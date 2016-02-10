@@ -6,4 +6,9 @@ The ideal starting app for React Native
 * Standard JS compliant
 * Redux
 * Sagas
-* Cocoapods 
+* Common Cocoapods 
+* Mocha Tests
+* Common Node Modules
+* Fastlane
+* Git Hooks
+* Network code
