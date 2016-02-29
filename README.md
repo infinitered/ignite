@@ -41,7 +41,7 @@ npm install
     * run `react-native run-android`
 
 
-## Wishlist
+## :cool: Wishlist
 * Redux
 * Sagas
 * Common Cocoapods
