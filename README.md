@@ -6,7 +6,6 @@ The ideal starting app for React Native:
 * Documented structure
 
 # TODO:
-* Add Themes
 * Add Redux
 * Add Sagas
 * Add Githooks
