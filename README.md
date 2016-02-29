@@ -5,6 +5,12 @@ The ideal starting app for React Native:
 * Multiple Platform Support
 * Documented structure
 
+# TODO:
+* Add Themes
+* Add Redux
+* Add Sagas
+* Add Githooks
+
 ## iOS/Android/XDE support
 Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.
 
