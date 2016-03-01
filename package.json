@@ -13,7 +13,19 @@
     "react-redux": "^4.4.0"
   },
   "devDependencies": {
+    "babel-eslint": "^5.0.0",
     "snazzy": "^3.0.0",
     "standard": "^6.0.7"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "describe",
+      "it",
+      "navigator",
+      "__DEV__",
+      "XMLHttpRequest",
+      "FormData"
+    ]
   }
 }

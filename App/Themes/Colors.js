@@ -8,7 +8,7 @@ const colors = {
   ricePaper: 'rgba(255,255,255, 0.75)',
   windowTint: 'rgba(0, 0, 0, 0.4)',
   panther: '#464646',
-  charcoal: '#595959',
+  charcoal: '#595959'
 }
 
 export default colors
