@@ -10,7 +10,7 @@ export default class AllComponentsScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      webViewHeight: 0
+      // stuff
     }
   }
 

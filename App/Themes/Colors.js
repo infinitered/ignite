@@ -1,6 +1,7 @@
 const colors = {
   background: 'white',
   clear: 'rgba(0,0,0,0)',
+  ocean: '#415572',
   transparent: 'rgba(0,0,0,0)',
   silver: '#F7F7F7',
   error: 'rgba(200, 0, 0, 0.8)',
