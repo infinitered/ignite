@@ -1,4 +1,4 @@
-// import { Transitions } from '../Themes/'
+import { Transitions } from '../Themes/'
 
 export default new class Routes {
 
