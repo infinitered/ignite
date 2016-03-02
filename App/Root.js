@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
 import React, {Component, View, Navigator} from 'react-native'
 import {Router, Routes, NavigationBar} from './Navigation/'
 
@@ -11,7 +6,7 @@ import styles from './Styles/RootStyle'
 
 export default class RNBase extends Component {
 
-  renderApp() {
+  renderApp () {
     return (
       <View style={styles.applicationView}>
         <Navigator
@@ -25,7 +20,7 @@ export default class RNBase extends Component {
     )
   }
 
-  render() {
+  render () {
     return this.renderApp()
   }
 }

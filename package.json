@@ -4,11 +4,28 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm prune && npm i"
   },
   "dependencies": {
     "react-native": "^0.20.0",
     "react-redux": "^4.4.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "snazzy": "^3.0.0",
+    "standard": "^6.0.7"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "describe",
+      "it",
+      "navigator",
+      "__DEV__",
+      "XMLHttpRequest",
+      "FormData"
+    ]
   }
 }
