@@ -16,4 +16,12 @@ export default new class Routes {
     }
   }
 
+  get LoginScreen () {
+    return {
+      title: 'Login',
+      component: require('../Containers/LoginScreen').default,
+      customConfiguration: Transitions.modal,
+    }
+  }
+
 }
