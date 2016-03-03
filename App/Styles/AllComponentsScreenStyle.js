@@ -11,5 +11,18 @@ export default StyleSheet.create({
     width: Metrics.screenWidth,
     height: Metrics.screenHeight / 3,
     alignSelf: 'center'
+  },
+  loginBox: {
+    padding: 20
+  },
+  loginButton: {
+    borderWidth: 1,
+    borderColor: Colors.charcoal,
+    backgroundColor: Colors.panther,
+    padding: 6
+  },
+  loginText: {
+    textAlign: 'center',
+    color: Colors.silver
   }
 })

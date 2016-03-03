@@ -1,4 +1,4 @@
-// import { Transitions } from '../Themes/'
+import { Transitions } from '../Themes/'
 
 export default new class Routes {
 
@@ -13,6 +13,14 @@ export default new class Routes {
     return {
       title: 'Welcome',
       component: require('../Containers/AllComponentsScreen').default
+    }
+  }
+
+  get LoginScreen () {
+    return {
+      title: 'Login',
+      component: require('../Containers/LoginScreen').default,
+      customConfiguration: Transitions.modal,
     }
   }
 

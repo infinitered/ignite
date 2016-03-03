@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "react-native": "^0.20.0",
-    "react-redux": "^4.4.0"
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
+    "redux-logger": "^2.4.0",
+    "seamless-immutable": "^5.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^5.0.0",
