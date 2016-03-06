@@ -5,6 +5,5 @@ import Types from '../Actions/Types'
 export function * watchStartup () {
   while (true) {
     yield take(Types.STARTUP)
-    console.log('Hello! Time to start!')
   }
 }

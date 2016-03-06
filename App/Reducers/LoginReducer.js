@@ -2,7 +2,7 @@ import Types from '../Actions/Types'
 import Immutable from 'seamless-immutable'
 import createReducer from './CreateReducer'
 
-const INITIAL_STATE = Immutable({
+export const INITIAL_STATE = Immutable({
   username: null,
   errorCode: null,
   attempting: false
@@ -33,4 +33,3 @@ const ACTION_HANDLERS = {
 }
 
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS)
-
