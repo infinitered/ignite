@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
-    "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm prune && npm i"
+    "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm prune && npm i",
+    "test": "mocha --opts Tests/mocha.opts Tests/ --recursive"
   },
   "dependencies": {
     "ramda": "^0.19.1",
@@ -19,6 +20,11 @@
   },
   "devDependencies": {
     "babel-eslint": "^5.0.0",
+    "babel-plugin-transform-runtime": "^6.6.0",
+    "chai": "^3.5.0",
+    "chai-immutable": "^1.5.3",
+    "deep-freeze": "0.0.1",
+    "mocha": "^2.4.5",
     "snazzy": "^3.0.0",
     "standard": "^6.0.7"
   },

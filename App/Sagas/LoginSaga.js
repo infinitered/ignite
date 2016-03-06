@@ -6,7 +6,7 @@ import Actions from '../Actions/Creators'
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 // attempts to login
-function * attemptLogin (username, password) {
+export function * attemptLogin (username, password) {
   // simulate work
   yield delay(2000)
 

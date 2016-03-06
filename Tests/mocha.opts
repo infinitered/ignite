@@ -1,0 +1,3 @@
+--compilers js:Tests/Compiler.js
+--require Tests/Setup.js
+--reporter nyan
