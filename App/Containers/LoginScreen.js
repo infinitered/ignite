@@ -16,7 +16,7 @@ class LoginScreen extends Component {
     super(props)
     this.state = {
       username: 'reactnative@infinite.red',
-      password: 'password',
+      password: 'password'
     }
     this.isAttempting = false
     this.handleChangeUsername = this.handleChangeUsername.bind(this)
@@ -36,12 +36,8 @@ class LoginScreen extends Component {
     const { username, password } = this.state
     const { dispatch } = this.props
     this.isAttempting = true
-    // kick off a login
+    // attempt a login - a saga is listening to pick it up from here.
     dispatch(Actions.attemptLogin(username, password))
-    // pretend this is correct
-    setTimeout(() => {
-      dispatch(Actions.loginSuccess(username))
-    }, 1000)
   }
 
   handlePressCancel () {
@@ -126,4 +122,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(LoginScreen)
-
