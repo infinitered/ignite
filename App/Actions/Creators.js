@@ -12,6 +12,8 @@ const loginFailure = (errorCode) =>
 
 const logout = () => createAction(Types.LOGOUT)
 
+const startup = () => createAction(Types.STARTUP)
+
 /**
  Makes available all the action creators we've created.
  */
@@ -19,6 +21,6 @@ export default {
   attemptLogin,
   loginSuccess,
   loginFailure,
-  logout
+  logout,
+  startup
 }
-

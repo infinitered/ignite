@@ -9,10 +9,12 @@
     "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm prune && npm i"
   },
   "dependencies": {
+    "ramda": "^0.19.1",
     "react-native": "^0.20.0",
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-logger": "^2.4.0",
+    "redux-saga": "^0.9.3",
     "seamless-immutable": "^5.0.1"
   },
   "devDependencies": {
