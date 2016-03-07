@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var babel = require('babel-core');
 var origJs = require.extensions['.js'];
+require('babel-polyfill')
 
 require.extensions['.js'] = function (module, fileName) {
   var output;
@@ -19,7 +20,8 @@ require.extensions['.js'] = function (module, fileName) {
   }
   var src = fs.readFileSync(fileName, 'utf8');
   output = babel.transform(src, {
-    filename: fileName
+    filename: fileName,
+    'presets': ['react-native']
   }).code;
 
   return module._compile(output, fileName);

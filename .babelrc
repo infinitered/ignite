@@ -1,6 +1,0 @@
-{
-  "extends": "react-native/packager/react-packager/rn-babelrc.json",
-  "plugins": [
-    "transform-runtime"
-  ]
-}
