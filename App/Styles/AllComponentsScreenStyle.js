@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics } from '../Themes/'
+import { Colors, Metrics, Base } from '../Themes/'
 
 export default StyleSheet.create({
   screenContainer: {
@@ -24,5 +24,8 @@ export default StyleSheet.create({
   loginText: {
     textAlign: 'center',
     color: Colors.silver
+  },
+  componentLabel: {
+    ...Base.darkLabel
   }
 })

@@ -23,6 +23,12 @@ const base = {
       fontSize: Metrics.fonts.smallHeader,
       color: Colors.blueTint
     }
+  },
+  darkLabel: {
+    backgroundColor: Colors.windowTint,
+    fontFamily: Fonts.bold,
+    color: Colors.snow,
+    padding: 5
   }
 }
 

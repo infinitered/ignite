@@ -17,12 +17,7 @@ export default class AllComponentsScreen extends React.Component {
   }
 
   static propTypes = {
-    navigator: React.PropTypes.object,
-    dispatch: React.PropTypes.func,
-    subjectId: React.PropTypes.number,
-    profileImage: React.PropTypes.string,
-    thumbnailUri: React.PropTypes.string,
-    customFields: React.PropTypes.array,
+    navigator: React.PropTypes.object.isRequired,
     loggedIn: React.PropTypes.bool
   };
 
@@ -66,16 +61,17 @@ export default class AllComponentsScreen extends React.Component {
   render () {
     const { loggedIn } = this.props
     return (
-      <View style={styles.screenContainer}>
-        <Text>Progressive Image</Text>
+      <ScrollView style={styles.screenContainer}>
+        <Text style={styles.componentLabel}>Login/Logout Redux + Sagas Example</Text>
         { loggedIn ? this.renderLogoutButton() : this.renderLoginButton() }
+        <Text style={styles.componentLabel}>Progressive Image Component</Text>
         <ProgressiveImage
           style={styles.progressiveImage}
           defaultSource={Images.logo}
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
-      </View>
+      </ScrollView>
     )
   }
 }
