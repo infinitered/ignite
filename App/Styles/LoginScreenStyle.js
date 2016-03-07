@@ -29,7 +29,7 @@ export default StyleSheet.create({
   loginRow: {
     paddingBottom: 20,
     paddingHorizontal: 20,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   loginButtonWrapper: {
     flex: 1

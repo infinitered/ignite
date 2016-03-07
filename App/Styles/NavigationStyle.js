@@ -1,5 +1,5 @@
 import React from 'react-native'
-import {Fonts, Metrics, Colors} from '../Themes/'
+import { Fonts, Metrics, Colors } from '../Themes/'
 
 const NavigationStyle = React.StyleSheet.create({
   titleWrapper: {
@@ -10,7 +10,7 @@ const NavigationStyle = React.StyleSheet.create({
     alignItems: 'center'
   },
   navTitle: {
-    color: Colors.white,
+    color: Colors.snow,
     fontSize: Metrics.fonts.regular,
     fontFamily: Fonts.bold,
     justifyContent: 'center',
@@ -31,7 +31,7 @@ const NavigationStyle = React.StyleSheet.create({
     padding: Metrics.baseMargin
   },
   navigationBar: {
-    backgroundColor: Colors.blueTop
+    backgroundColor: Colors.ocean
   }
 })
 
