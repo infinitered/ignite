@@ -1,4 +1,4 @@
-import React, {Component, View, Navigator} from 'react-native'
+import React, {Component, View, Navigator, StatusBar} from 'react-native'
 import {Router, Routes, NavigationBar} from './Navigation/'
 import configureStore from './Store/Store'
 import { Provider } from 'react-redux'
@@ -20,6 +20,10 @@ export default class RNBase extends Component {
     return (
       <Provider store={store}>
         <View style={styles.applicationView}>
+          <StatusBar
+            barStyle="light-content"
+          />
+
           <Navigator
             initialRoute={Routes.AllComponentsScreen}
             configureScene={Router.configureScene}
