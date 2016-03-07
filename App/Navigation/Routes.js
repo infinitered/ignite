@@ -20,7 +20,7 @@ export default new class Routes {
     return {
       title: 'Login',
       component: require('../Containers/LoginScreen').default,
-      customConfiguration: Transitions.modal,
+      customConfiguration: Transitions.modal
     }
   }
 
