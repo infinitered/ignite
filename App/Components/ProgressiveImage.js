@@ -23,10 +23,12 @@ export default class ProgressiveImage extends React.Component {
   };
 
   mainImageLoad () {
-    Animated.timing(this.state.thumbnailOpacity, {
-      toValue: 0,
-      duration: 250
-    }).start()
+    window.requestAnimationFrame((time) => {
+      Animated.timing(this.state.thumbnailOpacity, {
+        toValue: 0,
+        duration: 250
+      }).start()
+    })
   }
 
   onThumbnailLoad () {
