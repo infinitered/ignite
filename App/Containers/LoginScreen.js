@@ -4,11 +4,15 @@ import React, {
   View,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Image,
+  DeviceEventEmitter,
+  LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from '../Styles/LoginScreenStyle'
 import Actions from '../Actions/Creators'
+import {Images, Metrics} from '../Themes'
 
 class LoginScreen extends Component {
 
@@ -16,9 +20,13 @@ class LoginScreen extends Component {
     super(props)
     this.state = {
       username: 'reactnative@infinite.red',
-      password: 'password'
+      password: 'password',
+      visibleHeight: Metrics.screenHeight,
+      topLogo: { width: Metrics.screenWidth }
     }
     this.isAttempting = false
+
+    // Bind before render
     this.handleChangeUsername = this.handleChangeUsername.bind(this)
     this.handleChangePassword = this.handleChangePassword.bind(this)
     this.handlePressLogin = this.handlePressLogin.bind(this)
@@ -30,6 +38,30 @@ class LoginScreen extends Component {
     if (this.isAttempting && !newProps.attempting) {
       this.props.navigator.pop()
     }
+  }
+
+  componentWillMount () {
+    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardWillShow.bind(this))
+    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardWillHide.bind(this))
+  }
+
+  keyboardWillShow (e) {
+    // Animation types easeInEaseOut/linear/spring
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    let newSize = Metrics.screenHeight - e.endCoordinates.height
+    this.setState({
+      visibleHeight: newSize,
+      topLogo: {width: 100, height: 70}
+    })
+  }
+
+  keyboardWillHide (e) {
+    // Animation types easeInEaseOut/linear/spring
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    this.setState({
+      visibleHeight: Metrics.screenHeight,
+      topLogo: {width: Metrics.screenWidth}
+    })
   }
 
   handlePressLogin () {
@@ -59,7 +91,8 @@ class LoginScreen extends Component {
     const editable = !attempting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <View style={ Styles.container }>
+      <View style={ [Styles.container, {height: this.state.visibleHeight}] }>
+        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]}/>
         <View style={ Styles.form }>
           <View style={ Styles.row }>
             <Text style={ Styles.rowLabel }>Username</Text>
@@ -67,7 +100,6 @@ class LoginScreen extends Component {
               ref='username'
               style={ textInputStyle }
               value={ username }
-              autoFocus
               editable={ editable }
               keyboardType='default'
               returnKeyType='search'
