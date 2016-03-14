@@ -41,8 +41,13 @@ class LoginScreen extends Component {
   }
 
   componentWillMount () {
-    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardWillShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardWillHide.bind(this))
+    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+  }
+
+  componentWillUnmount () {
+    DeviceEventEmitter.removeAllListeners('keyboardWillShow')
+    DeviceEventEmitter.removeAllListeners('keyboardWillHide')
   }
 
   keyboardWillShow (e) {
