@@ -43,8 +43,8 @@ class LoginScreen extends Component {
   componentWillMount () {
     // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
-    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardWillShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardWillHide.bind(this))
+    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
+    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
   }
 
   componentWillUnmount () {
@@ -52,7 +52,7 @@ class LoginScreen extends Component {
     DeviceEventEmitter.removeAllListeners('keyboardDidHide')
   }
 
-  keyboardWillShow (e) {
+  keyboardDidShow (e) {
     // Animation types easeInEaseOut/linear/spring
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     let newSize = Metrics.screenHeight - e.endCoordinates.height
@@ -62,7 +62,7 @@ class LoginScreen extends Component {
     })
   }
 
-  keyboardWillHide (e) {
+  keyboardDidHide (e) {
     // Animation types easeInEaseOut/linear/spring
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     this.setState({
