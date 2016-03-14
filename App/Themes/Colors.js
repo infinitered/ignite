@@ -3,6 +3,7 @@ const colors = {
   snow: 'white',
   clear: 'rgba(0,0,0,0)',
   ocean: '#415572',
+  deepOcean: '#32435c',
   transparent: 'rgba(0,0,0,0)',
   silver: '#F7F7F7',
   steel: '#CCCCCC',

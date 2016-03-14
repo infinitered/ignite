@@ -4,7 +4,8 @@ import Colors from '../Themes/Colors'
 export default StyleSheet.create({
   container: {
     justifyContent: 'center',
-    paddingTop: 70
+    paddingTop: 70,
+    backgroundColor: Colors.deepOcean
   },
   form: {
     backgroundColor: Colors.background,
@@ -44,5 +45,9 @@ export default StyleSheet.create({
   loginText: {
     textAlign: 'center',
     color: Colors.silver
+  },
+  topLogo: {
+    alignSelf: 'center',
+    resizeMode: 'contain'
   }
 })
