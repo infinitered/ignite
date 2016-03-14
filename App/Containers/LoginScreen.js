@@ -41,13 +41,15 @@ class LoginScreen extends Component {
   }
 
   componentWillMount () {
-    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+    // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
+    // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
+    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardWillShow.bind(this))
+    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardWillHide.bind(this))
   }
 
   componentWillUnmount () {
-    DeviceEventEmitter.removeAllListeners('keyboardWillShow')
-    DeviceEventEmitter.removeAllListeners('keyboardWillHide')
+    DeviceEventEmitter.removeAllListeners('keyboardDidShow')
+    DeviceEventEmitter.removeAllListeners('keyboardDidHide')
   }
 
   keyboardWillShow (e) {
