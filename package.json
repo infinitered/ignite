@@ -7,9 +7,11 @@
     "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm prune && npm i",
-    "test": "mocha --opts Tests/mocha.opts Tests/ --recursive"
+    "test": "mocha --opts Tests/mocha.opts Tests/ --recursive",
+    "test:client": "mocha --opts Tests/mocha.opts Tests/Services/HttpClient*.js --recursive"
   },
   "dependencies": {
+    "querystringify": "0.0.3",
     "ramda": "^0.19.1",
     "react-native": "^0.21.0",
     "react-redux": "^4.4.0",
@@ -32,6 +34,7 @@
     "globals": [
       "describe",
       "it",
+      "fetch",
       "navigator",
       "__DEV__",
       "XMLHttpRequest",

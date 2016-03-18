@@ -27,5 +27,8 @@ export default StyleSheet.create({
   },
   componentLabel: {
     ...Base.darkLabel
+  },
+  temperature: {
+    fontSize: Metrics.fonts.title
   }
 })

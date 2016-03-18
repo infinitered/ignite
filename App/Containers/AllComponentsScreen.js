@@ -60,7 +60,7 @@ export default class AllComponentsScreen extends React.Component {
   }
 
   render () {
-    const { loggedIn } = this.props
+    const { loggedIn, temperature, city } = this.props
     return (
       <ScrollView style={styles.screenContainer}>
         <Text style={styles.componentLabel}>Login/Logout Redux + Sagas Example</Text>
@@ -72,6 +72,8 @@ export default class AllComponentsScreen extends React.Component {
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
+        <Text style={ styles.componentLabel }>Http Client: { city }</Text>
+        <Text style={ styles.temperature }>{ temperature && `${temperature} F` }</Text>
       </ScrollView>
     )
   }
@@ -79,7 +81,9 @@ export default class AllComponentsScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.login.username !== null
+    loggedIn: state.login.username !== null,
+    temperature: state.weather.temperature,
+    city: state.weather.city
   }
 }
 
