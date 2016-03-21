@@ -8,6 +8,7 @@ The ideal starting app for React Native:
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
+* Networking Code
 
 ## iOS/Android/XDE support
 Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.
@@ -60,4 +61,3 @@ The linting rules are from JS Standard and React-Standard.  [Regular JS errors c
 * Common Cocoapods
 * Common Node Modules
 * Fastlane
-* Network code
