@@ -6,14 +6,15 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
-    "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm prune && npm i",
+    "newclear": "watchman watch-del-all && rm -rf node_modules/ && npm cache clean && npm i",
     "test": "mocha --opts Tests/mocha.opts Tests/ --recursive",
     "test:client": "mocha --opts Tests/mocha.opts Tests/Services/HttpClient*.js --recursive"
   },
   "dependencies": {
     "querystringify": "0.0.3",
     "ramda": "^0.19.1",
-    "react-native": "^0.21.0",
+    "react-native": "^0.22.0",
+    "react": "^0.14.5",
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-logger": "^2.4.0",
