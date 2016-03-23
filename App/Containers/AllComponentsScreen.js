@@ -39,10 +39,10 @@ export default class AllComponentsScreen extends React.Component {
 
   renderLoginButton () {
     return (
-      <View style={ styles.loginBox }>
-        <TouchableOpacity onPress={ this.handlePressLogin }>
-          <View style={ styles.loginButton }>
-            <Text style={ styles.loginText }>Sign In</Text>
+      <View style={styles.loginBox}>
+        <TouchableOpacity onPress={this.handlePressLogin}>
+          <View style={styles.loginButton}>
+            <Text style={styles.loginText}>Sign In</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -51,10 +51,10 @@ export default class AllComponentsScreen extends React.Component {
 
   renderLogoutButton () {
     return (
-      <View style={ styles.loginBox }>
-        <TouchableOpacity onPress={ this.handlePressLogout }>
-          <View style={ styles.loginButton }>
-            <Text style={ styles.loginText }>Log out</Text>
+      <View style={styles.loginBox}>
+        <TouchableOpacity onPress={this.handlePressLogout}>
+          <View style={styles.loginButton}>
+            <Text style={styles.loginText}>Log out</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -66,7 +66,7 @@ export default class AllComponentsScreen extends React.Component {
     return (
       <ScrollView style={styles.screenContainer}>
         <Text style={styles.componentLabel}>Login/Logout Redux + Sagas Example</Text>
-        { loggedIn ? this.renderLogoutButton() : this.renderLoginButton() }
+        {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
         <Text style={styles.componentLabel}>Progressive Image Component</Text>
         <ProgressiveImage
           style={styles.progressiveImage}
@@ -74,8 +74,8 @@ export default class AllComponentsScreen extends React.Component {
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
-        <Text style={ styles.componentLabel }>Http Client: { city }</Text>
-        <Text style={ styles.temperature }>{ temperature && `${temperature} F` }</Text>
+        <Text style={styles.componentLabel}>Http Client: {city}</Text>
+        <Text style={styles.temperature}>{temperature && `${temperature} F`}</Text>
       </ScrollView>
     )
   }
