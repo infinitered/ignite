@@ -3,7 +3,7 @@ import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
 
 // a helper for simulating work
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 // attempts to login
 export function * attemptLogin (username, password) {
