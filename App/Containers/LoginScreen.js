@@ -98,45 +98,45 @@ class LoginScreen extends Component {
     const editable = !attempting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <View style={ [Styles.container, {height: this.state.visibleHeight}] }>
+      <View style={[Styles.container, {height: this.state.visibleHeight}]}>
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]}/>
-        <View style={ Styles.form }>
-          <View style={ Styles.row }>
-            <Text style={ Styles.rowLabel }>Username</Text>
+        <View style={Styles.form}>
+          <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>Username</Text>
             <TextInput
               ref='username'
-              style={ textInputStyle }
-              value={ username }
-              editable={ editable }
+              style={textInputStyle}
+              value={username}
+              editable={editable}
               keyboardType='default'
               returnKeyType='search'
-              onChangeText={ this.handleChangeUsername }
+              onChangeText={this.handleChangeUsername}
               placeholder='Username' />
           </View>
 
-          <View style={ Styles.row }>
-            <Text style={ Styles.rowLabel }>Password</Text>
+          <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>Password</Text>
             <TextInput
               ref='password'
-              style={ textInputStyle }
-              value={ password }
-              editable={ editable }
+              style={textInputStyle}
+              value={password}
+              editable={editable}
               keyboardType='default'
               returnKeyType='search'
               secureTextEntry
-              onChangeText={ this.handleChangePassword }
+              onChangeText={this.handleChangePassword}
               placeholder='Password' />
           </View>
 
-          <View style={ [Styles.loginRow] }>
-            <TouchableOpacity style={ Styles.loginButtonWrapper } onPress={ this.handlePressLogin }>
-              <View style={ Styles.loginButton }>
-                <Text style={ Styles.loginText }>Sign In</Text>
+          <View style={[Styles.loginRow]}>
+            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressLogin}>
+              <View style={Styles.loginButton}>
+                <Text style={Styles.loginText}>Sign In</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={ Styles.loginButtonWrapper } onPress={ this.handlePressCancel }>
-              <View style={ Styles.loginButton }>
-                <Text style={ Styles.loginText }>Cancel</Text>
+            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressCancel}>
+              <View style={Styles.loginButton}>
+                <Text style={Styles.loginText}>Cancel</Text>
               </View>
             </TouchableOpacity>
           </View>
