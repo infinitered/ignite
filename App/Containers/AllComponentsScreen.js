@@ -1,5 +1,5 @@
 // An All Components Screen is a great way to dev and quick-test components
-import React, { View, ScrollView, Text, TouchableOpacity } from 'react-native'
+import React, { View, ScrollView, Text, TouchableOpacity, PropTypes } from 'react-native'
 import { connect } from 'react-redux'
 import styles from '../Styles/AllComponentsScreenStyle'
 import ProgressiveImage from '../Components/ProgressiveImage'
@@ -17,9 +17,11 @@ export default class AllComponentsScreen extends React.Component {
   }
 
   static propTypes = {
-    navigator: React.PropTypes.object.isRequired,
-    loggedIn: React.PropTypes.bool,
-    dispatch: React.PropTypes.func
+    navigator: PropTypes.object.isRequired,
+    loggedIn: PropTypes.bool,
+    dispatch: PropTypes.func,
+    temperature: PropTypes.string,
+    city: PropTypes.string
   };
 
   // fires when the user presses the login button

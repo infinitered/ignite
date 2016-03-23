@@ -21,7 +21,7 @@ export default class RNBase extends Component {
       <Provider store={store}>
         <View style={styles.applicationView}>
           <StatusBar
-            barStyle="light-content"
+            barStyle='light-content'
           />
 
           <Navigator
