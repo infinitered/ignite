@@ -1,7 +1,9 @@
-# React Native Template
+<img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/App/Images/ir.png">
+#  React Native Template
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/react_native_base/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
-The ideal starting app for React Native:
-* Standard compliant
+
+_The ideal starting app for React Native:_
+* Standard Compliant
 * Multiple Platform Support
 * Documented structure
 * Redux State Management
@@ -39,10 +41,10 @@ npm install
     * Run Genymotion
     * run `react-native run-android`
 
-## :no_entry_sign: Linting
+## :no_entry_sign: Standard Compliant
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-This project adheres to JS Standard.  The linting process enforces this.
+This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
 
 **To Lint on Commit**
 
@@ -56,6 +58,10 @@ If you have to bypass lint for a special commit that you will come back and clea
 **Understanding Linting Errors**
 
 The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
+
+## :open_file_folder: Related Articles
+* [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
+* [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
 ## :cool: Wishlist
 * Common Cocoapods
