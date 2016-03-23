@@ -82,7 +82,7 @@ const httpCall = (options) => {
 
     // call fetch
     fetch(url, fetchOptions)
-      .then(fetchResponse => {
+      .then((fetchResponse) => {
         const { status, statusText } = fetchResponse
         // tuck these in the client response
         clientResponse.statusCode = status
@@ -94,11 +94,11 @@ const httpCall = (options) => {
         err.status = status
         throw err
       })
-      .then(fetchResponse => {
+      .then((fetchResponse) => {
         // TODO: not all responses need be JSON, maybe a style option can drive this?
         return fetchResponse.json()
       })
-      .then(json => {
+      .then((json) => {
         if (logging) {
           logResponse(url, method, Date.now() - timeStart, json)
         }
@@ -106,7 +106,7 @@ const httpCall = (options) => {
         clientResponse.json = json
         resolve(clientResponse)
       })
-      .catch(error => {
+      .catch((error) => {
         const status = error.status
         clientResponse.reason = statusCodeToReason(status)
         resolve(clientResponse)
