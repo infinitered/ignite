@@ -7,7 +7,8 @@ import React, {
   TouchableOpacity,
   Image,
   DeviceEventEmitter,
-  LayoutAnimation
+  LayoutAnimation,
+  Alert
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from '../Styles/LoginScreenStyle'
@@ -51,8 +52,8 @@ class LoginScreen extends Component {
   }
 
   // Method that runs when you tap the right nav bar button
-  tapForgotPassword() {
-    alert('Forgot Password')
+  tapForgotPassword () {
+    Alert.alert('Forgot Password')
   }
 
   componentWillUnmount () {

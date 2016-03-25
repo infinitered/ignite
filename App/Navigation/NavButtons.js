@@ -3,12 +3,12 @@ import styles from '../Styles/NavigationStyle'
 
 export default {
 
-  forgotPasswordButton(onPressFunction) {
+  forgotPasswordButton (onPressFunction) {
     return (
       <TouchableOpacity onPress={onPressFunction}>
         <Text style={styles.navButtonText}>Forgot Password</Text>
       </TouchableOpacity>
-    );
+    )
   }
 
 }
