@@ -45,6 +45,14 @@ class LoginScreen extends Component {
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
     DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
     DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+
+    // Configure the right nav button
+    this.props.navigator.state.tapForgotPassword = this.tapForgotPassword.bind(this)
+  }
+
+  // Method that runs when you tap the right nav bar button
+  tapForgotPassword() {
+    alert('Forgot Password')
   }
 
   componentWillUnmount () {

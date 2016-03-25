@@ -10,14 +10,16 @@ export default {
 
   CreateButton (button_id, navigator) {
     switch (button_id) {
-      case 'SEARCH':
-        return NavButtons.searchButton(navigator.state.tapSearch)
-      case 'MAP':
-        return NavButtons.mapButton(navigator.state.tapMap)
-      case 'COMPOSE':
-        return NavButtons.composeButton(navigator.state.tapCompose)
-      case 'BACK':
-        return NavButtons.backButton(this.BackButton.bind(this, navigator))
+      // case 'SEARCH':
+      //   return NavButtons.searchButton(navigator.state.tapSearch)
+      // case 'MAP':
+      //   return NavButtons.mapButton(navigator.state.tapMap)
+      // case 'COMPOSE':
+      //   return NavButtons.composeButton(navigator.state.tapCompose)
+      // case 'BACK':
+      //   return NavButtons.backButton(this.BackButton.bind(this, navigator))
+      case 'FORGOT_PASSWORD':
+        return NavButtons.forgotPasswordButton(navigator.state.tapForgotPassword)
       default:
         return (<Text>Needs Button</Text>)
     }
