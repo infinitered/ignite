@@ -23,6 +23,13 @@ const NavigationStyle = React.StyleSheet.create({
     fontFamily: Fonts.base,
     alignSelf: 'center'
   },
+  navButtonText: {
+    color: Colors.white,
+    marginTop: 8,
+    marginLeft: 8,
+    fontFamily: Fonts.bold,
+    padding: Metrics.baseMargin
+  },
   backButtonText: {
     color: Colors.white,
     marginTop: 8,

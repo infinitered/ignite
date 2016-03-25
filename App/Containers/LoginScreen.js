@@ -7,7 +7,8 @@ import React, {
   TouchableOpacity,
   Image,
   DeviceEventEmitter,
-  LayoutAnimation
+  LayoutAnimation,
+  Alert
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from '../Styles/LoginScreenStyle'
@@ -45,6 +46,14 @@ class LoginScreen extends Component {
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
     DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
     DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+
+    // Configure the right nav button
+    this.props.navigator.state.tapForgotPassword = this.tapForgotPassword.bind(this)
+  }
+
+  // Method that runs when you tap the right nav bar button
+  tapForgotPassword () {
+    Alert.alert('Forgot Password')
   }
 
   componentWillUnmount () {
