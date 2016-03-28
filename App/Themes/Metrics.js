@@ -15,26 +15,11 @@ const metrics = {
   navBarHeight: 64,
   buttonRadius: 4,
   icons: {
-    tiny: {
-      size: 15,
-      frameSize: 20
-    },
-    small: {
-      size: 20,
-      frameSize: 30
-    },
-    medium: {
-      size: 30,
-      frameSize: 35
-    },
-    large: {
-      size: 45,
-      frameSize: 45
-    },
-    largest: {
-      size: 60,
-      frameSize: 60
-    }
+    tiny: 15,
+    small: 20,
+    medium: 30,
+    large: 45,
+    xl: 60
   },
   fonts: {
     title: 40,

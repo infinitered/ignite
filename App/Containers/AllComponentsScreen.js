@@ -3,9 +3,10 @@ import React, { View, ScrollView, Text, TouchableOpacity, PropTypes } from 'reac
 import { connect } from 'react-redux'
 import styles from '../Styles/AllComponentsScreenStyle'
 import ProgressiveImage from '../Components/ProgressiveImage'
-import { Images } from '../Themes'
+import { Colors, Images, Metrics } from '../Themes'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class AllComponentsScreen extends React.Component {
 
@@ -20,7 +21,7 @@ export default class AllComponentsScreen extends React.Component {
     navigator: PropTypes.object.isRequired,
     loggedIn: PropTypes.bool,
     dispatch: PropTypes.func,
-    temperature: PropTypes.string,
+    temperature: PropTypes.number,
     city: PropTypes.string
   };
 
@@ -76,6 +77,19 @@ export default class AllComponentsScreen extends React.Component {
         />
         <Text style={styles.componentLabel}>Http Client: {city}</Text>
         <Text style={styles.temperature}>{temperature && `${temperature} F`}</Text>
+        <Text style={styles.componentLabel}>RN Vector Icons</Text>
+        <View style={styles.buttonContainer}>
+          <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
+          <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
+          <Icon name='star' size={Metrics.icons.medium} color={Colors.error} />
+          <Icon name='trophy' size={Metrics.icons.medium} color={Colors.error} />
+          <Icon name='warning' size={Metrics.icons.medium} color={Colors.error} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Icon.Button name='facebook' style={styles.facebookButton} backgroundColor={Colors.facebook} onPress={() => window.alert('Facebook')}>
+            Login with Facebook
+          </Icon.Button>
+        </View>
       </ScrollView>
     )
   }
