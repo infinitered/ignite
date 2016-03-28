@@ -26,9 +26,15 @@ export default StyleSheet.create({
     color: Colors.silver
   },
   componentLabel: {
-    ...Base.darkLabel
+    ...Base.darkLabel,
+    marginBottom: 5
   },
   temperature: {
     fontSize: Metrics.fonts.title
+  },
+  buttonContainer: {
+    margin: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
 })
