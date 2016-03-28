@@ -6,7 +6,9 @@ import ProgressiveImage from '../Components/ProgressiveImage'
 import { Colors, Images, Metrics } from '../Themes'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
+// external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
+import Animatable from 'react-native-animatable'
 
 export default class AllComponentsScreen extends React.Component {
 
@@ -78,17 +80,25 @@ export default class AllComponentsScreen extends React.Component {
         <Text style={styles.componentLabel}>Http Client: {city}</Text>
         <Text style={styles.temperature}>{temperature && `${temperature} F`}</Text>
         <Text style={styles.componentLabel}>RN Vector Icons</Text>
-        <View style={styles.buttonContainer}>
+        <View style={styles.groupContainer}>
           <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
           <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
           <Icon name='star' size={Metrics.icons.medium} color={Colors.error} />
           <Icon name='trophy' size={Metrics.icons.medium} color={Colors.error} />
           <Icon name='warning' size={Metrics.icons.medium} color={Colors.error} />
         </View>
-        <View style={styles.buttonContainer}>
+        <View style={styles.groupContainer}>
           <Icon.Button name='facebook' style={styles.facebookButton} backgroundColor={Colors.facebook} onPress={() => window.alert('Facebook')}>
             Login with Facebook
           </Icon.Button>
+        </View>
+        <Text style={styles.componentLabel}>RN Animatable</Text>
+        <View style={styles.groupContainer}>
+          <Animatable.Text animation='fadeIn' iterationCount='infinite' direction='alternate'>RN Animatable</Animatable.Text>
+          <Animatable.Image animation='pulse' iterationCount='infinite' source={Images.logo} />
+          <Animatable.View animation='jello' iterationCount='infinite'>
+            <Icon name='cab' size={Metrics.icons.medium} />
+          </Animatable.View>
         </View>
       </ScrollView>
     )

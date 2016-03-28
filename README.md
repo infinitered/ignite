@@ -11,6 +11,9 @@ _The ideal starting app for React Native:_
 * Githooks
 * Mocha Tests
 * Networking Code
+* Common Libs:
+  * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+  * [react-native-animatable](https://github.com/oblador/react-native-animatable)
 
 ## iOS/Android/XDE support
 Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.

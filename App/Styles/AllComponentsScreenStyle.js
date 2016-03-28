@@ -32,9 +32,10 @@ export default StyleSheet.create({
   temperature: {
     fontSize: Metrics.fonts.title
   },
-  buttonContainer: {
+  groupContainer: {
     margin: 5,
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    alignItems: 'center'
   }
 })
