@@ -21,7 +21,8 @@ export default new class Routes {
       title: 'Login',
       component: require('../Containers/LoginScreen').default,
       customConfiguration: Transitions.modal,
-      rightButton: 'FORGOT_PASSWORD'
+      rightButton: 'FORGOT_PASSWORD',
+      leftButton: 'BACK'
     }
   }
 
