@@ -11,29 +11,29 @@ export const INITIAL_STATE = Immutable({
 
 // request temp
 const request = (state, action) => {
-  return { ...state, ...{
+  return Immutable({ ...state,
     fetching: true,
     city: action.city,
     temperature: null
-  } }
+  })
 }
 
 // receive temp
 const receive = (state, action) => {
-  return { ...state, ...{
+  return Immutable({ ...state,
     fetching: false,
     error: null,
     temperature: action.temperature
-  } }
+  })
 }
 
 // temp failure
 const failure = (state, action) => {
-  return { ...state, ...{
+  return Immutable({ ...state,
     fetching: false,
     error: true,
     temperature: null
-  } }
+  })
 }
 
 // map our types to our handlers

@@ -10,22 +10,22 @@ export const INITIAL_STATE = Immutable({
 
 // login attempts
 const attempt = (state, action) => {
-  return { ...state, ...{ attempting: true } }
+  return Immutable({ ...state, attempting: true })
 }
 
 // successful logins
 const success = (state, action) => {
-  return { ...state, ...{ attempting: false, errorCode: null, username: action.username } }
+  return Immutable({ ...state, attempting: false, errorCode: null, username: action.username })
 }
 
 // login failure
 const failure = (state, action) => {
-  return { ...state, ...{ attempting: false, errorCode: action.errorCode } }
+  return Immutable({ ...state, attempting: false, errorCode: action.errorCode })
 }
 
 // logout
 const logout = (state, action) => {
-  return { ...state, ...{ username: null } }
+  return Immutable({ ...state, username: null })
 }
 
 // map our types to our handlers
