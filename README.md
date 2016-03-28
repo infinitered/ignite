@@ -7,6 +7,7 @@ _The ideal starting app for React Native:_
 * Multiple Platform Support
 * Documented structure
 * Redux State Management
+* Redux persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
