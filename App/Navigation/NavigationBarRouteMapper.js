@@ -16,8 +16,8 @@ export default {
       //   return NavButtons.mapButton(navigator.state.tapMap)
       // case 'COMPOSE':
       //   return NavButtons.composeButton(navigator.state.tapCompose)
-      // case 'BACK':
-      //   return NavButtons.backButton(this.BackButton.bind(this, navigator))
+      case 'BACK':
+        return NavButtons.backButton(this.BackButton.bind(this, navigator))
       case 'FORGOT_PASSWORD':
         return NavButtons.forgotPasswordButton(navigator.state.tapForgotPassword)
       default:
@@ -29,7 +29,7 @@ export default {
   // We don't want it to do an additional back if back was
   // already pressed.   Checking the transition state fixes this.
   BackButton (navigator) {
-    if (navigator.state.stable) {
+    if (navigator.state.activeGesture === null && navigator.state.pendingGestureProgress === null) {
       navigator.pop()
     }
   },
