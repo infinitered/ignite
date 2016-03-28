@@ -9,24 +9,20 @@ export const INITIAL_STATE = Immutable({
 })
 
 // login attempts
-const attempt = (state, action) => {
-  return Immutable({ ...state, attempting: true })
-}
+const attempt = (state, action) =>
+  Immutable(state).merge({ attempting: true })
 
 // successful logins
-const success = (state, action) => {
-  return Immutable({ ...state, attempting: false, errorCode: null, username: action.username })
-}
+const success = (state, action) =>
+  Immutable(state).merge({ attempting: false, errorCode: null, username: action.username })
 
 // login failure
-const failure = (state, action) => {
-  return Immutable({ ...state, attempting: false, errorCode: action.errorCode })
-}
+const failure = (state, action) =>
+  Immutable(state).merge({ attempting: false, errorCode: action.errorCode })
 
 // logout
-const logout = (state, action) => {
-  return Immutable({ ...state, username: null })
-}
+const logout = (state, action) =>
+  Immutable(state).merge({ username: null })
 
 // map our types to our handlers
 const ACTION_HANDLERS = {
