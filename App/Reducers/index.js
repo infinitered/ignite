@@ -7,3 +7,5 @@ export default combineReducers({
   login: LoginReducer,
   weather: WeatherReducer
 })
+
+export const persistentStoreBlacklist = ['login']

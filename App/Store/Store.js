@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist'
 import { AsyncStorage } from 'react-native'
 import createLogger from 'redux-logger'
-import rootReducer from '../Reducers/'
+import rootReducer, { persistentStoreBlacklist } from '../Reducers/'
 import Config from '../Config/DebugSettings'
 import sagaMiddleware from 'redux-saga'
 import sagas from '../Sagas/'
@@ -29,7 +29,10 @@ export default () => {
   )
 
   if (Config.reduxPersist) {
-    persistStore(store, {storage: AsyncStorage})
+    persistStore(store, {
+      storage: AsyncStorage,
+      blacklist: persistentStoreBlacklist
+    })
   }
 
   return store
