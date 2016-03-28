@@ -11,7 +11,7 @@ export const INITIAL_STATE = Immutable({
 
 // request temp
 const request = (state, action) =>
-  Immutable(state).merge({
+  state.merge({
     fetching: true,
     city: action.city,
     temperature: null
@@ -19,7 +19,7 @@ const request = (state, action) =>
 
 // receive temp
 const receive = (state, action) =>
-  Immutable(state).merge({
+  state.merge({
     fetching: false,
     error: null,
     temperature: action.temperature
@@ -27,7 +27,7 @@ const receive = (state, action) =>
 
 // temp failure
 const failure = (state, action) =>
-  Immutable(state).merge({
+  state.merge({
     fetching: false,
     error: true,
     temperature: null
