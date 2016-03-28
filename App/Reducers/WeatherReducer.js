@@ -10,28 +10,31 @@ export const INITIAL_STATE = Immutable({
 })
 
 // request temp
-const request = (state, action) =>
-  state.merge({
+const request = (state, action) => {
+  return { ...state, ...{
     fetching: true,
     city: action.city,
     temperature: null
-  })
+  } }
+}
 
 // receive temp
-const receive = (state, action) =>
-  state.merge({
+const receive = (state, action) => {
+  return { ...state, ...{
     fetching: false,
     error: null,
     temperature: action.temperature
-  })
+  } }
+}
 
 // temp failure
-const failure = (state, action) =>
-  state.merge({
+const failure = (state, action) => {
+  return { ...state, ...{
     fetching: false,
     error: true,
     temperature: null
-  })
+  } }
+}
 
 // map our types to our handlers
 const ACTION_HANDLERS = {

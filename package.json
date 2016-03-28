@@ -19,6 +19,7 @@
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-logger": "^2.4.0",
+    "redux-persist": "^2.0.1",
     "redux-saga": "^0.9.3",
     "seamless-immutable": "^5.0.1"
   },

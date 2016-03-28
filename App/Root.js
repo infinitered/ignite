@@ -7,7 +7,8 @@ import Actions from './Actions/Creators'
 // Styles
 import styles from './Styles/RootStyle'
 
-const store = configureStore()
+const PERSIST = true
+const store = configureStore(PERSIST)
 
 export default class RNBase extends Component {
 
