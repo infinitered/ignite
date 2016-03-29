@@ -68,6 +68,5 @@ The linting rules are from JS Standard and React-Standard.  [Regular JS errors c
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
 ## :cool: Wishlist
-* Common Cocoapods
-* Common Node Modules
+* https://github.com/oblador/react-native-lightbox
 * Fastlane
