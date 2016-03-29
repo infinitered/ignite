@@ -1,5 +1,3 @@
-import Immutable from 'seamless-immutable'
-
 /**
   Creates a reducer.
   @param {string} initialState - The initial state for this reducer.
@@ -9,11 +7,5 @@ import Immutable from 'seamless-immutable'
 export default (initialState = null, handlers = {}) => (state = initialState, action) => {
   if (!action && !action.type) return state
   const handler = handlers[action.type]
-
-  // Check to see if the state is already Immutable
-  if (state && typeof state.asMutable === 'function') {
-    return handler && handler(state, action) || state
-  } else {
-    return handler && handler(Immutable(state), action) || Immutable(state)
-  }
+  return handler && handler(state, action) || state
 }
