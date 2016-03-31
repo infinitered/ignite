@@ -10,6 +10,7 @@ export default {
   render () {
     return (
       <Navigator.NavigationBar
+        navigationStyles={Navigator.NavigationBar.StylesIOS}
         routeMapper={NavigationBarRouteMapper}
         style={styles.navigationBar}
       />
