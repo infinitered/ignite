@@ -3,6 +3,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/react_native_base/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 _The ideal starting app for React Native:_
+* Seed and Standard with [our Generator](https://github.com/GantMan/irrigate)
 * Standard Compliant
 * Multiple Platform Support
 * Documented structure
