@@ -19,7 +19,8 @@ I18n.translations = {
     password: 'Password',
     cancel: 'Cancel',
     welcome: 'Welcome',
-    login: 'Login'
+    login: 'Login',
+    tempIndicator: 'F'
   },
   fr: {
     signIn: 'Se connecter',
@@ -35,7 +36,8 @@ I18n.translations = {
     password: 'Mot de passe',
     cancel: 'Annuler',
     welcome: 'Bienvenue',
-    login: 'S\'identifier'
+    login: 'S\'identifier',
+    tempIndicator: 'C'
   }
 }
 

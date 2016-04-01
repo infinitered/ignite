@@ -81,7 +81,7 @@ export default class AllComponentsScreen extends React.Component {
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
         <Text style={styles.componentLabel}>{I18n.t('httpClient')}: {city}</Text>
-        <Text style={styles.temperature}>{temperature && `${temperature} F`}</Text>
+        <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
         <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
         <View style={styles.groupContainer}>
           <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
