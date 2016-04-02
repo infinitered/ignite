@@ -45,7 +45,7 @@ export default class RNBase extends React.Component {
             style={styles.drawer}
             openDrawerOffset={100}
             type='static'
-            tapToClose={true}
+            tapToClose
           >
             <Navigator
               ref={(ref) => { this.navigator = ref }}
