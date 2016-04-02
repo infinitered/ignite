@@ -31,7 +31,7 @@ const NavigationStyle = React.StyleSheet.create({
     padding: Metrics.baseMargin
   },
   navButtonLeft: {
-    padding: Metrics.baseMargin
+    margin: Metrics.baseMargin
   },
   navigationBar: {
     backgroundColor: Colors.ocean
