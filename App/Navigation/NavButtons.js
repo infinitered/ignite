@@ -3,6 +3,9 @@ import styles from '../Styles/NavigationStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { Colors, Metrics } from '../Themes'
 
+// I18n
+import I18n from '../I18n/I18n.js'
+
 export default {
 
   backButton (onPressFunction) {
@@ -20,7 +23,7 @@ export default {
   forgotPasswordButton (onPressFunction) {
     return (
       <TouchableOpacity onPress={onPressFunction}>
-        <Text style={styles.navButtonText}>Forgot Password</Text>
+        <Text style={styles.navButtonText}>{I18n.t('forgotPassword')}</Text>
       </TouchableOpacity>
     )
   }

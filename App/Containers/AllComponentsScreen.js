@@ -10,6 +10,9 @@ import Routes from '../Navigation/Routes'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
 
+// I18n
+import I18n from '../I18n/I18n.js'
+
 export default class AllComponentsScreen extends React.Component {
 
   constructor (props) {
@@ -45,7 +48,7 @@ export default class AllComponentsScreen extends React.Component {
       <View style={styles.loginBox}>
         <TouchableOpacity onPress={this.handlePressLogin}>
           <View style={styles.loginButton}>
-            <Text style={styles.loginText}>Sign In</Text>
+            <Text style={styles.loginText}>{I18n.t('signIn')}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -57,7 +60,7 @@ export default class AllComponentsScreen extends React.Component {
       <View style={styles.loginBox}>
         <TouchableOpacity onPress={this.handlePressLogout}>
           <View style={styles.loginButton}>
-            <Text style={styles.loginText}>Log out</Text>
+            <Text style={styles.loginText}>{I18n.t('logOut')}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -68,18 +71,18 @@ export default class AllComponentsScreen extends React.Component {
     const { loggedIn, temperature, city } = this.props
     return (
       <ScrollView style={styles.screenContainer}>
-        <Text style={styles.componentLabel}>Login/Logout Redux + Sagas Example</Text>
+        <Text style={styles.componentLabel}>{I18n.t('loginLogoutExampleTitle')}</Text>
         {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
-        <Text style={styles.componentLabel}>Progressive Image Component</Text>
+        <Text style={styles.componentLabel}>{I18n.t('progressiveImageComponent')}</Text>
         <ProgressiveImage
           style={styles.progressiveImage}
           defaultSource={Images.logo}
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
-        <Text style={styles.componentLabel}>Http Client: {city}</Text>
-        <Text style={styles.temperature}>{temperature && `${temperature} F`}</Text>
-        <Text style={styles.componentLabel}>RN Vector Icons</Text>
+        <Text style={styles.componentLabel}>{I18n.t('httpClient')}: {city}</Text>
+        <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
+        <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
         <View style={styles.groupContainer}>
           <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
           <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
@@ -89,12 +92,12 @@ export default class AllComponentsScreen extends React.Component {
         </View>
         <View style={styles.groupContainer}>
           <Icon.Button name='facebook' style={styles.facebookButton} backgroundColor={Colors.facebook} onPress={() => window.alert('Facebook')}>
-            Login with Facebook
+            {I18n.t('loginWithFacebook')}
           </Icon.Button>
         </View>
-        <Text style={styles.componentLabel}>RN Animatable</Text>
+        <Text style={styles.componentLabel}>{I18n.t('rnAnimatable')}</Text>
         <View style={styles.groupContainer}>
-          <Animatable.Text animation='fadeIn' iterationCount='infinite' direction='alternate'>RN Animatable</Animatable.Text>
+          <Animatable.Text animation='fadeIn' iterationCount='infinite' direction='alternate'>{I18n.t('rnAnimatable')}</Animatable.Text>
           <Animatable.Image animation='pulse' iterationCount='infinite' source={Images.logo} />
           <Animatable.View animation='jello' iterationCount='infinite'>
             <Icon name='cab' size={Metrics.icons.medium} />

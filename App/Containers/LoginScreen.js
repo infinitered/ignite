@@ -15,6 +15,9 @@ import Styles from '../Styles/LoginScreenStyle'
 import Actions from '../Actions/Creators'
 import {Images, Metrics} from '../Themes'
 
+// I18n
+import I18n from '../I18n/I18n.js'
+
 class LoginScreen extends Component {
 
   constructor (props) {
@@ -53,7 +56,7 @@ class LoginScreen extends Component {
 
   // Method that runs when you tap the right nav bar button
   tapForgotPassword () {
-    Alert.alert('Forgot Password')
+    Alert.alert(I18n.t('forgotPassword'))
   }
 
   componentWillUnmount () {
@@ -111,7 +114,7 @@ class LoginScreen extends Component {
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]}/>
         <View style={Styles.form}>
           <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>Username</Text>
+            <Text style={Styles.rowLabel}>{I18n.t('username')}</Text>
             <TextInput
               ref='username'
               style={textInputStyle}
@@ -120,11 +123,11 @@ class LoginScreen extends Component {
               keyboardType='default'
               returnKeyType='search'
               onChangeText={this.handleChangeUsername}
-              placeholder='Username' />
+              placeholder={I18n.t('username')} />
           </View>
 
           <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>Password</Text>
+            <Text style={Styles.rowLabel}>{I18n.t('password')}</Text>
             <TextInput
               ref='password'
               style={textInputStyle}
@@ -134,18 +137,18 @@ class LoginScreen extends Component {
               returnKeyType='search'
               secureTextEntry
               onChangeText={this.handleChangePassword}
-              placeholder='Password' />
+              placeholder={I18n.t('password')} />
           </View>
 
           <View style={[Styles.loginRow]}>
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressLogin}>
               <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>Sign In</Text>
+                <Text style={Styles.loginText}>{I18n.t('signIn')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressCancel}>
               <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>Cancel</Text>
+                <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
               </View>
             </TouchableOpacity>
           </View>
