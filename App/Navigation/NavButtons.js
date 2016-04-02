@@ -11,7 +11,19 @@ export default {
         <Icon name='angle-left'
           size={Metrics.icons.medium}
           color={Colors.snow}
-          style={styles.backButton}
+          style={styles.navButtonLeft}
+        />
+      </TouchableOpacity>
+    )
+  },
+
+  hamburgerButton (onPressFunction) {
+    return (
+      <TouchableOpacity onPress={onPressFunction}>
+        <Icon name='bars'
+          size={Metrics.icons.medium}
+          color={Colors.snow}
+          style={styles.navButtonLeft}
         />
       </TouchableOpacity>
     )

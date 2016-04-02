@@ -30,7 +30,7 @@ const NavigationStyle = React.StyleSheet.create({
     fontFamily: Fonts.bold,
     padding: Metrics.baseMargin
   },
-  backButton: {
+  navButtonLeft: {
     padding: Metrics.baseMargin
   },
   navigationBar: {
