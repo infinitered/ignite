@@ -40,15 +40,15 @@ export default class RNBase extends React.Component {
           />
 
           <Drawer
-            ref={(ref) => this.drawer = ref}
+            ref={(ref) => { this.drawer = ref }}
             content={this.renderDrawerContent()}
             style={styles.drawer}
             openDrawerOffset={100}
-            type="static"
+            type='static'
             tapToClose={true}
           >
             <Navigator
-              ref={(ref) => this.navigator = ref}
+              ref={(ref) => { this.navigator = ref }}
               initialRoute={Routes.AllComponentsScreen}
               configureScene={Router.configureScene}
               renderScene={Router.renderScene}
