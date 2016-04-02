@@ -15,7 +15,8 @@ export default new class Routes {
   get AllComponentsScreen () {
     return {
       title: I18n.t('welcome'),
-      component: require('../Containers/AllComponentsScreen').default
+      component: require('../Containers/AllComponentsScreen').default,
+      leftButton: 'HAMBURGER'
     }
   }
 

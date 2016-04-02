@@ -30,6 +30,12 @@ export default class AllComponentsScreen extends React.Component {
     city: PropTypes.string
   };
 
+  componentWillMount () {
+    this.props.navigator.state.tapHamburger = () => {
+      this.props.navigator.drawer.toggle()
+    }
+  }
+
   // fires when the user presses the login button
   handlePressLogin () {
     const { navigator } = this.props
