@@ -1,9 +1,0 @@
-test/
-tmp/
-.documentup.json
-.gitignore
-.jshintrc
-.lgtm
-.travis.yml
-appveyor.yml
-RELEASE.md

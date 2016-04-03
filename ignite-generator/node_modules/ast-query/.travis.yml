@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  - v0.10
-  - v0.12
-  - v4
-  - v5
-  - stable
