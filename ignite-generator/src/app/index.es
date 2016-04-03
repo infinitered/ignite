@@ -5,6 +5,8 @@ import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
 import Shell from 'shelljs'
 
+const igniteBase = 'ignite-base'
+
 const verifyTools = () => {
   // verify react-native
   if (!Shell.which('react-native')) {
@@ -35,47 +37,47 @@ const verifyTools = () => {
 const copyOverBase = (context) => {
   // copy New project Readme
   context.fs.copyTpl(
-    context.templatePath('README.md.template'),
+    context.templatePath(`${igniteBase}/README.md.template`),
     context.destinationPath(`${context.name}/README.md`),
     { name: context.name }
   )
 
   // copy package.json
   context.fs.copyTpl(
-    context.templatePath('package.json.template'),
+    context.templatePath(`${igniteBase}/package.json.template`),
     context.destinationPath(`${context.name}/package.json`),
     { name: context.name }
   )
 
   // copy template of index.ios.js
   context.fs.copyTpl(
-    context.templatePath('index.js.template'),
+    context.templatePath(`${igniteBase}/index.js.template`),
     context.destinationPath(`${context.name}/index.ios.js`),
     { name: context.name }
   )
 
   // copy template of index.android.js
   context.fs.copyTpl(
-    context.templatePath('index.js.template'),
+    context.templatePath(`${igniteBase}/index.js.template`),
     context.destinationPath(`${context.name}/index.android.js`),
     { name: context.name }
   )
 
   // copy git_hooks/
   context.directory(
-    context.templatePath('git_hooks'),
+    context.templatePath(`${igniteBase}/git_hooks`),
     context.destinationPath(`${context.name}/git_hooks`)
   )
 
   // copy Tests/
   context.directory(
-    context.templatePath('Tests'),
+    context.templatePath(`${igniteBase}/Tests`),
     context.destinationPath(`${context.name}/Tests`)
   )
 
   // copy App/
   context.directory(
-    context.templatePath('App'),
+    context.templatePath(`${igniteBase}/App`),
     context.destinationPath(`${context.name}/App`)
   )
 }
