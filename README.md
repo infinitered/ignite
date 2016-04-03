@@ -1,6 +1,6 @@
 <img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/ignite-base/App/Images/ir.png">
 #  React Native Ignite
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/react_native_base/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 _The ideal starting app for React Native:_
 * Seed Apps/Components/Styles etc. with ignite generator
