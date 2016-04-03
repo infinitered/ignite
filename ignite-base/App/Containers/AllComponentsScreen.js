@@ -1,7 +1,7 @@
 // An All Components Screen is a great way to dev and quick-test components
 import React, { View, ScrollView, Text, TouchableOpacity, PropTypes } from 'react-native'
 import { connect } from 'react-redux'
-import styles from '../Styles/AllComponentsScreenStyle'
+import styles from './Styles/AllComponentsScreenStyle'
 import ProgressiveImage from '../Components/ProgressiveImage'
 import { Colors, Images, Metrics } from '../Themes'
 import Actions from '../Actions/Creators'

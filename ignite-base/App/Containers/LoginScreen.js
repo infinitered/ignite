@@ -11,7 +11,7 @@ import React, {
   Alert
 } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from '../Styles/LoginScreenStyle'
+import Styles from './Styles/LoginScreenStyle'
 import Actions from '../Actions/Creators'
 import {Images, Metrics} from '../Themes'
 

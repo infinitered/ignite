@@ -6,7 +6,7 @@ import Actions from './Actions/Creators'
 import Drawer from 'react-native-drawer'
 
 // Styles
-import styles from './Styles/RootStyle'
+import styles from './Containers/Styles/RootStyle'
 
 const store = configureStore()
 

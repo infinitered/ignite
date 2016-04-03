@@ -1,5 +1,5 @@
 import React from 'react-native'
-import { Fonts, Metrics, Colors } from '../Themes/'
+import { Fonts, Metrics, Colors } from '../../Themes/'
 
 const NavigationStyle = React.StyleSheet.create({
   titleWrapper: {

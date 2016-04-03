@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 // import { MapButton } from '../Components/Buttons/MapButton'
 import NavButtons from './NavButtons'
 // Stylesheet
-import styles from '../Styles/NavigationStyle'
+import styles from './Styles/NavigationStyle'
 
 export default {
 

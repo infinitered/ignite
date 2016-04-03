@@ -1,5 +1,5 @@
 import React, { TouchableOpacity, Text } from 'react-native'
-import styles from '../Styles/NavigationStyle'
+import styles from './Styles/NavigationStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { Colors, Metrics } from '../Themes'
 
