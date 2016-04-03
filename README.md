@@ -1,14 +1,14 @@
-<img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/App/Images/ir.png">
-#  React Native Template
+<img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/ignite-base/App/Images/ir.png">
+#  React Native Ignite
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/react_native_base/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 _The ideal starting app for React Native:_
-* Seed and Standard with [our Generator](https://github.com/GantMan/irrigate)
+* Seed Apps/Components/Styles etc. with ignite generator
 * Standard Compliant
 * Multiple Platform Support
-* Documented structure
+* Documented Structure
 * Redux State Management
-* Redux persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
+* Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
@@ -24,18 +24,7 @@ Code is geared towards tested and cross platform functionality. [XDE](https://ex
 
 ## :arrow_up: How to Setup
 
-**Step 1:** git clone this repo:
-```
-$git clone git@github.com:infinitered/react_native_base.git
-```
-**Step 2:** cd to the cloned repo:
-```
-cd react_native_base
-```
-**Step 3:** Install the Application
-```
-npm install
-```
+Generator is kinda working right now, we'll put more detailed instructions on how to :fire: **ignite** :fire: your own application based off of this template soon!
 
 ## :arrow_forward: How to Run App
 
@@ -57,18 +46,10 @@ This project adheres to Standard.  Our CI enforces this, so we suggest you enabl
 1. Install git-hooks => On a Mac `brew install git-hooks` - [Other](https://github.com/icefox/git-hooks/)
 2. Setup on Repo => `git hooks --install`
 
-**Bypass Lint**
-
-If you have to bypass lint for a special commit that you will come back and clean (pushing something to a branch etc.) then you can bypass git hooks with adding `--no-verify` to your commit command.
-
-**Understanding Linting Errors**
-
-The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
-
 ## :us: Internationalization (i18n)
 Translations are kept in the [I18n.js](https://github.com/infinitered/react_native_base/blob/master/App/I18n/I18n.js) file.  Edit this file for strings.  Even if your app doesn't support multi-languge, this is one of the best ways to keep strings uniform, and typos in check throughout an application.
 
-## :open_file_folder: Related Articles
+## :open_file_folder: Related Articles for this Code
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
