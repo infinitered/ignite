@@ -24,6 +24,7 @@ const verifyTools = () => {
   // verify rnpm
   if (!Shell.which('rnpm')) {
     console.log(colors.red('This script requires rnpm to be installed.'))
+    console.log(colors.green('Installing rnpm...')
     Shell.exec('npm i -g rnpm')
   }
 
@@ -86,7 +87,7 @@ const emptyFolder = (folder) => {
 
 class AppGenerator extends NamedBase {
   initializing () {
-    console.log(colors.yellow('irrigate app -> ') + this.name + ' ☕️ This will take a while ☕️ ')
+    console.log(colors.yellow('irrigate app -> ') + this.name + ' ☕️  This will take a while ☕️ ')
     // force overwrite on conflicts (default is ask user)
     this.conflicter.force = true
 
@@ -120,7 +121,7 @@ class AppGenerator extends NamedBase {
     // Clean template folder
     emptyFolder(this.templateFolder)
 
-    console.log('Time to get cooking! ' + colors.red('IRrigate is Done!'))
+    console.log('Time to get cooking! 🍽 ' + colors.red('IR') + colors.green('rigate is Done! 💦'))
   }
 }
 
