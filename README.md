@@ -73,5 +73,23 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
 ## :cool: Wishlist
-* Drawer lib
 * Fastlane
+
+## Roadmap
+### Version 1.0
+* Working App Generator
+* Working Component Generator
+* Working Container Generator
+* Working Reducer Generator
+* Other possible Generators
+
+### Version 2.0
+* Pick and choose formulas in Generator
+  * e.g. `Did you want a drawer?`
+  * e.g. `Did you want i18n?`
+* Utilize composabilities of generator
+* Example app can still be generated with it's own command (not default)
+
+### Version 3.0
+* Generated apps can have some supportablity for upgrades
+* Upgradable commands
