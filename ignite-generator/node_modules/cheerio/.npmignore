@@ -1,0 +1,9 @@
+benchmark/
+src/
+support/
+tests/
+examples/
+*.sock
+*.tmproj
+coverage.html
+lib-cov
