@@ -1,9 +1,8 @@
-<img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/App/Images/ir.png">
-#  React Native Template
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/react_native_base/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
+<img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/ignite-base/App/Images/ir.png">
+#  React Native Ignite Base App
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 _The ideal starting app for React Native:_
-* Seed and Standard with [our Generator](https://github.com/GantMan/irrigate)
 * Standard Compliant
 * Multiple Platform Support
 * Documented structure
@@ -26,11 +25,11 @@ Code is geared towards tested and cross platform functionality. [XDE](https://ex
 
 **Step 1:** git clone this repo:
 ```
-$git clone git@github.com:infinitered/react_native_base.git
+$git clone git@github.com:infinitered/ignite.git
 ```
 **Step 2:** cd to the cloned repo:
 ```
-cd react_native_base
+cd ignite/ignite-base
 ```
 **Step 3:** Install the Application
 ```
@@ -39,7 +38,7 @@ npm install
 
 ## :arrow_forward: How to Run App
 
-1. cd to the repo
+1. cd to ignite-base
 2. Run Build for either OS
   * for iOS
     * run `react-native run-ios`
@@ -73,5 +72,4 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
 ## :cool: Wishlist
-* Drawer lib
 * Fastlane
