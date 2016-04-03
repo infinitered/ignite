@@ -1,0 +1,45 @@
+{
+  "name": "react-native-ignite",
+  "version": "0.1.3",
+  "description": "Create new react native files that fit the IR workflow",
+  "files": [
+    "app",
+    "screen",
+    "component",
+    "container",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dos2unix": "find . -type f -exec dos2unix {} \\;",
+    "compile": "babel -d ./ src/",
+    "prepublish": "npm run compile"
+  },
+  "author": "Gant Laborde <gant@infinite.red> (http://github.com/gantman)",
+  "preferGlobal": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http:://github.com/infinitered/react_native_base"
+  },
+  "bin": {
+    "irrigate": "index.js"
+  },
+  "keywords": [
+    "react-native",
+    "yeoman-generator",
+    "infinite red"
+  ],
+  "dependencies": {
+    "colors": "^1.1.2",
+    "ramda": "^0.20.0",
+    "shelljs": "^0.6.0",
+    "yeoman-generator": "^0.21.1"
+  },
+  "devDependencies": {
+    "babel": "^6.1.18",
+    "babel-cli": "^6.1.18",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18"
+  }
+}
