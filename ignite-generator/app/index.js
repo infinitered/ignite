@@ -22,6 +22,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var igniteBase = 'ignite-base';
+
 var verifyTools = function verifyTools() {
   // verify react-native
   if (!_shelljs2.default.which('react-native')) {
@@ -41,6 +43,7 @@ var verifyTools = function verifyTools() {
   // verify rnpm
   if (!_shelljs2.default.which('rnpm')) {
     console.log(_safe2.default.red('This script requires rnpm to be installed.'));
+    console.log(_safe2.default.green('Installing rnpm...'));
     _shelljs2.default.exec('npm i -g rnpm');
   }
 
@@ -50,25 +53,25 @@ var verifyTools = function verifyTools() {
 
 var copyOverBase = function copyOverBase(context) {
   // copy New project Readme
-  context.fs.copyTpl(context.templatePath('README.md.template'), context.destinationPath(context.name + '/README.md'), { name: context.name });
+  context.fs.copyTpl(context.templatePath(igniteBase + '/README.md.template'), context.destinationPath(context.name + '/README.md'), { name: context.name });
 
   // copy package.json
-  context.fs.copyTpl(context.templatePath('package.json.template'), context.destinationPath(context.name + '/package.json'), { name: context.name });
+  context.fs.copyTpl(context.templatePath(igniteBase + '/package.json.template'), context.destinationPath(context.name + '/package.json'), { name: context.name });
 
   // copy template of index.ios.js
-  context.fs.copyTpl(context.templatePath('index.js.template'), context.destinationPath(context.name + '/index.ios.js'), { name: context.name });
+  context.fs.copyTpl(context.templatePath(igniteBase + '/index.js.template'), context.destinationPath(context.name + '/index.ios.js'), { name: context.name });
 
   // copy template of index.android.js
-  context.fs.copyTpl(context.templatePath('index.js.template'), context.destinationPath(context.name + '/index.android.js'), { name: context.name });
+  context.fs.copyTpl(context.templatePath(igniteBase + '/index.js.template'), context.destinationPath(context.name + '/index.android.js'), { name: context.name });
 
   // copy git_hooks/
-  context.directory(context.templatePath('git_hooks'), context.destinationPath(context.name + '/git_hooks'));
+  context.directory(context.templatePath(igniteBase + '/git_hooks'), context.destinationPath(context.name + '/git_hooks'));
 
   // copy Tests/
-  context.directory(context.templatePath('Tests'), context.destinationPath(context.name + '/Tests'));
+  context.directory(context.templatePath(igniteBase + '/Tests'), context.destinationPath(context.name + '/Tests'));
 
   // copy App/
-  context.directory(context.templatePath('App'), context.destinationPath(context.name + '/App'));
+  context.directory(context.templatePath(igniteBase + '/App'), context.destinationPath(context.name + '/App'));
 };
 
 var emptyFolder = function emptyFolder(folder) {
@@ -88,7 +91,7 @@ var AppGenerator = function (_NamedBase) {
   _createClass(AppGenerator, [{
     key: 'initializing',
     value: function initializing() {
-      console.log(_safe2.default.yellow('irrigate app -> ') + this.name + ' ☕️ This will take a while ☕️ ');
+      console.log(_safe2.default.yellow('irrigate app -> ') + this.name + ' ☕️  This will take a while ☕️ ');
       // force overwrite on conflicts (default is ask user)
       this.conflicter.force = true;
 
@@ -125,7 +128,7 @@ var AppGenerator = function (_NamedBase) {
       // Clean template folder
       emptyFolder(this.templateFolder);
 
-      console.log('Time to get cooking! ' + _safe2.default.red('IRrigate is Done!'));
+      console.log('Time to get cooking! 🍽 ' + _safe2.default.red('IR') + _safe2.default.green('rigate is Done! 💦'));
     }
   }]);
 

@@ -26,7 +26,7 @@ const verifyTools = () => {
   // verify rnpm
   if (!Shell.which('rnpm')) {
     console.log(colors.red('This script requires rnpm to be installed.'))
-    console.log(colors.green('Installing rnpm...')
+    console.log(colors.green('Installing rnpm...'))
     Shell.exec('npm i -g rnpm')
   }
 
