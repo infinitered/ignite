@@ -1,6 +1,6 @@
 {
-  "name": "react-native-ignite",
-  "version": "0.1.4",
+  "name": "generator-react-native-ignite",
+  "version": "0.1.5",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
     "app",
@@ -20,10 +20,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http:://github.com/infinitered/react_native_base"
+    "url": "http:://github.com/infinitered/ignite"
   },
   "bin": {
-    "irrigate": "index.js"
+    "ignite": "index.js"
   },
   "keywords": [
     "react-native",

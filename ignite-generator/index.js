@@ -1,2 +1,2 @@
 #! /usr/bin/env node
-console.log("IRrigate installed - run with yo irrigate")
+console.log('Ignite installed 🔥 - run with yo ignite')

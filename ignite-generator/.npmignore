@@ -1,5 +1,5 @@
 # ES6 code that gets created
 src/
 
-# Logo for readme
-_art/
+# NPM issues
+npm-debug.log
