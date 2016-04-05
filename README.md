@@ -1,19 +1,23 @@
-<img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/ignite-base/App/Images/ir.png">
+<img align=left src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/ignite.png">
 #  React Native Ignite
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
-_The ideal starting app for React Native:_
+_The ideal starting app for React Native, best practices, generators, and more._
+
+<br/>
+
+### Why Ignite?
 * Seed Apps/Components/Styles etc. with ignite generator
-* Standard Compliant
+* JS Code Standard - Standard Compliant
 * Multiple Platform Support
 * Documented Structure
 * Redux State Management
-* Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
+* Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
 * Networking Code
-* Common Libs:
+* Include Common Libs:
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
@@ -24,7 +28,13 @@ Code is geared towards tested and cross platform functionality. [XDE](https://ex
 
 ## :arrow_up: How to Setup
 
-Generator is kinda working right now, we'll put more detailed instructions on how to :fire: **ignite** :fire: your own application based off of this template soon!
+*Install*
+
+`npm install -g react-native-ignite`
+
+*Use*
+
+`ignite new MyApplication`
 
 ## :arrow_forward: How to Run App
 
@@ -36,7 +46,7 @@ Generator is kinda working right now, we'll put more detailed instructions on ho
     * Run Genymotion
     * run `react-native run-android`
 
-## :no_entry_sign: Standard Compliant
+## :no_entry_sign: About Standard Compliance
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
@@ -59,7 +69,7 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 ## Roadmap
 ### Version 1.0
 * - [x] Best Practices Base App
-* - [ ] Working App Generator
+* - [x] Working App Generator
 * - [ ] Working Component Generator
 * - [ ] Working Container Generator
 * - [ ] Working Screen Generator
