@@ -6,8 +6,7 @@
     "app",
     "screen",
     "component",
-    "container",
-    "index.js"
+    "container"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,9 +20,6 @@
   "repository": {
     "type": "git",
     "url": "http:://github.com/infinitered/ignite"
-  },
-  "bin": {
-    "ignite": "index.js"
   },
   "keywords": [
     "react-native",
