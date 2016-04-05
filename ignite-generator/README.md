@@ -1,6 +1,8 @@
-![irrigate](https://raw.githubusercontent.com/GantMan/irrigate/master/_art/logo.png)
+### Users
+It is preferred that you use the ignite-cli instead of using the generator directly.   Only continue researching here if you are planning on adding new functionality that the CLI will call.
 
-Hydrate React components/styles and screens the Infinite Red way.
+### Developers
+
 ## Requirements
 Make sure you have [Yeoman](http://yeoman.io/):
 
@@ -25,9 +27,3 @@ Run `npm link` to link this code base locally and so you don't have to keep rein
 ## Compile
 Code is written in ES2015+, so `npm run compile` will babelfy the source.
 
-## TODO LIST
-This was originally conceived without Yeoman, so there's a good bit of overlap with yeoman functionality over included functionality.   Once we're sure we're going 100% with Yeoman or not it would be ideal to unify the syntax.
-
-Sagas
-
-Reducers
