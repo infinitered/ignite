@@ -22,10 +22,6 @@ _The ideal starting app for React Native, best practices, generators, and more._
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
 
-## iOS/Android/XDE support
-Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.
-
-
 ## :arrow_up: How to Setup
 
 *Install*
@@ -45,6 +41,9 @@ Code is geared towards tested and cross platform functionality. [XDE](https://ex
   * for Android
     * Run Genymotion
     * run `react-native run-android`
+
+## :iphone: iOS/Android/XDE support
+Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.
 
 ## :no_entry_sign: About Standard Compliance
 
