@@ -7,7 +7,7 @@ import { NamedBase } from 'yeoman-generator'
 class ScreenGenerator extends NamedBase {
 
   generateFile () {
-    console.log('IRrigate screen - ' + this.name)
+    console.log('generate screen - ' + this.name)
     Generator.hydrateComponent('Containers', this.name)
   }
 }

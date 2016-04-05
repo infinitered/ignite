@@ -30,7 +30,7 @@ var ContainerGenerator = function (_NamedBase) {
   _createClass(ContainerGenerator, [{
     key: 'generateFile',
     value: function generateFile() {
-      console.log('IRrigate container - ' + this.name);
+      console.log('generate container - ' + this.name);
       _Generator2.default.hydrateComponent('Containers', this.name);
     }
   }]);

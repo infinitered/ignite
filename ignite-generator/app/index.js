@@ -91,7 +91,7 @@ var AppGenerator = function (_NamedBase) {
   _createClass(AppGenerator, [{
     key: 'initializing',
     value: function initializing() {
-      console.log(_safe2.default.yellow('irrigate app -> ') + this.name + ' ☕️  This will take a while ☕️ ');
+      console.log(_safe2.default.yellow('generate app -> ') + this.name + ' ☕️  This will take a while ☕️ ');
       // force overwrite on conflicts (default is ask user)
       this.conflicter.force = true;
 
@@ -128,7 +128,7 @@ var AppGenerator = function (_NamedBase) {
       // Clean template folder
       emptyFolder(this.templateFolder);
 
-      console.log('Time to get cooking! 🍽 ' + _safe2.default.red('IR') + _safe2.default.green('rigate is Done! 💦'));
+      console.log('Time to get cooking! 🍽 ');
     }
   }]);
 

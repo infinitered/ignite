@@ -1,8 +1,11 @@
 #! /usr/bin/env node
 'use strict'
 import Program from 'commander'
+import colors from 'colors/safe'
 import pjson from './package.json'
 import Shell from 'shelljs'
+
+const FIRE = colors.red('FIRE!')
 
 // version
 Program
@@ -14,7 +17,7 @@ Program
   .description('ignite a new base project')
   .alias('n')
   .action((project) => {
-    console.log(`🔥 Setting ${project} on fire 🔥`)
+    console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
     Shell.exec(`yo react-native-ignite ${project}`)
   })
 

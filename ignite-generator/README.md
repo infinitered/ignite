@@ -8,17 +8,17 @@ Make sure you have [Yeoman](http://yeoman.io/):
 
 `npm install -g yo`
 
-Now install irrigate generator
+Now install ignite generator
 
-`npm install -g generator-irrigate`
+`npm install -g generator-react-native-ignite`
 
 ## Use
-* `yo irrigate AppName` -- Generate new React Native app based off of [IR RNBase](https://github.com/infinitered/react_native_base)
-* `yo irrigate:container ContainerName` -- Simple container
-* `yo irrigate:screen ScreenName` -- An opinionated container
-* `yo irrigate:component ComponentName` -- Creates a base component
-* `yo irrigate:redux ActionReducerSet` -- Coming One Day :sunrise_over_mountains:
-* `yo irrigate:saga SagaName` -- Coming One Day :sunrise_over_mountains:
+* `yo react-native-ignite AppName` -- Generate new React Native app based off of [IR RNBase](https://github.com/infinitered/ignite)
+* `yo react-native-ignite:container ContainerName` -- Simple container
+* `yo react-native-ignite:screen ScreenName` -- An opinionated container
+* `yo react-native-ignite:component ComponentName` -- Creates a base component
+* `yo react-native-ignite:redux ActionReducerSet` -- Coming One Day :sunrise_over_mountains:
+* `yo react-native-ignite:saga SagaName` -- Coming One Day :sunrise_over_mountains:
 
 
 ## When Developing

@@ -7,7 +7,7 @@ import { NamedBase } from 'yeoman-generator'
 class ContainerGenerator extends NamedBase {
 
   generateFile () {
-    console.log('IRrigate container - ' + this.name)
+    console.log('generate container - ' + this.name)
     Generator.hydrateComponent('Containers', this.name)
   }
 }
