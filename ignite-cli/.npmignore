@@ -1,0 +1,5 @@
+# ES6 code that gets created
+src/
+
+# NPM issues
+npm-debug.log

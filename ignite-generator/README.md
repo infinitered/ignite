@@ -1,22 +1,24 @@
-![irrigate](https://raw.githubusercontent.com/GantMan/irrigate/master/_art/logo.png)
+### Users
+It is preferred that you use the ignite-cli instead of using the generator directly.   Only continue researching here if you are planning on adding new functionality that the CLI will call.
 
-Hydrate React components/styles and screens the Infinite Red way.
+### Developers
+
 ## Requirements
 Make sure you have [Yeoman](http://yeoman.io/):
 
 `npm install -g yo`
 
-Now install irrigate generator
+Now install ignite generator
 
-`npm install -g generator-irrigate`
+`npm install -g generator-react-native-ignite`
 
 ## Use
-* `yo irrigate AppName` -- Generate new React Native app based off of [IR RNBase](https://github.com/infinitered/react_native_base)
-* `yo irrigate:container ContainerName` -- Simple container
-* `yo irrigate:screen ScreenName` -- An opinionated container
-* `yo irrigate:component ComponentName` -- Creates a base component
-* `yo irrigate:redux ActionReducerSet` -- Coming One Day :sunrise_over_mountains:
-* `yo irrigate:saga SagaName` -- Coming One Day :sunrise_over_mountains:
+* `yo react-native-ignite AppName` -- Generate new React Native app based off of [IR RNBase](https://github.com/infinitered/ignite)
+* `yo react-native-ignite:container ContainerName` -- Simple container
+* `yo react-native-ignite:screen ScreenName` -- An opinionated container
+* `yo react-native-ignite:component ComponentName` -- Creates a base component
+* `yo react-native-ignite:redux ActionReducerSet` -- Coming One Day :sunrise_over_mountains:
+* `yo react-native-ignite:saga SagaName` -- Coming One Day :sunrise_over_mountains:
 
 
 ## When Developing
@@ -25,9 +27,3 @@ Run `npm link` to link this code base locally and so you don't have to keep rein
 ## Compile
 Code is written in ES2015+, so `npm run compile` will babelfy the source.
 
-## TODO LIST
-This was originally conceived without Yeoman, so there's a good bit of overlap with yeoman functionality over included functionality.   Once we're sure we're going 100% with Yeoman or not it would be ideal to unify the syntax.
-
-Sagas
-
-Reducers

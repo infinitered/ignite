@@ -30,7 +30,7 @@ var ComponentGenerator = function (_NamedBase) {
   _createClass(ComponentGenerator, [{
     key: 'generateFile',
     value: function generateFile() {
-      console.log('IRrigate component - ' + this.name);
+      console.log('generate component - ' + this.name);
       _Generator2.default.hydrateComponent('Components', this.name);
     }
   }]);

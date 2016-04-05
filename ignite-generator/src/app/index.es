@@ -89,7 +89,7 @@ const emptyFolder = (folder) => {
 
 class AppGenerator extends NamedBase {
   initializing () {
-    console.log(colors.yellow('irrigate app -> ') + this.name + ' ☕️  This will take a while ☕️ ')
+    console.log(colors.yellow('generate app -> ') + this.name + ' ☕️  This will take a while ☕️ ')
     // force overwrite on conflicts (default is ask user)
     this.conflicter.force = true
 
@@ -123,7 +123,7 @@ class AppGenerator extends NamedBase {
     // Clean template folder
     emptyFolder(this.templateFolder)
 
-    console.log('Time to get cooking! 🍽 ' + colors.red('IR') + colors.green('rigate is Done! 💦'))
+    console.log('Time to get cooking! 🍽 ')
   }
 }
 

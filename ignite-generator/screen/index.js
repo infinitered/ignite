@@ -30,7 +30,7 @@ var ScreenGenerator = function (_NamedBase) {
   _createClass(ScreenGenerator, [{
     key: 'generateFile',
     value: function generateFile() {
-      console.log('IRrigate screen - ' + this.name);
+      console.log('generate screen - ' + this.name);
       _Generator2.default.hydrateComponent('Containers', this.name);
     }
   }]);

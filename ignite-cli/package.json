@@ -1,17 +1,14 @@
 {
-  "name": "generator-react-native-ignite",
-  "version": "0.0.1",
+  "name": "react-native-ignite",
+  "version": "0.1.5",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
-    "app",
-    "screen",
-    "component",
-    "container"
+    "index.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dos2unix": "find . -type f -exec dos2unix {} \\;",
     "compile": "babel -d ./ src/",
+    "newclear": "npm cache clean && rm -rf ./node_modules && npm install",
     "prepublish": "npm run compile"
   },
   "author": "Gant Laborde <gant@infinite.red> (http://github.com/gantman)",
@@ -21,6 +18,9 @@
     "type": "git",
     "url": "http:://github.com/infinitered/ignite"
   },
+  "bin": {
+    "ignite": "index.js"
+  },
   "keywords": [
     "react-native",
     "yeoman-generator",
@@ -28,9 +28,12 @@
   ],
   "dependencies": {
     "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "generator-react-native-ignite": "0.0.1",
     "ramda": "^0.20.0",
     "shelljs": "^0.6.0",
-    "yeoman-generator": "^0.21.1"
+    "yeoman-generator": "^0.21.1",
+    "yo": "^1.7.0"
   },
   "devDependencies": {
     "babel": "^6.1.18",
