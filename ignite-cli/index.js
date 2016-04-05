@@ -10,6 +10,10 @@ var _package = require('./package.json');
 
 var _package2 = _interopRequireDefault(_package);
 
+var _shelljs = require('shelljs');
+
+var _shelljs2 = _interopRequireDefault(_shelljs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // version
@@ -18,6 +22,7 @@ _commander2.default.version(_package2.default.version);
 // new
 _commander2.default.command('new <project>').description('ignite a new base project').alias('n').action(function (project) {
   console.log('🔥 Setting ' + project + ' on fire 🔥');
+  _shelljs2.default.exec('yo react-native-ignite ' + project);
 });
 
 // generate

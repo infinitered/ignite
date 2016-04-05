@@ -2,6 +2,7 @@
 'use strict'
 import Program from 'commander'
 import pjson from './package.json'
+import Shell from 'shelljs'
 
 // version
 Program
@@ -14,6 +15,7 @@ Program
   .alias('n')
   .action((project) => {
     console.log(`🔥 Setting ${project} on fire 🔥`)
+    Shell.exec(`yo react-native-ignite ${project}`)
   })
 
 // generate
