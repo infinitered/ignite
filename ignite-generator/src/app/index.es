@@ -74,7 +74,7 @@ class AppGenerator extends NamedBase {
     this.spawnCommandSync('react-native', ['init', this.name])
 
     // Grab latest RNBase into templates folder
-    Shell.exec(`git clone git@github.com:infinitered/react_native_base.git ${this.templateFolder}`)
+    Shell.exec(`git clone git@github.com:infinitered/ignite.git ${this.templateFolder}`)
 
     // Copy over files from RN Base that apply
     copyOverBase(this)
