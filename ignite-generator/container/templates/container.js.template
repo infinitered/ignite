@@ -1,7 +1,6 @@
 // An All Components Screen is a great way to dev and quick-test components
-import React, { View, ScrollView, Text, TouchableOpacity, PropTypes } from 'react-native'
+import React, { View, ScrollView, Text, PropTypes } from 'react-native'
 import { connect } from 'react-redux'
-import ProgressiveImage from '../Components/ProgressiveImage'
 import { Colors, Images, Metrics } from '../Themes'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
@@ -35,12 +34,7 @@ export default class <%= name %> extends React.Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <ProgressiveImage
-          style={styles.progressiveImage}
-          defaultSource={Images.logo}
-          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
-          thumbnail='http://i.imgur.com/eVAFUhj.png'
-        />
+        <Text><%= name %> Container</Text>
       </ScrollView>
     )
   }
