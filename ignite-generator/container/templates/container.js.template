@@ -1,0 +1,54 @@
+// An All Components Screen is a great way to dev and quick-test components
+import React, { View, ScrollView, Text, TouchableOpacity, PropTypes } from 'react-native'
+import { connect } from 'react-redux'
+import ProgressiveImage from '../Components/ProgressiveImage'
+import { Colors, Images, Metrics } from '../Themes'
+import Actions from '../Actions/Creators'
+import Routes from '../Navigation/Routes'
+// external libs
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Animatable from 'react-native-animatable'
+
+// Styles
+import styles from './Styles/<%= name %>Style'
+
+// I18n
+import I18n from '../I18n/I18n.js'
+
+export default class <%= name %> extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {}
+  }
+
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+  };
+
+  componentWillMount () {
+    this.props.navigator.state.tapHamburger = () => {
+      this.props.navigator.drawer.toggle()
+    }
+  }
+
+  render () {
+    return (
+      <ScrollView style={styles.container}>
+        <ProgressiveImage
+          style={styles.progressiveImage}
+          defaultSource={Images.logo}
+          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
+          thumbnail='http://i.imgur.com/eVAFUhj.png'
+        />
+      </ScrollView>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps)(<%= name %>Screen)
