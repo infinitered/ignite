@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { ScrollView, View, Text } from 'react-native'
-var styles = require('./Styles/<%= name %>Style')
+import styles from './Styles/<%= name %>Style'
 
 export default class <%= name %> extends React.Component {
 
