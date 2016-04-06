@@ -1,0 +1,19 @@
+'use strict'
+
+import React, { ScrollView, View, Text } from 'react-native'
+var styles = require('./Styles/<%= name %>Style')
+
+export default class <%= name %> extends React.Component {
+
+  static propTypes = {
+    navigator: React.PropTypes.object
+  }
+
+  render () {
+    return (
+      <ScrollView style={styles.container}>
+        <Text><%= name %> Component</Text>
+      </ScrollView>
+    )
+  }
+}

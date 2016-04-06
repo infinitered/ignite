@@ -3,36 +3,10 @@
 
 import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
+import { verifyTools, emptyFolder } from '../shared/shared'
 import Shell from 'shelljs'
 
 const igniteBase = 'ignite-base'
-
-const verifyTools = () => {
-  // verify react-native
-  if (!Shell.which('react-native')) {
-    console.log(colors.red('This script requires react-native to be installed first.'))
-    Shell.exit(1)
-  }
-
-  // Warn if outdated
-  Shell.exec(`npm outdated react-native-cli`)
-
-  // verify git
-  if (!Shell.which('git')) {
-    console.log(colors.red('This script requires git to be installed first.'))
-    Shell.exit(1)
-  }
-
-  // verify rnpm
-  if (!Shell.which('rnpm')) {
-    console.log(colors.red('This script requires rnpm to be installed.'))
-    console.log(colors.green('Installing rnpm...'))
-    Shell.exec('npm i -g rnpm')
-  }
-
-  // Warn if outdated
-  Shell.exec(`npm outdated rnpm`)
-}
 
 const copyOverBase = (context) => {
   // copy New project Readme
@@ -82,11 +56,6 @@ const copyOverBase = (context) => {
   )
 }
 
-const emptyFolder = (folder) => {
-  Shell.rm('-rf', folder)
-  Shell.mkdir(folder)
-}
-
 class AppGenerator extends NamedBase {
   initializing () {
     console.log(colors.yellow('generate app -> ') + this.name + ' ☕️  This will take a while ☕️ ')
@@ -106,7 +75,7 @@ class AppGenerator extends NamedBase {
     this.spawnCommandSync('react-native', ['init', this.name])
 
     // Grab latest RNBase into templates folder
-    Shell.exec(`git clone git@github.com:infinitered/react_native_base.git ${this.templateFolder}`)
+    Shell.exec(`git clone git@github.com:infinitered/ignite.git ${this.templateFolder}`)
 
     // Copy over files from RN Base that apply
     copyOverBase(this)
