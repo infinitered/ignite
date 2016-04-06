@@ -33,7 +33,8 @@ _commander2.default.command('new <project>').description('ignite a new base proj
 
 // generate
 _commander2.default.command('generate <type> <name>').description('create a new component, container etc.').alias('g').action(function (type, name) {
-  console.log('You would like to generate a new ' + type + ' named ' + name);
+  console.log('Generate a new ' + type + ' named ' + name);
+  _shelljs2.default.exec('yo react-native-ignite:' + type + ' ' + name);
 });
 
 // parse params

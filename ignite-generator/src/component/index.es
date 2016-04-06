@@ -1,14 +1,40 @@
 #! /usr/bin/env node
 'use strict'
 
-import Generator from '../Generator'
+import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
+import { verifyTools, emptyFolder } from '../shared/shared'
+
+const copyOverCompoment = (context) => {
+  // copy component template
+  context.fs.copyTpl(
+    context.templatePath(`component.js.template`),
+    context.destinationPath(`./App/Components/${context.name}.js`),
+    { name: context.name }
+  )
+
+  // copy component style template
+  context.fs.copyTpl(
+    context.templatePath(`component-style.js.template`),
+    context.destinationPath(`./App/Components/Styles/${context.name}Style.js`),
+    { name: context.name }
+  )
+
+}
 
 class ComponentGenerator extends NamedBase {
+  initializing () {
+    // Fail if tools are missing
+    verifyTools()
+  }
 
-  generateFile () {
-    console.log('generate component - ' + this.name)
-    Generator.hydrateComponent('Components', this.name)
+  generateApp () {
+    // Copy over component files.
+    copyOverCompoment(this)
+  }
+
+  end () {
+    console.log('Time to get cooking! 🍽 ')
   }
 }
 

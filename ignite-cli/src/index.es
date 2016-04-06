@@ -27,7 +27,8 @@ Program
   .description('create a new component, container etc.')
   .alias('g')
   .action((type, name) => {
-    console.log(`You would like to generate a new ${type} named ${name}`)
+    console.log(`Generate a new ${type} named ${name}`)
+    Shell.exec(`yo react-native-ignite:${type} ${name}`)
   })
 
 // parse params
