@@ -12,6 +12,10 @@ var _yeomanGenerator = require('yeoman-generator');
 
 var _shared = require('../shared/shared');
 
+var _shelljs = require('shelljs');
+
+var _shelljs2 = _interopRequireDefault(_shelljs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -75,7 +79,7 @@ var AppGenerator = function (_NamedBase) {
       this.spawnCommandSync('react-native', ['init', this.name]);
 
       // Grab latest RNBase into templates folder
-      Shell.exec('git clone git@github.com:infinitered/ignite.git ' + this.templateFolder);
+      _shelljs2.default.exec('git clone git@github.com:infinitered/ignite.git ' + this.templateFolder);
 
       // Copy over files from RN Base that apply
       copyOverBase(this);
@@ -86,7 +90,7 @@ var AppGenerator = function (_NamedBase) {
       // npm install copied package.json via `npm --prefix ./some_project install ./some_project`
       this.spawnCommandSync('npm', ['--prefix', './' + this.name, 'install', './' + this.name]);
       // Do rnpm link
-      Shell.exec('cd ' + this.name + ' && rnpm link');
+      _shelljs2.default.exec('cd ' + this.name + ' && rnpm link');
     }
   }, {
     key: 'end',

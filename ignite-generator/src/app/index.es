@@ -4,6 +4,7 @@
 import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
 import { verifyTools, emptyFolder } from '../shared/shared'
+import Shell from 'shelljs'
 
 const igniteBase = 'ignite-base'
 
