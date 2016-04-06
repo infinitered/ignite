@@ -3,36 +3,9 @@
 
 import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
-import Shell from 'shelljs'
+import { verifyTools, emptyFolder } from '../shared/shared'
 
 const igniteBase = 'ignite-base'
-
-const verifyTools = () => {
-  // verify react-native
-  if (!Shell.which('react-native')) {
-    console.log(colors.red('This script requires react-native to be installed first.'))
-    Shell.exit(1)
-  }
-
-  // Warn if outdated
-  Shell.exec(`npm outdated react-native-cli`)
-
-  // verify git
-  if (!Shell.which('git')) {
-    console.log(colors.red('This script requires git to be installed first.'))
-    Shell.exit(1)
-  }
-
-  // verify rnpm
-  if (!Shell.which('rnpm')) {
-    console.log(colors.red('This script requires rnpm to be installed.'))
-    console.log(colors.green('Installing rnpm...'))
-    Shell.exec('npm i -g rnpm')
-  }
-
-  // Warn if outdated
-  Shell.exec(`npm outdated rnpm`)
-}
 
 const copyOverBase = (context) => {
   // copy New project Readme
@@ -80,11 +53,6 @@ const copyOverBase = (context) => {
     context.templatePath(`${igniteBase}/App`),
     context.destinationPath(`${context.name}/App`)
   )
-}
-
-const emptyFolder = (folder) => {
-  Shell.rm('-rf', folder)
-  Shell.mkdir(folder)
 }
 
 class AppGenerator extends NamedBase {
