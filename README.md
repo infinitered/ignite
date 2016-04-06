@@ -69,8 +69,8 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 ### Version 1.0
 * - [x] Best Practices Base App
 * - [x] Working App Generator
-* - [ ] Working Component Generator
-* - [ ] Working Container Generator
+* - [x] Working Component Generator
+* - [x] Working Container Generator
 * - [ ] Working Screen Generator
 * - [ ] Working Reducer Generator
 * - [ ] Working Saga Generator
