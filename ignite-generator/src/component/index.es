@@ -3,7 +3,7 @@
 
 import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
-import { verifyTools, emptyFolder } from '../shared/shared'
+import { verifyTools } from '../shared/shared'
 
 const copyOverCompoment = (context) => {
   // copy component template
