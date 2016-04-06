@@ -1,4 +1,5 @@
 const colors = {
+  rainbow: 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')',
   background: 'white',
   snow: 'white',
   clear: 'rgba(0,0,0,0)',
