@@ -22,6 +22,8 @@ _The ideal starting app for React Native, best practices, generators, and more._
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
 
+To view the generated example project, just pull down the code and run ignite-base!
+
 ## :arrow_up: How to Setup
 
 *Install*
