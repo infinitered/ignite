@@ -1,12 +1,13 @@
 {
   "name": "react-native-ignite",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
     "index.js"
   ],
   "scripts": {
-    "preinstall": "npm i -g yo && npm i -g generator-react-native-ignite",
+    "preinstall": "npm i -g yo",
+    "postinstall": "npm i -g generator-react-native-ignite",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "babel -d ./ src/",
     "newclear": "npm cache clean && rm -rf ./node_modules && npm install",
