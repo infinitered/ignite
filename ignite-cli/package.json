@@ -6,6 +6,7 @@
     "index.js"
   ],
   "scripts": {
+    "preinstall": "npm i -g yo && npm i -g generator-react-native-ignite",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "babel -d ./ src/",
     "newclear": "npm cache clean && rm -rf ./node_modules && npm install",
@@ -29,7 +30,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
-    "generator-react-native-ignite": "0.0.3",
+    "generator-react-native-ignite": "^0.0.4",
     "ramda": "^0.20.0",
     "shelljs": "^0.6.0",
     "yeoman-generator": "^0.21.1",
