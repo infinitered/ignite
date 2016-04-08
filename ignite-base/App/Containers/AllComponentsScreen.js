@@ -9,6 +9,7 @@ import Routes from '../Navigation/Routes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
+import PushNotification from 'react-native-push-notification'
 
 // I18n
 import I18n from '../I18n/I18n.js'
@@ -33,6 +34,15 @@ export default class AllComponentsScreen extends React.Component {
   componentWillMount () {
     this.props.navigator.state.tapHamburger = () => {
       this.props.navigator.drawer.toggle()
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    // Request premissions only if the user has logged in.
+    const { loggedIn } = nextProps
+    if (loggedIn) {
+      console.log('Requesting push notification permissions.')
+      PushNotification.requestPermissions()
     }
   }
 

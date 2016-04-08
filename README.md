@@ -21,6 +21,9 @@ _The ideal starting app for React Native, best practices, generators, and more._
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
+  * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
+
+To view the generated example project, just pull down the code and run ignite-base!
 
 ## :arrow_up: How to Setup
 
@@ -69,8 +72,8 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 ### Version 1.0
 * - [x] Best Practices Base App
 * - [x] Working App Generator
-* - [ ] Working Component Generator
-* - [ ] Working Container Generator
+* - [x] Working Component Generator
+* - [x] Working Container Generator
 * - [ ] Working Screen Generator
 * - [ ] Working Reducer Generator
 * - [ ] Working Saga Generator

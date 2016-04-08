@@ -10,6 +10,8 @@ var _safe2 = _interopRequireDefault(_safe);
 
 var _yeomanGenerator = require('yeoman-generator');
 
+var _shared = require('../shared/shared');
+
 var _shelljs = require('shelljs');
 
 var _shelljs2 = _interopRequireDefault(_shelljs);
@@ -23,33 +25,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var igniteBase = 'ignite-base';
-
-var verifyTools = function verifyTools() {
-  // verify react-native
-  if (!_shelljs2.default.which('react-native')) {
-    console.log(_safe2.default.red('This script requires react-native to be installed first.'));
-    _shelljs2.default.exit(1);
-  }
-
-  // Warn if outdated
-  _shelljs2.default.exec('npm outdated react-native-cli');
-
-  // verify git
-  if (!_shelljs2.default.which('git')) {
-    console.log(_safe2.default.red('This script requires git to be installed first.'));
-    _shelljs2.default.exit(1);
-  }
-
-  // verify rnpm
-  if (!_shelljs2.default.which('rnpm')) {
-    console.log(_safe2.default.red('This script requires rnpm to be installed.'));
-    console.log(_safe2.default.green('Installing rnpm...'));
-    _shelljs2.default.exec('npm i -g rnpm');
-  }
-
-  // Warn if outdated
-  _shelljs2.default.exec('npm outdated rnpm');
-};
 
 var copyOverBase = function copyOverBase(context) {
   // copy New project Readme
@@ -74,11 +49,6 @@ var copyOverBase = function copyOverBase(context) {
   context.directory(context.templatePath(igniteBase + '/App'), context.destinationPath(context.name + '/App'));
 };
 
-var emptyFolder = function emptyFolder(folder) {
-  _shelljs2.default.rm('-rf', folder);
-  _shelljs2.default.mkdir(folder);
-};
-
 var AppGenerator = function (_NamedBase) {
   _inherits(AppGenerator, _NamedBase);
 
@@ -96,11 +66,11 @@ var AppGenerator = function (_NamedBase) {
       this.conflicter.force = true;
 
       // Fail if tools are missing
-      verifyTools();
+      (0, _shared.verifyTools)();
 
       this.templateFolder = this.sourceRoot();
       // Clean template folder
-      emptyFolder(this.templateFolder);
+      (0, _shared.emptyFolder)(this.templateFolder);
     }
   }, {
     key: 'generateApp',
@@ -109,7 +79,7 @@ var AppGenerator = function (_NamedBase) {
       this.spawnCommandSync('react-native', ['init', this.name]);
 
       // Grab latest RNBase into templates folder
-      _shelljs2.default.exec('git clone git@github.com:infinitered/react_native_base.git ' + this.templateFolder);
+      _shelljs2.default.exec('git clone git@github.com:infinitered/ignite.git ' + this.templateFolder);
 
       // Copy over files from RN Base that apply
       copyOverBase(this);
@@ -126,7 +96,7 @@ var AppGenerator = function (_NamedBase) {
     key: 'end',
     value: function end() {
       // Clean template folder
-      emptyFolder(this.templateFolder);
+      (0, _shared.emptyFolder)(this.templateFolder);
 
       console.log('Time to get cooking! 🍽 ');
     }
