@@ -1,6 +1,6 @@
 {
   "name": "react-native-ignite",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
     "index.js"
@@ -29,7 +29,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
-    "generator-react-native-ignite": "0.0.1",
+    "generator-react-native-ignite": "0.0.3",
     "ramda": "^0.20.0",
     "shelljs": "^0.6.0",
     "yeoman-generator": "^0.21.1",
