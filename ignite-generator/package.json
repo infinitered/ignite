@@ -1,12 +1,13 @@
 {
   "name": "generator-react-native-ignite",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
     "app",
     "screen",
     "component",
-    "container"
+    "container",
+    "shared"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 'use strict'
 
-import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
 import { verifyTools } from '../shared/shared'
 
