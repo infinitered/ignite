@@ -21,6 +21,7 @@ _The ideal starting app for React Native, best practices, generators, and more._
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
+  * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
 
 To view the generated example project, just pull down the code and run ignite-base!
 
