@@ -7,6 +7,14 @@ import Shell from 'shelljs'
 
 const FIRE = colors.red('FIRE!')
 
+const checkYo = () => {
+  if (!Shell.which('yo')) {
+    console.log(colors.red('This command requires yo to be installed.'))
+    console.log(colors.green('Installing yo...'))
+    Shell.exec('npm i -g yo')
+  }
+}
+
 // version
 Program
   .version(pjson.version)
@@ -17,6 +25,7 @@ Program
   .description('ignite a new base project')
   .alias('n')
   .action((project) => {
+    checkYo()
     console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
     Shell.exec(`yo react-native-ignite ${project}`)
   })
@@ -27,6 +36,7 @@ Program
   .description('create a new component, container etc.')
   .alias('g')
   .action((type, name) => {
+    checkYo()
     console.log(`Generate a new ${type} named ${name}`)
     Shell.exec(`yo react-native-ignite:${type} ${name}`)
   })
