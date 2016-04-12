@@ -10,17 +10,17 @@ const base = {
     heading: {
       marginBottom: Metrics.smallMargin,
       fontFamily: Fonts.bold,
-      fontSize: Metrics.fonts.regular,
+      fontSize: Fonts.size.regular,
       color: Colors.almostBlack
     },
     subheading: {
       marginBottom: Metrics.baseMargin,
-      fontSize: Metrics.fonts.smallHeader,
+      fontSize: Fonts.size.smallHeader,
       color: Colors.dirtyGray
     },
     text: {
       marginBottom: Metrics.baseMargin,
-      fontSize: Metrics.fonts.smallHeader,
+      fontSize: Fonts.size.smallHeader,
       color: Colors.blueTint
     }
   },
