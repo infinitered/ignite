@@ -14,7 +14,7 @@
     "querystringify": "0.0.3",
     "ramda": "^0.19.1",
     "react": "^0.14.5",
-    "react-native": "^0.22.0",
+    "react-native": "^0.23.1",
     "react-native-animatable": "^0.5.2",
     "react-native-drawer": "^2.0.0",
     "react-native-i18n": "0.0.8",
