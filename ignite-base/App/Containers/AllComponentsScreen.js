@@ -91,7 +91,19 @@ export default class AllComponentsScreen extends React.Component {
         {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
         <Text style={styles.componentLabel}>{I18n.t('progressiveImageComponent')}</Text>
         <ProgressiveImage
-          style={styles.progressiveImage}
+          style={[styles.progressiveImage, styles.smallImage]}
+          defaultSource={Images.logo}
+          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
+          thumbnail='http://i.imgur.com/eVAFUhj.png'
+        />
+        <ProgressiveImage
+          style={[styles.progressiveImage, styles.mediumImage]}
+          defaultSource={Images.logo}
+          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
+          thumbnail='http://i.imgur.com/eVAFUhj.png'
+        />
+        <ProgressiveImage
+          style={[styles.progressiveImage, styles.largeImage]}
           defaultSource={Images.logo}
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
