@@ -3,10 +3,15 @@
 
 import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
-import { verifyTools, emptyFolder } from '../shared/shared'
+import { showWarnings, verifyTools, verifyExtensiveTools } from '../validation'
 import Shell from 'shelljs'
 
 const igniteBase = 'ignite-base'
+
+const emptyFolder = (folder) => {
+  Shell.rm('-rf', folder)
+  Shell.mkdir(folder)
+}
 
 const copyOverBase = (context) => {
   // copy New project Readme
@@ -62,8 +67,10 @@ class AppGenerator extends NamedBase {
     // force overwrite on conflicts (default is ask user)
     this.conflicter.force = true
 
+    showWarnings()
     // Fail if tools are missing
     verifyTools()
+    verifyExtensiveTools()
 
     this.templateFolder = this.sourceRoot()
     // Clean template folder

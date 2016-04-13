@@ -2,7 +2,7 @@
 'use strict'
 
 import { NamedBase } from 'yeoman-generator'
-import { verifyTools } from '../shared/shared'
+import { verifyTools } from '../validation'
 
 const copyOverContainer = (context) => {
   // copy container template
@@ -18,7 +18,6 @@ const copyOverContainer = (context) => {
     context.destinationPath(`./App/Containers/Styles/${context.name}Style.js`),
     { name: context.name }
   )
-
 }
 
 class ContainerGenerator extends NamedBase {
