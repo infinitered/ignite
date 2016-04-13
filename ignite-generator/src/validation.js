@@ -17,6 +17,7 @@ const verifyTools = () => {
   }
 }
 
+// These tools are slower to check
 const verifyExtensiveTools = () => {
   // verify git
   if (!Shell.which('git')) {
