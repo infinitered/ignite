@@ -5,7 +5,7 @@ import Shell from 'shelljs'
 
 const showWarnings = () => {
   // Warn if outdated
-  Shell.exec(`npm outdated -g react-native-cli`)
+  Shell.exec('npm outdated -g react-native-cli')
 }
 
 // keep this one fast
@@ -31,7 +31,7 @@ const verifyExtensiveTools = () => {
     console.log(colors.green('Installing rnpm...'))
     Shell.exec('npm i -g rnpm')
   // Enforce latest rnpm -> line count of npm outdated should be zero
-  } else if (!Shell.exec(`npm outdated -g rnpm | wc -l | grep 0`)) {
+  } else if (!Shell.exec('npm outdated -g rnpm | wc -l | grep 0')) {
     console.log(colors.red('We depend on an updated rnpm.'))
     console.log(colors.yellow('Please update with ') + colors.green('npm i -g rnpm'))
     console.log(colors.red('Exiting!'))
