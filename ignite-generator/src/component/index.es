@@ -1,9 +1,8 @@
 #! /usr/bin/env node
 'use strict'
 
-import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
-import { verifyTools } from '../shared/shared'
+import { verifyTools } from '../validation'
 
 const copyOverCompoment = (context) => {
   // copy component template
@@ -19,7 +18,6 @@ const copyOverCompoment = (context) => {
     context.destinationPath(`./App/Components/Styles/${context.name}Style.js`),
     { name: context.name }
   )
-
 }
 
 class ComponentGenerator extends NamedBase {
