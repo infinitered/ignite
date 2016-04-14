@@ -16,6 +16,7 @@ _The ideal starting app for React Native:_
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
+  * [react-native-drawer](https://github.com/root-two/react-native-drawer)
 
 ## iOS/Android/XDE support
 Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.
