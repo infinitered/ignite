@@ -1,19 +1,26 @@
 'use strict'
 
-import React, { ScrollView, View, Text } from 'react-native'
+import React, { View, Text } from 'react-native'
 import styles from './Styles/<%= name %>Style'
 
 export default class <%= name %> extends React.Component {
 
-  static propTypes = {
-    navigator: React.PropTypes.object
-  }
+  // // Prop type warnings
+  // static propTypes = {
+  //   someProperty: React.PropTypes.object,
+  //   someSetting: React.PropTypes.bool.isRequired
+  // }
+  //
+  // // Defaults for props
+  // static defaultProps = {
+  //   someSetting: false
+  // }
 
   render () {
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <Text><%= name %> Component</Text>
-      </ScrollView>
+      </View>
     )
   }
 }
