@@ -10,7 +10,7 @@ var _safe2 = _interopRequireDefault(_safe);
 
 var _yeomanGenerator = require('yeoman-generator');
 
-var _shared = require('../shared/shared');
+var _validation = require('../validation');
 
 var _shelljs = require('shelljs');
 
@@ -25,6 +25,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var igniteBase = 'ignite-base';
+
+var emptyFolder = function emptyFolder(folder) {
+  _shelljs2.default.rm('-rf', folder);
+  _shelljs2.default.mkdir(folder);
+};
 
 var copyOverBase = function copyOverBase(context) {
   // copy New project Readme
@@ -65,12 +70,14 @@ var AppGenerator = function (_NamedBase) {
       // force overwrite on conflicts (default is ask user)
       this.conflicter.force = true;
 
+      (0, _validation.showWarnings)();
       // Fail if tools are missing
-      (0, _shared.verifyTools)();
+      (0, _validation.verifyTools)();
+      (0, _validation.verifyExtensiveTools)();
 
       this.templateFolder = this.sourceRoot();
       // Clean template folder
-      (0, _shared.emptyFolder)(this.templateFolder);
+      emptyFolder(this.templateFolder);
     }
   }, {
     key: 'generateApp',
@@ -96,7 +103,7 @@ var AppGenerator = function (_NamedBase) {
     key: 'end',
     value: function end() {
       // Clean template folder
-      (0, _shared.emptyFolder)(this.templateFolder);
+      emptyFolder(this.templateFolder);
 
       console.log('Time to get cooking! 🍽 ');
     }
