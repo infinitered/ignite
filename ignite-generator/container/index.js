@@ -6,7 +6,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _yeomanGenerator = require('yeoman-generator');
 
-var _shared = require('../shared/shared');
+var _validation = require('../validation');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -35,7 +35,7 @@ var ContainerGenerator = function (_NamedBase) {
     key: 'initializing',
     value: function initializing() {
       // Fail if tools are missing
-      (0, _shared.verifyTools)();
+      (0, _validation.verifyTools)();
     }
   }, {
     key: 'generateApp',
