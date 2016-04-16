@@ -1,6 +1,7 @@
 'use strict';
 
 var _shelljs = require('shelljs');
+var colors = require('colors');
 
 var _shelljs2 = _interopRequireDefault(_shelljs);
 
