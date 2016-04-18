@@ -16,7 +16,7 @@ export default class <%= name %> extends React.Component {
   }
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired
   }
 
   render () {
