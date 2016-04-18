@@ -1,8 +1,9 @@
 // An All Components Screen is a great way to dev and quick-test components
-import React, { View, ScrollView, Text, PropTypes } from 'react-native'
+import React, { View, ScrollView, Text, PropTypes, LayoutAnimation } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
+import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
@@ -17,22 +18,52 @@ export default class <%= name %> extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      visibleHeight: Metrics.screenHeight
+    }
   }
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired
   }
 
   componentWillMount () {
+    // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
+    // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
+    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
+    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+
+    // Configure nav button
     this.props.navigator.state.tapHamburger = () => {
       this.props.navigator.drawer.toggle()
     }
   }
 
+  componentWillUnmount () {
+    DeviceEventEmitter.removeAllListeners('keyboardDidShow')
+    DeviceEventEmitter.removeAllListeners('keyboardDidHide')
+  }
+
+  keyboardDidShow (e) {
+    // Animation types easeInEaseOut/linear/spring
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    let newSize = Metrics.screenHeight - e.endCoordinates.height
+    this.setState({
+      visibleHeight: newSize
+    })
+  }
+
+  keyboardDidHide (e) {
+    // Animation types easeInEaseOut/linear/spring
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    this.setState({
+      visibleHeight: Metrics.screenHeight
+    })
+  }
+
   render () {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={[styles.container, {height: this.state.visibleHeight}]}>
         <Text><%= name %> Container</Text>
       </ScrollView>
     )
