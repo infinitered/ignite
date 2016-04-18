@@ -1,5 +1,5 @@
 // An All Components Screen is a great way to dev and quick-test components
-import React, { View, ScrollView, Text, PropTypes, LayoutAnimation } from 'react-native'
+import React, { View, ScrollView, Text, PropTypes, LayoutAnimation, DeviceEventEmitter } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
