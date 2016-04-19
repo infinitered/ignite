@@ -16,13 +16,14 @@ _The ideal starting app for React Native, best practices, generators, and more._
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
-* Networking Code
+* API Client
 * Include Common Libs:
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
   * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
+  * [apisauce](https://github.com/skellock/apisauce)
 
 To view the generated example project, just pull down the code and run ignite-base!
 
