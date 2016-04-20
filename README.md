@@ -1,16 +1,13 @@
 <p align="center">
-  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="logo" width="250px">  
+  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">  
 </p>
 
 <p align="center">
   The ideal starting app for React Native, best practices, generators, and more.
+  <br/>
+  <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
+  <img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/>
 </p>
-
-<br/>
-
-# React Native Ignite 
-
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 ### Why Ignite?
 * Seed Apps/Components/Styles etc. with ignite generator
