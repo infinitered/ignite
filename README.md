@@ -1,10 +1,13 @@
-<img align=left src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/ignite.png">
-#  React Native Ignite
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
+<p align="center">
+  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">  
+</p>
 
-_The ideal starting app for React Native, best practices, generators, and more._
-
-<br/>
+<p align="center">
+  The ideal starting app for React Native, best practices, generators, and more.
+  <br/>
+  <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
+  <img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/>
+</p>
 
 ### Why Ignite?
 * Seed Apps/Components/Styles etc. with ignite generator
@@ -16,13 +19,14 @@ _The ideal starting app for React Native, best practices, generators, and more._
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
-* Networking Code
+* API Client
 * Include Common Libs:
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
   * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
+  * [apisauce](https://github.com/skellock/apisauce)
 
 To view the generated example project, just pull down the code and run ignite-base!
 
@@ -65,6 +69,13 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 ## :open_file_folder: Related Articles for this Code
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
+
+## Built by the fine folks at [Infinite Red](http://infinite.red)
+
+[![image](http://infinite.red/images/ir-logo.svg)](http://infinite.red)
+
+_We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco._
+
 
 ## :cool: Wishlist
 * Fastlane

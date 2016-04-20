@@ -21,6 +21,9 @@ export default class AllComponentsScreen extends React.Component {
     this.state = {}
     this.handlePressLogin = this.handlePressLogin.bind(this)
     this.handlePressLogout = this.handlePressLogout.bind(this)
+    this.handlePressRocket = this.handlePressRocket.bind(this)
+    this.handlePressSend = this.handlePressSend.bind(this)
+    this.handlePressStar = this.handlePressStar.bind(this)
   }
 
   static propTypes = {
@@ -57,6 +60,24 @@ export default class AllComponentsScreen extends React.Component {
   handlePressLogout () {
     const { dispatch } = this.props
     dispatch(Actions.logout())
+  }
+
+  // fires when we tap the rocket!
+  handlePressRocket () {
+    const {dispatch} = this.props
+    dispatch(Actions.requestTemperature('Boise'))
+  }
+
+  // fires when tap send
+  handlePressSend () {
+    const {dispatch} = this.props
+    dispatch(Actions.requestTemperature('Toronto'))
+  }
+
+  // fires when tap star
+  handlePressStar () {
+    const {dispatch} = this.props
+    dispatch(Actions.requestTemperature('New Orleans'))
   }
 
   renderLoginButton () {
@@ -108,13 +129,19 @@ export default class AllComponentsScreen extends React.Component {
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
-        <Text style={styles.componentLabel}>{I18n.t('httpClient')}: {city}</Text>
+        <Text style={styles.componentLabel}>{I18n.t('api')}: {city}</Text>
         <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
         <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
         <View style={styles.groupContainer}>
-          <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
-          <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
-          <Icon name='star' size={Metrics.icons.medium} color={Colors.error} />
+          <TouchableOpacity onPress={this.handlePressRocket}>
+            <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handlePressSend}>
+            <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handlePressStar}>
+            <Icon name='star' size={Metrics.icons.medium} color={Colors.error} />
+          </TouchableOpacity>
           <Icon name='trophy' size={Metrics.icons.medium} color={Colors.error} />
           <Icon name='warning' size={Metrics.icons.medium} color={Colors.error} />
         </View>
