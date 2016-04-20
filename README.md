@@ -1,15 +1,16 @@
 <p align="center">
-  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="logo" width="250px">
+  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="logo" width="250px">  
 </p>
 
 <p align="center">
-  The ideal starting app for React Native, best practices, generators, and more._
-  [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
+  The ideal starting app for React Native, best practices, generators, and more.
 </p>
 
 <br/>
 
-# React Native Ignite
+# React Native Ignite 
+
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 ### Why Ignite?
 * Seed Apps/Components/Styles etc. with ignite generator
@@ -72,13 +73,15 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
-## :cool: Wishlist
-* Fastlane
-
+## Built by the fine folks at [Infinite Red](http://infinite.red)
 
 [![image](http://infinite.red/images/ir-logo.svg)](http://infinite.red)
-Built by the team at [Infinite Red](http://infinite.red). We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco.
 
+_We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco._
+
+
+## :cool: Wishlist
+* Fastlane
 
 ## Roadmap
 ### Version 1.0
