@@ -1,11 +1,15 @@
-<p align="center"><img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="logo" width="250px"></p>
+<p align="center">
+  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="logo" width="250px">
+</p>
 
-#  React Native Ignite
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
-
-_The ideal starting app for React Native, best practices, generators, and more._
+<p align="center">
+  The ideal starting app for React Native, best practices, generators, and more._
+  [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
+</p>
 
 <br/>
+
+# React Native Ignite
 
 ### Why Ignite?
 * Seed Apps/Components/Styles etc. with ignite generator
@@ -70,6 +74,11 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 
 ## :cool: Wishlist
 * Fastlane
+
+
+[![image](http://infinite.red/images/ir-logo.svg)](http://infinite.red)
+Built by the team at [Infinite Red](http://infinite.red). We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco.
+
 
 ## Roadmap
 ### Version 1.0
