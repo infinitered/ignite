@@ -1,4 +1,5 @@
-<img align=left src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/ignite.png">
+<p align="center"><img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="logo" width="250px"></p>
+
 #  React Native Ignite
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
