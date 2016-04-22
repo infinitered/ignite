@@ -86,7 +86,7 @@ _We're web (Elixir and Phoenix) and mobile (React Native) developers based in Po
 * - [x] Working App Generator
 * - [x] Working Component Generator
 * - [x] Working Container Generator
-* - [ ] Working Screen Generator
+* - [x] Working Screen Generator
 * - [ ] Working Reducer Generator
 * - [ ] Working Saga Generator
 

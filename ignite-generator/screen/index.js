@@ -6,11 +6,21 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _yeomanGenerator = require('yeoman-generator');
 
+var _validation = require('../validation');
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var copyOverScreenContainer = function copyOverScreenContainer(context) {
+  // copy screen template
+  context.fs.copyTpl(context.templatePath('screen.js.template'), context.destinationPath('./App/Containers/' + context.name + '.js'), { name: context.name });
+
+  // copy screen style template
+  context.fs.copyTpl(context.templatePath('screen-style.js.template'), context.destinationPath('./App/Containers/Styles/' + context.name + 'Style.js'), { name: context.name });
+};
 
 var ScreenGenerator = function (_NamedBase) {
   _inherits(ScreenGenerator, _NamedBase);
@@ -22,9 +32,21 @@ var ScreenGenerator = function (_NamedBase) {
   }
 
   _createClass(ScreenGenerator, [{
-    key: 'generateFile',
-    value: function generateFile() {
-      console.log('Coming soon generate screen - ' + this.name);
+    key: 'initializing',
+    value: function initializing() {
+      // Fail if tools are missing
+      (0, _validation.verifyTools)();
+    }
+  }, {
+    key: 'generateApp',
+    value: function generateApp() {
+      // Copy over component files.
+      copyOverScreenContainer(this);
+    }
+  }, {
+    key: 'end',
+    value: function end() {
+      console.log('Time to get cooking! 🍽 ');
     }
   }]);
 
