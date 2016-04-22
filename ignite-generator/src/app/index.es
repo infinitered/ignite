@@ -79,7 +79,7 @@ class AppGenerator extends NamedBase {
 
   generateApp () {
     // Create latest RN project
-    this.spawnCommandSync('react-native', ['init', this.name])
+    this.spawnCommandSync('react-native', ['init', this.name, '--verbose'])
 
     // Grab latest RNBase into templates folder
     Shell.exec(`git clone git@github.com:infinitered/ignite.git ${this.templateFolder}`)
