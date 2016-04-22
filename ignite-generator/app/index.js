@@ -83,7 +83,7 @@ var AppGenerator = function (_NamedBase) {
     key: 'generateApp',
     value: function generateApp() {
       // Create latest RN project
-      this.spawnCommandSync('react-native', ['init', this.name]);
+      this.spawnCommandSync('react-native', ['init', this.name, '--verbose']);
 
       // Grab latest RNBase into templates folder
       _shelljs2.default.exec('git clone git@github.com:infinitered/ignite.git ' + this.templateFolder);
