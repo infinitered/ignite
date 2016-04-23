@@ -70,17 +70,13 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
 
-## Built by the fine folks at [Infinite Red](http://infinite.red)
+## :cool: Built by the fine folks at [Infinite Red](http://infinite.red)
 
 [![image](http://infinite.red/images/ir-logo.svg)](http://infinite.red)
 
 _We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco._
 
-
-## :cool: Wishlist
-* Fastlane
-
-## Roadmap
+##  :red_car: Roadmap
 ### Version 1.0
 * - [x] Best Practices Base App
 * - [x] Working App Generator
