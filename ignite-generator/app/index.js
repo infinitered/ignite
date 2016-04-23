@@ -97,7 +97,8 @@ var AppGenerator = function (_NamedBase) {
       // npm install copied package.json via `npm --prefix ./some_project install ./some_project`
       this.spawnCommandSync('npm', ['--prefix', './' + this.name, 'install', './' + this.name]);
       // Do rnpm link
-      _shelljs2.default.exec('cd ' + this.name + ' && rnpm link');
+      // Separate process now, due to hang - Shell.exec(`cd ${this.name} && rnpm link`)
+      _shelljs2.default.exec('cd ' + this.name + ' && rnpm link &', { async: true, silent: true });
     }
   }, {
     key: 'end',
