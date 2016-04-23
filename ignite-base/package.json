@@ -39,6 +39,7 @@
     "chai-immutable": "^1.5.3",
     "deep-freeze": "0.0.1",
     "mocha": "^2.4.5",
+    "reactotron": "^0.4.0",
     "snazzy": "^3.0.1",
     "standard": "^6.0.7"
   },
