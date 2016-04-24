@@ -4,4 +4,4 @@ import Reactotron from 'reactotron'
 
 Reactotron.connect({enabled: __DEV__})
 
-AppRegistry.registerComponent('RNBase', () => Root)
+AppRegistry.registerComponent('<%= name %>', () => Root)
