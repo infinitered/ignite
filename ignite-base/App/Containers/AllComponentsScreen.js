@@ -112,23 +112,31 @@ export default class AllComponentsScreen extends React.Component {
         {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
         <Text style={styles.componentLabel}>{I18n.t('progressiveImageComponent')}</Text>
         <ProgressiveImage
-          style={[styles.progressiveImage, styles.smallImage]}
+          style={styles.progressiveImage}
           defaultSource={Images.logo}
           source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
           thumbnail='http://i.imgur.com/eVAFUhj.png'
         />
-        <ProgressiveImage
-          style={[styles.progressiveImage, styles.mediumImage]}
-          defaultSource={Images.logo}
-          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
-          thumbnail='http://i.imgur.com/eVAFUhj.png'
-        />
-        <ProgressiveImage
-          style={[styles.progressiveImage, styles.largeImage]}
-          defaultSource={Images.logo}
-          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
-          thumbnail='http://i.imgur.com/eVAFUhj.png'
-        />
+        <View style={styles.groupContainer}>
+          <ProgressiveImage
+            style={styles.smallImage}
+            defaultSource={Images.logo}
+            source='http://imgur.com/3BaDWGT.png'
+            thumbnail='http://imgur.com/3BaDWGT.png'
+          />
+          <ProgressiveImage
+            style={styles.mediumImage}
+            defaultSource={Images.logo}
+            source='http://imgur.com/HWcqUJJ.jpg'
+            thumbnail='http://imgur.com/M07ucqg.png'
+          />
+          <ProgressiveImage
+            style={styles.largeImage}
+            defaultSource={Images.logo}
+            source='http://imgur.com/LgSAS60.jpg'
+            thumbnail='http://imgur.com/l2QQs2R.png'
+          />
+        </View>
         <Text style={styles.componentLabel}>{I18n.t('api')}: {city}</Text>
         <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
         <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
