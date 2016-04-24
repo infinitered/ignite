@@ -8,6 +8,7 @@
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
     "test": "mocha --opts Tests/mocha.opts Tests/ --recursive",
+    "tron": "node_modules/.bin/reactotron",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
     "android:hockeyapp": "cd android && ./gradlew assembleRelease && puck -submit=auto app/build/outputs/apk/app-release.apk",
@@ -39,6 +40,7 @@
     "chai-immutable": "^1.5.3",
     "deep-freeze": "0.0.1",
     "mocha": "^2.4.5",
+    "reactotron": "^0.6.0",
     "snazzy": "^3.0.1",
     "standard": "^6.0.7"
   },
