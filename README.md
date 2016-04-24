@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">  
+  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">
 </p>
 
 <p align="center">
@@ -27,6 +27,7 @@
   * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
   * [apisauce](https://github.com/skellock/apisauce)
+  * [reactotron](https://github.com/skellock/reactotron)
 
 To view the generated example project, just pull down the code and run ignite-base!
 
