@@ -1,7 +1,5 @@
 import { AppRegistry } from 'react-native'
 import Root from './App/Root'
-import Reactotron from 'reactotron'
-
-Reactotron.connect({enabled: __DEV__})
+import './App/Config/ReactotronConfig'
 
 AppRegistry.registerComponent('RNBase', () => Root)
