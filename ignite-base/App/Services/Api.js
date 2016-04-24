@@ -1,5 +1,6 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import Reactotron from 'reactotron'
 
 // our "constructor"
 const create = (baseURL = 'http://openweathermap.org/data/2.1') => {
@@ -25,11 +26,10 @@ const create = (baseURL = 'http://openweathermap.org/data/2.1') => {
 
   // Wrap api's addMonitor to allow the calling code to attach
   // additional monitors in the future.
-  const addMonitor = api.addMonitor
-
-  // Monitors are called passively after every request.  Here's one that
-  // simply prints out the response to the console.
-  addMonitor((response) => console.log(response))
+  const addMonitor = api.addMonitor((response) => {
+    // Monitors are called passively after every request.
+    Reactotron.apiLog(response)
+  })
 
   // ------
   // STEP 2
