@@ -70,6 +70,7 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 ## :open_file_folder: Related Articles for this Code
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
+* [Using Fastlane to Deploy](https://shift.infinite.red/simple-react-native-ios-releases-4c28bb53a97b#.bjifers3r)
 
 ## :cool: Built by the fine folks at [Infinite Red](http://infinite.red)
 
