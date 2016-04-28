@@ -138,7 +138,9 @@ export default class AllComponentsScreen extends React.Component {
           />
         </View>
         <Text style={styles.componentLabel}>{I18n.t('api')}: {city}</Text>
-        <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
+        <View style={[styles.groupContainer, {height: 50}]}>
+          <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
+        </View>
         <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
         <View style={styles.groupContainer}>
           <TouchableOpacity onPress={this.handlePressRocket}>
