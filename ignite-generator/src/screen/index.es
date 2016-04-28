@@ -20,7 +20,7 @@ const copyOverScreenContainer = (context) => {
   )
 }
 
-class ContainerGenerator extends NamedBase {
+class ScreenGenerator extends NamedBase {
   initializing () {
     // Fail if tools are missing
     verifyTools()
@@ -36,4 +36,4 @@ class ContainerGenerator extends NamedBase {
   }
 }
 
-module.exports = ContainerGenerator
+module.exports = ScreenGenerator
