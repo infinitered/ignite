@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">  
+  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">
 </p>
 
 <p align="center">
@@ -27,6 +27,7 @@
   * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
   * [apisauce](https://github.com/skellock/apisauce)
+  * [reactotron](https://github.com/skellock/reactotron)
 
 To view the generated example project, just pull down the code and run ignite-base!
 
@@ -69,24 +70,21 @@ Translations are kept in the [I18n.js](https://github.com/infinitered/react_nati
 ## :open_file_folder: Related Articles for this Code
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
 * [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
+* [Using Fastlane to Deploy](https://shift.infinite.red/simple-react-native-ios-releases-4c28bb53a97b#.bjifers3r)
 
-## Built by the fine folks at [Infinite Red](http://infinite.red)
+## :cool: Built by the fine folks at [Infinite Red](http://infinite.red)
 
 [![image](http://infinite.red/images/ir-logo.svg)](http://infinite.red)
 
 _We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco._
 
-
-## :cool: Wishlist
-* Fastlane
-
-## Roadmap
+##  :red_car: Roadmap
 ### Version 1.0
 * - [x] Best Practices Base App
 * - [x] Working App Generator
 * - [x] Working Component Generator
 * - [x] Working Container Generator
-* - [ ] Working Screen Generator
+* - [x] Working Screen Generator
 * - [ ] Working Reducer Generator
 * - [ ] Working Saga Generator
 

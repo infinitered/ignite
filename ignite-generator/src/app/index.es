@@ -79,7 +79,7 @@ class AppGenerator extends NamedBase {
 
   generateApp () {
     // Create latest RN project
-    this.spawnCommandSync('react-native', ['init', this.name])
+    this.spawnCommandSync('react-native', ['init', this.name, '--verbose'])
 
     // Grab latest RNBase into templates folder
     Shell.exec(`git clone git@github.com:infinitered/ignite.git ${this.templateFolder}`)
@@ -92,7 +92,8 @@ class AppGenerator extends NamedBase {
     // npm install copied package.json via `npm --prefix ./some_project install ./some_project`
     this.spawnCommandSync('npm', ['--prefix', `./${this.name}`, 'install', `./${this.name}`])
     // Do rnpm link
-    Shell.exec(`cd ${this.name} && rnpm link`)
+    // Separate process now, due to hang - Shell.exec(`cd ${this.name} && rnpm link`)
+    Shell.exec(`cd ${this.name} && rnpm link &`, {async: true, silent: true})
   }
 
   end () {
