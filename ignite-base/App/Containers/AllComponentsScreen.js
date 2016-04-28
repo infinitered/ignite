@@ -137,6 +137,10 @@ export default class AllComponentsScreen extends React.Component {
             thumbnail='http://imgur.com/l2QQs2R.png'
           />
         </View>
+        <Text style={styles.componentLabel}>I18n Locale</Text>
+        <View style={styles.groupContainer}>
+          <Text style={styles.locale}>{I18n.locale}</Text>
+        </View>
         <Text style={styles.componentLabel}>{I18n.t('api')}: {city}</Text>
         <View style={[styles.groupContainer, {height: 50}]}>
           <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>

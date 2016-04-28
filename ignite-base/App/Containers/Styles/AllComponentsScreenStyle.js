@@ -47,6 +47,9 @@ export default StyleSheet.create({
   temperature: {
     fontSize: Fonts.size.title
   },
+  locale: {
+    fontSize: Fonts.size.input
+  },
   groupContainer: {
     margin: 5,
     flexDirection: 'row',
