@@ -3,36 +3,15 @@ import ExamplesRegistry from '../Services/ExamplesRegistry'
 import { Images } from '../Themes'
 import styles from './Styles/ProgressiveImageStyle'
 
-// Example Usage
+// Example
 ExamplesRegistry.add(() =>
-  <View key='ProgressiveImageExample'>
-    <ProgressiveImage
-      style={styles.progressiveImage}
-      defaultSource={Images.logo}
-      source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
-      thumbnail='http://i.imgur.com/eVAFUhj.png'
-    />
-    <View style={styles.groupContainer}>
-      <ProgressiveImage
-        style={styles.smallImage}
-        defaultSource={Images.logo}
-        source='http://imgur.com/3BaDWGT.png'
-        thumbnail='http://imgur.com/3BaDWGT.png'
-      />
-      <ProgressiveImage
-        style={styles.mediumImage}
-        defaultSource={Images.logo}
-        source='http://imgur.com/HWcqUJJ.jpg'
-        thumbnail='http://imgur.com/M07ucqg.png'
-      />
-      <ProgressiveImage
-        style={styles.largeImage}
-        defaultSource={Images.logo}
-        source='http://imgur.com/LgSAS60.jpg'
-        thumbnail='http://imgur.com/l2QQs2R.png'
-      />
-    </View>
-  </View>
+  <ProgressiveImage
+    key='ProgressiveImageExample'
+    style={styles.progressiveImage}
+    defaultSource={Images.logo}
+    source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
+    thumbnail='http://i.imgur.com/eVAFUhj.png'
+  />
 )
 
 export default class ProgressiveImage extends Component {
