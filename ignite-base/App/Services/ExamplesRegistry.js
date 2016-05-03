@@ -15,5 +15,6 @@ export const renderExamples = () => (
 
 // Default for readability
 export default {
+  render: renderExamples,
   add: addExample
 }

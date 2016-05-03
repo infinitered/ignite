@@ -32,5 +32,11 @@ export default StyleSheet.create({
   },
   groupContainer: {
     ...Base.groupContainer
+  },
+  sectionHeader: {
+    ...Base.sectionHeader
+  },
+  subtitle: {
+    ...Base.subtitle
   }
 })

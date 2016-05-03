@@ -12,9 +12,9 @@ import PushNotification from 'react-native-push-notification'
 
 // Components to show examples
 import '../Components/ProgressiveImage'
-
+import '../Components/FullButton'
 // Examples Render Engine
-import {renderExamples} from '../Services/ExamplesRegistry'
+import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // I18n
 import I18n from '../I18n/I18n.js'
@@ -109,12 +109,10 @@ export default class AllComponentsScreen extends React.Component {
     )
   }
 
-  render () {
+  renderUsageExamples () {
     const { loggedIn, temperature, city } = this.props
     return (
-      <ScrollView style={styles.screenContainer}>
-        <Text style={styles.componentLabel}>Testing ER</Text>
-        {renderExamples()}
+      <View>
         <Text style={styles.componentLabel}>{I18n.t('loginLogoutExampleTitle')}</Text>
         {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
         <Text style={styles.componentLabel}>I18n Locale</Text>
@@ -152,6 +150,21 @@ export default class AllComponentsScreen extends React.Component {
             <Icon name='cab' size={Metrics.icons.medium} />
           </Animatable.View>
         </View>
+      </View>
+    )
+  }
+
+  render () {
+    return (
+      <ScrollView style={styles.screenContainer}>
+
+        <Text style={styles.sectionHeader}>Component Examples</Text>
+        <Text style={styles.subtitle} >All components that have registered example usages</Text>
+        {ExamplesRegistry.render()}
+
+        <Text style={styles.sectionHeader}>Usage Examples</Text>
+        <Text style={styles.subtitle} >Functionality demos of libs and practices</Text>
+        {this.renderUsageExamples()}
       </ScrollView>
     )
   }
