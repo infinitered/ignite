@@ -1,13 +1,41 @@
-/* Example Usage
-  style={styles.imageStyles}
-  source='http://stockphotos.com/photo1.jpg'
-  thumbnail='http://stockphotos.com/thumbnail1.jpg'
-*/
+import React, { PropTypes, Component, Image, Animated, View } from 'react-native'
+import ExamplesRegistry from '../Services/ExamplesRegistry'
+import { Images } from '../Themes'
+import styles from './Styles/ProgressiveImageStyle'
 
-import React, { Image, Animated, View } from 'react-native'
-// import { Images } from '../Themes'
+// Example Usage
+ExamplesRegistry.add(() =>
+  <View key='ProgressiveImageExample'>
+    <ProgressiveImage
+      style={styles.progressiveImage}
+      defaultSource={Images.logo}
+      source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
+      thumbnail='http://i.imgur.com/eVAFUhj.png'
+    />
+    <View style={styles.groupContainer}>
+      <ProgressiveImage
+        style={styles.smallImage}
+        defaultSource={Images.logo}
+        source='http://imgur.com/3BaDWGT.png'
+        thumbnail='http://imgur.com/3BaDWGT.png'
+      />
+      <ProgressiveImage
+        style={styles.mediumImage}
+        defaultSource={Images.logo}
+        source='http://imgur.com/HWcqUJJ.jpg'
+        thumbnail='http://imgur.com/M07ucqg.png'
+      />
+      <ProgressiveImage
+        style={styles.largeImage}
+        defaultSource={Images.logo}
+        source='http://imgur.com/LgSAS60.jpg'
+        thumbnail='http://imgur.com/l2QQs2R.png'
+      />
+    </View>
+  </View>
+)
 
-export default class ProgressiveImage extends React.Component {
+export default class ProgressiveImage extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -16,10 +44,10 @@ export default class ProgressiveImage extends React.Component {
   }
 
   static propTypes = {
-    key: React.PropTypes.string,
-    thumbnail: React.PropTypes.string,
-    source: React.PropTypes.string,
-    style: React.PropTypes.number
+    key: PropTypes.string,
+    thumbnail: PropTypes.string,
+    source: PropTypes.string,
+    style: PropTypes.number
   };
 
   mainImageLoad () {

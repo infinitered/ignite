@@ -29,6 +29,12 @@ const base = {
     fontFamily: Fonts.bold,
     color: Colors.snow,
     padding: 5
+  },
+  groupContainer: {
+    margin: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   }
 }
 

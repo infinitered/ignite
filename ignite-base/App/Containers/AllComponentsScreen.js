@@ -2,7 +2,6 @@
 import React, { View, ScrollView, Text, TouchableOpacity, PropTypes } from 'react-native'
 import { connect } from 'react-redux'
 import styles from './Styles/AllComponentsScreenStyle'
-import ProgressiveImage from '../Components/ProgressiveImage'
 import { Colors, Images, Metrics } from '../Themes'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
@@ -10,6 +9,12 @@ import Routes from '../Navigation/Routes'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
 import PushNotification from 'react-native-push-notification'
+
+// Components to show examples
+import '../Components/ProgressiveImage'
+
+// Examples Render Engine
+import {renderExamples} from '../Services/ExamplesRegistry'
 
 // I18n
 import I18n from '../I18n/I18n.js'
@@ -108,35 +113,10 @@ export default class AllComponentsScreen extends React.Component {
     const { loggedIn, temperature, city } = this.props
     return (
       <ScrollView style={styles.screenContainer}>
+        <Text style={styles.componentLabel}>Testing ER</Text>
+        {renderExamples()}
         <Text style={styles.componentLabel}>{I18n.t('loginLogoutExampleTitle')}</Text>
         {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
-        <Text style={styles.componentLabel}>{I18n.t('progressiveImageComponent')}</Text>
-        <ProgressiveImage
-          style={styles.progressiveImage}
-          defaultSource={Images.logo}
-          source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
-          thumbnail='http://i.imgur.com/eVAFUhj.png'
-        />
-        <View style={styles.groupContainer}>
-          <ProgressiveImage
-            style={styles.smallImage}
-            defaultSource={Images.logo}
-            source='http://imgur.com/3BaDWGT.png'
-            thumbnail='http://imgur.com/3BaDWGT.png'
-          />
-          <ProgressiveImage
-            style={styles.mediumImage}
-            defaultSource={Images.logo}
-            source='http://imgur.com/HWcqUJJ.jpg'
-            thumbnail='http://imgur.com/M07ucqg.png'
-          />
-          <ProgressiveImage
-            style={styles.largeImage}
-            defaultSource={Images.logo}
-            source='http://imgur.com/LgSAS60.jpg'
-            thumbnail='http://imgur.com/l2QQs2R.png'
-          />
-        </View>
         <Text style={styles.componentLabel}>I18n Locale</Text>
         <View style={styles.groupContainer}>
           <Text style={styles.locale}>{I18n.locale}</Text>
