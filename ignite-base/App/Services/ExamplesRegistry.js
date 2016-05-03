@@ -1,4 +1,3 @@
-import React, {View} from 'react-native'
 import R from 'ramda'
 import DebugSettings from '../Config/DebugSettings'
 let globalExamplesRegistry = []
@@ -7,11 +6,7 @@ export const addExample = (renderExampleFunc) => { if (DebugSettings.includeExam
 
 const renderExample = (example) => example.call()
 
-export const renderExamples = () => (
-  <View>
-    {R.map(renderExample, globalExamplesRegistry)}
-  </View>
-)
+export const renderExamples = () => R.map(renderExample, globalExamplesRegistry)
 
 // Default for readability
 export default {
