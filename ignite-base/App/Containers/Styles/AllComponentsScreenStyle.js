@@ -36,6 +36,9 @@ export default StyleSheet.create({
   sectionHeader: {
     ...Base.sectionHeader
   },
+  sectionTitle: {
+    ...Base.sectionTitle
+  },
   subtitle: {
     ...Base.subtitle
   }

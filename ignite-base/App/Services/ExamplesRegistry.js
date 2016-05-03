@@ -1,10 +1,19 @@
+import React, {Text, View} from 'react-native'
 import R from 'ramda'
+import { Base } from '../Themes'
 import DebugSettings from '../Config/DebugSettings'
 let globalExamplesRegistry = []
 
-export const addExample = (renderExampleFunc) => { if (DebugSettings.includeExamples) globalExamplesRegistry.push(renderExampleFunc) }
+export const addExample = (title, usage) => { if (DebugSettings.includeExamples) globalExamplesRegistry.push({title, usage}) }
 
-const renderExample = (example) => example.call()
+const renderExample = (example) => {
+  return (
+    <View key={example.title}>
+      <Text style={Base.darkLabel}>{example.title}</Text>
+      {example.usage.call()}
+    </View>
+  )
+}
 
 export const renderExamples = () => R.map(renderExample, globalExamplesRegistry)
 

@@ -158,12 +158,16 @@ export default class AllComponentsScreen extends React.Component {
     return (
       <ScrollView style={styles.screenContainer}>
 
-        <Text style={styles.sectionHeader}>Component Examples</Text>
-        <Text style={styles.subtitle} >All components that have registered example usages</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Component Examples</Text>
+          <Text style={styles.subtitle} >All components with registered example usages</Text>
+        </View>
         {ExamplesRegistry.render()}
 
-        <Text style={styles.sectionHeader}>Usage Examples</Text>
-        <Text style={styles.subtitle} >Functionality demos of libs and practices</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Usage Examples</Text>
+          <Text style={styles.subtitle} >Functionality demos of libs and practices</Text>
+        </View>
         {this.renderUsageExamples()}
       </ScrollView>
     )

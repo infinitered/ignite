@@ -5,6 +5,7 @@ const colors = {
   clear: 'rgba(0,0,0,0)',
   ocean: '#415572',
   deepOcean: '#32435c',
+  wave: '#0083b0',
   facebook: '#3b5998',
   transparent: 'rgba(0,0,0,0)',
   silver: '#F7F7F7',

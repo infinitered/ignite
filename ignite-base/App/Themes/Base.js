@@ -25,9 +25,9 @@ const base = {
     }
   },
   darkLabel: {
-    backgroundColor: Colors.windowTint,
+    backgroundColor: Colors.steel,
     fontFamily: Fonts.bold,
-    color: Colors.snow,
+    color: Colors.coal,
     padding: 5
   },
   groupContainer: {
@@ -37,18 +37,18 @@ const base = {
     alignItems: 'center'
   },
   sectionHeader: {
-    backgroundColor: Colors.steel,
+    backgroundColor: Colors.wave
+  },
+  sectionTitle: {
     fontFamily: Fonts.bold,
     color: Colors.coal,
-    paddingHorizontal: 5,
+    padding: 5,
     fontSize: Fonts.size.title
   },
   subtitle: {
-    color: Colors.charcoal,
+    color: Colors.snow,
     padding: 5,
-    marginBottom: 5,
-    borderWidth: 1,
-    borderColor: Colors.steel
+    marginBottom: 5
   }
 }
 

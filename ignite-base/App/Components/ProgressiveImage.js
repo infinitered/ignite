@@ -4,9 +4,8 @@ import { Images } from '../Themes'
 import styles from './Styles/ProgressiveImageStyle'
 
 // Example
-ExamplesRegistry.add(() =>
+ExamplesRegistry.add('Progressive Image', () =>
   <ProgressiveImage
-    key='ProgressiveImageExample'
     style={styles.progressiveImage}
     defaultSource={Images.logo}
     source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'

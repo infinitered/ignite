@@ -3,9 +3,8 @@ import styles from './Styles/FullButtonStyle'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add(() =>
+ExamplesRegistry.add('Full Button', () =>
   <FullButton
-    key='FullButtonExample'
     text='Hey there'
     onPress={() => window.alert('Full Button Pressed!')}
   />
