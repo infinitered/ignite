@@ -20,6 +20,8 @@ const logger = createLogger({
 })
 
 let middleware = []
+const sagaMiddleware = createSagaMiddleware()
+middleware.push(sagaMiddleware)
 
 // Don't ship these
 if (__DEV__) {
@@ -29,8 +31,6 @@ if (__DEV__) {
 // a function which can create our store and auto-persist the data
 export default () => {
   let store = {}
-  const sagaMiddleware = createSagaMiddleware()
-  middleware.push(sagaMiddleware)
 
   // Add rehydrate enhancer if reduxPersist
   if (Config.reduxPersist) {
@@ -64,7 +64,7 @@ export default () => {
   }
 
   // run sagas
-  sagaMiddleware.run(...sagas)
+  sagaMiddleware.run(sagas)
 
   return store
 }

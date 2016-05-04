@@ -20,7 +20,6 @@ export default (api) => {
   // This is our worker.  It does the job.  In this case, we
   // get the weather for the city.
   function * worker (city) {
-    window.alert('city worker')
     // make the call to the api
     const response = yield call(api.getCity, city)
 

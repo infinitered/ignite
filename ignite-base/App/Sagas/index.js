@@ -1,3 +1,4 @@
+import { fork } from 'redux-saga/effects'
 import API from '../Services/Api'
 import { watchStartup } from './StartupSaga'
 import { watchLoginAttempt } from './LoginSaga'
@@ -9,8 +10,8 @@ import getCityWeather from './GetCityWeatherSaga'
 const api = API.create()
 
 // start the daemons
-export default [
-  watchStartup,
-  watchLoginAttempt,
-  getCityWeather(api).watcher
-]
+export default function* root() {
+  yield fork(watchStartup)
+  yield fork(watchLoginAttempt)
+  yield fork(getCityWeather(api).watcher)
+}
