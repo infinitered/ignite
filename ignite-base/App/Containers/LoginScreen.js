@@ -111,7 +111,7 @@ class LoginScreen extends Component {
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
       <View style={[Styles.container, {height: this.state.visibleHeight}]}>
-        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]}/>
+        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
         <View style={Styles.form}>
           <View style={Styles.row}>
             <Text style={Styles.rowLabel}>{I18n.t('username')}</Text>

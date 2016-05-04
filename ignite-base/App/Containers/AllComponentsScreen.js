@@ -44,7 +44,7 @@ export default class AllComponentsScreen extends React.Component {
     // Request premissions only if the user has logged in.
     const { loggedIn } = nextProps
     if (loggedIn) {
-      console.log('Requesting push notification permissions.')
+      if (__DEV__) console.log('Requesting push notification permissions.')
       PushNotification.requestPermissions()
     }
   }
