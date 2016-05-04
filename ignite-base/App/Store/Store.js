@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native'
 import createLogger from 'redux-logger'
 import rootReducer, { persistentStoreBlacklist } from '../Reducers/'
 import Config from '../Config/DebugSettings'
-import sagaMiddleware from 'redux-saga'
+import createSagaMiddleware from 'redux-saga'
 import sagas from '../Sagas/'
 import R from 'ramda'
 import immutablePersistenceTransform from './ImmutablePersistenceTransform'
@@ -19,16 +19,18 @@ const logger = createLogger({
   predicate: (getState, { type }) => USE_LOGGING && R.not(R.contains(type, SAGA_LOGGING_BLACKLIST))
 })
 
-let middleware = [sagaMiddleware(...sagas)]
+let middleware = []
 
 // Don't ship these
 if (__DEV__) {
-  middleware.push[logger]
+  middleware.push(logger)
 }
 
 // a function which can create our store and auto-persist the data
 export default () => {
   let store = {}
+  const sagaMiddleware = createSagaMiddleware()
+  middleware.push(sagaMiddleware)
 
   // Add rehydrate enhancer if reduxPersist
   if (Config.reduxPersist) {
@@ -60,6 +62,9 @@ export default () => {
       enhancers
     )
   }
+
+  // run sagas
+  sagaMiddleware.run(...sagas)
 
   return store
 }
