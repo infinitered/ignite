@@ -4,7 +4,8 @@
   thumbnail='http://stockphotos.com/thumbnail1.jpg'
 */
 
-import React, { Image, Animated, View } from 'react-native'
+import React from 'react'
+import { Image, Animated, View } from 'react-native'
 // import { Images } from '../Themes'
 
 export default class ProgressiveImage extends React.Component {

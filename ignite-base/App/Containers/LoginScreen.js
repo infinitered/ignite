@@ -1,5 +1,5 @@
-import React, {
-  Component,
+import React from 'react'
+import {
   PropTypes,
   View,
   Text,
@@ -18,7 +18,7 @@ import {Images, Metrics} from '../Themes'
 // I18n
 import I18n from '../I18n/I18n.js'
 
-class LoginScreen extends Component {
+class LoginScreen extends React.Component {
 
   constructor (props) {
     super(props)
