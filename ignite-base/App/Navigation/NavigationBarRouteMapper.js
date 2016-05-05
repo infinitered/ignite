@@ -1,5 +1,4 @@
-import React from 'react-native'
-import { Text, View } from 'react-native'
+import React, { Text, View } from 'react-native'
 // For some reason using this causes a crash: Investigate
 // import { MapButton } from '../Components/Buttons/MapButton'
 import NavButtons from './NavButtons'
@@ -8,8 +7,8 @@ import styles from './Styles/NavigationStyle'
 
 export default {
 
-  CreateButton (button_id, navigator) {
-    switch (button_id) {
+  CreateButton (buttonId, navigator) {
+    switch (buttonId) {
       // case 'SEARCH':
       //   return NavButtons.searchButton(navigator.state.tapSearch)
       // case 'MAP':
