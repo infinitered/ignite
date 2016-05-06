@@ -14,6 +14,12 @@ export default class PresentationScreen extends React.Component {
     navigator: PropTypes.object.isRequired
   }
 
+  componentWillMount () {
+    this.props.navigator.state.tapHamburger = () => {
+      this.props.navigator.drawer.toggle()
+    }
+  }
+
   render () {
     return (
       <ScrollView style={styles.container}>
@@ -37,7 +43,9 @@ export default class PresentationScreen extends React.Component {
           way for a team of devs to show/use/test their components with examples that reside
           within the component file.
         </Text>
-        <RoundedButton>Component Examples Screen</RoundedButton>
+        <RoundedButton onPress={() => this.props.navigator.push(Routes.AllComponentsScreen)}>
+          Component Examples Screen
+        </RoundedButton>
 
         <Text style={styles.sectionTitle}>Usage Examples</Text>
         <Text style={styles.description}>

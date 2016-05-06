@@ -38,12 +38,6 @@ export default class AllComponentsScreen extends React.Component {
     dispatch: PropTypes.func,
     temperature: PropTypes.number,
     city: PropTypes.string
-  };
-
-  componentWillMount () {
-    this.props.navigator.state.tapHamburger = () => {
-      this.props.navigator.drawer.toggle()
-    }
   }
 
   componentWillReceiveProps (nextProps) {

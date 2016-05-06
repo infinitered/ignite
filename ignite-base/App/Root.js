@@ -61,7 +61,7 @@ export default class RNBase extends React.Component {
     return (
       <View style={{marginTop: 30, padding: 10}}>
         <Text>
-          Drawer Content
+          Drawer Content Goes Here!
         </Text>
       </View>
     )
