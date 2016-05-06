@@ -27,8 +27,8 @@ export default class PresentationScreen extends React.Component {
           <Image source={Images.ignite} style={styles.logo} />
         </View>
         <Text style={styles.section} >
-          By default this project has quite a few bells and whistles.  The
-          software and blog posts can be found on the README.md document.
+          By default this project has quite a few 🎶 bells and whistles 🎶.  Blog
+          posts regarding this tool can be found on the README.md document.
         </Text>
         <Text style={styles.section} >
           The default screens for development, debugging, and alpha testing
@@ -52,24 +52,37 @@ export default class PresentationScreen extends React.Component {
           The Usage Examples screen, is a playground for 3rd party libs and logic flow proofs.
           Items on this screen can be composed of multiple components working in concert.
         </Text>
+        <RoundedButton onPress={() => this.props.navigator.push(Routes.AllComponentsScreen)}>
+          Usage Examples Screen
+        </RoundedButton>
 
         <Text style={styles.sectionTitle}>API Testing</Text>
         <Text style={styles.description}>
           Testing API with tools such as Postman or APIary.io are great for verifying the server works.
-          The API Test screen is a simple in-app way to verify your API functions work as expected.  Additionally,
-          it's good for debugging API issues in the field.
+          The API Test screen is the next step; a simple in-app way to verify your API functions work as expected.
+          Additionally, it's good for debugging API issues in the field.
         </Text>
+        <RoundedButton onPress={() => window.alert('coming soon')}>
+          COMING VERY SOON
+        </RoundedButton>
 
         <Text style={styles.sectionTitle}>Theme Settings</Text>
         <Text style={styles.description}>
           List of all Theme specific settings.  Configured style of each application.
         </Text>
+        <RoundedButton onPress={() => window.alert('coming soon')}>
+          COMING VERY SOON
+        </RoundedButton>
 
         <Text style={styles.sectionTitle}>Device Details</Text>
         <Text style={styles.description}>
           Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour
           specific to a device.
         </Text>
+        <RoundedButton onPress={() => window.alert('coming soon')}>
+          COMING VERY SOON
+        </RoundedButton>
+
       </ScrollView>
     )
   }
