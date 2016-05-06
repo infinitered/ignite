@@ -142,12 +142,10 @@ export default class UsageExamplesScreen extends React.Component {
     )
   }
 
-
   render () {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Usage Examples</Text>
           <Text style={styles.subtitle} >Functionality demos of libs and practices</Text>
         </View>
         {this.renderUsageExamples()}

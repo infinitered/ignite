@@ -22,7 +22,7 @@ export default new class Routes {
 
   get AllComponentsScreen () {
     return {
-      title: I18n.t('welcome'),
+      title: I18n.t('componentExamples'),
       component: require('../Containers/AllComponentsScreen').default,
       leftButton: 'BACK'
     }
@@ -30,7 +30,7 @@ export default new class Routes {
 
   get UsageExamplesScreen () {
     return {
-      title: I18n.t('welcome'),
+      title: I18n.t('usageExamples'),
       component: require('../Containers/UsageExamplesScreen').default,
       leftButton: 'BACK'
     }
