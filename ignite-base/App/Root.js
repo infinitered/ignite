@@ -1,4 +1,5 @@
-import React, { View, Text, Navigator, StatusBar } from 'react-native'
+import React from 'react'
+import { View, Text, Navigator, StatusBar } from 'react-native'
 import {Router, Routes, NavigationBar} from './Navigation/'
 import configureStore from './Store/Store'
 import { Provider } from 'react-redux'

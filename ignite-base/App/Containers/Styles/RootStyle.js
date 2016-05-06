@@ -1,7 +1,7 @@
-import React from 'react-native'
+import {StyleSheet} from 'react-native'
 import {Fonts, Metrics, Colors} from '../../Themes/'
 
-const RootStyle = React.StyleSheet.create({
+const RootStyle = StyleSheet.create({
   applicationView: {
     flex: 1
   },

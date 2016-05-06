@@ -1,4 +1,5 @@
-import React, {Text, View} from 'react-native'
+import React from 'react'
+import {Text, View} from 'react-native'
 import R from 'ramda'
 import { Base } from '../Themes'
 import DebugSettings from '../Config/DebugSettings'

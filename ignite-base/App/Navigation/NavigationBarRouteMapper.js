@@ -1,4 +1,5 @@
-import React, { Text, View } from 'react-native'
+import React from 'react'
+import { Text, View } from 'react-native'
 // For some reason using this causes a crash: Investigate
 // import { MapButton } from '../Components/Buttons/MapButton'
 import NavButtons from './NavButtons'

@@ -1,10 +1,10 @@
-import React from 'react-native'
+import React from 'react'
+import { Navigator } from 'react-native'
 import NavigationBarRouteMapper from './NavigationBarRouteMapper'
 
 // Stylesheet
 import styles from './Styles/NavigationStyle'
 
-const { Navigator } = React
 
 export default {
   render () {

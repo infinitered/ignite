@@ -1,7 +1,7 @@
-import React from 'react-native'
+import {StyleSheet} from 'react-native'
 import { Fonts, Metrics, Colors } from '../../Themes/'
 
-const NavigationStyle = React.StyleSheet.create({
+const NavigationStyle = StyleSheet.create({
   titleWrapper: {
     flex: 1,
     padding: Metrics.baseMargin,
