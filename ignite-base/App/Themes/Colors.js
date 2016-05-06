@@ -15,7 +15,9 @@ const colors = {
   windowTint: 'rgba(0, 0, 0, 0.4)',
   panther: '#464646',
   charcoal: '#595959',
-  coal: '#2d2d2d'
+  coal: '#2d2d2d',
+  bloodOrange: '#fb5f26',
+  bloodOrangeJuice: 'rgba(251, 95, 38, 0.8)'
 }
 
 export default colors

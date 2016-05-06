@@ -3,6 +3,7 @@ import { ScrollView, Text, PropTypes, Image, View } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux'
 import Routes from '../Navigation/Routes'
+import RoundedButton from '../Components/RoundedButton'
 
 // Styles
 import styles from './Styles/PresentationScreenStyle'
@@ -36,6 +37,7 @@ export default class PresentationScreen extends React.Component {
           way for a team of devs to show/use/test their components with examples that reside
           within the component file.
         </Text>
+        <RoundedButton>Component Examples Screen</RoundedButton>
 
         <Text style={styles.sectionTitle}>Usage Examples</Text>
         <Text style={styles.description}>
@@ -52,12 +54,12 @@ export default class PresentationScreen extends React.Component {
 
         <Text style={styles.sectionTitle}>Theme Settings</Text>
         <Text style={styles.description}>
-          List of all Theme specific settings.  Configured for style of each application.
+          List of all Theme specific settings.  Configured style of each application.
         </Text>
 
         <Text style={styles.sectionTitle}>Device Details</Text>
         <Text style={styles.description}>
-          Dedicated to identifying specifics of the device.  Most useful for identifying outlying behaviour
+          Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour
           specific to a device.
         </Text>
       </ScrollView>

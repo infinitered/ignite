@@ -47,7 +47,7 @@ const base = {
     marginVertical: 5,
     fontSize: Fonts.size.title,
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: Colors.error,
     alignItems: 'center'
   },
   subtitle: {
