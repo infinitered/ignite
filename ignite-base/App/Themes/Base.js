@@ -43,7 +43,11 @@ const base = {
     fontFamily: Fonts.bold,
     color: Colors.coal,
     padding: 5,
-    fontSize: Fonts.size.title
+    marginVertical: 5,
+    fontSize: Fonts.size.title,
+    borderWidth: 1,
+    borderColor: 'red',
+    alignItems: 'center'
   },
   subtitle: {
     color: Colors.snow,

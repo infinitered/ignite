@@ -12,6 +12,15 @@ export default new class Routes {
   // they're lazily evaluated to prevent recursion
   // when the screens themselves use this Routes file.
 
+  get PresentationScreen () {
+    return {
+      title: I18n.t('welcome'),
+      component: require('../Containers/PresentationScreen').default,
+      leftButton: 'HAMBURGER'
+    }
+  }
+
+
   get AllComponentsScreen () {
     return {
       title: I18n.t('welcome'),
