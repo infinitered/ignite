@@ -42,6 +42,7 @@ const base = {
   sectionTitle: {
     fontFamily: Fonts.bold,
     color: Colors.coal,
+    backgroundColor: Colors.silver,
     padding: 5,
     marginVertical: 5,
     fontSize: Fonts.size.title,

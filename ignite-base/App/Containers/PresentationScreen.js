@@ -40,19 +40,19 @@ export default class PresentationScreen extends React.Component {
         <Text style={styles.sectionTitle}>Usage Examples</Text>
         <Text style={styles.description}>
           The Usage Examples screen, is a playground for 3rd party libs and logic flow proofs.
-          Items on this screen can be composed of multiple components working on concert.
+          Items on this screen can be composed of multiple components working in concert.
         </Text>
 
         <Text style={styles.sectionTitle}>API Testing</Text>
         <Text style={styles.description}>
           Testing API with tools such as Postman or APIary.io are great for verifying the server works.
           The API Test screen is a simple in-app way to verify your API functions work as expected.  Additionally,
-          it's good for debugging API issues that may suddenly pop up!
+          it's good for debugging API issues in the field.
         </Text>
 
         <Text style={styles.sectionTitle}>Theme Settings</Text>
         <Text style={styles.description}>
-          List of all Theme specific settings.
+          List of all Theme specific settings.  Configured for style of each application.
         </Text>
 
         <Text style={styles.sectionTitle}>Device Details</Text>
