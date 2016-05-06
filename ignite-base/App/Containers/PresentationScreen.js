@@ -52,7 +52,7 @@ export default class PresentationScreen extends React.Component {
           The Usage Examples screen, is a playground for 3rd party libs and logic flow proofs.
           Items on this screen can be composed of multiple components working in concert.
         </Text>
-        <RoundedButton onPress={() => this.props.navigator.push(Routes.AllComponentsScreen)}>
+        <RoundedButton onPress={() => this.props.navigator.push(Routes.UsageExamplesScreen)}>
           Usage Examples Screen
         </RoundedButton>
 

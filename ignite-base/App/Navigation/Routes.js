@@ -20,11 +20,18 @@ export default new class Routes {
     }
   }
 
-
   get AllComponentsScreen () {
     return {
       title: I18n.t('welcome'),
       component: require('../Containers/AllComponentsScreen').default,
+      leftButton: 'BACK'
+    }
+  }
+
+  get UsageExamplesScreen () {
+    return {
+      title: I18n.t('welcome'),
+      component: require('../Containers/UsageExamplesScreen').default,
       leftButton: 'BACK'
     }
   }
