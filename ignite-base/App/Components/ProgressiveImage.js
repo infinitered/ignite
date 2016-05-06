@@ -1,14 +1,20 @@
-/* Example Usage
-  style={styles.imageStyles}
-  source='http://stockphotos.com/photo1.jpg'
-  thumbnail='http://stockphotos.com/thumbnail1.jpg'
-*/
-
 import React from 'react'
-import { Image, Animated, View } from 'react-native'
-// import { Images } from '../Themes'
+import { PropTypes, Component, Image, Animated, View } from 'react-native'
+import ExamplesRegistry from '../Services/ExamplesRegistry'
+import { Images } from '../Themes'
+import styles from './Styles/ProgressiveImageStyle'
 
-export default class ProgressiveImage extends React.Component {
+// Example
+ExamplesRegistry.add('Progressive Image', () =>
+  <ProgressiveImage
+    style={styles.progressiveImage}
+    defaultSource={Images.logo}
+    source='https://upload.wikimedia.org/wikipedia/commons/c/cc/ESC_large_ISS022_ISS022-E-11387-edit_01.JPG'
+    thumbnail='http://i.imgur.com/eVAFUhj.png'
+  />
+)
+
+export default class ProgressiveImage extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -17,10 +23,10 @@ export default class ProgressiveImage extends React.Component {
   }
 
   static propTypes = {
-    key: React.PropTypes.string,
-    thumbnail: React.PropTypes.string,
-    source: React.PropTypes.string,
-    style: React.PropTypes.number
+    key: PropTypes.string,
+    thumbnail: PropTypes.string,
+    source: PropTypes.string,
+    style: PropTypes.number
   };
 
   mainImageLoad () {

@@ -3,7 +3,7 @@ const fonts = {
   bold: 'HelveticaNeue-Bold',
   emphasis: 'HelveticaNeue-Italic',
   size: {
-    title: 40,
+    title: 30,
     input: 18,
     regular: 17,
     medium: 14,

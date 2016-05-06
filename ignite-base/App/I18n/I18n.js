@@ -21,7 +21,12 @@ I18n.translations = {
     cancel: 'Cancel',
     welcome: 'Welcome',
     login: 'Login',
-    tempIndicator: 'F'
+    tempIndicator: 'F',
+    componentExamples: 'Component Examples',
+    usageExamples: 'Usage Examples',
+    apiTesting: 'API Testing',
+    themeSettings: 'Theme Settings',
+    deviceDetails: 'Device Details'
   },
   fr: {
     signIn: 'Se connecter',
@@ -39,7 +44,12 @@ I18n.translations = {
     cancel: 'Annuler',
     welcome: 'Bienvenue',
     login: 'S\'identifier',
-    tempIndicator: 'C'
+    tempIndicator: 'C',
+    componentExamples: 'Exemples de Composants',
+    usageExamples: "Exemples d'utilisation",
+    apiTesting: 'API Testing',
+    themeSettings: 'Réglage des thèmes',
+    deviceDetails: 'Détails du périphérique'
   }
 }
 
