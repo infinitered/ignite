@@ -33,6 +33,8 @@ To view the generated example project, just pull down the code and run ignite-ba
 
 ## :arrow_up: How to Setup
 
+Make sure you're setup for [React Native](https://facebook.github.io/react-native/docs/getting-started.html#content)
+
 *Install*
 
 `npm install -g react-native-ignite`
