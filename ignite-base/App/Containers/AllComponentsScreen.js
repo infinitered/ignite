@@ -11,9 +11,6 @@ import '../Components/RoundedButton'
 // Examples Render Engine
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
-// I18n
-import I18n from '../I18n/I18n.js'
-
 export default class AllComponentsScreen extends React.Component {
 
   static propTypes = {

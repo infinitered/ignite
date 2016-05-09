@@ -5,7 +5,6 @@ import NavigationBarRouteMapper from './NavigationBarRouteMapper'
 // Stylesheet
 import styles from './Styles/NavigationStyle'
 
-
 export default {
   render () {
     return (
