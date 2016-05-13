@@ -11,7 +11,7 @@ const checkYo = () => {
   if (!Shell.which('yo')) {
     console.log(colors.red('This command requires yo to be installed.'))
     console.log(colors.green('Installing yo...'))
-    Shell.exec('npm i -g yo')
+    Shell.exec('CI=true npm i -g yo')
   }
 }
 
