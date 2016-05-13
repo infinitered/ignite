@@ -54,6 +54,10 @@ var copyOverBase = function copyOverBase(context) {
   context.directory(context.templatePath(igniteBase + '/App'), context.destinationPath(context.name + '/App'));
 };
 
+var performInserts = function performInserts(name) {
+  // Insert missing stuff here
+};
+
 var AppGenerator = function (_NamedBase) {
   _inherits(AppGenerator, _NamedBase);
 
@@ -105,6 +109,9 @@ var AppGenerator = function (_NamedBase) {
     value: function end() {
       // Clean template folder
       emptyFolder(this.templateFolder);
+
+      // Things rnmp didn't do
+      performInserts(this.name);
 
       console.log('Time to get cooking! 🍽 ');
     }

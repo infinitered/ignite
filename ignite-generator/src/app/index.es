@@ -61,6 +61,10 @@ const copyOverBase = (context) => {
   )
 }
 
+const performInserts = (name) => {
+  // Insert missing stuff here
+}
+
 class AppGenerator extends NamedBase {
   initializing () {
     console.log(colors.yellow('generate app -> ') + this.name + ' ☕️  This will take a while ☕️ ')
@@ -99,6 +103,9 @@ class AppGenerator extends NamedBase {
   end () {
     // Clean template folder
     emptyFolder(this.templateFolder)
+
+    // Things rnmp didn't do
+    performInserts(this.name)
 
     console.log('Time to get cooking! 🍽 ')
   }

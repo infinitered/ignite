@@ -6,8 +6,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _yeomanGenerator = require('yeoman-generator');
 
-var _validation = require('../validation');
-
 var _utilities = require('../utilities');
 
 var Utilities = _interopRequireWildcard(_utilities);
@@ -20,51 +18,34 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var copyOverScreenContainer = function copyOverScreenContainer(context) {
-  // copy screen template
-  context.fs.copyTpl(context.templatePath('screen.js.template'), context.destinationPath('./App/Containers/' + context.name + '.js'), { name: context.name });
+var TestGenerator = function (_NamedBase) {
+  _inherits(TestGenerator, _NamedBase);
 
-  // copy screen style template
-  context.fs.copyTpl(context.templatePath('screen-style.js.template'), context.destinationPath('./App/Containers/Styles/' + context.name + 'Style.js'), { name: context.name });
-};
+  function TestGenerator() {
+    _classCallCheck(this, TestGenerator);
 
-var addToRoutes = function addToRoutes(context) {
-  var newRoute = '\n  get ' + context.name + ' () {\n    return {\n      title: \'' + context.name + '\',\n      component: require(\'../Containers/' + context.name + '\').default,\n      leftButton: \'BACK\'\n    }\n  }\n\n';
-  Utilities.insertInFile('App/Navigation/Routes.js', 'get ', newRoute, false);
-};
-
-var ScreenGenerator = function (_NamedBase) {
-  _inherits(ScreenGenerator, _NamedBase);
-
-  function ScreenGenerator() {
-    _classCallCheck(this, ScreenGenerator);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ScreenGenerator).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(TestGenerator).apply(this, arguments));
   }
 
-  _createClass(ScreenGenerator, [{
+  _createClass(TestGenerator, [{
     key: 'initializing',
-    value: function initializing() {
-      // Fail if tools are missing
-      (0, _validation.verifyTools)();
-    }
+    value: function initializing() {}
   }, {
     key: 'generateApp',
     value: function generateApp() {
-      // Copy over component files.
-      copyOverScreenContainer(this);
+      Utilities.insertInFile('file.txt', 'taco', 'I am a new line');
     }
+  }, {
+    key: 'install',
+    value: function install() {}
   }, {
     key: 'end',
     value: function end() {
-      // insert screen into routes
-      addToRoutes(this);
-
       console.log('Time to get cooking! 🍽 ');
     }
   }]);
 
-  return ScreenGenerator;
+  return TestGenerator;
 }(_yeomanGenerator.NamedBase);
 
-module.exports = ScreenGenerator;
+module.exports = TestGenerator;

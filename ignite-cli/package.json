@@ -1,6 +1,6 @@
 {
   "name": "react-native-ignite",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
     "index.js"

@@ -3,6 +3,7 @@
 
 import { NamedBase } from 'yeoman-generator'
 import { verifyTools } from '../validation'
+import * as Utilities from '../utilities'
 
 const copyOverScreenContainer = (context) => {
   // copy screen template
@@ -20,6 +21,18 @@ const copyOverScreenContainer = (context) => {
   )
 }
 
+const addToRoutes = (context) => {
+  const newRoute = `  get ${context.name} () {
+    return {
+      title: '${context.name}',
+      component: require('../Containers/${context.name}').default,
+      leftButton: 'BACK'
+    }
+  }
+`
+  Utilities.insertInFile('App/Navigation/Routes.js', 'get ', newRoute, false)
+}
+
 class ScreenGenerator extends NamedBase {
   initializing () {
     // Fail if tools are missing
@@ -32,6 +45,9 @@ class ScreenGenerator extends NamedBase {
   }
 
   end () {
+    // insert screen into routes file
+    addToRoutes(this)
+
     console.log('Time to get cooking! 🍽 ')
   }
 }
