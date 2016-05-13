@@ -29,9 +29,9 @@ fi
 npm i -g babel-eslint
 npm i -g standard
 
-# Check base app for standard compliance
-standard ./ignite-base/App/**.*
 # Check cli for compliance
 standard ./ignite-cli/src/**.*
 # Check generator for compliance
 standard ./ignite-generator/src/**.*
+# Check base app for standard compliance
+cd ./ignite-base && standard ./App/**.*

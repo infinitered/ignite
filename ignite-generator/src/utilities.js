@@ -3,11 +3,10 @@
 
 import fs from 'fs'
 
-
 // Use this sparingly, as file contents are fickle!
 export const insertInFile = (theFile, theFind, theInsert, insertAfter = true) => {
   // read full file - Not a great idea if we ever touch large files
-  let data = fs.readFileSync(theFile, 'utf-8');
+  let data = fs.readFileSync(theFile, 'utf-8')
   let newContents = ''
   // get the full line of first occurance
   let finder = new RegExp(`.*${theFind}.*`, '')
