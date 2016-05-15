@@ -6,6 +6,10 @@ import { Provider } from 'react-redux'
 import Actions from './Actions/Creators'
 import Drawer from 'react-native-drawer'
 import PushNotification from 'react-native-push-notification'
+<<<<<<< Updated upstream
+=======
+import DebugSettings from './Config/DebugSettings'
+>>>>>>> Stashed changes
 
 // Styles
 import styles from './Containers/Styles/RootStyle'
