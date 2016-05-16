@@ -9,8 +9,6 @@
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
     "test": "mocha --opts Tests/mocha.opts Tests/ --recursive",
     "tron": "node_modules/.bin/reactotron",
-    "deploy-android": "fastlane android alpha", 
-    "deploy-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file ./index.ios.js --platform ios --bundle-output ios/main.jsbundle bundle && fastlane ios beta", 
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
     "android:hockeyapp": "cd android && ./gradlew assembleRelease && puck -submit=auto app/build/outputs/apk/app-release.apk",
