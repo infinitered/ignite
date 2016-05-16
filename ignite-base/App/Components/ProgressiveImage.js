@@ -1,5 +1,5 @@
-import React from 'react'
-import { PropTypes, Component, Image, Animated, View } from 'react-native'
+import React, { PropTypes, Component } from 'react'
+import { Image, Animated, View } from 'react-native'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 import { Images } from '../Themes'
 import styles from './Styles/ProgressiveImageStyle'

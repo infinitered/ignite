@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, PropTypes, Image, View } from 'react-native'
+import { ScrollView, Text, Image, View } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux'
 import Routes from '../Navigation/Routes'
@@ -12,7 +12,7 @@ import styles from './Styles/PresentationScreenStyle'
 export default class PresentationScreen extends React.Component {
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired
+    navigator: React.PropTypes.object.isRequired
   }
 
   componentWillMount () {
