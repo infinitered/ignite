@@ -97,6 +97,59 @@ platform :ios do
   end
 end
 
+platform :android do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+  end
+
+  desc "Tests Slack"
+  lane :test_slack do
+    # snapshot
+    slack(
+      message: "You can post to Slack!",
+      channel: "#p-projectname",  # Optional, by default will post to the default channel configured for the POST URL.
+      payload: {            # Optional, lets you specify any number of your own Slack attachments.
+        'Build Date' => Time.new.to_s
+      },
+      default_payloads: [:git_branch, :git_author], # Optional, lets you specify a whitelist of default payloads to include. Pass an empty array to suppress all the default payloads. Don't add this key, or pass nil, if you want all the default payloads. The available default payloads are: `lane`, `test_result`, `git_branch`, `git_author`, `last_git_commit`.
+    )
+  end
+
+  desc "Submit a new Alpha Build to Google Play Store"
+  lane :alpha do
+    # Build the release version of the Android App
+    gradle(
+      task: "assemble", 
+      build_type: "Release", 
+      project_dir: "android/"
+    )
+    
+    # Uploads generated apk to Google Play Store as an Alpha build
+    supply(
+      track: "alpha", 
+      apk: "android/app/build/outputs/apk/app-release.apk"
+    )
+
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    slack(
+      message: "App successfully released",
+      channel: "#myAppChannel"
+    )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
 
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/docs/Platforms.md
 # All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
