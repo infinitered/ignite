@@ -9,6 +9,3 @@ inside a object literal.
 
 Action creators provide a way to generate actions.
 
-### CreateAction.js
-
-This is a helper function to help generate action creators.

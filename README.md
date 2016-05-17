@@ -28,6 +28,7 @@
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
   * [apisauce](https://github.com/skellock/apisauce)
   * [reactotron](https://github.com/skellock/reactotron)
+  * [reduxsauce](https://github.com/skellock/reduxsauce)
 
 To view the generated example project, just pull down the code and run ignite-base!
 
