@@ -25,7 +25,7 @@
     "react-native-animatable": "^0.6.0",
     "react-native-drawer": "^2.2.2",
     "react-native-i18n": "0.0.8",
-    "react-native-push-notification": "^1.0.3",
+    "react-native-push-notification": "git@github.com:GantMan/react-native-push-notification.git",
     "react-native-vector-icons": "^2.0.2",
     "react-redux": "^4.4.2",
     "redux": "^3.4.0",
