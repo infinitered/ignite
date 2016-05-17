@@ -1,6 +1,6 @@
 import Types from '../Actions/Types'
 import Immutable from 'seamless-immutable'
-import createReducer from './CreateReducer'
+import { createReducer } from 'reduxsauce'
 
 export const INITIAL_STATE = Immutable({
   username: null,

@@ -42,7 +42,8 @@
     "mocha": "^2.4.5",
     "reactotron": "^0.6.0",
     "snazzy": "^4.0.0",
-    "standard": "^7.0.1"
+    "standard": "^7.0.1",
+    "reduxsauce": "0.0.2"
   },
   "standard": {
     "parser": "babel-eslint",

@@ -1,22 +1,21 @@
-import createAction from './CreateAction'
 import Types from './Types'
 
 const attemptLogin = (username, password) =>
-  createAction(Types.LOGIN_ATTEMPT, { username, password })
+  ({ type: Types.LOGIN_ATTEMPT, username, password })
 
 const loginSuccess = (username) =>
-  createAction(Types.LOGIN_SUCCESS, { username })
+  ({ type: Types.LOGIN_SUCCESS, username })
 
 const loginFailure = (errorCode) =>
-  createAction(Types.LOGIN_FAILURE, { errorCode })
+  ({ type: Types.LOGIN_FAILURE, errorCode })
 
-const logout = () => createAction(Types.LOGOUT)
+const logout = () => ({ type: Types.LOGOUT })
 
-const startup = () => createAction(Types.STARTUP)
+const startup = () => ({ type: Types.STARTUP })
 
-const requestTemperature = (city) => createAction(Types.TEMPERATURE_REQUEST, { city })
-const receiveTemperature = (temperature) => createAction(Types.TEMPERATURE_RECEIVE, { temperature })
-const receiveTemperatureFailure = () => createAction(Types.TEMPERATURE_FAILURE)
+const requestTemperature = (city) => ({ type: Types.TEMPERATURE_REQUEST, city })
+const receiveTemperature = (temperature) => ({ type: Types.TEMPERATURE_RECEIVE, temperature })
+const receiveTemperatureFailure = () => ({ type: Types.TEMPERATURE_FAILURE })
 
 /**
  Makes available all the action creators we've created.
