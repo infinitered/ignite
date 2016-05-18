@@ -29,7 +29,7 @@ var copyOverScreenContainer = function copyOverScreenContainer(context) {
 };
 
 var addToRoutes = function addToRoutes(context) {
-  var newRoute = '\n  get ' + context.name + ' () {\n    return {\n      title: \'' + context.name + '\',\n      component: require(\'../Containers/' + context.name + '\').default,\n      leftButton: \'BACK\'\n    }\n  }\n\n';
+  var newRoute = '  get ' + context.name + ' () {\n    return {\n      title: \'' + context.name + '\',\n      component: require(\'../Containers/' + context.name + '\').default,\n      leftButton: \'BACK\'\n    }\n  }\n';
   Utilities.insertInFile('App/Navigation/Routes.js', 'get ', newRoute, false);
 };
 
@@ -57,7 +57,7 @@ var ScreenGenerator = function (_NamedBase) {
   }, {
     key: 'end',
     value: function end() {
-      // insert screen into routes
+      // insert screen into routes file
       addToRoutes(this);
 
       console.log('Time to get cooking! 🍽 ');

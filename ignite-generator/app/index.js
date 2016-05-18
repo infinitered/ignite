@@ -16,6 +16,12 @@ var _shelljs = require('shelljs');
 
 var _shelljs2 = _interopRequireDefault(_shelljs);
 
+var _utilities = require('../utilities');
+
+var Utilities = _interopRequireWildcard(_utilities);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55,7 +61,13 @@ var copyOverBase = function copyOverBase(context) {
 };
 
 var performInserts = function performInserts(name) {
-  // Insert missing stuff here
+  // Add permissions for push notifications
+  var pushPermissions = '\n    <permission\n        android:name="${applicationId}.permission.C2D_MESSAGE"\n        android:protectionLevel="signature" />\n    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n  ';
+
+  var appEntries = '\n      <receiver\n          android:name="com.google.android.gms.gcm.GcmReceiver"\n          android:exported="true"\n          android:permission="com.google.android.c2dm.permission.SEND" >\n          <intent-filter>\n              <action android:name="com.google.android.c2dm.intent.RECEIVE" />\n              <category android:name="${applicationId}" />\n          </intent-filter>\n      </receiver>\n\n      <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>\n      <service\n          android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"\n          android:exported="false" >\n          <intent-filter>\n              <action android:name="com.google.android.c2dm.intent.RECEIVE" />\n          </intent-filter>\n      </service>\n  ';
+
+  Utilities.insertInFile(name + '/android/app/src/main/AndroidManifest.xml', 'SYSTEM_ALERT_WINDOW', pushPermissions);
+  Utilities.insertInFile(name + '/android/app/src/main/AndroidManifest.xml', 'android:theme', appEntries);
 };
 
 var AppGenerator = function (_NamedBase) {
