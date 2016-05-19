@@ -62,8 +62,8 @@ export default class PresentationScreen extends React.Component {
           The API Test screen is the next step; a simple in-app way to verify your coded API functions work as expected.
           Additionally, it's good for debugging API issues in the field.
         </Text>
-        <RoundedButton onPress={() => window.alert('coming soon')}>
-          COMING SOON
+        <RoundedButton onPress={() => this.props.navigator.push(Routes.APITestingScreen)}>
+          API Testing Screen
         </RoundedButton>
 
         <Text style={styles.sectionTitle}>{I18n.t('themeSettings')}</Text>
