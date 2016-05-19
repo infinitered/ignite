@@ -11,6 +11,12 @@ import FJSON from 'format-json'
 // Styles
 import styles from './Styles/APITestingScreenStyle'
 
+// API buttons here:
+const endpoints = [
+  { label: 'Get City (Boise)', endpoint: 'getCity', args: ['Boise'] },
+  { endpoint: 'getCity', args: ['Toronto'] }
+]
+
 export default class APITestingScreen extends React.Component {
 
   constructor (props) {
@@ -31,11 +37,6 @@ export default class APITestingScreen extends React.Component {
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
     DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
     DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
-
-    // Configure nav button
-    this.props.navigator.state.tapHamburger = () => {
-      this.props.navigator.leftDrawer.toggle()
-    }
   }
 
   componentWillUnmount () {
@@ -71,24 +72,20 @@ export default class APITestingScreen extends React.Component {
   }
 
   tryEndpoint (apiEndpoint) {
-    const { label, endpoint, args } = apiEndpoint
+    const { label, endpoint, args = [''] } = apiEndpoint
     this.api[endpoint].apply(this, args).then((result) => {
       this.showResult(result, label || `${endpoint}(${args.join(', ')})`)
     })
   }
 
   renderButton (apiEndpoint) {
-    const { label, endpoint, args } = apiEndpoint
+    const { label, endpoint, args = [''] } = apiEndpoint
     return (
       <FullButton text={label || `${endpoint}(${args.join(', ')})`} onPress={this.tryEndpoint.bind(this, apiEndpoint)} styles={{marginTop: 10}} key={`${endpoint}-${args.join('-')}`} />
     )
   }
 
   renderButtons () {
-    const endpoints = [
-      { label: 'Get City (Boise)', endpoint: 'getCity', args: ['Boise'] },
-      { endpoint: 'getCity', args: ['Toronto', 'Fail'] }
-    ]
     return endpoints.map((endpoint) => this.renderButton(endpoint))
   }
 
@@ -97,7 +94,8 @@ export default class APITestingScreen extends React.Component {
       <ScrollView ref='container' style={[styles.container, {height: this.state.visibleHeight}]}>
         <View style={styles.sectionHeader}>
           <Text style={styles.subtitle}>
-            Use this screen to quickly test your API endpoints. Create new endpoints in /Services/Api.js and then add them the endpoints array in Containers/APITestingScreen.js:88
+            API function testing -
+            Create new endpoints in Services/Api.js then add example uses to endpoints array in Containers/APITestingScreen.js for immediate feedback.
           </Text>
         </View>
         {this.renderButtons()}
