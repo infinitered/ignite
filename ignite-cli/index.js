@@ -26,7 +26,7 @@ var checkYo = function checkYo() {
   if (!_shelljs2.default.which('yo')) {
     console.log(_safe2.default.red('This command requires yo to be installed.'));
     console.log(_safe2.default.green('Installing yo...'));
-    _shelljs2.default.exec('npm i -g yo');
+    _shelljs2.default.exec('CI=true npm i -g yo');
   }
 };
 
