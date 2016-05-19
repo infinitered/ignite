@@ -36,6 +36,14 @@ export default new class Routes {
     }
   }
 
+  get APITestingScreen () {
+    return {
+      title: I18n.t('apiTesting'),
+      component: require('../Containers/APITestingScreen').default,
+      leftButton: 'BACK'
+    }
+  }
+
   get LoginScreen () {
     return {
       title: I18n.t('login'),
