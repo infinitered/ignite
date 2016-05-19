@@ -100,7 +100,7 @@ export default class APITestingScreen extends React.Component {
             Use this screen to quickly test your API endpoints. Create new endpoints in /Services/Api.js and then add them the endpoints array in Containers/APITestingScreen.js:88
           </Text>
         </View>
-        { this.renderButtons() }
+        {this.renderButtons()}
         <APIResult ref='result' />
       </ScrollView>
     )
