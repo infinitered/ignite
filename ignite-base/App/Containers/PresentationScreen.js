@@ -70,8 +70,8 @@ export default class PresentationScreen extends React.Component {
         <Text style={styles.description}>
           List of all Theme specific settings.  Configured style of each application.
         </Text>
-        <RoundedButton onPress={() => window.alert('coming soon')}>
-          COMING SOON
+        <RoundedButton onPress={() => this.props.navigator.push(Routes.ThemeScreen)}>
+          Theme Screen
         </RoundedButton>
 
         <Text style={styles.sectionTitle}>{I18n.t('deviceDetails')}</Text>

@@ -53,7 +53,8 @@ const base = {
   subtitle: {
     color: Colors.snow,
     padding: 5,
-    marginBottom: 5
+    marginBottom: 5,
+    marginHorizontal: Metrics.smallMargin
   }
 }
 

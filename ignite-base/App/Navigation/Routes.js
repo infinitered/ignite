@@ -44,6 +44,14 @@ export default new class Routes {
     }
   }
 
+  get ThemeScreen () {
+    return {
+      title: I18n.t('themeSettings'),
+      component: require('../Containers/ThemeScreen').default,
+      leftButton: 'BACK'
+    }
+  }
+
   get LoginScreen () {
     return {
       title: I18n.t('login'),
