@@ -53,16 +53,12 @@ export default class UsageExamplesScreen extends React.Component {
     return fonts.map((font) => this.renderFont(font))
   }
 
-  renderHeading (heading) {
-    return (<Text style={[styles.fontRow, {...Fonts[heading]}]} key={heading}>{`This is a ${heading} heading!`}</Text>)
+  renderStyle (fontStyle) {
+    return (<Text style={[styles.fontRow, {...Fonts.style[fontStyle]}]} key={fontStyle}>{`This is ${fontStyle} style`}</Text>)
   }
 
-  renderHeadings () {
-    return headings.map((heading) => this.renderHeading(heading))
-  }
-
-  renderParagraph (paragraph) {
-    return (<Text style={[styles.fontRow, {...Fonts[paragraph]}]} key={paragraph}>This is a {paragraph} paragraph.</Text>)
+  renderStyles () {
+    return headings.map((fontStyle) => this.renderStyle(fontStyle))
   }
 
   render () {
@@ -81,6 +77,7 @@ export default class UsageExamplesScreen extends React.Component {
         <View style={[styles.sectionHeader, {marginTop: 5}]} key='headings-header'>
           <Text style={styles.subtitle} key='headings'>Styles</Text>
         </View>
+        {this.renderStyles()}
 
       </ScrollView>
     )
