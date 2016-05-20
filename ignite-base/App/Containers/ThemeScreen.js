@@ -9,10 +9,10 @@ import styles from './Styles/ThemeScreenStyle'
 
 // Colors
 const colors = R.keys(Colors)
-// Fonts
-const fonts = R.keys(Fonts.type)
-// Font Style
-const headings = R.keys(Fonts.style)
+// Font Types
+const types = R.keys(Fonts.type)
+// Font Styles
+const fontStyles = R.keys(Fonts.style)
 
 export default class UsageExamplesScreen extends React.Component {
 
@@ -50,7 +50,7 @@ export default class UsageExamplesScreen extends React.Component {
   }
 
   renderFonts () {
-    return fonts.map((font) => this.renderFont(font))
+    return types.map((font) => this.renderFont(font))
   }
 
   renderStyle (fontStyle) {
@@ -58,7 +58,7 @@ export default class UsageExamplesScreen extends React.Component {
   }
 
   renderStyles () {
-    return headings.map((fontStyle) => this.renderStyle(fontStyle))
+    return fontStyles.map((fontStyle) => this.renderStyle(fontStyle))
   }
 
   render () {
@@ -70,12 +70,12 @@ export default class UsageExamplesScreen extends React.Component {
         <View style={styles.colorsContainer}>
           {this.renderColors()}
         </View>
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='fonts-header'>
-          <Text style={styles.subtitle} key='fonts'>Fonts</Text>
+        <View style={[styles.sectionHeader, {marginTop: 5}]} key='types-header'>
+          <Text style={styles.subtitle} key='types'>Fonts</Text>
         </View>
         {this.renderFonts()}
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='headings-header'>
-          <Text style={styles.subtitle} key='headings'>Styles</Text>
+        <View style={[styles.sectionHeader, {marginTop: 5}]} key='fontStyles-header'>
+          <Text style={styles.subtitle} key='fontStyles'>Styles</Text>
         </View>
         {this.renderStyles()}
 
