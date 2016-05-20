@@ -2,6 +2,7 @@
 const images = {
   logo: require('../Images/ir.png'),
   ignite: require('../Images/ignite_logo.png'),
+  tile_bg: require('../Images/tile_bg.png'),
   size: {
     small: 20,
     medium: 40,
