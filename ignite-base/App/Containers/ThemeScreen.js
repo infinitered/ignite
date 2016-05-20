@@ -2,18 +2,17 @@ import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { Colors, Fonts, Images } from '../Themes'
+import R from 'ramda'
 
 // Styles
 import styles from './Styles/ThemeScreenStyle'
 
 // Colors
-const colors = ['clear', 'ocean', 'deepOcean', 'wave', 'facebook', 'silver', 'steel', 'error', 'ricePaper', 'windowTint', 'panther', 'charcoal', 'coal', 'bloodOrange', 'bloodOrangeJuice']
-// Fonts
-const fonts = ['HelveticaNeue', 'HelveticaNeue-Bold', 'HelveticaNeue-Italic']
-// Headings
-const headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-// Paragraphs
-const paragraphs = ['lead', 'unclassified', 'secondary', 'tertiary']
+const colors = R.keys(Colors)
+// Font Types
+const types = R.keys(Fonts.type)
+// Font Styles
+const fontStyles = R.keys(Fonts.style)
 
 export default class UsageExamplesScreen extends React.Component {
 
@@ -44,28 +43,22 @@ export default class UsageExamplesScreen extends React.Component {
 
   renderFont (font) {
     return (
-      <Text style={[styles.fontRow, {fontFamily: font}]} key={font}>{font}</Text>
+      <Text style={[styles.fontRow, {fontFamily: Fonts.type[font]}]} key={font}>{
+        `${font}: ${Fonts.type[font]}`
+      }</Text>
     )
   }
 
   renderFonts () {
-    return fonts.map((font) => this.renderFont(font))
+    return types.map((font) => this.renderFont(font))
   }
 
-  renderHeading (heading) {
-    return (<Text style={[styles.fontRow, {...Fonts[heading]}]} key={heading}>{`This is a ${heading} heading!`}</Text>)
+  renderStyle (fontStyle) {
+    return (<Text style={[styles.fontRow, {...Fonts.style[fontStyle]}]} key={fontStyle}>{`This is ${fontStyle} style`}</Text>)
   }
 
-  renderHeadings () {
-    return headings.map((heading) => this.renderHeading(heading))
-  }
-
-  renderParagraph (paragraph) {
-    return (<Text style={[styles.fontRow, {...Fonts[paragraph]}]} key={paragraph}>This is a {paragraph} paragraph.</Text>)
-  }
-
-  renderParagraphs () {
-    return paragraphs.map((paragraph) => this.renderParagraph(paragraph))
+  renderStyles () {
+    return fontStyles.map((fontStyle) => this.renderStyle(fontStyle))
   }
 
   render () {
@@ -77,18 +70,15 @@ export default class UsageExamplesScreen extends React.Component {
         <View style={styles.colorsContainer}>
           {this.renderColors()}
         </View>
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='fonts-header'>
-          <Text style={styles.subtitle} key='fonts'>Fonts</Text>
+        <View style={[styles.sectionHeader, {marginTop: 5}]} key='types-header'>
+          <Text style={styles.subtitle} key='types'>Fonts</Text>
         </View>
         {this.renderFonts()}
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='headings-header'>
-          <Text style={styles.subtitle} key='headings'>Headings</Text>
+        <View style={[styles.sectionHeader, {marginTop: 5}]} key='fontStyles-header'>
+          <Text style={styles.subtitle} key='fontStyles'>Styles</Text>
         </View>
-        {this.renderHeadings()}
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='paragraphs-header'>
-          <Text style={styles.subtitle} key='paragraphs'>Paragraphs</Text>
-        </View>
-        {this.renderParagraphs()}
+        {this.renderStyles()}
+
       </ScrollView>
     )
   }

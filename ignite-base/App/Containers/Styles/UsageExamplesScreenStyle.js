@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, Fonts, Base } from '../../Themes/'
+import { Colors, Metrics, Fonts, CommonStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     color: Colors.silver
   },
   componentLabel: {
-    ...Base.darkLabel,
+    ...CommonStyles.darkLabel,
     marginBottom: 5
   },
   temperature: {
@@ -31,15 +31,15 @@ export default StyleSheet.create({
     fontSize: Fonts.size.input
   },
   groupContainer: {
-    ...Base.groupContainer
+    ...CommonStyles.groupContainer
   },
   sectionHeader: {
-    ...Base.sectionHeader
+    ...CommonStyles.sectionHeader
   },
   sectionTitle: {
-    ...Base.sectionTitle
+    ...CommonStyles.sectionTitle
   },
   subtitle: {
-    ...Base.subtitle
+    ...CommonStyles.subtitle
   }
 })

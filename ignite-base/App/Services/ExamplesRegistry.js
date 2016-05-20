@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text, View} from 'react-native'
 import R from 'ramda'
-import { Base } from '../Themes'
+import { CommonStyles } from '../Themes'
 import DebugSettings from '../Config/DebugSettings'
 let globalExamplesRegistry = []
 
@@ -10,7 +10,7 @@ export const addExample = (title, usage) => { if (DebugSettings.includeExamples)
 const renderExample = (example) => {
   return (
     <View key={example.title}>
-      <Text style={Base.darkLabel}>{example.title}</Text>
+      <Text style={CommonStyles.darkLabel}>{example.title}</Text>
       {example.usage.call()}
     </View>
   )

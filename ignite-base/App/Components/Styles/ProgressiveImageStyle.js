@@ -1,7 +1,7 @@
 'use strict'
 
 import { StyleSheet } from 'react-native'
-import { Metrics, Images, Base } from '../../Themes/'
+import { Metrics, Images, CommonStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   progressiveImage: {
@@ -25,6 +25,6 @@ export default StyleSheet.create({
     margin: Metrics.baseMargin
   },
   groupContainer: {
-    ...Base.groupContainer
+    ...CommonStyles.groupContainer
   }
 })
