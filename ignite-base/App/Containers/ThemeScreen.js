@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { Colors, Fonts } from '../Themes'
-import { Images } from '../Themes'
+import { Colors, Fonts, Images } from '../Themes'
 
 // Styles
 import styles from './Styles/ThemeScreenStyle'
@@ -76,20 +75,20 @@ export default class UsageExamplesScreen extends React.Component {
           <Text style={styles.subtitle} key='colors'>Colors</Text>
         </View>
         <View style={styles.colorsContainer}>
-          { this.renderColors() }
+          {this.renderColors()}
         </View>
         <View style={[styles.sectionHeader, {marginTop: 5}]} key='fonts-header'>
           <Text style={styles.subtitle} key='fonts'>Fonts</Text>
         </View>
-        { this.renderFonts() }
+        {this.renderFonts()}
         <View style={[styles.sectionHeader, {marginTop: 5}]} key='headings-header'>
           <Text style={styles.subtitle} key='headings'>Headings</Text>
         </View>
-        { this.renderHeadings() }
+        {this.renderHeadings()}
         <View style={[styles.sectionHeader, {marginTop: 5}]} key='paragraphs-header'>
           <Text style={styles.subtitle} key='paragraphs'>Paragraphs</Text>
         </View>
-        { this.renderParagraphs() }
+        {this.renderParagraphs()}
       </ScrollView>
     )
   }
