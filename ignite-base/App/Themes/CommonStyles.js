@@ -7,7 +7,7 @@ import Colors from './Colors'
 
 // NAME THIS FILE CommonStyles.js
 
-const base = {
+const CommonStyles = {
   cell: {
     heading: {
       marginBottom: Metrics.smallMargin,
@@ -60,4 +60,4 @@ const base = {
   }
 }
 
-export default base
+export default CommonStyles

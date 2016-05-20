@@ -3,6 +3,6 @@ import Fonts from './Fonts'
 import Metrics from './Metrics'
 import Images from './Images'
 import Transitions from './Transitions'
-import Base from './Base'
+import CommonStyles from './CommonStyles'
 
-export { Colors, Fonts, Images, Metrics, Base, Transitions }
+export { Colors, Fonts, Images, Metrics, CommonStyles, Transitions }
