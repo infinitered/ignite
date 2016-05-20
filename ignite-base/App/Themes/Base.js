@@ -5,6 +5,8 @@ import Colors from './Colors'
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
 
+// NAME THIS FILE CommonStyles.js
+
 const base = {
   cell: {
     heading: {

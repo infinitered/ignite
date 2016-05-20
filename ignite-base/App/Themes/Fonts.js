@@ -1,55 +1,52 @@
-const fonts = {
+const type = {
   base: 'HelveticaNeue',
   bold: 'HelveticaNeue-Bold',
-  emphasis: 'HelveticaNeue-Italic',
-  size: {
-    title: 30,
-    input: 18,
-    regular: 17,
-    medium: 14,
-    small: 12,
-    tiny: 8.5
-  },
+  emphasis: 'HelveticaNeue-Italic'
+}
+
+const size = {
+  title: 30,
+  input: 18,
+  regular: 17,
+  medium: 14,
+  small: 12,
+  tiny: 8.5
+}
+
+const style = {
   h1: {
-    fontFamily: 'HelveticaNeue',
+    fontFamily: type.base,
     fontSize: 38
   },
   h2: {
-    fontFamily: 'HelveticaNeue-Bold',
+    fontFamily: type.bold,
     fontSize: 34
   },
   h3: {
-    fontFamily: 'HelveticaNeue-Italic',
+    fontFamily: type.emphasis,
     fontSize: 30
   },
   h4: {
-    fontFamily: 'HelveticaNeue',
+    fontFamily: type.base,
     fontSize: 26
   },
   h5: {
-    fontFamily: 'HelveticaNeue-Bold',
+    fontFamily: type.bold,
     fontSize: 24
   },
   h6: {
-    fontFamily: 'HelveticaNeue-Italic',
+    fontFamily: type.emphasis,
     fontSize: 19
   },
-  lead: {
-    fontFamily: 'HelveticaNeue',
+  normal: {
+    fontFamily: type.base,
     fontSize: 15
-  },
-  unclassified: {
-    fontFamily: 'HelveticaNeue-Bold',
-    fontSize: 13
-  },
-  secondary: {
-    fontFamily: 'HelveticaNeue-Italic',
-    fontSize: 11
-  },
-  tertiary: {
-    fontFamily: 'HelveticaNeue',
-    fontSize: 9
   }
 }
 
-export default fonts
+export default {
+  type,
+  size,
+  style
+}
+
