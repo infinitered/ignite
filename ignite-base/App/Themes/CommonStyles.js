@@ -42,12 +42,11 @@ const CommonStyles = {
     backgroundColor: Colors.wave
   },
   sectionTitle: {
-    fontFamily: Fonts.bold,
+    ...Fonts.style.h3,
     color: Colors.coal,
     backgroundColor: Colors.silver,
     padding: 5,
     marginVertical: 5,
-    fontSize: Fonts.size.title,
     borderWidth: 1,
     borderColor: Colors.error,
     alignItems: 'center'
