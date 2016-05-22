@@ -25,7 +25,7 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   temperature: {
-    fontSize: Fonts.size.title
+    fontSize: Fonts.size.h5
   },
   locale: {
     fontSize: Fonts.size.input
