@@ -88,8 +88,20 @@ _We're web (Elixir and Phoenix) and mobile (React Native) developers based in Po
 * - [x] Working Component Generator
 * - [x] Working Container Generator
 * - [x] Working Screen Generator
+* - [x] Intro Screens
+  * - [x] API Test Screen
+  * - [x] Theme screen
+  * - [x] Components Style Guide
+  * - [ ] Device info screen
+* - [ ]  Friendly UX for generators 
+
+### Version 1.1
+* - [ ] Generators
+  * - [ ] Feature specific genertors
+    * _e.g._ Gifted form, Realm etc. 
 * - [ ] Working Reducer Generator
 * - [ ] Working Saga Generator
+* - [ ] Left menu item Generator
 
 ### Version 2.0
 * - [ ] Pick and choose formulas in Generator
