@@ -1,12 +1,11 @@
-import React from 'react'
-import { ScrollView, Text, PropTypes } from 'react-native'
+import React, { PropTypes } from 'react'
+import { ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
 
 // Styles
 import styles from './Styles/<%= name %>Style'
-
 
 export default class <%= name %> extends React.Component {
 
