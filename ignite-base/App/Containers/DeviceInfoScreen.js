@@ -17,6 +17,21 @@ import I18n from '../I18n/I18n.js'
 
 export default class DeviceInfoScreen extends React.Component {
 
+  // {title: 'Device Unique ID', info: DeviceInfo.getUniqueID()},
+  // {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},
+  // {title: 'Device Model', info: DeviceInfo.getModel()},
+  // {title: 'Device ID', info: DeviceInfo.getDeviceId()},
+  // {title: 'Device System Name', info: DeviceInfo.getSystemName()},
+  // {title: 'Device Version', info: DeviceInfo.getSystemVersion()},
+  // {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
+  // {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
+  // {title: 'App Version', info: DeviceInfo.getVersion()},
+  // {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()},
+  // {title: 'Device Name', info: DeviceInfo.getDeviceName()},
+  // {title: 'Device Locale', info: DeviceInfo.getDeviceLocale()},
+  // {title: 'Device Country', info: DeviceInfo.getDeviceCountry()},
+  // {title: 'User Agent', info: DeviceInfo.getUserAgent()}
+
   constructor (props) {
     super(props)
     this.state = {
@@ -44,19 +59,21 @@ export default class DeviceInfoScreen extends React.Component {
     }
   }
 
-  renderRow () {
-    const ROW_DATA = [
-      {title: 'Device Unique ID', info: DeviceInfo.getUniqueID()},
+  renderHardwareCard (cardTitle) {
+    return (
+      <View style={styles.cardContainer}>
+        <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
+        {this.renderHardwareRows()}
+      </View>
+    )
+  }
+
+  renderHardwareRows () {
+    const HARDWARE_DATA = [
       {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},
-      {title: 'Device Model', info: DeviceInfo.getModel()},
-      {title: 'Device ID', info: DeviceInfo.getDeviceId()},
-      {title: 'Device System Name', info: DeviceInfo.getSystemName()},
-      {title: 'Device Version', info: DeviceInfo.getSystemVersion()},
-      {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
-      {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
-      {title: 'App Version', info: DeviceInfo.getVersion()},
-      {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()},
       {title: 'Device Name', info: DeviceInfo.getDeviceName()},
+      {title: 'Device Model', info: DeviceInfo.getModel()},
+      {title: 'Device Unique ID', info: DeviceInfo.getUniqueID()},
       {title: 'Device Locale', info: DeviceInfo.getDeviceLocale()},
       {title: 'Device Country', info: DeviceInfo.getDeviceCountry()},
       {title: 'User Agent', info: DeviceInfo.getUserAgent()}
@@ -75,7 +92,76 @@ export default class DeviceInfoScreen extends React.Component {
             </View>
           </View>
         )
-      }, ROW_DATA)
+      }, HARDWARE_DATA)
+    )
+    return rows
+  }
+
+  renderOSCard (cardTitle) {
+    return (
+      <View style={styles.cardContainer}>
+        <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
+        {this.renderOSRows()}
+      </View>
+    )
+  }
+
+  renderOSRows () {
+    const OS_DATA = [
+      {title: 'Device System Name', info: DeviceInfo.getSystemName()},
+      {title: 'Device ID', info: DeviceInfo.getDeviceId()},
+      {title: 'Device Version', info: DeviceInfo.getSystemVersion()}
+    ]
+    let index = 0
+    const rows = (
+      R.map((cell) => {
+        const {title, info} = cell
+        return (
+          <View key={index++} style={styles.rowContainer}>
+            <View style={styles.rowLabelContainer}>
+              <Text style={styles.rowLabel}>{title}</Text>
+            </View>
+            <View style={styles.rowInfoContainer}>
+              <Text style={styles.rowInfo}>{info}</Text>
+            </View>
+          </View>
+        )
+      }, OS_DATA)
+    )
+    return rows
+  }
+
+  renderAppCard (cardTitle) {
+    return (
+      <View style={styles.cardContainer}>
+        <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
+        {this.renderAppRows()}
+      </View>
+    )
+  }
+
+  renderAppRows () {
+    const APP_DATA = [
+      {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
+      {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
+      {title: 'App Version', info: DeviceInfo.getVersion()},
+      {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()}
+    ]
+    let index = 0
+    const rows = (
+      R.map((cell) => {
+        const {title, info} = cell
+        return (
+          <View key={index++} style={styles.rowContainer}>
+            <View style={styles.rowLabelContainer}>
+              <Text style={styles.rowLabel}>{title}</Text>
+            </View>
+            <View style={styles.rowInfoContainer}>
+              <Text style={styles.rowInfo}>{info}</Text>
+            </View>
+          </View>
+        )
+      }, APP_DATA)
     )
     return rows
   }
@@ -83,7 +169,9 @@ export default class DeviceInfoScreen extends React.Component {
   render () {
     return (
       <ScrollView style={[styles.container, {height: this.state.visibleHeight}]}>
-        {this.renderRow()}
+        {this.renderHardwareCard('Device Hardware')}
+        {this.renderOSCard('Device OS')}
+        {this.renderAppCard('App Info')}
       </ScrollView>
     )
   }
