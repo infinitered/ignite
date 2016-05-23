@@ -9,6 +9,7 @@ import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
+import R from 'ramda'
 
 import styles from './Styles/DeviceInfoScreenStyle'
 
@@ -33,10 +34,56 @@ export default class DeviceInfoScreen extends React.Component {
     }
   }
 
+  renderHeader (header) {
+    if (header) {
+      return (
+        <View>
+          <Text>{header}</Text>
+        </View>
+      )
+    }
+  }
+
+  renderRow () {
+    const ROW_DATA = [
+      {title: 'Device Unique ID', info: DeviceInfo.getUniqueID()},
+      {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},
+      {title: 'Device Model', info: DeviceInfo.getModel()},
+      {title: 'Device ID', info: DeviceInfo.getDeviceId()},
+      {title: 'Device System Name', info: DeviceInfo.getSystemName()},
+      {title: 'Device Version', info: DeviceInfo.getSystemVersion()},
+      {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
+      {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
+      {title: 'App Version', info: DeviceInfo.getVersion()},
+      {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()},
+      {title: 'Device Name', info: DeviceInfo.getDeviceName()},
+      {title: 'Device Locale', info: DeviceInfo.getDeviceLocale()},
+      {title: 'Device Country', info: DeviceInfo.getDeviceCountry()},
+      {title: 'User Agent', info: DeviceInfo.getUserAgent()}
+    ]
+    let index = 0
+    const rows = (
+      R.map((cell) => {
+        const {title, info} = cell
+        return (
+          <View key={index++} style={styles.rowContainer}>
+            <View style={styles.rowLabelContainer}>
+              <Text style={styles.rowLabel}>{title}</Text>
+            </View>
+            <View style={styles.rowInfoContainer}>
+              <Text style={styles.rowInfo}>{info}</Text>
+            </View>
+          </View>
+        )
+      }, ROW_DATA)
+    )
+    return rows
+  }
+
   render () {
     return (
       <ScrollView style={[styles.container, {height: this.state.visibleHeight}]}>
-        <Text>{DeviceInfo.getDeviceName()}</Text>
+        {this.renderRow()}
       </ScrollView>
     )
   }
