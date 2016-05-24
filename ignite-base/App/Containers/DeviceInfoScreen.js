@@ -47,23 +47,19 @@ export default class DeviceInfoScreen extends React.Component {
   }
 
   renderRows (rowData) {
-    let index = 0
-    const rows = (
-      R.map((cell) => {
-        const {title, info} = cell
-        return (
-          <View key={index++} style={styles.rowContainer}>
-            <View style={styles.rowLabelContainer}>
-              <Text style={styles.rowLabel}>{title}</Text>
-            </View>
-            <View style={styles.rowInfoContainer}>
-              <Text style={styles.rowInfo}>{info}</Text>
-            </View>
+    return rowData.map((cell) => {
+      const {title, info} = cell
+      return (
+        <View key={title} style={styles.rowContainer}>
+          <View style={styles.rowLabelContainer}>
+            <Text style={styles.rowLabel}>{title}</Text>
           </View>
-        )
-      }, rowData)
-    )
-    return rows
+          <View style={styles.rowInfoContainer}>
+            <Text style={styles.rowInfo}>{info}</Text>
+          </View>
+        </View>
+      )
+    })
   }
 
   render () {
