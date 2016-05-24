@@ -14,7 +14,7 @@ export default new class Routes {
 
   get DeviceInfoScreen () {
     return {
-      title: 'DeviceInfoScreen',
+      title: 'Device Info',
       component: require('../Containers/DeviceInfoScreen').default,
       leftButton: 'BACK'
     }

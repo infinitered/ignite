@@ -5,43 +5,36 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.ocean
+    backgroundColor: Colors.background
   },
   cardTitle: {
     alignSelf: 'center',
     fontSize: Fonts.size.regular,
     fontWeight: 'bold',
-    marginTop: Metrics.baseMargin
+    marginVertical: Metrics.baseMargin,
+    color: Colors.snow
   },
   cardContainer: {
-    backgroundColor: Colors.steel,
+    backgroundColor: Colors.wave,
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 2,
-    shadowColor: Colors.black,
+    shadowColor: Colors.panther,
     shadowOffset: {
       height: 7,
       width: 7
     },
-    shadowOpacity: 0.55,
+    shadowOpacity: 0.25,
     shadowRadius: 2,
     paddingBottom: Metrics.baseMargin,
-    margin: Metrics.baseMargin,
-    marginBottom: Metrics.baseMargin * 3
+    margin: Metrics.baseMargin
   },
   rowContainer: {
     flexDirection: 'row',
-    borderColor: 'black',
-    borderWidth: 1,
+    borderColor: Colors.windowTint,
+    borderWidth: 0.5,
     borderRadius: 2,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      height: 5,
-      width: 5
-    },
-    shadowOpacity: 0.55,
-    shadowRadius: 2,
-    margin: Metrics.baseMargin
+    marginHorizontal: Metrics.baseMargin
   },
   rowLabelContainer: {
     flex: 1,
