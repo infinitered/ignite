@@ -79,8 +79,8 @@ export default class PresentationScreen extends React.Component {
           Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour
           specific to a device.
         </Text>
-        <RoundedButton onPress={() => window.alert('coming soon')}>
-          COMING SOON
+        <RoundedButton onPress={() => this.props.navigator.push(Routes.DeviceInfoScreen)}>
+          Device Info Screen
         </RoundedButton>
 
       </ScrollView>
