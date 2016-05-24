@@ -92,7 +92,7 @@ _We're web (Elixir and Phoenix) and mobile (React Native) developers based in Po
   * - [x] API Test Screen
   * - [x] Theme screen
   * - [x] Components Style Guide
-  * - [ ] Device info screen
+  * - [x] Device info screen
 * - [ ]  Friendly UX for generators 
 
 ### Version 1.1
