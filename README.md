@@ -10,16 +10,17 @@
 </p>
 
 ### Why Ignite?
-* Seed Apps/Components/Styles etc. with ignite generator
+* Command-line Generator - Seed Apps/Components/Styles etc.
 * JS Code Standard - Standard Compliant
-* Multiple Platform Support
+* EVERYTHING works with iOS and Android
 * Documented Structure
 * Redux State Management
 * Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
 * Githooks
 * Mocha Tests
-* API Client
+* API Ready
+* Reactotron Ready
 * Include Common Libs:
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
@@ -36,11 +37,11 @@ To view the generated example project, just pull down the code and run ignite-ba
 
 Make sure you're setup for [React Native](https://facebook.github.io/react-native/docs/getting-started.html#content)
 
-*Install*
+**Step 1: Install**
 
 `npm install -g react-native-ignite`
 
-*Use*
+**Step 2: Use**
 
 `ignite new MyApplication`
 
