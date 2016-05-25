@@ -58,18 +58,7 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 ## :iphone: iOS/Android/XDE support
 Code is geared towards tested and cross platform functionality. [XDE](https://exponentjs.com/) is disabled by default, but see `index.js` for enabling.
 
-## :no_entry_sign: About Standard Compliance
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
-
-**To Lint on Commit**
-
-1. Install git-hooks => On a Mac `brew install git-hooks` - [Other](https://github.com/icefox/git-hooks/)
-2. Setup on Repo => `git hooks --install`
-
-
 ## Where to Go From Here
-#### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Related-Articles-&-Information) - Understand the Tech Inside
+#### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Chosen-Tech) - Understand the Tech Inside
 #### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
