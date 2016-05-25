@@ -68,7 +68,7 @@ This project adheres to Standard.  Our CI enforces this, so we suggest you enabl
 2. Setup on Repo => `git hooks --install`
 
 
-## Important Links
+## Where to Go From Here
+#### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Related-Articles-&-Information) - Understand the Tech Inside
 #### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
-#### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Related-Articles-&-Information) - Understand Why and How of the Tech
