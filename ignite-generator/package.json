@@ -30,9 +30,11 @@
   ],
   "dependencies": {
     "colors": "^1.1.2",
+    "ora": "^0.2.1",
     "ramda": "^0.20.0",
     "shelljs": "^0.6.0",
-    "yeoman-generator": "^0.21.1"
+    "yeoman-generator": "^0.21.1",
+    "semver": "^5.1.0"
   },
   "devDependencies": {
     "babel": "^6.1.18",

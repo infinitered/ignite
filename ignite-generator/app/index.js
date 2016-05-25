@@ -1,6 +1,11 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.AppGenerator = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -10,8 +15,6 @@ var _safe2 = _interopRequireDefault(_safe);
 
 var _yeomanGenerator = require('yeoman-generator');
 
-var _validation = require('../validation');
-
 var _shelljs = require('shelljs');
 
 var _shelljs2 = _interopRequireDefault(_shelljs);
@@ -19,6 +22,14 @@ var _shelljs2 = _interopRequireDefault(_shelljs);
 var _utilities = require('../utilities');
 
 var Utilities = _interopRequireWildcard(_utilities);
+
+var _ora = require('ora');
+
+var _ora2 = _interopRequireDefault(_ora);
+
+var _semver = require('semver');
+
+var _semver2 = _interopRequireDefault(_semver);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37,29 +48,9 @@ var emptyFolder = function emptyFolder(folder) {
   _shelljs2.default.mkdir(folder);
 };
 
-var copyOverBase = function copyOverBase(context) {
-  // copy New project Readme
-  context.fs.copyTpl(context.templatePath(igniteBase + '/README.md.template'), context.destinationPath(context.name + '/README.md'), { name: context.name });
-
-  // copy package.json
-  context.fs.copyTpl(context.templatePath(igniteBase + '/package.json.template'), context.destinationPath(context.name + '/package.json'), { name: context.name });
-
-  // copy template of index.ios.js
-  context.fs.copyTpl(context.templatePath(igniteBase + '/index.js.template'), context.destinationPath(context.name + '/index.ios.js'), { name: context.name });
-
-  // copy template of index.android.js
-  context.fs.copyTpl(context.templatePath(igniteBase + '/index.js.template'), context.destinationPath(context.name + '/index.android.js'), { name: context.name });
-
-  // copy git_hooks/
-  context.directory(context.templatePath(igniteBase + '/git_hooks'), context.destinationPath(context.name + '/git_hooks'));
-
-  // copy Tests/
-  context.directory(context.templatePath(igniteBase + '/Tests'), context.destinationPath(context.name + '/Tests'));
-
-  // copy App/
-  context.directory(context.templatePath(igniteBase + '/App'), context.destinationPath(context.name + '/App'));
-};
-
+/**
+ * Doctors the AndroidManifest.xml to put in the stuff we need.
+ */
 var performInserts = function performInserts(name) {
   // Add permissions for push notifications
   var pushPermissions = '\n    <permission\n        android:name="${applicationId}.permission.C2D_MESSAGE"\n        android:protectionLevel="signature" />\n    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n  ';
@@ -70,7 +61,38 @@ var performInserts = function performInserts(name) {
   Utilities.insertInFile(name + '/android/app/src/main/AndroidManifest.xml', 'android:theme', appEntries);
 };
 
-var AppGenerator = function (_NamedBase) {
+/**
+ * A green checkmark
+ */
+var check = _safe2.default.green('✔︎');
+
+/**
+ * A red x.
+ */
+var xmark = _safe2.default.red('𝗫');
+
+/**
+ * Is this command installed on ze computer?
+ */
+var isCommandInstalled = function isCommandInstalled(command) {
+  return !!_shelljs2.default.which(command);
+};
+
+/**
+ * Behold.  The Yeoman generator to install Ignite.
+ *
+ * These methods get executed top-to-bottom.  The methods that start with an _ are not automatically run.
+ * This is a Yeomanism.
+ *
+ * Also, a few of these functions like `initializing` and `end` are reserved lifecycle methods.
+ * This too is a Yeomanism.
+ *
+ * Finally, if you want to ensure your task finishes before starting the next one, either return a
+ * promise, or call `const done = this.async()` before and `done()` once you're finished your task.
+ * And yes.  That too is a Yeomanism.
+ */
+
+var AppGenerator = exports.AppGenerator = function (_NamedBase) {
   _inherits(AppGenerator, _NamedBase);
 
   function AppGenerator() {
@@ -81,51 +103,304 @@ var AppGenerator = function (_NamedBase) {
 
   _createClass(AppGenerator, [{
     key: 'initializing',
+
+
+    /**
+     * Entry point.  Let's set this up.
+     */
     value: function initializing() {
-      console.log(_safe2.default.yellow('generate app -> ') + this.name + ' ☕️  This will take a while ☕️ ');
-      // force overwrite on conflicts (default is ask user)
+      // this is a fresh install, so let's always clobber the destination.
       this.conflicter.force = true;
+      // prep our spinner
+      this.spinner = (0, _ora2.default)('starting');
 
-      (0, _validation.showWarnings)();
-      // Fail if tools are missing
-      (0, _validation.verifyTools)();
-      (0, _validation.verifyExtensiveTools)();
+      this.log('-----------------------------------------------');
+      this.log(_safe2.default.red('  (                  )   (                   '));
+      this.log(_safe2.default.red('  )\\ )   (        ( /(   )\\ )    *   )       '));
+      this.log(_safe2.default.red(' (()/(   )\\ )     )\\()) (()/(  ` )  /(   (   '));
+      this.log(_safe2.default.red('  /(_)) (()/(    ((_)\\   /(_))  ( )(_))  )\\  '));
+      this.log(_safe2.default.red(' (_))    /(_))_   _((_) (_))   (_(_())  ((_) '));
+      this.log(' |_ _|  ' + _safe2.default.red('(_))') + ' __| | \\| | |_ _|  |_   _|  | __|');
+      this.log('  | |     | (_ | | .` |  | |     | |    | _| ');
+      this.log(' |___|     \\___| |_|\\_| |___|    |_|    |___|');
+      this.log('-----------------------------------------------');
+      this.log('');
+      this.log('An unfair headstart for your React Native apps.');
+      this.log(_safe2.default.yellow('https://ignite.infinite.red'));
+      this.log('');
+      this.log('-----------------------------------------------');
 
-      this.templateFolder = this.sourceRoot();
-      // Clean template folder
-      emptyFolder(this.templateFolder);
+      this.log('Igniting ' + _safe2.default.yellow(this.name) + '\n');
     }
+
+    /**
+     * Check for react-native.
+     */
+
   }, {
-    key: 'generateApp',
-    value: function generateApp() {
-      // Create latest RN project
-      this.spawnCommandSync('react-native', ['init', this.name, '--verbose']);
-
-      // Grab latest RNBase into templates folder
-      _shelljs2.default.exec('git clone git@github.com:infinitered/ignite.git ' + this.templateFolder);
-
-      // Copy over files from RN Base that apply
-      copyOverBase(this);
+    key: 'findReactNativeCli',
+    value: function findReactNativeCli() {
+      var status = 'Finding react-native';
+      this.spinner.text = status;
+      this.spinner.start();
+      if (!isCommandInstalled('react-native')) {
+        this.log(xmark + ' Missing react-native - \'npm install -g react-native-cli\'');
+        process.exit(1);
+      }
+      this.spinner.stop();
+      this.log(check + ' Found react-native');
     }
+
+    /**
+     * Check for git.
+     */
+
+  }, {
+    key: 'findGit',
+    value: function findGit() {
+      var status = 'Finding git';
+      this.spinner.text = status;
+      this.spinner.start();
+      if (!isCommandInstalled('git')) {
+        this.log(xmark + ' Missing git');
+        process.exit(1);
+      }
+      this.spinner.stop();
+      this.log(check + ' Found git');
+    }
+
+    /**
+     * Check for rnpm.
+     */
+
+  }, {
+    key: 'findRnpm',
+    value: function findRnpm() {
+      var _this2 = this;
+
+      var status = 'Finding rnpm';
+      this.spinner.text = status;
+      this.spinner.start();
+      if (!isCommandInstalled('rnpm')) {
+        this.log(xmark + ' Missing rnpm - \'npm install -g rnpm\'');
+        process.exit(1);
+      }
+      var done = this.async();
+      // check an outdated version of rnpm (< 1.7.0)
+      var minimumRnpm = '1.7.0';
+      _shelljs2.default.exec('rnpm --version', { silent: true }, function (code, stdout, stderr) {
+        var rnpmVersion = stdout.replace(/\s/, '');
+        _this2.spinner.stop();
+        if (_semver2.default.lt(rnpmVersion, minimumRnpm)) {
+          _this2.log(xmark + ' rnpm ' + minimumRnpm + ' required - \'npm install -g rnpm\'');
+          process.exit(1);
+        } else {
+          _this2.log(check + ' Found rnpm');
+          done();
+        }
+      });
+    }
+
+    /**
+     * Do a quick clean up of the template folder.
+     */
+
+  }, {
+    key: 'cleanBeforeRunning',
+    value: function cleanBeforeRunning() {
+      var status = 'Getting ready for guests';
+      this.spinner.text = status;
+      this.spinner.start();
+      emptyFolder(this.sourceRoot());
+      this.spinner.stop();
+      this.log(check + ' ' + status);
+    }
+
+    /**
+     * Run React Native init.
+     */
+
+  }, {
+    key: 'reactNativeInit',
+    value: function reactNativeInit() {
+      var _this3 = this;
+
+      var status = 'Running React Native setup (~ 1 minute)';
+      this.spinner.start();
+      this.spinner.text = status;
+      var done = this.async();
+      var command = 'react-native';
+      var commandOpts = ['init', this.name];
+      this.spawnCommand(command, commandOpts, { stdio: 'ignore' }).on('close', function () {
+        _this3.spinner.stop();
+        _this3.log(check + ' ' + status);
+        done();
+      });
+    }
+
+    /**
+     * Ensure we have the latest Ignite templates.
+     */
+
+  }, {
+    key: 'downloadLatestIgnite',
+    value: function downloadLatestIgnite() {
+      var _this4 = this;
+
+      var status = 'Downloading latest Ignite files';
+      this.spinner.start();
+      this.spinner.text = status;
+      var done = this.async();
+      var command = 'git';
+      var commandOpts = ['clone', 'https://github.com/infinitered/ignite.git', this.sourceRoot()];
+      this.spawnCommand(command, commandOpts, { stdio: 'ignore' }).on('close', function () {
+        _this4.spinner.stop();
+        _this4.log(check + ' ' + status);
+        done();
+      });
+    }
+
+    /**
+     * Helper to copy a file to the destination.
+     */
+
+  }, {
+    key: '_cpFile',
+    value: function _cpFile(fromFilename, toFilename) {
+      var from = this.templatePath(igniteBase + '/' + fromFilename);
+      var to = this.destinationPath(this.name + '/' + toFilename);
+      this.fs.copyTpl(from, to, { name: this.name });
+    }
+
+    /**
+     * Helper to copy a template to the destination.
+     */
+
+  }, {
+    key: '_cpTemplate',
+    value: function _cpTemplate(filename) {
+      this._cpFile(filename + '.template', filename);
+    }
+
+    /**
+     * Helper to copy a directory to the destination.
+     */
+
+  }, {
+    key: '_cpDirectory',
+    value: function _cpDirectory(directory) {
+      this.directory(this.templatePath(igniteBase + '/' + directory), this.destinationPath(this.name + '/' + directory));
+    }
+
+    /**
+     * Let's ignite all up in hurrr.
+     */
+
+  }, {
+    key: 'copyExistingStuff',
+    value: function copyExistingStuff() {
+      var status = 'Copying Ignite goodies';
+      this.spinner.start();
+      this.spinner.text = status;
+
+      this._cpTemplate('README.md');
+      this._cpTemplate('package.json');
+      this._cpFile('index.js.template', 'index.ios.js');
+      this._cpFile('index.js.template', 'index.android.js');
+      this._cpDirectory('git_hooks');
+      this._cpDirectory('Tests');
+      this._cpDirectory('App');
+
+      this.spinner.stop();
+      this.log(check + ' ' + status);
+    }
+
+    /**
+     * Let's hand tweak the the android manifest because rnpm doesn't support that just yet.
+     */
+
+  }, {
+    key: '_updateAndroidManifest',
+    value: function _updateAndroidManifest() {
+      var status = 'Updating android manifest file';
+      this.spinner.start();
+      this.spinner.text = status;
+      performInserts(this.name);
+      this.spinner.stop();
+      this.log(check + ' ' + status);
+    }
+
+    /**
+     * Let's clean up any temp files.
+     */
+
+  }, {
+    key: '_cleanAfterRunning',
+    value: function _cleanAfterRunning() {
+      var status = 'Cleaning up after messy guests';
+      this.spinner.text = status;
+      this.spinner.start();
+      emptyFolder(this.sourceRoot());
+      this.spinner.stop();
+      this.log(check + ' ' + status);
+    }
+
+    /**
+     * Installs npm then rnpm ...
+     * Also, sadly, we need this install the install() function due to how
+     * Yeoman times its template copies.  :(
+     */
+
   }, {
     key: 'install',
     value: function install() {
-      // npm install copied package.json via `npm --prefix ./some_project install ./some_project`
-      this.spawnCommandSync('npm', ['--prefix', './' + this.name, 'install', './' + this.name]);
-      // Do rnpm link
-      // Separate process now, due to hang - Shell.exec(`cd ${this.name} && rnpm link`)
-      _shelljs2.default.exec('cd ' + this.name + ' && rnpm link &', { async: true, silent: true });
+      var _this5 = this;
+
+      var npmStatus = 'Installing Ignite dependencies (~30 seconds-ish)';
+      this.spinner.start();
+      this.spinner.text = npmStatus;
+      var done = this.async();
+      var dir = _shelljs2.default.pwd() + '/' + this.name;
+      // run the npm command
+      this.spawnCommand('npm', ['install'], { cwd: dir, stdio: 'ignore' }).on('close', function () {
+        _this5.spinner.stop();
+        _this5.log(check + ' ' + npmStatus);
+
+        // then run the rnpm command
+        var rnpmStatus = 'Linking with rnpm';
+        _this5.spinner.start();
+        _this5.spinner.text = rnpmStatus;
+        _this5.spawnCommand('rnpm', ['link'], { cwd: dir, stdio: 'ignore' }).on('close', function () {
+          _this5.spinner.stop();
+          _this5.log(check + ' ' + rnpmStatus);
+
+          // then update the android manifest
+          _this5._updateAndroidManifest();
+          done();
+        });
+      });
     }
+
+    /**
+     * Hold for applause.
+     */
+
   }, {
     key: 'end',
     value: function end() {
-      // Clean template folder
-      emptyFolder(this.templateFolder);
-
-      // Things rnmp didn't do
-      performInserts(this.name);
-
-      console.log('Time to get cooking! 🍽 ');
+      this._cleanAfterRunning();
+      this.spinner.stop();
+      this.log('');
+      this.log('Time to get cooking! 🍽 ');
+      this.log('');
+      this.log('To run in iOS:');
+      this.log(_safe2.default.yellow('  cd ' + this.name));
+      this.log(_safe2.default.yellow('  react-native run-ios'));
+      this.log('');
+      this.log('To run in Android:');
+      this.log(_safe2.default.yellow('  cd ' + this.name));
+      this.log(_safe2.default.yellow('  react-native run-android'));
+      this.log('');
     }
   }]);
 

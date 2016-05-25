@@ -1,11 +1,12 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 'use strict'
 
 import colors from 'colors/safe'
 import { NamedBase } from 'yeoman-generator'
-import { showWarnings, verifyTools, verifyExtensiveTools } from '../validation'
 import Shell from 'shelljs'
 import * as Utilities from '../utilities'
+import ora from 'ora'
+import semver from 'semver'
 
 const igniteBase = 'ignite-base'
 
@@ -14,54 +15,9 @@ const emptyFolder = (folder) => {
   Shell.mkdir(folder)
 }
 
-const copyOverBase = (context) => {
-  // copy New project Readme
-  context.fs.copyTpl(
-    context.templatePath(`${igniteBase}/README.md.template`),
-    context.destinationPath(`${context.name}/README.md`),
-    { name: context.name }
-  )
-
-  // copy package.json
-  context.fs.copyTpl(
-    context.templatePath(`${igniteBase}/package.json.template`),
-    context.destinationPath(`${context.name}/package.json`),
-    { name: context.name }
-  )
-
-  // copy template of index.ios.js
-  context.fs.copyTpl(
-    context.templatePath(`${igniteBase}/index.js.template`),
-    context.destinationPath(`${context.name}/index.ios.js`),
-    { name: context.name }
-  )
-
-  // copy template of index.android.js
-  context.fs.copyTpl(
-    context.templatePath(`${igniteBase}/index.js.template`),
-    context.destinationPath(`${context.name}/index.android.js`),
-    { name: context.name }
-  )
-
-  // copy git_hooks/
-  context.directory(
-    context.templatePath(`${igniteBase}/git_hooks`),
-    context.destinationPath(`${context.name}/git_hooks`)
-  )
-
-  // copy Tests/
-  context.directory(
-    context.templatePath(`${igniteBase}/Tests`),
-    context.destinationPath(`${context.name}/Tests`)
-  )
-
-  // copy App/
-  context.directory(
-    context.templatePath(`${igniteBase}/App`),
-    context.destinationPath(`${context.name}/App`)
-  )
-}
-
+/**
+ * Doctors the AndroidManifest.xml to put in the stuff we need.
+ */
 const performInserts = (name) => {
   // Add permissions for push notifications
   const pushPermissions = `
@@ -97,49 +53,289 @@ const performInserts = (name) => {
   Utilities.insertInFile(`${name}/android/app/src/main/AndroidManifest.xml`, 'android:theme', appEntries)
 }
 
-class AppGenerator extends NamedBase {
+/**
+ * A green checkmark
+ */
+const check = colors.green('✔︎')
+
+/**
+ * A red x.
+ */
+const xmark = colors.red('𝗫')
+
+/**
+ * Is this command installed on ze computer?
+ */
+const isCommandInstalled = (command) => !!Shell.which(command)
+
+/**
+ * Behold.  The Yeoman generator to install Ignite.
+ *
+ * These methods get executed top-to-bottom.  The methods that start with an _ are not automatically run.
+ * This is a Yeomanism.
+ *
+ * Also, a few of these functions like `initializing` and `end` are reserved lifecycle methods.
+ * This too is a Yeomanism.
+ *
+ * Finally, if you want to ensure your task finishes before starting the next one, either return a
+ * promise, or call `const done = this.async()` before and `done()` once you're finished your task.
+ * And yes.  That too is a Yeomanism.
+ */
+export class AppGenerator extends NamedBase {
+
+  /**
+   * Entry point.  Let's set this up.
+   */
   initializing () {
-    console.log(colors.yellow('generate app -> ') + this.name + ' ☕️  This will take a while ☕️ ')
-    // force overwrite on conflicts (default is ask user)
+    // this is a fresh install, so let's always clobber the destination.
     this.conflicter.force = true
+    // prep our spinner
+    this.spinner = ora('starting')
 
-    showWarnings()
-    // Fail if tools are missing
-    verifyTools()
-    verifyExtensiveTools()
+    this.log('-----------------------------------------------')
+    this.log(colors.red('  (                  )   (                   '))
+    this.log(colors.red('  )\\ )   (        ( /(   )\\ )    *   )       '))
+    this.log(colors.red(' (()/(   )\\ )     )\\()) (()/(  ` )  /(   (   '))
+    this.log(colors.red('  /(_)) (()/(    ((_)\\   /(_))  ( )(_))  )\\  '))
+    this.log(colors.red(' (_))    /(_))_   _((_) (_))   (_(_())  ((_) '))
+    this.log(' |_ _|  ' + colors.red('(_))') + ' __| | \\| | |_ _|  |_   _|  | __|')
+    this.log('  | |     | (_ | | .` |  | |     | |    | _| ')
+    this.log(' |___|     \\___| |_|\\_| |___|    |_|    |___|')
+    this.log('-----------------------------------------------')
+    this.log('')
+    this.log('An unfair headstart for your React Native apps.')
+    this.log(colors.yellow('https://ignite.infinite.red'))
+    this.log('')
+    this.log('-----------------------------------------------')
 
-    this.templateFolder = this.sourceRoot()
-    // Clean template folder
-    emptyFolder(this.templateFolder)
+    this.log('Igniting ' + colors.yellow(this.name) + '\n')
   }
 
-  generateApp () {
-    // Create latest RN project
-    this.spawnCommandSync('react-native', ['init', this.name, '--verbose'])
-
-    // Grab latest RNBase into templates folder
-    Shell.exec(`git clone git@github.com:infinitered/ignite.git ${this.templateFolder}`)
-
-    // Copy over files from RN Base that apply
-    copyOverBase(this)
+  /**
+   * Check for react-native.
+   */
+  findReactNativeCli () {
+    const status = 'Finding react-native'
+    this.spinner.text = status
+    this.spinner.start()
+    if (!isCommandInstalled('react-native')) {
+      this.log(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
+      process.exit(1)
+    }
+    this.spinner.stop()
+    this.log(`${check} Found react-native`)
   }
 
-  install () {
-    // npm install copied package.json via `npm --prefix ./some_project install ./some_project`
-    this.spawnCommandSync('npm', ['--prefix', `./${this.name}`, 'install', `./${this.name}`])
-    // Do rnpm link
-    // Separate process now, due to hang - Shell.exec(`cd ${this.name} && rnpm link`)
-    Shell.exec(`cd ${this.name} && rnpm link &`, {async: true, silent: true})
+  /**
+   * Check for git.
+   */
+  findGit () {
+    const status = 'Finding git'
+    this.spinner.text = status
+    this.spinner.start()
+    if (!isCommandInstalled('git')) {
+      this.log(`${xmark} Missing git`)
+      process.exit(1)
+    }
+    this.spinner.stop()
+    this.log(`${check} Found git`)
   }
 
-  end () {
-    // Clean template folder
-    emptyFolder(this.templateFolder)
+  /**
+   * Check for rnpm.
+   */
+  findRnpm () {
+    const status = 'Finding rnpm'
+    this.spinner.text = status
+    this.spinner.start()
+    if (!isCommandInstalled('rnpm')) {
+      this.log(`${xmark} Missing rnpm - 'npm install -g rnpm'`)
+      process.exit(1)
+    }
+    const done = this.async()
+    // check an outdated version of rnpm (< 1.7.0)
+    const minimumRnpm = '1.7.0'
+    Shell.exec('rnpm --version', {silent: true}, (code, stdout, stderr) => {
+      const rnpmVersion = stdout.replace(/\s/, '')
+      this.spinner.stop()
+      if (semver.lt(rnpmVersion, minimumRnpm)) {
+        this.log(`${xmark} rnpm ${minimumRnpm} required - 'npm install -g rnpm'`)
+        process.exit(1)
+      } else {
+        this.log(`${check} Found rnpm`)
+        done()
+      }
+    })
+  }
 
-    // Things rnmp didn't do
+  /**
+   * Do a quick clean up of the template folder.
+   */
+  cleanBeforeRunning () {
+    const status = 'Getting ready for guests'
+    this.spinner.text = status
+    this.spinner.start()
+    emptyFolder(this.sourceRoot())
+    this.spinner.stop()
+    this.log(`${check} ${status}`)
+  }
+
+  /**
+   * Run React Native init.
+   */
+  reactNativeInit () {
+    const status = 'Running React Native setup (~ 1 minute)'
+    this.spinner.start()
+    this.spinner.text = status
+    const done = this.async()
+    const command = 'react-native'
+    const commandOpts = ['init', this.name]
+    this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
+      .on('close', () => {
+        this.spinner.stop()
+        this.log(`${check} ${status}`)
+        done()
+      })
+  }
+
+  /**
+   * Ensure we have the latest Ignite templates.
+   */
+  downloadLatestIgnite () {
+    const status = 'Downloading latest Ignite files'
+    this.spinner.start()
+    this.spinner.text = status
+    const done = this.async()
+    const command = 'git'
+    const commandOpts = ['clone', 'https://github.com/infinitered/ignite.git', this.sourceRoot()]
+    this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
+      .on('close', () => {
+        this.spinner.stop()
+        this.log(`${check} ${status}`)
+        done()
+      })
+  }
+
+  /**
+   * Helper to copy a file to the destination.
+   */
+  _cpFile (fromFilename, toFilename) {
+    const from = this.templatePath(`${igniteBase}/${fromFilename}`)
+    const to = this.destinationPath(`${this.name}/${toFilename}`)
+    this.fs.copyTpl(from, to, { name: this.name })
+  }
+
+  /**
+   * Helper to copy a template to the destination.
+   */
+  _cpTemplate (filename) {
+    this._cpFile(`${filename}.template`, filename)
+  }
+
+  /**
+   * Helper to copy a directory to the destination.
+   */
+  _cpDirectory (directory) {
+    this.directory(
+      this.templatePath(`${igniteBase}/${directory}`),
+      this.destinationPath(`${this.name}/${directory}`)
+    )
+  }
+
+  /**
+   * Let's ignite all up in hurrr.
+   */
+  copyExistingStuff () {
+    const status = 'Copying Ignite goodies'
+    this.spinner.start()
+    this.spinner.text = status
+
+    this._cpTemplate('README.md')
+    this._cpTemplate('package.json')
+    this._cpFile('index.js.template', 'index.ios.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpDirectory('git_hooks')
+    this._cpDirectory('Tests')
+    this._cpDirectory('App')
+
+    this.spinner.stop()
+    this.log(`${check} ${status}`)
+  }
+
+  /**
+   * Let's hand tweak the the android manifest because rnpm doesn't support that just yet.
+   */
+  _updateAndroidManifest () {
+    const status = 'Updating android manifest file'
+    this.spinner.start()
+    this.spinner.text = status
     performInserts(this.name)
+    this.spinner.stop()
+    this.log(`${check} ${status}`)
+  }
 
-    console.log('Time to get cooking! 🍽 ')
+  /**
+   * Let's clean up any temp files.
+   */
+  _cleanAfterRunning () {
+    const status = 'Cleaning up after messy guests'
+    this.spinner.text = status
+    this.spinner.start()
+    emptyFolder(this.sourceRoot())
+    this.spinner.stop()
+    this.log(`${check} ${status}`)
+  }
+
+  /**
+   * Installs npm then rnpm ...
+   * Also, sadly, we need this install the install() function due to how
+   * Yeoman times its template copies.  :(
+   */
+  install () {
+    const npmStatus = 'Installing Ignite dependencies (~30 seconds-ish)'
+    this.spinner.start()
+    this.spinner.text = npmStatus
+    const done = this.async()
+    const dir = `${Shell.pwd()}/${this.name}`
+    // run the npm command
+    this.spawnCommand('npm', ['install'], {cwd: dir, stdio: 'ignore'})
+      .on('close', () => {
+        this.spinner.stop()
+        this.log(`${check} ${npmStatus}`)
+
+        // then run the rnpm command
+        const rnpmStatus = 'Linking with rnpm'
+        this.spinner.start()
+        this.spinner.text = rnpmStatus
+        this.spawnCommand('rnpm', ['link'], {cwd: dir, stdio: 'ignore'})
+          .on('close', () => {
+            this.spinner.stop()
+            this.log(`${check} ${rnpmStatus}`)
+
+            // then update the android manifest
+            this._updateAndroidManifest()
+            done()
+          })
+      })
+  }
+
+  /**
+   * Hold for applause.
+   */
+  end () {
+    this._cleanAfterRunning()
+    this.spinner.stop()
+    this.log('')
+    this.log('Time to get cooking! 🍽 ')
+    this.log('')
+    this.log('To run in iOS:')
+    this.log(colors.yellow(`  cd ${this.name}`))
+    this.log(colors.yellow('  react-native run-ios'))
+    this.log('')
+    this.log('To run in Android:')
+    this.log(colors.yellow(`  cd ${this.name}`))
+    this.log(colors.yellow('  react-native run-android'))
+    this.log('')
   }
 }
 
