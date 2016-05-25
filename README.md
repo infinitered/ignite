@@ -67,49 +67,8 @@ This project adheres to Standard.  Our CI enforces this, so we suggest you enabl
 1. Install git-hooks => On a Mac `brew install git-hooks` - [Other](https://github.com/icefox/git-hooks/)
 2. Setup on Repo => `git hooks --install`
 
-## :us: Internationalization (i18n)
-Translations are kept in the [I18n.js](https://github.com/infinitered/react_native_base/blob/master/App/I18n/I18n.js) file.  Edit this file for strings.  Even if your app doesn't support multi-languge, this is one of the best ways to keep strings uniform, and typos in check throughout an application.
 
-## :open_file_folder: Related Articles for this Code
-* [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)
-* [Understanding Redux Sagas](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de#.2o2rmz888)
-* [Using Fastlane to Deploy](https://shift.infinite.red/simple-react-native-ios-releases-4c28bb53a97b#.bjifers3r)
-
-## :cool: Built by the fine folks at [Infinite Red](http://infinite.red)
-
-[![image](http://infinite.red/images/ir-logo.svg)](http://infinite.red)
-
-_We're web (Elixir and Phoenix) and mobile (React Native) developers based in Portland and San Francisco._
-
-##  :red_car: Roadmap
-### Version 1.0
-* - [x] Best Practices Base App
-* - [x] Working App Generator
-* - [x] Working Component Generator
-* - [x] Working Container Generator
-* - [x] Working Screen Generator
-* - [x] Intro Screens
-  * - [x] API Test Screen
-  * - [x] Theme screen
-  * - [x] Components Style Guide
-  * - [x] Device info screen
-* - [ ]  Friendly UX for generators 
-
-### Version 1.1
-* - [ ] Generators
-  * - [ ] Feature specific genertors
-    * _e.g._ Gifted form, Realm etc. 
-* - [ ] Working Reducer Generator
-* - [ ] Working Saga Generator
-* - [ ] Left menu item Generator
-
-### Version 2.0
-* - [ ] Pick and choose formulas in Generator
-  * e.g. `Did you want a drawer?`
-  * e.g. `Did you want i18n?`
-* - [ ] Utilize composabilities of generator
-* - [ ] Example app can still be generated with it's own command (not default)
-
-### Version 3.0
-* - [ ] Generated apps can have some supportablity for upgrades
-* - [ ] Upgradable commands
+## Important Links
+#### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
+#### [Who are We?](https://infinite.red) - Learn More About Infinite Red
+#### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Related-Articles-&-Information) - Understand Why and How of the Tech
