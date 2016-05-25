@@ -8,23 +8,8 @@ const showWarnings = () => {
   Shell.exec('npm outdated -g react-native-cli')
 }
 
-// keep this one fast
-const verifyTools = () => {
-  // verify react-native
-  if (!Shell.which('react-native')) {
-    console.log(colors.red('This script requires react-native to be installed first.'))
-    Shell.exit(1)
-  }
-}
-
 // These tools are slower to check
 const verifyExtensiveTools = () => {
-  // verify git
-  if (!Shell.which('git')) {
-    console.log(colors.red('This script requires git to be installed first.'))
-    Shell.exit(1)
-  }
-
   // verify rnpm exists
   if (!Shell.which('rnpm')) {
     console.log(colors.red('This script requires rnpm to be installed.'))
@@ -39,4 +24,4 @@ const verifyExtensiveTools = () => {
   }
 }
 
-module.exports = { showWarnings, verifyTools, verifyExtensiveTools }
+module.exports = { showWarnings, verifyExtensiveTools }

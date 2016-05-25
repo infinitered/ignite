@@ -15,23 +15,8 @@ var showWarnings = function showWarnings() {
   _shelljs2.default.exec('npm outdated -g react-native-cli');
 };
 
-// keep this one fast
-var verifyTools = function verifyTools() {
-  // verify react-native
-  if (!_shelljs2.default.which('react-native')) {
-    console.log(_safe2.default.red('This script requires react-native to be installed first.'));
-    _shelljs2.default.exit(1);
-  }
-};
-
 // These tools are slower to check
 var verifyExtensiveTools = function verifyExtensiveTools() {
-  // verify git
-  if (!_shelljs2.default.which('git')) {
-    console.log(_safe2.default.red('This script requires git to be installed first.'));
-    _shelljs2.default.exit(1);
-  }
-
   // verify rnpm exists
   if (!_shelljs2.default.which('rnpm')) {
     console.log(_safe2.default.red('This script requires rnpm to be installed.'));
@@ -46,4 +31,4 @@ var verifyExtensiveTools = function verifyExtensiveTools() {
     }
 };
 
-module.exports = { showWarnings: showWarnings, verifyTools: verifyTools, verifyExtensiveTools: verifyExtensiveTools };
+module.exports = { showWarnings: showWarnings, verifyExtensiveTools: verifyExtensiveTools };
