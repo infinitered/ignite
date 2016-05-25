@@ -45,6 +45,8 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 
 `ignite new MyApplication`
 
+![install](../_art/install.gif)
+
 ## :arrow_forward: How to Run
 
 1. cd to the repo
