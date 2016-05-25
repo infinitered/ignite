@@ -47,7 +47,7 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 
 ![install](_art/install.gif)
 
-## :arrow_forward: How to Run
+## :arrow_forward: How to Run Generated App
 
 1. cd to the repo
 2. Run Build for either OS
