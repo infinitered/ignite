@@ -42,14 +42,15 @@ const CommonStyles = {
     backgroundColor: Colors.wave
   },
   sectionTitle: {
-    ...Fonts.style.h3,
+    ...Fonts.style.h4,
     color: Colors.coal,
-    backgroundColor: Colors.silver,
+    backgroundColor: Colors.ricePaper,
     padding: 5,
-    marginVertical: 5,
+    marginTop: 5,
     borderWidth: 1,
-    borderColor: Colors.error,
-    alignItems: 'center'
+    borderColor: Colors.ember,
+    alignItems: 'center',
+    textAlign: 'center'
   },
   subtitle: {
     color: Colors.snow,

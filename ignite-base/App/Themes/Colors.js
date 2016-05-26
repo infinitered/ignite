@@ -10,13 +10,15 @@ const colors = {
   steel: '#CCCCCC',
   error: 'rgba(200, 0, 0, 0.8)',
   ricePaper: 'rgba(255,255,255, 0.75)',
+  cloud: 'rgba(255,255,255, 0.35)',
   windowTint: 'rgba(0, 0, 0, 0.4)',
   panther: '#464646',
   charcoal: '#595959',
   coal: '#2d2d2d',
   bloodOrange: '#fb5f26',
   bloodOrangeJuice: 'rgba(251, 95, 38, 0.8)',
-  snow: 'white'
+  snow: 'white',
+  ember: 'rgba(164, 0, 48, 0.5)'
 }
 
 export default colors

@@ -10,7 +10,7 @@ export default StyleSheet.create({
     margin: Metrics.smallMargin,
     borderColor: Colors.bloodOrange,
     borderWidth: 2,
-    backgroundColor: Colors.bloodOrangeJuice,
+    backgroundColor: Colors.ember,
     justifyContent: 'center'
   },
   buttonText: {
