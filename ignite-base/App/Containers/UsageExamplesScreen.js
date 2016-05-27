@@ -7,7 +7,8 @@ import { Colors, Images, Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable'
-import PushNotification from 'react-native-push-notification'
+// Enable when you have configured Xcode
+// import PushNotification from 'react-native-push-notification'
 import I18n from '../I18n/I18n.js'
 
 // Styles
@@ -34,11 +35,15 @@ export default class UsageExamplesScreen extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    // Request premissions only if the user has logged in.
+    // Request push premissions only if the user has logged in.
     const { loggedIn } = nextProps
     if (loggedIn) {
-      if (__DEV__) console.log('Requesting push notification permissions.')
-      PushNotification.requestPermissions()
+      /*
+      * If you have turned on Push in Xcode,
+      * uncomment this code below and import at top
+      */
+      // if (__DEV__) console.log('Requesting push notification permissions.')
+      // PushNotification.requestPermissions()
     }
   }
 

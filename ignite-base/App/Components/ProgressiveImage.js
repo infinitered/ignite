@@ -23,7 +23,6 @@ export default class ProgressiveImage extends Component {
   }
 
   static propTypes = {
-    key: PropTypes.string,
     thumbnail: PropTypes.string,
     source: PropTypes.string,
     style: PropTypes.number
