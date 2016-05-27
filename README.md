@@ -10,7 +10,12 @@
 </p>
 
 ### Why Ignite?
-* Command-line Generator - Seed Apps/Components/Styles etc.
+* No Need to Fork!  Command-line Generator
+  * Apps
+  * Components/Styles
+  * Containers (smart components)
+  * Screens (opinionated containers)
+  * _and more..._
 * JS Code Standard - Standard Compliant
 * EVERYTHING works with iOS and Android
 * Documented Structure
