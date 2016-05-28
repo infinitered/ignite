@@ -4,6 +4,7 @@ import Program from 'commander'
 import colors from 'colors/safe'
 import pjson from './package.json'
 import Shell from 'shelljs'
+import spawn from 'cross-spawn'
 
 const FIRE = colors.red('FIRE!')
 
@@ -27,7 +28,7 @@ Program
   .action((project) => {
     checkYo()
     console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
-    Shell.exec(`yo react-native-ignite ${project}`)
+    spawn('yo', ['react-native-ignite', project], { shell: true, stdio: 'inherit' })
   })
 
 // generate
@@ -38,7 +39,7 @@ Program
   .action((type, name) => {
     checkYo()
     console.log(`Generate a new ${type} named ${name}`)
-    Shell.exec(`yo react-native-ignite:${type} ${name}`)
+    spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
 
 // parse params
