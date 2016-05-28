@@ -41,9 +41,15 @@ export default StyleSheet.create({
     ...CommonStyles.sectionTitle
   },
   description: {
+    marginHorizontal: Metrics.baseMargin,
     marginBottom: Metrics.smallMargin,
-    color: Colors.coal,
-    backgroundColor: Colors.silver,
-    padding: 5
+    backgroundColor: Colors.smoke,
+    padding: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5
+  },
+  descriptionText: {
+    ...Fonts.style.description,
+    color: Colors.snow
   }
 })

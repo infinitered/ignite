@@ -9,8 +9,8 @@ const metrics = {
   baseMargin: 10,
   smallMargin: 5,
   horizontalLineHeight: 1,
-  screenWidth: width,
-  screenHeight: height,
+  screenWidth: width < height ? width : height,
+  screenHeight: width < height ? height : width,
   navBarHeight: 64,
   buttonRadius: 4,
   icons: {

@@ -46,6 +46,10 @@ const style = {
   normal: {
     fontFamily: type.base,
     fontSize: size.regular
+  },
+  description: {
+    fontFamily: type.base,
+    fontSize: size.medium
   }
 }
 

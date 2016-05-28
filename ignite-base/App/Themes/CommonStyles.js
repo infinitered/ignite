@@ -47,6 +47,7 @@ const CommonStyles = {
     backgroundColor: Colors.ricePaper,
     padding: 5,
     marginTop: 5,
+    marginHorizontal: Metrics.baseMargin,
     borderWidth: 1,
     borderColor: Colors.ember,
     alignItems: 'center',
