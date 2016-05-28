@@ -6,8 +6,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _yeomanGenerator = require('yeoman-generator');
 
-var _validation = require('../validation');
-
 var _utilities = require('../utilities');
 
 var Utilities = _interopRequireWildcard(_utilities);
@@ -43,12 +41,6 @@ var ScreenGenerator = function (_NamedBase) {
   }
 
   _createClass(ScreenGenerator, [{
-    key: 'initializing',
-    value: function initializing() {
-      // Fail if tools are missing
-      (0, _validation.verifyTools)();
-    }
-  }, {
     key: 'generateApp',
     value: function generateApp() {
       // Copy over component files.

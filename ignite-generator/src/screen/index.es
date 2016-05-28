@@ -2,7 +2,6 @@
 'use strict'
 
 import { NamedBase } from 'yeoman-generator'
-import { verifyTools } from '../validation'
 import * as Utilities from '../utilities'
 
 const copyOverScreenContainer = (context) => {
@@ -34,11 +33,7 @@ const addToRoutes = (context) => {
 }
 
 class ScreenGenerator extends NamedBase {
-  initializing () {
-    // Fail if tools are missing
-    verifyTools()
-  }
-
+  
   generateApp () {
     // Copy over component files.
     copyOverScreenContainer(this)
