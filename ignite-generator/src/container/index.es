@@ -2,7 +2,6 @@
 'use strict'
 
 import { NamedBase } from 'yeoman-generator'
-import { verifyTools } from '../validation'
 
 const copyOverContainer = (context) => {
   // copy container template
@@ -21,11 +20,6 @@ const copyOverContainer = (context) => {
 }
 
 class ContainerGenerator extends NamedBase {
-  initializing () {
-    // Fail if tools are missing
-    verifyTools()
-  }
-
   generateApp () {
     // Copy over component files.
     copyOverContainer(this)
