@@ -32,3 +32,13 @@ local.properties
 #
 node_modules/
 npm-debug.log
+
+# Generated files
+utilities.js
+validation.js
+app/index.js
+component/index.js
+container/index.js
+screen/index.js
+testing/index.js
+
