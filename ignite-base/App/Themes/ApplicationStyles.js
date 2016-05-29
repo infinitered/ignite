@@ -50,9 +50,6 @@ const ApplicationStyles = {
     justifyContent: 'space-around',
     alignItems: 'center'
   },
-  sectionHeader: {
-    backgroundColor: Colors.wave
-  },
   sectionTitle: {
     ...Fonts.style.h4,
     color: Colors.coal,

@@ -8,7 +8,7 @@ const RootStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: Colors.coal
+    backgroundColor: Colors.background
   },
   drawer: {
     shadowColor: '#000000',

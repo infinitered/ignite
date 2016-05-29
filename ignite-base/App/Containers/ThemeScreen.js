@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, Image } from 'react-native'
-import { connect } from 'react-redux'
 import { Colors, Fonts, Images } from '../Themes'
 import R from 'ramda'
 
@@ -29,7 +28,7 @@ export default class UsageExamplesScreen extends React.Component {
     return (
       <View style={styles.colorContainer} key={`${color}Container`}>
         <View style={styles.backgroundContainer} key={`${color}BackgroundContainer`}>
-          <Image style={styles.backgroundImage} source={Images.tile_bg} key={`${color}BackgroundImage`} />
+          <Image style={styles.backerImage} source={Images.tile_bg} key={`${color}BackgroundImage`} />
           <View style={[styles.colorSquare, {backgroundColor: Colors[color]}]} key={`${color}Square`} />
         </View>
         <Text style={styles.colorName} key={`${color}Text`}>{color}</Text>
@@ -63,30 +62,25 @@ export default class UsageExamplesScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <Text>List of all Theme specific settings.  Configured style of each application.</Text>
-        <View style={styles.sectionHeader} key='colors-header'>
-          <Text style={styles.subtitle} key='colors'>Colors</Text>
-        </View>
-        <View style={styles.colorsContainer}>
-          {this.renderColors()}
-        </View>
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='types-header'>
-          <Text style={styles.subtitle} key='types'>Fonts</Text>
-        </View>
-        {this.renderFonts()}
-        <View style={[styles.sectionHeader, {marginTop: 5}]} key='fontStyles-header'>
-          <Text style={styles.subtitle} key='fontStyles'>Styles</Text>
-        </View>
-        {this.renderStyles()}
+      <Image source={Images.background} style={styles.backgroundImage}>
+        <ScrollView style={styles.container}>
+          <View style={styles.section} key='colors-header'>
+            <Text style={styles.sectionText} key='colors'>List of Theme specific settings.  Auto-generated from Themes folder.</Text>
+          </View>
+          <Text style={styles.sectionHeader}>Colors</Text>
+          <View style={styles.colorsContainer}>
+            {this.renderColors()}
+          </View>
 
-      </ScrollView>
+          <Text style={styles.sectionHeader}>Fonts</Text>
+          {this.renderFonts()}
+
+          <Text style={styles.sectionHeader}>Styles</Text>
+          {this.renderStyles()}
+
+        </ScrollView>
+      </Image>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {}
-}
-
-export default connect(mapStateToProps)(UsageExamplesScreen)

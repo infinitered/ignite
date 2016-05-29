@@ -13,7 +13,7 @@ const colors = {
   cloud: 'rgba(200,200,200, 0.35)',
   smoke: 'rgba(100, 100, 100, 0.9)',
   windowTint: 'rgba(0, 0, 0, 0.4)',
-  panther: '#1F0808',
+  panther: '#161616',
   charcoal: '#595959',
   coal: '#2d2d2d',
   bloodOrange: '#fb5f26',

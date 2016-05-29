@@ -1,23 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
+import { Colors, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
-  },
+  ...ApplicationStyles.screen,
   groupContainer: {
     ...ApplicationStyles.groupContainer
   },
   sectionHeader: {
-    ...ApplicationStyles.sectionHeader
-  },
-  sectionTitle: {
-    ...ApplicationStyles.sectionTitle
-  },
-  subtitle: {
-    ...ApplicationStyles.subtitle
+    ...ApplicationStyles.darkLabel
   },
   colorsContainer: {
     flexDirection: 'row',
@@ -26,10 +16,12 @@ export default StyleSheet.create({
   },
   backgroundContainer: {
     position: 'relative',
-    width: 100,
-    height: 100
+    width: 102,
+    height: 102,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.5)'
   },
-  backgroundImage: {
+  backerImage: {
     top: 0,
     bottom: 0,
     left: 0,
@@ -57,6 +49,7 @@ export default StyleSheet.create({
     padding: 5,
     fontSize: 24,
     marginHorizontal: 5,
-    flex: 1
+    flex: 1,
+    color: Colors.snow
   }
 })
