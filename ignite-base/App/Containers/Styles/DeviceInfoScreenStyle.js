@@ -1,12 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, Fonts } from '../../Themes/'
+import { Colors, Metrics, Fonts, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
-  },
+  ...ApplicationStyles.screen,
   cardTitle: {
     alignSelf: 'center',
     fontSize: Fonts.size.regular,
@@ -15,7 +11,7 @@ export default StyleSheet.create({
     color: Colors.snow
   },
   cardContainer: {
-    backgroundColor: Colors.wave,
+    backgroundColor: Colors.ember,
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 2,

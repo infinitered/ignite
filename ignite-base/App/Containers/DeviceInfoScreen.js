@@ -1,8 +1,8 @@
 // An All Components Screen is a great way to dev and quick-test components
 import React, {PropTypes} from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, Image } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
-import { Metrics } from '../Themes'
+import { Metrics, Images } from '../Themes'
 
 import styles from './Styles/DeviceInfoScreenStyle'
 
@@ -63,14 +63,18 @@ export default class DeviceInfoScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <Text>Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour
-              specific to a device.
-        </Text>
-        {this.renderCard('Device Hardware', HARDWARE_DATA)}
-        {this.renderCard('Device OS', OS_DATA)}
-        {this.renderCard('App Info', APP_DATA)}
-      </ScrollView>
+      <Image source={Images.background} style={styles.backgroundImage}>
+        <ScrollView style={styles.container}>
+          <View style={styles.section}>
+            <Text style={styles.sectionText} >
+              Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour specific to a device.
+            </Text>
+          </View>
+          {this.renderCard('Device Hardware', HARDWARE_DATA)}
+          {this.renderCard('Device OS', OS_DATA)}
+          {this.renderCard('App Info', APP_DATA)}
+        </ScrollView>
+      </Image>
     )
   }
 }
