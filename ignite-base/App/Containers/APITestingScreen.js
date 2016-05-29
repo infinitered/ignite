@@ -1,8 +1,7 @@
 // An All Components Screen is a great way to dev and quick-test components
 import React, { PropTypes } from 'react'
-import { ScrollView, View, Text, LayoutAnimation, DeviceEventEmitter, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
-import { Metrics } from '../Themes'
+import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native'
+import { Metrics, Images } from '../Themes'
 import FullButton from '../Components/FullButton'
 // For API
 import API from '../Services/Api'
@@ -30,35 +29,6 @@ export default class APITestingScreen extends React.Component {
 
   static propTypes = {
     navigator: PropTypes.object.isRequired
-  }
-
-  componentWillMount () {
-    // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
-    // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
-    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
-  }
-
-  componentWillUnmount () {
-    DeviceEventEmitter.removeAllListeners('keyboardDidShow')
-    DeviceEventEmitter.removeAllListeners('keyboardDidHide')
-  }
-
-  keyboardDidShow (e) {
-    // Animation types easeInEaseOut/linear/spring
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    let newSize = Metrics.screenHeight - e.endCoordinates.height
-    this.setState({
-      visibleHeight: newSize
-    })
-  }
-
-  keyboardDidHide (e) {
-    // Animation types easeInEaseOut/linear/spring
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    this.setState({
-      visibleHeight: Metrics.screenHeight
-    })
   }
 
   showResult (response, title = 'Response') {
@@ -91,29 +61,25 @@ export default class APITestingScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView ref='container' style={[styles.container, {height: this.state.visibleHeight}]}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.subtitle}>
-            Testing API with tools such as Postman or APIary.io are great for verifying the server works.
-              The API Test screen is the next step; a simple in-app way to verify your coded API functions work as expected.
-              Additionally, it's good for debugging API issues in the field.
-              API function testing -
-            Create new endpoints in Services/Api.js then add example uses to endpoints array in Containers/APITestingScreen.js for immediate feedback.
-          </Text>
-        </View>
-        {this.renderButtons()}
-        <APIResult ref='result' />
-      </ScrollView>
+      <Image source={Images.background} style={styles.backgroundImage}>
+        <ScrollView style={styles.container} ref='container'>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>
+              Testing API with Postman or APIary.io verifies the server works.
+              The API Test screen is the next step; a simple in-app way to verify and debug your in-app API functions.
+            </Text>
+            <Text style={styles.sectionText}>
+              Create new endpoints in Services/Api.js then add example uses to endpoints array in Containers/APITestingScreen.js
+            </Text>
+          </View>
+          {this.renderButtons()}
+          <APIResult ref='result' />
+        </ScrollView>
+      </Image>
     )
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps)(APITestingScreen)
 
 class APIResult extends React.Component {
 

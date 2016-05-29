@@ -1,6 +1,7 @@
 // An All Components Screen is a great way to dev and quick-test components
 import React, {PropTypes} from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, Image } from 'react-native'
+import { Images } from '../Themes'
 import { connect } from 'react-redux'
 import styles from './Styles/AllComponentsScreenStyle'
 
@@ -20,21 +21,23 @@ export default class AllComponentsScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.screenContainer}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.subtitle}>
-            Sometimes called a 'Style Guide', or 'Pattern Library', Examples Screen is filled with usage examples
-            of fundamental components for a given application.  Use this merge-friendly way for your team
-            to show/use/test components.  Examples are registered inside each component's file for quick changes and usage identification.
-          </Text>
-          <Text style={styles.subtitle} >
-            All components with registered examples will be rendered below:
-          </Text>
-        </View>
+      <Image source={Images.background} style={styles.backgroundImage}>
+        <ScrollView style={styles.container}>
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>
+              Sometimes called a 'Style Guide', or 'Pattern Library', Examples Screen is filled with usage examples
+              of fundamental components for a given application.  Use this merge-friendly way for your team
+              to show/use/test components.  Examples are registered inside each component's file for quick changes and usage identification.
+            </Text>
+            <Text style={styles.subtitle} >
+              All components that register examples will be rendered below:
+            </Text>
+          </View>
 
-        {ExamplesRegistry.render()}
+          {ExamplesRegistry.render()}
 
-      </ScrollView>
+        </ScrollView>
+      </Image>
     )
   }
 }

@@ -56,7 +56,7 @@ export default class PresentationScreen extends React.Component {
           </RoundedButton>
 
           <View style={styles.centered}>
-            <Text style={styles.descriptionText}>Made with ❤️ by Infinite Red</Text>
+            <Text style={styles.subtitle}>Made with ❤️ by Infinite Red</Text>
           </View>
 
         </ScrollView>

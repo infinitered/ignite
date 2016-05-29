@@ -4,11 +4,11 @@ import { Fonts, Colors } from '../../Themes/'
 export default StyleSheet.create({
   button: {
     marginVertical: 5,
-    borderTopColor: Colors.charcoal,
-    borderBottomColor: Colors.charcoal,
+    borderTopColor: Colors.fire,
+    borderBottomColor: Colors.bloodOrange,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    backgroundColor: Colors.deepOcean
+    backgroundColor: Colors.ember
   },
   buttonText: {
     margin: 18,

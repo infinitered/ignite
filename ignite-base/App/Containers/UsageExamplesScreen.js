@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Routes from '../Navigation/Routes'
 import { Colors, Images, Metrics } from '../Themes'
+import RoundedButton from '../Components/RoundedButton'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable'
@@ -80,25 +81,17 @@ export default class UsageExamplesScreen extends React.Component {
 
   renderLoginButton () {
     return (
-      <View style={styles.loginBox}>
-        <TouchableOpacity onPress={this.handlePressLogin}>
-          <View style={styles.loginButton}>
-            <Text style={styles.loginText}>{I18n.t('signIn')}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <RoundedButton onPress={this.handlePressLogin}>
+        {I18n.t('signIn')}
+      </RoundedButton>
     )
   }
 
   renderLogoutButton () {
     return (
-      <View style={styles.loginBox}>
-        <TouchableOpacity onPress={this.handlePressLogout}>
-          <View style={styles.loginButton}>
-            <Text style={styles.loginText}>{I18n.t('logOut')}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <RoundedButton onPress={this.handlePressLogout}>
+        {I18n.t('logOut')}
+      </RoundedButton>
     )
   }
 
@@ -119,16 +112,16 @@ export default class UsageExamplesScreen extends React.Component {
         <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
         <View style={styles.groupContainer}>
           <TouchableOpacity onPress={this.handlePressRocket}>
-            <Icon name='rocket' size={Metrics.icons.medium} color={Colors.error} />
+            <Icon name='rocket' size={Metrics.icons.medium} color={Colors.ember} />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handlePressSend}>
             <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handlePressStar}>
-            <Icon name='star' size={Metrics.icons.medium} color={Colors.error} />
+            <Icon name='star' size={Metrics.icons.medium} color={Colors.snow} />
           </TouchableOpacity>
           <Icon name='trophy' size={Metrics.icons.medium} color={Colors.error} />
-          <Icon name='warning' size={Metrics.icons.medium} color={Colors.error} />
+          <Icon name='warning' size={Metrics.icons.medium} color={Colors.ember} />
         </View>
         <View style={styles.groupContainer}>
           <Icon.Button name='facebook' style={styles.facebookButton} backgroundColor={Colors.facebook} onPress={() => window.alert('Facebook')}>
@@ -137,10 +130,10 @@ export default class UsageExamplesScreen extends React.Component {
         </View>
         <Text style={styles.componentLabel}>{I18n.t('rnAnimatable')}</Text>
         <View style={styles.groupContainer}>
-          <Animatable.Text animation='fadeIn' iterationCount='infinite' direction='alternate'>{I18n.t('rnAnimatable')}</Animatable.Text>
+          <Animatable.Text animation='fadeIn' iterationCount='infinite' direction='alternate' style={styles.subtitle}>{I18n.t('rnAnimatable')}</Animatable.Text>
           <Animatable.Image animation='pulse' iterationCount='infinite' source={Images.logo} />
-          <Animatable.View animation='jello' iterationCount='infinite'>
-            <Icon name='cab' size={Metrics.icons.medium} />
+          <Animatable.View animation='jello' iterationCount='infinite' >
+            <Icon name='cab' size={Metrics.icons.medium} color={Colors.snow} />
           </Animatable.View>
         </View>
       </View>
@@ -149,13 +142,17 @@ export default class UsageExamplesScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.subtitle} >The Usage Examples screen is a playground for 3rd party libs and logic proofs.
-              Items on this screen can be composed of multiple components working in concert.  Functionality demos of libs and practices</Text>
-        </View>
-        {this.renderUsageExamples()}
-      </ScrollView>
+      <Image source={Images.background} style={styles.backgroundImage}>
+        <ScrollView style={styles.container}>
+          <View style={styles.section}>
+            <Text style={styles.sectionText} >
+              The Usage Examples screen is a playground for 3rd party libs and logic proofs.
+              Items on this screen can be composed of multiple components working in concert.  Functionality demos of libs and practices
+            </Text>
+          </View>
+          {this.renderUsageExamples()}
+        </ScrollView>
+      </Image>
     )
   }
 }

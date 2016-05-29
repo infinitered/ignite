@@ -5,31 +5,43 @@ import Colors from './Colors'
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
 
-// NAME THIS FILE ApplicationStyles.js
-
 const ApplicationStyles = {
-  cell: {
-    heading: {
-      marginBottom: Metrics.smallMargin,
-      fontFamily: Fonts.bold,
-      fontSize: Fonts.size.regular,
-      color: Colors.almostBlack
+  screen: {
+    backgroundImage: {
+      resizeMode: 'stretch',
+      width: Metrics.screenWidth,
+      flex: 1,
+      marginTop: Metrics.navBarHeight
     },
-    subheading: {
-      marginBottom: Metrics.baseMargin,
-      fontSize: Fonts.size.smallHeader,
-      color: Colors.dirtyGray
+    container: {
+      flex: 1,
+      paddingTop: Metrics.baseMargin
     },
-    text: {
-      marginBottom: Metrics.baseMargin,
-      fontSize: Fonts.size.smallHeader,
-      color: Colors.blueTint
+    section: {
+      margin: Metrics.section,
+      padding: Metrics.baseMargin,
+      borderTopColor: Colors.ricePaper,
+      borderTopWidth: 0.5,
+      borderBottomColor: Colors.ricePaper,
+      borderBottomWidth: 1
+    },
+    sectionText: {
+      color: Colors.snow,
+      marginVertical: Metrics.smallMargin,
+      textAlign: 'center',
+      fontFamily: Fonts.type.bold
+    },
+    subtitle: {
+      color: Colors.snow,
+      padding: 5,
+      marginBottom: 5,
+      marginHorizontal: Metrics.smallMargin
     }
   },
   darkLabel: {
-    backgroundColor: Colors.steel,
+    backgroundColor: Colors.cloud,
     fontFamily: Fonts.bold,
-    color: Colors.coal,
+    color: Colors.snow,
     padding: 5
   },
   groupContainer: {
@@ -52,12 +64,6 @@ const ApplicationStyles = {
     borderColor: Colors.ember,
     alignItems: 'center',
     textAlign: 'center'
-  },
-  subtitle: {
-    color: Colors.snow,
-    padding: 5,
-    marginBottom: 5,
-    marginHorizontal: Metrics.smallMargin
   }
 }
 
