@@ -16,6 +16,6 @@ export default StyleSheet.create({
     color: Colors.snow,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: Fonts.size.regular
+    fontSize: Fonts.size.medium
   }
 })
