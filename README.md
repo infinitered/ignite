@@ -10,7 +10,7 @@
 </p>
 
 ### Why Ignite?
-* No Need to Fork!  Command-line Generator
+* **No Need to Fork!**  Command-line Generator
   * Apps
   * Components/Styles
   * Containers (smart components)
@@ -19,6 +19,7 @@
 * JS Code Standard - Standard Compliant
 * ALL CODE works with iOS and Android
 * Documented Structure
+* Battle Tested - We use this!
 * Redux State Management
 * Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
