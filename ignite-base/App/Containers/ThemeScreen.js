@@ -64,6 +64,7 @@ export default class UsageExamplesScreen extends React.Component {
   render () {
     return (
       <ScrollView style={styles.container}>
+        <Text>List of all Theme specific settings.  Configured style of each application.</Text>
         <View style={styles.sectionHeader} key='colors-header'>
           <Text style={styles.subtitle} key='colors'>Colors</Text>
         </View>

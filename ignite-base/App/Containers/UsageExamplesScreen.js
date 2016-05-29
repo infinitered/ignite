@@ -151,7 +151,8 @@ export default class UsageExamplesScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.sectionHeader}>
-          <Text style={styles.subtitle} >Functionality demos of libs and practices</Text>
+          <Text style={styles.subtitle} >The Usage Examples screen is a playground for 3rd party libs and logic proofs.
+              Items on this screen can be composed of multiple components working in concert.  Functionality demos of libs and practices</Text>
         </View>
         {this.renderUsageExamples()}
       </ScrollView>

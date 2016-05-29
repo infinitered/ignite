@@ -23,7 +23,9 @@ export default class AllComponentsScreen extends React.Component {
       <ScrollView style={styles.screenContainer}>
         <View style={styles.sectionHeader}>
           <Text style={styles.subtitle}>
-            Examples are registered inside each component's file for quick changes and usage identification.
+            Sometimes called a 'Style Guide', or 'Pattern Library', Examples Screen is filled with usage examples
+            of fundamental components for a given application.  Use this merge-friendly way for your team
+            to show/use/test components.  Examples are registered inside each component's file for quick changes and usage identification.
           </Text>
           <Text style={styles.subtitle} >
             All components with registered examples will be rendered below:

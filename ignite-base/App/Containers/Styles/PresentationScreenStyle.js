@@ -5,37 +5,43 @@ export default StyleSheet.create({
   backgroundImage: {
     resizeMode: 'stretch',
     width: Metrics.screenWidth,
-    top: 0,
-    flex: 1
-  },
-  container: {
     flex: 1,
     marginTop: Metrics.navBarHeight
   },
+  container: {
+    flex: 1,
+    paddingTop: Metrics.baseMargin
+  },
   logo: {
-    height: 300,
-    width: 300,
+    height: Metrics.images.logo,
+    width: Metrics.images.logo,
     resizeMode: 'contain'
   },
   hero: {
-    backgroundColor: Colors.cloud,
     alignItems: 'center',
-    marginVertical: 20,
+    marginVertical: 10,
     padding: 5
   },
   heroText: {
     ...CommonStyles.subtitle,
-    ...Fonts.style.h6
+    ...Fonts.style.h5
   },
   centered: {
     alignItems: 'center'
   },
   section: {
-    margin: Metrics.baseMargin,
+    margin: Metrics.section,
     padding: Metrics.baseMargin,
+    borderTopColor: Colors.ricePaper,
+    borderTopWidth: 0.5,
+    borderBottomColor: Colors.ricePaper,
+    borderBottomWidth: 1
+  },
+  sectionText: {
     color: Colors.snow,
-    backgroundColor: Colors.ember,
-    borderRadius: 5
+    marginVertical: Metrics.smallMargin,
+    textAlign: 'center',
+    fontFamily: Fonts.type.bold
   },
   sectionTitle: {
     ...CommonStyles.sectionTitle

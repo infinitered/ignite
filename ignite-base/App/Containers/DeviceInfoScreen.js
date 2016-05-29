@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react'
 import { View, ScrollView, Text } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import { Metrics } from '../Themes'
-import R from 'ramda'
 
 import styles from './Styles/DeviceInfoScreenStyle'
 
@@ -65,6 +64,9 @@ export default class DeviceInfoScreen extends React.Component {
   render () {
     return (
       <ScrollView style={styles.container}>
+        <Text>Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour
+              specific to a device.
+        </Text>
         {this.renderCard('Device Hardware', HARDWARE_DATA)}
         {this.renderCard('Device OS', OS_DATA)}
         {this.renderCard('App Info', APP_DATA)}

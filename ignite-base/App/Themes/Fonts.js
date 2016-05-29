@@ -9,7 +9,7 @@ const size = {
   h2: 34,
   h3: 30,
   h4: 26,
-  h5: 24,
+  h5: 20,
   h6: 19,
   input: 18,
   regular: 17,
@@ -36,7 +36,7 @@ const style = {
     fontSize: size.h4
   },
   h5: {
-    fontFamily: type.bold,
+    fontFamily: type.base,
     fontSize: size.h5
   },
   h6: {

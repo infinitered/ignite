@@ -94,7 +94,10 @@ export default class APITestingScreen extends React.Component {
       <ScrollView ref='container' style={[styles.container, {height: this.state.visibleHeight}]}>
         <View style={styles.sectionHeader}>
           <Text style={styles.subtitle}>
-            API function testing -
+            Testing API with tools such as Postman or APIary.io are great for verifying the server works.
+              The API Test screen is the next step; a simple in-app way to verify your coded API functions work as expected.
+              Additionally, it's good for debugging API issues in the field.
+              API function testing -
             Create new endpoints in Services/Api.js then add example uses to endpoints array in Containers/APITestingScreen.js for immediate feedback.
           </Text>
         </View>

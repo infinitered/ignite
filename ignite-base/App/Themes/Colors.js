@@ -1,5 +1,5 @@
 const colors = {
-  background: 'white',
+  background: '#1F0808',
   clear: 'rgba(0,0,0,0)',
   ocean: '#415572',
   deepOcean: '#32435c',
@@ -13,13 +13,14 @@ const colors = {
   cloud: 'rgba(200,200,200, 0.35)',
   smoke: 'rgba(100, 100, 100, 0.9)',
   windowTint: 'rgba(0, 0, 0, 0.4)',
-  panther: '#464646',
+  panther: '#1F0808',
   charcoal: '#595959',
   coal: '#2d2d2d',
   bloodOrange: '#fb5f26',
   bloodOrangeJuice: 'rgba(251, 95, 38, 0.8)',
   snow: 'white',
-  ember: 'rgba(164, 0, 48, 0.5)'
+  ember: 'rgba(164, 0, 48, 0.5)',
+  fire: '#e73536'
 }
 
 export default colors
