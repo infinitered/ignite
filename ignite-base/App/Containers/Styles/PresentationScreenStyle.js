@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, CommonStyles, Fonts } from '../../Themes/'
+import { Colors, Metrics, ApplicationStyles, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   backgroundImage: {
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     padding: 5
   },
   heroText: {
-    ...CommonStyles.subtitle,
+    ...ApplicationStyles.subtitle,
     ...Fonts.style.h5
   },
   centered: {
@@ -44,7 +44,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.bold
   },
   sectionTitle: {
-    ...CommonStyles.sectionTitle
+    ...ApplicationStyles.sectionTitle
   },
   description: {
     marginHorizontal: Metrics.baseMargin,

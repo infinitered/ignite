@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, CommonStyles } from '../../Themes/'
+import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -8,9 +8,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   sectionHeader: {
-    ...CommonStyles.sectionHeader
+    ...ApplicationStyles.sectionHeader
   },
   subtitle: {
-    ...CommonStyles.subtitle
+    ...ApplicationStyles.subtitle
   }
 })

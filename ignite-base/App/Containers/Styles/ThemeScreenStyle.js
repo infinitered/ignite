@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, CommonStyles } from '../../Themes/'
+import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -8,16 +8,16 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   groupContainer: {
-    ...CommonStyles.groupContainer
+    ...ApplicationStyles.groupContainer
   },
   sectionHeader: {
-    ...CommonStyles.sectionHeader
+    ...ApplicationStyles.sectionHeader
   },
   sectionTitle: {
-    ...CommonStyles.sectionTitle
+    ...ApplicationStyles.sectionTitle
   },
   subtitle: {
-    ...CommonStyles.subtitle
+    ...ApplicationStyles.subtitle
   },
   colorsContainer: {
     flexDirection: 'row',

@@ -5,9 +5,9 @@ import Colors from './Colors'
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
 
-// NAME THIS FILE CommonStyles.js
+// NAME THIS FILE ApplicationStyles.js
 
-const CommonStyles = {
+const ApplicationStyles = {
   cell: {
     heading: {
       marginBottom: Metrics.smallMargin,
@@ -61,4 +61,4 @@ const CommonStyles = {
   }
 }
 
-export default CommonStyles
+export default ApplicationStyles
