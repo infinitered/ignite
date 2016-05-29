@@ -5,10 +5,10 @@ export default StyleSheet.create({
   container: {
     justifyContent: 'center',
     paddingTop: 70,
-    backgroundColor: Colors.deepOcean
+    backgroundColor: Colors.ember
   },
   form: {
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.snow,
     margin: 10,
     borderRadius: 4
   },
