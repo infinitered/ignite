@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="http://ir_public.s3.amazonaws.com/projects/ignite/react-native-ignite-logo_500w.png" alt="React Native Ignite logo" width="250px">
+  <img src="https://raw.githubusercontent.com/infinitered/ignite/usage_logo/_art/in_use.jpg" alt="React Native Ignite logo" width="400px">
 </p>
 
 <p align="center">
@@ -10,7 +10,7 @@
 </p>
 
 ### Why Ignite?
-* No Need to Fork!  Command-line Generator
+* **No Need to Fork!**  Command-line Generator
   * Apps
   * Components/Styles
   * Containers (smart components)
@@ -19,6 +19,7 @@
 * JS Code Standard - Standard Compliant
 * ALL CODE works with iOS and Android
 * Documented Structure
+* Battle Tested - We use this!
 * Redux State Management
 * Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
