@@ -17,7 +17,7 @@
   * Screens (opinionated containers)
   * _and more..._
 * JS Code Standard - Standard Compliant
-* EVERYTHING works with iOS and Android
+* ALL CODE works with iOS and Android
 * Documented Structure
 * Redux State Management
 * Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
@@ -61,6 +61,8 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
   * for Android
     * Run Genymotion
     * run the command `react-native run-android`
+
+![install](_art/screens.gif)
 
 ## :arrow_up: Built-In Generators
 
