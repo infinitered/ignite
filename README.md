@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/infinitered/ignite/usage_logo/_art/in_use.jpg" alt="React Native Ignite logo" width="400px">
+  <img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="400px">
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 * JS Code Standard - Standard Compliant
 * ALL CODE works with iOS and Android
 * Documented Structure
-* Battle Tested - We use this!
+* **Battle Tested** - We use this!
 * Redux State Management
 * Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
@@ -62,6 +62,7 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
   * for Android
     * Run Genymotion
     * run the command `react-native run-android`
+3. _**Enjoy!**_
 
 ![install](_art/screens.gif)
 
