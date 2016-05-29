@@ -1,12 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, Fonts, CommonStyles } from '../../Themes/'
+import { Colors, Fonts, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
-  },
+  ...ApplicationStyles.screen,
   loginBox: {
     padding: 20
   },
@@ -21,25 +17,18 @@ export default StyleSheet.create({
     color: Colors.silver
   },
   componentLabel: {
-    ...CommonStyles.darkLabel,
+    ...ApplicationStyles.darkLabel,
     marginBottom: 5
   },
   temperature: {
-    fontSize: Fonts.size.h5
+    ...Fonts.style.h4,
+    color: Colors.snow
   },
   locale: {
-    fontSize: Fonts.size.input
+    ...Fonts.style.h4,
+    color: Colors.snow
   },
   groupContainer: {
-    ...CommonStyles.groupContainer
-  },
-  sectionHeader: {
-    ...CommonStyles.sectionHeader
-  },
-  sectionTitle: {
-    ...CommonStyles.sectionTitle
-  },
-  subtitle: {
-    ...CommonStyles.subtitle
+    ...ApplicationStyles.groupContainer
   }
 })

@@ -6,11 +6,12 @@ const { width, height } = Dimensions.get('window')
 const metrics = {
   marginHorizontal: 10,
   marginVertical: 10,
+  section: 25,
   baseMargin: 10,
   smallMargin: 5,
   horizontalLineHeight: 1,
-  screenWidth: width,
-  screenHeight: height,
+  screenWidth: width < height ? width : height,
+  screenHeight: width < height ? height : width,
   navBarHeight: 64,
   buttonRadius: 4,
   icons: {
@@ -23,7 +24,8 @@ const metrics = {
   images: {
     small: 20,
     medium: 40,
-    large: 60
+    large: 60,
+    logo: 300
   }
 }
 

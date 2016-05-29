@@ -6,17 +6,16 @@ import { Fonts, Colors, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   button: {
     height: 45,
-    borderRadius: 10,
-    margin: Metrics.smallMargin,
-    borderColor: Colors.bloodOrange,
-    borderWidth: 2,
-    backgroundColor: Colors.bloodOrangeJuice,
+    borderRadius: 5,
+    marginHorizontal: Metrics.section,
+    marginVertical: Metrics.baseMargin,
+    backgroundColor: Colors.fire,
     justifyContent: 'center'
   },
   buttonText: {
     color: Colors.snow,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: Fonts.size.regular
+    fontSize: Fonts.size.medium
   }
 })

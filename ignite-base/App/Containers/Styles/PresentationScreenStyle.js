@@ -1,29 +1,14 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Metrics, CommonStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
-  },
+  ...ApplicationStyles.screen,
   logo: {
-    height: 300,
-    width: 300,
+    height: Metrics.images.logo,
+    width: Metrics.images.logo,
     resizeMode: 'contain'
   },
   centered: {
     alignItems: 'center'
-  },
-  section: {
-    margin: Metrics.baseMargin,
-    color: Colors.panther
-  },
-  sectionTitle: {
-    ...CommonStyles.sectionTitle
-  },
-  description: {
-    margin: Metrics.baseMargin,
-    color: Colors.coal
   }
 })
