@@ -26,7 +26,8 @@ I18n.translations = {
     usageExamples: 'Usage Examples',
     apiTesting: 'API Testing',
     themeSettings: 'Theme Settings',
-    deviceDetails: 'Device Details'
+    deviceDetails: 'Device Details',
+    noItems: 'No Items'
   },
   fr: {
     signIn: 'Se connecter',
@@ -49,7 +50,8 @@ I18n.translations = {
     usageExamples: "Exemples d'utilisation",
     apiTesting: 'API Testing',
     themeSettings: 'Réglage des thèmes',
-    deviceDetails: 'Détails du périphérique'
+    deviceDetails: 'Détails du périphérique',
+    noItems: 'Aucun'
   }
 }
 

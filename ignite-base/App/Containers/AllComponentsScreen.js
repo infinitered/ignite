@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import styles from './Styles/AllComponentsScreenStyle'
 
 // Components to show examples (only real point of merge conflict)
+import '../Components/AlertMessageComponent'
 import '../Components/ProgressiveImage'
 import '../Components/FullButton'
 import '../Components/RoundedButton'
