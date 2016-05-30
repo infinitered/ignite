@@ -1,0 +1,47 @@
+{
+  "message": "",
+  "cod": "200",
+  "type": "base",
+  "calctime": "",
+  "units": "internal",
+  "count": 1,
+  "list": [
+    {
+      "id": 0,
+      "coord": {
+        "lat": 43.700111,
+        "lon": -79.416298
+      },
+      "name": "Toronto",
+      "main": {
+        "temp": 300.25,
+        "pressure": 1013,
+        "humidity": 39,
+        "temp_min": 299.15,
+        "temp_max": 301.85
+      },
+      "dt": 1464640303,
+      "date": "2016-05-30 20:33:46",
+      "wind": {
+        "speed": 6.7,
+        "deg": 280,
+        "gust": 10.3
+      },
+      "clouds": {
+        "all": 20
+      },
+      "weather": [
+        {
+          "id": 801,
+          "main": "Clouds",
+          "description": "few clouds",
+          "icon": "02d"
+        }
+      ],
+      "sys": {
+        "population": 0
+      },
+      "url": "http://openweathermap.org/city/"
+    }
+  ]
+}
