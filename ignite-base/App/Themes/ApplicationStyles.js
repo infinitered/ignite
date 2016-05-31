@@ -37,11 +37,13 @@ const ApplicationStyles = {
       marginHorizontal: Metrics.smallMargin
     }
   },
-  darkLabel: {
+  darkLabelContainer: {
     backgroundColor: Colors.cloud,
-    fontFamily: Fonts.bold,
-    color: Colors.snow,
     padding: 5
+  },
+  darkLabel: {
+    fontFamily: Fonts.bold,
+    color: Colors.snow
   },
   groupContainer: {
     margin: 5,
