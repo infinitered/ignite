@@ -122,6 +122,7 @@ class LoginScreen extends React.Component {
               keyboardType='default'
               returnKeyType='search'
               onChangeText={this.handleChangeUsername}
+              underlineColorAndroid='transparent'
               placeholder={I18n.t('username')} />
           </View>
 
@@ -136,6 +137,7 @@ class LoginScreen extends React.Component {
               returnKeyType='search'
               secureTextEntry
               onChangeText={this.handleChangePassword}
+              underlineColorAndroid='transparent'
               placeholder={I18n.t('password')} />
           </View>
 
