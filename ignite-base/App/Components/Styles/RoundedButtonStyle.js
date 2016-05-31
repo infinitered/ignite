@@ -17,6 +17,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: Fonts.size.medium,
-    paddingVertical: Metrics.baseMargin
+    marginVertical: Metrics.baseMargin
   }
 })
