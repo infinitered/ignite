@@ -1,0 +1,47 @@
+{
+  "message": "",
+  "cod": "200",
+  "type": "base",
+  "calctime": "",
+  "units": "internal",
+  "count": 1,
+  "list": [
+    {
+      "id": 0,
+      "coord": {
+        "lat": 43.613499,
+        "lon": -116.203453
+      },
+      "name": "Boise",
+      "main": {
+        "temp": 294.08,
+        "pressure": 1021,
+        "humidity": 26,
+        "temp_min": 292.59,
+        "temp_max": 296.15
+      },
+      "dt": 1464639834,
+      "date": "2016-05-30 20:23:54",
+      "wind": {
+        "speed": 5.1,
+        "deg": 320,
+        "gust": 8.2
+      },
+      "clouds": {
+        "all": 1
+      },
+      "weather": [
+        {
+          "id": 800,
+          "main": "Clear",
+          "description": "Sky is Clear",
+          "icon": "01d"
+        }
+      ],
+      "sys": {
+        "population": 0
+      },
+      "url": "http://openweathermap.org/city/"
+    }
+  ]
+}
