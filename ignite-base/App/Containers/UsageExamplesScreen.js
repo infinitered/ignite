@@ -95,21 +95,29 @@ export default class UsageExamplesScreen extends React.Component {
     )
   }
 
+  renderHeader (title) {
+    return (
+      <View style={styles.componentLabelContainer}>
+        <Text style={styles.componentLabel}>{title}</Text>
+      </View>
+    )
+  }
+
   renderUsageExamples () {
     const { loggedIn, temperature, city } = this.props
     return (
       <View>
-        <Text style={styles.componentLabel}>{I18n.t('loginLogoutExampleTitle')}</Text>
+        {this.renderHeader(I18n.t('loginLogoutExampleTitle'))}
         {loggedIn ? this.renderLogoutButton() : this.renderLoginButton()}
-        <Text style={styles.componentLabel}>I18n Locale</Text>
+        {this.renderHeader('I18n Locale')}
         <View style={styles.groupContainer}>
           <Text style={styles.locale}>{I18n.locale}</Text>
         </View>
-        <Text style={styles.componentLabel}>{I18n.t('api')}: {city}</Text>
+        {this.renderHeader(I18n.t('api') + `: ${city}`)}
         <View style={[styles.groupContainer, {height: 50}]}>
           <Text style={styles.temperature}>{temperature && `${temperature} ${I18n.t('tempIndicator')}`}</Text>
         </View>
-        <Text style={styles.componentLabel}>{I18n.t('rnVectorIcons')}</Text>
+        {this.renderHeader(I18n.t('rnVectorIcons'))}
         <View style={styles.groupContainer}>
           <TouchableOpacity onPress={this.handlePressRocket}>
             <Icon name='rocket' size={Metrics.icons.medium} color={Colors.ember} />
@@ -128,7 +136,7 @@ export default class UsageExamplesScreen extends React.Component {
             {I18n.t('loginWithFacebook')}
           </Icon.Button>
         </View>
-        <Text style={styles.componentLabel}>{I18n.t('rnAnimatable')}</Text>
+        {this.renderHeader(I18n.t('rnAnimatable'))}
         <View style={styles.groupContainer}>
           <Animatable.Text animation='fadeIn' iterationCount='infinite' direction='alternate' style={styles.subtitle}>{I18n.t('rnAnimatable')}</Animatable.Text>
           <Animatable.Image animation='pulse' iterationCount='infinite' source={Images.logo} />

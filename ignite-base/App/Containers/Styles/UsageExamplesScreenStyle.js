@@ -16,9 +16,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: Colors.silver
   },
+  componentLabelContainer: {
+    ...ApplicationStyles.darkLabelContainer
+  },
   componentLabel: {
-    ...ApplicationStyles.darkLabel,
-    marginBottom: 5
+    ...ApplicationStyles.darkLabel
   },
   temperature: {
     ...Fonts.style.h4,
