@@ -8,7 +8,6 @@ import Colors from './Colors'
 const ApplicationStyles = {
   screen: {
     backgroundImage: {
-      resizeMode: 'stretch',
       width: Metrics.screenWidth,
       flex: 1,
       marginTop: Metrics.navBarHeight

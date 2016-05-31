@@ -61,7 +61,7 @@ export default class APITestingScreen extends React.Component {
 
   render () {
     return (
-      <Image source={Images.background} style={styles.backgroundImage}>
+      <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch'>
         <ScrollView style={styles.container} ref='container'>
 
           <View style={styles.section}>
