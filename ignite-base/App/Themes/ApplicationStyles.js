@@ -8,7 +8,6 @@ import Colors from './Colors'
 const ApplicationStyles = {
   screen: {
     backgroundImage: {
-      resizeMode: 'stretch',
       width: Metrics.screenWidth,
       flex: 1,
       marginTop: Metrics.navBarHeight
@@ -20,9 +19,9 @@ const ApplicationStyles = {
     section: {
       margin: Metrics.section,
       padding: Metrics.baseMargin,
-      borderTopColor: Colors.ricePaper,
+      borderTopColor: Colors.frost,
       borderTopWidth: 0.5,
-      borderBottomColor: Colors.ricePaper,
+      borderBottomColor: Colors.frost,
       borderBottomWidth: 1
     },
     sectionText: {
@@ -38,11 +37,13 @@ const ApplicationStyles = {
       marginHorizontal: Metrics.smallMargin
     }
   },
-  darkLabel: {
+  darkLabelContainer: {
     backgroundColor: Colors.cloud,
-    fontFamily: Fonts.bold,
-    color: Colors.snow,
     padding: 5
+  },
+  darkLabel: {
+    fontFamily: Fonts.bold,
+    color: Colors.snow
   },
   groupContainer: {
     margin: 5,
