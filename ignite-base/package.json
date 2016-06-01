@@ -17,7 +17,7 @@
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82"
   },
   "dependencies": {
-    "apisauce": "^0.1.3",
+    "apisauce": "^0.1.4",
     "format-json": "^1.0.3",
     "querystringify": "0.0.3",
     "ramda": "^0.21.0",
@@ -34,6 +34,7 @@
     "redux-logger": "^2.4.0",
     "redux-persist": "^3.1.1",
     "redux-saga": "^0.10.4",
+    "reduxsauce": "0.1.0",
     "seamless-immutable": "^6.1.0"
   },
   "devDependencies": {
@@ -42,10 +43,9 @@
     "chai-immutable": "^1.5.3",
     "deep-freeze": "0.0.1",
     "mocha": "^2.4.5",
-    "reactotron": "^0.6.0",
+    "reactotron": "^0.6.1",
     "snazzy": "^4.0.0",
-    "standard": "^7.0.1",
-    "reduxsauce": "0.1.0"
+    "standard": "^7.0.1"
   },
   "standard": {
     "parser": "babel-eslint",
