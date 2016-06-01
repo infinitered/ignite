@@ -19,9 +19,9 @@ const ApplicationStyles = {
     section: {
       margin: Metrics.section,
       padding: Metrics.baseMargin,
-      borderTopColor: Colors.ricePaper,
+      borderTopColor: Colors.frost,
       borderTopWidth: 0.5,
-      borderBottomColor: Colors.ricePaper,
+      borderBottomColor: Colors.frost,
       borderBottomWidth: 1
     },
     sectionText: {

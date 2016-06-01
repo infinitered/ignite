@@ -19,7 +19,7 @@ export default StyleSheet.create({
     width: 102,
     height: 102,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.5)'
+    borderColor: Colors.frost
   },
   backerImage: {
     top: 0,
