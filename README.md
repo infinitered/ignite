@@ -3,11 +3,13 @@
 </p>
 
 <p align="center">
-  The ideal starting app for React Native, best practices, generators, and more.
+  :fire: The ideal starting app for React Native, best practices, generators, and more. :fire:
   <br/>
   <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
   <img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/>
 </p>
+
+#### :earth_americas: [Tour Video and More on Ignite Web Page](http://infinitered.github.io/ignite/)
 
 ### Why Ignite?
 * **No Need to Fork!**  Command-line Generator
