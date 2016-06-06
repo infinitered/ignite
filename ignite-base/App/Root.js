@@ -9,7 +9,7 @@ import DebugSettings from './Config/DebugSettings'
 import './Config/PushConfig'
 
 // Styles
-import styles from './Containers/Styles/RootStyle'
+import styles, {drawerStyles} from './Containers/Styles/RootStyle'
 
 const store = configureStore()
 
@@ -27,7 +27,7 @@ export default class RNBase extends React.Component {
   renderDrawerContent () {
     return (
       <View style={{marginTop: 30, padding: 10}}>
-        <Text>
+        <Text style={{color: 'white'}}>
           Drawer Content Goes Here!
         </Text>
       </View>
@@ -46,7 +46,7 @@ export default class RNBase extends React.Component {
           <Drawer
             ref={(ref) => { this.drawer = ref }}
             content={this.renderDrawerContent()}
-            styles={styles.drawer}
+            styles={drawerStyles}
             openDrawerOffset={100}
             type='static'
             tapToClose
