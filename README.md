@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="400px">
+  <a href="https://infinite.red/ignite"><img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="300px"></a>
 </p>
 
 <p align="center">
@@ -9,7 +9,7 @@
   <img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/>
 </p>
 
-#### :earth_americas: [Tour Video and More on Ignite Web Page](http://infinitered.github.io/ignite/)
+#### :earth_americas: [Tour Video and More on Ignite Web Page](https://infinite.red/ignite)
 
 ### Why Ignite?
 * **No Need to Fork!**  Command-line Generator
