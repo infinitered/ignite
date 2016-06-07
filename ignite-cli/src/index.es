@@ -16,6 +16,14 @@ const checkYo = () => {
   }
 }
 
+const checkName = (project) => {
+  // Only alphanumeric project names
+  if (/[^a-z0-9]+/i.test(project)) {
+    console.log(`"${project}" is not a valid name for a project. Please use a valid identifier name (alphanumeric).`)
+    Shell.exit(1)
+  }
+}
+
 // version
 Program
   .version(pjson.version)
@@ -27,6 +35,7 @@ Program
   .alias('n')
   .action((project) => {
     checkYo()
+    checkName(project)
     console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
     spawn('yo', ['react-native-ignite', project], { shell: true, stdio: 'inherit' })
   })
