@@ -7,6 +7,7 @@
   <br/>
   <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
   <img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/>
+  <a href="https://badge.fury.io/js/react-native-ignite"><img src="https://badge.fury.io/js/react-native-ignite.svg" alt="npm version" height="20"></a>
 </p>
 
 #### :earth_americas: [Tour Video and More on Ignite Web Page](https://infinite.red/ignite)
