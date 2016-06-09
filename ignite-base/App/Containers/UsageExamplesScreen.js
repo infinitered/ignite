@@ -40,7 +40,7 @@ export default class UsageExamplesScreen extends React.Component {
     const { loggedIn } = nextProps
     if (loggedIn) {
       /*
-      * If you have turned on Push in Xcode,
+      * If you have turned on Push in Xcode, http://i.imgur.com/qFDRhQr.png
       * uncomment this code below and import at top
       */
       // if (__DEV__) console.log('Requesting push notification permissions.')
