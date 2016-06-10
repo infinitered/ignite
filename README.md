@@ -5,9 +5,11 @@
 <p align="center">
   :fire: The ideal starting app for React Native, best practices, generators, and more. :fire:
   <br/>
-  <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
+  <a href="https://www.codacy.com/app/gantman/ignite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=infinitered/ignite&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/1c6e04abe7224bdc88095129b5eb43fb"/></a>  
+  <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>  
   <img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/>
   <a href="https://badge.fury.io/js/react-native-ignite"><img src="https://badge.fury.io/js/react-native-ignite.svg" alt="npm version" height="20"></a>
+  
 </p>
 
 #### :earth_americas: [Tour Video and More on Ignite Web Page](https://infinite.red/ignite)
