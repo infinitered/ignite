@@ -46,8 +46,8 @@ class LoginScreen extends React.Component {
   componentWillMount () {
     // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
-    Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
-    Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
 
     // Configure the right nav button
     this.props.navigator.state.tapForgotPassword = this.tapForgotPassword.bind(this)
@@ -59,8 +59,8 @@ class LoginScreen extends React.Component {
   }
 
   componentWillUnmount () {
-    Keyboard.removeAllListeners('keyboardDidShow')
-    Keyboard.removeAllListeners('keyboardDidHide')
+    this.keyboardDidShowListener.remove()
+    this.keyboardDidHideListener.remove()
   }
 
   keyboardDidShow (e) {
