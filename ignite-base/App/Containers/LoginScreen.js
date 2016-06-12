@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  DeviceEventEmitter,
+  Keyboard,
   LayoutAnimation,
   Alert
 } from 'react-native'
@@ -46,8 +46,8 @@ class LoginScreen extends React.Component {
   componentWillMount () {
     // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
-    DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+    Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
+    Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
 
     // Configure the right nav button
     this.props.navigator.state.tapForgotPassword = this.tapForgotPassword.bind(this)
@@ -59,8 +59,8 @@ class LoginScreen extends React.Component {
   }
 
   componentWillUnmount () {
-    DeviceEventEmitter.removeAllListeners('keyboardDidShow')
-    DeviceEventEmitter.removeAllListeners('keyboardDidHide')
+    Keyboard.removeAllListeners('keyboardDidShow')
+    Keyboard.removeAllListeners('keyboardDidHide')
   }
 
   keyboardDidShow (e) {
