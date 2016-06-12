@@ -50,7 +50,7 @@ export default class AlertMessage extends React.Component {
               size={Metrics.icons.large}
               style={styles.icon}
             />
-            <Text allowFontScaling={false} style={styles.message}>{title.toUpperCase()}</Text>
+            <Text allowFontScaling={false} style={styles.message}>{title && title.toUpperCase()}</Text>
           </View>
         </Animatable.View>
       )

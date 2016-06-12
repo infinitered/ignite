@@ -4,6 +4,7 @@ import { ApplicationStyles, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
-    marginTop: Metrics.navBarHeight
+    marginTop: Metrics.navBarHeight,
+    flex: 1
   }
 })

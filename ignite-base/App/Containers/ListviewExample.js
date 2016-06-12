@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
-import { Text, ListView } from 'react-native'
+import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
+
+// For empty lists
+import AlertMessage from '../Components/AlertMessageComponent'
 
 // Styles
 import styles from './Styles/ListviewExampleStyle'
@@ -72,12 +75,21 @@ class ListviewExample extends React.Component {
     navigator: PropTypes.object.isRequired
   }
 
+  // Used for friendly AlertMessage
+  // returns true if the dataSource is empty
+  _noRowData () {
+    return this.state.dataSource.getRowCount() === 0
+  }
+
   render () {
     return (
-      <ListView style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={this._renderRow}
-      />
+      <View style={styles.container}>
+        <AlertMessage title='Nothing to See Here, Move Along' show={this._noRowData()} />
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow}
+        />
+      </View>
     )
   }
 }
