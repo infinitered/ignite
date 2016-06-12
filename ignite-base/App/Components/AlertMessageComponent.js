@@ -10,37 +10,52 @@ import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
 ExamplesRegistry.add('Alert Message', () =>
-  <AlertMessage
-    title='Alert Message with animation'
-  />
+  <View>
+    <AlertMessage
+      title='Alert Message with animation'
+    />
+    <AlertMessage
+      title='Never see me'
+      show={false}
+    />
+  </View>
 )
 
 export default class AlertMessage extends React.Component {
 
   static propTypes = {
     style: React.PropTypes.object,
-    title: React.PropTypes.string,
-    icon: React.PropTypes.string
+    title: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.string,
+    show: React.PropTypes.bool
+  }
+
+  static defaultProps = {
+    show: true
   }
 
   render () {
-    const { title } = this.props
-    const defMessage = I18n.t('noItems')
-    return (
-      <Animatable.View
-        style={[styles.container, this.props.style]}
-        delay={800}
-        animation='bounceIn'
-      >
-        <View style={styles.contentContainer}>
-          <Icon
-            name={this.props.icon || 'ios-alert'}
-            size={Metrics.icons.large}
-            style={styles.icon}
-          />
-          <Text allowFontScaling={false} style={styles.message}>{title ? title.toUpperCase() : defMessage.toUpperCase()}</Text>
-        </View>
-      </Animatable.View>
-    )
+    let messageComponent = null
+    if (this.props.show) {
+      const { title } = this.props
+      return (
+        <Animatable.View
+          style={[styles.container, this.props.style]}
+          delay={800}
+          animation='bounceIn'
+        >
+          <View style={styles.contentContainer}>
+            <Icon
+              name={this.props.icon || 'ios-alert'}
+              size={Metrics.icons.large}
+              style={styles.icon}
+            />
+            <Text allowFontScaling={false} style={styles.message}>{title.toUpperCase()}</Text>
+          </View>
+        </Animatable.View>
+      )
+    }
+
+    return messageComponent
   }
 }
