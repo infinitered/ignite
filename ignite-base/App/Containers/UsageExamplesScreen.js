@@ -25,6 +25,7 @@ export default class UsageExamplesScreen extends React.Component {
     this.handlePressRocket = this.handlePressRocket.bind(this)
     this.handlePressSend = this.handlePressSend.bind(this)
     this.handlePressStar = this.handlePressStar.bind(this)
+    this.handlePressListview = this.handlePressListview.bind(this)
   }
 
   static propTypes = {
@@ -77,6 +78,13 @@ export default class UsageExamplesScreen extends React.Component {
   handlePressStar () {
     const {dispatch} = this.props
     dispatch(Actions.requestTemperature('New Orleans'))
+  }
+
+  // Fires when tap listview
+  handlePressListview () {
+    const { navigator } = this.props
+    const route = Routes.ListviewExample
+    navigator.push(route)
   }
 
   renderLoginButton () {
@@ -143,6 +151,10 @@ export default class UsageExamplesScreen extends React.Component {
           <Animatable.View animation='jello' iterationCount='infinite' >
             <Icon name='cab' size={Metrics.icons.medium} color={Colors.snow} />
           </Animatable.View>
+        </View>
+        {this.renderHeader(I18n.t('igniteGenerated'))}
+        <View>
+          <RoundedButton text='Listview' onPress={this.handlePressListview} />
         </View>
       </View>
     )
