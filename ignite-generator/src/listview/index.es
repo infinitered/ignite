@@ -22,19 +22,18 @@ const copyOverListView = (context) => {
 class ContainerGenerator extends NamedBase {
 
   prompting () {
-    // supposidly returning the prompt stops it from moving forward
-    // doesn't seem to work
-    return this.prompt({
+    let prompts = [{
       type: 'list',
       name: 'listviewtype',
       message: 'What kind of listview would you like to generate?',
       choices: ['Row List', 'Grid List'],
       store: true
-    }, (answers, error) => {
-      this.log('ANSWERS', answers)
+    }]
+
+    return this.prompt(prompts).then((answers) => {
       if (answers.listviewtype === 'Row List') {
         this.log('Create a Row Listview')
-        // copyOverListView(this)
+        copyOverListView(this)
       } else {
         this.log('Create a Grid Listview')
       }
