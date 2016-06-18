@@ -20,13 +20,29 @@ const copyOverListView = (context) => {
 }
 
 class ContainerGenerator extends NamedBase {
-  generateApp () {
-    // Copy over component files.
-    copyOverListView(this)
+
+  prompting () {
+    // supposidly returning the prompt stops it from moving forward
+    // doesn't seem to work
+    return this.prompt({
+      type: 'list',
+      name: 'listviewtype',
+      message: 'What kind of listview would you like to generate?',
+      choices: ['Row List', 'Grid List'],
+      store: true
+    }, (answers, error) => {
+      this.log('ANSWERS', answers)
+      if (answers.listviewtype === 'Row List') {
+        this.log('Create a Row Listview')
+        // copyOverListView(this)
+      } else {
+        this.log('Create a Grid Listview')
+      }
+    })
   }
 
   end () {
-    console.log('Time to get cooking! 🍽 ')
+    this.log('Time to get cooking! 🍽 ')
   }
 }
 
