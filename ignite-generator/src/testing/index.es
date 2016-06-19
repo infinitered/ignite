@@ -1,10 +1,16 @@
 #! /usr/bin/env node
 'use strict'
 
-import { NamedBase } from 'yeoman-generator'
+import Generators from 'yeoman-generator'
 import * as Utilities from '../utilities'
 
-class TestGenerator extends NamedBase {
+class TestGenerator extends Generators.Base {
+
+  constructor (args, options) {
+    super(args, options)
+    this.argument('name', { type: String, required: true })
+  }
+
   initializing () {
   }
 

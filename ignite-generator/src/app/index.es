@@ -2,7 +2,7 @@
 'use strict'
 
 import colors from 'colors/safe'
-import { NamedBase } from 'yeoman-generator'
+import Generators from 'yeoman-generator'
 import Shell from 'shelljs'
 import * as Utilities from '../utilities'
 import ora from 'ora'
@@ -81,7 +81,12 @@ const isCommandInstalled = (command) => !!Shell.which(command)
  * promise, or call `const done = this.async()` before and `done()` once you're finished your task.
  * And yes.  That too is a Yeomanism.
  */
-export class AppGenerator extends NamedBase {
+export class AppGenerator extends Generators.Base {
+
+  constructor (args, options) {
+    super(args, options)
+    this.argument('name', { type: String, required: true })
+  }
 
   /**
    * Entry point.  Let's set this up.
