@@ -3,23 +3,39 @@
 
 import { NamedBase } from 'yeoman-generator'
 
-const copyOverListView = (context) => {
-  // copy listview template
-  context.fs.copyTpl(
-    context.templatePath('listview.js.template'),
-    context.destinationPath(`./App/Containers/${context.name}.js`),
-    { name: context.name }
-  )
-
-  // copy listview style template
-  context.fs.copyTpl(
-    context.templatePath('listview-style.js.template'),
-    context.destinationPath(`./App/Containers/Styles/${context.name}Style.js`),
-    { name: context.name }
-  )
-}
-
 class ContainerGenerator extends NamedBase {
+
+  _copyOverListView (type) {
+    if (type === 'Row List') {
+      // copy listview template
+      this.fs.copyTpl(
+        this.templatePath('listview.js.template'),
+        this.destinationPath(`./App/Containers/${this.name}.js`),
+        { name: this.name }
+      )
+
+      // copy listview style template
+      this.fs.copyTpl(
+        this.templatePath('listview-style.js.template'),
+        this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
+        { name: this.name }
+      )
+    } else {
+      // copy grid listview template
+      this.fs.copyTpl(
+        this.templatePath('gridlistview.js.template'),
+        this.destinationPath(`./App/Containers/${this.name}.js`),
+        { name: this.name }
+      )
+
+      // copy grid listview style template
+      this.fs.copyTpl(
+        this.templatePath('gridlistview-style.js.template'),
+        this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
+        { name: this.name }
+      )
+    }
+  }
 
   prompting () {
     let prompts = [{
@@ -31,12 +47,7 @@ class ContainerGenerator extends NamedBase {
     }]
 
     return this.prompt(prompts).then((answers) => {
-      if (answers.listviewtype === 'Row List') {
-        this.log('Create a Row Listview')
-        copyOverListView(this)
-      } else {
-        this.log('Create a Grid Listview')
-      }
+      this._copyOverListView(answers.listviewtype)
     })
   }
 
