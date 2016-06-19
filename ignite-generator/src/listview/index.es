@@ -11,29 +11,22 @@ class ListviewGenerator extends Generators.Base {
   }
 
   _copyOverListView (type) {
-    if (type === 'Row List') {
-      // copy listview template
-      this.fs.copyTpl(
-        this.templatePath('listview.js.template'),
-        this.destinationPath(`./App/Containers/${this.name}.js`),
-        { name: this.name }
-      )
+    // copy listview template
+    this.fs.copyTpl(
+      this.templatePath('listview.js.template'),
+      this.destinationPath(`./App/Containers/${this.name}.js`),
+      { name: this.name }
+    )
 
-      // copy listview style template
+    if (type === 'Row List') {
+      // copy row style template
       this.fs.copyTpl(
         this.templatePath('listview-style.js.template'),
         this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
         { name: this.name }
       )
     } else {
-      // copy grid listview template
-      this.fs.copyTpl(
-        this.templatePath('gridlistview.js.template'),
-        this.destinationPath(`./App/Containers/${this.name}.js`),
-        { name: this.name }
-      )
-
-      // copy grid listview style template
+      // copy grid style template
       this.fs.copyTpl(
         this.templatePath('gridlistview-style.js.template'),
         this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),

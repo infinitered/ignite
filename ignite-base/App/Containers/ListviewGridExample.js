@@ -53,7 +53,7 @@ class ListviewGridExample extends React.Component {
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
   _renderRow (rowData) {
-    return <Text style={styles.gridItem}>{rowData.title} - {rowData.description}</Text>
+    return <Text style={styles.item}>{rowData.title} - {rowData.description}</Text>
   }
 
   /* ***********************************************************
@@ -89,7 +89,7 @@ class ListviewGridExample extends React.Component {
       <View style={styles.container}>
         <AlertMessage title='Nothing to See Here, Move Along' show={this._noRowData()} />
         <ListView
-          contentContainerStyle={styles.grid}
+          contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
         />

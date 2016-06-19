@@ -7,13 +7,13 @@ export default StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     flex: 1
   },
-  gridItem: {
+  item: {
     width: 100,
     backgroundColor: Colors.snow,
     margin: Metrics.baseMargin,
     borderRadius: 5
   },
-  grid: {
+  listContent: {
     justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap'

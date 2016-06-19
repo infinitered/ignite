@@ -21,7 +21,10 @@ class ListviewExample extends React.Component {
       {title: 'First Title', description: 'First Description'},
       {title: 'Second Title', description: 'Second Description'},
       {title: 'Third Title', description: 'Third Description'},
-      {title: 'Fourth Title', description: 'Fourth Description'}
+      {title: 'Fourth Title', description: 'Fourth Description'},
+      {title: 'Fifth Title', description: 'Fifth Description'},
+      {title: 'Sixth Title', description: 'Sixth Description'},
+      {title: 'Seventh Title', description: 'Seventh Description'}
     ]
 
     /* ***********************************************************
@@ -50,7 +53,7 @@ class ListviewExample extends React.Component {
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
   _renderRow (rowData) {
-    return <Text style={styles.sectionText}>{rowData.title} - {rowData.description}</Text>
+    return <Text style={styles.item}>{rowData.title} - {rowData.description}</Text>
   }
 
   /* ***********************************************************
@@ -86,6 +89,7 @@ class ListviewExample extends React.Component {
       <View style={styles.container}>
         <AlertMessage title='Nothing to See Here, Move Along' show={this._noRowData()} />
         <ListView
+          contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
         />
