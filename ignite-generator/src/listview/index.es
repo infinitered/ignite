@@ -1,9 +1,14 @@
 #! /usr/bin/env node
 'use strict'
 
-import { NamedBase } from 'yeoman-generator'
+import Generators from 'yeoman-generator'
 
-class ContainerGenerator extends NamedBase {
+class ListviewGenerator extends Generators.Base {
+
+  constructor (args, options) {
+    super(args, options)
+    this.argument('name', { type: String, required: true })
+  }
 
   _copyOverListView (type) {
     if (type === 'Row List') {
@@ -56,4 +61,4 @@ class ContainerGenerator extends NamedBase {
   }
 }
 
-module.exports = ContainerGenerator
+module.exports = ListviewGenerator
