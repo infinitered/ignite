@@ -7,7 +7,7 @@
     "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
-    "test": "mocha --opts Tests/mocha.opts Tests/ --recursive",
+    "test": "mocha --opts Tests/mocha.opts Tests/ --recursive && ava",
     "tron": "node_modules/.bin/reactotron",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
@@ -38,6 +38,7 @@
     "seamless-immutable": "^6.1.0"
   },
   "devDependencies": {
+    "ava": "^0.15.2",
     "babel-eslint": "^6.0.2",
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
@@ -46,6 +47,15 @@
     "reactotron": "^0.6.1",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
+  },
+  "ava": {
+    "files": [
+      "Tests/**/*.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   },
   "standard": {
     "parser": "babel-eslint",

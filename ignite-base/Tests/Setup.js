@@ -1,6 +1,7 @@
-import chai from 'chai'
-import chaiImmutable from 'chai-immutable'
+// import test from 'ava'
+// import chai from 'chai'
+// import chaiImmutable from 'chai-immutable'
 
-chai.use(chaiImmutable)
-global.expect = chai.expect
-global.__DEV__ = true
+// chai.use(chaiImmutable)
+// global.expect = chai.expect
+// global.__DEV__ = true
