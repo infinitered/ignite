@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import AlertMessage from '../Components/AlertMessageComponent'
 
 // Styles
-import styles from './Styles/<%= name %>Style'
+import styles from './Styles/ListviewGridExampleStyle'
 
 class ListviewGridExample extends React.Component {
 
@@ -104,4 +104,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(<%= name %>)
+export default connect(mapStateToProps)(ListviewGridExample)

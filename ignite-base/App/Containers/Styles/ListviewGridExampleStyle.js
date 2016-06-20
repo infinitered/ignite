@@ -8,10 +8,15 @@ export default StyleSheet.create({
     flex: 1
   },
   item: {
-    ...ApplicationStyles.screen.sectionText,
-    backgroundColor: Colors.fire
+    width: 100,
+    color: Colors.snow,
+    backgroundColor: Colors.fire,
+    margin: Metrics.baseMargin,
+    borderRadius: 5
   },
   listContent: {
-    flex: 1
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 })

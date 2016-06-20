@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 'use strict'
 
-import { NamedBase } from 'yeoman-generator'
+import Generators from 'yeoman-generator'
 import * as Utilities from '../utilities'
 
 const copyOverScreenContainer = (context) => {
@@ -32,8 +32,13 @@ const addToRoutes = (context) => {
   Utilities.insertInFile('App/Navigation/Routes.js', 'get ', newRoute, false)
 }
 
-class ScreenGenerator extends NamedBase {
-  
+class ScreenGenerator extends Generators.Base {
+
+  constructor (args, options) {
+    super(args, options)
+    this.argument('name', { type: String, required: true })
+  }
+
   generateApp () {
     // Copy over component files.
     copyOverScreenContainer(this)

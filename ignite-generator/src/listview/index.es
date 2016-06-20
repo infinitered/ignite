@@ -1,33 +1,57 @@
 #! /usr/bin/env node
 'use strict'
 
-import { NamedBase } from 'yeoman-generator'
+import Generators from 'yeoman-generator'
 
-const copyOverListView = (context) => {
-  // copy listview template
-  context.fs.copyTpl(
-    context.templatePath('listview.js.template'),
-    context.destinationPath(`./App/Containers/${context.name}.js`),
-    { name: context.name }
-  )
+class ListviewGenerator extends Generators.Base {
 
-  // copy listview style template
-  context.fs.copyTpl(
-    context.templatePath('listview-style.js.template'),
-    context.destinationPath(`./App/Containers/Styles/${context.name}Style.js`),
-    { name: context.name }
-  )
-}
+  constructor (args, options) {
+    super(args, options)
+    this.argument('name', { type: String, required: true })
+  }
 
-class ContainerGenerator extends NamedBase {
-  generateApp () {
-    // Copy over component files.
-    copyOverListView(this)
+  _copyOverListView (type) {
+    // copy listview template
+    this.fs.copyTpl(
+      this.templatePath('listview.js.template'),
+      this.destinationPath(`./App/Containers/${this.name}.js`),
+      { name: this.name }
+    )
+
+    if (type === 'Row List') {
+      // copy row style template
+      this.fs.copyTpl(
+        this.templatePath('listview-style.js.template'),
+        this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
+        { name: this.name }
+      )
+    } else {
+      // copy grid style template
+      this.fs.copyTpl(
+        this.templatePath('gridlistview-style.js.template'),
+        this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
+        { name: this.name }
+      )
+    }
+  }
+
+  prompting () {
+    let prompts = [{
+      type: 'list',
+      name: 'listviewtype',
+      message: 'What kind of listview would you like to generate?',
+      choices: ['Row List', 'Grid List'],
+      store: true
+    }]
+
+    return this.prompt(prompts).then((answers) => {
+      this._copyOverListView(answers.listviewtype)
+    })
   }
 
   end () {
-    console.log('Time to get cooking! 🍽 ')
+    this.log('Time to get cooking! 🍽 ')
   }
 }
 
-module.exports = ContainerGenerator
+module.exports = ListviewGenerator

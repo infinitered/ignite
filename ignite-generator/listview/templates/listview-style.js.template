@@ -6,5 +6,11 @@ export default StyleSheet.create({
   container: {
     marginTop: Metrics.navBarHeight,
     flex: 1
+  },
+  item: {
+    ...ApplicationStyles.screen.sectionText
+  },
+  listContent: {
+    flex: 1
   }
 })

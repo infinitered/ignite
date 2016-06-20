@@ -26,6 +26,7 @@ export default class UsageExamplesScreen extends React.Component {
     this.handlePressSend = this.handlePressSend.bind(this)
     this.handlePressStar = this.handlePressStar.bind(this)
     this.handlePressListview = this.handlePressListview.bind(this)
+    this.handlePressListviewGrid = this.handlePressListviewGrid.bind(this)
   }
 
   static propTypes = {
@@ -80,10 +81,15 @@ export default class UsageExamplesScreen extends React.Component {
     dispatch(Actions.requestTemperature('New Orleans'))
   }
 
-  // Fires when tap listview
   handlePressListview () {
     const { navigator } = this.props
     const route = Routes.ListviewExample
+    navigator.push(route)
+  }
+
+  handlePressListviewGrid () {
+    const { navigator } = this.props
+    const route = Routes.ListviewGridExample
     navigator.push(route)
   }
 
@@ -155,6 +161,9 @@ export default class UsageExamplesScreen extends React.Component {
         {this.renderHeader(I18n.t('igniteGenerated'))}
         <View>
           <RoundedButton text='Listview' onPress={this.handlePressListview} />
+        </View>
+        <View>
+          <RoundedButton text='Listview Grid' onPress={this.handlePressListviewGrid} />
         </View>
       </View>
     )
