@@ -9,7 +9,8 @@ export default StyleSheet.create({
   },
   item: {
     width: 100,
-    backgroundColor: Colors.snow,
+    color: Colors.snow,
+    backgroundColor: Colors.fire,
     margin: Metrics.baseMargin,
     borderRadius: 5
   },
