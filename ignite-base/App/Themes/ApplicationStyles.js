@@ -7,10 +7,16 @@ import Colors from './Colors'
 
 const ApplicationStyles = {
   screen: {
-    backgroundImage: {
-      width: Metrics.screenWidth,
+    mainContainer: {
       flex: 1,
       marginTop: Metrics.navBarHeight
+    },
+    backgroundImage: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0
     },
     container: {
       flex: 1,

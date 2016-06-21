@@ -62,7 +62,8 @@ export default class UsageExamplesScreen extends React.Component {
 
   render () {
     return (
-      <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch'>
+      <View style={styles.mainContainer}>
+        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
           <View style={styles.section} key='colors-header'>
             <Text style={styles.sectionText} key='colors'>List of Theme specific settings.  Auto-generated from Themes folder.</Text>
@@ -79,7 +80,7 @@ export default class UsageExamplesScreen extends React.Component {
           {this.renderStyles()}
 
         </ScrollView>
-      </Image>
+      </View>
     )
   }
 }

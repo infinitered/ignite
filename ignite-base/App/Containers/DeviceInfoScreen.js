@@ -63,7 +63,8 @@ export default class DeviceInfoScreen extends React.Component {
 
   render () {
     return (
-      <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch'>
+      <View style={styles.mainContainer}>
+        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
           <View style={styles.section}>
             <Text style={styles.sectionText} >
@@ -74,7 +75,7 @@ export default class DeviceInfoScreen extends React.Component {
           {this.renderCard('Device OS', OS_DATA)}
           {this.renderCard('App Info', APP_DATA)}
         </ScrollView>
-      </Image>
+      </View>
     )
   }
 }
