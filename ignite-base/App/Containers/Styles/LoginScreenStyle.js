@@ -3,7 +3,6 @@ import Colors from '../../Themes/Colors'
 
 export default StyleSheet.create({
   container: {
-    justifyContent: 'center',
     paddingTop: 70,
     backgroundColor: Colors.ember
   },
