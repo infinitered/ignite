@@ -12,7 +12,7 @@ const updateReducers = (store) => {
   // Check to ensure latest reducer version
   AsyncStorage.getItem('reducerVersion').then((localVersion) => {
     if (localVersion !== reducerVersion) {
-      console.log('PURGING STORE', localVersion, 'vs.', reducerVersion)
+      // console.log('PURGING STORE', localVersion, 'vs.', reducerVersion)
       // Purge store and refresh
       persistStore(store, config, () => {
         // Start a fresh store
