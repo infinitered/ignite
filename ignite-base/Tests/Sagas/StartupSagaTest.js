@@ -3,8 +3,9 @@ import { take } from 'redux-saga/effects'
 import { watchStartup } from '../../App/Sagas/StartupSaga'
 import Types from '../../App/Actions/Types'
 
+const stepper = (fn) => (mock) => fn.next(mock).value
+
 test('watches for the right action', t => {
-  const gen = watchStartup()
-  const next = (mock) => gen.next(mock).value
-  t.deepEqual(next(), take(Types.STARTUP))
+  const step = stepper(watchStartup())
+  t.deepEqual(step(), take(Types.STARTUP))
 })

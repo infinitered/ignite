@@ -4,25 +4,24 @@ import { attemptLogin, watchLoginAttempt } from '../../App/Sagas/LoginSaga'
 import Types from '../../App/Actions/Types'
 import Actions from '../../App/Actions/Creators'
 
+const stepper = (fn) => (mock) => fn.next(mock).value
+
 test('watcher', t => {
-  const gen = watchLoginAttempt() // the test subject
-  const next = (mock) => gen.next(mock).value // makes for nicer looking tests
+  const step = stepper(watchLoginAttempt())
   const mock = { username: 'steve', password: 'password' } // sample data
 
-  t.deepEqual(next(), take(Types.LOGIN_ATTEMPT))
-  t.deepEqual(next(mock), call(attemptLogin, mock.username, mock.password))
+  t.deepEqual(step(), take(Types.LOGIN_ATTEMPT))
+  t.deepEqual(step(mock), call(attemptLogin, mock.username, mock.password))
 })
 
 test('attemptLogin success', t => {
-  const gen = attemptLogin('a', 'b')
-  const next = (mock) => gen.next(mock).value
+  const step = stepper(attemptLogin('a', 'b'))
 
-  t.deepEqual(next(), put(Actions.loginSuccess('a')))
+  t.deepEqual(step(), put(Actions.loginSuccess('a')))
 })
 
 test('attemptLogin failure', t => {
-  const gen = attemptLogin('bad', '')
-  const next = (mock) => gen.next(mock).value
+  const step = stepper(attemptLogin('bad', ''))
 
-  t.deepEqual(next(), put(Actions.loginFailure('WRONG')))
+  t.deepEqual(step(), put(Actions.loginFailure('WRONG')))
 })
