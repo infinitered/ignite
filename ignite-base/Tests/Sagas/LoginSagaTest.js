@@ -1,43 +1,28 @@
-// import test from 'ava'
-// import { describe, it } from 'mocha'
-// import { expect } from 'chai'
-// import { take, call, put } from 'redux-saga/effects'
-// import { attemptLogin, watchLoginAttempt } from '../../App/Sagas/LoginSaga'
-// import Types from '../../App/Actions/Types'
-// import Actions from '../../App/Actions/Creators'
+import test from 'ava'
+import { take, call, put } from 'redux-saga/effects'
+import { attemptLogin, watchLoginAttempt } from '../../App/Sagas/LoginSaga'
+import Types from '../../App/Actions/Types'
+import Actions from '../../App/Actions/Creators'
 
-// describe('watchLoginAttempt', () => {
-//   it('listens for the right action type', () => {
-//     const gen = watchLoginAttempt()
-//     const actual = gen.next().value
-//     const expected = take(Types.LOGIN_ATTEMPT)
-//     expect(actual).to.deep.equal(expected)
-//   })
+test('watcher', t => {
+  const gen = watchLoginAttempt() // the test subject
+  const next = (mock) => gen.next(mock).value // makes for nicer looking tests
+  const mock = { username: 'steve', password: 'password' } // sample data
 
-//   it('calls the saga that does the work', () => {
-//     const gen = watchLoginAttempt()
-//     gen.next()
-//     const mock = { username: 'steve', password: 'password' }
-//     const actual = gen.next(mock).value
-//     const expected = call(attemptLogin, mock.username, mock.password)
-//     expect(actual).to.deep.equal(expected)
-//   })
-// })
+  t.deepEqual(next(), take(Types.LOGIN_ATTEMPT))
+  t.deepEqual(next(mock), call(attemptLogin, mock.username, mock.password))
+})
 
-// describe('attemptLogin', () => {
-//   it('dispatches failure actions', () => {
-//     const gen = attemptLogin('steve', '')
-//     gen.next()
-//     const actual = gen.next().value
-//     const expected = put(Actions.loginFailure('WRONG'))
-//     expect(actual).to.deep.equal(expected)
-//   })
+test('attemptLogin success', t => {
+  const gen = attemptLogin('a', 'b')
+  const next = (mock) => gen.next(mock).value
 
-//   it('dispatches success actions', () => {
-//     const gen = attemptLogin('steve', 'password')
-//     gen.next()
-//     const actual = gen.next().value
-//     const expected = put(Actions.loginSuccess('steve'))
-//     expect(actual).to.deep.equal(expected)
-//   })
-// })
+  t.deepEqual(next(), put(Actions.loginSuccess('a')))
+})
+
+test('attemptLogin failure', t => {
+  const gen = attemptLogin('bad', '')
+  const next = (mock) => gen.next(mock).value
+
+  t.deepEqual(next(), put(Actions.loginFailure('WRONG')))
+})

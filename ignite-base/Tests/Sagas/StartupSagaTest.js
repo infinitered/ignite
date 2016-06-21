@@ -1,15 +1,10 @@
-// import test from 'ava'
-// import { describe, it } from 'mocha'
-// import { expect } from 'chai'
-// import { take } from 'redux-saga/effects'
-// import { watchStartup } from '../../App/Sagas/StartupSaga'
-// import Types from '../../App/Actions/Types'
+import test from 'ava'
+import { take } from 'redux-saga/effects'
+import { watchStartup } from '../../App/Sagas/StartupSaga'
+import Types from '../../App/Actions/Types'
 
-// describe('watchStartup', () => {
-//   it('listens for the STARTUP action type', () => {
-//     const gen = watchStartup()
-//     const actual = gen.next().value
-//     const expected = take(Types.STARTUP)
-//     expect(actual).to.deep.equal(expected)
-//   })
-// })
+test('watches for the right action', t => {
+  const gen = watchStartup()
+  const next = (mock) => gen.next(mock).value
+  t.deepEqual(next(), take(Types.STARTUP))
+})

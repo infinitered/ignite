@@ -7,7 +7,8 @@
     "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
-    "test": "mocha --opts Tests/mocha.opts Tests/ --recursive && ava",
+    "test": "ava",
+    "test:watch": "ava --watch",
     "tron": "node_modules/.bin/reactotron",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
@@ -50,12 +51,14 @@
   },
   "ava": {
     "files": [
-      "Tests/**/*.js"
+      "Tests/**/*.js",
+      "!Tests/Compiler.js",
+      "!Tests/Setup.js"
     ],
     "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
+      "babel-register",
+      "babel-polyfill"
+    ]
   },
   "standard": {
     "parser": "babel-eslint",
