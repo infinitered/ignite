@@ -42,11 +42,7 @@
   "devDependencies": {
     "ava": "^0.15.2",
     "babel-eslint": "^6.0.2",
-    "chai": "^3.5.0",
-    "chai-immutable": "^1.5.3",
-    "deep-freeze": "0.0.1",
     "enzyme": "^2.3.0",
-    "mocha": "^2.4.5",
     "mockery": "^1.7.0",
     "nyc": "^6.6.1",
     "react-addons-test-utils": "^15.1.0",

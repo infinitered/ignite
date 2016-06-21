@@ -10,7 +10,7 @@ _The ideal starting app for React Native:_
 * Redux persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
 * Sagas Redux Daemons
 * Githooks
-* Mocha Tests
+* AVA Tests
 * Networking Code
 * Common Libs:
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
