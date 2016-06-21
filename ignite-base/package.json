@@ -59,7 +59,6 @@
   "ava": {
     "files": [
       "Tests/**/*.js",
-      "!Tests/Compiler.js",
       "!Tests/Setup.js"
     ],
     "require": [
