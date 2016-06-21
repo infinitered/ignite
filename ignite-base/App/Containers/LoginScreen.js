@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {
   View,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -109,7 +110,7 @@ class LoginScreen extends React.Component {
     const editable = !attempting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <View style={[Styles.container, {height: this.state.visibleHeight}]}>
+      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]}>
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
         <View style={Styles.form}>
           <View style={Styles.row}>
@@ -155,7 +156,7 @@ class LoginScreen extends React.Component {
           </View>
         </View>
 
-      </View>
+      </ScrollView>
     )
   }
 
