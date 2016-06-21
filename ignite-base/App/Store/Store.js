@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import { persistStore, autoRehydrate } from 'redux-persist'
-import { AsyncStorage } from 'react-native'
+import { autoRehydrate } from 'redux-persist'
 import createLogger from 'redux-logger'
-import rootReducer, { persistentStoreBlacklist } from '../Reducers/'
+import rootReducer from '../Reducers/'
 import Config from '../Config/DebugSettings'
 import createSagaMiddleware from 'redux-saga'
 import sagas from '../Sagas/'
 import R from 'ramda'
-import immutablePersistenceTransform from './ImmutablePersistenceTransform'
 import Reactotron from 'reactotron'
+import RehydrationServices from '../Services/RehydrationServices'
+import ReduxPersist from '../Config/ReduxPersist'
 
 // the logger master switch
 const USE_LOGGING = Config.reduxLogging
@@ -32,8 +32,8 @@ if (__DEV__) {
 export default () => {
   let store = {}
 
-  // Add rehydrate enhancer if reduxPersist
-  if (Config.reduxPersist) {
+  // Add rehydrate enhancer if ReduxPersist is active
+  if (ReduxPersist.active) {
     const enhancers = compose(
       applyMiddleware(...middleware),
       Reactotron.storeEnhancer(),
@@ -45,12 +45,8 @@ export default () => {
       enhancers
     )
 
-    // configure persistStore
-    persistStore(store, {
-      storage: AsyncStorage,
-      blacklist: persistentStoreBlacklist,
-      transforms: [immutablePersistenceTransform]
-    })
+    // configure persistStore and check reducer version number
+    RehydrationServices.updateReducers(store)
   } else {
     const enhancers = compose(
       applyMiddleware(...middleware),
