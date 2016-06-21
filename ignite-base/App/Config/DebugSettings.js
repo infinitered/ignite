@@ -3,7 +3,6 @@ const SETTINGS = {
   ezLogin: false,
   yellowBox: __DEV__,
   reduxLogging: true,
-  reduxPersist: true,
   includeExamples: __DEV__
 }
 
