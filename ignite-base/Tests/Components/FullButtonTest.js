@@ -12,7 +12,7 @@ test('component structure', t => {
 })
 
 test('onPress', t => {
-  var i = 0 // i guess i could have used sinon here too... less is more i guess
+  let i = 0 // i guess i could have used sinon here too... less is more i guess
   const onPress = () => i++
   const wrapper = shallow(<FullButton onPress={onPress} text='hi' />)
 
