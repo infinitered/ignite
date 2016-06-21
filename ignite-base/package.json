@@ -45,8 +45,13 @@
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
     "deep-freeze": "0.0.1",
+    "enzyme": "^2.3.0",
     "mocha": "^2.4.5",
+    "mockery": "^1.7.0",
     "nyc": "^6.6.1",
+    "react-addons-test-utils": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-native-mock": "^0.2.3",
     "reactotron": "^0.6.1",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
@@ -59,8 +64,11 @@
     ],
     "require": [
       "babel-register",
-      "babel-polyfill"
-    ]
+      "babel-polyfill",
+      "react-native-mock/mock",
+      "./Tests/Setup"
+    ],
+    "babel": "inherit"
   },
   "standard": {
     "parser": "babel-eslint",
