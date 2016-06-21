@@ -42,6 +42,7 @@
   "devDependencies": {
     "ava": "^0.15.2",
     "babel-eslint": "^6.0.2",
+    "enzyme": "^2.3.0",
     "mockery": "^1.7.0",
     "nyc": "^6.6.1",
     "react-addons-test-utils": "^15.1.0",
