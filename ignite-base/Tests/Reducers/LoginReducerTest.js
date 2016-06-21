@@ -1,39 +1,29 @@
-import { describe, it } from 'mocha'
-import { expect } from 'chai'
-import reducer from '../../App/Reducers/LoginReducer'
-import Types from '../../App/Actions/Types'
+import test from 'ava'
+import reducer, { INITIAL_STATE } from '../../App/Reducers/LoginReducer'
+import Actions from '../../App/Actions/Creators'
 
-describe('Login Reducer - LOGIN_ATTEMPT', () => {
-  const action = { type: Types.LOGIN_ATTEMPT }
-  const actual = reducer(undefined, action)
-  it('has the right values', () => {
-    expect(actual.attempting).to.be.true
-  })
+test('attempt', t => {
+  const state = reducer(INITIAL_STATE, Actions.attemptLogin('u', 'p'))
+
+  t.true(state.attempting)
 })
 
-describe('Login Reducer - LOGIN_SUCCESS', () => {
-  const action = { type: Types.LOGIN_SUCCESS, username: 'steve' }
-  const actual = reducer(undefined, action)
-  it('has the right values', () => {
-    expect(actual.attempting).to.be.false
-    expect(actual.username).to.equal('steve')
-    expect(actual.errorCode).to.be.null
-  })
+test('success', t => {
+  const state = reducer(INITIAL_STATE, Actions.loginSuccess('hi'))
+
+  t.is(state.username, 'hi')
 })
 
-describe('Login Reducer - LOGIN_FAILURE', () => {
-  const action = { type: Types.LOGIN_FAILURE, errorCode: 123 }
-  const actual = reducer(undefined, action)
-  it('has the right values', () => {
-    expect(actual.attempting).to.be.false
-    expect(actual.errorCode).to.equal(123)
-  })
+test('failure', t => {
+  const state = reducer(INITIAL_STATE, Actions.loginFailure(69))
+
+  t.false(state.attempting)
+  t.is(state.errorCode, 69)
 })
 
-describe('Login Reducer - LOGOUT', () => {
-  const action = { type: Types.LOGOUT }
-  const actual = reducer(undefined, action)
-  it('has the right values', () => {
-    expect(actual.username).to.be.null
-  })
+test('logout', t => {
+  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess('hi'))
+  const state = reducer(loginState, Actions.logout())
+
+  t.falsy(state.username)
 })

@@ -2,14 +2,8 @@ import { take, put, call } from 'redux-saga/effects'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
 
-// a helper for simulating work
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
 // attempts to login
 export function * attemptLogin (username, password) {
-  // simulate work
-  yield delay(2000)
-
   if (password === '') {
     // dispatch failure
     yield put(Actions.loginFailure('WRONG'))
