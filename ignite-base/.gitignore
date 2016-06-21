@@ -32,3 +32,7 @@ local.properties
 #
 node_modules/
 npm-debug.log
+
+# Coverage
+.nyc_output/
+coverage/

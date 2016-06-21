@@ -9,6 +9,7 @@
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
     "test": "ava",
     "test:watch": "ava --watch",
+    "coverage": "nyc ava",
     "tron": "node_modules/.bin/reactotron",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
@@ -45,6 +46,7 @@
     "chai-immutable": "^1.5.3",
     "deep-freeze": "0.0.1",
     "mocha": "^2.4.5",
+    "nyc": "^6.6.1",
     "reactotron": "^0.6.1",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
