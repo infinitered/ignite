@@ -27,20 +27,28 @@
 * **Battle Tested** - We use this!
 * Redux State Management
 * Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
-* Sagas Redux Daemons
+* Redux Sagas
 * Githooks
-* Mocha Tests
+* AVA Tests - even React Native components!
+* Code Coverage Reports
 * API Ready
 * Reactotron Ready
-* Include Common Libs:
+* Included Common Libs:
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
   * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
   * [apisauce](https://github.com/skellock/apisauce)
-  * [reactotron](https://github.com/skellock/reactotron)
   * [reduxsauce](https://github.com/skellock/reduxsauce)
+* Included Developer Libs:
+  * [reactotron](https://github.com/skellock/reactotron)
+  * [AVA](https://github.com/avajs/ava)
+  * [enzyme](https://github.com/airbnb/enzyme)
+  * [react-native-mock](https://github.com/lelandrichardson/react-native-mock)
+  * [mockery](https://github.com/mfncooper/mockery)
+  * [nyc](https://github.com/bcoe/nyc)
+
 
 To view the generated example project, just pull down the code and run ignite-base!
 
