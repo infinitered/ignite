@@ -257,6 +257,7 @@ export class AppGenerator extends Generators.Base {
 
     this._cpTemplate('README.md')
     this._cpTemplate('package.json')
+    this._cpTemplate('.babelrc')
     this._cpFile('index.js.template', 'index.ios.js')
     this._cpFile('index.js.template', 'index.android.js')
     this._cpDirectory('git_hooks')
