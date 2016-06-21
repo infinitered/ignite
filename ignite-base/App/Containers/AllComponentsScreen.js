@@ -22,7 +22,8 @@ export default class AllComponentsScreen extends React.Component {
 
   render () {
     return (
-      <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch'>
+      <View style={styles.mainContainer}>
+        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
           <View style={styles.section}>
             <Text style={styles.sectionText}>
@@ -38,7 +39,7 @@ export default class AllComponentsScreen extends React.Component {
           {ExamplesRegistry.render()}
 
         </ScrollView>
-      </Image>
+      </View>
     )
   }
 }

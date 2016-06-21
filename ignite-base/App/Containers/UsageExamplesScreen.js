@@ -171,7 +171,8 @@ export default class UsageExamplesScreen extends React.Component {
 
   render () {
     return (
-      <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch'>
+      <View style={styles.mainContainer}>
+        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
           <View style={styles.section}>
             <Text style={styles.sectionText} >
@@ -181,7 +182,7 @@ export default class UsageExamplesScreen extends React.Component {
           </View>
           {this.renderUsageExamples()}
         </ScrollView>
-      </Image>
+      </View>
     )
   }
 }
