@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, Navigator, StatusBar } from 'react-native'
+import { View, Navigator, StatusBar } from 'react-native'
 import {Router, Routes, NavigationBar} from './Navigation/'
 import configureStore from './Store/Store'
 import { Provider } from 'react-redux'
 import Actions from './Actions/Creators'
 import Drawer from 'react-native-drawer'
 import DebugSettings from './Config/DebugSettings'
+import DrawerContent from './Components/DrawerContent'
 import './Config/PushConfig'
 
 // Styles
@@ -14,6 +15,11 @@ import styles, {drawerStyles} from './Containers/Styles/RootStyle'
 const store = configureStore()
 
 export default class RNBase extends React.Component {
+  constructor (props) {
+    super(props)
+    this.handlePushRoute = this.handlePushRoute.bind(this)
+    this.closeDrawer = this.closeDrawer.bind(this)
+  }
 
   componentWillMount () {
     const { dispatch } = store
@@ -21,17 +27,23 @@ export default class RNBase extends React.Component {
   }
 
   componentDidMount () {
-    this.navigator.drawer = this.drawer
+    this.refs.drawerContent.navigator = this.navigator
+    this.navigator.drawer = this.refs.drawer
+  }
+
+  handlePushRoute (route) {
+    this.navigator.push(route)
+    this.closeDrawer()
   }
 
   renderDrawerContent () {
     return (
-      <View style={{marginTop: 30, padding: 10}}>
-        <Text style={{color: 'white'}}>
-          Drawer Content Goes Here!
-        </Text>
-      </View>
+      <DrawerContent ref='drawerContent' onPushRoute={this.handlePushRoute} onClose={this.closeDrawer} />
     )
+  }
+
+  closeDrawer () {
+    this.refs.drawer.close()
   }
 
   renderApp () {
@@ -44,12 +56,14 @@ export default class RNBase extends React.Component {
           />
 
           <Drawer
-            ref={(ref) => { this.drawer = ref }}
+            ref='drawer'
             content={this.renderDrawerContent()}
             styles={drawerStyles}
             openDrawerOffset={100}
-            type='static'
+            type='overlay'
             tapToClose
+            panOpenMask={0.05}
+            panCloseMask={0.3}
           >
             <Navigator
               ref={(ref) => { this.navigator = ref }}
