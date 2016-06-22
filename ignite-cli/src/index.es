@@ -33,11 +33,29 @@ Program
   .command('new <project>')
   .description('ignite a new base project')
   .alias('n')
-  .action((project) => {
+  .option('--repo [https://github.com/infinitered/ignite.git]', 'An optional git URL for Ignite source files.')
+  .option('--branch [master]', 'An optional branch for Ignite source files.')
+  .action((project, options) => {
     checkYo()
     checkName(project)
     console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
-    spawn('yo', ['react-native-ignite', project], { shell: true, stdio: 'inherit' })
+    // the array of options fed into spawn
+    const spawnOptions = []
+    // start with the command line
+    spawnOptions.push('react-native-ignite')
+    // then add the project name
+    spawnOptions.push(project)
+    // should we use a different repo?
+    if (options.repo) {
+      spawnOptions.push('--repo')
+      spawnOptions.push(options.repo)
+    }
+    // should we use a different branch?
+    if (options.branch) {
+      spawnOptions.push('--branch')
+      spawnOptions.push(options.branch)
+    }
+    spawn('yo', spawnOptions, { shell: true, stdio: 'inherit' })
   })
 
 // generate

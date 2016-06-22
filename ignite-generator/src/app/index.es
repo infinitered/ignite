@@ -207,13 +207,47 @@ export class AppGenerator extends Generators.Base {
    * Ensure we have the latest Ignite templates.
    */
   downloadLatestIgnite () {
-    const status = 'Downloading latest Ignite files'
+    // the default repo
+    const defaultRepo = 'https://github.com/infinitered/ignite.git'
+    // the repo the user might have asked for via a command line
+    const requestedRepo = this.options['repo']
+    // did the user actually ask for a custom repo?
+    const useCustomRepo = typeof requestedRepo !== 'undefined' && requestedRepo !== null && requestedRepo !== ''
+    // the right repo to use
+    const repo = useCustomRepo ? requestedRepo : defaultRepo
+
+    const status = `Downloading latest Ignite files from ${repo}`
     this.spinner.start()
     this.spinner.text = status
     const done = this.async()
     const command = 'git'
-    const commandOpts = ['clone', 'https://github.com/infinitered/ignite.git', this.sourceRoot()]
+    const commandOpts = ['clone', repo, this.sourceRoot()]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
+      .on('close', () => {
+        this.spinner.stop()
+        this.log(`${check} ${status}`)
+        done()
+      })
+  }
+
+  /**
+   * We might need to switch to a new branch if we're testing a ignite feature.
+   */
+  checkoutDifferentBranch () {
+    // read the user's choice from the source-branch command line option
+    const branch = this.options['branch']
+    // should we be using master?
+    const useMasterBranch = typeof branch === 'undefined' || branch === null || branch === 'master' || branch === ''
+    // jet if we're using the default behaviour
+    if (useMasterBranch) return
+
+    const status = `Using ignite branch ${branch}`
+    this.spinner.start()
+    this.spinner.text = status
+    const done = this.async()
+    const command = 'git'
+    const commandOpts = ['checkout', branch]
+    this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
       .on('close', () => {
         this.spinner.stop()
         this.log(`${check} ${status}`)
