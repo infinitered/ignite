@@ -20,7 +20,6 @@ export default StyleSheet.create({
       height: 7,
       width: 7
     },
-    shadowOpacity: 0.25,
     shadowRadius: 2,
     paddingBottom: Metrics.baseMargin,
     margin: Metrics.baseMargin
