@@ -52,7 +52,7 @@ public class MainActivity extends ReactActivity {
 
     // Add onNewIntent
     @Override
-    protected void onNewIntent (Intent intent) {
+    public void onNewIntent (Intent intent) {
       super.onNewIntent(intent);
 
       mReactNativePushNotificationPackage.newIntent(intent);
