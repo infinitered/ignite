@@ -10,7 +10,7 @@ class DrawerContent extends React.Component {
     super(props)
     this.handlePressComponent = props.onPushRoute.bind(this, Routes.AllComponentsScreen)
     this.handlePressUsage = props.onPushRoute.bind(this, Routes.UsageExamplesScreen)
-    this.handlePressApi = props.onPushRoute.bind(this, Routes.ApiTestingScreen)
+    this.handlePressApi = props.onPushRoute.bind(this, Routes.APITestingScreen)
     this.handlePressTheme = props.onPushRoute.bind(this, Routes.ThemeScreen)
     this.handlePressDeviceInfo = props.onPushRoute.bind(this, Routes.DeviceInfoScreen)
   }
