@@ -3,7 +3,9 @@ import {Fonts, Metrics, Colors} from '../../Themes/'
 
 // For some reason this doesn't want to be a stylesheet
 export const drawerStyles = {
-  drawer: {shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3, backgroundColor: Colors.background}
+  drawer: {
+    backgroundColor: Colors.drawer
+  }
 }
 
 const RootStyle = StyleSheet.create({
@@ -14,11 +16,6 @@ const RootStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: Colors.background
-  },
-  drawer: {
-    shadowColor: '#000000',
-    shadowOpacity: 0.8,
-    shadowRadius: 3
   },
   welcome: {
     fontSize: 20,

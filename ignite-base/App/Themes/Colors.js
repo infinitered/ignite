@@ -16,7 +16,8 @@ const colors = {
   bloodOrange: '#fb5f26',
   snow: 'white',
   ember: 'rgba(164, 0, 48, 0.5)',
-  fire: '#e73536'
+  fire: '#e73536',
+  drawer: 'rgba(30, 30, 29, 0.95)'
 }
 
 export default colors
