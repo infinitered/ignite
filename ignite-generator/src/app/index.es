@@ -57,7 +57,7 @@ const performInserts = (name) => {
  * Doctors Info.plist to allow API examples to openweather.org
  */
 const addAPITransportException = (name) => {
-  const addEntry = `plutil -replace NSAppTransportSecurity -xml '<dict> <key>NSExceptionDomains</key> <dict> <key>localhost</key> <dict> <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key> <true/> </dict> <key>openweathermap.org</key> <dict> <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key> <true/> </dict> </dict> </dict>' ./ios/${name}/Info.plist`
+  const addEntry = `plutil -replace NSAppTransportSecurity -xml '<dict> <key>NSExceptionDomains</key> <dict> <key>localhost</key> <dict> <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key> <true/> </dict> <key>openweathermap.org</key> <dict> <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key> <true/> </dict> </dict> </dict>' ./${name}/ios/${name}/Info.plist`
   Shell.exec(addEntry)
 }
 
