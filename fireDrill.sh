@@ -1,6 +1,9 @@
 #! /bin/bash
 LOGS_BASE=$(grep -rnw './ignite-base/App' -e '\s console.log' | wc -l)
-echo 'Warning: console.log() count in ignite-base:' $LOGS_BASE
+
+if [[ $LOGS_BASE -gt 0 ]]; then
+  echo 'Warning: console.log() count in ignite-base:' $LOGS_BASE
+fi
 
 # Template code should mirror active base project
 # Except in the known instances where names differ
@@ -33,5 +36,10 @@ npm i -g standard
 standard ./ignite-cli/src/**.*
 # Check generator for compliance
 standard ./ignite-generator/src/**.*
+
+# Run checks specific to ignite-base
+cd ./ignite-base
 # Check base app for standard compliance
-cd ./ignite-base && standard ./App/**.*
+standard ./App/**.*
+# Run tests on base app
+ava
