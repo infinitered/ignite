@@ -302,6 +302,8 @@ export class AppGenerator extends Generators.Base {
     this._cpTemplate('.babelrc')
     this._cpFile('index.js.template', 'index.ios.js')
     this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('.editorconfig.template', '.editorconfig')
     this._cpDirectory('git_hooks')
     this._cpDirectory('Tests')
     this._cpDirectory('App')
