@@ -14,6 +14,7 @@ mockery.warnOnUnregistered(false)
 // Let's register some mocks for the images that are brought into our project.
 // You'll have to do the same because the React Native packager and babel
 // are locked into a horrible custody battle.
+mockery.registerMock('reactotron', {})
 mockery.registerMock('../Images/ir.png', 0)
 mockery.registerMock('../Images/top_logo.png', 0)
 mockery.registerMock('../Images/ignite_logo.png', 0)
