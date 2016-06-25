@@ -28,9 +28,8 @@ if [[ $DIFF_COUNT -ne ONE_LINE_DIFFERENT ]]; then
   exit 1
 fi
 
-# latest
+# latest eslint plz
 npm i -g babel-eslint
-npm i -g standard
 
 # Check cli for compliance
 standard ./ignite-cli/src/**.*
@@ -39,7 +38,19 @@ standard ./ignite-generator/src/**.*
 
 # Run checks specific to ignite-base
 cd ./ignite-base
+
+# install standard if needed
+which standard
+if [[ $? -ne 0 ]]; then
+  npm i -g standard
+fi
 # Check base app for standard compliance
 standard ./App/**.*
+
 # Run tests on base app
+# install ava if needed
+which ava
+if [[ $? -ne 0 ]]; then
+  npm i -g ava
+fi
 ava
