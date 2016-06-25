@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import MapView from 'react-native-maps'
 import { calculateRegion } from '../Lib/MapHelpers'
@@ -95,7 +95,7 @@ class MapviewExample extends React.Component {
         onRegionChangeComplete={this.onRegionChange}
         showsUserLocation={this.state.showUserLocation}
       >
-        { this.state.locations.map((location) => this.renderMapMarkers(location)) }
+        {this.state.locations.map((location) => this.renderMapMarkers(location))}
       </MapView>
     )
   }
