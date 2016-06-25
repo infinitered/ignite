@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { View, Navigator, StatusBar } from 'react-native'
 import {Router, Routes, NavigationBar} from './Navigation/'
-import configureStore from './Store/Store'
 import { Provider } from 'react-redux'
 import Actions from './Actions/Creators'
 import Drawer from 'react-native-drawer'
@@ -12,17 +11,19 @@ import './Config/PushConfig'
 // Styles
 import styles, {drawerStyles} from './Containers/Styles/RootStyle'
 
-const store = configureStore()
-
-export default class RNBase extends React.Component {
+export default class Root extends React.Component {
   constructor (props) {
     super(props)
     this.handlePushRoute = this.handlePushRoute.bind(this)
     this.closeDrawer = this.closeDrawer.bind(this)
   }
 
+  static propTypes = {
+    store: PropTypes.object.isRequired
+  }
+
   componentWillMount () {
-    const { dispatch } = store
+    const { dispatch } = this.props.store
     dispatch(Actions.startup())
   }
 
@@ -49,7 +50,7 @@ export default class RNBase extends React.Component {
   renderApp () {
     console.disableYellowBox = !DebugSettings.yellowBox
     return (
-      <Provider store={store}>
+      <Provider store={this.props.store}>
         <View style={styles.applicationView}>
           <StatusBar
             barStyle='light-content'
