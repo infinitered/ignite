@@ -117,7 +117,7 @@ export class AppGenerator extends Generators.Base {
     this.log('-----------------------------------------------')
     this.log('')
     this.log('An unfair headstart for your React Native apps.')
-    this.log(colors.yellow('https://ignite.infinite.red'))
+    this.log(colors.yellow('https://infinite.red/ignite'))
     this.log('')
     this.log('-----------------------------------------------')
 
