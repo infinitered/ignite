@@ -14,7 +14,7 @@ import styles from './Styles/<%= name %>Style'
 // I18n
 import I18n from '../I18n/I18n.js'
 
-export default class <%= name %> extends React.Component {
+class <%= name %> extends React.Component {
 
   constructor (props) {
     super(props)

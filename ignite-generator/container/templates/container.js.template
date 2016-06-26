@@ -7,7 +7,7 @@ import Routes from '../Navigation/Routes'
 // Styles
 import styles from './Styles/<%= name %>Style'
 
-export default class <%= name %> extends React.Component {
+class <%= name %> extends React.Component {
 
   // constructor (props) {
   //   super(props)
