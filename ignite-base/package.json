@@ -42,6 +42,7 @@
   "devDependencies": {
     "ava": "^0.15.2",
     "babel-eslint": "^6.1.0",
+    "babel-preset-es2015": "^6.9.0",
     "enzyme": "^2.3.0",
     "mockery": "^1.7.0",
     "nyc": "^6.6.1",
