@@ -15,7 +15,7 @@ import I18n from '../I18n/I18n.js'
 // Styles
 import styles from './Styles/UsageExamplesScreenStyle'
 
-export default class UsageExamplesScreen extends React.Component {
+class UsageExamplesScreen extends React.Component {
 
   constructor (props) {
     super(props)

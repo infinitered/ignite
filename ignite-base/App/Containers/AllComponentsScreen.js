@@ -13,7 +13,7 @@ import '../Components/RoundedButton'
 // Examples Render Engine
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
-export default class AllComponentsScreen extends React.Component {
+class AllComponentsScreen extends React.Component {
 
   static propTypes = {
     navigator: PropTypes.object.isRequired,
