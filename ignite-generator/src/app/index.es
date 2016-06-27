@@ -374,8 +374,11 @@ export class AppGenerator extends Generators.Base {
             this.spinner.stop()
             this.log(`${check} ${rnpmStatus}`)
 
-            // then update the android manifest
-            this._updateAndroidManifest()
+            // Push notifications code, disabled for now
+            // Causing issues :(
+            // update the android manifest
+            // this._updateAndroidManifest()
+
             // then update Plist
             this._updatePList()
             done()
