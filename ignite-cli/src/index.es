@@ -69,6 +69,17 @@ Program
     spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
 
+// import
+Program
+  .command('import <type>')
+  .description('import data into existing structure')
+  .alias('i')
+  .action((type) => {
+    checkYo()
+    console.log(`Imported ${type}`)
+    spawn('yo', [`react-native-ignite:${type}`], { shell: true, stdio: 'inherit' })
+  })
+
 // parse params
 Program.parse(process.argv)
 
