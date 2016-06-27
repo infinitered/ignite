@@ -97,6 +97,9 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 #### Generate a listview: `ignite generate listview HotDates`
 * React Native listview container with easy step by step instructions on how to get started with an easy list template.
 
+#### Import images: `ignite import imagesfile`
+* Imports all files in `Images` folder and converts the names into **key: value** pairs in the _image_ object inside of the `Images.js` file in the `Themes` folder.
+
 ## :twisted_rightwards_arrows: Where to Go From Here
 #### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Chosen-Tech) - Understand the Tech Inside
 #### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
