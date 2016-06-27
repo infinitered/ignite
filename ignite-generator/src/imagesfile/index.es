@@ -9,10 +9,6 @@ import Generators from 'yeoman-generator'
 
 class ImagesFileGenerator extends Generators.Base {
 
-  replaceFileContents (theFile, newContents) {
-    fs.writeFileSync(theFile, newContents, 'utf-8')
-  }
-
   generateImagesFile () {
     // Read files in Images folder
     fs.readdir('./App/Images', (err, files) => {
@@ -51,7 +47,7 @@ class ImagesFileGenerator extends Generators.Base {
   }
 
   end () {
-    console.log('Pretty Pictures')
+    console.log('Pretty Pictures 📸')
   }
 }
 
