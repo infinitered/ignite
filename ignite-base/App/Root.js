@@ -6,7 +6,7 @@ import Actions from './Actions/Creators'
 import Drawer from 'react-native-drawer'
 import DebugSettings from './Config/DebugSettings'
 import DrawerContent from './Components/DrawerContent'
-import './Config/PushConfig'
+// import './Config/PushConfig'
 
 // Styles
 import styles, {drawerStyles} from './Containers/Styles/RootStyle'
