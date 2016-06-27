@@ -38,7 +38,7 @@
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
-  * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification)
+  * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification) (sorta - requires your setup)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
   * [apisauce](https://github.com/skellock/apisauce)
   * [reduxsauce](https://github.com/skellock/reduxsauce)
