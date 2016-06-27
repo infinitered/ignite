@@ -117,7 +117,7 @@ export class AppGenerator extends Generators.Base {
     this.log('-----------------------------------------------')
     this.log('')
     this.log('An unfair headstart for your React Native apps.')
-    this.log(colors.yellow('https://ignite.infinite.red'))
+    this.log(colors.yellow('https://infinite.red/ignite'))
     this.log('')
     this.log('-----------------------------------------------')
 
@@ -302,6 +302,8 @@ export class AppGenerator extends Generators.Base {
     this._cpTemplate('.babelrc')
     this._cpFile('index.js.template', 'index.ios.js')
     this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('.editorconfig.template', '.editorconfig')
     this._cpDirectory('git_hooks')
     this._cpDirectory('Tests')
     this._cpDirectory('App')
@@ -372,8 +374,11 @@ export class AppGenerator extends Generators.Base {
             this.spinner.stop()
             this.log(`${check} ${rnpmStatus}`)
 
-            // then update the android manifest
-            this._updateAndroidManifest()
+            // Push notifications code, disabled for now
+            // Causing issues :(
+            // update the android manifest
+            // this._updateAndroidManifest()
+
             // then update Plist
             this._updatePList()
             done()
