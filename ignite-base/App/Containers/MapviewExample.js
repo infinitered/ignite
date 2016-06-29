@@ -1,9 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { View } from 'react-native'
 import MapView from 'react-native-maps'
 import { calculateRegion } from '../Lib/MapHelpers'
 import MapCallout from '../Components/MapCallout'
 import Styles from './Styles/MapviewExampleStyle'
+
+/* ***********************************************************
+* IMPORTANT!!! Before you get started, if you are going to support Android,
+* PLEASE generate your own API key and add it to android/app/src/main/AndroidManifest.xml
+* We've included our API key for demonstration purposes only, and it will be regenerated from
+* time to time. As such, neglecting to complete this step could potentially break your app in production!
+* https://console.developers.google.com/apis/credentials
+* Also, you'll need to enable Google Maps Android API for your project:
+* https://console.developers.google.com/apis/api/maps_android_backend/
+*************************************************************/
 
 class MapviewExample extends React.Component {
   /* ***********************************************************
@@ -89,14 +100,16 @@ class MapviewExample extends React.Component {
 
   render () {
     return (
-      <MapView
-        style={Styles.container}
-        initialRegion={this.state.region}
-        onRegionChangeComplete={this.onRegionChange}
-        showsUserLocation={this.state.showUserLocation}
-      >
-        {this.state.locations.map((location) => this.renderMapMarkers(location))}
-      </MapView>
+      <View style={Styles.container}>
+        <MapView
+          style={Styles.map}
+          initialRegion={this.state.region}
+          onRegionChangeComplete={this.onRegionChange}
+          showsUserLocation={this.state.showUserLocation}
+        >
+          {this.state.locations.map((location) => this.renderMapMarkers(location))}
+        </MapView>
+      </View>
     )
   }
 }

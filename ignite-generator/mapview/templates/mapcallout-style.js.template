@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles } from '../../Themes/'
+// import { ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  ...ApplicationStyles.screen
+  callout: {
+    position: 'relative',
+    flex: 1
+  }
 })

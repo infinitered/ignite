@@ -44,7 +44,7 @@ public class MainActivity extends ReactActivity {
         mReactNativePushNotificationPackage = new ReactNativePushNotificationPackage(this); // <------ Initialize the Package
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new MapsPackage(),
+            new MapsPackage(this),
             new RNDeviceInfo(),
             new ReactNativeI18n(),
             new VectorIconsPackage(),
