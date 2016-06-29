@@ -307,6 +307,7 @@ export class AppGenerator extends Generators.Base {
     this._cpDirectory('git_hooks')
     this._cpDirectory('Tests')
     this._cpDirectory('App')
+    this._cpDirectory('fastlane')
 
     this.spinner.stop()
     this.log(`${check} ${status}`)
