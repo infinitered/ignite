@@ -8,7 +8,7 @@ import RoundedButton from '../Components/RoundedButton'
 // Styles
 import styles from './Styles/PresentationScreenStyle'
 
-export default class PresentationScreen extends React.Component {
+class PresentationScreen extends React.Component {
 
   static propTypes = {
     navigator: PropTypes.object.isRequired

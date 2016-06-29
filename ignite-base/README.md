@@ -66,7 +66,7 @@ If you have to bypass lint for a special commit that you will come back and clea
 The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
 
 ## :us: Internationalization (i18n)
-Translations are kept in the [I18n.js](https://github.com/infinitered/react_native_base/blob/master/App/I18n/I18n.js) file.  Edit this file for strings.  Even if your app doesn't support multi-languge, this is one of the best ways to keep strings uniform, and typos in check throughout an application.
+Translations are kept in the [I18n.js](https://github.com/infinitered/ignite/blob/master/ignite-base/App/I18n/I18n.js) file.  Edit this file for strings.  Even if your app doesn't support multi-languge, this is one of the best ways to keep strings uniform, and typos in check throughout an application.
 
 ## :open_file_folder: Related Articles
 * [Understanding Keyboard Avoiding Code](https://shift.infinite.red/avoiding-the-keyboard-in-react-native-56d05b9a1e81#.s4bzjlc7l)

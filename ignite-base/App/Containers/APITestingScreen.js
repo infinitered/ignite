@@ -34,10 +34,9 @@ export default class APITestingScreen extends React.Component {
   showResult (response, title = 'Response') {
     this.refs.container.scrollTo({x: 0, y: 0, animated: true})
     if (response.ok) {
-      // this.props.navigator.setState({title})
       this.refs.result.setState({message: FJSON.plain(response.data), title: title})
     } else {
-      this.refs.result.setState({message: response.problem, title: title})
+      this.refs.result.setState({message: `${response.problem} - ${response.status}`, title: title})
     }
   }
 
