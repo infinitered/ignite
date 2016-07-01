@@ -12,6 +12,14 @@ export default new class Routes {
   // they're lazily evaluated to prevent recursion
   // when the screens themselves use this Routes file.
 
+  get MapviewExample () {
+    return {
+      title: 'Mapview Example',
+      component: require('../Containers/MapviewExample').default,
+      leftButton: 'BACK'
+    }
+  }
+
   get ListviewGridExample () {
     return {
       title: 'Listview Grid Example',
