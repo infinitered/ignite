@@ -101,6 +101,7 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 * Imports all files in `Images` folder and converts the names into **key: value** pairs in the _image_ object inside of the `Images.js` file in the `Themes` folder.
 
 ## :twisted_rightwards_arrows: Where to Go From Here
+#### [Chat with us on Gitter](https://gitter.im/infinitered/ignite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - Infinite Red devs standing by
 #### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Chosen-Tech) - Understand the Tech Inside
 #### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
