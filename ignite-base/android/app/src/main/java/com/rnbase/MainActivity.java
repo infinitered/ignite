@@ -1,7 +1,6 @@
 package com.rnbase;
 
 import android.content.Intent;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.react.ReactActivity;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -13,8 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends ReactActivity {
-
-    private ReactNativePushNotificationPackage mReactNativePushNotificationPackage;
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -40,13 +37,11 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected List<ReactPackage> getPackages() {
-        mReactNativePushNotificationPackage = new ReactNativePushNotificationPackage(this); // <------ Initialize the Package
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
             new RNDeviceInfo(),
             new ReactNativeI18n(),
-            new VectorIconsPackage(),
-            mReactNativePushNotificationPackage
+            new VectorIconsPackage()
         );
     }
 
@@ -55,7 +50,6 @@ public class MainActivity extends ReactActivity {
     public void onNewIntent (Intent intent) {
       super.onNewIntent(intent);
 
-      mReactNativePushNotificationPackage.newIntent(intent);
     }
 
 }
