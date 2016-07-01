@@ -38,10 +38,10 @@
   * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   * [react-native-animatable](https://github.com/oblador/react-native-animatable)
   * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
-  * [react-native-push-notification](https://github.com/zo0r/react-native-push-notification) (sorta - requires your setup)
   * [react-native-drawer](https://github.com/root-two/react-native-drawer)
   * [apisauce](https://github.com/skellock/apisauce)
   * [reduxsauce](https://github.com/skellock/reduxsauce)
+  * [react-native-maps](https://github.com/lelandrichardson/react-native-maps)
 * Included Developer Libs:
   * [reactotron](https://github.com/skellock/reactotron)
   * [AVA](https://github.com/avajs/ava)
@@ -96,6 +96,9 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 
 #### Generate a listview: `ignite generate listview HotDates`
 * React Native listview container with easy step by step instructions on how to get started with an easy list template.
+
+#### Generate a mapview: `ignite generate mapview MapScreen`
+* react-native-maps container, component, and map helpers with easy step by step instructions on how to get started with an simple map screen.
 
 #### Import images: `ignite import imagesfile`
 * Imports all files in `Images` folder and converts the names into **key: value** pairs in the _image_ object inside of the `Images.js` file in the `Themes` folder.
