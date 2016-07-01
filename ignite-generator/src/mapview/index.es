@@ -70,7 +70,9 @@ const insertApiKey = () => {
   `
 
   const dir = `${Shell.pwd()}`
-  Utilities.insertInFile(`${dir}/android/app/src/main/AndroidManifest.xml`, '</application>', metaData, false)
+  if (!Utilities.isInFile(`${dir}/android/app/src/main/AndroidManifest.xml`, 'com.google.android.geo.API_KEY')) {
+    Utilities.insertInFile(`${dir}/android/app/src/main/AndroidManifest.xml`, '</application>', metaData, false)
+  }
 }
 
 class MapviewGenerator extends Generators.Base {

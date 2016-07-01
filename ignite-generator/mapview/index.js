@@ -66,7 +66,9 @@ var insertApiKey = function insertApiKey() {
   var metaData = '\n      <meta-data\n        android:name="com.google.android.geo.API_KEY"\n        android:value="AIzaSyBcCdKMCWtxN1mXHlVE6z5cLVXIPWaEcso"/>\n  ';
 
   var dir = '' + _shelljs2.default.pwd();
-  Utilities.insertInFile(dir + '/android/app/src/main/AndroidManifest.xml', '</application>', metaData, false);
+  if (!Utilities.isInFile(dir + '/android/app/src/main/AndroidManifest.xml', 'com.google.android.geo.API_KEY')) {
+    Utilities.insertInFile(dir + '/android/app/src/main/AndroidManifest.xml', '</application>', metaData, false);
+  }
 };
 
 var MapviewGenerator = function (_Generators$Base) {
