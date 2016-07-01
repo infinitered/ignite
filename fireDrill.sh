@@ -7,7 +7,7 @@ fi
 
 # Template code should mirror active base project
 # Except in the known instances where names differ
-# This rule enforces that tempaltes are kept up to date!
+# This rule enforces that templates are kept up to date!
 ONE_LINE_DIFFERENT=4
 # index.android.js
 DIFF_COUNT=$(diff ./ignite-base/index.android.js ./ignite-base/index.js.template | wc -l | grep $ONE_LINE_DIFFERENT)

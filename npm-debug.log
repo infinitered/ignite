@@ -2,14 +2,14 @@
 1 verbose cli [ '/Users/kvg/.nvm/versions/node/v5.9.1/bin/node',
 1 verbose cli   '/Users/kvg/.nvm/versions/node/v5.9.1/bin/npm',
 1 verbose cli   'run',
-1 verbose cli   'lint' ]
+1 verbose cli   'compile' ]
 2 info using npm@3.7.3
 3 info using node@v5.9.1
 4 verbose stack Error: ENOENT: no such file or directory, open '/Users/kvg/code/gems/ignite/package.json'
 4 verbose stack     at Error (native)
 5 verbose cwd /Users/kvg/code/gems/ignite
 6 error Darwin 15.4.0
-7 error argv "/Users/kvg/.nvm/versions/node/v5.9.1/bin/node" "/Users/kvg/.nvm/versions/node/v5.9.1/bin/npm" "run" "lint"
+7 error argv "/Users/kvg/.nvm/versions/node/v5.9.1/bin/node" "/Users/kvg/.nvm/versions/node/v5.9.1/bin/npm" "run" "compile"
 8 error node v5.9.1
 9 error npm  v3.7.3
 10 error path /Users/kvg/code/gems/ignite/package.json
