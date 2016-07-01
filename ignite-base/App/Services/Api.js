@@ -18,9 +18,6 @@ const create = (baseURL = 'http://openweathermap.org/data/2.1') => {
       'Cache-Control': 'no-cache'
     },
     // 10 second timeout...
-    // ...however, it doesn't work on React Native because the `timeout`
-    // property of `XMLHttpRequest` hasn't been implemented.  It is
-    // arriving in RN 0.25 though!
     timeout: 10000
   })
 
