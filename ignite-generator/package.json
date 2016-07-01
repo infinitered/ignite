@@ -9,6 +9,7 @@
     "container",
     "imagesfile",
     "listview",
+    "mapview",
     "validation.js",
     "utilities.js"
   ],

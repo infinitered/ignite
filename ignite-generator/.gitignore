@@ -41,7 +41,7 @@ app/index.js
 component/index.js
 container/index.js
 listview/index.js
+mapview/index.js
 imagesfile/index.js
 screen/index.js
 testing/index.js
-
