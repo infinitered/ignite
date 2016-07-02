@@ -26,26 +26,42 @@ Code is geared towards tested and cross platform functionality. [XDE](https://ex
 
 **Step 1:** git clone this repo:
 ```
-$git clone git@github.com:infinitered/ignite.git
+$ git clone git@github.com:infinitered/ignite.git
 ```
 **Step 2:** cd to the cloned repo:
 ```
-cd ignite/ignite-base
+$ cd ignite/ignite-base
 ```
 **Step 3:** Install the Application
 ```
-npm install
+$ npm install
 ```
 
-## :arrow_forward: How to Run App
+## :arrow_forward: How to Build and Run App
 
-1. cd to ignite-base
+Note that if you do not already have the React Native command line tools installed, you should run `npm install -g react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
+
+1. `$ cd ignite-base`
 2. Run Build for either OS
   * for iOS
-    * run `react-native run-ios`
+    * `$ react-native run-ios`
   * for Android
     * Run Genymotion
-    * run `react-native run-android`
+    * `$ react-native run-android`
+
+## Testing the App
+
+We use [AVA](https://github.com/avajs/ava) for testing.
+
+First build the app, then run:
+```
+$ npm test
+```
+
+Or to run it in [intelligent watch mode](https://github.com/avajs/ava/blob/master/docs/recipes/watch-mode.md):
+```
+$ npm test -- --watch
+```
 
 ## :no_entry_sign: Standard Compliant
 
