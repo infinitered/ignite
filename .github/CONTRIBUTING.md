@@ -1,5 +1,5 @@
 <img align=left src="https://raw.githubusercontent.com/infinitered/react_native_base/master/ignite-base/App/Images/ir.png">
-#  Contributing to React Native Ignite Base App
+#  Contributing to the Ignite Base App
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
 We welcome all contributors to Ignite! This contributing guide will help you get up and running to submit your first pull request.
@@ -17,7 +17,9 @@ Before submitting a pull request, you will want to make sure that your branch me
 **Note**: Before starting, make sure you are running Node version 5.1 or later. If you install the packages using an older version of Node, you may experience many errors because Node could not properly install the babel-react-native preset.
 
 **Step 1:** Fork this repo.
+
 **Step 2:** Clone your fork to your local dev environment.
+
 **Step 3:** cd to the cloned repo, ignite-base folder:
 ```
 $ cd ignite/ignite-base
@@ -60,6 +62,7 @@ $ npm test -- --watch
 ## :no_entry_sign: Standard Compliant
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
 
 **To Run Lint** from ignite-base:
