@@ -1,4 +1,5 @@
 import mockery from 'mockery'
+import m from 'module'
 
 // inject __DEV__ as it is not available when running through the tests
 global.__DEV__ = true
@@ -11,16 +12,16 @@ mockery.enable()
 // will be mocked.
 mockery.warnOnUnregistered(false)
 
-// Let's register some mocks for the images that are brought into our project.
-// You'll have to do the same because the React Native packager and babel
-// are locked into a horrible custody battle.
+// Mock any libs that get called in here
+// I'm looking at you react-native-router-flux, reactotron etc!
 mockery.registerMock('reactotron', {})
-mockery.registerMock('../Images/ir.png', 0)
-mockery.registerMock('../Images/top_logo.png', 0)
-mockery.registerMock('../Images/ignite_logo.png', 0)
-mockery.registerMock('../Images/tile_bg.png', 0)
-mockery.registerMock('../Images/BG.png', 0)
 
-// Add more mocks here.  Mainly images need to be stubbed, however, you might
-// find 3rd party libraries need a little bit of love too.  I'm looking at you
-// react-native-router-flux.
+// Mock all images for React Native
+const originalLoader = m._load
+m._load = (request, parent, isMain) => {
+  if (request.match(/.jpeg|.jpg|.png|.gif$/)) {
+    return { uri: request }
+  }
+
+  return originalLoader(request, parent, isMain)
+}

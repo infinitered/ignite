@@ -86,6 +86,12 @@ class UsageExamplesScreen extends React.Component {
     navigator.push(route)
   }
 
+  handlePressMapview = () => {
+    const { navigator } = this.props
+    const route = Routes.MapviewExample
+    navigator.push(route)
+  }
+
   renderLoginButton () {
     return (
       <RoundedButton onPress={this.handlePressLogin}>
@@ -157,6 +163,9 @@ class UsageExamplesScreen extends React.Component {
         </View>
         <View>
           <RoundedButton text='Listview Grid' onPress={this.handlePressListviewGrid} />
+        </View>
+        <View>
+          <RoundedButton text='Mapview' onPress={this.handlePressMapview} />
         </View>
       </View>
     )
