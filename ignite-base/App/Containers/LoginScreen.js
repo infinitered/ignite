@@ -29,12 +29,6 @@ class LoginScreen extends React.Component {
       topLogo: { width: Metrics.screenWidth }
     }
     this.isAttempting = false
-
-    // Bind before render
-    this.handleChangeUsername = this.handleChangeUsername.bind(this)
-    this.handleChangePassword = this.handleChangePassword.bind(this)
-    this.handlePressLogin = this.handlePressLogin.bind(this)
-    this.handlePressCancel = this.handlePressCancel.bind(this)
   }
 
   componentWillReceiveProps (newProps) {
@@ -47,15 +41,15 @@ class LoginScreen extends React.Component {
   componentWillMount () {
     // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
 
     // Configure the right nav button
-    this.props.navigator.state.tapForgotPassword = this.tapForgotPassword.bind(this)
+    this.props.navigator.state.tapForgotPassword = this.tapForgotPassword
   }
 
   // Method that runs when you tap the right nav bar button
-  tapForgotPassword () {
+  tapForgotPassword = () => {
     Alert.alert(I18n.t('forgotPassword'))
   }
 
@@ -64,7 +58,7 @@ class LoginScreen extends React.Component {
     this.keyboardDidHideListener.remove()
   }
 
-  keyboardDidShow (e) {
+  keyboardDidShow = (e) => {
     // Animation types easeInEaseOut/linear/spring
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     let newSize = Metrics.screenHeight - e.endCoordinates.height
@@ -74,7 +68,7 @@ class LoginScreen extends React.Component {
     })
   }
 
-  keyboardDidHide (e) {
+  keyboardDidHide = (e) => {
     // Animation types easeInEaseOut/linear/spring
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     this.setState({
@@ -83,7 +77,7 @@ class LoginScreen extends React.Component {
     })
   }
 
-  handlePressLogin () {
+  handlePressLogin = () => {
     const { username, password } = this.state
     const { dispatch } = this.props
     this.isAttempting = true
@@ -91,16 +85,16 @@ class LoginScreen extends React.Component {
     dispatch(Actions.attemptLogin(username, password))
   }
 
-  handlePressCancel () {
+  handlePressCancel = () => {
     const { navigator } = this.props
     navigator.pop()
   }
 
-  handleChangeUsername (text) {
+  handleChangeUsername = (text) => {
     this.setState({ username: text })
   }
 
-  handleChangePassword (text) {
+  handleChangePassword = (text) => {
     this.setState({ password: text })
   }
 
