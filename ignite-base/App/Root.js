@@ -12,12 +12,6 @@ import DrawerContent from './Components/DrawerContent'
 import styles, {drawerStyles} from './Containers/Styles/RootStyle'
 
 export default class Root extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handlePushRoute = this.handlePushRoute.bind(this)
-    this.closeDrawer = this.closeDrawer.bind(this)
-  }
-
   static propTypes = {
     store: PropTypes.object.isRequired
   }
@@ -32,7 +26,7 @@ export default class Root extends React.Component {
     this.navigator.drawer = this.refs.drawer
   }
 
-  handlePushRoute (route) {
+  handlePushRoute = (route) => {
     this.navigator.push(route)
     this.closeDrawer()
   }
@@ -43,7 +37,7 @@ export default class Root extends React.Component {
     )
   }
 
-  closeDrawer () {
+  closeDrawer = () => {
     this.refs.drawer.close()
   }
 

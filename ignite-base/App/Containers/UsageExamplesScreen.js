@@ -20,13 +20,6 @@ class UsageExamplesScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.handlePressLogin = this.handlePressLogin.bind(this)
-    this.handlePressLogout = this.handlePressLogout.bind(this)
-    this.handlePressRocket = this.handlePressRocket.bind(this)
-    this.handlePressSend = this.handlePressSend.bind(this)
-    this.handlePressStar = this.handlePressStar.bind(this)
-    this.handlePressListview = this.handlePressListview.bind(this)
-    this.handlePressListviewGrid = this.handlePressListviewGrid.bind(this)
   }
 
   static propTypes = {
@@ -51,43 +44,43 @@ class UsageExamplesScreen extends React.Component {
   }
 
   // fires when the user presses the login button
-  handlePressLogin () {
+  handlePressLogin = () => {
     const { navigator } = this.props
     const route = Routes.LoginScreen
     navigator.push(route)
   }
 
   // fires when the user presses the logout button
-  handlePressLogout () {
+  handlePressLogout = () => {
     const { dispatch } = this.props
     dispatch(Actions.logout())
   }
 
   // fires when we tap the rocket!
-  handlePressRocket () {
+  handlePressRocket = () => {
     const {dispatch} = this.props
     dispatch(Actions.requestTemperature('Boise'))
   }
 
   // fires when tap send
-  handlePressSend () {
+  handlePressSend = () => {
     const {dispatch} = this.props
     dispatch(Actions.requestTemperature('Toronto'))
   }
 
   // fires when tap star
-  handlePressStar () {
+  handlePressStar = () => {
     const {dispatch} = this.props
     dispatch(Actions.requestTemperature('New Orleans'))
   }
 
-  handlePressListview () {
+  handlePressListview = () => {
     const { navigator } = this.props
     const route = Routes.ListviewExample
     navigator.push(route)
   }
 
-  handlePressListviewGrid () {
+  handlePressListviewGrid = () => {
     const { navigator } = this.props
     const route = Routes.ListviewGridExample
     navigator.push(route)

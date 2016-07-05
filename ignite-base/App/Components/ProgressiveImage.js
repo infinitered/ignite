@@ -26,9 +26,9 @@ export default class ProgressiveImage extends Component {
     thumbnail: PropTypes.string,
     source: PropTypes.string,
     style: PropTypes.number
-  };
+  }
 
-  mainImageLoad () {
+  mainImageLoad = () => {
     window.requestAnimationFrame((time) => {
       Animated.timing(this.state.thumbnailOpacity, {
         toValue: 0,
@@ -37,7 +37,7 @@ export default class ProgressiveImage extends Component {
     })
   }
 
-  onThumbnailLoad () {
+  onThumbnailLoad = () => {
     Animated.timing(this.state.thumbnailOpacity, {
       toValue: 1,
       duration: 250
@@ -52,12 +52,12 @@ export default class ProgressiveImage extends Component {
             resizeMode={'cover'}
             style={[{position: 'absolute'}, this.props.style]}
             source={{uri: this.props.source}}
-            onLoad={this.mainImageLoad.bind(this)} />
+            onLoad={this.mainImageLoad} />
           <Animated.Image
             resizeMode={'cover'}
             style={[{opacity: this.state.thumbnailOpacity}, this.props.style]}
             source={{uri: this.props.thumbnail}}
-            onLoad={this.onThumbnailLoad.bind(this)} />
+            onLoad={this.onThumbnailLoad} />
         </View>
       )
     } else {
