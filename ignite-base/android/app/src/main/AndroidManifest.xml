@@ -45,6 +45,11 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+      <!-- To use Google Maps, please use your own API key as this one will be regenerated from time to time. -->
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBcCdKMCWtxN1mXHlVE6z5cLVXIPWaEcso"/>
     </application>
 
 </manifest>

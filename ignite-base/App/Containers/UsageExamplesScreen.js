@@ -27,6 +27,7 @@ class UsageExamplesScreen extends React.Component {
     this.handlePressStar = this.handlePressStar.bind(this)
     this.handlePressListview = this.handlePressListview.bind(this)
     this.handlePressListviewGrid = this.handlePressListviewGrid.bind(this)
+    this.handlePressMapview = this.handlePressMapview.bind(this)
   }
 
   static propTypes = {
@@ -90,6 +91,12 @@ class UsageExamplesScreen extends React.Component {
   handlePressListviewGrid () {
     const { navigator } = this.props
     const route = Routes.ListviewGridExample
+    navigator.push(route)
+  }
+
+  handlePressMapview () {
+    const { navigator } = this.props
+    const route = Routes.MapviewExample
     navigator.push(route)
   }
 
@@ -164,6 +171,9 @@ class UsageExamplesScreen extends React.Component {
         </View>
         <View>
           <RoundedButton text='Listview Grid' onPress={this.handlePressListviewGrid} />
+        </View>
+        <View>
+          <RoundedButton text='Mapview' onPress={this.handlePressMapview} />
         </View>
       </View>
     )

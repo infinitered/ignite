@@ -6,3 +6,9 @@ Reactotron.connect({
   name: 'ignite App',
   userAgent: Platform.OS
 })
+
+if (__DEV__) {
+  console.tron = Reactotron
+} else {
+  console.tron = () => false
+}

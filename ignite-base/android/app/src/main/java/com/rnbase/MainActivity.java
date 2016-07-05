@@ -2,6 +2,7 @@ package com.rnbase;
 
 import android.content.Intent;
 import com.facebook.react.ReactActivity;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
@@ -39,6 +40,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new MapsPackage(this),
             new RNDeviceInfo(),
             new ReactNativeI18n(),
             new VectorIconsPackage()
