@@ -28,7 +28,6 @@ export const insertInFile = (theFile, theFind, theInsert, insertAfter = true) =>
 export const isInFile = (theFile, theFind) => {
   // read full file - Not a great idea if we ever touch large files
   let data = fs.readFileSync(theFile, 'utf-8')
-  let newContents = ''
   // get the full line of first occurance
   let finder = new RegExp(`.*${theFind}.*`, '')
   let matches = data.match(finder)

@@ -27,7 +27,7 @@ export default class Root extends React.Component {
           <StatusBar
             barStyle='light-content'
           />
-        <NavigationRouter />
+          <NavigationRouter />
         </View>
       </Provider>
     )
