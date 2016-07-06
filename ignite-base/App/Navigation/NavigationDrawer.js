@@ -6,6 +6,10 @@ import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Styles from './Styles/NavigationDrawerStyle'
 
+/********************
+* Documentation: https://github.com/root-two/react-native-drawer
+********************/
+
 class NavigationDrawer extends Component {
   static propTypes = {
     navigationState: PropTypes.object
