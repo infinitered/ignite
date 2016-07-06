@@ -6,6 +6,9 @@ export default StyleSheet.create({
   groupContainer: {
     ...ApplicationStyles.groupContainer
   },
+  sectionHeaderContainer: {
+    ...ApplicationStyles.darkLabelContainer
+  },
   sectionHeader: {
     ...ApplicationStyles.darkLabel
   },
@@ -50,6 +53,7 @@ export default StyleSheet.create({
     fontSize: 24,
     marginHorizontal: 5,
     flex: 1,
-    color: Colors.snow
+    color: Colors.snow,
+    backgroundColor: Colors.transparent
   }
 })

@@ -28,7 +28,6 @@ export default class APITestingScreen extends React.Component {
   }
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired
   }
 
   showResult (response, title = 'Response') {

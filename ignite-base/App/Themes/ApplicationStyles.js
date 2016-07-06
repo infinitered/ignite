@@ -34,13 +34,15 @@ const ApplicationStyles = {
       color: Colors.snow,
       marginVertical: Metrics.smallMargin,
       textAlign: 'center',
-      fontFamily: Fonts.type.bold
+      fontFamily: Fonts.type.bold,
+      backgroundColor: Colors.transparent
     },
     subtitle: {
       color: Colors.snow,
       padding: 5,
       marginBottom: 5,
-      marginHorizontal: Metrics.smallMargin
+      marginHorizontal: Metrics.smallMargin,
+      backgroundColor: Colors.transparent
     }
   },
   darkLabelContainer: {
@@ -49,7 +51,8 @@ const ApplicationStyles = {
   },
   darkLabel: {
     fontFamily: Fonts.bold,
-    color: Colors.snow
+    color: Colors.snow,
+    backgroundColor: Colors.transparent
   },
   groupContainer: {
     margin: 5,

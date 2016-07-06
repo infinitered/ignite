@@ -21,7 +21,6 @@ export default class UsageExamplesScreen extends React.Component {
   }
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired
   }
 
   renderColor (color) {
@@ -68,15 +67,21 @@ export default class UsageExamplesScreen extends React.Component {
           <View style={styles.section} key='colors-header'>
             <Text style={styles.sectionText} key='colors'>List of Theme specific settings.  Auto-generated from Themes folder.</Text>
           </View>
-          <Text style={styles.sectionHeader}>Colors</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>Colors</Text>
+          </View>
           <View style={styles.colorsContainer}>
             {this.renderColors()}
           </View>
 
-          <Text style={styles.sectionHeader}>Fonts</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>Fonts</Text>
+          </View>
           {this.renderFonts()}
 
-          <Text style={styles.sectionHeader}>Styles</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>Styles</Text>
+          </View>
           {this.renderStyles()}
 
         </ScrollView>
@@ -84,4 +89,3 @@ export default class UsageExamplesScreen extends React.Component {
     )
   }
 }
-
