@@ -1,10 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import Drawer from 'react-native-drawer'
-import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
-import DrawerContent from './DrawerContent'
+import { DefaultRenderer } from 'react-native-router-flux'
+import DrawerContent from '../Containers/DrawerContent'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
-
+import Styles from './Styles/NavigationDrawerStyle'
 
 class NavigationDrawer extends Component {
   static propTypes = {
@@ -17,14 +17,8 @@ class NavigationDrawer extends Component {
       <Drawer
         ref='navigation'
         type='displace'
-        content={
-          <DrawerContent
-            componentExamples={this.props.componentExamples}
-            usageExamples={this.props.usageExamples}
-            apiTesting={this.props.apiTesting}
-            theme={this.props.theme}
-            deviceInfo={this.props.deviceInfo}
-            />}
+        content={<DrawerContent />}
+        styles={Styles}
         tapToClose
         openDrawerOffset={0.2}
         panCloseMask={0.2}
@@ -46,11 +40,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    componentExamples: NavigationActions.componentExamples,
-    usageExamples: NavigationActions.usageExamples,
-    apiTesting: NavigationActions.apiTesting,
-    theme: NavigationActions.theme,
-    deviceInfo: NavigationActions.deviceInfo
   }
 }
 

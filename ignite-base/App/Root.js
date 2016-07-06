@@ -2,9 +2,8 @@ import React, { PropTypes } from 'react'
 import { View, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import Actions from './Actions/Creators'
-import Drawer from 'react-native-drawer'
 import DebugSettings from './Config/DebugSettings'
-import NavigationContainer from './Navigation/NavigationContainer'
+import NavigationRouter from './Navigation/NavigationRouter'
 // import './Config/PushConfig'
 
 // Styles
@@ -28,7 +27,7 @@ export default class Root extends React.Component {
           <StatusBar
             barStyle='light-content'
           />
-          <NavigationContainer />
+        <NavigationRouter />
         </View>
       </Provider>
     )
