@@ -29,7 +29,6 @@
     "react-native-device-info": "^0.9.3",
     "react-native-drawer": "^2.2.4",
     "react-native-i18n": "0.0.8",
-    "react-native-maps": "github:skellock/react-native-maps#friends-with-28",
     "react-native-vector-icons": "^2.0.2",
     "react-redux": "^4.4.2",
     "redux": "^3.4.0",

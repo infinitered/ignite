@@ -25,6 +25,26 @@ export const insertInFile = (theFile, theFind, theInsert, insertAfter = true) =>
   fs.writeFileSync(theFile, newContents, 'utf-8')
 }
 
+////////////////
+// UNTESTED
+////////////////
+export const replaceInFile = (theFile, theFind, theReplace) => {
+  // read full file - Not a great idea if we ever touch large files
+  let data = fs.readFileSync(theFile, 'utf-8')
+  let newContents = ''
+  // get the full line of first occurance
+  let finder = new RegExp(`.*${theFind}.*`, '')
+  let matches = data.match(finder)
+  // Quick error check
+  if (matches.length === 0) throw new Error(`'${theFind}' was not found in file.`)
+
+  // replace contents
+  newContents = data.replace(finder, `${theReplace}`)
+
+  // overwrite file with modified contents
+  fs.writeFileSync(theFile, newContents, 'utf-8')
+}
+
 export const isInFile = (theFile, theFind) => {
   // read full file - Not a great idea if we ever touch large files
   let data = fs.readFileSync(theFile, 'utf-8')
