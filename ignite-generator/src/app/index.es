@@ -202,7 +202,7 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     const done = this.async()
     const command = 'react-native'
-    const commandOpts = ['init', this.name]
+    const commandOpts = ['init', this.name, '--version 0.28.0']
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
       .on('close', () => {
         this.spinner.stop()
