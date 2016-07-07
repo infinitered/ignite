@@ -1,6 +1,6 @@
 {
   "name": "generator-react-native-ignite",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Create new react native files that fit the IR workflow",
   "files": [
     "app",
