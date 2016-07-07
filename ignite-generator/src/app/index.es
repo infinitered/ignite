@@ -9,6 +9,7 @@ import ora from 'ora'
 import semver from 'semver'
 
 const igniteBase = 'ignite-base'
+const lockedReactNativeVersion = '0.28.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
@@ -202,7 +203,7 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     const done = this.async()
     const command = 'react-native'
-    const commandOpts = ['init', this.name]
+    const commandOpts = ['init', this.name, '--version', lockedReactNativeVersion]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
       .on('close', () => {
         this.spinner.stop()
