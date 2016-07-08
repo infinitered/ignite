@@ -6,11 +6,10 @@ import Generators from 'yeoman-generator'
 import Shell from 'shelljs'
 import * as Utilities from '../utilities'
 import ora from 'ora'
-import semver from 'semver'
 
 const igniteBase = 'ignite-base'
 const lockedReactNativeVersion = '0.28.0'
-const lockedIgniteVersion = '1.2.1'
+const lockedIgniteVersion = '1.3.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
