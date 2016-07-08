@@ -137,6 +137,12 @@ export class AppGenerator extends Generators.Base {
       this.log(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
       process.exit(1)
     }
+
+    // verify 1.x or higher (we need react-native link)
+    if (!Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\d*\.\d\.\d'")) {
+      this.log(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
+      process.exit(1)
+    }
     this.spinner.stop()
     this.log(`${check} Found react-native`)
   }
@@ -154,33 +160,6 @@ export class AppGenerator extends Generators.Base {
     }
     this.spinner.stop()
     this.log(`${check} Found git`)
-  }
-
-  /**
-   * Check for rnpm.
-   */
-  findRnpm () {
-    const status = 'Finding rnpm'
-    this.spinner.text = status
-    this.spinner.start()
-    if (!isCommandInstalled('rnpm')) {
-      this.log(`${xmark} Missing rnpm - 'npm install -g rnpm'`)
-      process.exit(1)
-    }
-    const done = this.async()
-    // check an outdated version of rnpm (< 1.7.0)
-    const minimumRnpm = '1.7.0'
-    Shell.exec('rnpm --version', {silent: true}, (code, stdout, stderr) => {
-      const rnpmVersion = stdout.replace(/\s/, '')
-      this.spinner.stop()
-      if (semver.lt(rnpmVersion, minimumRnpm)) {
-        this.log(`${xmark} rnpm ${minimumRnpm} required - 'npm install -g rnpm'`)
-        process.exit(1)
-      } else {
-        this.log(`${check} Found rnpm`)
-        done()
-      }
-    })
   }
 
   /**
@@ -340,7 +319,7 @@ export class AppGenerator extends Generators.Base {
   }
 
   /**
-   * Let's hand tweak the the android manifest because rnpm doesn't support that just yet.
+   * Let's hand tweak the the android manifest,
    */
   _updateAndroidManifest () {
     const status = 'Updating android manifest file'
@@ -376,7 +355,7 @@ export class AppGenerator extends Generators.Base {
   }
 
   /**
-   * Installs npm then rnpm ...
+   * Installs npm then links (old rnpm style)
    * Also, sadly, we need this install the install() function due to how
    * Yeoman times its template copies.  :(
    */
@@ -392,14 +371,14 @@ export class AppGenerator extends Generators.Base {
         this.spinner.stop()
         this.log(`${check} ${npmStatus}`)
 
-        // then run the rnpm command
-        const rnpmStatus = 'Linking with rnpm'
+        // then run the `react-native link` (old rnpm) command
+        const linkStatus = 'Linking external libs'
         this.spinner.start()
-        this.spinner.text = rnpmStatus
-        this.spawnCommand('rnpm', ['link'], {cwd: dir, stdio: 'ignore'})
+        this.spinner.text = linkStatus
+        this.spawnCommand('react-native', ['link'], {cwd: dir, stdio: 'ignore'})
           .on('close', () => {
             this.spinner.stop()
-            this.log(`${check} ${rnpmStatus}`)
+            this.log(`${check} ${linkStatus}`)
 
             // Push notifications code, disabled for now
             // Causing issues :(
