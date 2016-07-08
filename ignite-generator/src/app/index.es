@@ -10,6 +10,7 @@ import semver from 'semver'
 
 const igniteBase = 'ignite-base'
 const lockedReactNativeVersion = '0.28.0'
+const lockedIgniteVersion = '1.2.1'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
@@ -256,6 +257,30 @@ export class AppGenerator extends Generators.Base {
     const done = this.async()
     const command = 'git'
     const commandOpts = ['checkout', branch]
+    this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
+      .on('close', () => {
+        this.spinner.stop()
+        this.log(`${check} ${status}`)
+        done()
+      })
+  }
+
+  /**
+   * Enforce checking out a specific tag
+   */
+  checkoutTag () {
+    // read the user's choice from the source-branch command line option
+    const tag = this.options['tag'] || lockedIgniteVersion
+
+    // jet if we said tag was master
+    if (tag === 'master') return
+
+    const status = `Using ignite release ${tag}`
+    this.spinner.start()
+    this.spinner.text = status
+    const done = this.async()
+    const command = 'git'
+    const commandOpts = ['checkout', '-b', tag, tag]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
       .on('close', () => {
         this.spinner.stop()
