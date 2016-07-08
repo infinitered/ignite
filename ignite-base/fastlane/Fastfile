@@ -18,6 +18,7 @@ default_platform :ios
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    @username = "itunes_email@gmail.com"
   end
 
   desc "Tests Slack"
@@ -68,13 +69,13 @@ platform :ios do
 
     # Sometimes itunes email is different!
     if changelog
-      pilot(username: "itunes_email@gmail.com")
+      pilot(username: @username)
     else
-      pilot(username: "itunes_email@gmail.com", changelog: changelog)
+      pilot(username: @username, changelog: changelog)
     end
 
-    # Reminder of testers
-    sh "pilot list"
+    # Print reminder of testers
+    sh "pilot list -u #{@username}"
 
   end
 
@@ -119,14 +120,14 @@ platform :android do
   lane :alpha do
     # Build the release version of the Android App
     gradle(
-      task: "assemble", 
-      build_type: "Release", 
+      task: "assemble",
+      build_type: "Release",
       project_dir: "android/"
     )
-    
+
     # Uploads generated apk to Google Play Store as an Alpha build
     supply(
-      track: "alpha", 
+      track: "alpha",
       apk: "android/app/build/outputs/apk/app-release.apk"
     )
 
