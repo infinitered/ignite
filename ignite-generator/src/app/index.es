@@ -133,14 +133,12 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     this.spinner.start()
     if (!isCommandInstalled('react-native')) {
-      this.log(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
-      process.exit(1)
+      this._logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
     }
 
     // verify 1.x or higher (we need react-native link)
     if (Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\\d*\\.\\d\\.\\d'", {silent: true}).code > 0) {
-      this.log(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
-      process.exit(1)
+      this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
     }
     this.spinner.stop()
     this.log(`${check} Found react-native`)
@@ -154,8 +152,7 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     this.spinner.start()
     if (!isCommandInstalled('git')) {
-      this.log(`${xmark} Missing git`)
-      process.exit(1)
+      this._logAndExit(`${xmark} Missing git`)
     }
     this.spinner.stop()
     this.log(`${check} Found git`)
@@ -351,6 +348,15 @@ export class AppGenerator extends Generators.Base {
     emptyFolder(this.sourceRoot())
     this.spinner.stop()
     this.log(`${check} ${status}`)
+  }
+
+  /**
+   * Log an error and exit gracefully.
+   */
+  _logAndExit(finalMessage) {
+    this.spinner.stop()
+    this.log(finalMessage)
+    process.exit(1)
   }
 
   /**
