@@ -138,7 +138,7 @@ export class AppGenerator extends Generators.Base {
     }
 
     // verify 1.x or higher (we need react-native link)
-    if (!Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\d*\.\d\.\d'")) {
+    if (Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\\d*\\.\\d\\.\\d'", {silent: true}).code > 0) {
       this.log(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
       process.exit(1)
     }
