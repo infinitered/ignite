@@ -80,7 +80,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "cd ./ignite-base && npm run lint"
+      "pre-commit": "npm run lint"
     }
   }
 }
