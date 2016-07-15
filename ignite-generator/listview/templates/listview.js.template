@@ -12,6 +12,11 @@ class <%= name %> extends React.Component {
 
   constructor (props) {
     super(props)
+
+    // Set up our two placeholder values for scrollToBottom()
+    this.listHeight = 0
+    this.footerY = 0
+
     /* ***********************************************************
     * STEP 1
     * This is an array of objects with the properties you desire
@@ -84,6 +89,39 @@ class <%= name %> extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
+  // Magical helper function that can scroll your ListView to the bottom
+  scrollToBottom(animated = true) {
+    if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
+      // Calculates the y scroll position inside the ListView
+      const scrollTo = this.footerY - this.listHeight
+
+      // Scroll that sucker!
+      this.refs.listView.scrollTo({
+        y: scrollTo,
+        animated: animated,
+      })
+    }
+  }
+
+  // Save the list's height when it renders
+  onLayout = (event) => {
+    const layout = event.nativeEvent.layout
+    this.listHeight = layout.height
+  }
+
+  // Render a fake footer for determining the height of the ListView
+  renderFooter = () => {
+    return (
+      <View onLayout={this.onFooterLayout} />
+    )
+  }
+
+  // When the fake footer is laid out, store its y-position
+  onFooterLayout = (event) => {
+    const layout = event.nativeEvent.layout
+    this.footerY = layout.y
+  }
+
   render () {
     return (
       <View style={styles.container}>
@@ -91,7 +129,9 @@ class <%= name %> extends React.Component {
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
+          onLayout={this.onLayout}
           renderRow={this._renderRow}
+          renderFooter={this.renderFooter}
         />
       </View>
     )
