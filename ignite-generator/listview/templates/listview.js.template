@@ -132,6 +132,7 @@ class <%= name %> extends React.Component {
           onLayout={this.onLayout}
           renderRow={this._renderRow}
           renderFooter={this.renderFooter}
+          enableEmptySections
         />
       </View>
     )
