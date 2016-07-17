@@ -50,9 +50,7 @@ export default StyleSheet.create({
   },
   fontRow: {
     padding: 5,
-    fontSize: 24,
     marginHorizontal: 5,
-    flex: 1,
     color: Colors.snow
   }
 })
