@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // For empty lists
 import AlertMessage from '../Components/AlertMessageComponent'
@@ -74,10 +75,6 @@ class <%= name %> extends React.Component {
     }
   *************************************************************/
 
-  static propTypes = {
-    navigator: PropTypes.object.isRequired
-  }
-
   // Used for friendly AlertMessage
   // returns true if the dataSource is empty
   _noRowData () {
@@ -104,4 +101,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(<%= name %>)
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>)

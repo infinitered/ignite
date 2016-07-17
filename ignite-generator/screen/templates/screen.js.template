@@ -1,12 +1,12 @@
-import React, { PropTypes } from 'react'
-import { View, ScrollView, Text, KeyboardAvoidingView } from 'react-native'
+import React from 'react'
+import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
-import Routes from '../Navigation/Routes'
 import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/<%= name %>Style'
@@ -15,17 +15,6 @@ import styles from './Styles/<%= name %>Style'
 import I18n from '../I18n/I18n.js'
 
 class <%= name %> extends React.Component {
-
-  static propTypes = {
-    navigator: PropTypes.object.isRequired
-  }
-
-  componentWillMount () {
-    // Configure nav button
-    this.props.navigator.state.tapHamburger = () => {
-      this.props.navigator.drawer.toggle()
-    }
-  }
 
   render () {
     return (
@@ -43,4 +32,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(<%= name %>)
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>)
