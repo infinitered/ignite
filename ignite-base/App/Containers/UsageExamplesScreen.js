@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
-import Routes from '../Navigation/Routes'
 import { Colors, Images, Metrics } from '../Themes'
 import RoundedButton from '../Components/RoundedButton'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable'
@@ -23,11 +23,16 @@ class UsageExamplesScreen extends React.Component {
   }
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
     loggedIn: PropTypes.bool,
     dispatch: PropTypes.func,
     temperature: PropTypes.number,
-    city: PropTypes.string
+    city: PropTypes.string,
+    login: PropTypes.func,
+    logout: PropTypes.func,
+    requestTemperature: PropTypes.func,
+    listviewExample: PropTypes.func,
+    listviewGridExample: PropTypes.func,
+    mapviewExample: PropTypes.func
   }
 
   componentWillReceiveProps (nextProps) {
@@ -43,58 +48,24 @@ class UsageExamplesScreen extends React.Component {
     }
   }
 
-  // fires when the user presses the login button
-  handlePressLogin = () => {
-    const { navigator } = this.props
-    const route = Routes.LoginScreen
-    navigator.push(route)
-  }
-
-  // fires when the user presses the logout button
-  handlePressLogout = () => {
-    const { dispatch } = this.props
-    dispatch(Actions.logout())
-  }
-
   // fires when we tap the rocket!
   handlePressRocket = () => {
-    const {dispatch} = this.props
-    dispatch(Actions.requestTemperature('Boise'))
+    this.props.requestTemperature('Boise')
   }
 
   // fires when tap send
   handlePressSend = () => {
-    const {dispatch} = this.props
-    dispatch(Actions.requestTemperature('Toronto'))
+    this.props.requestTemperature('Toronto')
   }
 
   // fires when tap star
   handlePressStar = () => {
-    const {dispatch} = this.props
-    dispatch(Actions.requestTemperature('New Orleans'))
-  }
-
-  handlePressListview = () => {
-    const { navigator } = this.props
-    const route = Routes.ListviewExample
-    navigator.push(route)
-  }
-
-  handlePressListviewGrid = () => {
-    const { navigator } = this.props
-    const route = Routes.ListviewGridExample
-    navigator.push(route)
-  }
-
-  handlePressMapview = () => {
-    const { navigator } = this.props
-    const route = Routes.MapviewExample
-    navigator.push(route)
+    this.props.requestTemperature('New Orleans')
   }
 
   renderLoginButton () {
     return (
-      <RoundedButton onPress={this.handlePressLogin}>
+      <RoundedButton onPress={this.props.login}>
         {I18n.t('signIn')}
       </RoundedButton>
     )
@@ -102,7 +73,7 @@ class UsageExamplesScreen extends React.Component {
 
   renderLogoutButton () {
     return (
-      <RoundedButton onPress={this.handlePressLogout}>
+      <RoundedButton onPress={this.props.logout}>
         {I18n.t('logOut')}
       </RoundedButton>
     )
@@ -159,10 +130,10 @@ class UsageExamplesScreen extends React.Component {
         </View>
         {this.renderHeader(I18n.t('igniteGenerated'))}
         <View>
-          <RoundedButton text='Listview' onPress={this.handlePressListview} />
+          <RoundedButton text='Listview' onPress={this.props.listviewExample} />
         </View>
         <View>
-          <RoundedButton text='Listview Grid' onPress={this.handlePressListviewGrid} />
+          <RoundedButton text='Listview Grid' onPress={this.props.listviewGridExample} />
         </View>
       </View>
     )
@@ -194,4 +165,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(UsageExamplesScreen)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: NavigationActions.login,
+    logout: () => dispatch(Actions.logout()),
+    requestTemperature: (city) => dispatch(Actions.requestTemperature(city)),
+    listviewExample: NavigationActions.listviewExample,
+    listviewGridExample: NavigationActions.listviewGridExample,
+    mapviewExample: NavigationActions.mapviewExample
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsageExamplesScreen)

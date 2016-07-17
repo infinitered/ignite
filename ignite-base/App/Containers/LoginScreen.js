@@ -14,6 +14,7 @@ import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyle'
 import Actions from '../Actions/Creators'
 import {Images, Metrics} from '../Themes'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // I18n
 import I18n from '../I18n/I18n.js'
@@ -33,8 +34,9 @@ class LoginScreen extends React.Component {
 
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
+    // Did the login attempt complete?
     if (this.isAttempting && !newProps.attempting) {
-      this.props.navigator.pop()
+      this.props.close()
     }
   }
 
@@ -43,14 +45,6 @@ class LoginScreen extends React.Component {
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
-
-    // Configure the right nav button
-    this.props.navigator.state.tapForgotPassword = this.tapForgotPassword
-  }
-
-  // Method that runs when you tap the right nav bar button
-  tapForgotPassword = () => {
-    Alert.alert(I18n.t('forgotPassword'))
   }
 
   componentWillUnmount () {
@@ -79,15 +73,9 @@ class LoginScreen extends React.Component {
 
   handlePressLogin = () => {
     const { username, password } = this.state
-    const { dispatch } = this.props
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
-    dispatch(Actions.attemptLogin(username, password))
-  }
-
-  handlePressCancel = () => {
-    const { navigator } = this.props
-    navigator.pop()
+    this.props.attemptLogin(username, password)
   }
 
   handleChangeUsername = (text) => {
@@ -144,7 +132,7 @@ class LoginScreen extends React.Component {
                 <Text style={Styles.loginText}>{I18n.t('signIn')}</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressCancel}>
+            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.props.close}>
               <View style={Styles.loginButton}>
                 <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
               </View>
@@ -160,8 +148,9 @@ class LoginScreen extends React.Component {
 
 LoginScreen.propTypes = {
   dispatch: PropTypes.func,
-  navigator: PropTypes.object,
-  attempting: PropTypes.bool
+  attempting: PropTypes.bool,
+  close: PropTypes.func,
+  attemptLogin: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -170,4 +159,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(LoginScreen)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    close: NavigationActions.pop,
+    attemptLogin: (username, password) => {dispatch(Actions.attemptLogin(username, password))}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

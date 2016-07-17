@@ -16,7 +16,6 @@ import ExamplesRegistry from '../Services/ExamplesRegistry'
 class AllComponentsScreen extends React.Component {
 
   static propTypes = {
-    navigator: PropTypes.object.isRequired,
     dispatch: PropTypes.func
   }
 
