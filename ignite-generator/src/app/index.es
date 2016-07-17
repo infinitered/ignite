@@ -8,7 +8,7 @@ import * as Utilities from '../utilities'
 import ora from 'ora'
 
 const igniteBase = 'ignite-base'
-const lockedReactNativeVersion = '0.28.0'
+const lockedReactNativeVersion = '0.29.2'
 const lockedIgniteVersion = '1.3.0'
 
 const emptyFolder = (folder) => {
@@ -246,9 +246,11 @@ export class AppGenerator extends Generators.Base {
   checkoutTag () {
     // read the user's choice from the source-branch command line option
     const tag = this.options['tag'] || lockedIgniteVersion
+    const branch = this.options['branch']
+    const useMasterBranch = typeof branch === 'undefined' || branch === null || branch === 'master' || branch === ''
 
-    // jet if we said tag was master
-    if (tag === 'master') return
+    // jet if we said tag was master, or if they specified a branch
+    if (tag === 'master' || !useMasterBranch) return
 
     const status = `Using ignite release ${tag}`
     this.spinner.start()

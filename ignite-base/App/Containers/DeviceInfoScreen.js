@@ -33,7 +33,6 @@ const APP_DATA = [
 
 export default class DeviceInfoScreen extends React.Component {
   static propTypes = {
-    navigator: PropTypes.object.isRequired
   }
 
   renderCard (cardTitle, rowData) {
