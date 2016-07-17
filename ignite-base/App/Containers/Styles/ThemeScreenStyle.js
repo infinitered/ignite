@@ -53,7 +53,6 @@ export default StyleSheet.create({
     fontSize: 24,
     marginHorizontal: 5,
     flex: 1,
-    color: Colors.snow,
-    backgroundColor: Colors.transparent
+    color: Colors.snow
   }
 })

@@ -9,7 +9,8 @@ const ApplicationStyles = {
   screen: {
     mainContainer: {
       flex: 1,
-      marginTop: Metrics.navBarHeight
+      marginTop: Metrics.navBarHeight,
+      backgroundColor: Colors.transparent
     },
     backgroundImage: {
       position: 'absolute',
@@ -34,15 +35,13 @@ const ApplicationStyles = {
       color: Colors.snow,
       marginVertical: Metrics.smallMargin,
       textAlign: 'center',
-      fontFamily: Fonts.type.bold,
-      backgroundColor: Colors.transparent
+      fontFamily: Fonts.type.bold
     },
     subtitle: {
       color: Colors.snow,
       padding: 5,
       marginBottom: 5,
-      marginHorizontal: Metrics.smallMargin,
-      backgroundColor: Colors.transparent
+      marginHorizontal: Metrics.smallMargin
     }
   },
   darkLabelContainer: {
@@ -51,8 +50,7 @@ const ApplicationStyles = {
   },
   darkLabel: {
     fontFamily: Fonts.bold,
-    color: Colors.snow,
-    backgroundColor: Colors.transparent
+    color: Colors.snow
   },
   groupContainer: {
     margin: 5,
