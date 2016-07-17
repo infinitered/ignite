@@ -2,7 +2,6 @@
 'use strict'
 
 import Generators from 'yeoman-generator'
-import * as Utilities from '../utilities'
 
 const copyOverScreenContainer = (context) => {
   // copy screen template
@@ -20,18 +19,6 @@ const copyOverScreenContainer = (context) => {
   )
 }
 
-const addToRoutes = (context) => {
-  const newRoute = `  get ${context.name} () {
-    return {
-      title: '${context.name}',
-      component: require('../Containers/${context.name}').default,
-      leftButton: 'BACK'
-    }
-  }
-`
-  Utilities.insertInFile('App/Navigation/Routes.js', 'get ', newRoute, false)
-}
-
 class ScreenGenerator extends Generators.Base {
 
   constructor (args, options) {
@@ -46,7 +33,8 @@ class ScreenGenerator extends Generators.Base {
 
   end () {
     // insert screen into routes file
-    addToRoutes(this)
+    // Needs to be updated to new navigation routing
+    // addToRoutes(this)
 
     console.log('Time to get cooking! 🍽 ')
   }
