@@ -97,7 +97,7 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 #### Generate a listview: `ignite generate listview HotDates`
 * React Native listview container with easy step by step instructions on how to get started with an easy list template.
 
-#### Generate a mapview: `ignite generate mapview MapScreen`
+#### COMING BACK SOON (broken in latest maps) - Generate a mapview: `ignite generate mapview MapScreen`
 * react-native-maps container, component, and map helpers with easy step by step instructions on how to get started with an simple map screen.
 
 #### Import images: `ignite import imagesfile`
