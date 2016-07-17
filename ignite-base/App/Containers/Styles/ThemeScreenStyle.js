@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors, ApplicationStyles } from '../../Themes/'
+import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -34,8 +34,8 @@ export default StyleSheet.create({
   },
   colorContainer: {
     height: 130,
-    padding: 5,
-    marginBottom: 5
+    padding: Metrics.smallMargin,
+    marginBottom: Metrics.smallMargin
   },
   colorSquare: {
     width: 100,
@@ -43,14 +43,14 @@ export default StyleSheet.create({
   },
   colorName: {
     width: 100,
-    height: 20,
-    lineHeight: 20,
+    height: Metrics.doubleBaseMargin,
+    lineHeight: Metrics.doubleBaseMargin,
     color: Colors.charcoal,
     textAlign: 'center'
   },
   fontRow: {
-    padding: 5,
-    marginHorizontal: 5,
+    padding: Metrics.smallMargin,
+    marginHorizontal: Metrics.smallMargin,
     color: Colors.snow
   }
 })

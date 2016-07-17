@@ -39,21 +39,21 @@ const ApplicationStyles = {
     },
     subtitle: {
       color: Colors.snow,
-      padding: 5,
-      marginBottom: 5,
+      padding: Metrics.smallMargin,
+      marginBottom: Metrics.smallMargin,
       marginHorizontal: Metrics.smallMargin
     }
   },
   darkLabelContainer: {
     backgroundColor: Colors.cloud,
-    padding: 5
+    padding: Metrics.smallMargin
   },
   darkLabel: {
     fontFamily: Fonts.bold,
     color: Colors.snow
   },
   groupContainer: {
-    margin: 5,
+    margin: Metrics.smallMargin,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
@@ -62,8 +62,8 @@ const ApplicationStyles = {
     ...Fonts.style.h4,
     color: Colors.coal,
     backgroundColor: Colors.ricePaper,
-    padding: 5,
-    marginTop: 5,
+    padding: Metrics.smallMargin,
+    marginTop: Metrics.smallMargin,
     marginHorizontal: Metrics.baseMargin,
     borderWidth: 1,
     borderColor: Colors.ember,
