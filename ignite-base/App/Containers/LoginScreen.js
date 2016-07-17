@@ -115,9 +115,10 @@ class LoginScreen extends React.Component {
               value={username}
               editable={editable}
               keyboardType='default'
-              returnKeyType='search'
+              returnKeyType='next'
               onChangeText={this.handleChangeUsername}
               underlineColorAndroid='transparent'
+              onSubmitEditing={() => this.refs.password.focus()}
               placeholder={I18n.t('username')} />
           </View>
 
@@ -129,10 +130,11 @@ class LoginScreen extends React.Component {
               value={password}
               editable={editable}
               keyboardType='default'
-              returnKeyType='search'
+              returnKeyType='go'
               secureTextEntry
               onChangeText={this.handleChangePassword}
               underlineColorAndroid='transparent'
+              onSubmitEditing={this.handlePressLogin}
               placeholder={I18n.t('password')} />
           </View>
 
