@@ -6,9 +6,10 @@ import Generators from 'yeoman-generator'
 import Shell from 'shelljs'
 import * as Utilities from '../utilities'
 import ora from 'ora'
-import semver from 'semver'
 
 const igniteBase = 'ignite-base'
+const lockedReactNativeVersion = '0.28.0'
+const lockedIgniteVersion = '1.3.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
@@ -132,14 +133,12 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     this.spinner.start()
     if (!isCommandInstalled('react-native')) {
-      this.log(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
-      process.exit(1)
+      this._logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
     }
 
     // verify 1.x or higher (we need react-native link)
-    if (!Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\d*\.\d\.\d'")) {
-      this.log(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
-      process.exit(1)
+    if (Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\\d*\\.\\d\\.\\d'", {silent: true}).code > 0) {
+      this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
     }
     this.spinner.stop()
     this.log(`${check} Found react-native`)
@@ -153,39 +152,11 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     this.spinner.start()
     if (!isCommandInstalled('git')) {
-      this.log(`${xmark} Missing git`)
-      process.exit(1)
+      this._logAndExit(`${xmark} Missing git`)
     }
     this.spinner.stop()
     this.log(`${check} Found git`)
   }
-
-  /**
-   * Check for rnpm.
-   */
-  // findRnpm () {
-  //   const status = 'Finding rnpm'
-  //   this.spinner.text = status
-  //   this.spinner.start()
-  //   if (!isCommandInstalled('rnpm')) {
-  //     this.log(`${xmark} Missing rnpm - 'npm install -g rnpm'`)
-  //     process.exit(1)
-  //   }
-  //   const done = this.async()
-  //   // check an outdated version of rnpm (< 1.7.0)
-  //   const minimumRnpm = '1.7.0'
-  //   Shell.exec('rnpm --version', {silent: true}, (code, stdout, stderr) => {
-  //     const rnpmVersion = stdout.replace(/\s/, '')
-  //     this.spinner.stop()
-  //     if (semver.lt(rnpmVersion, minimumRnpm)) {
-  //       this.log(`${xmark} rnpm ${minimumRnpm} required - 'npm install -g rnpm'`)
-  //       process.exit(1)
-  //     } else {
-  //       this.log(`${check} Found rnpm`)
-  //       done()
-  //     }
-  //   })
-  // }
 
   /**
    * Do a quick clean up of the template folder.
@@ -208,7 +179,7 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     const done = this.async()
     const command = 'react-native'
-    const commandOpts = ['init', this.name]
+    const commandOpts = ['init', this.name, '--version', lockedReactNativeVersion]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
       .on('close', () => {
         this.spinner.stop()
@@ -261,6 +232,30 @@ export class AppGenerator extends Generators.Base {
     const done = this.async()
     const command = 'git'
     const commandOpts = ['checkout', branch]
+    this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
+      .on('close', () => {
+        this.spinner.stop()
+        this.log(`${check} ${status}`)
+        done()
+      })
+  }
+
+  /**
+   * Enforce checking out a specific tag
+   */
+  checkoutTag () {
+    // read the user's choice from the source-branch command line option
+    const tag = this.options['tag'] || lockedIgniteVersion
+
+    // jet if we said tag was master
+    if (tag === 'master') return
+
+    const status = `Using ignite release ${tag}`
+    this.spinner.start()
+    this.spinner.text = status
+    const done = this.async()
+    const command = 'git'
+    const commandOpts = ['checkout', '-b', tag, tag]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
       .on('close', () => {
         this.spinner.stop()
@@ -356,7 +351,16 @@ export class AppGenerator extends Generators.Base {
   }
 
   /**
-   * Installs npm then links (old rnpm style) ...
+   * Log an error and exit gracefully.
+   */
+  _logAndExit(finalMessage) {
+    this.spinner.stop()
+    this.log(finalMessage)
+    process.exit(1)
+  }
+
+  /**
+   * Installs npm then links (old rnpm style)
    * Also, sadly, we need this install the install() function due to how
    * Yeoman times its template copies.  :(
    */
