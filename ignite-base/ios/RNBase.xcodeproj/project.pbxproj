@@ -33,7 +33,6 @@
 		A427EE71C7CC4E1C95DA919E /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7020FAD6C04DB88066FD95 /* libRNI18n.a */; };
 		B6AA679B9ED84BC98CDD8932 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D3654AF0EBC4655BD8FEEFB /* MaterialIcons.ttf */; };
 		D1A64356ED20492AA3F40EE5 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E9127216354BAAA0AA1492 /* FontAwesome.ttf */; };
-		DFB3B35729CC443EB3A9B869 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A9F50650F514004AB6A7702 /* libAirMaps.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,8 +186,6 @@
 		BF9A5384DD3846318247BDE8 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/RNI18n.xcodeproj"; sourceTree = "<group>"; };
 		EE9C0949165E4E669FB7C472 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		F745055AC6594FDE88A42390 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
-		0C4DB73D4ABE4CFEB403C415 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		2A9F50650F514004AB6A7702 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,7 +214,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				60E66BE4D5434E7BA7EEA39E /* libRNVectorIcons.a in Frameworks */,
 				A427EE71C7CC4E1C95DA919E /* libRNI18n.a in Frameworks */,
-				DFB3B35729CC443EB3A9B869 /* libAirMaps.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +388,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				B721D5FF6D414F8E8BA82A71 /* RNVectorIcons.xcodeproj */,
 				BF9A5384DD3846318247BDE8 /* RNI18n.xcodeproj */,
-				0C4DB73D4ABE4CFEB403C415 /* AirMaps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
