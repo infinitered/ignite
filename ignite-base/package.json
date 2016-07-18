@@ -81,7 +81,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run lintdiff"
+      "pre-commit": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy"
     }
   }
 }
