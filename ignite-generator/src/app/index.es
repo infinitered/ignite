@@ -174,7 +174,7 @@ export class AppGenerator extends Generators.Base {
    * Run React Native init.
    */
   reactNativeInit () {
-    const status = 'Running React Native setup (~ 1 minute)'
+    const status = 'Running React Native setup (~ 2 minutes-ish)'
     this.spinner.start()
     this.spinner.text = status
     const done = this.async()
@@ -367,7 +367,7 @@ export class AppGenerator extends Generators.Base {
    * Yeoman times its template copies.  :(
    */
   install () {
-    const npmStatus = 'Installing Ignite dependencies (~30 seconds-ish)'
+    const npmStatus = 'Installing Ignite dependencies (~ 1 minute-ish)'
     this.spinner.start()
     this.spinner.text = npmStatus
     const done = this.async()
