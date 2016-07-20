@@ -81,7 +81,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy"
+      "pre-commit": "if [ -d 'ignite-base' ]; then cd ignite-base; fi; npm run lint"
     }
   }
 }
