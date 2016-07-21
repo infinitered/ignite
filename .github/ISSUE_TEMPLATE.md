@@ -8,10 +8,5 @@ Welllllll, it just might be.  Do me a favor and check the following.
   - [ ] ignite the cli
   - [ ] ignite generated code
 
-Also, for the quickest assistance please include the following version information.
-
-- `node -v`: 
-- `npm -v`: 
-- `react-native -v` (cli): 
-- `react-native -v`: 
-- `ignite --version`: 
+Also, for the quickest assistance please run `ignite doctor` and paste in
+everything (including the lines with 3 backticks).
