@@ -26,9 +26,3 @@ test('onPress', t => {
   wrapper.simulate('press')
   t.is(i, 1)
 })
-
-test('renders children text when passed', t => {
-  const wrapper = shallow(<FullButton onPress={() => {}}>Howdy</FullButton>)
-  t.is(wrapper.children().length, 1) // has 1 child
-  t.is(wrapper.children().first().name(), 'Text') // that child is Text
-})
