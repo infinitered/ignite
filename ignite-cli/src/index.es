@@ -5,6 +5,7 @@ import colors from 'colors/safe'
 import pjson from './package.json'
 import Shell from 'shelljs'
 import spawn from 'cross-spawn'
+import R from 'ramda'
 
 const FIRE = colors.red('FIRE!')
 
@@ -78,6 +79,53 @@ Program
     checkYo()
     console.log(`Imported ${type}`)
     spawn('yo', [`react-native-ignite:${type}`], { shell: true, stdio: 'inherit' })
+  })
+
+Program
+  .command('doctor')
+  .description('shows your development environment settings')
+  .action(type => {
+    const platform = process.platform
+    const ignitePath = R.trim(Shell.which('ignite'))
+    const igniteVersion = R.trim(Shell.exec('ignite -V', { silent: true }).stdout)
+    const nodePath = R.trim(Shell.which('node'))
+    const npmVersion = R.trim(Shell.exec('npm --version', { silent: true }).stdout)
+    const npmPath = R.trim(Shell.which('npm'))
+    const nodeVersion = R.trim(Shell.exec('node --version', { silent: true }).stdout)
+    const yoVersion = R.trim(Shell.exec('yo --version', { silent: true }).stdout)
+    const rnCli = R.split(/\s/, R.trim(Shell.exec('react-native --version', { silent: true }).stdout))[1] // lulz
+
+    const rnPackageFile = './node_modules/react-native/package.json'
+    const appReactNativeVersion = Shell.test('-f', rnPackageFile) ? require(rnPackageFile).version : '¯\\_(ツ)_/¯'
+
+    const body = `
+\`\`\`
+Computer
+  Platform: ${platform}
+
+Ignite
+  Version: ${igniteVersion}
+  Path: ${ignitePath}
+
+Node
+  Version: ${nodeVersion}
+  Path: ${nodePath}
+
+NPM
+  Version: ${npmVersion}
+  Path: ${npmPath}
+
+Yeoman
+  Version: ${yoVersion}
+
+React Native CLI
+  Version: ${rnCli}
+
+App
+  React Native Version: ${appReactNativeVersion}
+\`\`\`
+`
+    console.log(body)
   })
 
 // parse params
