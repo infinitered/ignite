@@ -53,7 +53,12 @@ class ListviewGridExample extends React.Component {
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
   _renderRow (rowData) {
-    return <Text style={styles.item}>{rowData.title} - {rowData.description}</Text>
+    return (
+      <View style={styles.row}>
+        <Text style={styles.boldLabel}>{rowData.title}</Text>
+        <Text style={styles.label}>{rowData.description}</Text>
+      </View>
+    )
   }
 
   /* ***********************************************************
@@ -73,10 +78,6 @@ class ListviewGridExample extends React.Component {
       }
     }
   *************************************************************/
-
-  static propTypes = {
-    navigator: PropTypes.object.isRequired
-  }
 
   // Used for friendly AlertMessage
   // returns true if the dataSource is empty

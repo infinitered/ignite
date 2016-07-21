@@ -19,12 +19,12 @@
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82"
   },
   "dependencies": {
-    "apisauce": "^0.2.0",
+    "apisauce": "^0.3.0",
     "format-json": "^1.0.3",
     "querystringify": "0.0.3",
     "ramda": "^0.21.0",
     "react": "^15.1.0",
-    "react-native": "^0.29.2",
+    "react-native": "^0.30.0",
     "react-native-animatable": "^0.6.0",
     "react-native-device-info": "^0.9.3",
     "react-native-drawer": "^2.2.6",
@@ -35,7 +35,7 @@
     "redux": "^3.4.0",
     "redux-logger": "^2.4.0",
     "redux-persist": "^3.1.1",
-    "redux-saga": "^0.10.5",
+    "redux-saga": "^0.11.0",
     "reduxsauce": "0.1.0",
     "seamless-immutable": "^6.1.0"
   },
@@ -45,11 +45,11 @@
     "babel-preset-es2015": "^6.9.0",
     "enzyme": "^2.3.0",
     "mockery": "^1.7.0",
-    "nyc": "^6.6.1",
+    "nyc": "^7.0.0",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-native-mock": "^0.2.3",
-    "reactotron": "^0.6.1",
+    "reactotron": "^0.7.0",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
   },
