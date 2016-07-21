@@ -35,7 +35,7 @@ const ApplicationStyles = {
       color: Colors.snow,
       marginVertical: Metrics.smallMargin,
       textAlign: 'center',
-      fontFamily: Fonts.type.bold
+      fontWeight: 'bold'
     },
     subtitle: {
       color: Colors.snow,

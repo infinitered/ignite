@@ -162,7 +162,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     close: NavigationActions.pop,
-    attemptLogin: (username, password) => {dispatch(Actions.attemptLogin(username, password))}
+    attemptLogin: (username, password) => dispatch(Actions.attemptLogin(username, password))
   }
 }
 

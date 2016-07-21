@@ -24,7 +24,7 @@ const style = {
     fontSize: size.h1
   },
   h2: {
-    fontFamily: type.bold,
+    fontWeight: 'bold',
     fontSize: size.h2
   },
   h3: {
