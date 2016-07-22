@@ -9,7 +9,7 @@ import ora from 'ora'
 
 const igniteBase = 'ignite-base'
 const lockedReactNativeVersion = '0.30.0'
-const lockedIgniteVersion = '1.3.1'
+const lockedIgniteVersion = '1.4.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
@@ -138,7 +138,7 @@ export class AppGenerator extends Generators.Base {
 
     const rnCli = Shell.exec('react-native --version', { silent: true }).stdout
     // verify 1.x.x or higher (we need react-native link)
-    if (!rnCLI.match(/react-native-cli:\s[1-9]\d*\.\d+\.\d+/)) {
+    if (!rnCli.match(/react-native-cli:\s[1-9]\d*\.\d+\.\d+/)) {
       this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
     }
 
