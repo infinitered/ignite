@@ -6,7 +6,6 @@ import Generators from 'yeoman-generator'
 import Shell from 'shelljs'
 import * as Utilities from '../utilities'
 import ora from 'ora'
-import R from 'ramda'
 
 const igniteBase = 'ignite-base'
 const lockedReactNativeVersion = '0.30.0'
@@ -137,9 +136,9 @@ export class AppGenerator extends Generators.Base {
       this._logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
     }
 
-    const rnCli = R.split(/\s/, R.trim(Shell.exec('react-native --version', { silent: true }).stdout))[1] // steve's lulz
+    const rnCli = Shell.exec('react-native --version', { silent: true }).stdout
     // verify 1.x.x or higher (we need react-native link)
-    if (!rnCLI.match(/[1-9]\d*\.\d+\.\d+/)) {
+    if (!rnCLI.match(/react-native-cli:\s[1-9]\d*\.\d+\.\d+/)) {
       this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
     }
 
