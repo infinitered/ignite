@@ -77,6 +77,7 @@ clean_up()
 {
   cd ../../
   rm -rf testgrounds
+  git checkout -
   git branch -d test_$1
   git push origin --delete test_$1
 }
