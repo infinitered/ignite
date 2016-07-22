@@ -26,6 +26,12 @@ function test_command {
     return $status
 }
 
+fire_drill()
+{
+  echo '~~~🌟 Running Fire Drill'
+  test_command ./fireDrill
+}
+
 setup()
 {
   echo '~~~🌟 Setting up branch'
@@ -84,6 +90,7 @@ clean_up()
 }
 
 # This is where the magic happens
+fire_drill
 setup $1
 verify_code
 check_builds

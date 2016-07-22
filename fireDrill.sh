@@ -39,7 +39,7 @@ enforce_versions()
   # ignite generator version
   CURRENT_VERSION=$(node -e "var o = require('./ignite-generator/package.json'); console.log(o.version);")
 
-  verify version is in index
+  # verify version is in index
   grep -q 'lockedIgniteVersion.*'$CURRENT_VERSION ignite-generator/src/app/index.es
   if [[ $? -ne 0 ]]; then
     echo 'ignite-generator/src/app/index.es:lockedIgniteVersion does not match' $CURRENT_VERSION
