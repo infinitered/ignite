@@ -75,6 +75,7 @@ check_builds()
 
 clean_up()
 {
+  echo '~~~🌟 Cleanup'
   cd ../../
   rm -rf testgrounds
   git checkout -
@@ -87,5 +88,8 @@ setup $1
 verify_code
 check_builds
 clean_up $1
+
+# Done
+echo "👍 Everything looks good!"
 # How much time did we save?
 times
