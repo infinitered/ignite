@@ -1,16 +1,16 @@
 #! /bin/bash
-#########################################################
-# Test a release of Ignite before actually releasing it #
-#                  ._______.                            #
-#                   | \   / |                           #
-#                .--|.O.|.O.|______.                    #
-#              __).-| = | = |/   \ |                    #
-#              >__) (.'---`.)Q.|.Q.|--.                 #
-#                    \\___// = | = |-.(__               #
-#                     `---'( .---. ) (__<               #
-#                           \\.-.//                     #
-#                            `---'                      #
-#########################################################
+echo "#########################################################"
+echo '# Test a release of Ignite before actually releasing it #'
+echo '#                  ._______.                            #'
+echo '#                   | \   / |                           #'
+echo '#                .--|.O.|.O.|______.                    #'
+echo '#              __).-| = | = |/   \ |                    #'
+echo "#              >__) (.'---\`.)Q.|.Q.|--.                 #"
+echo '#                    \\___// = | = |-.(__               #'
+echo "#                     \`---'( .---. ) (__<               #"
+echo "#                           \\\\.-.//                     #"
+echo "#                            \`---'                      #"
+echo '#########################################################'
 
 if [[ -z $1 ]]; then
   echo 'Must pass release version as parameter'
@@ -90,6 +90,6 @@ check_builds
 clean_up $1
 
 # Done
-echo "👍 Everything looks good!"
+echo "~~~👍 Everything looks good!"
 # How much time did we save?
 times
