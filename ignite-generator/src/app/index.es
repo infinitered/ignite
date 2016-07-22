@@ -136,10 +136,16 @@ export class AppGenerator extends Generators.Base {
       this._logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
     }
 
-    // verify 1.x or higher (we need react-native link)
-    if (Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\\d*\\.\\d\\.\\d'", {silent: true}).code > 0) {
-      this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
+    // FIRST check if we have grep, because windows machines complain
+    if isCommandInstalled('grep') {
+      // verify 1.x or higher (we need react-native link)
+      if (Shell.exec("react-native -v | grep 'react-native-cli: [1-9]\\d*\\.\\d\\.\\d'", {silent: true}).code > 0) {
+        this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
+      }
+    } else {
+      this.log("RN CLI version must be at least 1.x - install grep to enable this check")
     }
+
     this.spinner.stop()
     this.log(`${check} Found react-native`)
   }
