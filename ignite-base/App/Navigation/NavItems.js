@@ -15,7 +15,7 @@ const toggleDrawer = () => {
 export default {
   backButton () {
     return (
-      <TouchableOpacity onPress={() => NavigationActions.pop}>
+      <TouchableOpacity onPress={NavigationActions.pop}>
         <Icon name='angle-left'
           size={Metrics.icons.medium}
           color={Colors.snow}
