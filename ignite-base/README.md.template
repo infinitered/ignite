@@ -29,8 +29,7 @@ This project adheres to Standard.  Our CI enforces this, so we suggest you enabl
 
 **To Lint on Commit**
 
-1. Install git-hooks => On a Mac `brew install git-hooks` - [Other](https://github.com/icefox/git-hooks/)
-2. Setup on Repo => `git hooks --install`
+This is implemented using [ghooks](https://github.com/gtramontina/ghooks). There is no additional setup needed.
 
 **Bypass Lint**
 
