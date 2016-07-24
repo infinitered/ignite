@@ -95,7 +95,7 @@ Program
     const yoVersion = R.trim(Shell.exec('yo --version', { silent: true }).stdout)
     const rnCli = R.split(/\s/, R.trim(Shell.exec('react-native --version', { silent: true }).stdout))[1] // lulz
 
-    const rnPackageFile = './node_modules/react-native/package.json'
+    const rnPackageFile = `${process.cwd()}/node_modules/react-native/package.json`
     const appReactNativeVersion = Shell.test('-f', rnPackageFile) ? require(rnPackageFile).version : '¯\\_(ツ)_/¯'
 
     const body = `
