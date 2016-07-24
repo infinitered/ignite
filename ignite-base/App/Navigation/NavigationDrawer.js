@@ -1,12 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 import Drawer from 'react-native-drawer'
-import { DefaultRenderer } from 'react-native-router-flux'
+import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
 import DrawerContent from '../Containers/DrawerContent'
 import { connect } from 'react-redux'
-import Actions from '../Actions/Creators'
 import Styles from './Styles/NavigationDrawerStyle'
 
-/********************
+/* *******************
 * Documentation: https://github.com/root-two/react-native-drawer
 ********************/
 
@@ -16,11 +15,15 @@ class NavigationDrawer extends Component {
   }
 
   render () {
-    const children = this.props.navigationState.children
+    const state = this.props.navigationState
+    const children = state.children
     return (
       <Drawer
         ref='navigation'
         type='displace'
+        open={state.open}
+        onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
+        onClose={() => NavigationActions.refresh({key: state.key, open: false})}
         content={<DrawerContent />}
         styles={Styles}
         tapToClose
