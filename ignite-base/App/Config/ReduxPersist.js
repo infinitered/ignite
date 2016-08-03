@@ -1,5 +1,5 @@
 import immutablePersistenceTransform from '../Store/ImmutablePersistenceTransform'
-import { persistentStoreBlacklist } from '../Reducers/'
+import { persistentStoreBlacklist, persistentStoreWhitelist } from '../Reducers/'
 import { AsyncStorage } from 'react-native'
 
 const REDUX_PERSIST = {
@@ -8,6 +8,7 @@ const REDUX_PERSIST = {
   storeConfig: {
     storage: AsyncStorage,
     blacklist: persistentStoreBlacklist,
+    whitelist: persistentStoreWhitelist,
     transforms: [immutablePersistenceTransform]
   }
 }
