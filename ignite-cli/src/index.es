@@ -70,6 +70,23 @@ Program
     spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
 
+// Update
+Program
+  .command('update')
+  .description('update Ignite to latest version')
+  .action((type) => {
+    checkYo()
+    const updateCheck = Shell.exec('npm outdated react-native-ignite --global')
+
+    if (updateCheck.output === '') {
+      console.log('Ignite is already latest version')
+    } else {
+      console.log('Updating ' + colors.red('Ignite'))
+      // RUN `npm i -g react-native-ignite --silent`
+      spawn('npm', [' i', '-g', 'react-native-ignite', '--silent'], { shell: true, stdio: 'inherit'})
+    }
+  })
+
 // import
 Program
   .command('import <type>')
