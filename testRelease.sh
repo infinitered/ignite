@@ -1,4 +1,10 @@
 #! /bin/bash
+
+#################### Running this Script #######################
+# Verify Git status is clean
+# Verify current git is what you're testing
+# Run this with `./testRelease.sh <release version>`
+################################################################
 echo "#########################################################"
 echo '# Test a release of Ignite before actually releasing it #'
 echo '#                  ._______.                            #'

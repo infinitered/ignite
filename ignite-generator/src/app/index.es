@@ -8,8 +8,8 @@ import * as Utilities from '../utilities'
 import ora from 'ora'
 
 const igniteBase = 'ignite-base'
-const lockedReactNativeVersion = '0.30.0'
-const lockedIgniteVersion = '1.4.1'
+const lockedReactNativeVersion = '0.31.0'
+const lockedIgniteVersion = '1.5.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
