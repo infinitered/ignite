@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Keyboard,
-  LayoutAnimation,
-  Alert
+  LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyle'

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
 

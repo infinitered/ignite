@@ -83,7 +83,7 @@ Program
     } else {
       console.log('Updating ' + colors.red('Ignite'))
       // RUN `npm i -g react-native-ignite --silent`
-      spawn('npm', [' i', '-g', 'react-native-ignite', '--silent'], { shell: true, stdio: 'inherit'})
+      spawn('npm', ['i', '-g', 'react-native-ignite', '--silent'], {shell: true, stdio: 'inherit'})
     }
   })
 
@@ -101,7 +101,7 @@ Program
 Program
   .command('doctor')
   .description('shows your development environment settings')
-  .action(type => {
+  .action((type) => {
     const platform = process.platform
     const ignitePath = R.trim(Shell.which('ignite'))
     const igniteVersion = R.trim(Shell.exec('ignite -V', { silent: true }).stdout)
