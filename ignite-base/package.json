@@ -23,7 +23,7 @@
     "apisauce": "^0.3.0",
     "format-json": "^1.0.3",
     "querystringify": "0.0.3",
-    "ramda": "^0.21.0",
+    "ramda": "^0.22.0",
     "react": "^15.3.0",
     "react-native": "^0.31.0",
     "react-native-animatable": "^0.6.0",
@@ -51,7 +51,7 @@
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-native-mock": "^0.2.3",
-    "reactotron": "^0.7.0",
+    "reactotron": "^0.8.0",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
   },
