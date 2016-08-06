@@ -51,7 +51,7 @@
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-native-mock": "^0.2.3",
-    "reactotron": "^0.7.0",
+    "reactotron": "^0.8.0",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
   },
