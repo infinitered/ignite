@@ -5,10 +5,10 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { Colors, Metrics } from '../Themes'
 
-const toggleDrawer = () => {
+const openDrawer = () => {
   NavigationActions.refresh({
     key: 'drawer',
-    open: value => !value
+    open: true
   })
 }
 
@@ -27,7 +27,7 @@ export default {
 
   hamburgerButton () {
     return (
-      <TouchableOpacity onPress={toggleDrawer}>
+      <TouchableOpacity onPress={openDrawer}>
         <Icon name='bars'
           size={Metrics.icons.medium}
           color={Colors.snow}
