@@ -10,7 +10,7 @@
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
     "test": "ava",
     "test:watch": "ava --watch",
-    "coverage": "nyc ava",
+    "coverage": "nyc ava report --reporter=html && open coverage/index.html",
     "tron": "node_modules/.bin/reactotron",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
