@@ -42,6 +42,7 @@
   * [apisauce](https://github.com/skellock/apisauce)
   * [reduxsauce](https://github.com/skellock/reduxsauce)
   * [react-native-maps](https://github.com/lelandrichardson/react-native-maps)
+  * [rn-translate-template](https://github.com/hiaw/rn-translate-template)
 * Included Developer Libs:
   * [reactotron](https://github.com/skellock/reactotron)
   * [AVA](https://github.com/avajs/ava)
