@@ -1,9 +1,9 @@
 Android:                                iOS:
 --------------                          -------------
-Afrikaans               af              
-Amharic                 am              
+Afrikaans               af
+Amharic                 am
                                         Arabic                  ar
-Bulgarian               bg              
+Bulgarian               bg
 Catalan                 ca              Catalan                 ca
 Chinese (Hong Kong)     zh-HK           Chinese (Hong Kong)     zh-HK
 Chinese (PRC)           zh-CN           Chinese (Simplified)    zh-Hans
@@ -17,8 +17,8 @@ English (AU)            en-AU           English (Australian)    en-AU
 English (UK)            en-GB           English (British)       en-GB
                                         English (Canadian)      en-CA
                                         English (Indian)        en-IN
-Estonian                et              
-Filipino                fil             
+Estonian                et
+Filipino                fil
 Finnish                 fi              Finnish                 fi
 French (Canada)         fr-CA           French (Canadian)       fr-CA
 French (France)         fr-FR           French                  fr
@@ -32,67 +32,23 @@ Italian                 it              Italian                 it
 Japanese                ja              Japanese                ja
 Korean                  ko              Korean                  ko
 Latvian                 lv              Malay                   ms
-Lithuanian              lt              
-Malay                   ms              
-Norwegian               no              
+Lithuanian              lt
+Malay                   ms
+Norwegian               no
                                         Norwegian (Bokmal)      nb
 Polish                  pl              Polish                  pl
 Portuguese (Brazil)     pt-BR           Portuguese (Brazil)     pt-BR
 Portuguese (Portugal)   pt-PT           Portuguese              pt
 Romanian                ro              Romanian                ro
 Russian                 ru              Russian                 ru
-Serbian                 sr              
+Serbian                 sr
 Slovak                  sk              Slovak                  sk
-Slovenian               sl              
+Slovenian               sl
 Spanish (Latin America) es-419          Spanish (Mexico)        es-M
 Spanish (Spain)         es-ES           Spanish                 es
-Swahili                 sw              
+Swahili                 sw
 Swedish                 sv              Swedish                 sv
 Thai                    th              Thai                    th
 Turkish                 tr              Turkish                 tr
 Ukrainian               uk              Ukrainian               uk
 Zulu                    zu              Vietnamese              vi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
