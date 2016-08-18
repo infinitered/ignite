@@ -27,6 +27,7 @@
     "react": "~15.2.1",
     "react-native": "^0.31.0",
     "react-native-animatable": "^0.6.0",
+    "react-native-config": "0.0.8",
     "react-native-device-info": "^0.9.3",
     "react-native-drawer": "^2.2.6",
     "react-native-i18n": "0.0.8",
