@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable'
 // Enable when you have configured Xcode
 // import PushNotification from 'react-native-push-notification'
-import I18n from '../I18n/I18n.js'
+import I18n from 'react-native-i18n'
 
 // Styles
 import styles from './Styles/UsageExamplesScreenStyle'

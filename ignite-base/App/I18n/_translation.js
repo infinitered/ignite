@@ -147,5 +147,3 @@ switch (languageCode) {
     I18n.translations.zu = require('./zu.json')
     break
 }
-
-export default I18n
