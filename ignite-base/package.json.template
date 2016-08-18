@@ -20,7 +20,7 @@
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82"
   },
   "dependencies": {
-    "apisauce": "^0.3.0",
+    "apisauce": "^0.4.0",
     "format-json": "^1.0.3",
     "querystringify": "0.0.3",
     "ramda": "^0.22.0",
