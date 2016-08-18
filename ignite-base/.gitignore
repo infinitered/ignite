@@ -35,11 +35,17 @@ node_modules/
 npm-debug.log
 
 # Coverage
+#
 .nyc_output/
 coverage/
 
 # BUCK
+#
 buck-out/
 \.buckd/
 android/app/libs
 android/keystores/debug.keystore
+
+# Secrets
+#
+.env
