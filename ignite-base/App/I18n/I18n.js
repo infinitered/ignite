@@ -5,7 +5,7 @@ I18n.fallbacks = true
 
 // English language is the main language for fall back:
 I18n.translations = {
-  en: require('./_en.json')
+  en: require('./english.json')
 }
 
 let languageCode = I18n.locale.substr(0, 2)

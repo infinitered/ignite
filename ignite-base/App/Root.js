@@ -38,4 +38,4 @@ export default class Root extends React.Component {
   }
 }
 
-require('./I18n/_translation.js')
+require('./I18n/I18n.js')
