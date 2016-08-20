@@ -55,7 +55,7 @@ To view the generated example project, just pull down the code and run ignite-ba
 
 ## :arrow_down: Install
 
-Make sure you're setup for [React Native](https://facebook.github.io/react-native/docs/getting-started.html#content)
+Make sure you're set up for [React Native](https://facebook.github.io/react-native/docs/getting-started.html#content)
 
 **Step 1: Install**
 
@@ -83,7 +83,7 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 ## :arrow_up: Built-In Generators
 
 #### Generate an app: `ignite new MyApplication`
-* The application generator uses the `ignite-base` template to provide a fresh application with all the common tech wired up and ready to roll.  Base applications come with common development screens, tools, and components.  _As for now, this is a 'Kitchen Sink' plan of attack.  Eventually to be paired down, and adjustable in v2.0_
+* The application generator uses the `ignite-base` template to provide a fresh application with all the common tech wired up and ready to roll.  Base applications come with common development screens, tools, and components.  _As for now, this is a 'Kitchen Sink' plan of attack.  Eventually to be pared down, and adjustable in v2.0_
 
 #### Generate a component: `ignite generate component SmoothButton`
 * The component generator creates a new 'dumb component' with the stylesheet.  Both files are created and placed in their appropriate folders.
@@ -92,13 +92,13 @@ Make sure you're setup for [React Native](https://facebook.github.io/react-nativ
 * A generated container is a smart component that is connected to Redux.  Usually for containing other components.  The component and stylesheet are placed in the `Containers` folder.
 
 #### Generate a screen: `ignite generate screen Settings`
-* A generated screen, is an opinionated container, with a generated route.  Keyboard avoiding, and other base code is placed in this connected smart component.
+* A generated screen is an opinionated container with a generated route.  Keyboard avoiding and other base code is placed in this connected smart component.
 
 #### Generate a listview: `ignite generate listview HotDates`
-* React Native listview container with easy step by step instructions on how to get started with an easy list template.
+* React Native listview container with easy step-by-step instructions on how to get started with an easy list template.
 
 #### COMING BACK SOON (broken in latest maps) - Generate a mapview: `ignite generate mapview MapScreen`
-* react-native-maps container, component, and map helpers with easy step by step instructions on how to get started with an simple map screen.
+* react-native-maps container, component, and map helpers with easy step-by-step instructions on how to get started with an simple map screen.
 
 #### Import images: `ignite import imagesfile`
 * Imports all files in `Images` folder and converts the names into **key: value** pairs in the _image_ object inside of the `Images.js` file in the `Themes` folder.
