@@ -16,7 +16,7 @@ import {Images, Metrics} from '../Themes'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // I18n
-import I18n from '../I18n/I18n.js'
+import I18n from 'react-native-i18n'
 
 class LoginScreen extends React.Component {
 

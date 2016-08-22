@@ -2,7 +2,7 @@ import {take, call, put} from 'redux-saga/effects'
 import R from 'ramda'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
-import I18n from '../I18n/I18n.js'
+import I18n from 'react-native-i18n'
 
 // This style of Saga is a common pattern.  It has a
 // worker and a watcher.
