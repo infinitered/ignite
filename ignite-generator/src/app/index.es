@@ -11,6 +11,14 @@ const igniteBase = 'ignite-base'
 const lockedReactNativeVersion = '0.31.0'
 const lockedIgniteVersion = '1.5.0'
 
+const copyEnv = (context) => {
+  context.fs.copyTpl(
+    context.templatePath('.env.template'),
+    context.destinationPath(`./${context.name}/.env`),
+    {}
+  )
+}
+
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
   Shell.mkdir(folder)
@@ -396,6 +404,7 @@ export class AppGenerator extends Generators.Base {
 
             // then update Plist
             this._updatePList()
+            copyEnv(this)
             done()
           })
       })

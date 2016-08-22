@@ -36,7 +36,6 @@ npm-debug.log
 # Generated files
 utilities.js
 validation.js
-app/
 app/index.js
 component/index.js
 container/index.js
