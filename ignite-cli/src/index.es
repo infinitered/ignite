@@ -25,6 +25,15 @@ const checkName = (project) => {
   }
 }
 
+const checkReactNative = () => {
+  if (Shell.exec('npm -s -g ls --depth=0', { silent: true }).stdout.indexOf('react-native@') >= 0) {
+    console.log(colors.red('Oops! Looks like react-native is installed globally when it should be react-native-cli.'))
+    console.log(colors.green('Fixing issue...'))
+    Shell.exec('npm uninstall -g react-native', { silent: true })
+    Shell.exec('npm install -g react-native-cli', { silent: true })
+  }
+}
+
 // version
 Program
   .version(pjson.version)
@@ -39,6 +48,7 @@ Program
   .action((project, options) => {
     checkYo()
     checkName(project)
+    checkReactNative()
     console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
     // the array of options fed into spawn
     const spawnOptions = []
