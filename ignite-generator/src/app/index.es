@@ -11,14 +11,6 @@ const igniteBase = 'ignite-base'
 const lockedReactNativeVersion = '0.31.0'
 const lockedIgniteVersion = '1.5.0'
 
-const copyEnv = (context) => {
-  context.fs.copyTpl(
-    context.templatePath('.env.template'),
-    context.destinationPath(`./${context.name}/.env`),
-    {}
-  )
-}
-
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
   Shell.mkdir(folder)
@@ -313,6 +305,7 @@ export class AppGenerator extends Generators.Base {
     this._cpTemplate('README.md')
     this._cpTemplate('package.json')
     this._cpTemplate('.babelrc')
+    this._cpTemplate('.env')
     this._cpFile('index.js.template', 'index.ios.js')
     this._cpFile('index.js.template', 'index.android.js')
     this._cpFile('index.js.template', 'index.android.js')
@@ -404,7 +397,6 @@ export class AppGenerator extends Generators.Base {
 
             // then update Plist
             this._updatePList()
-            copyEnv(this)
             done()
           })
       })
