@@ -49,3 +49,7 @@ android/keystores/debug.keystore
 # Secrets
 #
 .env
+
+# NYC
+.nyc_output
+coverage/
