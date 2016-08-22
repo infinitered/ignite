@@ -3,7 +3,7 @@
 
 import Generators from 'yeoman-generator'
 
-const copyOverCompoment = (context) => {
+const copyOverComponent = (context) => {
   // copy component template
   context.fs.copyTpl(
     context.templatePath('component.js.template'),
@@ -26,9 +26,9 @@ class ComponentGenerator extends Generators.Base {
     this.argument('name', { type: String, required: true })
   }
 
-  generateApp () {
+  generateComponent () {
     // Copy over component files.
-    copyOverCompoment(this)
+    copyOverComponent(this)
   }
 
   end () {
