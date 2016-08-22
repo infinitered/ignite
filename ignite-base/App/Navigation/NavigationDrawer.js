@@ -10,6 +10,11 @@ import Styles from './Styles/NavigationDrawerStyle'
 ********************/
 
 class NavigationDrawer extends Component {
+  constructor (props) {
+    super(props)
+    this.props.navigationState.open = false
+  }
+
   static propTypes = {
     navigationState: PropTypes.object
   }
