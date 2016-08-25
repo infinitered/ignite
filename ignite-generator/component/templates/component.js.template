@@ -4,16 +4,6 @@ import styles from './Styles/<%= name %>Style'
 
 export default class <%= name %> extends React.Component {
 
-  // // Prop type warnings
-  // static propTypes = {
-  //   someProperty: React.PropTypes.object,
-  //   someSetting: React.PropTypes.bool.isRequired
-  // }
-  //
-  // // Defaults for props
-  // static defaultProps = {
-  //   someSetting: false
-  // }
 
   render () {
     return (
@@ -23,3 +13,14 @@ export default class <%= name %> extends React.Component {
     )
   }
 }
+
+// // Prop type warnings
+// <%= name %>.propTypes = {
+//   someProperty: React.PropTypes.object,
+//   someSetting: React.PropTypes.bool.isRequired
+// }
+//
+// // Defaults for props
+// <%= name %>.defaultProps = {
+//   someSetting: false
+// }
