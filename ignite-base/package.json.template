@@ -55,7 +55,7 @@
     "react-native-mock": "^0.2.3",
     "reactotron": "^0.8.0",
     "snazzy": "^4.0.0",
-    "standard": "^7.1.2"
+    "standard": "^8.0.0"
   },
   "ava": {
     "files": [
