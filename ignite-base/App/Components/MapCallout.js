@@ -4,11 +4,6 @@ import MapView from 'react-native-maps'
 import Styles from './Styles/MapCalloutStyle'
 
 export default class MapCallout extends React.Component {
-  static propTypes = {
-    location: PropTypes.object.isRequired,
-    onPress: PropTypes.func
-  }
-
   constructor (props) {
     super(props)
     this.onPress = this.props.onPress.bind(this, this.props.location)
@@ -28,4 +23,9 @@ export default class MapCallout extends React.Component {
       </MapView.Callout>
     )
   }
+}
+
+MapCallout.propTypes = {
+  location: PropTypes.object.isRequired,
+  onPress: PropTypes.func
 }

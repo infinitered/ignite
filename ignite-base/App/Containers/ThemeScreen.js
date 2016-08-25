@@ -20,9 +20,6 @@ export default class UsageExamplesScreen extends React.Component {
     this.state = {}
   }
 
-  static propTypes = {
-  }
-
   renderColor (color) {
     return (
       <View style={styles.colorContainer} key={`${color}Container`}>

@@ -32,9 +32,6 @@ const APP_DATA = [
 ]
 
 export default class DeviceInfoScreen extends React.Component {
-  static propTypes = {
-  }
-
   constructor (props) {
     super(props)
 

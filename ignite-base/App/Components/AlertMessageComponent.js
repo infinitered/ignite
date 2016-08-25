@@ -21,18 +21,6 @@ ExamplesRegistry.add('Alert Message', () =>
 )
 
 export default class AlertMessage extends React.Component {
-
-  static propTypes = {
-    style: React.PropTypes.object,
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string,
-    show: React.PropTypes.bool
-  }
-
-  static defaultProps = {
-    show: true
-  }
-
   render () {
     let messageComponent = null
     if (this.props.show) {
@@ -57,4 +45,15 @@ export default class AlertMessage extends React.Component {
 
     return messageComponent
   }
+}
+
+AlertMessage.propTypes = {
+  style: React.PropTypes.object,
+  title: React.PropTypes.string.isRequired,
+  icon: React.PropTypes.string,
+  show: React.PropTypes.bool
+}
+
+AlertMessage.defaultProps = {
+  show: true
 }

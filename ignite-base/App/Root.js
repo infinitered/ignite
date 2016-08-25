@@ -10,10 +10,6 @@ import NavigationRouter from './Navigation/NavigationRouter'
 import styles from './Containers/Styles/RootStyle'
 
 export default class Root extends React.Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired
-  }
-
   componentWillMount () {
     const { dispatch } = this.props.store
     dispatch(Actions.startup())
@@ -36,6 +32,10 @@ export default class Root extends React.Component {
   render () {
     return this.renderApp()
   }
+}
+
+Root.propTypes = {
+  store: PropTypes.object.isRequired
 }
 
 require('./I18n/I18n.js')

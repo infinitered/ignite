@@ -22,12 +22,6 @@ export default class ProgressiveImage extends Component {
     }
   }
 
-  static propTypes = {
-    thumbnail: PropTypes.string,
-    source: PropTypes.string,
-    style: PropTypes.number
-  }
-
   mainImageLoad = () => {
     window.requestAnimationFrame((time) => {
       Animated.timing(this.state.thumbnailOpacity, {
@@ -78,4 +72,10 @@ export default class ProgressiveImage extends Component {
       </View>
     )
   }
+}
+
+ProgressiveImage.propTypes = {
+  thumbnail: PropTypes.string,
+  source: PropTypes.string,
+  style: PropTypes.number
 }
