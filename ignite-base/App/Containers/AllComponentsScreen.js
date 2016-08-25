@@ -15,10 +15,6 @@ import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 class AllComponentsScreen extends React.Component {
 
-  static propTypes = {
-    dispatch: PropTypes.func
-  }
-
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -41,6 +37,10 @@ class AllComponentsScreen extends React.Component {
       </View>
     )
   }
+}
+
+AllComponentsScreen.propTypes = {
+  dispatch: PropTypes.func
 }
 
 export default connect()(AllComponentsScreen)

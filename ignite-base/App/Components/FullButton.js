@@ -12,13 +12,6 @@ ExamplesRegistry.add('Full Button', () =>
 )
 
 export default class FullButton extends React.Component {
-
-  static propTypes = {
-    text: React.PropTypes.string.isRequired,
-    onPress: React.PropTypes.func.isRequired,
-    styles: React.PropTypes.object
-  }
-
   render () {
     return (
       <TouchableOpacity style={[styles.button, this.props.styles]} onPress={this.props.onPress}>
@@ -26,4 +19,10 @@ export default class FullButton extends React.Component {
       </TouchableOpacity>
     )
   }
+}
+
+FullButton.propTypes = {
+  text: React.PropTypes.string.isRequired,
+  onPress: React.PropTypes.func.isRequired,
+  styles: React.PropTypes.object
 }

@@ -15,10 +15,6 @@ class NavigationDrawer extends Component {
     this.props.navigationState.open = false
   }
 
-  static propTypes = {
-    navigationState: PropTypes.object
-  }
-
   render () {
     const state = this.props.navigationState
     const children = state.children
@@ -43,6 +39,10 @@ class NavigationDrawer extends Component {
       </Drawer>
     )
   }
+}
+
+NavigationDrawer.propTypes = {
+  navigationState: PropTypes.object
 }
 
 const mapStateToProps = (state) => {

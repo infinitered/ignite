@@ -13,13 +13,6 @@ ExamplesRegistry.add('Rounded Button', () =>
 
 export default class RoundedButton extends React.Component {
 
-  static propTypes = {
-    navigator: React.PropTypes.object,
-    text: React.PropTypes.string,
-    onPress: React.PropTypes.func.isRequired,
-    children: React.PropTypes.string
-  }
-
   getText () {
     const buttonText = this.props.text || this.props.children.toString()
     return buttonText.toUpperCase()
@@ -32,4 +25,11 @@ export default class RoundedButton extends React.Component {
       </TouchableOpacity>
     )
   }
+}
+
+RoundedButton.propTypes = {
+  navigator: React.PropTypes.object,
+  text: React.PropTypes.string,
+  onPress: React.PropTypes.func.isRequired,
+  children: React.PropTypes.string
 }

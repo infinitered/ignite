@@ -9,15 +9,6 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import styles from './Styles/PresentationScreenStyle'
 
 class PresentationScreen extends React.Component {
-
-  static propTypes = {
-    componentExamples: PropTypes.func,
-    usageExamples: PropTypes.func,
-    apiTesting: PropTypes.func,
-    theme: PropTypes.func,
-    deviceInfo: PropTypes.func
-  }
-
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -62,6 +53,14 @@ class PresentationScreen extends React.Component {
       </View>
     )
   }
+}
+
+PresentationScreen.propTypes = {
+  componentExamples: PropTypes.func,
+  usageExamples: PropTypes.func,
+  apiTesting: PropTypes.func,
+  theme: PropTypes.func,
+  deviceInfo: PropTypes.func
 }
 
 const mapStateToProps = (state) => {

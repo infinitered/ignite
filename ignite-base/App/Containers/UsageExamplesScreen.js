@@ -22,19 +22,6 @@ class UsageExamplesScreen extends React.Component {
     this.state = {}
   }
 
-  static propTypes = {
-    loggedIn: PropTypes.bool,
-    dispatch: PropTypes.func,
-    temperature: PropTypes.number,
-    city: PropTypes.string,
-    login: PropTypes.func,
-    logout: PropTypes.func,
-    requestTemperature: PropTypes.func,
-    listviewExample: PropTypes.func,
-    listviewGridExample: PropTypes.func,
-    mapviewExample: PropTypes.func
-  }
-
   componentWillReceiveProps (nextProps) {
     // Request push premissions only if the user has logged in.
     const { loggedIn } = nextProps
@@ -155,6 +142,19 @@ class UsageExamplesScreen extends React.Component {
       </View>
     )
   }
+}
+
+UsageExamplesScreen.propTypes = {
+  loggedIn: PropTypes.bool,
+  dispatch: PropTypes.func,
+  temperature: PropTypes.number,
+  city: PropTypes.string,
+  login: PropTypes.func,
+  logout: PropTypes.func,
+  requestTemperature: PropTypes.func,
+  listviewExample: PropTypes.func,
+  listviewGridExample: PropTypes.func,
+  mapviewExample: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
