@@ -24,7 +24,7 @@ class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <Scene key='drawer' component={NavigationDrawer}>
+        <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
             <Scene initial key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />

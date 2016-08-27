@@ -10,11 +10,6 @@ import Styles from './Styles/NavigationDrawerStyle'
 ********************/
 
 class NavigationDrawer extends Component {
-  constructor (props) {
-    super(props)
-    this.props.navigationState.open = false
-  }
-
   render () {
     const state = this.props.navigationState
     const children = state.children
