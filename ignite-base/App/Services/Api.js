@@ -1,6 +1,5 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
-import Reactotron from 'reactotron'
 
 // our "constructor"
 const create = (baseURL = 'http://openweathermap.org/data/2.1') => {
@@ -22,11 +21,12 @@ const create = (baseURL = 'http://openweathermap.org/data/2.1') => {
   })
 
   // Wrap api's addMonitor to allow the calling code to attach
-  // additional monitors in the future.
-  const addMonitor = api.addMonitor((response) => {
-    // Monitors are called passively after every request.
-    Reactotron.apiLog(response)
-  })
+  // additional monitors in the future.  But only in __DEV__ and only
+  // if we've attached Reactotron to console (it isn't during unit tests).
+  if (__DEV__ && console.tron) {
+    console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
+    api.addMonitor(console.tron.apisauce)
+  }
 
   // ------
   // STEP 2
@@ -58,9 +58,7 @@ const create = (baseURL = 'http://openweathermap.org/data/2.1') => {
   //
   return {
     // a list of the API functions from step 2
-    getCity,
-    // additional utilities
-    addMonitor
+    getCity
   }
 }
 

@@ -14,7 +14,9 @@ mockery.warnOnUnregistered(false)
 
 // Mock any libs that get called in here
 // I'm looking at you react-native-router-flux, reactotron etc!
-mockery.registerMock('reactotron', {})
+mockery.registerMock('reactotron-react-native', {})
+mockery.registerMock('reactotron-redux', {})
+mockery.registerMock('reactotron-apisauce', {})
 
 // Mock all images for React Native
 const originalLoader = m._load

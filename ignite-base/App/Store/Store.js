@@ -6,9 +6,12 @@ import Config from '../Config/DebugSettings'
 import createSagaMiddleware from 'redux-saga'
 import sagas from '../Sagas/'
 import R from 'ramda'
-import Reactotron from 'reactotron'
 import RehydrationServices from '../Services/RehydrationServices'
 import ReduxPersist from '../Config/ReduxPersist'
+import Types from '../Actions/Types'
+
+// only bring in Reactotron in dev mode
+const createReactotronEnhancer = __DEV__ && require('reactotron-redux')
 
 // the logger master switch
 const USE_LOGGING = Config.reduxLogging
@@ -30,36 +33,38 @@ if (__DEV__) {
 
 // a function which can create our store and auto-persist the data
 export default () => {
-  let store = {}
+  // which enhancers we add are dynamic
+  const enhancers = []
 
-  // Add rehydrate enhancer if ReduxPersist is active
-  if (ReduxPersist.active) {
-    const enhancers = compose(
-      applyMiddleware(...middleware),
-      Reactotron.storeEnhancer(),
-      autoRehydrate()
-    )
+  // in dev, let's bring **START** with Reactotron's store enhancer
+  if (__DEV__) {
+    const reactotronEnhancer = createReactotronEnhancer(console.tron, {
+      // you can flag some of your actions as important by returning true here
+      isActionImportant: (action) => action.type === Types.STARTUP,
 
-    store = createStore(
-      rootReducer,
-      enhancers
-    )
-
-    // configure persistStore and check reducer version number
-    RehydrationServices.updateReducers(store)
-  } else {
-    const enhancers = compose(
-      applyMiddleware(...middleware),
-      Reactotron.storeEnhancer()
-    )
-
-    store = createStore(
-      rootReducer,
-      enhancers
-    )
+      // you can flag to completely ignore certain types too... especially the chatty ones
+      ignore: [...SAGA_LOGGING_BLACKLIST]
+    })
+    enhancers.push(reactotronEnhancer)
   }
 
-  // run sagas
+  // next bring in the middleware
+  enhancers.push(applyMiddleware(...middleware))
+
+  // add the autoRehydrate enhancer
+  if (ReduxPersist.active) {
+    enhancers.push(autoRehydrate())
+  }
+
+  // create the store!
+  const store = createStore(rootReducer, compose(...enhancers))
+
+  // configure persistStore and check reducer version number
+  if (ReduxPersist.active) {
+    RehydrationServices.updateReducers(store)
+  }
+
+  // kick off root saga
   sagaMiddleware.run(sagas)
 
   return store
