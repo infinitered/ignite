@@ -103,6 +103,12 @@ check_builds
 clean_up $1
 
 # Done
-echo "~~~👍 Everything looks good!"
+if [ "$?" != "0" ]; then
+    echo "~~~👎 Done with errors" 1>&2
+    exit 1
+else
+  echo "~~~👍 Everything looks good!"
+fi
+
 # How much time did we save?
 times
