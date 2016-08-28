@@ -27,7 +27,7 @@ function test_command {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
-        echo "$1 Failed" >&2
+        echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
     fi
     return $status
 }
@@ -82,7 +82,7 @@ check_builds()
   test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js
 
   echo '~ Build android'
-  test_command react-native bundle --entry-file index.android.js --bundle-output test.android.js
+  test_command cd android && ./gradlew assembleRelease && cd -
 }
 
 clean_up()
