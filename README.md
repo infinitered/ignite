@@ -104,6 +104,13 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
 #### Import images: `ignite import imagesfile`
 * Imports all files in `Images` folder and converts the names into **key: value** pairs in the _image_ object inside of the `Images.js` file in the `Themes` folder.
 
+## :arrow_upper_right: This Repo Explained
+* **ignite-base** aka [BASE] - is the generated default app.  You are required to `touch .env` to get it run-ready.
+* **ignite-cli** aka [CLI] - is the app that wraps our yeowman generators, and other commands.  This is the `react-native-ignite` node module.
+* **ignite-generator** aka [GEN] - Yeowman generators for ignote.  This is the `generator-react-native-ignite` node module that the CLI depends on for generating app items.
+* **fireDrill.sh** - A shell script for verifying the necessary relationship between folders and files is in good shape.  Since versions, templates, and linting is enforce, we have it all in one friendly script for developers and CI.
+* **testRelease.sh** - A shell script that automatically ignites a project based on the repo to make sure it generates correctly, and functions to the best of automated testability.  This script is run before every release.
+
 ## :twisted_rightwards_arrows: Where to Go From Here
 #### [Contribute to Ignite](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
 #### [Chat with us on Gitter](https://gitter.im/infinitered/ignite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - Infinite Red devs standing by
