@@ -108,7 +108,6 @@ if [ "$?" != "0" ]; then
     exit 1
 else
   echo "~~~👍 Everything looks good!"
+  # depends on $SECONDS being part of sh
+  printf '%dh:%dm:%ds\n' $(($SECONDS/3600)) $(($SECONDS%3600/60)) $(($SECONDS%60))
 fi
-
-# How much time did we save?
-times
