@@ -35,7 +35,7 @@ function test_command {
 fire_drill()
 {
   echo '~~~🌟 Running Fire Drill'
-  test_command ./fireDrill
+  test_command ./fireDrill.sh
 }
 
 setup()
