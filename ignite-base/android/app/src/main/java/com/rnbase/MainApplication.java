@@ -32,7 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
 
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactNativeConfigPackage(),
+          new ReactNativeConfigPackage(),
           // new MapsPackage(),
           new RNDeviceInfo(),
           new ReactNativeI18n(),
