@@ -25,7 +25,7 @@ export default (api) => {
 
     // success?
     if (response.ok) {
-      const kelvin = R.path(['list', 0, 'main', 'temp'], response.data)
+      const kelvin = R.path(['main', 'temp_max'], response.data)
       const celcius = kelvin - 273.15
       const farenheit = (celcius * 1.8000) + 32
 
