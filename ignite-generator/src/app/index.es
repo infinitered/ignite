@@ -358,7 +358,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Log an error and exit gracefully.
    */
-  _logAndExit(finalMessage) {
+  _logAndExit (finalMessage) {
     this.spinner.stop()
     this.log(finalMessage)
     process.exit(1)
