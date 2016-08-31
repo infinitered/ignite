@@ -6,16 +6,16 @@ const updateReducers = (store) => {
   const reducerVersion = ReduxPersist.reducerVersion
   const config = ReduxPersist.storeConfig
 
-
   // Check to ensure latest reducer version
   AsyncStorage.getItem('reducerVersion').then((localVersion) => {
     if (localVersion !== reducerVersion) {
       console.tron.display({
         name: 'PURGE',
-        value: `Reducer Version Change
-        Old Version: ${localVersion}
-        New Version: ${reducerVersion}`,
-        preview: 'Purging Store',
+        value: {
+          'Old Version:': localVersion,
+          'New Version:': reducerVersion
+        },
+        preview: 'Reducer Version Change Detected',
         important: true
       })
       // Purge store
