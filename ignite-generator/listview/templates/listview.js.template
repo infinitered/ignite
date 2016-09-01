@@ -135,6 +135,7 @@ class <%= name %> extends React.Component {
           renderRow={this._renderRow}
           renderFooter={this.renderFooter}
           enableEmptySections
+          pageSize={15}
         />
       </View>
     )
