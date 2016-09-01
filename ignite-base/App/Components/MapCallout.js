@@ -2,6 +2,17 @@ import React, { PropTypes } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 import MapView from 'react-native-maps'
 import Styles from './Styles/MapCalloutStyle'
+import ExamplesRegistry from '../Services/ExamplesRegistry'
+
+// Example
+ExamplesRegistry.add('Full Button', () =>
+  <MapCallout
+    location={{
+      title: 'Callout Example'
+    }}
+    onPress={() => window.alert('That tickles!')}
+  />
+)
 
 export default class MapCallout extends React.Component {
   constructor (props) {
