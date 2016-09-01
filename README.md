@@ -118,3 +118,6 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
 #### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
 #### [Project Web Page](http://infinitered.github.io/ignite/) - Our Github Page
+
+## :heart: Special Thanks :heart:
+Thank you to the numerous [contributors of Ignite](https://github.com/infinitered/ignite/graphs/contributors).  Additionally, our Gitter/Slack integration has been most graceously donated by [SameRoom.io](https://sameroom.io/).  Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite.
