@@ -33,6 +33,7 @@
     "cross-spawn": "^4.0.0",
     "ramda": "^0.22.0",
     "shelljs": "^0.6.0",
+    "update-notifier": "^1.0.2",
     "yeoman-generator": "^0.21.1",
     "yo": "^1.7.0"
   },
