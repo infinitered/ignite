@@ -6,6 +6,7 @@ import pjson from './package.json'
 import Shell from 'shelljs'
 import spawn from 'cross-spawn'
 import R from 'ramda'
+import updateNotifier from 'update-notifier'
 
 const FIRE = colors.red('FIRE!')
 
@@ -33,6 +34,9 @@ const checkReactNative = () => {
     Shell.exec('npm install -g react-native-cli', { silent: true })
   }
 }
+
+// Check update version
+updateNotifier({ pkg: pjson }).notify()
 
 // version
 Program
