@@ -11,24 +11,31 @@ class ListviewGenerator extends Generators.Base {
   }
 
   _copyOverListView (type) {
-    // copy listview template
-    this.fs.copyTpl(
-      this.templatePath('listview.js.template'),
-      this.destinationPath(`./App/Containers/${this.name}.js`),
-      { name: this.name }
-    )
-
-    if (type === 'Row List') {
-      // copy row style template
+    // sections or no?
+    if (type === 'Sectioned List') {
       this.fs.copyTpl(
-        this.templatePath('listview-style.js.template'),
+        this.templatePath('listview-sections.js.template'),
+        this.destinationPath(`./App/Containers/${this.name}.js`),
+        { name: this.name }
+      )
+    } else {
+      this.fs.copyTpl(
+        this.templatePath('listview.js.template'),
+        this.destinationPath(`./App/Containers/${this.name}.js`),
+        { name: this.name }
+      )
+    }
+
+    // grid or no?
+    if (type === 'Grid List') {
+      this.fs.copyTpl(
+        this.templatePath('gridlistview-style.js.template'),
         this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
         { name: this.name }
       )
     } else {
-      // copy grid style template
       this.fs.copyTpl(
-        this.templatePath('gridlistview-style.js.template'),
+        this.templatePath('listview-style.js.template'),
         this.destinationPath(`./App/Containers/Styles/${this.name}Style.js`),
         { name: this.name }
       )
@@ -40,7 +47,7 @@ class ListviewGenerator extends Generators.Base {
       type: 'list',
       name: 'listviewtype',
       message: 'What kind of listview would you like to generate?',
-      choices: ['Row List', 'Grid List'],
+      choices: ['Row List', 'Grid List', 'Sectioned List'],
       store: true
     }]
 
