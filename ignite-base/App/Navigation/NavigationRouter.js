@@ -11,6 +11,7 @@ import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import ListviewExample from '../Containers/ListviewExample'
 import ListviewGridExample from '../Containers/ListviewGridExample'
+import ListviewSectionsExample from '../Containers/ListviewSectionsExample'
 import MapviewExample from '../Containers/MapviewExample'
 import APITestingScreen from '../Containers/APITestingScreen'
 import ThemeScreen from '../Containers/ThemeScreen'
@@ -32,6 +33,7 @@ class NavigationRouter extends Component {
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
             <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
+            <Scene key='listviewSectionsExample' component={ListviewSectionsExample} title='Listview Sections' />
             <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='theme' component={ThemeScreen} title='Theme' />

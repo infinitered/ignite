@@ -122,6 +122,9 @@ class UsageExamplesScreen extends React.Component {
         <View>
           <RoundedButton text='Listview Grid' onPress={this.props.listviewGridExample} />
         </View>
+        <View>
+          <RoundedButton text='Listview Sections' onPress={this.props.listviewSectionsExample} />
+        </View>
       </View>
     )
   }
@@ -172,6 +175,7 @@ const mapDispatchToProps = (dispatch) => {
     requestTemperature: (city) => dispatch(Actions.requestTemperature(city)),
     listviewExample: NavigationActions.listviewExample,
     listviewGridExample: NavigationActions.listviewGridExample,
+    listviewSectionsExample: NavigationActions.listviewSectionsExample,
     mapviewExample: NavigationActions.mapviewExample
   }
 }
