@@ -106,8 +106,8 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
 
 ## :arrow_upper_right: This Repo Explained
 * **ignite-base** aka [BASE] - is the generated default app. Some files are different and have a `.template` extension.
-* **ignite-cli** aka [CLI] - is the app that wraps our yeowman generators, and other commands.  This is the `react-native-ignite` node module.
-* **ignite-generator** aka [GEN] - Yeowman generators for ignote.  This is the `generator-react-native-ignite` node module that the CLI depends on for generating app items.
+* **ignite-cli** aka [CLI] - is the app that wraps our yeoman generators, and other commands.  This is the `react-native-ignite` node module.
+* **ignite-generator** aka [GEN] - Yeoman generators for Ignite.  This is the `generator-react-native-ignite` node module that the CLI depends on for generating app items.
 * **fireDrill.sh** - A shell script for verifying the necessary relationship between folders and files is in good shape.  Since versions, templates, and linting is enforce, we have it all in one friendly script for developers and CI.
 * **testRelease.sh** - A shell script that automatically ignites a project based on the repo to make sure it generates correctly, and functions to the best of automated testability.  This script is run before every release.
 
