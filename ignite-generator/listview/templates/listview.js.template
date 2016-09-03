@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
-import { Actions as NavigationActions } from 'react-native-router-flux'
+// import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // For empty lists
 import AlertMessage from '../Components/AlertMessageComponent'
@@ -13,10 +13,7 @@ class <%= name %> extends React.Component {
 
   constructor (props) {
     super(props)
-
-    // Set up our two placeholder values for scrollToBottom()
-    this.listHeight = 0
-    this.footerY = 0
+    // If you need scroll to bottom, consider http://bit.ly/2bMQ2BZ
 
     /* ***********************************************************
     * STEP 1
@@ -91,37 +88,11 @@ class <%= name %> extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
-  // Magical helper function that can scroll your ListView to the bottom
-  scrollToBottom(animated = true) {
-    if (this.listHeight && this.footerY && this.footerY > this.listHeight) {
-      // Calculates the y scroll position inside the ListView
-      const scrollTo = this.footerY - this.listHeight
-
-      // Scroll that sucker!
-      this.refs.listView.scrollTo({
-        y: scrollTo,
-        animated: animated,
-      })
-    }
-  }
-
-  // Save the list's height when it renders
-  onLayout = (event) => {
-    const layout = event.nativeEvent.layout
-    this.listHeight = layout.height
-  }
-
-  // Render a footer. Keep onFooterLayout if you decide to fill out this section
-  renderFooter = () => {
+  // Render a footer.
+  _renderFooter = () => {
     return (
-      <View onLayout={this.onFooterLayout} />
+      <Text> - Footer - </Text>
     )
-  }
-
-  // When the footer is laid out, store its y-position
-  onFooterLayout = (event) => {
-    const layout = event.nativeEvent.layout
-    this.footerY = layout.y
   }
 
   render () {
@@ -131,9 +102,8 @@ class <%= name %> extends React.Component {
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
-          onLayout={this.onLayout}
           renderRow={this._renderRow}
-          renderFooter={this.renderFooter}
+          renderFooter={this._renderFooter}
           enableEmptySections
           pageSize={15}
         />
