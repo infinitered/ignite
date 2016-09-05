@@ -7,6 +7,7 @@ import Shell from 'shelljs'
 import spawn from 'cross-spawn'
 import R from 'ramda'
 import updateNotifier from 'update-notifier'
+import * as fs from 'fs'
 
 const FIRE = colors.red('FIRE!')
 
@@ -22,6 +23,14 @@ const checkName = (project) => {
   // Only alphanumeric project names
   if (/[^a-z0-9]+/i.test(project)) {
     console.log(`"${project}" is not a valid name for a project. Please use a valid identifier name (alphanumeric).`)
+    Shell.exit(1)
+  }
+}
+
+// Early exit if the project name already exists (#349)
+const checkDir = (project) => {
+  if (fs.existsSync(process.cwd() + '/' + project.toString())) {
+    console.log(`Sorry, I couldn\'t create the directory for "${project}" - it already exists. :(`)
     Shell.exit(1)
   }
 }
@@ -52,6 +61,7 @@ Program
   .action((project, options) => {
     checkYo()
     checkName(project)
+    checkDir(project)
     checkReactNative()
     console.log(`🔥 Setting ${project} on ${FIRE} 🔥`)
     // the array of options fed into spawn
