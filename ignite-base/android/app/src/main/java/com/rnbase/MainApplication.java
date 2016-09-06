@@ -12,7 +12,7 @@ import com.facebook.react.shell.MainReactPackage;
 
 // 3rd party imports
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
-// import com.airbnb.android.react.maps.MapsPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.oblador.vectoricons.VectorIconsPackage;
 
@@ -33,7 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new ReactNativeConfigPackage(),
-          // new MapsPackage(),
+          new MapsPackage(),
           new RNDeviceInfo(),
           new ReactNativeI18n(),
           new VectorIconsPackage()

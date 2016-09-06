@@ -34,6 +34,7 @@
     "react-native-i18n": "0.0.8",
     "react-native-router-flux": "^3.35.0",
     "react-native-vector-icons": "^2.1.0",
+    "react-native-maps": "^0.8.0",
     "react-redux": "^4.4.2",
     "redux": "^3.4.0",
     "redux-logger": "^2.4.0",

@@ -127,6 +127,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-maps')
     compile project(':react-native-config')
     compile project(':react-native-device-info')
     compile project(':react-native-i18n')
