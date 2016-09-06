@@ -25,7 +25,7 @@ class ListviewExample extends React.Component {
       {title: 'Fifth Title', description: 'Fifth Description'},
       {title: 'Sixth Title', description: 'Sixth Description'},
       {title: 'Seventh Title', description: 'Seventh Description'},
-      {title: 'Eigth Title', description: 'Eigth Description'},
+      {title: 'Eighth Title', description: 'Eighth Description'},
       {title: 'Ninth Title', description: 'Ninth Description'},
       {title: 'Tenth Title', description: 'Tenth Description'},
       {title: 'Eleventh Title', description: 'Eleventh Description'},
