@@ -11,8 +11,8 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyle'
-import Actions from '../Actions/Creators'
 import {Images, Metrics} from '../Themes'
+import { Actions as LoginActions } from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // I18n
@@ -34,7 +34,7 @@ class LoginScreen extends React.Component {
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
     // Did the login attempt complete?
-    if (this.isAttempting && !newProps.attempting) {
+    if (this.isAttempting && !newProps.fetching) {
       this.props.close()
     }
   }
@@ -87,8 +87,8 @@ class LoginScreen extends React.Component {
 
   render () {
     const { username, password } = this.state
-    const { attempting } = this.props
-    const editable = !attempting
+    const { fetching } = this.props
+    const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
       <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]}>
@@ -147,21 +147,21 @@ class LoginScreen extends React.Component {
 
 LoginScreen.propTypes = {
   dispatch: PropTypes.func,
-  attempting: PropTypes.bool,
+  fetching: PropTypes.bool,
   close: PropTypes.func,
   attemptLogin: PropTypes.func
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    attempting: state.login.attempting
+    fetching: state.login.fetching
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     close: NavigationActions.pop,
-    attemptLogin: (username, password) => dispatch(Actions.attemptLogin(username, password))
+    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password))
   }
 }
 

@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
 import { connect } from 'react-redux'
-import Actions from '../Actions/Creators'
+import { Actions as LoginActions, isLoggedIn } from '../Redux/LoginRedux'
+import { Actions as TemperatureActions } from '../Redux/TemperatureRedux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Colors, Images, Metrics } from '../Themes'
 import RoundedButton from '../Components/RoundedButton'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable'
@@ -165,17 +166,17 @@ UsageExamplesScreen.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.login.username !== null,
-    temperature: state.weather.temperature,
-    city: state.weather.city
+    loggedIn: isLoggedIn(state.login),
+    temperature: state.temperature.temperature,
+    city: state.temperature.city
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     login: NavigationActions.login,
-    logout: () => dispatch(Actions.logout()),
-    requestTemperature: (city) => dispatch(Actions.requestTemperature(city)),
+    logout: () => dispatch(LoginActions.logout()),
+    requestTemperature: (city) => dispatch(TemperatureActions.requestTemperature(city)),
     listviewExample: NavigationActions.listviewExample,
     listviewGridExample: NavigationActions.listviewGridExample,
     listviewSectionsExample: NavigationActions.listviewSectionsExample,
