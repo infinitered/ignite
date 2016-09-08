@@ -1,10 +1,9 @@
 import { createTypes, createReducer } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import I18n from 'react-native-i18n'
 
 /* ------------- Action Types ------------- */
 
-export const Types = createTypes(`
+export const TemperatureTypes = createTypes(`
   TEMPERATURE_REQUEST
   TEMPERATURE_SUCCESS
   TEMPERATURE_FAILURE
@@ -13,10 +12,10 @@ export const Types = createTypes(`
 
 /* ------------- Action Creators ------------- */
 
-export const Actions = {
-  requestTemperature: city => ({ type: Types.TEMPERATURE_REQUEST, city }),
-  receiveTemperature: temperature => ({ type: Types.TEMPERATURE_SUCCESS, temperature }),
-  receiveTemperatureFailure: () => ({ type: Types.TEMPERATURE_FAILURE })
+export default {
+  requestTemperature: city => ({ type: TemperatureTypes.TEMPERATURE_REQUEST, city }),
+  receiveTemperature: temperature => ({ type: TemperatureTypes.TEMPERATURE_SUCCESS, temperature }),
+  receiveTemperatureFailure: () => ({ type: TemperatureTypes.TEMPERATURE_FAILURE })
 }
 
 /* ------------- Initial State ------------- */
@@ -45,20 +44,7 @@ export const failure = state =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.TEMPERATURE_REQUEST]: request,
-  [Types.TEMPERATURE_SUCCESS]: success,
-  [Types.TEMPERATURE_FAILURE]: failure
+  [TemperatureTypes.TEMPERATURE_REQUEST]: request,
+  [TemperatureTypes.TEMPERATURE_SUCCESS]: success,
+  [TemperatureTypes.TEMPERATURE_FAILURE]: failure
 })
-
-/* ------------- Helpers ------------- */
-
-export const convertFromKelvin = kelvin => {
-  const celcius = kelvin - 273.15
-  const farenheit = (celcius * 1.8000) + 32
-
-  if (I18n.t('tempIndicator') === 'F') {
-    return Math.round(farenheit)
-  } else {
-    return Math.round(celcius)
-  }
-}

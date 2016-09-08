@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, StatusBar } from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
-import { Actions as StartupActions } from '../Redux/StartupRedux'
+import StartupActions from '../Redux/StartupRedux'
 // import './Config/PushConfig'
 
 // Styles

@@ -2,10 +2,10 @@ import { createTypes } from 'reduxsauce'
 
 /* ------------- Action Types ------------- */
 
-export const Types = createTypes('STARTUP')
+export const StartupTypes = createTypes('STARTUP')
 
 /* ------------- Action Creators ------------- */
 
-export const Actions = {
-  startup: () => ({ type: Types.STARTUP })
+export default {
+  startup: () => ({ type: StartupTypes.STARTUP })
 }

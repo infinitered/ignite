@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyle'
 import {Images, Metrics} from '../Themes'
-import { Actions as LoginActions } from '../Redux/LoginRedux'
+import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // I18n
@@ -35,7 +35,7 @@ class LoginScreen extends React.Component {
     this.forceUpdate()
     // Did the login attempt complete?
     if (this.isAttempting && !newProps.fetching) {
-      this.props.close()
+      NavigationActions.pop()
     }
   }
 
@@ -148,7 +148,6 @@ class LoginScreen extends React.Component {
 LoginScreen.propTypes = {
   dispatch: PropTypes.func,
   fetching: PropTypes.bool,
-  close: PropTypes.func,
   attemptLogin: PropTypes.func
 }
 
@@ -160,7 +159,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    close: NavigationActions.pop,
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password))
   }
 }

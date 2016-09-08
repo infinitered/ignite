@@ -5,9 +5,9 @@ import DebugSettings from '../Config/DebugSettings'
 
 /* ------------- Types ------------- */
 
-import { Types as StartupTypes } from '../Redux/StartupRedux'
-import { Types as TemperatureTypes } from '../Redux/TemperatureRedux'
-import { Types as LoginTypes } from '../Redux/LoginRedux'
+import { StartupTypes } from '../Redux/StartupRedux'
+import { TemperatureTypes } from '../Redux/TemperatureRedux'
+import { LoginTypes } from '../Redux/LoginRedux'
 
 /* ------------- Sagas ------------- */
 

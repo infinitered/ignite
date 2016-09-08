@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import R from 'ramda'
 import RehydrationServices from '../Services/RehydrationServices'
 import ReduxPersist from '../Config/ReduxPersist'
-import { Types as StartupTypes } from './StartupRedux'
+import { StartupTypes } from './StartupRedux'
 
 // creates the store
 export default (rootReducer, rootSaga) => {

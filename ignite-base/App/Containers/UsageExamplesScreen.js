@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { Actions as LoginActions, isLoggedIn } from '../Redux/LoginRedux'
-import { Actions as TemperatureActions } from '../Redux/TemperatureRedux'
+import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
+import TemperatureActions from '../Redux/TemperatureRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Colors, Images, Metrics } from '../Themes'
 import RoundedButton from '../Components/RoundedButton'
@@ -53,7 +53,7 @@ class UsageExamplesScreen extends React.Component {
 
   renderLoginButton () {
     return (
-      <RoundedButton onPress={this.props.login}>
+      <RoundedButton onPress={NavigationActions.login}>
         {I18n.t('signIn')}
       </RoundedButton>
     )
@@ -118,13 +118,13 @@ class UsageExamplesScreen extends React.Component {
         </View>
         {this.renderHeader(I18n.t('igniteGenerated'))}
         <View>
-          <RoundedButton text='Listview' onPress={this.props.listviewExample} />
+          <RoundedButton text='Listview' onPress={NavigationActions.listviewExample} />
         </View>
         <View>
-          <RoundedButton text='Listview Grid' onPress={this.props.listviewGridExample} />
+          <RoundedButton text='Listview Grid' onPress={NavigationActions.listviewGridExample} />
         </View>
         <View>
-          <RoundedButton text='Listview Sections' onPress={this.props.listviewSectionsExample} />
+          <RoundedButton text='Listview Sections' onPress={NavigationActions.listviewSectionsExample} />
         </View>
         <View>
           <RoundedButton text='Mapview' onPress={this.props.mapviewExample} />
@@ -153,15 +153,10 @@ class UsageExamplesScreen extends React.Component {
 
 UsageExamplesScreen.propTypes = {
   loggedIn: PropTypes.bool,
-  dispatch: PropTypes.func,
   temperature: PropTypes.number,
   city: PropTypes.string,
-  login: PropTypes.func,
   logout: PropTypes.func,
-  requestTemperature: PropTypes.func,
-  listviewExample: PropTypes.func,
-  listviewGridExample: PropTypes.func,
-  mapviewExample: PropTypes.func
+  requestTemperature: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -172,15 +167,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    login: NavigationActions.login,
     logout: () => dispatch(LoginActions.logout()),
-    requestTemperature: (city) => dispatch(TemperatureActions.requestTemperature(city)),
-    listviewExample: NavigationActions.listviewExample,
-    listviewGridExample: NavigationActions.listviewGridExample,
-    listviewSectionsExample: NavigationActions.listviewSectionsExample,
-    mapviewExample: NavigationActions.mapviewExample
+    requestTemperature: city => dispatch(TemperatureActions.requestTemperature(city))
   }
 }
 
