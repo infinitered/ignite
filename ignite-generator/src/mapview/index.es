@@ -44,18 +44,6 @@ const copyOverMapviewFiles = (context) => {
   )
 }
 
-const addToRoutes = (context) => {
-  const newRoute = `  get ${context.name} () {
-    return {
-      title: '${context.name}',
-      component: require('../Containers/${context.name}').default,
-      leftButton: 'BACK'
-    }
-  }
-`
-  Utilities.insertInFile('App/Navigation/Routes.js', 'get ', newRoute, false)
-}
-
 const check = colors.green('✔︎')
 
 /**
@@ -106,16 +94,16 @@ class MapviewGenerator extends Generators.Base {
     this.spinner.text = npmStatus
     const done = this.async()
     // run the npm command
-    this.spawnCommand('npm', ['install', '--save', 'skellock/react-native-maps\#friends-with-28'], {stdio: 'ignore'})
+    this.spawnCommand('npm', ['install', '--save', 'infinitered/react-native-maps\#master'], {stdio: 'ignore'})
       .on('close', () => {
         this.spinner.stop()
         this.log(`${check} ${npmStatus}`)
 
         // then run the rnpm command
-        const rnpmStatus = 'Linking with rnpm'
+        const rnpmStatus = 'Linking with react-native link'
         this.spinner.start()
         this.spinner.text = rnpmStatus
-        this.spawnCommand('rnpm', ['link', 'react-native-maps'], {stdio: 'ignore'})
+        this.spawnCommand('react-native', ['link', 'react-native-maps'], {stdio: 'ignore'})
           .on('close', () => {
             this.spinner.stop()
             this.log(`${check} ${rnpmStatus}`)
@@ -129,9 +117,6 @@ class MapviewGenerator extends Generators.Base {
   }
 
   end () {
-    // insert screen into routes file
-    addToRoutes(this)
-
     console.log('Time to get cooking! 🍽 ')
   }
 }
