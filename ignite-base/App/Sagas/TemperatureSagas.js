@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
 import TemperatureActions from '../Redux/TemperatureRedux'
-import convertFromKelvin from '../Lib/ConvertFromKelvin'
+import convertFromKelvin from '../Transforms/ConvertFromKelvin'
 
 export function * getTemperature (api, action) {
   const { city } = action
