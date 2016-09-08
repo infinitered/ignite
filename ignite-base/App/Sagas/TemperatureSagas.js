@@ -12,8 +12,8 @@ export function * getTemperature (api, action) {
   if (response.ok) {
     const kelvin = path(['data', 'main', 'temp_max'], response)
     const temperature = convertFromKelvin(kelvin)
-    yield put(TemperatureActions.receiveTemperature(temperature))
+    yield put(TemperatureActions.temperatureSuccess(temperature, 'bonus'))
   } else {
-    yield put(TemperatureActions.receiveTemperatureFailure())
+    yield put(TemperatureActions.temperatureFailure())
   }
 }

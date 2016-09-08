@@ -10,6 +10,6 @@ export function * startup (action) {
   const temp = yield select(selectTemperature)
   // only fetch new temps when we don't have one yet
   if (!is(Number, temp)) {
-    yield put(TemperatureActions.requestTemperature('San Francisco'))
+    yield put(TemperatureActions.temperatureRequest('San Francisco'))
   }
 }

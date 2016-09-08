@@ -1,23 +1,17 @@
-import { createTypes, createReducer } from 'reduxsauce'
+import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
-/* ------------- Action Types ------------- */
+/* ------------- Types and Action Creators ------------- */
 
-export const LoginTypes = createTypes(`
-  LOGIN_REQUEST
-  LOGIN_SUCCESS
-  LOGIN_FAILURE
-  LOGOUT
-  `)
+const { Types, Creators } = createActions({
+  loginRequest: ['username', 'password'],
+  loginSuccess: ['username'],
+  loginFailure: ['error'],
+  logout: null
+})
 
-/* ------------- Action Creators ------------- */
-
-export default {
-  loginRequest: (username, password) => ({ type: LoginTypes.LOGIN_REQUEST, username, password }),
-  loginSuccess: (username) => ({ type: LoginTypes.LOGIN_SUCCESS, username }),
-  loginFailure: error => ({ type: LoginTypes.LOGIN_FAILURE, error }),
-  logout: () => ({ type: LoginTypes.LOGOUT })
-}
+export const LoginTypes = Types
+export default Creators
 
 /* ------------- Initial State ------------- */
 
@@ -46,10 +40,10 @@ export const logout = state => INITIAL_STATE
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [LoginTypes.LOGIN_REQUEST]: request,
-  [LoginTypes.LOGIN_SUCCESS]: success,
-  [LoginTypes.LOGIN_FAILURE]: failure,
-  [LoginTypes.LOGOUT]: logout
+  [Types.LOGIN_REQUEST]: request,
+  [Types.LOGIN_SUCCESS]: success,
+  [Types.LOGIN_FAILURE]: failure,
+  [Types.LOGOUT]: logout
 })
 
 /* ------------- Selectors ------------- */

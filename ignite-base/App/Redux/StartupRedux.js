@@ -1,11 +1,10 @@
-import { createTypes } from 'reduxsauce'
+import { createActions } from 'reduxsauce'
 
-/* ------------- Action Types ------------- */
+/* ------------- Types and Action Creators ------------- */
 
-export const StartupTypes = createTypes('STARTUP')
+const { Types, Creators } = createActions({
+  startup: null
+})
 
-/* ------------- Action Creators ------------- */
-
-export default {
-  startup: () => ({ type: StartupTypes.STARTUP })
-}
+export const StartupTypes = Types
+export default Creators
