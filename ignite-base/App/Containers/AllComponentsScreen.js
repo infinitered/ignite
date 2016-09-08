@@ -1,8 +1,7 @@
 // An All Components Screen is a great way to dev and quick-test components
-import React, {PropTypes} from 'react'
+import React from 'react'
 import { Platform, View, ScrollView, Text, Image } from 'react-native'
 import { Images } from '../Themes'
-import { connect } from 'react-redux'
 import styles from './Styles/AllComponentsScreenStyle'
 
 // Components to show examples (only real point of merge conflict)
@@ -53,8 +52,4 @@ class AllComponentsScreen extends React.Component {
   }
 }
 
-AllComponentsScreen.propTypes = {
-  dispatch: PropTypes.func
-}
-
-export default connect()(AllComponentsScreen)
+export default AllComponentsScreen

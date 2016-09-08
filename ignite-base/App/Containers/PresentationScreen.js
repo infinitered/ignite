@@ -1,14 +1,13 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
 import { Images } from '../Themes'
-import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/PresentationScreenStyle'
 
-class PresentationScreen extends React.Component {
+export default class PresentationScreen extends React.Component {
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -25,23 +24,23 @@ class PresentationScreen extends React.Component {
             </Text>
           </View>
 
-          <RoundedButton onPress={this.props.componentExamples}>
+          <RoundedButton onPress={NavigationActions.componentExamples}>
             Component Examples Screen
           </RoundedButton>
 
-          <RoundedButton onPress={this.props.usageExamples}>
+          <RoundedButton onPress={NavigationActions.usageExamples}>
             Usage Examples Screen
           </RoundedButton>
 
-          <RoundedButton onPress={this.props.apiTesting}>
+          <RoundedButton onPress={NavigationActions.apiTesting}>
             API Testing Screen
           </RoundedButton>
 
-          <RoundedButton onPress={this.props.theme}>
+          <RoundedButton onPress={NavigationActions.theme}>
             Theme Screen
           </RoundedButton>
 
-          <RoundedButton onPress={this.props.deviceInfo}>
+          <RoundedButton onPress={NavigationActions.deviceInfo}>
             Device Info Screen
           </RoundedButton>
 
@@ -54,28 +53,3 @@ class PresentationScreen extends React.Component {
     )
   }
 }
-
-PresentationScreen.propTypes = {
-  componentExamples: PropTypes.func,
-  usageExamples: PropTypes.func,
-  apiTesting: PropTypes.func,
-  theme: PropTypes.func,
-  deviceInfo: PropTypes.func
-}
-
-const mapStateToProps = (state) => {
-  return {
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    componentExamples: NavigationActions.componentExamples,
-    usageExamples: NavigationActions.usageExamples,
-    apiTesting: NavigationActions.apiTesting,
-    theme: NavigationActions.theme,
-    deviceInfo: NavigationActions.deviceInfo
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PresentationScreen)
