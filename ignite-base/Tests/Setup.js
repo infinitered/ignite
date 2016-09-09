@@ -18,6 +18,11 @@ mockery.registerMock('reactotron-react-native', {})
 mockery.registerMock('reactotron-redux', {})
 mockery.registerMock('reactotron-apisauce', {})
 
+// mock i18n as it uses react native stufff
+mockery.registerMock('react-native-i18n', {
+  t: key => key
+})
+
 // Mock all images for React Native
 const originalLoader = m._load
 m._load = (request, parent, isMain) => {

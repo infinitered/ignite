@@ -1,11 +1,10 @@
 import test from 'ava'
-import reducer, { INITIAL_STATE } from '../../App/Reducers/LoginReducer'
-import Actions from '../../App/Actions/Creators'
+import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/LoginRedux'
 
 test('attempt', t => {
-  const state = reducer(INITIAL_STATE, Actions.attemptLogin('u', 'p'))
+  const state = reducer(INITIAL_STATE, Actions.loginRequest('u', 'p'))
 
-  t.true(state.attempting)
+  t.true(state.fetching)
 })
 
 test('success', t => {
@@ -17,8 +16,8 @@ test('success', t => {
 test('failure', t => {
   const state = reducer(INITIAL_STATE, Actions.loginFailure(69))
 
-  t.false(state.attempting)
-  t.is(state.errorCode, 69)
+  t.false(state.fetching)
+  t.is(state.error, 69)
 })
 
 test('logout', t => {

@@ -1,14 +1,13 @@
-import immutablePersistenceTransform from '../Store/ImmutablePersistenceTransform'
-import { persistentStoreBlacklist, persistentStoreWhitelist } from '../Reducers/'
+import immutablePersistenceTransform from '../Services/ImmutablePersistenceTransform'
 import { AsyncStorage } from 'react-native'
 
 const REDUX_PERSIST = {
   active: true,
-  reducerVersion: '1',
+  reducerVersion: '2',
   storeConfig: {
     storage: AsyncStorage,
-    blacklist: persistentStoreBlacklist,
-    whitelist: persistentStoreWhitelist,
+    blacklist: ['login'], // reducer keys that you do NOT want stored to persistence here
+    whitelist: [], // OR put reducer keys that you DO want stored to persistence here (overrides blacklist)
     transforms: [immutablePersistenceTransform]
   }
 }
