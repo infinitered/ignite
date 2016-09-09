@@ -26,7 +26,7 @@
     "querystringify": "0.0.4",
     "ramda": "^0.22.1",
     "react": "~15.3.0",
-    "react-native": "^0.32.0",
+    "react-native": "^0.33.0",
     "react-native-animatable": "^0.6.0",
     "react-native-config": "github:skellock/react-native-config#fix-missing-env",
     "react-native-device-info": "^0.9.4",
