@@ -127,7 +127,7 @@ class UsageExamplesScreen extends React.Component {
           <RoundedButton text='Listview Sections' onPress={NavigationActions.listviewSectionsExample} />
         </View>
         <View>
-          <RoundedButton text='Mapview' onPress={this.props.mapviewExample} />
+          <RoundedButton text='Mapview' onPress={NavigationActions.mapviewExample} />
         </View>
       </View>
     )
