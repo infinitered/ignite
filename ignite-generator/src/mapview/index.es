@@ -94,7 +94,7 @@ class MapviewGenerator extends Generators.Base {
     this.spinner.text = npmStatus
     const done = this.async()
     // run the npm command
-    this.spawnCommand('npm', ['install', '--save', 'infinitered/react-native-maps\#master'], {stdio: 'ignore'})
+    this.spawnCommand('npm', ['install', '--save', 'react-native-maps'], {stdio: 'ignore'})
       .on('close', () => {
         this.spinner.stop()
         this.log(`${check} ${npmStatus}`)
