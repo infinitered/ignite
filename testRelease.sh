@@ -71,7 +71,7 @@ check_builds()
   echo '~~~🌟 Checking Builds'
   if [ ! -d "android" ]; then
     echo 'Android folder did not generate'
-    rALL_PASSED=1
+    ALL_PASSED=1
   fi
 
   if [ ! -d "ios" ]; then
