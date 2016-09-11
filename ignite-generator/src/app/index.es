@@ -16,6 +16,14 @@ const emptyFolder = (folder) => {
   Shell.mkdir(folder)
 }
 
+// This step needed as of Ignite 1.7.0 and RN 0.33.0
+// This wasn't necessary before, might need to be removed at some point
+const cleanAndroid = (projectFolder) => {
+  Shell.cd(`${projectFolder}/android`)
+  Shell.exec('./gradlew clean')
+  Shell.cd('../..')
+}
+
 /**
  * Doctors the AndroidManifest.xml to put in the stuff we need.
  */
@@ -351,6 +359,7 @@ export class AppGenerator extends Generators.Base {
     this.spinner.text = status
     this.spinner.start()
     emptyFolder(this.sourceRoot())
+    cleanAndroid(this.name)
     this.spinner.stop()
     this.log(`${check} ${status}`)
   }
