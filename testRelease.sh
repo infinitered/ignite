@@ -5,6 +5,12 @@
 # Verify current git is what you're testing
 # Run this with `./testRelease.sh <release version>`
 ################################################################
+if [[ -z $1 ]]; then
+  echo 'Must pass release version as parameter'
+  exit 1
+fi
+
+ALL_PASSED=0
 echo "#########################################################"
 echo '# Test a release of Ignite before actually releasing it #'
 echo '#                  ._______.                            #'
@@ -18,16 +24,12 @@ echo "#                           \\\\.-.//                     #"
 echo "#                            \`---'                      #"
 echo '#########################################################'
 
-if [[ -z $1 ]]; then
-  echo 'Must pass release version as parameter'
-  exit 1
-fi
-
 function test_command {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
         echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
+        ALL_PASSED=1
     fi
     return $status
 }
@@ -67,22 +69,29 @@ verify_code()
 check_builds()
 {
   echo '~~~🌟 Checking Builds'
-
   if [ ! -d "android" ]; then
     echo 'Android folder did not generate'
-    exit 1
+    ALL_PASSED=1
   fi
 
   if [ ! -d "ios" ]; then
     echo 'ios folder did not generate'
-    exit 1
+    ALL_PASSED=1
   fi
 
   echo '~ Build ios'
   test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js
 
   echo '~ Build android'
-  test_command cd android && ./gradlew assembleRelease && cd -
+  # A failed android build will not exit with a non-zero return!
+  # This makes it a bit trickier to test for - look for the fail message instead
+  cd android
+  ./gradlew assembleRelease | grep -q 'BUILD FAILED'
+  if [[ $? -eq 0 ]]; then
+    echo 'Android build failed'
+    ALL_PASSED=1
+  fi
+  cd -
 }
 
 clean_up()
@@ -103,11 +112,12 @@ check_builds
 clean_up $1
 
 # Done
-if [ "$?" != "0" ]; then
-    echo "~~~👎 Done with errors" 1>&2
-    exit 1
+if [ "$ALL_PASSED" != "0" ]; then
+  echo "~~~👎 Done with errors" 1>&2
+  exit 1
 else
   echo "~~~👍 Everything looks good!"
   # depends on $SECONDS being part of sh
   printf '%dh:%dm:%ds\n' $(($SECONDS/3600)) $(($SECONDS%3600/60)) $(($SECONDS%60))
+  exit 0
 fi
