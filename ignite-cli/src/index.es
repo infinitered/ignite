@@ -32,6 +32,19 @@ const checkDir = (project) => {
   if (fs.existsSync(process.cwd() + '/' + project.toString())) {
     console.log(`Sorry, I couldn\'t create the directory for "${project}" - it already exists. :(`)
     Shell.exit(1)
+  };
+
+  if (fs.existsSync(process.cwd() + '/App')) {
+    console.log(`Sorry, I couldn\'t create a new app here, I\'m being run in an Ignite directory.`)
+    Shell.exit(1)
+  }
+}
+
+// Ensure generators are in the correct directory (#129)
+const checkIgniteDir = (type, name) => {
+  if (!fs.existsSync(process.cwd() + '/App')) {
+    console.log(`Sorry, I couldn\'t make your ${type} named ${name} - I\'m not being run from an Ignite directory. :(`)
+    Shell.exit(1)
   }
 }
 
@@ -90,6 +103,7 @@ Program
   .alias('g')
   .action((type, name) => {
     checkYo()
+    checkIgniteDir(type, name)
     console.log(`Generate a new ${type} named ${name}`)
     spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
