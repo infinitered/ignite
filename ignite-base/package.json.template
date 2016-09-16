@@ -28,7 +28,7 @@
     "react": "~15.3.0",
     "react-native": "^0.33.0",
     "react-native-animatable": "^0.6.0",
-    "react-native-config": "github:skellock/react-native-config#fix-missing-env",
+    "react-native-config": "^0.1.0",
     "react-native-device-info": "^0.9.5",
     "react-native-drawer": "^2.3.0",
     "react-native-i18n": "^0.1.1",
