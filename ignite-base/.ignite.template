@@ -1,0 +1,6 @@
+{
+  "igniteVersion": "<%= igniteVersion %>",
+  "reactNativeVersion": "<%= reactNativeVersion %>",
+  "options": {},
+  "plugins": {}
+}

@@ -282,7 +282,7 @@ export class AppGenerator extends Generators.Base {
   _cpFile (fromFilename, toFilename) {
     const from = this.templatePath(`${igniteBase}/${fromFilename}`)
     const to = this.destinationPath(`${this.name}/${toFilename}`)
-    this.fs.copyTpl(from, to, { name: this.name })
+    this.fs.copyTpl(from, to, { name: this.name, reactNativeVersion: lockedReactNativeVersion, igniteVersion: lockedIgniteVersion })
   }
 
   /**
@@ -314,6 +314,7 @@ export class AppGenerator extends Generators.Base {
     this._cpTemplate('package.json')
     this._cpTemplate('.babelrc')
     this._cpTemplate('.env')
+    this._cpFile('.ignite.template', '.ignite')
     this._cpFile('index.js.template', 'index.ios.js')
     this._cpFile('index.js.template', 'index.android.js')
     this._cpFile('index.js.template', 'index.android.js')
