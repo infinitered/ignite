@@ -4,14 +4,13 @@ import React from 'react'
 import DrawerButton from '../../App/Components/DrawerButton'
 import { shallow } from 'enzyme'
 
+const wrapper = shallow(<DrawerButton onPress={() => {}} text='hi' />)
+
 test('component exists', t => {
-  const wrapper = shallow(<DrawerButton onPress={() => {}} text='hi' />)
   t.is(wrapper.length, 1) // exists
 })
 
 test('component structure', t => {
-  const wrapper = shallow(<DrawerButton onPress={() => {}} text='hi' />)
-
   t.is(wrapper.name(), 'TouchableOpacity') // the right root component
   t.is(wrapper.children().length, 1) // has 1 child
   t.is(wrapper.children().first().name(), 'Text') // that child is Text
@@ -20,10 +19,10 @@ test('component structure', t => {
 test('onPress', t => {
   let i = 0
   const onPress = () => i++
-  const wrapper = shallow(<DrawerButton onPress={onPress} text='hi' />)
+  const wrapperPress = shallow(<DrawerButton onPress={onPress} text='hi' />)
 
-  t.is(wrapper.prop('onPress'), onPress) // uses the right handler
+  t.is(wrapperPress.prop('onPress'), onPress) // uses the right handler
   t.is(i, 0)
-  wrapper.simulate('press')
+  wrapperPress.simulate('press')
   t.is(i, 1)
 })
