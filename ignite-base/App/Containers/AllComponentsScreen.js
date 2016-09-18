@@ -5,7 +5,7 @@ import { Images } from '../Themes'
 import styles from './Styles/AllComponentsScreenStyle'
 
 // Components to show examples (only real point of merge conflict)
-import '../Components/AlertMessageComponent'
+import '../Components/AlertMessage'
 import '../Components/FullButton'
 import '../Components/RoundedButton'
 import '../Components/DrawerButton'

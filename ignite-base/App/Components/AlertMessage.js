@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import styles from './Styles/AlertMessageComponentStyle'
+import styles from './Styles/AlertMessageStyle'
 import * as Animatable from 'react-native-animatable'
 import { Metrics } from '../Themes/'
 import Icon from 'react-native-vector-icons/Ionicons'

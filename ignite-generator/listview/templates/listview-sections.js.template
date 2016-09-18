@@ -3,7 +3,7 @@ import { View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 // For empty lists
-import AlertMessage from '../Components/AlertMessageComponent'
+import AlertMessage from '../Components/AlertMessage'
 
 // Styles
 import styles from './Styles/<%= name %>Style'
