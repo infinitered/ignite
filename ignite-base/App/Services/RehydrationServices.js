@@ -20,13 +20,13 @@ const updateReducers = (store) => {
         important: true
       })
       // Purge store and dispatch startup
-       persistStore(store, config,()=> {store.dispatch(StartupActions.startup());}).purge()
+       persistStore(store, config,()=> {store.dispatch(StartupActions.startup())}).purge()
       AsyncStorage.setItem('reducerVersion', reducerVersion)
     } else {
-      persistStore(store, config,()=> {store.dispatch(StartupActions.startup());});
+      persistStore(store, config,()=> {store.dispatch(StartupActions.startup())});
     }
   }).catch(() => {
-    persistStore(store, config,()=> {store.dispatch(StartupActions.startup());});
+    persistStore(store, config,()=> {store.dispatch(StartupActions.startup())});
     AsyncStorage.setItem('reducerVersion', reducerVersion)
   })
 }
