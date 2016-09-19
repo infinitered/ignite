@@ -1,6 +1,7 @@
 import ReduxPersist from '../Config/ReduxPersist'
 import { AsyncStorage } from 'react-native'
 import { persistStore } from 'redux-persist'
+import StartupActions from '../Redux/StartupRedux'
 
 const updateReducers = (store) => {
   const reducerVersion = ReduxPersist.reducerVersion
@@ -18,14 +19,14 @@ const updateReducers = (store) => {
         preview: 'Reducer Version Change Detected',
         important: true
       })
-      // Purge store
-      persistStore(store, config).purge()
+      // Purge store and dispatch startup
+       persistStore(store, config,()=> {store.dispatch(StartupActions.startup());}).purge()
       AsyncStorage.setItem('reducerVersion', reducerVersion)
     } else {
-      persistStore(store, config)
+      persistStore(store, config,()=> {store.dispatch(StartupActions.startup());});
     }
   }).catch(() => {
-    persistStore(store, config)
+    persistStore(store, config,()=> {store.dispatch(StartupActions.startup());});
     AsyncStorage.setItem('reducerVersion', reducerVersion)
   })
 }
