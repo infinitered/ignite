@@ -24,10 +24,10 @@ const updateReducers = (store) => {
        persistStore(store, config, startup).purge()
       AsyncStorage.setItem('reducerVersion', reducerVersion)
     } else {
-      persistStore(store, config, startup);
+      persistStore(store, config, startup)
     }
   }).catch(() => {
-    persistStore(store, config, startup);
+    persistStore(store, config, startup)
     AsyncStorage.setItem('reducerVersion', reducerVersion)
   })
 }
