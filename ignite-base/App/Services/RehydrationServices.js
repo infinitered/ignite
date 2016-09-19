@@ -6,6 +6,7 @@ import StartupActions from '../Redux/StartupRedux'
 const updateReducers = (store) => {
   const reducerVersion = ReduxPersist.reducerVersion
   const config = ReduxPersist.storeConfig
+  const startup = () => store.dispatch(StartupActions.startup())
 
   // Check to ensure latest reducer version
   AsyncStorage.getItem('reducerVersion').then((localVersion) => {
@@ -19,14 +20,14 @@ const updateReducers = (store) => {
         preview: 'Reducer Version Change Detected',
         important: true
       })
-      // Purge store and dispatch startup
-       persistStore(store, config,()=> {store.dispatch(StartupActions.startup())}).purge()
+      // Purge store
+       persistStore(store, config, startup).purge()
       AsyncStorage.setItem('reducerVersion', reducerVersion)
     } else {
-      persistStore(store, config,()=> {store.dispatch(StartupActions.startup())});
+      persistStore(store, config, startup);
     }
   }).catch(() => {
-    persistStore(store, config,()=> {store.dispatch(StartupActions.startup())});
+    persistStore(store, config, startup);
     AsyncStorage.setItem('reducerVersion', reducerVersion)
   })
 }
