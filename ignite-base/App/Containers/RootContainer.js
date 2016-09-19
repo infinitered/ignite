@@ -3,6 +3,7 @@ import { View, StatusBar } from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
+import ReduxPersist from '../Config/ReduxPersist'
 // import './Config/PushConfig'
 
 // Styles
@@ -10,7 +11,10 @@ import styles from './Styles/RootContainerStyle'
 
 class RootContainer extends Component {
   componentDidMount () {
-    this.props.startup()
+    //if redux persist is not active fire startup action
+    if(!ReduxPersist.active){
+      this.props.startup()
+    }
   }
 
   render () {
