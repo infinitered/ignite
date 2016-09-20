@@ -13,9 +13,7 @@ class DrawerContent extends Component {
         this.toggleDrawer()
         return true
       }
-      else{
-       return false 
-      }
+      return false 
     })
   }
 
