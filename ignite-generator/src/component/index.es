@@ -17,6 +17,14 @@ const copyOverComponent = (context) => {
     context.destinationPath(`./App/Components/Styles/${context.name}Style.js`),
     { name: context.name }
   )
+
+  // create a component test
+  context.fs.copyTpl(
+    context.templatePath('component-test.js.template'),
+    context.destinationPath(`./Tests/Components/${context.name}Test.js`),
+    { name: context.name }
+  )
+
 }
 
 class ComponentGenerator extends Generators.Base {
