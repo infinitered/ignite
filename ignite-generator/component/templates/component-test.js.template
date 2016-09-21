@@ -9,7 +9,7 @@ test('component exists', t => {
 })
 
 test('component structure', t => {
-  const wrapper = shallow(<<%= name %>  />)  //Add in Props if needed
+  const wrapper = shallow(<<%= name %>  />)  // Add in Props if needed
 
   t.is(wrapper.name(), 'View')                       // the right root component
   t.is(wrapper.children().length, 1)                 // has 1 child
@@ -18,7 +18,7 @@ test('component structure', t => {
 })
 
 //test('some other things here', t => {
-//   const wrapper = shallow(<YourComponentNameHere //SomeProps )
+//   const wrapper = shallow(<YourComponentNameHere // SomeProps > )
 //   // make some assertions.
 //
 //})
