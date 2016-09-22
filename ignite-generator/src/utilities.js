@@ -1,7 +1,14 @@
-#! /usr/bin/env node
-'use strict'
-
 import fs from 'fs'
+import Shell from 'shelljs'
+
+// Get ignite config file
+export const getConfig = () => {
+  try {
+    return require(`${Shell.pwd()}/.ignite`)
+  } catch (e) {
+    return null
+  }
+}
 
 // Use this sparingly, as file contents are fickle!
 export const insertInFile = (theFile, theFind, theInsert, insertAfter = true) => {
