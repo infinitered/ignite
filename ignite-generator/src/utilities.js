@@ -4,7 +4,7 @@ import Shell from 'shelljs'
 // Get ignite config file
 export const getConfig = () => {
   try {
-    return require(`${Shell.pwd()}/ignite.json`)
+    return require(`${Shell.pwd()}/.ignite`)
   } catch (e) {
     return null
   }
