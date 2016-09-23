@@ -2,9 +2,8 @@ import Generators from 'yeoman-generator'
 import R from 'ramda'
 import { getConfig } from '../utilities'
 
-const igniteConfig = getConfig()
-
 const copyOverComponent = (context) => {
+  const igniteConfig = getConfig()
   // copy component template
   context.fs.copyTpl(
     context.templatePath('component.js.template'),
