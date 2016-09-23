@@ -1,6 +1,8 @@
-{
-  "igniteVersion": "<%= igniteVersion %>",
-  "reactNativeVersion": "<%= reactNativeVersion %>",
-  "options": {},
-  "plugins": {}
+module.exports = {
+  igniteVersion: '<%= igniteVersion %>',
+  reactNativeVersion: '<%= reactNativeVersion %>',
+  options: {
+    testing: 'ava'
+  },
+  plugins: {}
 }

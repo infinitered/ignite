@@ -1,9 +1,9 @@
-#! /usr/bin/env node
-'use strict'
-
 import Generators from 'yeoman-generator'
+import R from 'ramda'
+import { getConfig } from '../utilities'
 
 const copyOverComponent = (context) => {
+  const igniteConfig = getConfig()
   // copy component template
   context.fs.copyTpl(
     context.templatePath('component.js.template'),
@@ -17,6 +17,15 @@ const copyOverComponent = (context) => {
     context.destinationPath(`./App/Components/Styles/${context.name}Style.js`),
     { name: context.name }
   )
+
+  // create a component ava test
+  if (R.pathEq(['options', 'testing'], 'ava', igniteConfig)) {
+    context.fs.copyTpl(
+      context.templatePath('component-test.js.template'),
+      context.destinationPath(`./Tests/Components/${context.name}Test.js`),
+      { name: context.name }
+    )
+  }
 }
 
 class ComponentGenerator extends Generators.Base {

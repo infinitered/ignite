@@ -4,7 +4,6 @@ import styles from './Styles/<%= name %>Style'
 
 export default class <%= name %> extends React.Component {
 
-
   render () {
     return (
       <View style={styles.container}>
