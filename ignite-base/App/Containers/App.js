@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
+
 import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
-import DebugSettings from '../Config/DebugSettings'
+import applyConfigSettings from '../Config'
 import '../I18n/I18n'
 
-if (__DEV__) {
-  // If ReactNative's yellow box warnings are too much, it is possible to turn
-  // it off, but the healthier approach is to fix the warnings.  =)
-  console.disableYellowBox = !DebugSettings.yellowBox
-}
-
+// Apply config overrides
+applyConfigSettings()
 // create our store
 const store = createStore()
 

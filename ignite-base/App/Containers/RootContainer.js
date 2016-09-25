@@ -4,7 +4,6 @@ import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
-// import './Config/PushConfig'
 
 // Styles
 import styles from './Styles/RootContainerStyle'
