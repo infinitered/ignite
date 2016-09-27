@@ -7,13 +7,13 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 
 class DrawerContent extends Component {
 
-  componentDidMount(){
+  componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if(this.context.drawer.props.open){
+      if (this.context.drawer.props.open) {
         this.toggleDrawer()
         return true
       }
-      return false 
+      return false
     })
   }
 
