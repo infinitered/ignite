@@ -27,7 +27,7 @@
     "querystringify": "0.0.4",
     "ramda": "^0.22.1",
     "react": "~15.3.0",
-    "react-native": "^0.33.0",
+    "react-native": "^0.34.0",
     "react-native-animatable": "^0.6.0",
     "react-native-config": "^0.1.0",
     "react-native-device-info": "^0.9.5",
@@ -46,10 +46,10 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
-    "babel-eslint": "^6.1.0",
+    "babel-eslint": "^7.0.0",
     "babel-preset-es2015": "^6.14.0",
     "enzyme": "^2.3.0",
-    "flow-bin": "^0.30.0",
+    "flow-bin": "^0.32.0",
     "ghooks": "^1.3.2",
     "mockery": "^1.7.0",
     "nyc": "^8.1.0",
@@ -59,7 +59,7 @@
     "reactotron-apisauce": "^1.1.2",
     "reactotron-react-native": "^1.1.2",
     "reactotron-redux": "^1.1.2",
-    "snazzy": "^4.0.1",
+    "snazzy": "^5.0.0",
     "standard": "^8.0.0"
   },
   "ava": {
