@@ -10,7 +10,7 @@ if [[ -z $1 ]]; then
   exit 1
 fi
 
-ALL_PASSED=0
+SOMETHING_FAILED=0
 echo "#########################################################"
 echo '# Test a release of Ignite before actually releasing it #'
 echo '#                  ._______.                            #'
@@ -24,12 +24,13 @@ echo "#                           \\\\.-.//                     #"
 echo "#                            \`---'                      #"
 echo '#########################################################'
 
+# Runs command and on failure turns on the SOMETHING_FAILED flag
 function test_command {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
         echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
-        ALL_PASSED=1
+        SOMETHING_FAILED=1
     fi
     return $status
 }
@@ -71,12 +72,12 @@ check_builds()
   echo '~~~🌟 Checking Builds'
   if [ ! -d "android" ]; then
     echo 'Android folder did not generate'
-    ALL_PASSED=1
+    SOMETHING_FAILED=1
   fi
 
   if [ ! -d "ios" ]; then
     echo 'ios folder did not generate'
-    ALL_PASSED=1
+    SOMETHING_FAILED=1
   fi
 
   echo '~ Build ios'
@@ -89,7 +90,7 @@ check_builds()
   ./gradlew assembleRelease | grep -q 'BUILD FAILED'
   if [[ $? -eq 0 ]]; then
     echo 'Android build failed'
-    ALL_PASSED=1
+    SOMETHING_FAILED=1
   fi
   cd -
 }
@@ -112,7 +113,7 @@ check_builds
 clean_up $1
 
 # Done
-if [ "$ALL_PASSED" != "0" ]; then
+if [ "$SOMETHING_FAILED" != "0" ]; then
   echo "~~~👎 Done with errors" 1>&2
   exit 1
 else
