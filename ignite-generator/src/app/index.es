@@ -398,20 +398,18 @@ export class AppGenerator extends Generators.Base {
     process.exit(1)
   }
 
-  conflicts () {
-    // overwrite RN version if we're testing bleeding edge
-    if (this.options.latest) {
-      this.log(`${check} Force RN Master`)
-      Utilities.replaceInFile(`${this.name}/package.json`, '"react-native":', '    "react-native": "github:facebook/react-native"')
-    }
-  }
-
   /**
    * Installs npm then links (old rnpm style)
    * Also, sadly, we need this install the install() function due to how
    * Yeoman times its template copies.  :(
    */
   install () {
+    // overwrite RN version if we're testing bleeding edge
+    if (this.options.latest) {
+      this.log(`${check} Force RN Master`)
+      Utilities.replaceInFile(`${this.name}/package.json`, '"react-native":', '    "react-native": "github:facebook/react-native"')
+    }
+
     const npmStatus = 'Installing Ignite dependencies (~ 1 minute-ish)'
     this.spinner.start()
     this.spinner.text = npmStatus
