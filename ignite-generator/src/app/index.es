@@ -407,7 +407,7 @@ export class AppGenerator extends Generators.Base {
     // overwrite RN version if we're testing bleeding edge
     if (this.options.latest) {
       this.log(`${check} Force RN Master`)
-      Utilities.replaceInFile(`${this.name}/package.json`, '"react-native":', '    "react-native": "github:facebook/react-native"')
+      Utilities.replaceInFile(`${this.name}/package.json`, '"react-native":', '    "react-native": "github:facebook/react-native",')
     }
 
     const npmStatus = 'Installing Ignite dependencies (~ 1 minute-ish)'

@@ -4,6 +4,9 @@
 # Verify Git status is clean
 # Verify current git is what you're testing
 # Run this with `./testRelease.sh <release version>`
+#
+# If you'd like to test Ignite against FB Master branch
+# Run with 2nd param latest `./testRelease.sh fb_check latest`
 ################################################################
 if [[ -z $1 ]]; then
   echo 'Must pass release version as parameter'
@@ -56,7 +59,14 @@ setup()
   cd testgrounds
 
   echo '~~~🌟 Creating project from branch'
-  test_command ignite n TestProj --branch test_$1
+  # Check flag to see if we're testing latest
+  if [[ $2 -eq "latest" ]]; then
+    echo 'Testing against Facebook Latest'
+    test_command ignite n TestProj --branch test_$1 --latest
+  else
+    test_command ignite n TestProj --branch test_$1
+  fi
+
   cd TestProj
 }
 
@@ -107,7 +117,7 @@ clean_up()
 
 # This is where the magic happens
 fire_drill
-setup $1
+setup $1 $2
 verify_code
 check_builds
 clean_up $1
