@@ -1,6 +1,20 @@
 #!/usr/bin/env node
 'use strict'
 
+/*
+* The 8 stages of yeoman generators
+* Not all used here, but documented for quick reference
+*
+* 1. initializing - Your initialization methods (checking current project state, getting configs, etc)
+* 2. prompting - Where you prompt users for options (where you'd call this.prompt())
+* 3. configuring - Saving configurations and configure the project (creating .editorconfig files and other metadata files)
+* 4. default - If the method name doesn't match a priority, it will be pushed to this group.
+* 5. writing - Where you write the generator specific files (routes, controllers, etc)
+* 6. conflicts - Where conflicts are handled (used internally)
+* 7. install - Where installation are run (npm, bower)
+* 8. end - Called last, cleanup, say good bye, etc
+*/
+
 import colors from 'colors/safe'
 import Generators from 'yeoman-generator'
 import Shell from 'shelljs'
@@ -103,6 +117,12 @@ export class AppGenerator extends Generators.Base {
   constructor (args, options) {
     super(args, options)
     this.argument('name', { type: String, required: true })
+
+    this.option('latest', {
+      desc: 'Use cutting edge React Native Master',
+      type: Boolean,
+      defaults: false
+    })
   }
 
   /**
@@ -184,12 +204,16 @@ export class AppGenerator extends Generators.Base {
    * Run React Native init.
    */
   reactNativeInit () {
-    const status = 'Running React Native setup (~ 2 minutes-ish)'
+    const rnVersion = (this.options.latest) ? 'facebook/react-native' : lockedReactNativeVersion
+    const status = `Running React Native setup version ${rnVersion} (~ 2 minutes-ish)`
     this.spinner.start()
     this.spinner.text = status
     const done = this.async()
     const command = 'react-native'
-    const commandOpts = ['init', this.name, '--version', lockedReactNativeVersion]
+    // use Master if latest flag was set to true - used for early warning tests
+    // package.json will be overwritten with package.json.template -> so follow through is needed there
+    // Build base project using RN generator
+    const commandOpts = ['init', this.name, '--version', rnVersion]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
       .on('close', () => {
         this.spinner.stop()
@@ -372,6 +396,14 @@ export class AppGenerator extends Generators.Base {
     this.spinner.stop()
     this.log(finalMessage)
     process.exit(1)
+  }
+
+  conflicts () {
+    // overwrite RN version if we're testing bleeding edge
+    if (this.options.latest) {
+      this.log(`${check} Force RN Master`)
+      Utilities.replaceInFile(`${this.name}/package.json`, '"react-native":', '    "react-native": "github:facebook/react-native"')
+    }
   }
 
   /**

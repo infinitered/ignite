@@ -21,8 +21,9 @@ class TestGenerator extends Generators.Base {
   }
 
   generateApp () {
-    this.log('here are your options for latest')
-    this.log(this.options.latest)
+    // this.log('here are your options for latest')
+    // this.log(this.options.latest)
+    Utilities.replaceInFile(`MyTest/package.json`, '"react-native":', '"react-native": "github:facebook/react-native"')
   }
 
   install () {

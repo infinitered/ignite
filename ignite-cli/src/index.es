@@ -71,6 +71,7 @@ Program
   .alias('n')
   .option('--repo [https://github.com/infinitered/ignite.git]', 'An optional git URL for Ignite source files.')
   .option('--branch [master]', 'An optional branch for Ignite source files.')
+  .option('--latest [true]', 'Optional bool to force RN version to be facebook master (for automated tests).')
   .action((project, options) => {
     checkYo()
     checkName(project)
@@ -92,6 +93,11 @@ Program
     if (options.branch) {
       spawnOptions.push('--branch')
       spawnOptions.push(options.branch)
+    }
+    // should we use Facebook master branch?
+    if (options.latest) {
+      spawnOptions.push('--latest')
+      spawnOptions.push(options.latest)
     }
     spawn('yo', spawnOptions, { shell: true, stdio: 'inherit' })
   })

@@ -32,9 +32,6 @@ export const insertInFile = (theFile, theFind, theInsert, insertAfter = true) =>
   fs.writeFileSync(theFile, newContents, 'utf-8')
 }
 
-// --------------
-// UNTESTED
-// --------------
 export const replaceInFile = (theFile, theFind, theReplace) => {
   // read full file - Not a great idea if we ever touch large files
   let data = fs.readFileSync(theFile, 'utf-8')
