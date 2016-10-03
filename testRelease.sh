@@ -4,13 +4,16 @@
 # Verify Git status is clean
 # Verify current git is what you're testing
 # Run this with `./testRelease.sh <release version>`
+#
+# If you'd like to test Ignite against FB Master branch
+# Run with 2nd param latest `./testRelease.sh fb_check latest`
 ################################################################
 if [[ -z $1 ]]; then
   echo 'Must pass release version as parameter'
   exit 1
 fi
 
-ALL_PASSED=0
+SOMETHING_FAILED=0
 echo "#########################################################"
 echo '# Test a release of Ignite before actually releasing it #'
 echo '#                  ._______.                            #'
@@ -24,12 +27,13 @@ echo "#                           \\\\.-.//                     #"
 echo "#                            \`---'                      #"
 echo '#########################################################'
 
+# Runs command and on failure turns on the SOMETHING_FAILED flag
 function test_command {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
         echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
-        ALL_PASSED=1
+        SOMETHING_FAILED=1
     fi
     return $status
 }
@@ -55,7 +59,14 @@ setup()
   cd testgrounds
 
   echo '~~~🌟 Creating project from branch'
-  test_command ignite n TestProj --branch test_$1
+  # Check flag to see if we're testing latest
+  if [[ $2 -eq "latest" ]]; then
+    echo 'Testing against Facebook Latest'
+    test_command ignite n TestProj --branch test_$1 --latest
+  else
+    test_command ignite n TestProj --branch test_$1
+  fi
+
   cd TestProj
 }
 
@@ -71,12 +82,12 @@ check_builds()
   echo '~~~🌟 Checking Builds'
   if [ ! -d "android" ]; then
     echo 'Android folder did not generate'
-    ALL_PASSED=1
+    SOMETHING_FAILED=1
   fi
 
   if [ ! -d "ios" ]; then
     echo 'ios folder did not generate'
-    ALL_PASSED=1
+    SOMETHING_FAILED=1
   fi
 
   echo '~ Build ios'
@@ -89,7 +100,7 @@ check_builds()
   ./gradlew assembleRelease | grep -q 'BUILD FAILED'
   if [[ $? -eq 0 ]]; then
     echo 'Android build failed'
-    ALL_PASSED=1
+    SOMETHING_FAILED=1
   fi
   cd -
 }
@@ -106,13 +117,13 @@ clean_up()
 
 # This is where the magic happens
 fire_drill
-setup $1
+setup $1 $2
 verify_code
 check_builds
 clean_up $1
 
 # Done
-if [ "$ALL_PASSED" != "0" ]; then
+if [ "$SOMETHING_FAILED" != "0" ]; then
   echo "~~~👎 Done with errors" 1>&2
   exit 1
 else
