@@ -9,13 +9,20 @@ class TestGenerator extends Generators.Base {
   constructor (args, options) {
     super(args, options)
     this.argument('name', { type: String, required: true })
+
+    this.option('latest', {
+      desc: 'Use cutting edge React Native Master',
+      type: Boolean,
+      defaults: false
+    })
   }
 
   initializing () {
   }
 
   generateApp () {
-    Utilities.insertInFile('file.txt', 'taco', 'I am a new line')
+    this.log('here are your options for latest')
+    this.log(this.options.latest)
   }
 
   install () {
