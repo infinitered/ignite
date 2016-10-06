@@ -13,25 +13,7 @@ Before submitting a pull request, you will want to make sure that your branch me
 * Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
 ## Getting Started
-
-**Note**: Before starting, make sure you are running Node version 5.1 or later. If you install the packages using an older version of Node, you may experience many errors because Node could not properly install the babel-react-native preset.
-
-**Step 1:** Fork this repo.
-
-**Step 2:** Clone your fork to your local dev environment.
-
-**Step 3:** cd to the cloned repo, ignite-base folder:
-```
-$ cd ignite/ignite-base
-```
-**Step 4:** Install the application
-```
-$ npm install
-```
-**Step 5:** Run tests to make sure the installation worked properlly
-```
-$ npm test
-```
+Information explaining getting started can be found in our [Intro Wiki](https://github.com/infinitered/ignite/wiki/Intro-to-Contributing-to-Ignite)
 
 ## How to Build and Run App
 
