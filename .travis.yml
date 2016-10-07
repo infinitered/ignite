@@ -1,0 +1,3 @@
+before_install
+- cd ignite-base
+- npm test
