@@ -2,4 +2,5 @@
 language: node
 before_install:
   - cd ignite-base
+  - npm install
   - npm test
