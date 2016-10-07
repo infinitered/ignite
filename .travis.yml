@@ -1,3 +1,5 @@
-before_install
+# Validate with http://lint.travis-ci.org/
+language: node
+before_install:
   - cd ignite-base
   - npm test
