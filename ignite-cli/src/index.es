@@ -25,7 +25,7 @@ const checkName = (project) => {
     console.log(`"${project}" is not a valid name for a project. Please use a valid identifier name (alphanumeric).`)
     Shell.exit(1)
   }
-  
+
   // 'React' is reserved
   if (project === 'React') {
     console.log(`"${project}" is not a valid name for a project. Please do not use the reserved word "React".`)
