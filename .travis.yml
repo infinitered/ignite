@@ -10,7 +10,8 @@ install:
   - cd android-sdk-linux/tools
   # -u means no ui / -a means all / -t means filter
   # to see the list `$ android list sdk --all`
-  - ./android update sdk -u -a -t 8,9
+  # echo y to automatically accept android licenses
+  - ( while [ 1 ]; do sleep 5; echo y; done ) | ./android update sdk -u -a -t 8,9
 env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
 script:
