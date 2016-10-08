@@ -3,5 +3,10 @@ sudo: required
 language: node_js
 node_js: "6.1"
 
+install:
+  - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+  - tar -xvf android-sdk_r24.2-linux.tgz
+env:
+  - ANDROID_HOME=~/android-sdk-linux
 script:
   - ./testRelease.sh master_check latest
