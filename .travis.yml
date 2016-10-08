@@ -8,10 +8,12 @@ install:
   - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
   - tar -xvf android-sdk_r24.2-linux.tgz
   - cd android-sdk-linux/tools
+  # list possible installs
+  - ./android list sdk --all
   # -u means no ui / -a means all / -t means filter
-  # to see the list `$ android list sdk --all`
   # echo y to automatically accept android licenses
   - ( while [ 1 ]; do sleep 5; echo y; done ) | ./android update sdk -u -a -t 8,9
+  - cd ../../
 env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
 script:
