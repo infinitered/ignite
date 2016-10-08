@@ -57,6 +57,7 @@ setup()
   # Check flag to see if we're testing RN latest against FB latest
   if [[ $2 = "latest" ]]; then
     echo '~~~🌟 Testing Master vs Facebook Latest'
+    test_command npm install -g react-native-cli
     test_command ignite n TestProj --branch master --latest
   else
     echo '~~~🌟 Setting up branch'
