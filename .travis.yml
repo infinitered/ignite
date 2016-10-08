@@ -5,6 +5,7 @@ node_js: "6.1"
 
 install:
   - pwd
+  - sudo apt-get install lib32stdc++6 lib32z1
   - wget http://dl.google.com/android/android-sdk_r24.4-linux.tgz
   - tar -xvf android-sdk_r24.4-linux.tgz
   - cd android-sdk-linux/tools
