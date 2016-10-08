@@ -1,7 +1,10 @@
 # Validate with http://lint.travis-ci.org/
-language: node
+sudo: required
+language: node_js
 node_js: "6.1"
-before_install:
-  - cd ignite-base
-  - npm install
 
+install:
+  - cd ignite-base
+  - npm install --no-progress
+script:
+  - npm test
