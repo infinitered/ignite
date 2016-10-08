@@ -8,3 +8,5 @@ install:
   - npm install --no-progress
 script:
   - npm test
+  - cd ..
+  - ./fireDrill.sh
