@@ -1,6 +1,7 @@
 # Validate with http://lint.travis-ci.org/
 language: node
+node_js: "6.1"
 before_install:
   - cd ignite-base
   - npm install
-  - npm test
+
