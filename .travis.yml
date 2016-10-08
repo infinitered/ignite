@@ -3,10 +3,5 @@ sudo: required
 language: node_js
 node_js: "6.1"
 
-install:
-  - cd ignite-base
-  - npm install --no-progress
 script:
-  - npm test
-  - cd ..
-  - ./fireDrill.sh
+  - ./testRelease.sh master_check latest
