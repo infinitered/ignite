@@ -112,9 +112,11 @@ clean_up()
   echo '~~~🌟 Cleanup'
   cd ../../
   rm -rf testgrounds
-  git checkout -
-  git branch -d test_$1
-  git push origin --delete test_$1
+  if [[ -z $2 ]]; then
+    git checkout -
+    git branch -d test_$1
+    git push origin --delete test_$1
+  fi
 }
 
 # This is where the magic happens
@@ -122,7 +124,7 @@ fire_drill
 setup $1 $2
 verify_code
 check_builds
-clean_up $1
+clean_up $1 $2
 
 # Done
 if [ "$SOMETHING_FAILED" != "0" ]; then
