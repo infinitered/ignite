@@ -111,6 +111,10 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
 * **fireDrill.sh** - A shell script for verifying the necessary relationship between folders and files is in good shape.  Since versions, templates, and linting is enforce, we have it all in one friendly script for developers and CI.
 * **testRelease.sh** - A shell script that automatically ignites a project based on the repo to make sure it generates correctly, and functions to the best of automated testability.  This script is run before every release.
 
+## :up: Ignite Versions
+##### Ignite is tested on every release: See [release history](https://github.com/infinitered/ignite/releases) for changes and upgrades.
+##### Ignite `master` branch is tested against facebook's react-native `master` branch every 24 hours.  Though this doesn't immediately affect the current release of Ignite, it helps us detect early issues with upgrading:  Current status [![Build Status](https://travis-ci.org/infinitered/ignite.svg?branch=master)](https://travis-ci.org/infinitered/ignite)
+
 ## :twisted_rightwards_arrows: Where to Go From Here
 #### [Contribute to Ignite](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
 #### [Chat with us on Gitter](https://gitter.im/infinitered/ignite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - Infinite Red devs standing by
