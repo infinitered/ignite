@@ -46,10 +46,7 @@ fire_drill()
 
 setup()
 {
-  echo '~~~🌟 Setting up branch'
-  git branch -d test_$1
-  git checkout -b test_$1
-  git push origin test_$1
+  echo '~~~🌟 Linking local for Testing'
   cd ignite-generator
   test_command npm link
   cd ../ignite-cli
@@ -57,13 +54,18 @@ setup()
   cd ../
   mkdir testgrounds
   cd testgrounds
-
-  echo '~~~🌟 Creating project from branch'
-  # Check flag to see if we're testing latest
-  if [[ $2 -eq "latest" ]]; then
-    echo 'Testing against Facebook Latest'
-    test_command ignite n TestProj --branch test_$1 --latest
+  # Check flag to see if we're testing RN latest against FB latest
+  if [[ $2 = "latest" ]]; then
+    echo '~~~🌟 Testing Master vs Facebook Latest'
+    test_command npm install -g react-native-cli
+    test_command ignite n TestProj --branch master --latest
   else
+    echo '~~~🌟 Setting up branch'
+    git branch -d test_$1
+    git checkout -b test_$1
+    git push origin test_$1
+
+    echo '~~~🌟 Creating project from branch'
     test_command ignite n TestProj --branch test_$1
   fi
 
@@ -110,9 +112,11 @@ clean_up()
   echo '~~~🌟 Cleanup'
   cd ../../
   rm -rf testgrounds
-  git checkout -
-  git branch -d test_$1
-  git push origin --delete test_$1
+  if [[ -z $2 ]]; then
+    git checkout -
+    git branch -d test_$1
+    git push origin --delete test_$1
+  fi
 }
 
 # This is where the magic happens
@@ -120,7 +124,7 @@ fire_drill
 setup $1 $2
 verify_code
 check_builds
-clean_up $1
+clean_up $1 $2
 
 # Done
 if [ "$SOMETHING_FAILED" != "0" ]; then
