@@ -77,7 +77,8 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
   * for Android
     * Run Genymotion
     * run the command `react-native run-android`
-3. _**Enjoy!**_
+3. If the packager does not automatically start, run `npm-start` 
+4. _**Enjoy!**_
 
 ![install](_art/screens.gif)
 
