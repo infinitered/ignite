@@ -47,8 +47,8 @@ export default (rootReducer, rootSaga) => {
       isActionImportant: action =>
         action.type === StartupTypes.STARTUP,
 
-      // you can flag to completely ignore certain types too... especially the chatty ones
-      ignore: [...SAGA_LOGGING_BLACKLIST]
+      // you can flag to exclude certain types too... especially the chatty ones
+      except: [...SAGA_LOGGING_BLACKLIST]
     })
     enhancers.push(reactotronEnhancer)
   }
