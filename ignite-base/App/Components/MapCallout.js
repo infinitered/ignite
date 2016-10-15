@@ -5,7 +5,7 @@ import Styles from './Styles/MapCalloutStyle'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Full Button', () =>
+ExamplesRegistry.add('Map Callout', () =>
   <MapCallout
     location={{
       title: 'Callout Example'
