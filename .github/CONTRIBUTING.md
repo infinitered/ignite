@@ -6,9 +6,9 @@ We welcome all contributors to Ignite! This contributing guide will help you get
 
 Before submitting a pull request, you will want to make sure that your branch meets the following requirements:
 * Everything works on iOS/Android
-* AVA Tests pass in ignite-base folder (`npm test`)
+* AVA Tests pass in ignite-base folder (`npm test` or `yarn test`)
 * New tests are included for any new functionality
-* Code is compliant with StandardJS  in ignite-base (`npm run lint`)
+* Code is compliant with StandardJS  in ignite-base (`npm run lint` or `yarn lint`)
 * `./fireDrill.sh` passes in main ignite folder
 * Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
@@ -17,7 +17,7 @@ Information explaining getting started can be found in our [Intro Wiki](https://
 
 ## How to Build and Run App
 
-Note that if you do not already have the React Native command line tools installed, you should run `npm install -g react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
+Note that if you do not already have the React Native command line tools installed, you should run `npm install -g react-native-cli` or `yarn global add react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
 
 1. `$ cd ignite-base`
 2. Run Build for either OS
@@ -34,11 +34,15 @@ We use [AVA](https://github.com/avajs/ava) for testing.
 To run tests from the ignite-base folder:
 ```
 $ npm test
+or
+$ yarn test
 ```
 
 Or to run it in [intelligent watch mode](https://github.com/avajs/ava/blob/master/docs/recipes/watch-mode.md):
 ```
 $ npm test -- --watch
+or
+$ yarn test -- --watch
 ```
 
 ## :no_entry_sign: Standard Compliant
@@ -50,6 +54,8 @@ This project adheres to Standard.  Our CI enforces this, so we suggest you enabl
 **To Run Lint** from ignite-base:
 ```
 $ npm run lint
+or
+$ yarn lint
 ```
 
 **To Lint on Commit**

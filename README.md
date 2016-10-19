@@ -62,6 +62,12 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
 
 `npm install -g react-native-ignite`
 
+or
+
+`yarn global add react-native-ignite`
+
+For those of you unfamiliar with the new package manager Yarn, it's basically a 1 for 1 replacement for npm, but with a significant speed boost. Check out this [yarn cheatsheet](https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc#.1ckrhd77a) for more info.
+
 **Step 2: Use**
 
 `ignite new MyApplication`
@@ -77,7 +83,7 @@ Make sure you're set up for [React Native](https://facebook.github.io/react-nati
   * for Android
     * Run Genymotion
     * run the command `react-native run-android`
-3. If the packager does not automatically start, run `npm-start` 
+3. If the packager does not automatically start, run `npm start` or `yarn start`
 4. _**Enjoy!**_
 
 ![install](_art/screens.gif)
