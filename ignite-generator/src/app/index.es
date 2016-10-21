@@ -37,7 +37,7 @@ const cleanAndroid = (projectFolder) => {
   if (/^win/.test(process.platform)) {
     Shell.exec('gradlew.bat clean')
   } else {
-    Shell.exec('./gradlew clean')
+    Shell.exec('./gradlew clean > /dev/null')
   }
   Shell.cd('../..')
 }
