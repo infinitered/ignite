@@ -161,9 +161,8 @@ export class AppGenerator extends Generators.Base {
    * Check for react-native.
    */
   findReactNativeCli () {
-    const status = 'Finding react-native'
-    this.spinner.text = status
-    this.spinner.start()
+    const animation = Utilities.startStep('Finding react-native', this)
+
     if (!isCommandInstalled('react-native')) {
       this._logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
     }
@@ -174,22 +173,20 @@ export class AppGenerator extends Generators.Base {
       this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
     }
 
-    this.spinner.stop()
-    this.log(`${check} Found react-native`)
+    animation.finish()
   }
 
   /**
    * Check for git.
    */
   findGit () {
-    const status = 'Finding git'
-    this.spinner.text = status
-    this.spinner.start()
+    const animation = Utilities.startStep('Finding git', this)
+
     if (!isCommandInstalled('git')) {
       this._logAndExit(`${xmark} Missing git`)
     }
-    this.spinner.stop()
-    this.log(`${check} Found git`)
+
+    animation.finish()
   }
 
   /**
@@ -197,7 +194,9 @@ export class AppGenerator extends Generators.Base {
    */
   cleanBeforeRunning () {
     const animation = Utilities.startStep('Getting ready for guests', this)
+
     emptyFolder(this.sourceRoot())
+
     animation.finish()
   }
 
@@ -232,17 +231,15 @@ export class AppGenerator extends Generators.Base {
     const useCustomRepo = typeof requestedRepo !== 'undefined' && requestedRepo !== null && requestedRepo !== ''
     // the right repo to use
     const repo = useCustomRepo ? requestedRepo : defaultRepo
+    // start spinner and message
+    const animation = Utilities.startStep(`Downloading latest Ignite files from ${repo}`, this)
 
-    const status = `Downloading latest Ignite files from ${repo}`
-    this.spinner.start()
-    this.spinner.text = status
     const done = this.async()
     const command = 'git'
     const commandOpts = ['clone', repo, this.sourceRoot()]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
-      .on('close', () => {
-        this.spinner.stop()
-        this.log(`${check} ${status}`)
+      .on('close', (retCode) => {
+        animation.finish(retCode)
         done()
       })
   }
@@ -258,16 +255,13 @@ export class AppGenerator extends Generators.Base {
     // jet if we're using the default behaviour
     if (useMasterBranch) return
 
-    const status = `Using ignite branch ${branch}`
-    this.spinner.start()
-    this.spinner.text = status
+    const animation = Utilities.startStep(`Using ignite branch ${branch}`, this)
     const done = this.async()
     const command = 'git'
     const commandOpts = ['checkout', branch]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
-      .on('close', () => {
-        this.spinner.stop()
-        this.log(`${check} ${status}`)
+      .on('close', (retCode) => {
+        animation.finish(retCode)
         done()
       })
   }
@@ -284,16 +278,13 @@ export class AppGenerator extends Generators.Base {
     // jet if we said tag was master, or if they specified a branch
     if (tag === 'master' || !emptyBranch) return
 
-    const status = `Using ignite release ${tag}`
-    this.spinner.start()
-    this.spinner.text = status
+    const animation = Utilities.startStep(`Using ignite release ${tag}`, this)
     const done = this.async()
     const command = 'git'
     const commandOpts = ['checkout', '-b', tag, tag]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
-      .on('close', () => {
-        this.spinner.stop()
-        this.log(`${check} ${status}`)
+      .on('close', (retCode) => {
+        animation.finish(retCode)
         done()
       })
   }
@@ -324,13 +315,22 @@ export class AppGenerator extends Generators.Base {
     )
   }
 
+  preRinse () {
+    const animation = Utilities.startStep('Pre-rinse', this)
+
+    // Been having reported issues
+    //with Multidex still so extra scrubbing!
+    Shell.rm('-rf', 'android/app/build')
+    Shell.rm('-rf', 'node_modules/')
+
+    animation.finish()
+  }
+
   /**
    * Let's ignite all up in hurrr.
    */
   copyExistingStuff () {
-    const status = 'Copying Ignite goodies'
-    this.spinner.start()
-    this.spinner.text = status
+    const animation = Utilities.startStep('Copying Ignite goodies', this)
 
     this._cpTemplate('README.md')
     this._cpTemplate('package.json')
@@ -346,59 +346,41 @@ export class AppGenerator extends Generators.Base {
     this._cpDirectory('App')
     this._cpDirectory('fastlane')
 
-    this.spinner.stop()
-    this.log(`${check} ${status}`)
-  }
-
-  preRinse () {
-    const status = 'Pre-rinse'
-    this.spinner.start()
-    this.spinner.text = status
-
-    // Been having reported issues
-    //with Multidex still so extra scrubbing!
-    Shell.rm('-rf', 'android/app/build')
-    Shell.rm('-rf', 'node_modules/')
-
-    this.spinner.stop()
-    this.log(`${check} ${status}`)
+    animation.finish()
   }
 
   /**
    * Let's hand tweak the the android manifest,
    */
   _updateAndroidManifest () {
-    const status = 'Updating android manifest file'
-    this.spinner.start()
-    this.spinner.text = status
+    const animation = Utilities.startStep('Updating android manifest file', this)
+
     performInserts(this.name)
-    this.spinner.stop()
-    this.log(`${check} ${status}`)
+
+    animation.finish()
   }
 
   /**
    * Let's hand tweak PList to allow our API example to work with Transport Security
    */
   _updatePList () {
-    const status = 'Updating PList file'
-    this.spinner.start()
-    this.spinner.text = status
+    const animation = Utilities.startStep('Updating PList file', this)
+
     addAPITransportException(this.name)
-    this.spinner.stop()
-    this.log(`${check} ${status}`)
+
+    animation.finish()
   }
 
   /**
    * Let's clean up any temp files.
    */
   _cleanAfterRunning () {
-    const status = 'Cleaning up after messy guests'
-    this.spinner.text = status
-    this.spinner.start()
+    const animation = Utilities.startStep('Cleaning up after messy guests', this)
+
     emptyFolder(this.sourceRoot())
     cleanAndroid(this.name)
-    this.spinner.stop()
-    this.log(`${check} ${status}`)
+
+    animation.finish()
   }
 
   /**
@@ -422,25 +404,20 @@ export class AppGenerator extends Generators.Base {
       Utilities.replaceInFile(`${this.name}/package.json`, '"react-native":', '    "react-native": "github:facebook/react-native",')
     }
 
-    const npmStatus = 'Installing Ignite dependencies (~ 1 minute-ish)'
-    this.spinner.start()
-    this.spinner.text = npmStatus
+    const animation = Utilities.startStep('Installing Ignite dependencies (~ 1 minute-ish)', this)
+
     const done = this.async()
     const dir = `${Shell.pwd()}/${this.name}`
     // run the npm command
     this.spawnCommand('npm', ['install'], {cwd: dir, stdio: 'ignore'})
-      .on('close', () => {
-        this.spinner.stop()
-        this.log(`${check} ${npmStatus}`)
+      .on('close', (retCode) => {
+        animation.finish(retCode)
 
         // then run the `react-native link` (old rnpm) command
-        const linkStatus = 'Linking external libs'
-        this.spinner.start()
-        this.spinner.text = linkStatus
+        const linkAnimation = Utilities.startStep('Linking external libs', this)
         this.spawnCommand('react-native', ['link'], {cwd: dir, stdio: 'ignore'})
-          .on('close', () => {
-            this.spinner.stop()
-            this.log(`${check} ${linkStatus}`)
+          .on('close', (linkReturnCode) => {
+            linkAnimation.finish(linkReturnCode)
 
             // Push notifications code, disabled for now
             // Causing issues :(
