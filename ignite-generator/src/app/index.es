@@ -34,7 +34,11 @@ const emptyFolder = (folder) => {
 // This wasn't necessary before, might need to be removed at some point
 const cleanAndroid = (projectFolder) => {
   Shell.cd(`${projectFolder}/android`)
-  Shell.exec('./gradlew clean')
+  if /^win/.test(process.platform) {
+    Shell.exec('gradlew.bat clean')
+  } else {
+    Shell.exec('./gradlew clean')
+  }
   Shell.cd('../..')
 }
 
@@ -347,6 +351,20 @@ export class AppGenerator extends Generators.Base {
     this._cpDirectory('Tests')
     this._cpDirectory('App')
     this._cpDirectory('fastlane')
+
+    this.spinner.stop()
+    this.log(`${check} ${status}`)
+  }
+
+  preRinse () {
+    const status = 'Pre-rinse'
+    this.spinner.start()
+    this.spinner.text = status
+
+    // Been having reported issues
+    //with Multidex still so extra scrubbing!
+    Shell.rm('-rf', 'android/app/build')
+    Shell.rm('-rf', 'node_modules/')
 
     this.spinner.stop()
     this.log(`${check} ${status}`)
