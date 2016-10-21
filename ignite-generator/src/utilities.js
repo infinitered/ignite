@@ -1,5 +1,6 @@
 import fs from 'fs'
 import Shell from 'shelljs'
+import colors from 'colors/safe'
 
 /**
  * A green checkmark
