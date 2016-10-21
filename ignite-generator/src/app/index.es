@@ -34,7 +34,7 @@ const emptyFolder = (folder) => {
 // This wasn't necessary before, might need to be removed at some point
 const cleanAndroid = (projectFolder) => {
   Shell.cd(`${projectFolder}/android`)
-  if /^win/.test(process.platform) {
+  if (/^win/.test(process.platform)) {
     Shell.exec('gradlew.bat clean')
   } else {
     Shell.exec('./gradlew clean')
