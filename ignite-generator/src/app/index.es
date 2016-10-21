@@ -196,12 +196,9 @@ export class AppGenerator extends Generators.Base {
    * Do a quick clean up of the template folder.
    */
   cleanBeforeRunning () {
-    const status = 'Getting ready for guests'
-    this.spinner.text = status
-    this.spinner.start()
+    const animation = Utilities.startStep('Getting ready for guests', this)
     emptyFolder(this.sourceRoot())
-    this.spinner.stop()
-    this.log(`${check} ${status}`)
+    animation.finish()
   }
 
   /**
@@ -209,9 +206,7 @@ export class AppGenerator extends Generators.Base {
    */
   reactNativeInit () {
     const rnVersion = (this.options.latest) ? 'facebook/react-native' : lockedReactNativeVersion
-    const status = `Running React Native setup version ${rnVersion} (~ 2 minutes-ish)`
-    this.spinner.start()
-    this.spinner.text = status
+    const animation = Utilities.startStep(`Running React Native setup version ${rnVersion} (~ 2 minutes-ish)`, this)
     const done = this.async()
     const command = 'react-native'
     // use Master if latest flag was set to true - used for early warning tests
@@ -219,9 +214,8 @@ export class AppGenerator extends Generators.Base {
     // Build base project using RN generator
     const commandOpts = ['init', this.name, '--version', rnVersion]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
-      .on('close', () => {
-        this.spinner.stop()
-        this.log(`${check} ${status}`)
+      .on('close', (retCode) => {
+        animation.finish(retCode)
         done()
       })
   }

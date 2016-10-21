@@ -3,6 +3,7 @@
 
 import Generators from 'yeoman-generator'
 import * as Utilities from '../utilities'
+import Shell from 'shelljs'
 
 class TestGenerator extends Generators.Base {
 
@@ -21,9 +22,16 @@ class TestGenerator extends Generators.Base {
   }
 
   generateApp () {
+    this.spawnCommand('ls', ['.'])
+      .on('close', (x) => {
+        console.log('X', x)
+      })
+
+
+
     // this.log('here are your options for latest')
     // this.log(this.options.latest)
-    Utilities.replaceInFile(`MyTest/package.json`, '"react-native":', '"react-native": "github:facebook/react-native"')
+    // Utilities.replaceInFile(`MyTest/package.json`, '"react-native":', '"react-native": "github:facebook/react-native"')
   }
 
   install () {

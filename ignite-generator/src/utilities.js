@@ -1,12 +1,39 @@
 import fs from 'fs'
 import Shell from 'shelljs'
 
+/**
+ * A green checkmark
+ */
+const check = colors.green('✔︎')
+
+/**
+ * A red x.
+ */
+const xmark = colors.red('𝗫')
+
+
 // Get ignite config file
 export const getConfig = () => {
   try {
     return require(`${Shell.pwd()}/.ignite`)
   } catch (e) {
     return null
+  }
+}
+
+export const startStep = (title, generator) => {
+  generator.spinner.start()
+  generator.spinner.text = title
+
+  return {
+    finish: (retCode = 0) => {
+      generator.spinner.stop()
+      if (retCode === 0) {
+        generator.log(`${check} ${title}`)
+      } else {
+        generator.log(`${xmark} ${title}`)
+      }
+    }
   }
 }
 
