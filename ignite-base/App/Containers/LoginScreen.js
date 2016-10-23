@@ -103,6 +103,8 @@ class LoginScreen extends React.Component {
               editable={editable}
               keyboardType='default'
               returnKeyType='next'
+              autoCapitalize='none'
+              autoCorrect={false}
               onChangeText={this.handleChangeUsername}
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.password.focus()}
@@ -118,6 +120,8 @@ class LoginScreen extends React.Component {
               editable={editable}
               keyboardType='default'
               returnKeyType='go'
+              autoCapitalize='none'
+              autoCorrect={false}
               secureTextEntry
               onChangeText={this.handleChangePassword}
               underlineColorAndroid='transparent'
