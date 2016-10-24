@@ -177,6 +177,26 @@ export class AppGenerator extends Generators.Base {
   }
 
   /**
+   * Check if Android is good
+   */
+  checkAndroid () {
+    const animation = Utilities.startStep('Finding android', this)
+
+    if (isCommandInstalled('android')) {
+      const androidVersions = Shell.exec('android list', { silent: true }).stdout
+      if (androidVersions.match(/android-23/)) {
+        animation.finish()
+      } else {
+        this.spinner.stop()
+        this.log(`${xmark} Missing android SDK 23`)
+      }
+    } else {
+      this.spinner.stop()
+      this.log(`${xmark} Missing android!`)
+    }
+  }
+
+  /**
    * Check for git.
    */
   findGit () {
