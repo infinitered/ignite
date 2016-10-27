@@ -428,8 +428,22 @@ export class AppGenerator extends Generators.Base {
 
     const done = this.async()
     const dir = `${Shell.pwd()}/${this.name}`
+    let command = ''
+    let commandOpts = []
+
+    // Use Yarn if it is installed
+    if (!Shell.which('yarn')) {
+      command = 'npm'
+      commandOpts.push('install')
+      this.log(`\n➟ Package manager:\t[${check}]︎ npm  |  [ ]︎ yarn`)
+    } else {
+      command = 'yarn'
+      commandOpts.push('install')
+      this.log(`\n➟ Package manager:\t[ ]︎ npm  |  [${check}]︎ yarn`)
+    }
+
     // run the npm command
-    this.spawnCommand('npm', ['install'], {cwd: dir, stdio: 'ignore'})
+    this.spawnCommand(command, commandOpts, {cwd: dir, stdio: 'ignore'})
       .on('close', (retCode) => {
         animation.finish(retCode)
 
