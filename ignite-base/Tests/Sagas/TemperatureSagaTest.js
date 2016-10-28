@@ -6,13 +6,13 @@ import TemperatureActions from '../../App/Redux/TemperatureRedux'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
-test('first calls API', t => {
+test('first calls API', (t) => {
   const step = stepper(getTemperature(FixtureAPI, {city: 'taco'}))
   // first yield is API
   t.deepEqual(step(), call(FixtureAPI.getCity, 'taco'))
 })
 
-test('success path', t => {
+test('success path', (t) => {
   const response = FixtureAPI.getCity('taco')
   const step = stepper(getTemperature(FixtureAPI, {city: 'taco'}))
   // first step API
@@ -21,7 +21,7 @@ test('success path', t => {
   t.deepEqual(step(response), put(TemperatureActions.temperatureSuccess(21, 'bonus')))
 })
 
-test('failure path', t => {
+test('failure path', (t) => {
   const response = {ok: false}
   const step = stepper(getTemperature(FixtureAPI, {city: 'taco'}))
   // first step API

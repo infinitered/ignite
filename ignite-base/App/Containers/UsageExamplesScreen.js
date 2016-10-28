@@ -164,10 +164,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(LoginActions.logout()),
-    requestTemperature: city => dispatch(TemperatureActions.temperatureRequest(city))
+    requestTemperature: (city) => dispatch(TemperatureActions.temperatureRequest(city))
   }
 }
 

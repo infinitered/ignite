@@ -26,7 +26,7 @@ class RootContainer extends Component {
   }
 }
 
-const mapStateToDispatch = dispatch => ({
+const mapStateToDispatch = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup())
 })
 

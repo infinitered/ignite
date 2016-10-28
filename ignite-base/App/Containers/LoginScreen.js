@@ -155,7 +155,7 @@ LoginScreen.propTypes = {
   attemptLogin: PropTypes.func
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     fetching: state.login.fetching
   }

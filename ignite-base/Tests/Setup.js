@@ -22,7 +22,7 @@ mockery.registerMock('react-native-vector-icons/Ionicons', {})
 
 // mock i18n as it uses react native stufff
 mockery.registerMock('react-native-i18n', {
-  t: key => key
+  t: (key) => key
 })
 
 // Mock all images for React Native

@@ -44,7 +44,7 @@ export default (rootReducer, rootSaga) => {
     // create it
     const reactotronEnhancer = createReactotronEnhancer(console.tron, {
       // you can flag some of your actions as important by returning true here
-      isActionImportant: action =>
+      isActionImportant: (action) =>
         action.type === StartupTypes.STARTUP,
 
       // you can flag to exclude certain types too... especially the chatty ones

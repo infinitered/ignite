@@ -34,7 +34,7 @@ export const success = (state, action) => {
 }
 
 // failed to get the temperature
-export const failure = state =>
+export const failure = (state) =>
   state.merge({ fetching: false, error: true, temperature: null })
 
 /* ------------- Hookup Reducers To Types ------------- */

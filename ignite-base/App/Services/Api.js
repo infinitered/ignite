@@ -21,7 +21,7 @@ const create = (baseURL = 'http://api.openweathermap.org/data/2.5/') => {
   })
 
   // Force OpenWeather API Key on all requests
-  api.addRequestTransform(request => {
+  api.addRequestTransform((request) => {
     request.params['APPID'] = '0e44183e8d1018fc92eb3307d885379c'
   })
 

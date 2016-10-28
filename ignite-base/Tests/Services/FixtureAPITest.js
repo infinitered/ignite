@@ -3,7 +3,7 @@ import API from '../../App/Services/Api'
 import FixtureAPI from '../../App/Services/FixtureApi'
 import R from 'ramda'
 
-test('All fixtures map to actual API', t => {
+test('All fixtures map to actual API', (t) => {
   const fixtureKeys = R.keys(FixtureAPI).sort()
   const apiKeys = R.keys(API.create())
 
