@@ -19,7 +19,7 @@
     "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2"
+    "flow": "flow --show-all-errors; test $? -eq 0 -o $? -eq 2"
   },
   "dependencies": {
     "apisauce": "^0.5.0",
