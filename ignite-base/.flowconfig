@@ -24,6 +24,9 @@
 .*/Libraries/react-native/ReactNative.js
 .*/node_modules/jest-runtime/build/__tests__/.*
 
+# Ignore node_modules
+.*/node_modules/*
+
 [include]
 
 [libs]
