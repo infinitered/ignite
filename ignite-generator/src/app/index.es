@@ -442,7 +442,7 @@ export class AppGenerator extends Generators.Base {
       this.log(`\n➟ Package manager:\t[ ]︎ npm  |  [${check}]︎ yarn`)
     }
 
-    // run the npm command
+    // Install node modules
     this.spawnCommand(command, commandOpts, {cwd: dir, stdio: 'ignore'})
       .on('close', (retCode) => {
         animation.finish(retCode)
