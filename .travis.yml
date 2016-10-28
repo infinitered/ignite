@@ -13,7 +13,8 @@ install:
   - ./android list sdk --all
   # -u means no ui / -a means all / -t means filter to specifc SDK items
   # echo y to automatically accept android licenses
-  - ( while [ 1 ]; do sleep 5; echo y; done ) | ./android update sdk -u -a -t 8,10,33,125,159,166,167
+  # Libs selected: SDK Build Tools 23.0.3 and 23.0.1, SDK Platform 23, Google APIs 23, Support Repo, Google Repo
+  - ( while [ 1 ]; do sleep 5; echo y; done ) | ./android update sdk -u -a -t 8,10,33,129,163,171
   - cd ../../
 env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
