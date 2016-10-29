@@ -44,5 +44,6 @@ listview/index.js
 mapview/index.js
 imagesfile/index.js
 redux/index.js
+saga/index.js
 screen/index.js
 testing/index.js
