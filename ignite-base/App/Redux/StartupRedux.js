@@ -1,3 +1,5 @@
+// @flow
+
 import { createActions } from 'reduxsauce'
 
 /* ------------- Types and Action Creators ------------- */
