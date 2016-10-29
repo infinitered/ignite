@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
@@ -26,6 +28,7 @@ class <%= name %> extends React.Component {
       </ScrollView>
     )
   }
+
 }
 
 const mapStateToProps = (state) => {
