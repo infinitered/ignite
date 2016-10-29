@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import { View, ScrollView, Text, Image } from 'react-native'
 import { Colors, Fonts, Images } from '../Themes'
@@ -15,12 +17,7 @@ const fontStyles = R.keys(Fonts.style)
 
 export default class UsageExamplesScreen extends React.Component {
 
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
-  renderColor (color) {
+  renderColor (color: string) {
     return (
       <View style={styles.colorContainer} key={`${color}Container`}>
         <View style={styles.backgroundContainer} key={`${color}BackgroundContainer`}>
@@ -36,7 +33,7 @@ export default class UsageExamplesScreen extends React.Component {
     return colors.map((color) => this.renderColor(color))
   }
 
-  renderFont (font) {
+  renderFont (font: string) {
     return (
       <Text style={[styles.fontRow, {fontFamily: Fonts.type[font]}]} key={font}>{
         `${font}: ${Fonts.type[font]}`
@@ -48,7 +45,7 @@ export default class UsageExamplesScreen extends React.Component {
     return types.map((font) => this.renderFont(font))
   }
 
-  renderStyle (fontStyle) {
+  renderStyle (fontStyle: string) {
     return (<Text style={[styles.fontRow, {...Fonts.style[fontStyle]}]} key={fontStyle}>{`This is ${fontStyle} style`}</Text>)
   }
 

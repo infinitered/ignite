@@ -1,9 +1,10 @@
+// @flow
+
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
 import { View, ScrollView, Text, Image, NetInfo } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import { Metrics, Images } from '../Themes'
-import { map, fromPairs } from 'ramda'
 import styles from './Styles/DeviceInfoScreenStyle'
 
 const HARDWARE_DATA = [
@@ -32,7 +33,13 @@ const APP_DATA = [
 ]
 
 export default class DeviceInfoScreen extends React.Component {
-  constructor (props) {
+  state: {
+    isConnected: boolean,
+    connectionInfo: Object | null,
+    connectionInfoHistory: Array<any>
+  }
+
+  constructor (props: Object) {
     super(props)
 
     this.state = {
@@ -40,10 +47,6 @@ export default class DeviceInfoScreen extends React.Component {
       connectionInfo: null,
       connectionInfoHistory: []
     }
-
-    this.setConnected = this.setConnected.bind(this)
-    this.setConnectionInfo = this.setConnectionInfo.bind(this)
-    this.updateConnectionInfoHistory = this.updateConnectionInfoHistory.bind(this)
   }
 
   componentDidMount () {
@@ -54,15 +57,15 @@ export default class DeviceInfoScreen extends React.Component {
     NetInfo.addEventListener('change', this.updateConnectionInfoHistory)
 
     // an example of how to display a custom Reactotron message
-    console.tron.display({
-      name: 'SPECS',
-      value: {
-        hardware: fromPairs(map((o) => [o.title, o.info], HARDWARE_DATA)),
-        os: fromPairs(map((o) => [o.title, o.info], OS_DATA)),
-        app: fromPairs(map((o) => [o.title, o.info], APP_DATA))
-      },
-      preview: 'About this device...'
-    })
+    // console.tron.display({
+    //   name: 'SPECS',
+    //   value: {
+    //     hardware: fromPairs(map((o) => [o.title, o.info], HARDWARE_DATA)),
+    //     os: fromPairs(map((o) => [o.title, o.info], OS_DATA)),
+    //     app: fromPairs(map((o) => [o.title, o.info], APP_DATA))
+    //   },
+    //   preview: 'About this device...'
+    // })
   }
 
   componentWillUnmount () {
@@ -71,15 +74,15 @@ export default class DeviceInfoScreen extends React.Component {
     NetInfo.removeEventListener('change', this.updateConnectionInfoHistory)
   }
 
-  setConnected (isConnected) {
+  setConnected = (isConnected: boolean) => {
     this.setState({isConnected})
   }
 
-  setConnectionInfo (connectionInfo) {
+  setConnectionInfo = (connectionInfo: Object) => {
     this.setState({connectionInfo})
   }
 
-  updateConnectionInfoHistory (connectionInfo) {
+  updateConnectionInfoHistory = (connectionInfo: Object) => {
     const connectionInfoHistory = this.state.connectionInfoHistory.slice()
     connectionInfoHistory.push(connectionInfo)
     this.setState({connectionInfoHistory})
@@ -93,7 +96,7 @@ export default class DeviceInfoScreen extends React.Component {
     ])
   }
 
-  renderCard (cardTitle, rowData) {
+  renderCard (cardTitle: string, rowData: Array<Object>) {
     return (
       <View style={styles.cardContainer}>
         <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
@@ -102,7 +105,7 @@ export default class DeviceInfoScreen extends React.Component {
     )
   }
 
-  renderRows (rowData) {
+  renderRows (rowData: Array<Object>) {
     return rowData.map((cell) => {
       const {title, info} = cell
       return (

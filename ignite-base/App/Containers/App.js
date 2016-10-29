@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import '../I18n/I18n' // keep before root container

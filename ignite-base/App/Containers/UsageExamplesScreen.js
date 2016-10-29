@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PropTypes } from 'react'
 import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
 import { connect } from 'react-redux'
@@ -17,11 +19,6 @@ import I18n from 'react-native-i18n'
 import styles from './Styles/UsageExamplesScreenStyle'
 
 class UsageExamplesScreen extends React.Component {
-
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
 
   componentWillReceiveProps (nextProps) {
     // Request push premissions only if the user has logged in.

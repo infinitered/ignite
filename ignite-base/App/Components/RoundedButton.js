@@ -15,7 +15,8 @@ ExamplesRegistry.add('Rounded Button', () =>
 
 type RoundedButtonProps = {
   onPress: () => void,
-  text: string,
+  text?: string,
+  children?: string,
   navigator?: Object
 }
 
@@ -23,7 +24,7 @@ export default class RoundedButton extends React.Component {
   props: RoundedButtonProps
 
   getText () {
-    const buttonText = this.props.text
+    const buttonText = this.props.text || this.props.children || ''
     return buttonText.toUpperCase()
   }
 
