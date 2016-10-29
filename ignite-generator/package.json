@@ -11,6 +11,7 @@
     "listview",
     "mapview",
     "redux",
+    "saga",
     "validation.js",
     "utilities.js"
   ],
