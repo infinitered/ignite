@@ -83,7 +83,8 @@
       "navigator",
       "__DEV__",
       "XMLHttpRequest",
-      "FormData"
+      "FormData",
+      "React$Element"
     ]
   },
   "config": {

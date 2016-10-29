@@ -15,7 +15,7 @@ export default StyleSheet.create({
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    fontFamily: Fonts.base,
+    fontFamily: Fonts.type.base,
     margin: Metrics.baseMargin
   },
   myImage: {

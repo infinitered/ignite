@@ -51,7 +51,7 @@ const ApplicationStyles = {
     padding: Metrics.smallMargin
   },
   darkLabel: {
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.type.bold,
     color: Colors.snow
   },
   groupContainer: {
