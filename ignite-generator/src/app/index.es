@@ -278,7 +278,11 @@ export class AppGenerator extends Generators.Base {
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
       .on('close', (retCode) => {
         animation.finish(retCode)
-        done()
+        if (retCode === 0) {
+          done()
+        } else {
+          this._logAndExit(`Failed to clone ${repo} with branch ${branch}`)
+        }
       })
   }
 
