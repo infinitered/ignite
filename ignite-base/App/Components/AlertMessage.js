@@ -1,10 +1,11 @@
+// @flow
+
 import React from 'react'
 import { View, Text } from 'react-native'
 import styles from './Styles/AlertMessageStyle'
 import * as Animatable from 'react-native-animatable'
 import { Metrics } from '../Themes/'
 import Icon from 'react-native-vector-icons/Ionicons'
-
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
@@ -20,7 +21,18 @@ ExamplesRegistry.add('Alert Message', () =>
   </View>
 )
 
+type AlertMessageProps = {
+  title: string,
+  icon?: string,
+  style?: Object,
+  show?: bool
+}
+
 export default class AlertMessage extends React.Component {
+  static defaultProps: { show: boolean }
+
+  props: AlertMessageProps
+
   render () {
     let messageComponent = null
     if (this.props.show) {
@@ -45,13 +57,6 @@ export default class AlertMessage extends React.Component {
 
     return messageComponent
   }
-}
-
-AlertMessage.propTypes = {
-  style: React.PropTypes.object,
-  title: React.PropTypes.string.isRequired,
-  icon: React.PropTypes.string,
-  show: React.PropTypes.bool
 }
 
 AlertMessage.defaultProps = {

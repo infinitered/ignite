@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import styles from './Styles/FullButtonStyle'
@@ -11,7 +13,15 @@ ExamplesRegistry.add('Full Button', () =>
   />
 )
 
+type FullButtonProps = {
+  text: string,
+  onPress: () => void,
+  styles?: Object
+}
+
 export default class FullButton extends React.Component {
+  props: FullButtonProps
+
   render () {
     return (
       <TouchableOpacity style={[styles.button, this.props.styles]} onPress={this.props.onPress}>
@@ -19,10 +29,4 @@ export default class FullButton extends React.Component {
       </TouchableOpacity>
     )
   }
-}
-
-FullButton.propTypes = {
-  text: React.PropTypes.string.isRequired,
-  onPress: React.PropTypes.func.isRequired,
-  styles: React.PropTypes.object
 }

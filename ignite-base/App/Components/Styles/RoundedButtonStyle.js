@@ -1,4 +1,4 @@
-'use strict'
+// @flow
 
 import { StyleSheet } from 'react-native'
 import { Fonts, Colors, Metrics } from '../../Themes/'
