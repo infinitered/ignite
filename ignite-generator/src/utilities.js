@@ -12,7 +12,6 @@ const check = colors.green('✔︎')
  */
 const xmark = colors.red('𝗫')
 
-
 // Get ignite config file
 export const getConfig = () => {
   try {

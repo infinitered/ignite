@@ -41,7 +41,7 @@ const checkDir = (project) => {
   };
 
   if (fs.existsSync(process.cwd() + '/App')) {
-    console.log(`Sorry, I couldn\'t create a new app here, I\'m being run in an Ignite directory.`)
+    console.log('Sorry, I couldn\'t create a new app here, I\'m being run in an Ignite directory.')
     Shell.exit(1)
   }
 }
