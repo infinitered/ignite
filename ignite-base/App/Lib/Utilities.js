@@ -1,3 +1,5 @@
+// @flow
+
 // Utility functions
 import { Platform } from 'react-native'
 import R from 'ramda'
@@ -8,7 +10,7 @@ const replaceEscapedCRLF = R.replace(/\\n/g)
 const nullifyNewlines = R.compose(replaceEscapedCRLF(' '), nullToEmpty)
 
 // Correct Map URIs
-export const locationURL = (address) => {
+export const locationURL = (address: string) => {
   let cleanAddress = nullifyNewlines(address)
   // https://developer.apple.com/library/ios/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
   let url = `http://maps.apple.com/?address=${cleanAddress}`
@@ -17,7 +19,7 @@ export const locationURL = (address) => {
 
   return url
 }
-export const directionsURL = (address) => {
+export const directionsURL = (address: string) => {
   let cleanAddress = nullifyNewlines(address)
   // https://developer.apple.com/library/ios/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
   let url = `http://maps.apple.com/?daddr=${cleanAddress}&dirflg=d`

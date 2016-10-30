@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 import { Scene, Router } from 'react-native-router-flux'
 import Styles from './Styles/NavigationContainerStyle'

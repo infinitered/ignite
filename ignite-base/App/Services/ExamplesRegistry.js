@@ -1,13 +1,15 @@
+// @flow
+
 import React from 'react'
-import {Text, View} from 'react-native'
+import { Text, View } from 'react-native'
 import R from 'ramda'
 import { ApplicationStyles } from '../Themes'
 import DebugSettings from '../Config/DebugSettings'
 let globalExamplesRegistry = []
 
-export const addExample = (title, usage) => { if (DebugSettings.includeExamples) globalExamplesRegistry.push({title, usage}) }
+export const addExample = (title: string, usage: () => React$Element<*>) => { if (DebugSettings.includeExamples) globalExamplesRegistry.push({title, usage}) }
 
-const renderExample = (example) => {
+const renderExample = (example: Object) => {
   return (
     <View key={example.title}>
       <View style={ApplicationStyles.darkLabelContainer}>

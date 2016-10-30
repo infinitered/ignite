@@ -5,14 +5,14 @@ import LoginActions from '../../App/Redux/LoginRedux'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
-test('success', t => {
+test('success', (t) => {
   const mock = { username: 'a', password: 'b' }
   const step = stepper(login(mock))
 
   t.deepEqual(step(), put(LoginActions.loginSuccess(mock.username)))
 })
 
-test('failure', t => {
+test('failure', (t) => {
   const mock = { username: '', password: '' }
   const step = stepper(login(mock))
 

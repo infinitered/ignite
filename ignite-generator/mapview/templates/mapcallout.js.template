@@ -1,9 +1,17 @@
+// @flow
+
 import React, { PropTypes } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 import MapView from 'react-native-maps'
 import Styles from './Styles/MapCalloutStyle'
 
 export default class MapCallout extends React.Component {
+  props: {
+    location: Object,
+    onPress: () => void
+  }
+  onPress: () => void
+
   constructor (props) {
     super(props)
     this.onPress = this.props.onPress.bind(this, this.props.location)
@@ -23,9 +31,4 @@ export default class MapCallout extends React.Component {
       </MapView.Callout>
     )
   }
-}
-
-MapCallout.propTypes = {
-  location: PropTypes.object.isRequired,
-  onPress: PropTypes.func
 }

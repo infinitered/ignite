@@ -5,7 +5,7 @@ import TemperatureActions from '../../App/Redux/TemperatureRedux'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
-test('watches for the right action', t => {
+test('watches for the right action', (t) => {
   const step = stepper(startup())
   TemperatureActions.temperatureRequest('San Francisco')
   t.deepEqual(step(), select(selectTemperature))

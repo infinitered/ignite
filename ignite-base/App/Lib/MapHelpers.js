@@ -1,13 +1,15 @@
+// @flow
+
 import R from 'ramda'
 
-export const removeEmpty = (markers) => {
+export const removeEmpty = (markers: Array<Object>) => {
   let filteredMarkers = R.filter((item) => {
     return item.latitude && item.longitude
   }, markers)
   return filteredMarkers
 }
 
-export const calculateRegion = (locations, options) => {
+export const calculateRegion = (locations: Array<Object>, options: Object) => {
   const latPadding = options && options.latPadding ? options.latPadding : 0.1
   const longPadding = options && options.longPadding ? options.longPadding : 0.1
   const mapLocations = removeEmpty(locations)

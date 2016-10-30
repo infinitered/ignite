@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import { View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
@@ -9,6 +11,10 @@ import AlertMessage from '../Components/AlertMessage'
 import styles from './Styles/ListviewExampleStyle'
 
 class ListviewSectionsExample extends React.Component {
+
+  state: {
+    dataSource: Object
+  }
 
   constructor (props) {
     super(props)
@@ -124,7 +130,6 @@ class ListviewSectionsExample extends React.Component {
           renderSectionHeader={this._renderHeader}
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
-          onLayout={this.onLayout}
           renderRow={this._renderRow}
           enableEmptySections
         />

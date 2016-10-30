@@ -1,4 +1,6 @@
-import React, {PropTypes} from 'react'
+// @flow
+
+import React from 'react'
 import {
   View,
   ScrollView,
@@ -14,13 +16,32 @@ import Styles from './Styles/LoginScreenStyle'
 import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-
-// I18n
 import I18n from 'react-native-i18n'
+
+type LoginScreenProps = {
+  dispatch: () => any,
+  fetching: boolean,
+  attemptLogin: () => void
+}
 
 class LoginScreen extends React.Component {
 
-  constructor (props) {
+  props: LoginScreenProps
+
+  state: {
+    username: string,
+    password: string,
+    visibleHeight: number,
+    topLogo: {
+      width: number
+    }
+  }
+
+  isAttempting: boolean
+  keyboardDidShowListener: Object
+  keyboardDidHideListener: Object
+
+  constructor (props: LoginScreenProps) {
     super(props)
     this.state = {
       username: 'reactnative@infinite.red',
@@ -149,13 +170,7 @@ class LoginScreen extends React.Component {
 
 }
 
-LoginScreen.propTypes = {
-  dispatch: PropTypes.func,
-  fetching: PropTypes.bool,
-  attemptLogin: PropTypes.func
-}
-
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     fetching: state.login.fetching
   }

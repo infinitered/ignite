@@ -1,3 +1,5 @@
+// @flow
+
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
 import { Platform, View, ScrollView, Text, Image } from 'react-native'
@@ -10,6 +12,7 @@ import '../Components/FullButton'
 import '../Components/RoundedButton'
 import '../Components/DrawerButton'
 // import '../Components/MapCallout'
+
 // Examples Render Engine
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 

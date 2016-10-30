@@ -19,7 +19,7 @@
     "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2"
+    "flow": "flow --show-all-errors; test $? -eq 0 -o $? -eq 2"
   },
   "dependencies": {
     "apisauce": "^0.5.0",
@@ -48,7 +48,7 @@
     "babel-eslint": "^7.0.0",
     "babel-preset-es2015": "^6.14.0",
     "enzyme": "^2.3.0",
-    "flow-bin": "^0.32.0",
+    "flow-bin": "^0.33.0",
     "ghooks": "^1.3.2",
     "mockery": "^1.7.0",
     "nyc": "^8.1.0",
@@ -59,7 +59,7 @@
     "reactotron-react-native": "^1.1.4",
     "reactotron-redux": "^1.1.4",
     "snazzy": "^5.0.0",
-    "standard": "^8.0.0"
+    "standard-flow": "^1.0.0"
   },
   "ava": {
     "files": [
@@ -83,7 +83,8 @@
       "navigator",
       "__DEV__",
       "XMLHttpRequest",
-      "FormData"
+      "FormData",
+      "React$Element"
     ]
   },
   "config": {

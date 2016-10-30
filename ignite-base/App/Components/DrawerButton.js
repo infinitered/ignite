@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+// @flow
+
+import React, { Component } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 import styles from './Styles/DrawerButtonStyles'
-
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
@@ -12,7 +13,14 @@ ExamplesRegistry.add('Drawer Button', () =>
   />
 )
 
+type DrawerButtonProps = {
+  text: string,
+  onPress: () => void
+}
+
 class DrawerButton extends Component {
+  props: DrawerButtonProps
+
   render () {
     return (
       <TouchableOpacity onPress={this.props.onPress}>
@@ -20,11 +28,6 @@ class DrawerButton extends Component {
       </TouchableOpacity>
     )
   }
-}
-
-DrawerButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired
 }
 
 export default DrawerButton

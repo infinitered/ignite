@@ -1,7 +1,7 @@
 import test from 'ava'
 import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/TemperatureRedux'
 
-test('request', t => {
+test('request', (t) => {
   const cityName = 'someCity'
   const state = reducer(INITIAL_STATE, Actions.temperatureRequest(cityName))
 
@@ -10,7 +10,7 @@ test('request', t => {
   t.is(null, state.temperature)
 })
 
-test('success', t => {
+test('success', (t) => {
   const cityTemp = 69
   const state = reducer(INITIAL_STATE, Actions.temperatureSuccess(cityTemp))
 
@@ -19,7 +19,7 @@ test('success', t => {
   t.is(null, state.error)
 })
 
-test('failure', t => {
+test('failure', (t) => {
   const state = reducer(INITIAL_STATE, Actions.temperatureFailure())
 
   t.false(state.fetching)

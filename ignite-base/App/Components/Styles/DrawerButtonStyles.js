@@ -1,3 +1,5 @@
+// @flow
+
 import { Metrics, Colors, Fonts } from '../../Themes'
 
 export default {

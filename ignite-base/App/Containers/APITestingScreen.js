@@ -1,8 +1,11 @@
+// @flow
+
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
 import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Images } from '../Themes'
 import FullButton from '../Components/FullButton'
+
 // For API
 import API from '../Services/Api'
 import FJSON from 'format-json'
@@ -17,8 +20,13 @@ const endpoints = [
 ]
 
 export default class APITestingScreen extends React.Component {
+  api: Object
 
-  constructor (props) {
+  state: {
+    visibleHeight: number
+  }
+
+  constructor (props: Object) {
     super(props)
     this.state = {
       visibleHeight: Metrics.screenHeight
@@ -27,7 +35,7 @@ export default class APITestingScreen extends React.Component {
     this.api = API.create()
   }
 
-  showResult (response, title = 'Response') {
+  showResult (response: Object, title: string = 'Response') {
     this.refs.container.scrollTo({x: 0, y: 0, animated: true})
     if (response.ok) {
       this.refs.result.setState({message: FJSON.plain(response.data), title: title})
@@ -36,14 +44,14 @@ export default class APITestingScreen extends React.Component {
     }
   }
 
-  tryEndpoint (apiEndpoint) {
+  tryEndpoint (apiEndpoint: Object) {
     const { label, endpoint, args = [''] } = apiEndpoint
     this.api[endpoint].apply(this, args).then((result) => {
       this.showResult(result, label || `${endpoint}(${args.join(', ')})`)
     })
   }
 
-  renderButton (apiEndpoint) {
+  renderButton (apiEndpoint: Object) {
     const { label, endpoint, args = [''] } = apiEndpoint
     return (
       <FullButton text={label || `${endpoint}(${args.join(', ')})`} onPress={this.tryEndpoint.bind(this, apiEndpoint)} styles={{marginTop: 10}} key={`${endpoint}-${args.join('-')}`} />
@@ -78,6 +86,11 @@ export default class APITestingScreen extends React.Component {
 }
 
 class APIResult extends React.Component {
+
+  state: {
+    message: boolean,
+    title: boolean
+  }
 
   constructor (props) {
     super(props)

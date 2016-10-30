@@ -1,6 +1,8 @@
+// @flow
+
 import I18n from 'react-native-i18n'
 
-export default kelvin => {
+export default (kelvin: number) => {
   const celcius = kelvin - 273.15
   const farenheit = (celcius * 1.8000) + 32
 

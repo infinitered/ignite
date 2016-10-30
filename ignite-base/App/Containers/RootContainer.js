@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 import { View, StatusBar } from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
@@ -26,7 +28,7 @@ class RootContainer extends Component {
   }
 }
 
-const mapStateToDispatch = dispatch => ({
+const mapStateToDispatch = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup())
 })
 
