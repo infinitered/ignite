@@ -10,12 +10,12 @@ test('attempt', t => {
 test('success', t => {
   const state = reducer(INITIAL_STATE, Actions.<%= name.charAt(0).toLowerCase() + name.slice(1) %>Success('hi'))
 
-  t.is(state.username, 'hi')
+  t.is(state.payload, 'hi')
 })
 
 test('failure', t => {
   const state = reducer(INITIAL_STATE, Actions.<%= name.charAt(0).toLowerCase() + name.slice(1) %>Failure(99))
 
   t.false(state.fetching)
-  t.is(state.error, 69)
+  t.true(state.error)
 })
