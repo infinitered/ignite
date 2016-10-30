@@ -5,6 +5,7 @@ import { Scene, Router } from 'react-native-router-flux'
 import Styles from './Styles/NavigationContainerStyle'
 import NavigationDrawer from './NavigationDrawer'
 import NavItems from './NavItems'
+import CustomNavBar from '../Components/CustomNavBar'
 
 // screens identified by the router
 import PresentationScreen from '../Containers/PresentationScreen'
@@ -39,7 +40,9 @@ class NavigationRouter extends Component {
             <Scene key='listviewSectionsExample' component={ListviewSectionsExample} title='Listview Sections' />
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='theme' component={ThemeScreen} title='Theme' />
-            <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
+
+            {/* Custom navigation bar example */}
+            <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' navBar={CustomNavBar} />
           </Scene>
         </Scene>
       </Router>
