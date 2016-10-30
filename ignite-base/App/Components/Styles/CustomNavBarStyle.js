@@ -7,16 +7,21 @@ export default {
     left: 0,
     right: 0,
     height: Metrics.navBarHeight,
-    paddingTop: Metrics.baseMargin,
-    paddingHorizontal: 20,
+    paddingHorizontal: Metrics.baseMargin,
     backgroundColor: Colors.background,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
+  leftButton: {
+    paddingTop: Metrics.baseMargin
+  },
   logo: {
-    flex: 1,
-    alignSelf: 'center',
     height: Metrics.navBarHeight - Metrics.doubleBaseMargin,
+    width: Metrics.navBarHeight - Metrics.doubleBaseMargin,
     resizeMode: 'contain'
+  },
+  rightButton: {
+    paddingTop: Metrics.baseMargin
   }
 }
