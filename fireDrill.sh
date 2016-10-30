@@ -74,9 +74,28 @@ lint()
 
   # Check base app for standard compliance
   standard ./App/**.*
+
+  # Return to root directory
+  cd ..
+}
+
+flow_type_check()
+{
+  # Run checks specific to ignite-base
+  cd ./ignite-base
+
+  # Ensure flow installed
+  npm install flow-bin
+
+  # Check base app for flow compliance
+  npm run flow
+
+  # Return to root directory
+  cd ..
 }
 
 show_warnings
 enforce_templates
 enforce_versions
 lint
+flow_type_check
