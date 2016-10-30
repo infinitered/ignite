@@ -240,6 +240,23 @@ export class AppGenerator extends Generators.Base {
   }
 
   /**
+   * Get the git branch or tag that we should check out.
+   */
+  _getGitBranch () {
+    const tag = this.options['tag'] || lockedIgniteVersion
+    // read the user's choice from the source-branch command line option
+    const branch = this.options['branch']
+    // check if the user specified a branch
+    const isBranchUndefined = typeof branch === 'undefined' || branch === null || branch === 'master' || branch === ''
+    // return branch if its defined
+    if (!isBranchUndefined) {
+      return branch
+    }
+    // otherwise return specified tag, or lockedIgniteVersion
+    return tag
+  }
+
+  /**
    * Ensure we have the latest Ignite templates.
    */
   downloadLatestIgnite () {
@@ -251,61 +268,21 @@ export class AppGenerator extends Generators.Base {
     const useCustomRepo = typeof requestedRepo !== 'undefined' && requestedRepo !== null && requestedRepo !== ''
     // the right repo to use
     const repo = useCustomRepo ? requestedRepo : defaultRepo
+    const branch = this._getGitBranch()
     // start spinner and message
-    const animation = Utilities.startStep(`Downloading latest Ignite files from ${repo}`, this)
+    const animation = Utilities.startStep(`Downloading latest Ignite files from ${repo}#${branch}`, this)
 
     const done = this.async()
     const command = 'git'
-    const commandOpts = ['clone', repo, this.sourceRoot()]
+    const commandOpts = ['clone', '--depth', '1', '--branch', branch, repo, this.sourceRoot()]
     this.spawnCommand(command, commandOpts, {stdio: 'ignore'})
       .on('close', (retCode) => {
         animation.finish(retCode)
-        done()
-      })
-  }
-
-  /**
-   * We might need to switch to a new branch if we're testing a ignite feature.
-   */
-  checkoutDifferentBranch () {
-    // read the user's choice from the source-branch command line option
-    const branch = this.options['branch']
-    // should we be using master?
-    const useMasterBranch = typeof branch === 'undefined' || branch === null || branch === 'master' || branch === ''
-    // jet if we're using the default behaviour
-    if (useMasterBranch) return
-
-    const animation = Utilities.startStep(`Using ignite branch ${branch}`, this)
-    const done = this.async()
-    const command = 'git'
-    const commandOpts = ['checkout', branch]
-    this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
-      .on('close', (retCode) => {
-        animation.finish(retCode)
-        done()
-      })
-  }
-
-  /**
-   * Enforce checking out a specific tag
-   */
-  checkoutTag () {
-    // read the user's choice from the source-branch command line option
-    const tag = this.options['tag'] || lockedIgniteVersion
-    const branch = this.options['branch']
-    const emptyBranch = typeof branch === 'undefined' || branch === null || branch === ''
-
-    // jet if we said tag was master, or if they specified a branch
-    if (tag === 'master' || !emptyBranch) return
-
-    const animation = Utilities.startStep(`Using ignite release ${tag}`, this)
-    const done = this.async()
-    const command = 'git'
-    const commandOpts = ['checkout', '-b', tag, tag]
-    this.spawnCommand(command, commandOpts, {stdio: 'ignore', cwd: this.sourceRoot()})
-      .on('close', (retCode) => {
-        animation.finish(retCode)
-        done()
+        if (retCode === 0) {
+          done()
+        } else {
+          this._logAndExit(`Failed to clone ${repo} with branch ${branch}`)
+        }
       })
   }
 
