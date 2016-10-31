@@ -37,6 +37,18 @@ export default {
         />
       </TouchableOpacity>
     )
+  },
+
+  searchButton (callbackFunction) {
+    return (
+      <TouchableOpacity style={{justifyContent: 'center'}} onPress={callbackFunction}>
+        <Icon name='search'
+          size={Metrics.icons.small}
+          color={Colors.snow}
+          style={styles.searchButton}
+        />
+      </TouchableOpacity>
+    )
   }
 
 }
