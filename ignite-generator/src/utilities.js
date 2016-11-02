@@ -1,6 +1,7 @@
 import fs from 'fs'
 import Shell from 'shelljs'
 import colors from 'colors/safe'
+import R from 'ramda'
 
 /**
  * A green checkmark
@@ -84,3 +85,63 @@ export const isInFile = (theFile, theFind) => {
   // Quick error check
   return matches || 0
 }
+
+/* ***********************************************************
+* createFiles: Copy template files for generator.
+* context: normally just 'this'.
+* config: Pass an object that looks something like:
+*  { templatePath: 'some-file-name.js',
+*      destinationPath: 'folder-name',
+*      test: true,
+*      style: false }
+*************************************************************/
+
+export const createFiles = (context, config) => {
+
+  const igniteConfig = getConfig()
+  const projectUsesTests = R.path(['options', 'testing'], getConfig())
+  let [appPath, testPath, jestPath] = ['./App/', './Tests/', './__tests__/']
+  let dest = R.prop('destinationPath', config)
+  let filename = R.split('.', R.prop('templatePath', config))[0]
+  let initFilename = R.toUpper(R.head(filename)) + R.slice(1, Infinity, filename) // ie. Initial Letter Capitalized
+
+  const copyFile = obj => context.fs.copyTpl(
+    context.templatePath(obj.templatePath),
+    context.destinationPath(obj.destinationPath + context.name + obj.ext),
+    { name: context.name }
+  )
+
+  // Create the App versions of the template.
+  copyFile(
+    R.merge(config,
+      {'destinationPath': appPath + dest + '/',
+        'ext': initFilename + '.js'}
+    )
+  )
+
+  // Followed by the Style, if requested
+  if (R.prop('style', config) === true) {
+    copyFile(
+      R.merge(config, {'destinationPath': appPath + dest + '/Styles/',
+      'ext': initFilename + 'Style.js',
+      'templatePath': filename + '.style.template'})
+    )
+  }
+  // And the tests!
+  if (R.prop('test', config) === true && projectUsesTests !== undefined) {
+    if (projectUsesTests == 'ava') {
+      copyFile(
+        R.merge(config, {'destinationPath': testPath + dest + '/',
+          'ext': initFilename + 'Test.js',
+          'templatePath': filename + '.ava.template'})
+      )
+    } else {
+      // project uses jest. Mocha support coming in a future release! :)
+      copyFile(
+        R.merge(config, {'destinationPath': jestPath + dest + '/',
+          'ext': initFilename +  'Test.js',
+          templatePath: filename + '.jest.template'})
+      )
+    }
+  }
+ }

@@ -1,0 +1,20 @@
+import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/<%= name %>Redux'
+
+it('attempt', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= name.charAt(0).toLowerCase() + name.slice(1) %>Request('data'))
+
+  expect(state.fetching).toBe(true)
+})
+
+it('success', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= name.charAt(0).toLowerCase() + name.slice(1) %>Success('hi'))
+
+  expect(state.payload).toBe('hi')
+})
+
+it('failure', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= name.charAt(0).toLowerCase() + name.slice(1) %>Failure())
+
+  expect(state.fetching).toBe(false)
+  expect(state.error).toBe(true)
+})
