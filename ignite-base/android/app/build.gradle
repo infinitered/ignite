@@ -143,3 +143,15 @@ task copyDownloadableDepsToLibs(type: Copy) {
   from configurations.compile
   into 'libs'
 }
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.getRequested().getGroup() == 'com.google.android.gms') {
+            // If different projects require different versions of
+            // Google Play Services it causes a crash on run.
+            // Fix by overriding version for all projects.
+            details.useVersion('9.6.1')
+        }
+    }
+}
+

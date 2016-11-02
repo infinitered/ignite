@@ -47,37 +47,57 @@ const cleanAndroid = (projectFolder) => {
  */
 const performInserts = (name) => {
   // Add permissions for push notifications
-  const pushPermissions = `
-    <permission
-        android:name="\${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="\${applicationId}.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+  // const pushPermissions = `
+  //   <permission
+  //       android:name="\${applicationId}.permission.C2D_MESSAGE"
+  //       android:protectionLevel="signature" />
+  //   <uses-permission android:name="\${applicationId}.permission.C2D_MESSAGE" />
+  //   <uses-permission android:name="android.permission.VIBRATE" />
+  // `
+
+  const networkPermissions = `
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
   `
 
-  const appEntries = `
-      <receiver
-          android:name="com.google.android.gms.gcm.GcmReceiver"
-          android:exported="true"
-          android:permission="com.google.android.c2dm.permission.SEND" >
-          <intent-filter>
-              <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-              <category android:name="\${applicationId}" />
-          </intent-filter>
-      </receiver>
+  // const appEntries = `
+  //     <receiver
+  //         android:name="com.google.android.gms.gcm.GcmReceiver"
+  //         android:exported="true"
+  //         android:permission="com.google.android.c2dm.permission.SEND" >
+  //         <intent-filter>
+  //             <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+  //             <category android:name="\${applicationId}" />
+  //         </intent-filter>
+  //     </receiver>
 
-      <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
-      <service
-          android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
-          android:exported="false" >
-          <intent-filter>
-              <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-          </intent-filter>
-      </service>
+  //     <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
+  //     <service
+  //         android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
+  //         android:exported="false" >
+  //         <intent-filter>
+  //             <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+  //         </intent-filter>
+  //     </service>
+  // `
+
+  const enforceServicesVersion = `
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.getRequested().getGroup() == 'com.google.android.gms') {
+            // If different projects require different versions of
+            // Google Play Services it causes a crash on run.
+            // Fix by overriding version for all projects.
+            details.useVersion('9.6.1')
+        }
+    }
+}
   `
 
-  Utilities.insertInFile(`${name}/android/app/src/main/AndroidManifest.xml`, 'SYSTEM_ALERT_WINDOW', pushPermissions)
-  Utilities.insertInFile(`${name}/android/app/src/main/AndroidManifest.xml`, 'android:theme', appEntries)
+  // Push disabled for now:
+  // Utilities.insertInFile(`${name}/android/app/src/main/AndroidManifest.xml`, 'SYSTEM_ALERT_WINDOW', pushPermissions)
+  // Utilities.insertInFile(`${name}/android/app/src/main/AndroidManifest.xml`, 'android:theme', appEntries)
+  Utilities.insertInFile(`${name}/android/app/src/main/AndroidManifest.xml`, 'SYSTEM_ALERT_WINDOW', networkPermissions)
+  Utilities.insertInFile(`${name}/android/app/build.gradle`, 'task copyDownloadableDepsToLibs', enforceServicesVersion, false)
 }
 
 /**
@@ -349,7 +369,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Let's hand tweak the the android manifest,
    */
-  _updateAndroidManifest () {
+  _updateAndroid () {
     const animation = Utilities.startStep('Updating android manifest file', this)
 
     performInserts(this.name)
@@ -433,7 +453,7 @@ export class AppGenerator extends Generators.Base {
             // Push notifications code, disabled for now
             // Causing issues :(
             // update the android manifest
-            // this._updateAndroidManifest()
+            this._updateAndroid()
 
             // then update Plist
             this._updatePList()
