@@ -123,7 +123,7 @@ check_generators()
 {
   echo '~~~🌟 Running Generator Tests'
   # Note to future self: You can add more generator:locations to this list!
-  declare -a params=('component:components' 'container:containers' 'screen:containers')
+  declare -a params=('component:components' 'container:containers' 'screen:containers', 'saga:sagas', 'redux:redux')
 
   # Loop through the generators array and create the files
   for i in "${params[@]}"
