@@ -5488,40 +5488,40 @@ react@~15.3.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-reactotron-apisauce@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/reactotron-apisauce/-/reactotron-apisauce-1.2.0.tgz#5879c1b294083461ff26610ed3a71794ecf11b81"
+reactotron-apisauce@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/reactotron-apisauce/-/reactotron-apisauce-1.3.0.tgz#1dba5cc95548f1783c47015d412d8173951518d0"
   dependencies:
     apisauce "^0.5.0"
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.1.4"
+    reactotron-core-client "^1.3.0"
 
-reactotron-core-client@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.1.4.tgz#44aed60db4967918bc6e9a2b4572779c8dffaaab"
+reactotron-core-client@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.3.0.tgz#abfa7401ad76d87226579d3ebe5326364fa5e746"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
     socket.io "^1.4.8"
 
-reactotron-react-native@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-1.1.4.tgz#7ee75d444b951e8af96457ca5420c9de2b99c7d3"
+reactotron-react-native@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-1.3.0.tgz#9929720142ecffbaa913715ef3bec1dd792055fd"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.1.4"
+    reactotron-core-client "^1.3.0"
     socket.io "^1.4.8"
     socket.io-client "^1.4.8"
 
-reactotron-redux@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.1.4.tgz#03768b6db443484d020e40a3624272c29288a419"
+reactotron-redux@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.3.1.tgz#4426226ef977165985610d457d1d422f854c1d0d"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.1.4"
+    reactotron-core-client "^1.3.0"
     redux "^3.6.0"
 
 read-all-stream@^3.0.0:
