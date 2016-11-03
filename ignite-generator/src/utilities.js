@@ -97,8 +97,6 @@ export const isInFile = (theFile, theFind) => {
 *************************************************************/
 
 export const createFiles = (context, config) => {
-
-  const igniteConfig = getConfig()
   const projectUsesTests = R.path(['options', 'testing'], getConfig())
   let [appPath, testPath, jestPath] = ['./App/', './Tests/', './__tests__/']
   let dest = R.prop('destinationPath', config)
@@ -129,7 +127,7 @@ export const createFiles = (context, config) => {
   }
   // And the tests!
   if (R.prop('test', config) === true && projectUsesTests !== undefined) {
-    if (projectUsesTests == 'ava') {
+    if (projectUsesTests === 'ava') {
       copyFile(
         R.merge(config, {'destinationPath': testPath + dest + '/',
           'ext': initFilename + 'Test.js',
@@ -139,9 +137,9 @@ export const createFiles = (context, config) => {
       // project uses jest. Mocha support coming in a future release! :)
       copyFile(
         R.merge(config, {'destinationPath': jestPath + dest + '/',
-          'ext': initFilename +  'Test.js',
+          'ext': initFilename + 'Test.js',
           templatePath: filename + '.jest.template'})
       )
     }
   }
- }
+}
