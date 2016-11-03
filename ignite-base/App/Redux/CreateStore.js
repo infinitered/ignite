@@ -6,7 +6,6 @@ import createSagaMiddleware from 'redux-saga'
 import R from 'ramda'
 import RehydrationServices from '../Services/RehydrationServices'
 import ReduxPersist from '../Config/ReduxPersist'
-import { StartupTypes } from './StartupRedux'
 
 // creates the store
 export default (rootReducer, rootSaga) => {
@@ -34,25 +33,6 @@ export default (rootReducer, rootSaga) => {
     middleware.push(logger)
   }
 
-  /* ------------- Reactotron Enhancer ------------- */
-
-  // in dev, let's bring **START** with Reactotron's store enhancer
-  if (__DEV__) {
-    // only bring in Reactotron in dev mode
-    const createReactotronEnhancer = require('reactotron-redux')
-
-    // create it
-    const reactotronEnhancer = createReactotronEnhancer(console.tron, {
-      // you can flag some of your actions as important by returning true here
-      isActionImportant: (action) =>
-        action.type === StartupTypes.STARTUP,
-
-      // you can flag to exclude certain types too... especially the chatty ones
-      except: [...SAGA_LOGGING_BLACKLIST]
-    })
-    enhancers.push(reactotronEnhancer)
-  }
-
   /* ------------- Assemble Middleware ------------- */
 
   enhancers.push(applyMiddleware(...middleware))
@@ -64,7 +44,9 @@ export default (rootReducer, rootSaga) => {
     enhancers.push(autoRehydrate())
   }
 
-  const store = createStore(rootReducer, compose(...enhancers))
+  // in dev mode, we'll create the store through Reactotron
+  const createAppropriateStore = __DEV__ ? console.tron.createStore : createStore
+  const store = createAppropriateStore(rootReducer, compose(...enhancers))
 
   // configure persistStore and check reducer version number
   if (ReduxPersist.active) {
