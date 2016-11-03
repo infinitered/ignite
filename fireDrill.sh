@@ -1,5 +1,16 @@
 #! /bin/bash
 
+SOMETHING_FAILED=0
+function test_command {
+    "$@"
+    local status=$?
+    if [ $status -ne 0 ]; then
+        echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
+        SOMETHING_FAILED=1
+    fi
+    return $status
+}
+
 show_warnings()
 {
   LOGS_BASE=$(grep -rnw './ignite-base/App' -e '\s console.log' | wc -l)
@@ -65,15 +76,15 @@ lint()
     npm i -g standard
   fi
   # Check cli for compliance
-  standard ./ignite-cli/src/**.*
+  test_command standard ./ignite-cli/src/**.*
   # Check generator for compliance
-  standard ./ignite-generator/src/**.*
+  test_command standard ./ignite-generator/src/**.*
 
   # Run checks specific to ignite-base
   cd ./ignite-base
 
   # Check base app for standard compliance
-  standard ./App/**.*
+  test_command standard ./App/**.*
 
   # Return to root directory
   cd ..
@@ -88,7 +99,7 @@ flow_type_check()
   npm install flow-bin
 
   # Check base app for flow compliance
-  npm run flow
+  test_command npm run flow
 
   # Return to root directory
   cd ..
@@ -99,3 +110,14 @@ enforce_templates
 enforce_versions
 lint
 flow_type_check
+
+# Done
+if [ "$SOMETHING_FAILED" != "0" ]; then
+  echo "~~~👎 Done with errors" 1>&2
+  exit 1
+else
+  echo "~~~👍 Everything looks good!"
+  # depends on $SECONDS being part of sh
+  printf '%dh:%dm:%ds\n' $(($SECONDS/3600)) $(($SECONDS%3600/60)) $(($SECONDS%60))
+  exit 0
+fi
