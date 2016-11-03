@@ -36,7 +36,7 @@ const checkName = (project) => {
 // Early exit if the project name already exists (#349)
 const checkDir = (project) => {
   if (fs.existsSync(process.cwd() + '/' + project.toString())) {
-    console.log(`Sorry, I couldn\'t create the directory for "${project}" - it already exists. :(`)
+    console.log(`Sorry, I couldn't create the directory for "${project}" - it already exists. :(`)
     Shell.exit(1)
   };
 
@@ -49,7 +49,7 @@ const checkDir = (project) => {
 // Ensure generators are in the correct directory (#129)
 const checkIgniteDir = (type, name) => {
   if (!fs.existsSync(process.cwd() + '/App')) {
-    console.log(`Sorry, I couldn\'t make your ${type} named ${name} - I\'m not being run from an Ignite directory. :(`)
+    console.log(`Sorry, I couldn't make your ${type} named ${name} - I'm not being run from an Ignite directory. :(`)
     Shell.exit(1)
   }
 }
