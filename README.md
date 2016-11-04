@@ -88,6 +88,24 @@ For those of you unfamiliar with the new package manager Yarn, it's basically a 
 
 ![install](_art/screens.gif)
 
+## :arrow_forward: Troubleshooting
+These are some common issues you may run into while setting up Ignite. If you encounter something that is not listed here, try searching for the [issue in GitHub](https://github.com/infinitered/ignite/issues).
+
+*Android*
+   
+   * **Problem**:
+    
+       After running `react-native android` you get the following error:
+   
+           com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException: 
+           Process 'command '     /usr/lib/jvm/java-8-oracle/bin/java'' finished with non-zero exit value 2
+   
+       Solution:
+       
+           cd android
+           ./gradlew clean
+
+
 ## :arrow_up: Built-In Generators
 
 #### Generate an app: `ignite new MyApplication`
