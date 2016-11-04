@@ -66,6 +66,8 @@ or
 
 `yarn global add react-native-ignite`
 
+NOTE: If you seem to not have `ignite` available on your path, check that your correct yarn bin directory is on your path by checking that the output of `yarn global bin` is listed as a directory in `$PATH` environment variable.
+
 For those of you unfamiliar with the new package manager Yarn, it's basically a 1 for 1 replacement for npm, but with a significant speed boost. Check out this [yarn cheatsheet](https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc#.1ckrhd77a) for more info.
 
 **Step 2: Use**
