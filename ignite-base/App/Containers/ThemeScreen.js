@@ -15,7 +15,7 @@ const types = R.keys(Fonts.type)
 // Font Styles
 const fontStyles = R.keys(Fonts.style)
 
-export default class UsageExamplesScreen extends React.Component {
+export default class ThemeScreen extends React.Component {
 
   renderColor (color: string) {
     return (
