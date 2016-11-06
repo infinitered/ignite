@@ -94,16 +94,16 @@ For those of you unfamiliar with the new package manager Yarn, it's basically a 
 These are some common issues you may run into while setting up Ignite. If you encounter something that is not listed here, try searching for the [issue in GitHub](https://github.com/infinitered/ignite/issues).
 
 *Android*
-   
+
    * **Problem**:
-    
+
        After running `react-native android` you get the following error:
-   
-           com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException: 
+
+           com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException:
            Process 'command '     /usr/lib/jvm/java-8-oracle/bin/java'' finished with non-zero exit value 2
-   
+
        Solution:
-       
+
            cd android
            ./gradlew clean
 
@@ -124,6 +124,12 @@ These are some common issues you may run into while setting up Ignite. If you en
 
 #### Generate a listview: `ignite generate listview HotDates`
 * React Native listview container with easy step-by-step instructions on how to get started with an easy list template.
+
+#### Generate a redux: `ignite generate redux Login`
+* Generate a reducer with three actions and three types: `request`, `success` and `failure`, all hooked together into a reducer.
+
+#### Generate a saga: `ignite generate saga Login`
+* Generate a saga - the generated example handles connecting to a third party api. Designed for use in tandem with redux generator.
 
 #### Generate a mapview: `ignite generate mapview MapScreen`
 * react-native-maps container, component, and map helpers with easy step-by-step instructions on how to get started with an simple map screen.
