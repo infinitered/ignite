@@ -37,7 +37,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-export const performSearch = (state: Object, searchTerm: string) => {
+export const performSearch = (state: Object, { searchTerm }: Object) => {
   const results = filter(startsWith(searchTerm), LIST_DATA)
   return state.merge({ searching: true, searchTerm, results })
 }
