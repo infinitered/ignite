@@ -39,9 +39,9 @@ export default {
     )
   },
 
-  searchButton (callbackFunction) {
+  searchButton (callback: Function) {
     return (
-      <TouchableOpacity onPress={callbackFunction}>
+      <TouchableOpacity onPress={callback}>
         <Icon name='search'
           size={Metrics.icons.small}
           color={Colors.snow}
