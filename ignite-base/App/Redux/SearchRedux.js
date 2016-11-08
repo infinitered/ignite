@@ -2,7 +2,7 @@
 
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { filter, map, toLower } from 'ramda'
+import { filter } from 'ramda'
 import { startsWith } from 'ramdasauce'
 
 const LIST_DATA = ['sausage', 'blubber', 'pencil', 'cloud', 'moon', 'water', 'computer', 'school',
@@ -38,11 +38,7 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 export const performSearch = (state: Object, { searchTerm }: String) => {
-  // Lowercase all items in WORDS & the searchTerm so that search is case insensitive
-  const lowercaseData = map((word) => toLower(word), LIST_DATA)
-  const lowercaseSearchTerm = toLower(searchTerm)
-  // Filter LIST_DATA and return a new list of each element that `startsWith` searchTerm
-  const results = filter(startsWith(lowercaseSearchTerm), lowercaseData)
+  const results = filter(startsWith(searchTerm), LIST_DATA)
   return state.merge({ searching: true, searchTerm, results })
 }
 
