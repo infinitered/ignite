@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './Styles/SearchBarStyle'
 import I18n from 'react-native-i18n'
 import { Colors, Metrics } from '../Themes/'
@@ -19,6 +19,7 @@ export default class SearchBar extends React.Component {
     const onSubmitEditing = () => onSearch(searchTerm)
     return (
       <Animatable.View animation='slideInRight' duration={250} style={styles.container}>
+        <Icon name='search' size={Metrics.icons.tiny} style={styles.searchIcon} />
         <TextInput
           ref='searchText'
           autoFocus
@@ -34,13 +35,6 @@ export default class SearchBar extends React.Component {
           autoCorrect={false}
           selectionColor={Colors.snow}
         />
-        <View style={styles.searchIconContainer}>
-          <Icon
-            name='search'
-            size={Metrics.icons.tiny}
-            style={styles.searchIcon}
-          />
-        </View>
         <TouchableOpacity onPress={onCancel} style={styles.cancelButton}>
           <Text style={styles.buttonLabel}>{I18n.t('cancel')}</Text>
         </TouchableOpacity>

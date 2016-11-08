@@ -7,14 +7,13 @@ export default StyleSheet.create({
     marginTop: Metrics.smallMargin,
     backgroundColor: Colors.transparent,
     flexDirection: 'row',
-    width: Metrics.screenWidth - Metrics.baseMargin,
-    justifyContent: 'center'
+    width: Metrics.screenWidth - Metrics.baseMargin
   },
   searchInput: {
     flex: 5,
     height: Metrics.searchBarHeight,
     alignSelf: 'center',
-    margin: Metrics.smallMargin,
+    padding: Metrics.smallMargin,
     textAlign: 'left',
     fontFamily: Fonts.type.base,
     fontSize: Fonts.size.instructions,
@@ -23,16 +22,11 @@ export default StyleSheet.create({
     borderColor: Colors.snow,
     paddingLeft: 30,
     color: Colors.snow,
-    marginLeft: Metrics.baseMargin
-  },
-  searchIconContainer: {
-    position: 'absolute',
-    height: 40,
-    left: Metrics.doubleBaseMargin,
-    top: 7,
-    justifyContent: 'center'
+    flexDirection: 'row'
   },
   searchIcon: {
+    left: Metrics.doubleBaseMargin,
+    alignSelf: 'center',
     color: Colors.snow,
     backgroundColor: Colors.transparent
   },
