@@ -33,7 +33,7 @@ function test_command {
     local status=$?
     if [ $status -ne 0 ]; then
         echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
-        SOMETHING_FAILED=1
+        SOMETHING_FAILED=$1
     fi
     return $status
 }
@@ -123,7 +123,7 @@ check_generators()
 {
   echo '~~~🌟 Running Generator Tests'
   # Note to future self: You can add more generator:locations to this list!
-  declare -a params=('component:components' 'container:containers' 'screen:containers')
+  declare -a params=('component:components' 'container:containers' 'screen:containers' 'saga:sagas' 'redux:redux')
 
   # Loop through the generators array and create the files
   for i in "${params[@]}"
@@ -137,13 +137,16 @@ check_generators()
   for i in "${params[@]}"
     do
       IFS=':' read -a split <<< "${i}"
-      if [ ! -f 'App/'${split[1]}/'tester'${split[0]}'.js' ]; then
-        echo ${split[0]} 'testing failed:' ${split[0]} 'js file was not generated.'
+      if [ ! -f 'App/'${split[1]}/'tester'${split[0]}*'.js' ]; then
+        echo '👎 👎 👎 👎 👎 👎 👎 👎' ${split[0]} 'testing failed:' ${split[0]} 'js file was not generated in' ${split[1]} 'folder.'
         SOMETHING_FAILED=1
       fi
-      if [ ! -f 'App/'${split[1]}'/Styles/tester'${split[0]}'Style.js' ]; then
-        echo ${split[0]} ' testing failed:' ${split[0]} 'style file not generated.'
-        SOMETHING_FAILED=1
+      # Check styles for certain types
+      if [[ '${split[0]}' == 'component' || '${split[0]}' == 'container' || '${split[0]}' == 'screen' ]]; then
+        if [ ! -f 'App/'${split[1]}'/Styles/tester'${split[0]}'Style.js' ]; then
+          echo '👎 👎 👎 👎 👎 👎 👎 👎' ${split[0]} ' testing failed:' ${split[0]} 'style file not generated in' ${split[1]} 'folder.'
+          SOMETHING_FAILED=1
+        fi
       fi
     done
 }
@@ -159,6 +162,7 @@ clean_up $1 $2
 # Done
 if [ "$SOMETHING_FAILED" != "0" ]; then
   echo "~~~👎 Done with errors" 1>&2
+  echo "$SOMETHING_FAILED"
   exit 1
 else
   echo "~~~👍 Everything looks good!"
