@@ -19,9 +19,9 @@ export default {
     return (
       <TouchableOpacity onPress={NavigationActions.pop}>
         <Icon name='angle-left'
-          size={Metrics.icons.medium}
+          size={Metrics.icons.large}
           color={Colors.snow}
-          style={styles.navButtonLeft}
+          style={styles.backButton}
         />
       </TouchableOpacity>
     )
@@ -41,7 +41,7 @@ export default {
 
   searchButton (callbackFunction) {
     return (
-      <TouchableOpacity style={{justifyContent: 'center'}} onPress={callbackFunction}>
+      <TouchableOpacity onPress={callbackFunction}>
         <Icon name='search'
           size={Metrics.icons.small}
           color={Colors.snow}
