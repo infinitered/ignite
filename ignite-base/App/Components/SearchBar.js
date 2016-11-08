@@ -28,7 +28,6 @@ export default class SearchBar extends React.Component {
           style={styles.searchInput}
           value={this.props.searchTerm}
           onChangeText={onSearch}
-          autoCapitalize='none'
           onSubmitEditing={onSubmitEditing}
           returnKeyType={'search'}
           autoCorrect={false}
