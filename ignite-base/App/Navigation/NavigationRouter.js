@@ -5,7 +5,7 @@ import { Scene, Router } from 'react-native-router-flux'
 import Styles from './Styles/NavigationContainerStyle'
 import NavigationDrawer from './NavigationDrawer'
 import NavItems from './NavItems'
-import CustomNavBar from '../Components/CustomNavBar'
+import CustomNavBar from '../Navigation/CustomNavBar'
 
 // screens identified by the router
 import PresentationScreen from '../Containers/PresentationScreen'
@@ -15,6 +15,7 @@ import LoginScreen from '../Containers/LoginScreen'
 import ListviewExample from '../Containers/ListviewExample'
 import ListviewGridExample from '../Containers/ListviewGridExample'
 import ListviewSectionsExample from '../Containers/ListviewSectionsExample'
+import ListviewSearchingExample from '../Containers/ListviewSearchingExample'
 import MapviewExample from '../Containers/MapviewExample'
 import APITestingScreen from '../Containers/APITestingScreen'
 import ThemeScreen from '../Containers/ThemeScreen'
@@ -37,12 +38,13 @@ class NavigationRouter extends Component {
             <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
             <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
             <Scene key='listviewSectionsExample' component={ListviewSectionsExample} title='Listview Sections' />
+            <Scene key='listviewSearchingExample' component={ListviewSearchingExample} title='Listview Searching' navBar={CustomNavBar} />
             <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='theme' component={ThemeScreen} title='Theme' />
 
             {/* Custom navigation bar example */}
-            <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' navBar={CustomNavBar} />
+            <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
           </Scene>
         </Scene>
       </Router>

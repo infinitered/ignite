@@ -114,18 +114,11 @@ class UsageExamplesScreen extends React.Component {
           </Animatable.View>
         </View>
         {this.renderHeader(I18n.t('igniteGenerated'))}
-        <View>
-          <RoundedButton text='Listview' onPress={NavigationActions.listviewExample} />
-        </View>
-        <View>
-          <RoundedButton text='Listview Grid' onPress={NavigationActions.listviewGridExample} />
-        </View>
-        <View>
-          <RoundedButton text='Listview Sections' onPress={NavigationActions.listviewSectionsExample} />
-        </View>
-        <View>
-          <RoundedButton text='Mapview' onPress={NavigationActions.mapviewExample} />
-        </View>
+        <RoundedButton text='Listview' onPress={NavigationActions.listviewExample} />
+        <RoundedButton text='Listview Grid' onPress={NavigationActions.listviewGridExample} />
+        <RoundedButton text='Listview Sections' onPress={NavigationActions.listviewSectionsExample} />
+        <RoundedButton text='Listview Searching' onPress={NavigationActions.listviewSearchingExample} />
+        <RoundedButton text='Mapview' onPress={NavigationActions.mapviewExample} />
       </View>
     )
   }
