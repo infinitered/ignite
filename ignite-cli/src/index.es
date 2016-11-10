@@ -7,6 +7,7 @@ import Shell from 'shelljs'
 import spawn from 'cross-spawn'
 import R from 'ramda'
 import updateNotifier from 'update-notifier'
+import exists from 'npm-exists'
 import * as fs from 'fs'
 
 const FIRE = colors.red('FIRE!')
@@ -135,6 +136,26 @@ Program
       // RUN `npm i -g react-native-ignite --silent`
       spawn('npm', ['i', '-g', 'react-native-ignite', '--silent'], {shell: true, stdio: 'inherit'})
     }
+  })
+
+// add plugin
+Program
+  .command('add <plugin>')
+  .description('add a designated ignite plugin')
+  .alias('a')
+  .action((plugin) => {
+    checkYo()
+    const moduleName = `ignite-${plugin}`
+    exists(moduleName)
+      .then((moduleExists) => {
+        if (moduleExists) {
+          console.log(`Adding ${plugin}`)
+          spawn('npm', ['i', `${moduleName}`, '--save'], { shell: true, stdio: 'inherit' })
+        } else {
+          console.error(colors.red("We couldn't find that ignite plugin"))
+          console.warn(`Please make sure ${moduleName} exists on the NPM registry`)
+        }
+      })
   })
 
 // import
