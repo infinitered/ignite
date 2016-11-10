@@ -15,23 +15,14 @@
 # Ignore BUCK generated dirs
 <PROJECT_ROOT>/\.buckd/
 
+# Ignore unexpected extra @providesModule
+.*/node_modules/commoner/test/source/widget/share.js
+
 # Ignore duplicate module providers
 # For RN Apps installed via npm, "Libraries" folder is inside node_modules/react-native but in the source repo it is in the root
 .*/Libraries/react-native/React.js
 .*/Libraries/react-native/ReactNative.js
 .*/node_modules/jest-runtime/build/__tests__/.*
-.*/node_modules/commoner/test/source/widget/share.js
-
-# Ignore failing node_modules
-.*/node_modules/react-native/Libraries/NavigationExperimental/*
-.*/node_modules/react-native/Libraries/CustomComponents/NavigationExperimental/*
-.*/node_modules/react-native/Libraries/Experimental/SwipeableRow/*
-.*/node_modules/react-native-experimental-navigation/*
-.*/node_modules/findup/test/fixture/config.json
-.*/node_modules/findup/test/fixture/f/e/d/c/b/a/top.json
-.*/node_modules/findup/test/fixture/f/e/d/c/config.json
-.*/node_modules/react-static-container/lib/StaticContainer.react.js
-.*/node_modules/react-native/Libraries/ReactIOS/YellowBox.js
 
 [include]
 
@@ -64,4 +55,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 unsafe.enable_getters_and_setters=true
 
 [version]
-^0.33.0
+^0.34.0
