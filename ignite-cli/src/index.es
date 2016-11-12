@@ -151,6 +151,11 @@ Program
         if (moduleExists) {
           console.log(`Adding ${plugin}`)
           spawn('npm', ['i', `${moduleName}`, '--save'], { shell: true, stdio: 'inherit' })
+            .on('close', (retCode) => {
+              console.log('OK now trying to initialize')
+              const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
+              newModule.initialize()
+            })
         } else {
           console.error(colors.red("We couldn't find that ignite plugin"))
           console.warn(`Please make sure ${moduleName} exists on the NPM registry`)
