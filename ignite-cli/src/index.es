@@ -154,7 +154,11 @@ Program
             .on('close', (retCode) => {
               console.log('OK now trying to initialize')
               const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-              newModule.initialize()
+              const igniteConfig = require(`${process.cwd()}/.ignite`)
+              const updatedConfig = newModule.initialize(igniteConfig)
+              if (updatedConfig) {
+                console.log('SUCCESS!', updatedConfig)
+              }
             })
         } else {
           console.error(colors.red("We couldn't find that ignite plugin"))
