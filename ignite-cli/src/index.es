@@ -154,10 +154,15 @@ Program
             .on('close', (retCode) => {
               console.log('OK now trying to initialize')
               const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-              const igniteConfig = require(`${process.cwd()}/.ignite`)
+              const igniteConfigPath = `${process.cwd()}/.ignite`
+              const igniteConfig = require(igniteConfigPath)
               const updatedConfig = newModule.initialize(igniteConfig)
               if (updatedConfig) {
-                console.log('SUCCESS!', updatedConfig)
+                const newConfig = `module.exports = ${JSON.stringify(updatedConfig)}`
+                console.log('SUCCESS!', newConfig)
+                // write updated file
+                const fs = require('fs')
+                fs.writeFile(igniteConfigPath, newConfig)
               }
             })
         } else {
