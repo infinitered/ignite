@@ -5515,9 +5515,19 @@ reactotron-react-native@^1.3.0:
     socket.io "^1.4.8"
     socket.io-client "^1.4.8"
 
-reactotron-redux@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.3.1.tgz#4426226ef977165985610d457d1d422f854c1d0d"
+reactotron-redux-saga@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.4.0.tgz#21df159b4183df78c14291575eb0a4ceb7bd86c8"
+  dependencies:
+    ramda "^0.22.1"
+    ramdasauce "^1.1.1"
+    reactotron-core-client "^1.3.0"
+    redux "^3.6.0"
+    redux-saga "^0.12.1"
+
+reactotron-redux@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.4.0.tgz#9fb61f64e3a13a3266fe8e353b43c99d7d3ded8f"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
@@ -5650,9 +5660,9 @@ redux-persist@^3.5.0:
     json-stringify-safe "^5.0.1"
     lodash "^4.11.1"
 
-redux-saga@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.11.1.tgz#dc2023d059af0b91c0b1b4febce21194b67d5a58"
+redux-saga@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.12.1.tgz#79c9263d67486fd26a7a3d3b9df8ed65057a9fc6"
 
 redux@^3.6.0:
   version "3.6.0"

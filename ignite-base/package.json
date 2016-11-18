@@ -40,7 +40,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.4.0",
     "redux-persist": "^3.5.0",
-    "redux-saga": "^0.11.1",
+    "redux-saga": "^0.13.0",
     "reduxsauce": "0.2.0",
     "seamless-immutable": "^6.1.0"
   },
@@ -56,9 +56,10 @@
     "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-native-mock": "^0.2.7",
-    "reactotron-apisauce": "^1.3.0",
-    "reactotron-react-native": "^1.3.0",
-    "reactotron-redux": "^1.3.1",
+    "reactotron-apisauce": "^1.5.2",
+    "reactotron-react-native": "^1.5.2",
+    "reactotron-redux": "^1.5.2",
+    "reactotron-redux-saga": "^1.5.2",
     "snazzy": "^5.0.0",
     "standard-flow": "^1.0.0"
   },
