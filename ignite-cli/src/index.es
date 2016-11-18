@@ -11,6 +11,16 @@ import exists from 'npm-exists'
 import * as fs from 'fs'
 
 const FIRE = colors.red('FIRE!')
+const igniteConfigPath = `${process.cwd()}/.ignite`
+
+const getIgniteConfig = (igniteConfigFilePath) => {
+  try {
+    return require(igniteConfigFilePath)
+  } catch (e) {
+    console.log(colors.red('No `.ignite` file found - This might affect your experience'))
+    return {}
+  }
+}
 
 const checkYo = () => {
   if (!Shell.which('yo')) {
@@ -117,8 +127,12 @@ Program
   .action((type, name) => {
     checkYo()
     checkIgniteDir(type, name)
+    const igniteConfig = getIgniteConfig(igniteConfigPath)
+    console.log('Here is the config', igniteConfig)
+    const command = igniteConfig.generators[type]
+    console.log('Here is the result of that command', command)
     console.log(`Generate a new ${type} named ${name}`)
-    spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
+    // spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
 
 // Update
@@ -154,8 +168,7 @@ Program
             .on('close', (retCode) => {
               console.log('OK now trying to initialize')
               const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-              const igniteConfigPath = `${process.cwd()}/.ignite`
-              const igniteConfig = require(igniteConfigPath)
+              const igniteConfig = getIgniteConfig(igniteConfigPath)
               const updatedConfig = newModule.initialize(igniteConfig)
               if (updatedConfig) {
                 const newConfig = `module.exports = ${JSON.stringify(updatedConfig)}`
