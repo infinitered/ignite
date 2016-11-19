@@ -9,6 +9,7 @@ import R from 'ramda'
 import updateNotifier from 'update-notifier'
 import exists from 'npm-exists'
 import * as fs from 'fs'
+import yeoman from 'yeoman-environment'
 
 const FIRE = colors.red('FIRE!')
 const igniteConfigPath = `${process.cwd()}/.ignite`
@@ -129,12 +130,18 @@ Program
     checkIgniteDir(type, name)
     const igniteConfig = getIgniteConfig(igniteConfigPath)
     console.log('Here is the config', igniteConfig)
+    const commandNamespace = `ignite:${type}`
     const command = igniteConfig.generators[type]
     console.log('Here is the result of that command', command)
-    const generatorModule = require(`${process.cwd()}/node_modules/${command}`)
-    console.log('Generator Module', generatorModule)
-    //generatorModule
+    const env = yeoman.createEnv()
+    const generatorModulePath = `${process.cwd()}/node_modules/${command}`
+    console.log('Generator Module', generatorModulePath)
+    env.register(generatorModulePath, commandNamespace)
     console.log(`Generate a new ${type} named ${name}`)
+    env.run(`${commandNamespace} ${name}`, {}, err => {
+      if (err) console.log(err)
+      console.log('DONERZ!!!!')
+    })
     // spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
 
