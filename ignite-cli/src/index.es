@@ -129,18 +129,18 @@ Program
     checkYo()
     checkIgniteDir(type, name)
     const igniteConfig = getIgniteConfig(igniteConfigPath)
-    console.log('Here is the config', igniteConfig)
     const commandNamespace = `ignite:${type}`
     const command = igniteConfig.generators[type]
-    console.log('Here is the result of that command', command)
     const env = yeoman.createEnv()
     const generatorModulePath = `${process.cwd()}/node_modules/${command}`
-    console.log('Generator Module', generatorModulePath)
     env.register(generatorModulePath, commandNamespace)
     console.log(`Generate a new ${type} named ${name}`)
     env.run(`${commandNamespace} ${name}`, {}, err => {
-      if (err) console.log(err)
-      console.log('DONERZ!!!!')
+      if (err) {
+        console.log(err)
+      } else {
+        console.log('Time to get cooking! 🍽 ')
+      }
     })
     // spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
   })
@@ -176,13 +176,11 @@ Program
           console.log(`Adding ${plugin}`)
           spawn('npm', ['i', `${moduleName}`, '--save'], { shell: true, stdio: 'inherit' })
             .on('close', (retCode) => {
-              console.log('OK now trying to initialize')
               const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
               const igniteConfig = getIgniteConfig(igniteConfigPath)
               const updatedConfig = newModule.initialize(igniteConfig)
               if (updatedConfig) {
                 const newConfig = `module.exports = ${JSON.stringify(updatedConfig)}`
-                console.log('SUCCESS!', newConfig)
                 // write updated file
                 const fs = require('fs')
                 fs.writeFile(igniteConfigPath, newConfig)
