@@ -162,18 +162,23 @@ Program
     const igniteConfig = getIgniteConfig(igniteConfigPath)
     const commandNamespace = `ignite:${type}`
     const command = igniteConfig.generators[type]
-    const env = yeoman.createEnv()
-    const generatorModulePath = `${process.cwd()}/node_modules/${command}`
-    env.register(generatorModulePath, commandNamespace)
-    console.log(`Generate a new ${type} named ${name}`)
-    env.run(`${commandNamespace} ${name}`, {}, err => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log('Time to get cooking! 🍽 ')
-      }
-    })
-    // spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
+    if (command) {
+      const env = yeoman.createEnv()
+      const generatorModulePath = `${process.cwd()}/node_modules/${command}`
+      env.register(generatorModulePath, commandNamespace)
+      console.log(`Generate a new ${type} named ${name}`)
+      env.run(`${commandNamespace} ${name}`, {}, err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Time to get cooking! 🍽 ')
+        }
+      })
+    } else {
+      console.log(colors.yellow('DEPRECATED: Generator not found attempting older method.'))
+      console.log('These generators will be removed in version 2.0')
+      spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
+    }
   })
 
 // Update
