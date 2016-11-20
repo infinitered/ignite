@@ -10,9 +10,40 @@ import updateNotifier from 'update-notifier'
 import exists from 'npm-exists'
 import * as fs from 'fs'
 import yeoman from 'yeoman-environment'
+import readline from 'readline'
 
 const FIRE = colors.red('FIRE!')
 const igniteConfigPath = `${process.cwd()}/.ignite`
+
+// Optional - could be used for changes warnings
+const detectedChanges = (oldObject, newObject) => {
+  let oldKeys = R.keys(oldObject)
+  let newKeys = R.keys(newObject)
+  const inter = R.intersection(oldKeys, newKeys)
+  return R.reduce((acc, k) => {
+    if (oldObject[k] !== newObject[k]) {
+      return R.concat([`'${k}'`], acc)
+    }
+    return acc
+  }, [], inter)
+}
+
+const verifyAddedGenerators = (oldIgniteConfig, newIgniteConfig, callback) => {
+  const changes = detectedChanges(oldIgniteConfig, newIgniteConfig)
+  let pluginGood = true
+  if (changes.length > 0) {
+    console.log(colors.red(`The following generators would be changed: ${R.join(', ', changes)}`))
+
+    var rl = readline.createInterface(process.stdin, process.stdout)
+    rl.question('Do you want to proceed overwriting these generators? (y/n): ', (answer) => {
+      if (answer.match(/n/ig)) pluginGood = false
+      callback(pluginGood)
+      rl.close()
+    })
+  } else {
+    callback(pluginGood)
+  }
+}
 
 const getIgniteConfig = (igniteConfigFilePath) => {
   try {
@@ -178,13 +209,18 @@ Program
             .on('close', (retCode) => {
               const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
               const igniteConfig = getIgniteConfig(igniteConfigPath)
+              // must clone at this level, bc object of objects is ref
+              const originalGenerators = Object.assign({}, igniteConfig.generators)
               const updatedConfig = newModule.initialize(igniteConfig)
-              if (updatedConfig) {
-                const newConfig = `module.exports = ${JSON.stringify(updatedConfig)}`
-                // write updated file
-                const fs = require('fs')
-                fs.writeFile(igniteConfigPath, newConfig)
-              }
+              verifyAddedGenerators(originalGenerators, updatedConfig.generators, (performUpdate) => {
+                if (performUpdate) {
+                  const newConfig = `module.exports = ${JSON.stringify(updatedConfig)}`
+                  // write updated file
+                  const fs = require('fs')
+                  fs.writeFile(igniteConfigPath, newConfig)
+                  console.log(`Added ${plugin}`)
+                }
+              })
             })
         } else {
           console.error(colors.red("We couldn't find that ignite plugin"))
