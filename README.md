@@ -108,7 +108,7 @@ These are some common issues you may run into while setting up Ignite. If you en
            ./gradlew clean
 
 
-## :arrow_up: Built-In Generators
+## :arrow_up: Built-In Generators (Deprecated in favor of Plugin Generators in upcoming 2.0)
 
 #### Generate an app: `ignite new MyApplication`
 * The application generator uses the `ignite-base` template to provide a fresh application with all the common tech wired up and ready to roll.  Base applications come with common development screens, tools, and components.  _As for now, this is a 'Kitchen Sink' plan of attack.  Eventually to be pared down, and adjustable in v2.0_
