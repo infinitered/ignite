@@ -95,8 +95,8 @@ flow_type_check()
   # Run checks specific to ignite-base
   cd ./ignite-base
 
-  # Ensure flow installed
-  npm install flow-bin
+  # Ensure node modules installed
+  npm install
 
   # Check base app for flow compliance
   test_command npm run flow
