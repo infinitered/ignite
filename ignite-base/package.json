@@ -51,6 +51,7 @@
     "enzyme": "^2.3.0",
     "flow-bin": "^0.33.0",
     "ghooks": "^1.3.2",
+    "ignite-basic-generators": "0.0.9",
     "mockery": "^1.7.0",
     "nyc": "^8.1.0",
     "react-addons-test-utils": "^15.3.2",
