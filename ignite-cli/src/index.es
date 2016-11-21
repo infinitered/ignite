@@ -210,7 +210,7 @@ Program
       .then((moduleExists) => {
         if (moduleExists) {
           console.log(`Adding ${plugin}`)
-          spawn('npm', ['i', `${moduleName}`, '--save'], { shell: true, stdio: 'inherit' })
+          spawn('npm', ['i', `${moduleName}`, '--save-dev'], { shell: true, stdio: 'inherit' })
             .on('close', (retCode) => {
               const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
               const igniteConfig = getIgniteConfig(igniteConfigPath)
