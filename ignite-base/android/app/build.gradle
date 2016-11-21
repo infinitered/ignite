@@ -150,7 +150,7 @@ configurations.all {
             // If different projects require different versions of
             // Google Play Services it causes a crash on run.
             // Fix by overriding version for all projects.
-            details.useVersion('9.8.75')
+            details.useVersion('9.6.1')
         }
     }
 }
