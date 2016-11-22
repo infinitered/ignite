@@ -22,8 +22,8 @@ import * as Utilities from '../utilities'
 import ora from 'ora'
 
 const igniteBase = 'ignite-base'
-const lockedReactNativeVersion = '0.36.0'
-const lockedIgniteVersion = '1.11.0'
+const lockedReactNativeVersion = '0.37.0'
+const lockedIgniteVersion = '1.12.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
