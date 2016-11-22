@@ -42,6 +42,12 @@ const cleanAndroid = (projectFolder) => {
   Shell.cd('../..')
 }
 
+// This step needed as of Ignite 1.11.0 and RN 0.37.0
+// This wasn't necessary before, might need to be removed at some point
+const removeJestTests = (projectFolder) => {
+  Shell.rm('-rf', `${projectFolder}/__tests__`)
+}
+
 /**
  * Doctors the AndroidManifest.xml to put in the stuff we need.
  */
@@ -396,6 +402,7 @@ export class AppGenerator extends Generators.Base {
 
     emptyFolder(this.sourceRoot())
     cleanAndroid(this.name)
+    removeJestTests(this.name)
 
     animation.finish()
   }
