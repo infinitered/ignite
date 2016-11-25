@@ -16,7 +16,7 @@ const xmark = colors.red('𝗫')
 // Get ignite config file
 export const getConfig = () => {
   try {
-    return require(`${Shell.pwd()}/.ignite`)
+    return require(`${Shell.pwd()}/ignite/ignite.json`)
   } catch (e) {
     return null
   }
