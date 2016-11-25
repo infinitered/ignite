@@ -223,7 +223,10 @@ Program
                   // write updated file
                   const fs = require('fs')
                   fs.writeFile(igniteConfigPath, newConfig)
-                  console.log(`Added ${plugin}`)
+                  // apply any additional steps defined by the plugin
+                  newModule.apply(() => {
+                    console.log(`Added ${plugin}`)
+                  })
                 }
               })
             })
