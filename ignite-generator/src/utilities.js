@@ -121,8 +121,8 @@ export const createFiles = (context, config) => {
   if (R.prop('style', config) === true) {
     copyFile(
       R.merge(config, {'destinationPath': appPath + dest + '/Styles/',
-      'ext': initFilename + 'Style.js',
-      'templatePath': filename + '.style.template'})
+        'ext': initFilename + 'Style.js',
+        'templatePath': filename + '.style.template'})
     )
   }
   // And the tests!
