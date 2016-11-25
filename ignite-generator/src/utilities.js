@@ -103,7 +103,7 @@ export const createFiles = (context, config) => {
   let filename = R.split('.', R.prop('templatePath', config))[0]
   let initFilename = R.toUpper(R.head(filename)) + R.slice(1, Infinity, filename) // ie. Initial Letter Capitalized
 
-  const copyFile = obj => context.fs.copyTpl(
+  const copyFile = (obj) => context.fs.copyTpl(
     context.templatePath(obj.templatePath),
     context.destinationPath(obj.destinationPath + context.name + obj.ext),
     { name: context.name }

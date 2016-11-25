@@ -22,8 +22,8 @@ import * as Utilities from '../utilities'
 import ora from 'ora'
 
 const igniteBase = 'ignite-base'
-const lockedReactNativeVersion = '0.36.0'
-const lockedIgniteVersion = '1.11.0'
+const lockedReactNativeVersion = '0.37.0'
+const lockedIgniteVersion = '1.12.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
@@ -40,6 +40,12 @@ const cleanAndroid = (projectFolder) => {
     Shell.exec('./gradlew clean > /dev/null')
   }
   Shell.cd('../..')
+}
+
+// This step needed as of Ignite 1.11.0 and RN 0.37.0
+// This wasn't necessary before, might need to be removed at some point
+const removeJestTests = (projectFolder) => {
+  Shell.rm('-rf', `${projectFolder}/__tests__`)
 }
 
 /**
@@ -396,6 +402,7 @@ export class AppGenerator extends Generators.Base {
 
     emptyFolder(this.sourceRoot())
     cleanAndroid(this.name)
+    removeJestTests(this.name)
 
     animation.finish()
   }

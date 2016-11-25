@@ -29,7 +29,6 @@ const create = (baseURL = 'http://api.openweathermap.org/data/2.5/') => {
   // additional monitors in the future.  But only in __DEV__ and only
   // if we've attached Reactotron to console (it isn't during unit tests).
   if (__DEV__ && console.tron) {
-    console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
     api.addMonitor(console.tron.apisauce)
   }
 
