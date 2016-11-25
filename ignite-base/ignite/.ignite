@@ -1,0 +1,15 @@
+module.exports = {
+  igniteVersion: '<%= igniteVersion %>',
+  reactNativeVersion: '<%= reactNativeVersion %>',
+  options: {
+    testing: 'ava'
+  },
+  generators: {
+      component:"ignite-basic-generators/component/",
+      container:"ignite-basic-generators/container/",
+      screen:"ignite-basic-generators/screen/",
+      redux:"ignite-basic-generators/redux/",
+      saga:"ignite-basic-generators/saga/",
+      listview:"ignite-basic-generators/listview/"
+  }
+}
