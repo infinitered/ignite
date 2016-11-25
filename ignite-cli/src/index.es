@@ -13,7 +13,7 @@ import yeoman from 'yeoman-environment'
 import readline from 'readline'
 
 const FIRE = colors.red('FIRE!')
-const igniteConfigPath = `${process.cwd()}/ignite/.ignite`
+const igniteConfigPath = `${process.cwd()}/ignite/ignite.json`
 
 // Optional - could be used for changes warnings
 const detectedChanges = (oldObject, newObject) => {
@@ -49,7 +49,7 @@ const getIgniteConfig = (igniteConfigFilePath) => {
   try {
     return require(igniteConfigFilePath)
   } catch (e) {
-    console.log(colors.red('No `./ignite/.ignite` file found - This might affect your experience'))
+    console.log(colors.red('No `./ignite/ignite.json` file found - This might affect your experience'))
     return {}
   }
 }

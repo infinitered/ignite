@@ -355,16 +355,16 @@ export class AppGenerator extends Generators.Base {
   copyExistingStuff () {
     const animation = Utilities.startStep('Copying Ignite goodies', this)
 
+    this._cpDirectory('ignite')
     this._cpDirectory('git_hooks')
     this._cpDirectory('Tests')
     this._cpDirectory('App')
     this._cpDirectory('fastlane')
-    this._cpDirectory('ignite')
     this._cpTemplate('README.md')
     this._cpTemplate('package.json')
     this._cpTemplate('.babelrc')
     this._cpTemplate('.env')
-    this._cpFile('.ignite.template', 'ignite/.ignite')
+    this._cpFile('ignite.json.template', 'ignite/ignite.json')
     this._cpFile('index.js.template', 'index.ios.js')
     this._cpFile('index.js.template', 'index.android.js')
     this._cpFile('index.js.template', 'index.android.js')
