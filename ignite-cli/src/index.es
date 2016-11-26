@@ -159,6 +159,7 @@ Program
   .action((type, name) => {
     checkYo()
     checkIgniteDir(type, name)
+    // const generatorSporked = checkForSporkedGen(name)
     const igniteConfig = getIgniteConfig(igniteConfigPath)
     const commandNamespace = `ignite:${type}`
     const command = igniteConfig.generators[type]
@@ -250,8 +251,10 @@ Program
     const genPath = igniteConfig.generators[generator]
     if (genPath) {
       console.log(`It is my ambition to spork ${genPath}`)
+      // make a home for the generator
+      Shell.mkdir('-p', `${process.cwd()}/ignite/generators/${generator}`)
       // Copy over generator
-      Shell.cp('-R', `${process.cwd()}/node_modules/${genPath}`, `${process.cwd()}/ignite/${generator}`)
+      Shell.cp('-R', `${process.cwd()}/node_modules/${genPath}`, `${process.cwd()}/ignite/generators/${generator}`)
       // Kill folders that cannot/should not come down with sporking
       Shell.rm('-rf', `${process.cwd()}/ignite/node_modules`)
       Shell.rm('-rf', `${process.cwd()}/ignite/package.json`)
