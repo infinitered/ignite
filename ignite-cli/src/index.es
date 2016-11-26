@@ -233,8 +233,34 @@ Program
         } else {
           console.error(colors.red("We couldn't find that ignite plugin"))
           console.warn(`Please make sure ${moduleName} exists on the NPM registry`)
+          Shell.exit(1)
         }
       })
+  })
+
+// spork!
+Program
+  .command('spork <generator>')
+  .description('copies specified generator to ignite folder for modification')
+  .alias('s')
+  .action((generator) => {
+    console.log(`⫚ Begin spork of ${generator} ⫚`)
+    const igniteConfig = getIgniteConfig(igniteConfigPath)
+    // look up generator in ignite config
+    const genPath = igniteConfig.generators[generator]
+    if (genPath) {
+      console.log(`It is my ambition to spork ${genPath}`)
+      // Copy over generator
+      Shell.cp('-R', `${process.cwd()}/node_modules/${genPath}`, `${process.cwd()}/ignite/${generator}`)
+      // Kill folders that cannot/should not come down with sporking
+      Shell.rm('-rf', `${process.cwd()}/ignite/node_modules`)
+      Shell.rm('-rf', `${process.cwd()}/ignite/package.json`)
+      Shell.rm('-rf', `${process.cwd()}/ignite/.git`)
+    } else {
+      console.log(colors.red(`No generator named ${generator} was found.`))
+      console.log('Please check your ignite.json file')
+      Shell.exit(1)
+    }
   })
 
 // import
