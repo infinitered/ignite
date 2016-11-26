@@ -108,9 +108,10 @@ const checkReactNative = () => {
 
 const checkForSporkedGen = (type) => {
   try {
-    return require(`${process.cwd()}/ignite/generators/${type}/`)
+    // make sure path works
+    return require.resolve(`${process.cwd()}/ignite/generators/${type}/`)
   } catch (e) {
-    return false
+    return null
   }
 }
 
@@ -167,31 +168,26 @@ Program
   .action((type, name) => {
     checkYo()
     checkIgniteDir(type, name)
-    const generatorSporked = checkForSporkedGen(type)
-    if (generatorSporked) {
-      // use sporked generator
-
+    const sporkedGenerator = checkForSporkedGen(type)
+    const igniteConfig = getIgniteConfig(igniteConfigPath)
+    const commandNamespace = `ignite:${type}`
+    const command = igniteConfig.generators[type]
+    if (command) {
+      const env = yeoman.createEnv()
+      const generatorModulePath = sporkedGenerator || `${process.cwd()}/node_modules/${command}`
+      env.register(generatorModulePath, commandNamespace)
+      console.log(`Generate a new ${type} named ${name}`)
+      env.run(`${commandNamespace} ${name}`, {}, err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Time to get cooking! 🍽 ')
+        }
+      })
     } else {
-      const igniteConfig = getIgniteConfig(igniteConfigPath)
-      const commandNamespace = `ignite:${type}`
-      const command = igniteConfig.generators[type]
-      if (command) {
-        const env = yeoman.createEnv()
-        const generatorModulePath = `${process.cwd()}/node_modules/${command}`
-        env.register(generatorModulePath, commandNamespace)
-        console.log(`Generate a new ${type} named ${name}`)
-        env.run(`${commandNamespace} ${name}`, {}, err => {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log('Time to get cooking! 🍽 ')
-          }
-        })
-      } else {
-        console.log(colors.yellow('DEPRECATED: Generator not found attempting older method.'))
-        console.log('These generators will be removed in version 2.0')
-        spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
-      }
+      console.log(colors.yellow('DEPRECATED: Generator not found attempting older method.'))
+      console.log('These generators will be removed in version 2.0')
+      spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
     }
   })
 
