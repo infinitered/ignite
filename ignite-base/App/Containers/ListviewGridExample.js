@@ -66,13 +66,13 @@ class ListviewGridExample extends React.Component {
 
   /* ***********************************************************
   * STEP 3
-  * `_renderRow` function -How each cell/row should be rendered
+  * `renderRow` function -How each cell/row should be rendered
   * It's our best practice to place a single component here:
   *
   * e.g.
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
-  _renderRow (rowData) {
+  renderRow (rowData) {
     return (
       <View style={styles.row}>
         <Text style={styles.boldLabel}>{rowData.title}</Text>
@@ -101,18 +101,18 @@ class ListviewGridExample extends React.Component {
 
   // Used for friendly AlertMessage
   // returns true if the dataSource is empty
-  _noRowData () {
+  noRowData () {
     return this.state.dataSource.getRowCount() === 0
   }
 
   render () {
     return (
       <View style={styles.container}>
-        <AlertMessage title='Nothing to See Here, Move Along' show={this._noRowData()} />
+        <AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
-          renderRow={this._renderRow}
+          renderRow={this.renderRow}
           pageSize={15}
         />
       </View>
