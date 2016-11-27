@@ -78,7 +78,7 @@ class MapviewGenerator extends Generators.Base {
   /**
    * Let's hand tweak the the android manifest because rnpm doesn't support that just yet.
    */
-  _updateAndroidManifest () {
+  updateAndroidManifest () {
     const status = 'Updating android manifest file'
     this.spinner.start()
     this.spinner.text = status
@@ -109,7 +109,7 @@ class MapviewGenerator extends Generators.Base {
             this.log(`${check} ${rnpmStatus}`)
 
             // update the android manifest
-            this._updateAndroidManifest()
+            this.updateAndroidManifest()
 
             done()
           })

@@ -10,7 +10,7 @@ class ListviewGenerator extends Generators.Base {
     this.argument('name', { type: String, required: true })
   }
 
-  _copyOverListView (type) {
+  copyOverListView (type) {
     // sections or no?
     if (type === 'Sectioned List') {
       this.fs.copyTpl(
@@ -52,7 +52,7 @@ class ListviewGenerator extends Generators.Base {
     }]
 
     return this.prompt(prompts).then((answers) => {
-      this._copyOverListView(answers.listviewtype)
+      this.copyOverListView(answers.listviewtype)
     })
   }
 
