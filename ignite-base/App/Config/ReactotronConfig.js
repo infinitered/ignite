@@ -6,9 +6,8 @@ const errorPlugin = require('reactotron-react-native').trackGlobalErrors
 const apisaucePlugin = require('reactotron-apisauce')
 const { reactotronRedux } = require('reactotron-redux')
 const sagaPlugin = require('reactotron-redux-saga')
-const USE_REACTOTRON = Config.reactotron
 
-if (USE_REACTOTRON) {
+if (Config.useReactotron) {
   Reactotron
     .configure({
       // host: '10.0.3.2' // default is localhost (on android don't forget to `adb reverse tcp:9090 tcp:9090`)
