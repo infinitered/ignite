@@ -1,12 +1,14 @@
 import { StartupTypes } from '../Redux/StartupRedux'
+import Config from '../Config/DebugSettings'
 import Immutable from 'seamless-immutable'
 const Reactotron = require('reactotron-react-native').default
 const errorPlugin = require('reactotron-react-native').trackGlobalErrors
 const apisaucePlugin = require('reactotron-apisauce')
 const { reactotronRedux } = require('reactotron-redux')
 const sagaPlugin = require('reactotron-redux-saga')
+const USE_REACTOTRON = Config.reactotron
 
-if (__DEV__) {
+if (USE_REACTOTRON) {
   Reactotron
     .configure({
       // host: '10.0.3.2' // default is localhost (on android don't forget to `adb reverse tcp:9090 tcp:9090`)
