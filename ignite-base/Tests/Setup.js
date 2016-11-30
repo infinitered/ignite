@@ -26,7 +26,7 @@ mockery.registerMock('react-native-vector-icons/Ionicons', {})
 // This mock returns the interpolated text from the english.json file in App/I18n
 // If you are not using '../App/I18n/english.json' for your I18n values, simply replace import english
 // with the import at the top of this file from '../App/I18n/english.json' with the I18n json file you
-// want to use, such as "import french from '../App/I18n/fr.json'" and set 'let value = french[key]' line 31`
+// want to use, such as "import french from '../App/I18n/fr.json'" and set 'let value = french[key]`
 mockery.registerMock('react-native-i18n', {
   t: (key, replacements) => {
     let value = english[key]
