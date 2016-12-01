@@ -62,7 +62,8 @@
     "reactotron-redux": "^1.5.2",
     "reactotron-redux-saga": "^1.5.2",
     "snazzy": "^5.0.0",
-    "standard-flow": "^1.0.0"
+    "standard-flow": "^1.0.0",
+    "standard": "8.6.0"
   },
   "ava": {
     "files": [
