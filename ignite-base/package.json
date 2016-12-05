@@ -27,8 +27,8 @@
     "lodash": "^4.17.2",
     "querystringify": "0.0.4",
     "ramda": "^0.22.1",
-    "react": "15.3.1",
-    "react-native": "^0.37.0",
+    "react": "~15.4.0-rc.4",
+    "react-native": "0.38.0",
     "react-native-animatable": "^0.6.0",
     "react-native-config": "^0.1.2",
     "react-native-device-info": "^0.9.6",
@@ -62,8 +62,8 @@
     "reactotron-redux": "^1.5.2",
     "reactotron-redux-saga": "^1.5.2",
     "snazzy": "^5.0.0",
-    "standard-flow": "^1.0.0",
-    "standard": "8.6.0"
+    "standard": "8.6.0",
+    "standard-flow": "^1.0.0"
   },
   "ava": {
     "files": [
