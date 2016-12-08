@@ -49,3 +49,7 @@ android/app/libs
 # Secrets
 #
 .env
+
+# NYC
+.nyc_output
+coverage/
