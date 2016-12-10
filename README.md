@@ -104,8 +104,7 @@ These are some common issues you may run into while setting up Ignite. If you en
 
        Solution:
 
-           cd android
-           ./gradlew clean
+           (cd android && ./gradlew clean)
 
 
 ## :arrow_up: Built-In Generators
