@@ -103,6 +103,7 @@ class <%= name %> extends React.Component {
     return (
       <View style={Styles.container}>
         <MapView
+          ref={ref => { this.map = ref }}
           style={Styles.map}
           initialRegion={this.state.region}
           onRegionChangeComplete={this.onRegionChange}
