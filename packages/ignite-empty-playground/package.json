@@ -1,0 +1,12 @@
+{
+  "name": "ignite-empty-playground",
+  "version": "0.2.0",
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  },
+  "devDependencies": {
+    "ignite": "0.2.0",
+    "ignite-basic-generators": "0.2.0"
+  }
+}

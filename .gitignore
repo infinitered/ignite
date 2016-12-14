@@ -2,3 +2,7 @@
 #
 .DS_Store
 npm-debug.log
+npm-debug.log*
+yarn.lock
+lerna-debug.log
+node_modules
