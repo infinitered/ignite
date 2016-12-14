@@ -1,0 +1,5 @@
+description = '🔥 file generation.'
+
+[defaults]
+tests = 'ava'
+askToOverwrite = true

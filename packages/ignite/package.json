@@ -1,0 +1,45 @@
+{
+  "name": "ignite",
+  "version": "0.2.0",
+  "description": "Ignite - The next version.",
+  "main": "src/index.js",
+  "bin": {
+    "ignite": "bin/ignite"
+  },
+  "scripts": {
+    "test": "node --harmony node_modules/.bin/ava",
+    "watch": "node --harmony node_modules/.bin/ava --watch",
+    "coverage": "nyc ava",
+    "start": "node --harmony src/index.js",
+    "lint": "standard"
+  },
+  "author": {
+    "name": "Gant Laborde",
+    "email": "gantman@gmail.com",
+    "url": "https://github.com/infinitered/ignite"
+  },
+  "files": [
+    "LICENSE",
+    "readme.md",
+    "src",
+    "bin"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "gluegun": "0.3.0"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-eslint": "^7.1.1",
+    "nyc": "^10.0.0",
+    "standard": "^8.6.0"
+  },
+  "ava": {},
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  }
+}
