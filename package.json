@@ -1,0 +1,15 @@
+{
+  "name": "ignite-monorepo",
+  "version": "2.0.0",
+  "description": "The Ignite universe.",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "lint": "lerna run lint",
+    "test": "lerna run test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "2.0.0-beta.30"
+  },
+  "dependencies": {}
+}
