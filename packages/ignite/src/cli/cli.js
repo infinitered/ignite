@@ -1,4 +1,5 @@
-const { build, printCommands } = require('gluegun')
+const minimist = require('minimist')
+const { build, printCommands, printWtf } = require('gluegun')
 const header = require('../brand/header')
 const { isNil } = require('ramda')
 
@@ -9,6 +10,9 @@ const { isNil } = require('ramda')
  * @return {RunContext}      The gluegun RunContext
  */
 module.exports = async function run (argv) {
+  // parse the cmd line
+  const cmd = minimist(argv.slice(2))
+
   // create a runtime
   const runtime = build()
     .brand('ignite')
@@ -17,6 +21,12 @@ module.exports = async function run (argv) {
     .token('commandDescription', 'cliDescription')
     .token('extensionName', 'contextExtension')
     .createRuntime()
+
+  // wtf mode shows problems with plugins, commands, and extensions
+  if (cmd.wtf) {
+    printWtf(runtime)
+    process.exit(0)
+  }
 
   // run the command
   const context = await runtime.run()
