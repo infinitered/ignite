@@ -22,13 +22,6 @@ const copyOverMapviewFiles = (context) => {
     { }
   )
 
-  // copy maphelpers template
-  context.fs.copyTpl(
-    context.templatePath('maphelpers.js.template'),
-    context.destinationPath(`./App/Lib/MapHelpers.js`),
-    { }
-  )
-
   // copy mapview style template
   context.fs.copyTpl(
     context.templatePath('mapview-style.js.template'),

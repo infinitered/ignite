@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import MapView from 'react-native-maps'
-import { calculateRegion } from '../Lib/MapHelpers'
 import MapCallout from '../Components/MapCallout'
 import Styles from './Styles/MapviewExampleStyle'
 
@@ -34,14 +33,8 @@ class MapviewExample extends React.Component {
       { title: 'Location A', latitude: 37.78825, longitude: -122.4324 },
       { title: 'Location B', latitude: 37.75825, longitude: -122.4624 }
     ]
-    /* ***********************************************************
-    * STEP 2
-    * Set your initial region either by dynamically calculating from a list of locations (as below)
-    * or as a fixed point, eg: { latitude: 123, longitude: 123, latitudeDelta: 0.1, longitudeDelta: 0.1}
-    *************************************************************/
-    const region = calculateRegion(locations, { latPadding: 0.05, longPadding: 0.05 })
+
     this.state = {
-      region,
       locations,
       showUserLocation: true
     }
@@ -49,20 +42,26 @@ class MapviewExample extends React.Component {
     this.onRegionChange = this.onRegionChange.bind(this)
   }
 
+  componentDidMount () {
+    this.map.fitToElements(false) // center map to all markers without animation
+  }
+
   componentWillReceiveProps (newProps) {
     /* ***********************************************************
-    * STEP 3
+    * STEP 2
     * If you wish to recenter the map on new locations any time the
     * Redux props change, do something like this:
     *************************************************************/
-    // this.setState({
-    //   region: calculateRegion(newProps.locations, { latPadding: 0.1, longPadding: 0.1 })
-    // })
+
+    // this.map.fitToElements(false)
+
+    // You can also use fitToSuppliedMarkers or fitToCoordinaates
+    // as documented here https://github.com/airbnb/react-native-maps/blob/master/docs/mapview.md#methods
   }
 
   onRegionChange (newRegion) {
     /* ***********************************************************
-    * STEP 4
+    * STEP 3
     * If you wish to fetch new locations when the user changes the
     * currently visible region, do something like this:
     *************************************************************/
@@ -77,7 +76,7 @@ class MapviewExample extends React.Component {
 
   calloutPress (location) {
     /* ***********************************************************
-    * STEP 5
+    * STEP 4
     * Configure what will happen (if anything) when the user
     * presses your callout.
     *************************************************************/
@@ -86,7 +85,7 @@ class MapviewExample extends React.Component {
 
   renderMapMarkers (location) {
     /* ***********************************************************
-    * STEP 6
+    * STEP 5
     * Customize the appearance and location of the map marker.
     * Customize the callout in ../Components/MapCallout.js
     *************************************************************/
@@ -102,6 +101,7 @@ class MapviewExample extends React.Component {
     return (
       <View style={Styles.container}>
         <MapView
+          ref={ref => { this.map = ref }}
           style={Styles.map}
           initialRegion={this.state.region}
           onRegionChangeComplete={this.onRegionChange}
