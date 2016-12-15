@@ -16,7 +16,8 @@ module.exports = async function run (argv) {
   // create a runtime
   const runtime = build()
     .brand('ignite')
-    .loadAll(`${__dirname}/../plugins`)
+    .loadDefault(`${__dirname}/../plugins/default`)
+    // .loadAll(`${__dirname}/../plugins`)
     .token('commandName', 'cliCommand')
     .token('commandDescription', 'cliDescription')
     .token('extensionName', 'contextExtension')
