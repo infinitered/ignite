@@ -1,6 +1,6 @@
 // @cliDescription  Generates a component, styles, and an optional test.
 // ----------------------------------------------------------------------------
-const generate = require('../../../utils/generate-utils')
+const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
