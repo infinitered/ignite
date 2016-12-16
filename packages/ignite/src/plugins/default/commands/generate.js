@@ -9,7 +9,9 @@ const {
   mapObjIndexed,
   equals,
   isNil,
-  values
+  values,
+  replace,
+  trim
 } = require('ramda')
 const { dotPath } = require('ramdasauce')
 const header = require('../../../brand/header')
@@ -117,6 +119,14 @@ module.exports = async function (context) {
     return
   }
 
-  // TODO: time to fire the command!
-  print.warning(`TODO: run the ${registryItem.plugin.name} ${registryItem.command.name}`)
+  // swap out the old command for the new one, keeping the same parameters
+  const rx = new RegExp('^' + parameters.first, 'g')
+  const newCommand = trim(replace(rx, '', parameters.string))
+
+  // make the call to the real generator
+  context.runtime.run({
+    pluginName: registryItem.pluginName,
+    rawCommand: newCommand,
+    options: parameters.options
+  })
 }
