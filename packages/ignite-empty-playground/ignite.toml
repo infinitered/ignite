@@ -1,11 +1,11 @@
 [ignite]
-foo = 69
+tests = 'ava'
+askToOverwrite = false
 
 [ignite.generators]
 component = 'ignite-basic-generators'
 container = 'ignite-basic-generators'
-listview = 'ignite-basic-generators'
-screen = 'ignite-basic-generators'
-notfound = 'ignite-3rd-party'
-
-[defaults]
+saga      = 'ignite-basic-generators'
+listview  = 'ignite-basic-generators'
+screen    = 'ignite-basic-generators'
+notfound  = 'ignite-3rd-party'
