@@ -1,31 +1,33 @@
 // @cliDescription  Generates an opinionated container.
 // ----------------------------------------------------------------------------
-const { isNilOrEmpty } = require('ramdasauce')
+const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, template, strings } = context
-  const { generate } = template
-  const { pascalCase } = strings
+  const { parameters, print, strings } = context
+  const { pascalCase, isBlank } = strings
 
-  // TODO: validation
-  if (isNilOrEmpty(parameters.string)) return
+  // validation
+  if (isBlank(parameters.first)) {
+    print.info(`${context.runtime.brand} generate saga <name>\n`)
+    print.info('A name is required.')
+    return
+  }
 
-  // make a name that's FriendlyLikeThis and not-like-this
   const name = pascalCase(parameters.first)
   const props = { name }
 
-  // generate the smart component
-  await generate({
-    template: 'screen.ejs',
-    target: `App/Containers/${name}Screen.js`,
-    props
-  })
+  const jobs = [
+    {
+      template: `screen.ejs`,
+      target: `App/Containers/${name}Screen.js`
+    },
+    {
+      template: `saga.ejs`,
+      target: `App/Containers/Styles/${name}ScreenStyle.js`
+    }
+  ]
 
-  // generate the style
-  await generate({
-    template: 'screen-style.ejs',
-    target: `App/Containers/Styles/${name}ScreenStyle.js`,
-    props
-  })
+  // make the templates
+  await generate(context, jobs, props)
 }

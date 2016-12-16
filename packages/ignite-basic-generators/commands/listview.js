@@ -1,53 +1,42 @@
 // @cliDescription  Generates a screen with a ListView + walkthrough.
 // ----------------------------------------------------------------------------
-const { isNilOrEmpty } = require('ramdasauce')
+const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, template, strings } = context
-  const { generate } = template
-  const { pascalCase } = strings
+  const { print, parameters, strings } = context
+  const { pascalCase, isBlank } = strings
 
-  // TODO: validation
-  if (isNilOrEmpty(parameters.string)) return
+  // validation
+  if (isBlank(parameters.first)) {
+    print.info(`${context.runtime.brand} generate listview <name>\n`)
+    print.info('A name is required.')
+    return
+  }
 
-  // make a name that's FriendlyLikeThis and not-like-this
   const name = pascalCase(parameters.first)
   const props = { name }
 
   // which type of grid?
   const message = 'What kind of ListView would you like to generate?'
-  const choices = [
-    { name: 'Row', value: 'row' },
-    { name: 'With Sections', value: 'sections' },
-    { name: 'Grid', value: 'grid' }
-  ]
+  const choices = ['Row', 'With Sections', 'Grid']
 
   // pick one
   let type = parameters.options.type
-  if (isNilOrEmpty(type)) {
-    type = context.prompt.ask([{
-      name: 'type',
-      message,
-      choices
-    }]).type
+  if (!type) {
+    const answers = await context.prompt.ask({ name: 'type', type: 'list', message, choices })
+    type = answers.type
   }
 
   // set appropriate templates to generate
-  const componentTemplate = type === 'sections' ? 'listview-sections' : 'listview'
-  const styleTemplate = type === 'grid' ? 'listview-grid-style' : 'listview-style'
+  const componentTemplate = type === 'With Sections' ? 'listview-sections' : 'listview'
+  const styleTemplate = type === 'Grid' ? 'listview-grid-style' : 'listview-style'
 
-  // generate the React component
-  await generate({
-    template: `${componentTemplate}.ejs`,
-    target: `App/Containers/${name}.js`,
-    props
-  })
+  const jobs = [
+    { template: `${componentTemplate}.ejs`, target: `App/Containers/${name}.js` },
+    { template: `${styleTemplate}.ejs`, target: `App/Containers/Styles/${name}Style.js` }
+  ]
 
-  // generate the style
-  await generate({
-    template: `${styleTemplate}.ejs`,
-    target: `App/Containers/Styles/${name}Style.js`,
-    props
-  })
+  // make the templates
+  await generate(context, jobs, props)
 }

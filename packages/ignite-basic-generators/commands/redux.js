@@ -1,36 +1,32 @@
 // @cliDescription  Generates a action/creator/reducer set for Redux.
 // ----------------------------------------------------------------------------
-const { isNilOrEmpty } = require('ramdasauce')
+const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, config, template, strings } = context
-  const { generate } = template
-  const { pascalCase } = strings
+  const { parameters, config, strings, print } = context
+  const { isBlank, pascalCase } = strings
 
-  // TODO: validation
-  if (isNilOrEmpty(parameters.string)) return
+  // validation
+  if (isBlank(parameters.first)) {
+    print.info(`${context.runtime.brand} generate redux <name>\n`)
+    print.info('A name is required.')
+    return
+  }
 
-  // read some configuration
-  const { tests } = config.ignite
-
-  // make a name that's FriendlyLikeThis and not-like-this
   const name = pascalCase(parameters.first)
   const props = { name }
 
-  // generate the React component
-  await generate({
-    template: 'redux.ejs',
-    target: `App/Redux/${name}Redux.js`,
-    props
-  })
-
-  // generate the appropriate test
-  if (tests) {
-    await generate({
-      template: `redux-test-${tests}.ejs`,
-      target: `Tests/Redux/${name}ReduxTest.js`,
-      props
+  const jobs = [
+    { template: `redux.ejs`, target: `App/Redux/${name}Redux.js` }
+  ]
+  if (config.ignite.tests) {
+    jobs.push({
+      template: `redux-test-${config.ignite.tests}.ejs`,
+      target: `Tests/Redux/${name}ReduxTest.js`
     })
   }
+
+  // make the templates
+  await generate(context, jobs, props)
 }

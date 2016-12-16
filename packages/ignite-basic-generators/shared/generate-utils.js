@@ -7,11 +7,11 @@
 module.exports = async function (context, jobs, props) {
   // grab some features
   const { config, template, prompt, filesystem, print } = context
-  const { confirm } = prompt
   const { generate } = template
+  const { confirm } = prompt
 
   // read some configuration
-  const { askToOverwrite } = config.generate
+  const { askToOverwrite } = config.ignite
 
   // If the file exists
   const shouldGenerate = async (target) => {
