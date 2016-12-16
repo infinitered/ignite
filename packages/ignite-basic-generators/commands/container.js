@@ -10,11 +10,10 @@ module.exports = async function (context) {
   // validation
   if (isBlank(parameters.first)) {
     print.info(`${context.runtime.brand} generate container <name>\n`)
-    print.info('A container name is required.')
+    print.info('A name is required.')
     return
   }
 
-  // make a name that's FriendlyLikeThis and not-like-this
   const name = pascalCase(parameters.first)
   const props = { name }
 

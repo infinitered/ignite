@@ -7,11 +7,20 @@
 module.exports = async function (context, jobs, props) {
   // grab some features
   const { config, template, prompt, filesystem, print } = context
-  const { confirm } = prompt
   const { generate } = template
 
+  // TODO: let's move this sucker back over to prompt-extensions
+  const confirm = async (message) => {
+    const answers = await prompt.ask({
+      name: 'yesno',
+      type: 'confirm',
+      message
+    })
+    return answers.yesno
+  }
+
   // read some configuration
-  const { askToOverwrite } = config.generate
+  const { askToOverwrite } = config.ignite
 
   // If the file exists
   const shouldGenerate = async (target) => {
