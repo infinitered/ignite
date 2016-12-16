@@ -80,7 +80,6 @@ module.exports = async function (context) {
       } else if (lookup.command.errorState !== 'none') {
         error = `command ${lookup.command.errorState}`
       } else {
-        error = 'ok'
         description = lookup.command.description
       }
 
@@ -110,7 +109,11 @@ module.exports = async function (context) {
     // turn into data we can print
     const data = pipe(
       values,
-      map(item => [item.type, item.pluginName, item.error, item.description])
+      map(item => [
+        item.type,
+        item.error || item.description,
+        print.colors.muted(item.pluginName)
+      ])
     )(userRegistry)
 
     // and print it
