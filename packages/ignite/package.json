@@ -26,7 +26,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gluegun": "0.6.0",
+    "gluegun": "0.7.0",
     "minimist": "^1.2.0",
     "ramda": "^0.22.1",
     "shelljs": "^0.7.5"
