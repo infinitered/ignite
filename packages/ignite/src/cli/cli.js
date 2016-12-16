@@ -16,10 +16,9 @@ module.exports = async function run (argv) {
   // create a runtime
   const runtime = build()
     .brand('ignite')
+    .configFile('ignite.toml')
     .loadDefault(`${__dirname}/../plugins/default`)
-    .configFile('./ignite.toml')
-    .load(`${__dirname}/../core`)
-    .loadAll('node_modules', 'ignite-*')
+    .loadAll(`${process.cwd()}/node_modules`, 'ignite-*')
     .token('commandName', 'cliCommand')
     .token('commandDescription', 'cliDescription')
     .token('extensionName', 'contextExtension')
@@ -38,6 +37,10 @@ module.exports = async function run (argv) {
   if (isNil(context.plugin) || isNil(context.command)) {
     header()
     printCommands(context)
+  }
+
+  if (context.error) {
+    console.dir(context.error)
   }
 
   // send it back to make testing easier
