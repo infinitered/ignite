@@ -39,6 +39,11 @@ module.exports = async function (context) {
       const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
       if (!filesystem.exists(tomlFilePath)) {
         error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
+        if (useYarn) {
+          Shell.exec(`yarn remove ${moduleName}`, {silent: true})
+        } else {
+          Shell.exec(`npm rm ${moduleName}`, {silent: true})
+        }
         Shell.exit(1)
       }
       const newConfig = Toml.parse(filesystem.read(tomlFilePath))
