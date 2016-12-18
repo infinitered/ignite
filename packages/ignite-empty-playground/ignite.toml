@@ -5,7 +5,7 @@ askToOverwrite = false
 [ignite.generators]
 component = 'ignite-basic-generators'
 container = 'ignite-basic-generators'
-saga      = 'ignite-basic-generators'
+saga      = 'ignite-basic-generaaaaators'
 listview  = 'ignite-basic-generators'
 screen    = 'ignite-basic-generators'
 redux     = 'ignite-basic-generators'
