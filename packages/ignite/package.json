@@ -28,6 +28,7 @@
   "dependencies": {
     "gluegun": "0.7.3",
     "minimist": "^1.2.0",
+    "npm-exists": "^0.1.0",
     "ramda": "^0.22.1",
     "shelljs": "^0.7.5"
   },

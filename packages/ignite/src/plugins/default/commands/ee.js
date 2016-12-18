@@ -4,9 +4,9 @@ const { assoc } = require('ramda')
 
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { system, print, filesystem, strings, R } = context
+  const { system, print, filesystem, strings, parameters } = context
   const { trim, kebabCase } = strings
-  const { info, warning, success, debug, checkmark } = print
+  const { info, warning, success, debug, checkmark, error } = print
 
   // ...and be the CLI you wish to see in the world
   const awesome = trim(system.run('whoami'))
@@ -20,5 +20,7 @@ module.exports = async function (context) {
   info(`${checkmark} Citius`)
   warning(`${checkmark} Altius`)
   success(`${checkmark} Fortius`)
+  error('NACHO-ius')
   debug('tacos')
+  info(parameters)
 }
