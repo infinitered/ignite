@@ -2,6 +2,10 @@
 // ----------------------------------------------------------------------------
 const Shell = require('shelljs')
 const Exists = require('npm-exists')
+const Toml = require('toml')
+
+// use yarn or use npm? hardcode for now
+const useYarn = false
 
 module.exports = async function (context) {
     // grab a fist-full of features...
@@ -9,8 +13,7 @@ module.exports = async function (context) {
   const { trim, kebabCase } = strings
   const { info, warning, success, debug, checkmark, error } = print
 
-
-  ///////////////////////////////////////////////////////////////////////////
+  // /////////////////////////////////////////////////////////////////////////
   // ...and be the CLI you wish to see in the world
   debug(context.config)
   warning('capture params')
@@ -24,16 +27,28 @@ module.exports = async function (context) {
   // it exists?  Let's install it else warn
     if (moduleExists) {
       success(`Found plugin ${moduleName}`)
-      // use yarn or use npm?
+
+      if (useYarn) {
+        Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
+      } else {
+        Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
+      }
+
+      // once installed, let's check on its toml
+      info('grab expected toml file')
+      const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
+      if (!filesystem.exists(tomlFilePath)) {
+        error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
+        Shell.exit(1)
+      }
+      const newConfig = Toml.parse(filesystem.read(tomlFilePath))
+      debug(newConfig, 'Toml Config from Module')
     } else {
-      warning()
       error("We couldn't find that ignite plugin")
       warning(`Please make sure ${moduleName} exists on the NPM registry`)
     }
   })
 
-
-  // once installed, let's check on its toml
   // we compare the toml changes against ours
   // we warn the user on changes
   // if they refuse, then npm/yarn uninstall

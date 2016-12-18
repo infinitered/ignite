@@ -30,7 +30,8 @@
     "minimist": "^1.2.0",
     "npm-exists": "^0.1.0",
     "ramda": "^0.22.1",
-    "shelljs": "^0.7.5"
+    "shelljs": "^0.7.5",
+    "toml": "^2.3.1"
   },
   "devDependencies": {
     "ava": "^0.17.0",
