@@ -3,6 +3,8 @@
 const Shell = require('shelljs')
 const Exists = require('npm-exists')
 const Toml = require('toml')
+// Yeah, why would toml include this? :(
+const json2toml = require('json2toml')
 const R = require('ramda')
 
 // use yarn or use npm? hardcode for now
@@ -41,6 +43,16 @@ const verifyAddedGenerators = (oldIgniteConfig, newIgniteConfig, callback) => {
   }
 }
 
+const noMegusta = (moduleName) => {
+  console.warn('Rolling back...')
+
+  if (useYarn) {
+    Shell.exec(`yarn remove ${moduleName}`, {silent: true})
+  } else {
+    Shell.exec(`npm rm ${moduleName}`, {silent: true})
+  }
+  Shell.exit(1)
+}
 
 module.exports = async function (context) {
     // grab a fist-full of features...
@@ -73,16 +85,11 @@ module.exports = async function (context) {
     const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
     if (!filesystem.exists(tomlFilePath)) {
       error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
-      if (useYarn) {
-        Shell.exec(`yarn remove ${moduleName}`, {silent: true})
-      } else {
-        Shell.exec(`npm rm ${moduleName}`, {silent: true})
-      }
-      Shell.exit(1)
+      noMegusta(moduleName)
     }
     const newConfig = Toml.parse(filesystem.read(tomlFilePath))
 
-    debug(newConfig, 'Toml Config from Module')
+    // debug(newConfig, 'Toml Config from Module')
     const proposedGenerators = R.reduce((acc, k) => {
       acc[k] = moduleName
       return acc
@@ -90,31 +97,24 @@ module.exports = async function (context) {
 
     // we compare the toml changes against ours
     const changes = detectedChanges(context.config.ignite.generators, proposedGenerators)
-    let pluginGood = true
     if (changes.length > 0) {
+      // we warn the user on changes
       warning(`The following generators would be changed: ${R.join(', ', changes)}`)
-      const answer = await context.prompt.confirm('You ok with that?')
-      // const test = await context.prompt.confirm('You ok with that?')
-      // const answers = await context.prompt.ask({ name: 'type', type: 'list', message, choices })
-      // var rl = readline.createInterface(process.stdin, process.stdout)
-      // rl.question('Do you want to proceed overwriting these generators? (y/n): ', (answer) => {
-      //   if (answer.match(/n/ig)) pluginGood = false
-      //   callback(pluginGood)
-      //   rl.close()
-      // })
-    } else {
-      console.log('no change')
-      // callback(pluginGood)
+      const ok = await context.prompt.confirm('You ok with that?')
+      // if they refuse, then npm/yarn uninstall
+      if (!ok) noMegusta(moduleName)
     }
 
-    info('next thing')
+    const combinedGenerators = Object.assign({}, context.config.ignite.generators, proposedGenerators)
+    const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
+    // local toml file
 
-    // we warn the user on changes
-    // if they refuse, then npm/yarn uninstall
-    // if they accept we write the toml changes
+    // We write the toml changes
+    const localToml = `${process.cwd()}/ignite.toml`
+    filesystem.write(localToml, json2toml(updatedConfig))
     // and then call the add function
     // get cooking message!
-
+    success('Time to get cooking! 🍽 ')
   } else {
     error("We couldn't find that ignite plugin")
     warning(`Please make sure ${moduleName} exists on the NPM registry`)

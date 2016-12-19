@@ -1,12 +1,11 @@
 [ignite]
-tests = 'ava'
 askToOverwrite = false
-
+tests = "ava"
 [ignite.generators]
-component = 'ignite-basic-generators'
-container = 'ignite-basic-generators'
-saga      = 'ignite-basic-generaaaaators'
-listview  = 'ignite-basic-generators'
-screen    = 'ignite-basic-generators'
-redux     = 'ignite-basic-generators'
-notfound  = 'ignite-3rd-party'
+component = "ignite-basic-generators"
+container = "ignite-basic-generators"
+listview = "ignite-basic-generators"
+notfound = "ignite-3rd-party"
+redux = "ignite-basic-generators"
+saga = "ignite-basic-generators"
+screen = "ignite-basic-generators"
