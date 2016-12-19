@@ -23,26 +23,6 @@ const detectedChanges = (oldObject, newObject) => {
   }, [], inter)
 }
 
-const verifyAddedGenerators = (oldIgniteConfig, newIgniteConfig, callback) => {
-  const changes = detectedChanges(oldIgniteConfig, newIgniteConfig)
-  let pluginGood = true
-  if (changes.length > 0) {
-    console.log(`The following generators would be changed: ${R.join(', ', changes)}`)
-
-    // enquirer.question('color', 'What is your favorite color?');
-    // const answers = await context.prompt.ask({ name: 'type', type: 'list', message, choices })
-    // var rl = readline.createInterface(process.stdin, process.stdout)
-    // rl.question('Do you want to proceed overwriting these generators? (y/n): ', (answer) => {
-    //   if (answer.match(/n/ig)) pluginGood = false
-    //   callback(pluginGood)
-    //   rl.close()
-    // })
-  } else {
-    console.log('no change')
-    // callback(pluginGood)
-  }
-}
-
 const noMegusta = (moduleName) => {
   console.warn('Rolling back...')
 
@@ -51,7 +31,7 @@ const noMegusta = (moduleName) => {
   } else {
     Shell.exec(`npm rm ${moduleName}`, {silent: true})
   }
-  Shell.exit(1)
+  process.exit(1)
 }
 
 module.exports = async function (context) {
@@ -65,14 +45,14 @@ module.exports = async function (context) {
   // debug(context)
   // debug(parameters, 'Captured parameters')
 
-  info('Does it exist?')
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   // prepend `ignite` as convention
   const moduleName = `ignite-${parameters.array.pop()}`
+  info(`🔎    Finding Plugin`)
   const moduleExists = await Exists(moduleName)
   // it exists?  Let's install it else warn
   if (moduleExists) {
-    success(`Found plugin ${moduleName}`)
+    success(`${checkmark}    Installing`)
 
     if (useYarn) {
       Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
@@ -81,7 +61,6 @@ module.exports = async function (context) {
     }
 
     // once installed, let's check on its toml
-    info('grab expected toml file')
     const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
     if (!filesystem.exists(tomlFilePath)) {
       error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
@@ -115,13 +94,14 @@ module.exports = async function (context) {
 
     // and then call the add function
     const pluginModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-    // pluginModule.add()
+    await pluginModule.add(context)
 
     // get cooking message!
     success('Time to get cooking! 🍽 ')
   } else {
     error("We couldn't find that ignite plugin")
     warning(`Please make sure ${moduleName} exists on the NPM registry`)
+    process.exit(1)
   }
 
 
