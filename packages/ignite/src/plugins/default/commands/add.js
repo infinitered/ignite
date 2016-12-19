@@ -36,9 +36,8 @@ const noMegusta = (moduleName) => {
 
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { system, print, filesystem, strings, parameters, prompt } = context
-  const { trim, kebabCase } = strings
-  const { info, warning, success, debug, checkmark, error } = print
+  const { print, filesystem, parameters, prompt } = context
+  const { info, warning, success, checkmark, error } = print
 
   // /////////////////////////////////////////////////////////////////////////
   // ...and be the CLI you wish to see in the world
@@ -79,7 +78,7 @@ module.exports = async function (context) {
     if (changes.length > 0) {
       // we warn the user on changes
       warning(`The following generators would be changed: ${R.join(', ', changes)}`)
-      const ok = await context.prompt.confirm('You ok with that?')
+      const ok = await prompt.confirm('You ok with that?')
       // if they refuse, then npm/yarn uninstall
       if (!ok) noMegusta(moduleName)
     }
