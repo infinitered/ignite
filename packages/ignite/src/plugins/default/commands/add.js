@@ -112,7 +112,11 @@ module.exports = async function (context) {
     // We write the toml changes
     const localToml = `${process.cwd()}/ignite.toml`
     filesystem.write(localToml, json2toml(updatedConfig))
+
     // and then call the add function
+    const pluginModule = require(`${process.cwd()}/node_modules/${moduleName}`)
+    // pluginModule.add()
+
     // get cooking message!
     success('Time to get cooking! 🍽 ')
   } else {
