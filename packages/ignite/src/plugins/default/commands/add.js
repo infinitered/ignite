@@ -10,7 +10,7 @@ const R = require('ramda')
 // use yarn or use npm? hardcode for now
 const useYarn = false
 
-// Optional - could be used for changes warnings
+// used for changes warnings
 const detectedChanges = (oldObject, newObject) => {
   let oldKeys = R.keys(oldObject)
   let newKeys = R.keys(newObject)
@@ -39,11 +39,6 @@ module.exports = async function (context) {
   const { print, filesystem, parameters, prompt } = context
   const { info, warning, success, checkmark, error } = print
 
-  // /////////////////////////////////////////////////////////////////////////
-  // ...and be the CLI you wish to see in the world
-  // debug(context)
-  // debug(parameters, 'Captured parameters')
-
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   // prepend `ignite` as convention
   const moduleName = `ignite-${parameters.array.pop()}`
@@ -67,7 +62,6 @@ module.exports = async function (context) {
     }
     const newConfig = Toml.parse(filesystem.read(tomlFilePath))
 
-    // debug(newConfig, 'Toml Config from Module')
     const proposedGenerators = R.reduce((acc, k) => {
       acc[k] = moduleName
       return acc
@@ -85,7 +79,6 @@ module.exports = async function (context) {
 
     const combinedGenerators = Object.assign({}, context.config.ignite.generators, proposedGenerators)
     const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
-    // local toml file
 
     // We write the toml changes
     const localToml = `${process.cwd()}/ignite.toml`
@@ -102,6 +95,4 @@ module.exports = async function (context) {
     warning(`Please make sure ${moduleName} exists on the NPM registry`)
     process.exit(1)
   }
-
-
 }
