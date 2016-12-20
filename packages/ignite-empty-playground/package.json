@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "ignite": "0.2.0",
-    "ignite-basic-generators": "0.2.0",
-    "ignite-ui": "^16.2.0-RC.2040"
-  }
+    "ignite-basic-generators": "0.2.0"
+  },
+  "dependencies": {}
 }
