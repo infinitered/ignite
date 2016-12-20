@@ -8,5 +8,6 @@
   "devDependencies": {
     "ignite": "0.2.0",
     "ignite-basic-generators": "0.2.0"
-  }
+  },
+  "dependencies": {}
 }
