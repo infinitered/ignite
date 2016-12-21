@@ -9,7 +9,7 @@ class SagaGenerator extends Generators.Base {
     super(args, options)
     this.argument('name', { type: String, required: true })
     this.fileConfig = {
-      templatePath: 'saga.js.template',
+      templatePath: 'sagas.js.template',
       destinationPath: 'Sagas',
       test: true }
   }
