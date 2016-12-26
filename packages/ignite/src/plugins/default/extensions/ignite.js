@@ -35,12 +35,17 @@ function attach (plugin, command, context) {
 
   // copies example usage file to project for use in dev screens
   async function addComponentExample (sourceFolder, fileName) {
+    const { filesystem, patching } = context
     // make sure examples is set
     if (context.config.ignite.examples === 'classic') {
       // copy to Components/Examples folder
       // Should be using template.generate but we can't due to gluegun #126
-      context.filesystem.copy(`${sourceFolder}${fileName}`, `${process.cwd()}/App/Components/Examples/${fileName}`)
+      filesystem.copy(`${sourceFolder}${fileName}`, `${process.cwd()}/App/Components/Examples/${fileName}`, { overwrite: true })
       // adds reference to usage example screen (if it exists)
+      const destinationPath = `${process.cwd()}/App/Containers/DevScreens/PluginExamples.js`
+      if (filesystem.exists(destinationPath)) {
+        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Components/Examples/${fileName}`)
+      }
     }
   }
 
