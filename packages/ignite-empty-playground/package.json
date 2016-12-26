@@ -8,7 +8,8 @@
   "devDependencies": {
     "ignite": "2.0.0",
     "ignite-basic-generators": "0.2.0",
-    "ignite-vector-icons": "^0.1.0"
+    "ignite-vector-icons": "^0.1.0",
+    "react-native-vector-icons": "^3.0.0"
   },
   "dependencies": {}
 }

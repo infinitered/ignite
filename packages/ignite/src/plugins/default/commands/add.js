@@ -36,7 +36,7 @@ const noMegusta = (moduleName) => {
 
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { print, filesystem, parameters, prompt } = context
+  const { print, filesystem, parameters, prompt, ignite } = context
   const { info, warning, success, checkmark, error } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
@@ -47,12 +47,7 @@ module.exports = async function (context) {
   // it exists?  Let's install it else warn
   if (moduleExists) {
     success(`${checkmark}    Installing`)
-
-    if (useYarn) {
-      Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
-    } else {
-      Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
-    }
+    ignite.addModule(moduleName)
 
     // once installed, let's check on its toml
     const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
