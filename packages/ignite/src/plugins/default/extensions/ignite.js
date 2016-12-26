@@ -14,9 +14,19 @@ function attach (plugin, command, context) {
     )(context.runtime.plugins)
   }
 
+  function addModule (moduleName) {
+    console.log(`I should be adding ${moduleName}`)
+  }
+
+  function removeModule (moduleName) {
+    console.log(`I should be removing ${moduleName}`)
+  }
+
   // send back the extension
   return {
-    findIgnitePlugins
+    findIgnitePlugins,
+    addModule,
+    removeModule
   }
 }
 
