@@ -47,7 +47,12 @@ module.exports = async function (context) {
   // it exists?  Let's install it else warn
   if (moduleExists) {
     success(`${checkmark}    Installing`)
-    ignite.addModule(moduleName)
+
+    if (ignite.useYarn) {
+      Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
+    } else {
+      Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
+    }
 
     // once installed, let's check on its toml
     const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`

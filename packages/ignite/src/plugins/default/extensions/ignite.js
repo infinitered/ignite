@@ -23,9 +23,13 @@ function attach (plugin, command, context) {
     } else {
       Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
     }
+
+    Shell.exec(`react-native link ${moduleName}`)
   }
 
   function removeModule (moduleName) {
+    Shell.exec(`react-native unlink ${moduleName}`)
+
     if (useYarn) {
       Shell.exec(`yarn remove ${moduleName}`, {silent: true})
     } else {
