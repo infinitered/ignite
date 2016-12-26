@@ -37,15 +37,16 @@ function attach (plugin, command, context) {
   async function addComponentExample (sourceFolder, fileName) {
     // make sure examples is set
     if (context.config.ignite.examples === 'classic') {
-      // copy to components/examples folder
+      // copy to Components/Examples folder
       // Should be using template.generate but we can't due to gluegun #126
       context.filesystem.copy(`${sourceFolder}${fileName}`, `${process.cwd()}/App/Components/Examples/${fileName}`)
       // adds reference to usage example screen (if it exists)
     }
   }
 
-  function removeComponentExample (exampleFile) {
-    // remove file from components/examples folder
+  function removeComponentExample (fileName) {
+    // remove file from Components/Examples folder
+    context.filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
     // remove reference in usage example screen (if it exists)
   }
 
