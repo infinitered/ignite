@@ -1,6 +1,6 @@
 {
   "name": "ignite",
-  "version": "0.2.0",
+  "version": "2.0.0",
   "description": "Ignite - The next version.",
   "main": "src/index.js",
   "bin": {

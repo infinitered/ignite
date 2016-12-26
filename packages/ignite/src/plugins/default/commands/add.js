@@ -65,7 +65,7 @@ module.exports = async function (context) {
     const proposedGenerators = R.reduce((acc, k) => {
       acc[k] = moduleName
       return acc
-    }, {}, newConfig.ignite.generators)
+    }, {}, newConfig.ignite.generators || [])
 
     // we compare the toml changes against ours
     const changes = detectedChanges(context.config.ignite.generators, proposedGenerators)
