@@ -53,13 +53,15 @@ function attach (plugin, command, context) {
     let finder = new RegExp(`.*${findPattern}.*`, '')
     let matches = data.match(finder)
     // Quick error check
-    if (matches.length === 0) throw new Error(`'${findPattern}' was not found in file.`)
+    if (matches.length > 0) {
+      // replace contents
+      const newContents = data.replace(finder, `${content}`)
 
-    // replace contents
-    const newContents = data.replace(finder, `${content}`)
-
-    // overwrite file with modified contents
-    fs.writeFileSync(filePath, newContents, 'utf-8')
+      // overwrite file with modified contents
+      fs.writeFileSync(filePath, newContents, 'utf-8')
+    } else {
+      console.warn(`${findPattern} not found`)
+    }
   }
 
   /**

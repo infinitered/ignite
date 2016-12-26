@@ -54,9 +54,14 @@ function attach (plugin, command, context) {
   }
 
   function removeComponentExample (fileName) {
+    const { filesystem, patching } = context
     // remove file from Components/Examples folder
-    context.filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
+    filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
     // remove reference in usage example screen (if it exists)
+    const destinationPath = `${process.cwd()}/App/Containers/DevScreens/PluginExamples.js`
+    if (filesystem.exists(destinationPath)) {
+      patching.replaceInFile(destinationPath, `import '../Components/Examples/${fileName}`, '')
+    }
   }
 
   // send back the extension
