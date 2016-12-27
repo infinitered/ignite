@@ -1,0 +1,15 @@
+description = 'Ignite basic generators'
+
+[ignite]
+generators = [
+  "component",
+  "container",
+  "listview",
+  "redux",
+  "saga",
+  "screen"
+]
+
+[defaults]
+tests = 'ava'
+askToOverwrite = true
