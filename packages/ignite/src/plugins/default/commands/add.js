@@ -36,7 +36,7 @@ const noMegusta = (moduleName) => {
 
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { print, filesystem, parameters, prompt } = context
+  const { print, filesystem, parameters, prompt, ignite } = context
   const { info, warning, success, checkmark, error } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
@@ -48,7 +48,7 @@ module.exports = async function (context) {
   if (moduleExists) {
     success(`${checkmark}    Installing`)
 
-    if (useYarn) {
+    if (ignite.useYarn) {
       Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
     } else {
       Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
@@ -65,7 +65,7 @@ module.exports = async function (context) {
     const proposedGenerators = R.reduce((acc, k) => {
       acc[k] = moduleName
       return acc
-    }, {}, newConfig.ignite.generators)
+    }, {}, newConfig.ignite.generators || [])
 
     // we compare the toml changes against ours
     const changes = detectedChanges(context.config.ignite.generators, proposedGenerators)
