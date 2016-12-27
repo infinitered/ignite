@@ -1,0 +1,11 @@
+{
+  "name": "ignite-dev-screens",
+  "version": "0.0.1",
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  },
+  "dependencies": {
+    "ignite": "0.2.0"
+  }
+}
