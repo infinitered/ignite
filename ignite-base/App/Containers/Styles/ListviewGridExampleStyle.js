@@ -8,7 +8,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
+    backgroundColor: Colors.igniteBackground
   },
   row: {
     width: 100,

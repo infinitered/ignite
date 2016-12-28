@@ -1,7 +1,9 @@
 // @flow
 
-const colors = {
-  background: '#1F0808',
+import { merge } from 'ramda'
+
+const igniteColors = {
+  igniteBackground: '#1F0808',
   clear: 'rgba(0,0,0,0)',
   facebook: '#3b5998',
   transparent: 'rgba(0,0,0,0)',
@@ -21,5 +23,9 @@ const colors = {
   fire: '#e73536',
   drawer: 'rgba(30, 30, 29, 0.95)'
 }
+
+const colors = merge(igniteColors, {
+  // add colors for your Ignited app here
+})
 
 export default colors
