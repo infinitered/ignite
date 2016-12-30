@@ -9,7 +9,7 @@
 import test from 'ava'
 import FixtureAPI from '../../App/Services/FixtureApi'
 import { call, put } from 'redux-saga/effects'
-import { get<%= name %> } from '../../App/Sagas/<%= name %>Saga'
+import { get<%= name %> } from '../../App/Sagas/<%= name %>Sagas'
 import <%= name %>Actions from '../../App/Redux/<%= name %>Redux'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
