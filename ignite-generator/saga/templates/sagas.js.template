@@ -5,8 +5,8 @@
 * you should know you can use sagas for other flow control too.
 *
 * Other points:
-*  - You'll need to add this saga to sagas/index.js
-*  - This template uses the api declared in sagas/index.js, so
+*  - You'll need to add this saga to Sagas/index.js
+*  - This template uses the api declared in Sagas/index.js, so
 *    you'll need to define a constant in that file.
 *************************************************************/
 
