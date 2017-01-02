@@ -363,7 +363,6 @@ export class AppGenerator extends Generators.Base {
     this.cpFile('index.js.template', 'index.ios.js')
     this.cpFile('index.js.template', 'index.android.js')
     this.cpFile('.editorconfig.template', '.editorconfig')
-    this.cpDirectory('git_hooks')
     this.cpDirectory('Tests')
     this.cpDirectory('App')
     this.cpDirectory('fastlane')

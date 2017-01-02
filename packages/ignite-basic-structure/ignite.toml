@@ -1,14 +1,6 @@
-description = 'Ignite basic generators'
+description = 'Ignite basic structure'
 
 [ignite]
-generators = [
-  "component",
-  "container",
-  "listview",
-  "redux",
-  "saga",
-  "screen"
-]
 
 [defaults]
 tests = 'ava'

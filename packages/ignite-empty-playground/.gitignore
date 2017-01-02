@@ -9,3 +9,5 @@ ios
 android
 *.js
 .flowconfig
+.editorconfig
+README.md

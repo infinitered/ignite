@@ -1,0 +1,42 @@
+{
+   "coord":{
+      "lon":-116.2,
+      "lat":43.61
+   },
+   "weather":[
+      {
+         "id":803,
+         "main":"Clouds",
+         "description":"broken clouds",
+         "icon":"04n"
+      }
+   ],
+   "base":"stations",
+   "main":{
+      "temp":294.76,
+      "pressure":1015,
+      "humidity":20,
+      "temp_min":294.15,
+      "temp_max":296.15
+   },
+   "visibility":16093,
+   "wind":{
+      "speed":3.6,
+      "deg":130
+   },
+   "clouds":{
+      "all":75
+   },
+   "dt":1474172351,
+   "sys":{
+      "type":1,
+      "id":911,
+      "message":0.0333,
+      "country":"US",
+      "sunrise":1474205304,
+      "sunset":1474249684
+   },
+   "id":5586437,
+   "name":"Boise",
+   "cod":200
+}
