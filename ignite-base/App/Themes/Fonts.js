@@ -1,16 +1,15 @@
 // @flow
 
-import { merge } from 'ramda'
-
 const igniteType = {
   base: 'HelveticaNeue',
   bold: 'HelveticaNeue-Bold',
   emphasis: 'HelveticaNeue-Italic'
 }
 
-const type = merge(igniteType, {
+const type = {
+  ...igniteType
   // Add font types for your Ignited app here
-})
+}
 
 const igniteSize = {
   h1: 38,
@@ -26,9 +25,10 @@ const igniteSize = {
   tiny: 8.5
 }
 
-const size = merge(igniteSize, {
+const size = {
+  ...igniteSize
   // Add font sizes for your Ignited app here
-})
+}
 
 const igniteStyle = {
   h1: {
@@ -65,9 +65,10 @@ const igniteStyle = {
   }
 }
 
-const style = merge(igniteStyle, {
+const style = {
+  ...igniteStyle
   // Add font styles for your Ignited app here
-})
+}
 
 export default {
   type,

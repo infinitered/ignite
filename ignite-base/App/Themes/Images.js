@@ -1,7 +1,5 @@
 // @flow
 
-import { merge } from 'ramda'
-
 // leave off @2x/@3x
 const igniteImages = {
   logo: require('../Images/ir.png'),
@@ -11,8 +9,9 @@ const igniteImages = {
   background: require('../Images/BG.png')
 }
 
-const images = merge(igniteImages, {
+const images = {
+  ...igniteImages
   // Add images for your Ignited app here
-})
+}
 
 export default images
