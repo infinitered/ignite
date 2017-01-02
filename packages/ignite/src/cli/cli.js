@@ -18,7 +18,7 @@ module.exports = async function run (argv) {
     .brand('ignite')
     .configFile('ignite.toml')
     .loadDefault(`${__dirname}/../plugins/default`)
-    .loadAll(`${process.cwd()}/node_modules`, 'ignite-*')
+    .loadAll(`${process.cwd()}/node_modules`, { matching: 'ignite-*', hidden: true })
     .token('commandName', 'cliCommand')
     .token('commandDescription', 'cliDescription')
     .token('extensionName', 'contextExtension')
