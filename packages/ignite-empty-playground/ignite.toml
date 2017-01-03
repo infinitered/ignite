@@ -1,12 +1,2 @@
 [ignite]
-askToOverwrite = false
-examples = "classic"
-tests = "ava"
-[ignite.generators]
-component = "ignite-basic-generators"
-container = "ignite-basic-generators"
-listview = "ignite-basic-generators"
-notfound = "ignite-3rd-party"
-redux = "ignite-basic-generators"
-saga = "ignite-basic-generators"
-screen = "ignite-basic-generators"
+createdWith = "2.0pre"
