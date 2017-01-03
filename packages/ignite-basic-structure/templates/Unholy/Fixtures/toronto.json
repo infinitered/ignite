@@ -1,0 +1,42 @@
+{
+   "coord":{
+      "lon":-79.38,
+      "lat":43.65
+   },
+   "weather":[
+      {
+         "id":701,
+         "main":"Mist",
+         "description":"mist",
+         "icon":"50n"
+      }
+   ],
+   "base":"stations",
+   "main":{
+      "temp":292.05,
+      "pressure":1012,
+      "humidity":94,
+      "temp_min":290.37,
+      "temp_max":293.71
+   },
+   "visibility":14484,
+   "wind":{
+      "speed":3.1,
+      "deg":230
+   },
+   "clouds":{
+      "all":1
+   },
+   "dt":1474172343,
+   "sys":{
+      "type":1,
+      "id":3721,
+      "message":0.037,
+      "country":"CA",
+      "sunrise":1474196460,
+      "sunset":1474240859
+   },
+   "id":6167863,
+   "name":"Downtown Toronto",
+   "cod":200
+}
