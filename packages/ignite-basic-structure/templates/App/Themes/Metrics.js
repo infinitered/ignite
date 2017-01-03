@@ -6,17 +6,13 @@ const { width, height } = Dimensions.get('window')
 
 // Used via Metrics.baseMargin
 const metrics = {
-  marginHorizontal: 10,
-  marginVertical: 10,
-  section: 25,
-  baseMargin: 10,
-  doubleBaseMargin: 20,
-  smallMargin: 5,
-  horizontalLineHeight: 1,
-  searchBarHeight: 30,
+  // Useful metrics for styles
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
-  navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
+  navBarHeight: (Platform.OS === 'ios') ? 64 : 54
+  /* Simple to add!
+  marginHorizontal: 10,
+  marginVertical: 10,
   buttonRadius: 4,
   icons: {
     tiny: 15,
@@ -31,6 +27,7 @@ const metrics = {
     large: 60,
     logo: 300
   }
+  */
 }
 
 export default metrics
