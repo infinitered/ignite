@@ -1,5 +1,6 @@
 [ignite]
 askToOverwrite = false
+examples = "classic"
 tests = "ava"
 [ignite.generators]
 component = "ignite-basic-generators"

@@ -1,6 +1,6 @@
 {
-  "name": "ignite-basic-generators",
-  "version": "0.2.0",
+  "name": "ignite-vector-icons",
+  "version": "0.1.0",
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x"

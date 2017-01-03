@@ -16,7 +16,7 @@ module.exports = async function (context) {
   const jobs = []
 
   screens.each((screen) => {
-    jobs.merge([
+    jobs.push(
       {
         template: `${screen}.ejs`,
         target: `App/Containers/DevScreens/${screen}.js`
@@ -25,8 +25,19 @@ module.exports = async function (context) {
         template: `${screen}Style.ejs`,
         target: `App/Containers/DevScreens/Styles/${screen}Style.js`
       }
-    ])
+    )
   })
+
+  jobs.push(
+    {
+      template: 'DevscreensButton.ejs',
+      target: 'App/Components/DevscreensButton.js'
+    },
+    {
+      template: 'DevscreensButtonStyle.ejs',
+      target: 'App/Components/Styles/DevscreensButtonStyle.js'
+    }
+  )
 
   // make the templates
   await generate(context, jobs, props)

@@ -7,9 +7,6 @@ const Toml = require('toml')
 const json2toml = require('json2toml')
 const R = require('ramda')
 
-// use yarn or use npm? hardcode for now
-const useYarn = false
-
 // used for changes warnings
 const detectedChanges = (oldObject, newObject) => {
   let oldKeys = R.keys(oldObject)
@@ -23,20 +20,9 @@ const detectedChanges = (oldObject, newObject) => {
   }, [], inter)
 }
 
-const noMegusta = (moduleName) => {
-  console.warn('Rolling back...')
-
-  if (useYarn) {
-    Shell.exec(`yarn remove ${moduleName}`, {silent: true})
-  } else {
-    Shell.exec(`npm rm ${moduleName}`, {silent: true})
-  }
-  process.exit(1)
-}
-
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { print, filesystem, parameters, prompt } = context
+  const { print, filesystem, parameters, prompt, ignite } = context
   const { info, warning, success, checkmark, error } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
@@ -48,7 +34,7 @@ module.exports = async function (context) {
   if (moduleExists) {
     success(`${checkmark}    Installing`)
 
-    if (useYarn) {
+    if (ignite.useYarn) {
       Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
     } else {
       Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
@@ -58,14 +44,14 @@ module.exports = async function (context) {
     const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
     if (!filesystem.exists(tomlFilePath)) {
       error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
-      noMegusta(moduleName)
+      ignite.noMegusta(moduleName)
     }
     const newConfig = Toml.parse(filesystem.read(tomlFilePath))
 
     const proposedGenerators = R.reduce((acc, k) => {
       acc[k] = moduleName
       return acc
-    }, {}, newConfig.ignite.generators)
+    }, {}, newConfig.ignite.generators || [])
 
     // we compare the toml changes against ours
     const changes = detectedChanges(context.config.ignite.generators, proposedGenerators)
@@ -74,7 +60,7 @@ module.exports = async function (context) {
       warning(`The following generators would be changed: ${R.join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
       // if they refuse, then npm/yarn uninstall
-      if (!ok) noMegusta(moduleName)
+      if (!ok) ignite.noMegusta(moduleName)
     }
 
     const combinedGenerators = Object.assign({}, context.config.ignite.generators, proposedGenerators)

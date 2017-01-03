@@ -16,10 +16,7 @@ npm run bootstrap
 
 You'll only have to run bootstap once at the start.  And once again whenever we add new directories under `packages`. It doesn't hurt to run it more than once.  All it really does is setup symlinks for us to make it a really nice development experience.
 
-The binary you're looking to run is located at `packages/ignite/bin/ignite`.  Might be worth creating a new `alias` to point to that during development.
-
-`alias ignite2=/Users/you/path-to-ignite-repo/packages/ignite/bin/ignite`
-
+The binary you're looking to run is located at `packages/ignite/bin/ignite` or, if you're in the `packages/ignite-empty-playground` directory, just `./devignite`.
 
 # Table of Contents
 
@@ -35,4 +32,4 @@ These are the basic generators for creating container, screens, sagas, and more.
 
 This is an integration playground for Ignite contributors.  Pretty much everything is in the .gitignore.  This is a great place to make some features and play around.  Remember not to check in any generated files.  
 
-Feel free to add more dependencies as you create them.   Also feel free to add more things to .gitignore as you see fit. 
+Feel free to add more dependencies as you create them.   Also feel free to add more things to .gitignore as you see fit.
