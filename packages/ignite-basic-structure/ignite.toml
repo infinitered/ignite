@@ -1,0 +1,7 @@
+description = 'Ignite basic structure'
+
+[ignite]
+
+[defaults]
+tests = 'ava'
+askToOverwrite = true

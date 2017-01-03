@@ -342,7 +342,7 @@ export class AppGenerator extends Generators.Base {
     const animation = Utilities.startStep('Pre-rinse', this)
 
     // Been having reported issues
-    //with Multidex still so extra scrubbing!
+    // with Multidex still so extra scrubbing!
     Shell.rm('-rf', 'android/app/build')
     Shell.rm('-rf', 'node_modules/')
 
@@ -362,9 +362,7 @@ export class AppGenerator extends Generators.Base {
     this.cpFile('.ignite.template', '.ignite')
     this.cpFile('index.js.template', 'index.ios.js')
     this.cpFile('index.js.template', 'index.android.js')
-    this.cpFile('index.js.template', 'index.android.js')
     this.cpFile('.editorconfig.template', '.editorconfig')
-    this.cpDirectory('git_hooks')
     this.cpDirectory('Tests')
     this.cpDirectory('App')
     this.cpDirectory('fastlane')
