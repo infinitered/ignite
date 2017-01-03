@@ -9,7 +9,8 @@ export default {
   // Useful metrics for styles
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
-  navBarHeight: (Platform.OS === 'ios') ? 64 : 54
+  navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
+  baseMargin: 20
   /* Simple to add!
   marginHorizontal: 10,
   marginVertical: 10,

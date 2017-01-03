@@ -1,19 +1,19 @@
 // @flow
 
 const type = {
+  base: 'HelveticaNeue'
   /*
-  base: 'HelveticaNeue',
   bold: 'HelveticaNeue-Bold',
   emphasis: 'HelveticaNeue-Italic'
   */
 }
 
 const size = {
+  regular: 17
   /*
   h1: 38,
   h2: 34,
   input: 18,
-  regular: 17,
   */
 }
 

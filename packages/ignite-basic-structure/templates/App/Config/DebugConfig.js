@@ -1,5 +1,5 @@
-const SETTINGS = {
+// Settings that help you build your app
+
+export default {
   yellowBox: __DEV__
 }
-
-export default SETTINGS
