@@ -5,7 +5,7 @@ import {Dimensions, Platform} from 'react-native'
 const { width, height } = Dimensions.get('window')
 
 // Used via Metrics.baseMargin
-const metrics = {
+export default {
   // Useful metrics for styles
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
@@ -29,5 +29,3 @@ const metrics = {
   }
   */
 }
-
-export default metrics
