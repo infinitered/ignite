@@ -12,5 +12,8 @@
     "ignite-vector-icons": "^0.1.0",
     "react-native-vector-icons": "^3.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ignite-vector-icons": "^0.1.0",
+    "react-native-vector-icons": "^3.0.0"
+  }
 }

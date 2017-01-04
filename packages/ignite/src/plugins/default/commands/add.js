@@ -42,20 +42,23 @@ module.exports = async function (context) {
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   // prepend `ignite` as convention
   const moduleName = `ignite-${parameters.array.pop()}`
-  info(`🔎    Finding Plugin`)
+  info(`🔎    Finding ${moduleName} on npmjs.com`)
   const moduleExists = await Exists(moduleName)
   // it exists?  Let's install it else warn
   if (moduleExists) {
-    success(`${checkmark}    Installing`)
+    info(`${checkmark}    Installing npm module`)
 
     if (ignite.useYarn) {
-      Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
+      Shell.exec(`yarn add ${moduleName}`, {silent: true})
     } else {
-      Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
+      Shell.exec(`npm i ${moduleName} --save`, {silent: true})
     }
 
+    // the full path to the module installed within node_modules
+    const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+
     // once installed, let's check on its toml
-    const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
+    const tomlFilePath = `${modulePath}/ignite.toml`
     if (!filesystem.exists(tomlFilePath)) {
       error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
       noMegusta(moduleName)
@@ -84,15 +87,22 @@ module.exports = async function (context) {
     const localToml = `${process.cwd()}/ignite.toml`
     filesystem.write(localToml, json2toml(updatedConfig))
 
-    // and then call the add function
-    const pluginModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-    await pluginModule.add(context)
+    // bring the ignite plugin to life
+    const pluginModule = require(modulePath)
 
-    // get cooking message!
-    success('Time to get cooking! 🍽 ')
+    // set the path to the current running ignite plugin
+    ignite.setIgnitePluginPath(modulePath)
+
+    try {
+      // and then call the add function
+      await pluginModule.add(context)
+      success('Time to get cooking! 🍽 ')
+    } catch (err) {
+      error(err.message)
+    }
   } else {
     error("We couldn't find that ignite plugin")
-    warning(`Please make sure ${moduleName} exists on the NPM registry`)
+    warning(`Please make sure ${moduleName} exists on the npmjs.com`)
     process.exit(1)
   }
 }
