@@ -1,14 +1,10 @@
 // @cliDescription  Add a new thingy
 // ----------------------------------------------------------------------------
-const Shell = require('shelljs')
 const Exists = require('npm-exists')
 const Toml = require('toml')
 // Yeah, why would toml include this? :(
 const json2toml = require('json2toml')
 const R = require('ramda')
-
-// use yarn or use npm? hardcode for now
-const useYarn = false
 
 // used for changes warnings
 const detectedChanges = (oldObject, newObject) => {
@@ -23,42 +19,54 @@ const detectedChanges = (oldObject, newObject) => {
   }, [], inter)
 }
 
-const noMegusta = (moduleName) => {
-  console.warn('Rolling back...')
+/**
+ * Removes the ignite plugin.
+ *
+ * @param {string} moduleName The name of the ignite-* plugin.
+ * @param {Object} context The gluegun context.
+ */
+const removeIgnitePlugin = async (moduleName, context) => {
+  const { print, system, ignite } = context
 
-  if (useYarn) {
-    Shell.exec(`yarn remove ${moduleName}`, {silent: true})
+  print.warning('Rolling back...')
+
+  if (ignite.useYarn) {
+    system.run(`yarn remove ${moduleName} --dev`)
   } else {
-    Shell.exec(`npm rm ${moduleName}`, {silent: true})
+    system.run(`npm rm ${moduleName} --save-dev`)
   }
-  process.exit(1)
 }
 
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { print, filesystem, parameters, prompt, ignite } = context
+  const { print, filesystem, parameters, prompt, ignite, system } = context
   const { info, warning, success, checkmark, error } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   // prepend `ignite` as convention
   const moduleName = `ignite-${parameters.array.pop()}`
-  info(`🔎    Finding Plugin`)
+  info(`🔎    Finding ${moduleName} on npmjs.com`)
   const moduleExists = await Exists(moduleName)
   // it exists?  Let's install it else warn
   if (moduleExists) {
-    success(`${checkmark}    Installing`)
+    info(`${checkmark}    Installing npm module`)
 
+    // Let's install the `ignite-*` plugin.  These are dev dependencies.
     if (ignite.useYarn) {
-      Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
+      system.run(`yarn add ${moduleName} --dev`)
     } else {
-      Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
+      system.run(`npm i ${moduleName} --save-dev`)
     }
 
+    // the full path to the module installed within node_modules
+    const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+
     // once installed, let's check on its toml
-    const tomlFilePath = `${process.cwd()}/node_modules/${moduleName}/ignite.toml`
+    const tomlFilePath = `${modulePath}/ignite.toml`
     if (!filesystem.exists(tomlFilePath)) {
       error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
-      noMegusta(moduleName)
+      await removeIgnitePlugin(moduleName, context)
+      return
     }
     const newConfig = Toml.parse(filesystem.read(tomlFilePath))
 
@@ -74,7 +82,10 @@ module.exports = async function (context) {
       warning(`The following generators would be changed: ${R.join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
       // if they refuse, then npm/yarn uninstall
-      if (!ok) noMegusta(moduleName)
+      if (!ok) {
+        await removeIgnitePlugin(moduleName, context)
+        return
+      }
     }
 
     const combinedGenerators = Object.assign({}, context.config.ignite.generators, proposedGenerators)
@@ -84,15 +95,23 @@ module.exports = async function (context) {
     const localToml = `${process.cwd()}/ignite.toml`
     filesystem.write(localToml, json2toml(updatedConfig))
 
-    // and then call the add function
-    const pluginModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-    await pluginModule.add(context)
+    // bring the ignite plugin to life
+    const pluginModule = require(modulePath)
 
-    // get cooking message!
-    success('Time to get cooking! 🍽 ')
+    // set the path to the current running ignite plugin
+    ignite.setIgnitePluginPath(modulePath)
+
+    try {
+      // and then call the add function
+      await pluginModule.add(context)
+      success('Time to get cooking! 🍽 ')
+    } catch (err) {
+      // write the error message out
+      error(err.message)
+    }
   } else {
     error("We couldn't find that ignite plugin")
-    warning(`Please make sure ${moduleName} exists on the NPM registry`)
+    warning(`Please make sure ${moduleName} exists on the npmjs.com`)
     process.exit(1)
   }
 }

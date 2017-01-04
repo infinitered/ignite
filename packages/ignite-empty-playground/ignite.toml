@@ -1,2 +1,3 @@
 [ignite]
 createdWith = "2.0pre"
+examples = "classic"
