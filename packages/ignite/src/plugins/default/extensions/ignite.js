@@ -1,38 +1,21 @@
-const Shell = require('shelljs')
-
 const { pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith } = require('ramdasauce')
+const Shell = require('shelljs')
 
 /**
- * Returns true if yarn is available on the system.
+ * The current executing ignite plugin path.
  */
-const useYarn = Shell.which('yarn')
+let pluginPath = null
 
 /**
- * Installs node module, using yarn if available
+ * Set the current executing ignite plugin path.
  */
-function addModule (moduleName) {
-  if (useYarn) {
-    Shell.exec(`yarn add ${moduleName} --dev`, {silent: true})
-  } else {
-    Shell.exec(`npm i ${moduleName} --save-dev`, {silent: true})
-  }
-
-  Shell.exec(`react-native link ${moduleName}`)
-}
+function setIgnitePluginPath (path) { pluginPath = path }
 
 /**
- * Uninstalls node module, using yarn if available
+ * Gets the path to the current running ignite plugin.
  */
-function removeModule (moduleName) {
-  Shell.exec(`react-native unlink ${moduleName}`)
-
-  if (useYarn) {
-    Shell.exec(`yarn remove ${moduleName}`, {silent: true})
-  } else {
-    Shell.exec(`npm rm ${moduleName}`, {silent: true})
-  }
-}
+function ignitePluginPath () { return pluginPath }
 
 /**
  * Adds ignite goodies
@@ -40,24 +23,95 @@ function removeModule (moduleName) {
  * @return {Function} A function to attach to the context.
  */
 function attach (plugin, command, context) {
-  const { print, filesystem } = context
+  const { template, config, runtime, system, parameters, print, filesystem, patching } = context
   const { error, warning } = print
 
+  // determine which package manager to use
+  const forceNpm = parameters.options.npm
+  const useYarn = !forceNpm && Shell.which('yarn')
+
+  /**
+   * Finds the gluegun plugins that are also ignite plugins.
+   *
+   * @returns {Plugin[]} - an array of ignite plugins
+   */
   function findIgnitePlugins () {
     return pipe(
       filter(propSatisfies(startsWith('ignite-'), 'name')),
       sortBy(prop('name'))
-    )(context.runtime.plugins)
+    )(runtime.plugins)
   }
 
-  // copies example usage file to project for use in dev screens
-  async function addComponentExample (sourceFolder, fileName) {
-    const { filesystem, patching } = context
-    // make sure examples is set
-    if (context.config.ignite.examples === 'classic') {
-      // copy to Components/Examples folder
-      // Should be using template.generate but we can't due to gluegun #126
-      filesystem.copy(`${sourceFolder}${fileName}`, `${process.cwd()}/App/Components/Examples/${fileName}`, { overwrite: true })
+  /**
+   * Adds a npm-based module to the project.
+   *
+   * @param {string}  moduleName - The module name as found on npm.
+   * @param {Object}  options - Various installing flags.
+   * @param {boolean} options.link - Should we run `react-native link`?
+   * @param {boolean} options.dev - Should we install as a dev-dependency?
+   */
+  async function addModule (moduleName, options = {}) {
+    // install the module
+    if (useYarn) {
+      const addSwitch = options.dev ? '--dev' : ''
+      await system.run(`yarn add ${moduleName} ${addSwitch}`)
+    } else {
+      const installSwitch = options.dev ? '--save-dev' : '--save'
+      await system.run(`npm i ${moduleName} ${installSwitch}`)
+    }
+
+    // should we react-native link?
+    if (options.link) {
+      try {
+        await system.run(`react-native link ${moduleName}`)
+      } catch (err) {
+        throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
+      }
+    }
+  }
+
+  /**
+   * Removes a npm-based module from the project.
+   *
+   * @param {string}  moduleName - The module name to remove.
+   * @param {Object}  options - Various uninstalling flags.
+   * @param {boolean} options.unlink - Should we unlink?
+   * @param {boolean} options.dev - is this a dev dependency?
+   */
+  async function removeModule (moduleName, options = {}) {
+    // unlink
+    if (options.unlink) {
+      await system.run(`react-native unlink ${moduleName}`)
+    }
+
+    // uninstall
+    if (useYarn) {
+      const addSwitch = options.dev ? '--dev' : ''
+      await system.run(`yarn remove ${moduleName} ${addSwitch}`)
+    } else {
+      const uninstallSwitch = options.dev ? '--save-dev' : '--save'
+      await system.run(`npm rm ${moduleName} ${uninstallSwitch}`)
+    }
+  }
+
+  /**
+   * Generates an example for use with the dev screens.
+   *
+   * @param {string} fileName - The js file to create. (.ejs will be appended to pick up the template.)
+   * @param {Object} props - The properties to use for template expansion.
+   */
+  async function addComponentExample (fileName, props = {}) {
+    // do we want to use examples in the classic format?
+    if (config.ignite.examples === 'classic') {
+      // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
+      // generate the file
+      template.generate({
+        directory: `${ignitePluginPath()}/templates`,
+        template: `${fileName}.ejs`,
+        target: `App/Components/Examples/${fileName}`,
+        props
+      })
+
       // adds reference to usage example screen (if it exists)
       const destinationPath = `${process.cwd()}/App/Containers/DevScreens/PluginExamples.js`
       if (filesystem.exists(destinationPath)) {
@@ -66,8 +120,10 @@ function attach (plugin, command, context) {
     }
   }
 
+  /**
+   * Removes the component example.
+   */
   function removeComponentExample (fileName) {
-    const { filesystem, patching } = context
     // remove file from Components/Examples folder
     filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
     // remove reference in usage example screen (if it exists)
@@ -78,18 +134,6 @@ function attach (plugin, command, context) {
   }
 
   /**
-   * Reverts module install and exits
-   *
-   * @param {string}  moduleName  Name(s) of module to be unistalled
-   */
-  const noMegusta = (moduleName) => {
-    console.warn('Rolling back...')
-
-    removeModule(moduleName)
-    process.exit(1)
-  }
-
-  /**
    * Sets Global Config setting
    *
    * @param {string}  key             Key of setting to be defined
@@ -97,7 +141,6 @@ function attach (plugin, command, context) {
    * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
    */
   function setGlobalConfig (key, value, isVariableName = false) {
-    const { patching } = context
     const globalToml = `${process.cwd()}/ignite.toml`
 
     if (!filesystem.exists(globalToml)) {
@@ -120,7 +163,6 @@ function attach (plugin, command, context) {
    * @param {string}  key Key of setting to be removed
    */
   function removeGlobalConfig (key) {
-    const { patching } = context
     const globalToml = `${process.cwd()}/ignite.toml`
 
     if (!filesystem.exists(globalToml)) {
@@ -143,7 +185,6 @@ function attach (plugin, command, context) {
    * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
    */
   function setDebugConfig (key, value, isVariableName = false) {
-    const { patching } = context
     const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
 
     if (!filesystem.exists(debugConfig)) {
@@ -166,7 +207,6 @@ function attach (plugin, command, context) {
    * @param {string}  key Key of setting to be removed
    */
   function removeDebugConfig (key) {
-    const { patching } = context
     const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
 
     if (!filesystem.exists(debugConfig)) {
@@ -183,6 +223,8 @@ function attach (plugin, command, context) {
 
   // send back the extension
   return {
+    ignitePluginPath,
+    setIgnitePluginPath,
     useYarn,
     findIgnitePlugins,
     addModule,
@@ -192,8 +234,7 @@ function attach (plugin, command, context) {
     setGlobalConfig,
     removeGlobalConfig,
     setDebugConfig,
-    removeDebugConfig,
-    noMegusta
+    removeDebugConfig
   }
 }
 

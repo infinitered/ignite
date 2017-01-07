@@ -5,7 +5,7 @@ import { View, TouchableOpacity } from 'react-native'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Alert Message', () =>
+ExamplesRegistry.add('<%= props.title %>', () =>
   <View style={styles.groupContainer}>
     <TouchableOpacity onPress={this.handlePressRocket}>
       <Icon name='rocket' size={Metrics.icons.medium} color={Colors.ember} />
