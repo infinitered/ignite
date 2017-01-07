@@ -1,16 +1,15 @@
-const Shell = require('shelljs')
 
 const add = async function (context) {
   console.log('Adding Ignite Dev Screens')
 
-  const { patching, filesystem, print } = context
+  const { patching, filesystem, print, system } = context
   const { warning } = print
 
   // Set Examples to "classic" in Ignite config
   context.ignite.setGlobalConfig('examples', 'classic')
 
   // Copy the the screens to containers folder
-  Shell.exec('ignite generate dev-screens')
+  system.run('ignite generate dev-screens')
 
   // Set App/Config/DebugSettings.js showDevScreens to __DEV__
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
@@ -34,7 +33,7 @@ const add = async function (context) {
 }
 
 const remove = async function (context) {
-  { filesystem } = context
+  const { filesystem } = context
 
   console.log('Removing Ignite Dev Screens')
 

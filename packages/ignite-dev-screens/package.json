@@ -6,6 +6,6 @@
     "npm": ">=4.x"
   },
   "dependencies": {
-    "ignite": "0.2.0"
+    "ignite": "2.0.0"
   }
 }
