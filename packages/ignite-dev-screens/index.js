@@ -11,7 +11,7 @@ const add = async function (context) {
   // Copy the the screens to containers folder
   system.run('ignite generate dev-screens')
 
-  // Set App/Config/DebugSettings.js showDevScreens to __DEV__
+  // Set App/Config/DebugConfig.js showDevScreens to __DEV__
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
 
   // Insert a function that renders the dev screens as part of the JSX in the navigation
