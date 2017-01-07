@@ -23,7 +23,7 @@ function ignitePluginPath () { return pluginPath }
  * @return {Function} A function to attach to the context.
  */
 function attach (plugin, command, context) {
-  const { template, config, runtime, system, parameters, print, filesystem, patching } = context
+  const { template, config, runtime, system, parameters, print, filesystem } = context
   const { error, warning } = print
 
   // determine which package manager to use
@@ -101,6 +101,8 @@ function attach (plugin, command, context) {
    * @param {Object} props - The properties to use for template expansion.
    */
   async function addComponentExample (fileName, props = {}) {
+    const { filesystem, patching } = context
+
     // do we want to use examples in the classic format?
     if (config.ignite.examples === 'classic') {
       // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
@@ -124,6 +126,7 @@ function attach (plugin, command, context) {
    * Removes the component example.
    */
   function removeComponentExample (fileName) {
+    const { filesystem, patching } = context
     // remove file from Components/Examples folder
     filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
     // remove reference in usage example screen (if it exists)
@@ -141,6 +144,7 @@ function attach (plugin, command, context) {
    * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
    */
   function setGlobalConfig (key, value, isVariableName = false) {
+    const { patching, filesystem } = context
     const globalToml = `${process.cwd()}/ignite.toml`
 
     if (!filesystem.exists(globalToml)) {
@@ -163,6 +167,7 @@ function attach (plugin, command, context) {
    * @param {string}  key Key of setting to be removed
    */
   function removeGlobalConfig (key) {
+    const { patching } = context
     const globalToml = `${process.cwd()}/ignite.toml`
 
     if (!filesystem.exists(globalToml)) {
@@ -185,6 +190,7 @@ function attach (plugin, command, context) {
    * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
    */
   function setDebugConfig (key, value, isVariableName = false) {
+    const { patching } = context
     const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
 
     if (!filesystem.exists(debugConfig)) {
@@ -207,6 +213,7 @@ function attach (plugin, command, context) {
    * @param {string}  key Key of setting to be removed
    */
   function removeDebugConfig (key) {
+    const { patching } = context
     const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
 
     if (!filesystem.exists(debugConfig)) {
