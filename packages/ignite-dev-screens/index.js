@@ -15,16 +15,16 @@ const add = async function (context) {
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
 
   // Insert a function that renders the dev screens as part of the JSX in the navigation
-  const launchScreen = `${process.cwd}/App/Containers/LaunchScreen.js`
+  const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
-    if (!patching.existsInFile(launchScreen, 'import DevscreensButton')) {
+    if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
       patching.insertInFile(launchScreen, 'export Default class', 'import DevscreensButton from \'./Components/DevscreensButton.js\'\n', false)
     }
-    if (!patching.existsInFile(launchScreen, '<DevscreensButton />')) {
+    if (!patching.isInFile(launchScreen, '<DevscreensButton />')) {
       patching.insertInFile(launchScreen, '</ScrollView>', '<DevscreensButton />', false)
     }
   } else {
-    warning('LaunchScreen.js not found. Please manually link the PresentationScreen from your primary screen/navigation or open it manually via Reactotron.')
+    warning('LaunchScreen.js not found. Please manually link the PresentationScreen from your primary screen/navigation.')
   }
 
   // Call the function in the navigation, which adds/provides the dev screens
@@ -53,7 +53,7 @@ const remove = async function (context) {
   // TODO: Use navigation generator to remove screens
 
   // Remove dev screens button from launch page, if launch page is found
-  const launchScreen = `${process.cwd}/App/Containers/LaunchScreen.js`
+  const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
     patching.replaceInFile(launchScreen, 'import DevscreensButton', '')
     patching.replaceInFile(launchScreen, '<DevscreensButton />', '')
