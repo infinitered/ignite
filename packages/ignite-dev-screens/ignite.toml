@@ -2,10 +2,5 @@ description = 'Ignite dev-screens generator'
 
 [ignite]
 generators = [
-  "dev-screens",
-  "examples"
+  "dev-screens"
 ]
-
-[defaults]
-tests = 'ava'
-askToOverwrite = true

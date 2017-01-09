@@ -18,7 +18,7 @@ const add = async function (context) {
   const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
     if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
-      patching.insertInFile(launchScreen, 'export Default class', 'import DevscreensButton from \'./Components/DevscreensButton.js\'\n', false)
+      patching.insertInFile(launchScreen, 'export default class', 'import DevscreensButton from \'./Components/DevscreensButton.js\'\n', false)
     }
     if (!patching.isInFile(launchScreen, '<DevscreensButton />')) {
       patching.insertInFile(launchScreen, '</ScrollView>', '<DevscreensButton />', false)
