@@ -153,11 +153,17 @@ function attach (plugin, command, context) {
     }
 
     if (patching.isInFile(globalToml, key)) {
-      if (isVariableName) patching.replaceInFile(globalToml, key, `${key} = ${value}`)
-      if (!isVariableName) patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
+      if (isVariableName) {
+        patching.replaceInFile(globalToml, key, `${key} = ${value}`)
+      } else {
+        patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
+      }
     } else {
-      if (isVariableName) patching.insertInFile(globalToml, '[ignite.generators]', `${key} = ${value}`, false)
-      if (!isVariableName) patching.insertInFile(globalToml, '[ignite.generators]', `${key} = '${value}'`, false)
+      if (isVariableName) {
+        patching.insertInFile(globalToml, '[ignite]', `${key} = ${value}`, false)
+      } else {
+        patching.insertInFile(globalToml, '[ignite]', `${key} = '${value}'`, false)
+      }
     }
   }
 
