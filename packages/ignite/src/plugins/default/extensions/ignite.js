@@ -1,5 +1,5 @@
-const { pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
-const { startsWith } = require('ramdasauce')
+const { keys, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
+const { startsWith, dotPath } = require('ramdasauce')
 const Shell = require('shelljs')
 
 /**
@@ -23,11 +23,13 @@ function ignitePluginPath () { return pluginPath }
  * @return {Function} A function to attach to the context.
  */
 function attach (plugin, command, context) {
-  const { template, config, runtime, system, parameters } = context
+  const { template, config, runtime, system, parameters, print } = context
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
-  const useYarn = !forceNpm && Shell.which('yarn')
+
+  // you know what?  just turn off yarn for now.
+  const useYarn = false && !forceNpm && Shell.which('yarn')
 
   /**
    * Finds the gluegun plugins that are also ignite plugins.
@@ -50,6 +52,9 @@ function attach (plugin, command, context) {
    * @param {boolean} options.dev - Should we install as a dev-dependency?
    */
   async function addModule (moduleName, options = {}) {
+    const depType = options.dev ? 'as dev dependency' : ''
+    print.info(` L⚙️  installing ${print.colors.cyan(moduleName)} ${depType}`)
+
     // install the module
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
@@ -62,6 +67,8 @@ function attach (plugin, command, context) {
     // should we react-native link?
     if (options.link) {
       try {
+        print.info(` L⚙️  linking`)
+
         await system.run(`react-native link ${moduleName}`)
       } catch (err) {
         throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
@@ -78,11 +85,15 @@ function attach (plugin, command, context) {
    * @param {boolean} options.dev - is this a dev dependency?
    */
   async function removeModule (moduleName, options = {}) {
+    print.info(` L⚙️  uninstalling ${moduleName}`)
+
     // unlink
     if (options.unlink) {
+      print.info(` L⚙️  unlinking`)
       await system.run(`react-native unlink ${moduleName}`)
     }
 
+    print.info(` L⚙️  removing`)
     // uninstall
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
@@ -103,7 +114,9 @@ function attach (plugin, command, context) {
     const { filesystem, patching } = context
 
     // do we want to use examples in the classic format?
-    if (config.ignite.examples === 'classic') {
+    if (dotPath('ignite.examples', config) === 'classic') {
+      print.info(` L⚙️  adding component example`)
+
       // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
       // generate the file
       template.generate({
@@ -125,7 +138,8 @@ function attach (plugin, command, context) {
    * Removes the component example.
    */
   function removeComponentExample (fileName) {
-    const { filesystem, patching } = context
+    const { filesystem, patching, print } = context
+    print.info(` L⚙️  removing component example`)
     // remove file from Components/Examples folder
     filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
     // remove reference in usage example screen (if it exists)

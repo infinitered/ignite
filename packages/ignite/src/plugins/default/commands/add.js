@@ -1,23 +1,13 @@
 // @cliDescription  Add a new thingy
 // ----------------------------------------------------------------------------
-const Exists = require('npm-exists')
+// const Exists = require('npm-exists')
 const Toml = require('toml')
 // Yeah, why would toml include this? :(
 const json2toml = require('json2toml')
 const R = require('ramda')
-
-// used for changes warnings
-const detectedChanges = (oldObject, newObject) => {
-  let oldKeys = R.keys(oldObject)
-  let newKeys = R.keys(newObject)
-  const inter = R.intersection(oldKeys, newKeys)
-  return R.reduce((acc, k) => {
-    if (oldObject[k] !== newObject[k]) {
-      return R.concat([`'${k}'`], acc)
-    }
-    return acc
-  }, [], inter)
-}
+const { dotPath } = require('ramdasauce')
+const detectedChanges = require('../../../lib/detectedChanges')
+const detectInstall = require('./add/detectInstall')
 
 /**
  * Removes the ignite plugin.
@@ -37,81 +27,108 @@ const removeIgnitePlugin = async (moduleName, context) => {
   }
 }
 
+/**
+ * Install this module.
+ *
+ * @param {Object} context         The gluegun context
+ * @param {Object} opts            The options used to install
+ * @param {string} opts.moduleName The module to install
+ */
+async function importPlugin (context, opts) {
+  const { moduleName, type, directory } = opts
+  const { system, ignite } = context
+  const target = type === 'directory' ? directory : moduleName
+
+  if (ignite.useYarn) {
+    await system.run(`yarn add ${target} --dev`)
+  } else {
+    await system.run(`npm i ${target} --save-dev`)
+  }
+}
+
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { print, filesystem, parameters, prompt, ignite, system } = context
-  const { info, warning, success, checkmark, error } = print
+  const { print, filesystem, prompt, ignite, parameters, strings } = context
+  const { info, warning, success, error } = print
+  const currentGenerators = dotPath('config.ignite.generators', context) || {}
 
-  // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
-  // prepend `ignite` as convention
-  const moduleName = `ignite-${parameters.array.pop()}`
-  info(`🔎    Finding ${moduleName} on npmjs.com`)
-  const moduleExists = await Exists(moduleName)
-  // it exists?  Let's install it else warn
-  if (moduleExists) {
-    info(`${checkmark}    Installing npm module`)
+  // the thing we're trying to install
+  if (strings.isBlank(parameters.second)) {
+    const instructions = `An ignite plugin is required.
 
-    // Let's install the `ignite-*` plugin.  These are dev dependencies.
-    if (ignite.useYarn) {
-      system.run(`yarn add ${moduleName} --dev`)
-    } else {
-      system.run(`npm i ${moduleName} --save-dev`)
-    }
+Examples:
+  ignite add ignite-basic-structure
+  ignite add ignite-basic-generators
+  ignite add vector-icons
+  ignite add gantman/ignite-react-native-config
+  ignite add /path/to/plugin/you/are/building`
+    info(instructions)
+    return
+  }
 
-    // the full path to the module installed within node_modules
-    const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+  // find out the type of install
+  const specs = detectInstall(context)
+  const { moduleName } = specs
 
-    // once installed, let's check on its toml
-    const tomlFilePath = `${modulePath}/ignite.toml`
-    if (!filesystem.exists(tomlFilePath)) {
-      error('No `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
+  // import the ignite plugin node module
+  info(`🔥  installing ${print.colors.cyan(moduleName)}`)
+  if (specs.type) {
+    await importPlugin(context, specs)
+  } else {
+    error(`💩  invalid ignite plugin`)
+    return
+  }
+
+  // the full path to the module installed within node_modules
+  const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+
+  // once installed, let's check on its toml
+  const tomlFilePath = `${modulePath}/ignite.toml`
+
+  if (!filesystem.exists(tomlFilePath)) {
+    error('💩  no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
+    await removeIgnitePlugin(moduleName, context)
+    return
+  }
+  const newConfig = Toml.parse(filesystem.read(tomlFilePath))
+
+  const proposedGenerators = R.reduce((acc, k) => {
+    acc[k] = moduleName
+    return acc
+  }, {}, newConfig.ignite.generators || [])
+
+  // we compare the toml changes against ours
+  const changes = detectedChanges(currentGenerators, proposedGenerators)
+  if (changes.length > 0) {
+      // we warn the user on changes
+    warning(`🔥  The following generators would be changed: ${R.join(', ', changes)}`)
+    const ok = await prompt.confirm('You ok with that?')
+      // if they refuse, then npm/yarn uninstall
+    if (!ok) {
       await removeIgnitePlugin(moduleName, context)
       return
     }
-    const newConfig = Toml.parse(filesystem.read(tomlFilePath))
+  }
 
-    const proposedGenerators = R.reduce((acc, k) => {
-      acc[k] = moduleName
-      return acc
-    }, {}, newConfig.ignite.generators || [])
+  const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
+  const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
 
-    // we compare the toml changes against ours
-    const changes = detectedChanges(context.config.ignite.generators, proposedGenerators)
-    if (changes.length > 0) {
-      // we warn the user on changes
-      warning(`The following generators would be changed: ${R.join(', ', changes)}`)
-      const ok = await prompt.confirm('You ok with that?')
-      // if they refuse, then npm/yarn uninstall
-      if (!ok) {
-        await removeIgnitePlugin(moduleName, context)
-        return
-      }
-    }
+  // We write the toml changes
+  const localToml = `${process.cwd()}/ignite.toml`
+  filesystem.write(localToml, json2toml(updatedConfig))
 
-    const combinedGenerators = Object.assign({}, context.config.ignite.generators, proposedGenerators)
-    const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
+  // bring the ignite plugin to life
+  const pluginModule = require(modulePath)
 
-    // We write the toml changes
-    const localToml = `${process.cwd()}/ignite.toml`
-    filesystem.write(localToml, json2toml(updatedConfig))
+  // set the path to the current running ignite plugin
+  ignite.setIgnitePluginPath(modulePath)
 
-    // bring the ignite plugin to life
-    const pluginModule = require(modulePath)
-
-    // set the path to the current running ignite plugin
-    ignite.setIgnitePluginPath(modulePath)
-
-    try {
-      // and then call the add function
-      await pluginModule.add(context)
-      success('Time to get cooking! 🍽 ')
-    } catch (err) {
+  try {
+    // and then call the add function
+    await pluginModule.add(context)
+    success('🍽  time to get cooking!')
+  } catch (err) {
       // write the error message out
-      error(err.message)
-    }
-  } else {
-    error("We couldn't find that ignite plugin")
-    warning(`Please make sure ${moduleName} exists on the npmjs.com`)
-    process.exit(1)
+    error(err.message)
   }
 }

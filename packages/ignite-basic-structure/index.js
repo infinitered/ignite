@@ -3,7 +3,6 @@ const generate = require('./shared/generate-utils')
 
 const add = async function (context) {
   const { filesystem, parameters } = context
-  console.log('Adding Ignite Basic Structure')
 
   const copyJobs = [
     // {
