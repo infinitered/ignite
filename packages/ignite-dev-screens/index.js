@@ -1,3 +1,40 @@
+const copyDevScreens = async function (context) {
+  // grab some features
+  const { parameters, print, strings, ignite } = context
+  const { isBlank } = strings
+
+  const screens = ["AllComponentsScreen", "APITestingScreen", "DeviceInfoScreen", "PresentationScreen", "ThemeScreen", "UsageExamplesScreen"]
+
+  const jobs = []
+
+  screens.map((screen) => {
+    jobs.push(
+      {
+        template: `${screen}.ejs`,
+        target: `App/Containers/DevScreens/${screen}.js`
+      },
+      {
+        template: `${screen}Style.ejs`,
+        target: `App/Containers/DevScreens/Styles/${screen}Style.js`
+      }
+    )
+  })
+
+  jobs.push(
+    {
+      template: 'DevscreensButton.ejs',
+      target: 'App/Components/DevscreensButton.js'
+    },
+    {
+      template: 'DevscreensButtonStyle.ejs',
+      target: 'App/Components/Styles/DevscreensButtonStyle.js'
+    }
+  )
+
+  // make the templates
+  await ignite.copyBatch(context, jobs, {})
+}
+
 
 const add = async function (context) {
   console.log('Adding Ignite Dev Screens')
@@ -9,7 +46,7 @@ const add = async function (context) {
   context.ignite.setGlobalConfig('examples', 'classic')
 
   // Copy the the screens to containers folder
-  system.run('ignite generate dev-screens')
+  await copyDevScreens(context)
 
   // Set App/Config/DebugConfig.js showDevScreens to __DEV__
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
