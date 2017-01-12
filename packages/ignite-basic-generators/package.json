@@ -4,8 +4,5 @@
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x"
-  },
-  "dependencies": {
-    "ignite": "2.0.0"
   }
 }

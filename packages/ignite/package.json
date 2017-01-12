@@ -30,8 +30,8 @@
     "gluegun-patching": "^0.3.0",
     "json2toml": "^1.0.6",
     "minimist": "^1.2.0",
-    "npm-exists": "^0.1.0",
     "ramda": "^0.22.1",
+    "ramdasauce": "^1.1.1",
     "shelljs": "^0.7.5",
     "toml": "^2.3.1"
   },
