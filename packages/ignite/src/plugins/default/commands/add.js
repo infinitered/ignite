@@ -1,8 +1,7 @@
 // @cliDescription  Add a new thingy
 // ----------------------------------------------------------------------------
-// const Exists = require('npm-exists')
+
 const Toml = require('toml')
-// Yeah, why would toml include this? :(
 const json2toml = require('json2toml')
 const R = require('ramda')
 const { dotPath } = require('ramdasauce')
