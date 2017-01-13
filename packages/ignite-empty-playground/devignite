@@ -1,9 +1,0 @@
-#!/usr/bin/env node --harmony
-
-const sourceDir = `${__dirname}/../ignite/src/cli`
-
-// load the entry point or die trying
-require(`${sourceDir}/check.js`)
-
-// congrats!  we're sane enough to load.
-require(`${sourceDir}/cli.js`)(process.argv)
