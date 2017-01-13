@@ -27,7 +27,7 @@ function attach (plugin, command, context) {
     const finder = new RegExp(`.*${findPattern}.*`, '')
     const matches = data.match(finder)
     // Quick error check
-    if (matches.length === 0) throw new Error(`'${findPattern}' was not found in file.`)
+    if (matches === null) throw new Error(`'${findPattern}' was not found in file.`)
 
     if (insertAfter) {
       newContents = data.replace(finder, `${matches[0]}\n${content}`)

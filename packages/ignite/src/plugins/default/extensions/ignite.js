@@ -255,11 +255,17 @@ function attach (plugin, command, context) {
     }
 
     if (patching.isInFile(debugConfig, key)) {
-      if (isVariableName) patching.replaceInFile(debugConfig, key, `\t${key}: ${value}`)
-      if (!isVariableName) patching.replaceInFile(debugConfig, key, `\t${key}: '${value}'`)
+      if (isVariableName) {
+        patching.replaceInFile(debugConfig, key, `\t${key}: ${value}`)
+      } else {
+        patching.replaceInFile(debugConfig, key, `\t${key}: '${value}'`)
+      }
     } else {
-      if (isVariableName) patching.insertInFile(debugConfig, 'const SETTINGS = {', `\t${key}: ${value}`)
-      if (!isVariableName) patching.insertInFile(debugConfig, 'const SETTINGS = {', `\t${key}: '${value}'`)
+      if (isVariableName) {
+        patching.insertInFile(debugConfig, 'export default {', `\t${key}: ${value}`)
+      } else {
+        patching.insertInFile(debugConfig, 'export default {', `\t${key}: '${value}'`)
+      }
     }
   }
 

@@ -37,15 +37,13 @@ const copyDevScreens = async function (context) {
 
 
 const add = async function (context) {
-  console.log('Adding Ignite Dev Screens')
-
   const { patching, filesystem, print, system } = context
   const { warning } = print
 
   // Set Examples to "classic" in Ignite config
   context.ignite.setGlobalConfig('examples', 'classic')
 
-  // Copy the the screens to containers folder
+  // // Copy the the screens to containers folder
   await copyDevScreens(context)
 
   // Set App/Config/DebugConfig.js showDevScreens to __DEV__
@@ -55,7 +53,7 @@ const add = async function (context) {
   const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
     if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
-      patching.insertInFile(launchScreen, 'export default class', 'import DevscreensButton from \'./Components/DevscreensButton.js\'\n', false)
+      patching.insertInFile(launchScreen, 'import styles', 'import DevscreensButton from \'./Components/DevscreensButton.js\'\n', false)
     }
     if (!patching.isInFile(launchScreen, '<DevscreensButton />')) {
       patching.insertInFile(launchScreen, '</ScrollView>', '<DevscreensButton />', false)
