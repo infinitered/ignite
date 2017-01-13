@@ -23,7 +23,8 @@ function ignitePluginPath () { return pluginPath }
  * @return {Function} A function to attach to the context.
  */
 function attach (plugin, command, context) {
-  const { template, config, runtime, system, parameters, print } = context
+  const { template, config, runtime, system, parameters, print, filesystem } = context
+  const { error, warning } = print
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
@@ -104,6 +105,42 @@ function attach (plugin, command, context) {
     }
   }
 
+  async function copyBatch (context, jobs, props) {
+    // grab some features
+    const { config, template, prompt, filesystem, print } = context
+    const { generate } = template
+    const { confirm } = prompt
+
+    // read some configuration
+    const { askToOverwrite } = config.ignite
+
+    // If the file exists
+    const shouldGenerate = async (target) => {
+      if (!askToOverwrite) return true
+      if (!filesystem.exists(target)) return true
+      return await confirm(`overwrite ${target}`)
+    }
+
+    // old school loop because of async stuff
+    for (let index = 0; index < jobs.length; index++) {
+      // grab the current job
+      const job = jobs[index]
+      // safety check
+      if (!job) continue
+
+      // generate the React component
+      if (await shouldGenerate(job.target)) {
+        await generate({
+          directory: `${ignitePluginPath()}/templates`,
+          template: job.template,
+          target: job.target,
+          props
+        })
+        print.info(`${print.checkmark} ${job.target}`)
+      }
+    }
+  }
+
   /**
    * Generates an example for use with the dev screens.
    *
@@ -149,6 +186,110 @@ function attach (plugin, command, context) {
     }
   }
 
+  /**
+   * Sets Global Config setting
+   *
+   * @param {string}  key             Key of setting to be defined
+   * @param {string}  value           Value to be set
+   * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
+   */
+  function setGlobalConfig (key, value, isVariableName = false) {
+    const { patching, filesystem } = context
+    const globalToml = `${process.cwd()}/ignite.toml`
+
+    if (!filesystem.exists(globalToml)) {
+      error('No `ignite.toml` file found in this folder are you sure it is an Ignite project?')
+      process.exit(1)
+    }
+
+    if (patching.isInFile(globalToml, key)) {
+      if (isVariableName) {
+        patching.replaceInFile(globalToml, key, `${key} = ${value}`)
+      } else {
+        patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
+      }
+    } else {
+      if (isVariableName) {
+        patching.insertInFile(globalToml, '[ignite]', `${key} = ${value}`, false)
+      } else {
+        patching.insertInFile(globalToml, '[ignite]', `${key} = '${value}'`, false)
+      }
+    }
+  }
+
+  /**
+   * Remove Global Config setting
+   *
+   * @param {string}  key Key of setting to be removed
+   */
+  function removeGlobalConfig (key) {
+    const { patching } = context
+    const globalToml = `${process.cwd()}/ignite.toml`
+
+    if (!filesystem.exists(globalToml)) {
+      error('No `ignite.toml` file found in this folder, are you sure it is an Ignite project?')
+      process.exit(1)
+    }
+
+    if (patching.isInFile(globalToml, key)) {
+      patching.replaceInFile(globalToml, key, '')
+    } else {
+      warning(`Global Config '${key}' not found.`)
+    }
+  }
+
+  /**
+   * Sets Debug Config setting
+   *
+   * @param {string}  key             Key of setting to be defined
+   * @param {string}  value           Value to be set
+   * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
+   */
+  function setDebugConfig (key, value, isVariableName = false) {
+    const { patching } = context
+    const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
+
+    if (!filesystem.exists(debugConfig)) {
+      error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an Ignite project?')
+      process.exit(1)
+    }
+
+    if (patching.isInFile(debugConfig, key)) {
+      if (isVariableName) {
+        patching.replaceInFile(debugConfig, key, `\t${key}: ${value}`)
+      } else {
+        patching.replaceInFile(debugConfig, key, `\t${key}: '${value}'`)
+      }
+    } else {
+      if (isVariableName) {
+        patching.insertInFile(debugConfig, 'export default {', `\t${key}: ${value}`)
+      } else {
+        patching.insertInFile(debugConfig, 'export default {', `\t${key}: '${value}'`)
+      }
+    }
+  }
+
+  /**
+   * Remove Debug Config setting
+   *
+   * @param {string}  key Key of setting to be removed
+   */
+  function removeDebugConfig (key) {
+    const { patching } = context
+    const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
+
+    if (!filesystem.exists(debugConfig)) {
+      error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an ignite project?')
+      process.exit(1)
+    }
+
+    if (patching.isInFile(debugConfig, key)) {
+      patching.replaceInFile(debugConfig, key, '')
+    } else {
+      warning(`Debug Setting ${key} not found.`)
+    }
+  }
+
   // send back the extension
   return {
     ignitePluginPath,
@@ -157,8 +298,13 @@ function attach (plugin, command, context) {
     findIgnitePlugins,
     addModule,
     removeModule,
+    copyBatch,
     addComponentExample,
-    removeComponentExample
+    removeComponentExample,
+    setGlobalConfig,
+    removeGlobalConfig,
+    setDebugConfig,
+    removeDebugConfig
   }
 }
 
