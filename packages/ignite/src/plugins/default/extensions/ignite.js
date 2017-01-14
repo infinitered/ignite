@@ -112,7 +112,7 @@ function attach (plugin, command, context) {
     const { confirm } = prompt
 
     // read some configuration
-    const { askToOverwrite } = config.ignite
+    const { askToOverwrite } = config.ignite || false
 
     // If the file exists
     const shouldGenerate = async (target) => {

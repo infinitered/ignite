@@ -1,8 +1,16 @@
 const sourceFolder = `${process.cwd()}/node_modules/ignite-basic-structure/templates/`
-const generate = require('./shared/generate-utils')
 
 const add = async function (context) {
-  const { filesystem, parameters, ignite } = context
+  const { filesystem, parameters, ignite, strings, print } = context
+  const { isBlank } = strings
+
+  // validation
+  if (isBlank(parameters.third)) {
+    print.info(`${context.runtime.brand} add basic-structure <name>\n`)
+    print.error('App name is required to properly brand structure')
+    process.exit(1)
+    return
+  }
 
   const copyJobs = [
     {
@@ -27,14 +35,7 @@ const add = async function (context) {
     }
   ]
 
-  await ignite.copyBatch(context, copyJobs, {name: 'Taco'})
-
-  // Should be using template.generate but we can't due to gluegun #126
-  // filesystem.copy(`${sourceFolder}index.js`, `${process.cwd()}/index.ios.js`, { overwrite: true })
-  // filesystem.copy(`${sourceFolder}index.js`, `${process.cwd()}/index.android.js`, { overwrite: true })
-  // filesystem.copy(`${sourceFolder}README.md`, `${process.cwd()}/README.md`, { overwrite: true })
-  // filesystem.copy(`${sourceFolder}ignite.toml`, `${process.cwd()}/ignite/ignite.toml`, { overwrite: true })
-  // filesystem.copy(`${sourceFolder}.editorconfig`, `${process.cwd()}/.editorconfig`, { overwrite: true })
+  await ignite.copyBatch(context, copyJobs, {name: parameters.third})
 
   if (parameters.options.unholy) {
     // copy far too many opinions
@@ -45,8 +46,9 @@ const add = async function (context) {
   }
 }
 
+// TODO
 const remove = async function (context) {
-  console.log('Removing Ignite Basic Structure')
+  console.log('This SHOULD remove Ignite Basic Structure')
 }
 
 module.exports = { add, remove }
