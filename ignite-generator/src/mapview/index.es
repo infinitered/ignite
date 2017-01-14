@@ -79,6 +79,7 @@ class MapviewGenerator extends Generators.Base {
    * Let's hand tweak the the android manifest because rnpm doesn't support that just yet.
    */
   updateAndroidManifest () {
+    this.spinner = ora('starting')
     const status = 'Updating android manifest file'
     this.spinner.start()
     this.spinner.text = status
