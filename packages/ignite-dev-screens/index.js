@@ -11,11 +11,11 @@ const copyDevScreens = async function (context) {
     jobs.push(
       {
         template: `${screen}.ejs`,
-        target: `App/Containers/DevScreens/${screen}.js`
+        target: `ignite/DevScreens/${screen}.js`
       },
       {
         template: `${screen}Style.ejs`,
-        target: `App/Containers/DevScreens/Styles/${screen}Style.js`
+        target: `ignite/DevScreens/Styles/${screen}Style.js`
       }
     )
   })
@@ -23,11 +23,11 @@ const copyDevScreens = async function (context) {
   jobs.push(
     {
       template: 'DevscreensButton.ejs',
-      target: 'App/Components/DevscreensButton.js'
+      target: 'ignite/DevScreens/DevscreensButton.js'
     },
     {
       template: 'DevscreensButtonStyle.ejs',
-      target: 'App/Components/Styles/DevscreensButtonStyle.js'
+      target: 'ignite/DevScreens/Styles/DevscreensButtonStyle.js'
     }
   )
 
@@ -76,10 +76,7 @@ const remove = async function (context) {
   context.ignite.removeGlobalConfig('examples')
 
   // Delete screens from containers folder
-  // TODO: Use un-generate once #564 is resolved
-  filesystem.remove('App/Containers/DevScreens')
-  filesystem.remove('App/Components/DevscreensButton.js')
-  filesystem.remove('App/Components/Styles/DevscreensButtonStyles.js')
+  filesystem.remove('ignite/DevScreens')
 
   // Remove App/Config/DebugSettings.js showDevScreens value
   context.ignite.removeDebugConfig('showDevScreens')
