@@ -1,4 +1,4 @@
-const { keys, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
+const { pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const Shell = require('shelljs')
 
@@ -42,6 +42,20 @@ function attach (plugin, command, context) {
       filter(propSatisfies(startsWith('ignite-'), 'name')),
       sortBy(prop('name'))
     )(runtime.plugins)
+  }
+
+  function getToml () {
+    const oldToml = `${process.cwd()}/ignite.toml`
+    const globalToml = `${process.cwd()}/ignite/ignite.toml`
+
+    if (filesystem.exists(globalToml)) {
+      return globalToml
+    } else if (filesystem.exists(oldToml)) {
+      return oldToml
+    } else {
+      error('No `ignite.toml` file found are you sure it is an Ignite project?')
+      process.exit(1)
+    }
   }
 
   /**
@@ -136,7 +150,7 @@ function attach (plugin, command, context) {
           target: job.target,
           props
         })
-        print.info(`${print.checkmark} ${job.target}`)
+        print.info(`    ${print.checkmark}  ${job.target}`)
       }
     }
   }
@@ -194,13 +208,8 @@ function attach (plugin, command, context) {
    * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
    */
   function setGlobalConfig (key, value, isVariableName = false) {
-    const { patching, filesystem } = context
-    const globalToml = `${process.cwd()}/ignite.toml`
-
-    if (!filesystem.exists(globalToml)) {
-      error('No `ignite.toml` file found in this folder are you sure it is an Ignite project?')
-      process.exit(1)
-    }
+    const { patching } = context
+    const globalToml = getToml()
 
     if (patching.isInFile(globalToml, key)) {
       if (isVariableName) {
@@ -224,12 +233,7 @@ function attach (plugin, command, context) {
    */
   function removeGlobalConfig (key) {
     const { patching } = context
-    const globalToml = `${process.cwd()}/ignite.toml`
-
-    if (!filesystem.exists(globalToml)) {
-      error('No `ignite.toml` file found in this folder, are you sure it is an Ignite project?')
-      process.exit(1)
-    }
+    const globalToml = getToml()
 
     if (patching.isInFile(globalToml, key)) {
       patching.replaceInFile(globalToml, key, '')
