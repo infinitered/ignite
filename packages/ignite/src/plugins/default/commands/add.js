@@ -125,7 +125,7 @@ Examples:
       // We write the toml changes
       const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
       const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
-      const localToml = `${process.cwd()}/ignite.toml`
+      const localToml = `${process.cwd()}/ignite/ignite.toml`
       filesystem.write(localToml, json2toml(updatedConfig))
 
       // Sweet! We did it!
