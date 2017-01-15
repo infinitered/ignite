@@ -173,14 +173,14 @@ function attach (plugin, command, context) {
       template.generate({
         directory: `${ignitePluginPath()}/templates`,
         template: `${fileName}.ejs`,
-        target: `App/Components/Examples/${fileName}`,
+        target: `ignite/Examples/Components/${fileName}`,
         props
       })
 
       // adds reference to usage example screen (if it exists)
-      const destinationPath = `${process.cwd()}/App/Containers/DevScreens/PluginExamples.js`
+      const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
       if (filesystem.exists(destinationPath)) {
-        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Components/Examples/${fileName}`)
+        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../../Examples/Components/${fileName}`)
       }
     }
   }
