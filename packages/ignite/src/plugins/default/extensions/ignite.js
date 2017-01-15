@@ -192,11 +192,11 @@ function attach (plugin, command, context) {
     const { filesystem, patching, print } = context
     print.info(` L⚙️  removing component example`)
     // remove file from Components/Examples folder
-    filesystem.remove(`${process.cwd()}/App/Components/Examples/${fileName}`)
+    filesystem.remove(`${process.cwd()}/ignite/Examples/Components/${fileName}`)
     // remove reference in usage example screen (if it exists)
-    const destinationPath = `${process.cwd()}/App/Containers/DevScreens/PluginExamples.js`
+    const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
     if (filesystem.exists(destinationPath)) {
-      patching.replaceInFile(destinationPath, `import '../Components/Examples/${fileName}`, '')
+      patching.replaceInFile(destinationPath, `import '../../Examples/Components/${fileName}`, '')
     }
   }
 
