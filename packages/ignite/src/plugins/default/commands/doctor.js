@@ -8,7 +8,7 @@ module.exports = async function (context) {
   // ... be the CLI you wish to see in the world
   const platform = process.platform
   const ignitePath = R.trim(Shell.which('ignite') || '')
-  const igniteVersion = R.trim(Shell.exec('ignite -V', { silent: true }).stdout)
+  const igniteVersion = R.trim(Shell.exec('ignite version', { silent: true }).stdout)
   const nodePath = R.trim(Shell.which('node'))
   const npmVersion = R.trim(Shell.exec('npm --version', { silent: true }).stdout)
   const npmPath = R.trim(Shell.which('npm'))
