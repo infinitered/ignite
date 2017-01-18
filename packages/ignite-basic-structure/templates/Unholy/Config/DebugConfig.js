@@ -1,4 +1,4 @@
-const SETTINGS = {
+export default {
   useFixtures: false,
   ezLogin: false,
   yellowBox: __DEV__,
@@ -6,5 +6,3 @@ const SETTINGS = {
   includeExamples: __DEV__,
   useReactotron: __DEV__
 }
-
-export default SETTINGS

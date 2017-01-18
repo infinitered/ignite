@@ -4,10 +4,10 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import R from 'ramda'
 import { ApplicationStyles } from '../Themes'
-import DebugSettings from '../Config/DebugSettings'
+import DebugConfig from '../Config/DebugConfig'
 let globalExamplesRegistry = []
 
-export const addExample = (title: string, usage: () => React$Element<*>) => { if (DebugSettings.includeExamples) globalExamplesRegistry.push({title, usage}) }
+export const addExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalExamplesRegistry.push({title, usage}) }
 
 const renderExample = (example: Object) => {
   return (

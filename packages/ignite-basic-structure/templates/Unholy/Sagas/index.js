@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga'
 import API from '../Services/Api'
 import FixtureAPI from '../Services/FixtureApi'
-import DebugSettings from '../Config/DebugSettings'
+import DebugConfig from '../Config/DebugConfig'
 
 /* ------------- Types ------------- */
 
@@ -21,7 +21,7 @@ import { openScreen } from './OpenScreenSagas'
 
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
-const api = DebugSettings.useFixtures ? FixtureAPI : API.create()
+const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
 
 /* ------------- Connect Types To Sagas ------------- */
 

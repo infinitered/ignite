@@ -1,5 +1,5 @@
 import { StartupTypes } from '../Redux/StartupRedux'
-import Config from '../Config/DebugSettings'
+import Config from '../Config/DebugConfig'
 import Immutable from 'seamless-immutable'
 const Reactotron = require('reactotron-react-native').default
 const errorPlugin = require('reactotron-react-native').trackGlobalErrors

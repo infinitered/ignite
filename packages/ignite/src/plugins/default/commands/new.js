@@ -1,38 +1,54 @@
 // @cliDescription  Generate a new React Native project with Ignite
 // ----------------------------------------------------------------------------
 
-const installWalthrough = [
+const installWalkthrough = [
   {
-    question: 'Would you like Ignite Development Screens',
-    plugin: 'dev-screens'
+    name: 'dev-screens',
+    message: 'Would you like Ignite Development Screens',
+    type: 'confirm'
   }, {
-    question: 'Will you need a vector icon library?',
-    plugin: 'vector-icons'
+    name: 'vector-icons',
+    message: 'What kind of vector icon library will you use?',
+    type: 'list',
+    choices: ['react-native-vector-icons', 'none']
   }
 
 ]
 
 module.exports = async function (context) {
-  const { filesystem, parameters, ignite, strings, print, system } = context
-  const { isBlank, trim, kebabCase } = strings
-  const { info, warning, success, debug, checkmark, error } = print
+  const { parameters, strings, print, system } = context
+  const { isBlank } = strings
+  const { info, debug } = print
 
   // validation
-  if (isBlank(parameters.second)) {
+  const projectName = parameters.second
+  if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
     process.exit(1)
     return
   }
 
-  // what does new do?
-  info('Create new RN project')
+  // First we ask!
+  const answers = await context.prompt.ask(installWalkthrough)
+  // then we kick off (TODO: Would be awesome to have this kick off during questions)
+  // we need to lock the RN version here
+  info('Creating new RN project')
+  await system.run(`react-native init ${projectName}`)
+  process.chdir(projectName)
   info('Add ignite basic structure with unholy')
+  await system.run(`ignite add basic-structure ${projectName} --unholy`)
   info('Add ignite basic generators')
+  await system.run('ignite add basic-generators')
 
-  // now run a myriad of Ignite Plugins with yes/no options.
-  {
-
+  // now run install of Ignite Plugins
+  if (answers['dev-screens']) {
+    await system.run('ignite add dev-screens')
   }
-  // ignite-vector-icons
+
+  if (answers['vector-icons'] === 'react-native-vector-icons') {
+    await system.run('ignite add vector-icons')
+  }
+
+  debug(answers)
 }

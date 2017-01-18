@@ -35,15 +35,20 @@ const add = async function (context) {
     }
   ]
 
-  await ignite.copyBatch(context, copyJobs, {name: parameters.third})
 
   if (parameters.options.unholy) {
     // copy far too many opinions
     filesystem.copy(`${sourceFolder}Unholy`, `${process.cwd()}/App`, { overwrite: true })
+    copyJobs.push({
+      template: 'package.json.unholy.ejs',
+      target: 'package.json'
+    })
   } else {
     // copy minimal structure YAY!
     filesystem.copy(`${sourceFolder}App`, `${process.cwd()}/App`, { overwrite: true })
   }
+
+  await ignite.copyBatch(context, copyJobs, {name: parameters.third})
 }
 
 // TODO
