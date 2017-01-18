@@ -1,6 +1,6 @@
 {
   "name": "ignite-basic-structure",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x"

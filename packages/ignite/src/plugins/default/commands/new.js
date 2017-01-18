@@ -38,6 +38,8 @@ module.exports = async function (context) {
   process.chdir(projectName)
   info('Add ignite basic structure with unholy')
   await system.run(`ignite add basic-structure ${projectName} --unholy`)
+  info('Link up all those unholy goodies')
+  await system.run('yarn || npm i')
   info('Add ignite basic generators')
   await system.run('ignite add basic-generators')
 
