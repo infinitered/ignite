@@ -34,13 +34,13 @@ module.exports = async function (context) {
   // then we kick off (TODO: Would be awesome to have this kick off during questions)
   // we need to lock the RN version here
   info('Creating new RN project')
-  await system.run(`react-native init ${projectName} --version 0.38.0`)
+  await system.run(`react-native init ${projectName} --version="0.38.0"`)
   process.chdir(projectName)
   info('Add ignite basic structure with unholy')
   await system.run(`ignite add basic-structure ${projectName} --unholy`)
   info('Link up all those unholy goodies')
   await system.run('yarn || npm i')
-  await system.run('react-native link')
+  await system.run('react-native link &')
   info('Add ignite basic generators')
   await system.run('ignite add basic-generators')
 
