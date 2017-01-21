@@ -1,5 +1,6 @@
 // @cliDescription  Generate a new React Native project with Ignite
 // ----------------------------------------------------------------------------
+const Shell = require('shelljs')
 
 const installWalkthrough = [
   {
@@ -34,13 +35,16 @@ module.exports = async function (context) {
   // then we kick off (TODO: Would be awesome to have this kick off during questions)
   // we need to lock the RN version here
   info('Creating new RN project')
-  await system.run(`react-native init ${projectName} --version="0.38.0"`)
+  // TODO make sure `react-antive --version has react-native-cli 2.x otherwise failure`
+  await system.run(`react-native init ${projectName} --version 0.38.0`)
   process.chdir(projectName)
   info('Add ignite basic structure with unholy')
   await system.run(`ignite add basic-structure ${projectName} --unholy`)
-  info('Link up all those unholy goodies')
+  info('Install all those unholy goodies')
   await system.run('yarn || npm i')
-  await system.run('react-native link &')
+  // info('Link up all those unholy goodies')
+  // the following never returns - without await it keeps the shell forever!
+  // system.run('react-native link')
   info('Add ignite basic generators')
   await system.run('ignite add basic-generators')
 
@@ -54,4 +58,7 @@ module.exports = async function (context) {
   }
 
   debug(answers)
+
+  info('cd to your new project')
+  info('YOU MUST NOW RUN `react-native link` Sorry we are not doing that for you yet')
 }
