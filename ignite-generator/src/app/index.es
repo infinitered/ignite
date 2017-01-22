@@ -342,7 +342,7 @@ export class AppGenerator extends Generators.Base {
     const animation = Utilities.startStep('Pre-rinse', this)
 
     // Been having reported issues
-    //with Multidex still so extra scrubbing!
+    // with Multidex still so extra scrubbing!
     Shell.rm('-rf', 'android/app/build')
     Shell.rm('-rf', 'node_modules/')
 
@@ -355,19 +355,20 @@ export class AppGenerator extends Generators.Base {
   copyExistingStuff () {
     const animation = Utilities.startStep('Copying Ignite goodies', this)
 
-    this._cpTemplate('README.md')
-    this._cpTemplate('package.json')
-    this._cpTemplate('.babelrc')
-    this._cpTemplate('.env')
-    this._cpFile('.ignite.template', '.ignite')
-    this._cpFile('index.js.template', 'index.ios.js')
-    this._cpFile('index.js.template', 'index.android.js')
-    this._cpFile('index.js.template', 'index.android.js')
-    this._cpFile('.editorconfig.template', '.editorconfig')
+    this._cpDirectory('ignite')
     this._cpDirectory('git_hooks')
     this._cpDirectory('Tests')
     this._cpDirectory('App')
     this._cpDirectory('fastlane')
+    this._cpTemplate('README.md')
+    this._cpTemplate('package.json')
+    this._cpTemplate('.babelrc')
+    this._cpTemplate('.env')
+    this._cpFile('ignite.json.template', 'ignite/ignite.json')
+    this._cpFile('index.js.template', 'index.ios.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('.editorconfig.template', '.editorconfig')
 
     animation.finish()
   }

@@ -31,10 +31,11 @@
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "cross-spawn": "^4.0.0",
+    "npm-exists": "^0.1.0",
     "ramda": "^0.22.0",
     "shelljs": "^0.6.0",
     "update-notifier": "^1.0.2",
-    "yeoman-generator": "^0.21.1",
+    "yeoman-generator": "^0.24.1",
     "yo": "^1.7.0"
   },
   "devDependencies": {

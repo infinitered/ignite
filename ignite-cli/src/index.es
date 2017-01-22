@@ -7,9 +7,52 @@ import Shell from 'shelljs'
 import spawn from 'cross-spawn'
 import R from 'ramda'
 import updateNotifier from 'update-notifier'
+import exists from 'npm-exists'
 import * as fs from 'fs'
+import yeoman from 'yeoman-environment'
+import readline from 'readline'
 
 const FIRE = colors.red('FIRE!')
+const igniteConfigPath = `${process.cwd()}/ignite/ignite.json`
+
+// Optional - could be used for changes warnings
+const detectedChanges = (oldObject, newObject) => {
+  let oldKeys = R.keys(oldObject)
+  let newKeys = R.keys(newObject)
+  const inter = R.intersection(oldKeys, newKeys)
+  return R.reduce((acc, k) => {
+    if (oldObject[k] !== newObject[k]) {
+      return R.concat([`'${k}'`], acc)
+    }
+    return acc
+  }, [], inter)
+}
+
+const verifyAddedGenerators = (oldIgniteConfig, newIgniteConfig, callback) => {
+  const changes = detectedChanges(oldIgniteConfig, newIgniteConfig)
+  let pluginGood = true
+  if (changes.length > 0) {
+    console.log(colors.red(`The following generators would be changed: ${R.join(', ', changes)}`))
+
+    var rl = readline.createInterface(process.stdin, process.stdout)
+    rl.question('Do you want to proceed overwriting these generators? (y/n): ', (answer) => {
+      if (answer.match(/n/ig)) pluginGood = false
+      callback(pluginGood)
+      rl.close()
+    })
+  } else {
+    callback(pluginGood)
+  }
+}
+
+const getIgniteConfig = (igniteConfigFilePath) => {
+  try {
+    return require(igniteConfigFilePath)
+  } catch (e) {
+    console.log(colors.red('No `./ignite/ignite.json` file found - This might affect your experience'))
+    return {}
+  }
+}
 
 const checkYo = () => {
   if (!Shell.which('yo')) {
@@ -60,6 +103,15 @@ const checkReactNative = () => {
     console.log(colors.green('Fixing issue...'))
     Shell.exec('npm uninstall -g react-native', { silent: true })
     Shell.exec('npm install -g react-native-cli', { silent: true })
+  }
+}
+
+const checkForSporkedGen = (type) => {
+  try {
+    // make sure path works
+    return require.resolve(`${process.cwd()}/ignite/generators/${type}/`)
+  } catch (e) {
+    return null
   }
 }
 
@@ -116,8 +168,27 @@ Program
   .action((type, name) => {
     checkYo()
     checkIgniteDir(type, name)
-    console.log(`Generate a new ${type} named ${name}`)
-    spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
+    const sporkedGenerator = checkForSporkedGen(type)
+    const igniteConfig = getIgniteConfig(igniteConfigPath)
+    const commandNamespace = `ignite:${type}`
+    const command = igniteConfig.generators[type]
+    if (command) {
+      const env = yeoman.createEnv()
+      const generatorModulePath = sporkedGenerator || `${process.cwd()}/node_modules/${command}`
+      env.register(generatorModulePath, commandNamespace)
+      console.log(`Generate a new ${type} named ${name}`)
+      env.run(`${commandNamespace} ${name}`, {}, err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Time to get cooking! 🍽 ')
+        }
+      })
+    } else {
+      console.log(colors.yellow('DEPRECATED: Generator not found attempting older method.'))
+      console.log('These generators will be removed in version 2.0')
+      spawn('yo', [`react-native-ignite:${type}`, name], { shell: true, stdio: 'inherit' })
+    }
   })
 
 // Update
@@ -134,6 +205,73 @@ Program
       console.log('Updating ' + colors.red('Ignite'))
       // RUN `npm i -g react-native-ignite --silent`
       spawn('npm', ['i', '-g', 'react-native-ignite', '--silent'], {shell: true, stdio: 'inherit'})
+    }
+  })
+
+// add plugin
+Program
+  .command('add <plugin>')
+  .description('add a designated ignite plugin')
+  .alias('a')
+  .action((plugin) => {
+    checkYo()
+    const moduleName = `ignite-${plugin}`
+    exists(moduleName)
+      .then((moduleExists) => {
+        if (moduleExists) {
+          console.log(`Adding ${plugin}`)
+          spawn('npm', ['i', `${moduleName}`, '--save-dev'], { shell: true, stdio: 'inherit' })
+            .on('close', (retCode) => {
+              const newModule = require(`${process.cwd()}/node_modules/${moduleName}`)
+              const igniteConfig = getIgniteConfig(igniteConfigPath)
+              // must clone at this level, bc object of objects is ref
+              const originalGenerators = Object.assign({}, igniteConfig.generators)
+              const updatedConfig = newModule.initialize(igniteConfig)
+              verifyAddedGenerators(originalGenerators, updatedConfig.generators, (performUpdate) => {
+                if (performUpdate) {
+                  const newConfig = `module.exports = ${JSON.stringify(updatedConfig, null, 2)}`
+                  // write updated file
+                  const fs = require('fs')
+                  fs.writeFile(igniteConfigPath, newConfig)
+                  // apply any additional steps defined by the plugin
+                  newModule.apply(() => {
+                    console.log(`Added ${plugin}`)
+                  })
+                }
+              })
+            })
+        } else {
+          console.error(colors.red("We couldn't find that ignite plugin"))
+          console.warn(`Please make sure ${moduleName} exists on the NPM registry`)
+          Shell.exit(1)
+        }
+      })
+  })
+
+// spork!
+Program
+  .command('spork <generator>')
+  .description('copies specified generator to ignite folder for modification')
+  .alias('s')
+  .action((generator) => {
+    console.log(`⫚ Begin spork of ${generator} ⫚`)
+    const igniteConfig = getIgniteConfig(igniteConfigPath)
+    // look up generator in ignite config
+    const genPath = igniteConfig.generators[generator]
+    if (genPath) {
+      console.log(`It is my ambition to spork ${genPath}`)
+      // make a home for the generator
+      Shell.mkdir('-p', `${process.cwd()}/ignite/generators/${generator}`)
+      // Copy over generator
+      Shell.cp('-R', `${process.cwd()}/node_modules/${genPath}`, `${process.cwd()}/ignite/generators/${generator}`)
+      // Kill folders that cannot/should not come down with sporking
+      Shell.rm('-rf', `${process.cwd()}/ignite/node_modules`)
+      Shell.rm('-rf', `${process.cwd()}/ignite/package.json`)
+      Shell.rm('-rf', `${process.cwd()}/ignite/.git`)
+    } else {
+      console.log(colors.red(`No generator named ${generator} was found.`))
+      console.log('Please check your ignite.json file')
+      Shell.exit(1)
     }
   })
 
