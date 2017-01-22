@@ -1,18 +1,16 @@
 const minimist = require('minimist')
 const { build, printCommands, printWtf } = require('gluegun')
 const header = require('../brand/header')
-const { isNil } = require('ramda')
+const { isNil, isEmpty } = require('ramda')
+const exitCodes = require('../lib/exitCodes')
 
 /**
  * Kick off a run.
  *
- * @param  {array}      argv An array of command line arguments.
- * @return {RunContext}      The gluegun RunContext
+ * @param  {array} argv An array of command line arguments.
+ * @return {RunContext} The gluegun RunContext
  */
 module.exports = async function run (argv) {
-  // parse the cmd line
-  const cmd = minimist(argv.slice(2))
-
   // create a runtime
   const runtime = build()
     .brand('ignite')
@@ -24,10 +22,20 @@ module.exports = async function run (argv) {
     .token('extensionName', 'contextExtension')
     .createRuntime()
 
+  // parse the commandLine line
+  const commandLine = minimist(argv.slice(2))
+
+  // are we asking for --version|-version|-v and nothing else?
+  const showVersionNumber = isEmpty(commandLine._) && commandLine.version || commandLine.v
+  if (showVersionNumber) {
+    runtime.run({ rawCommand: 'version' })
+    process.exit(exitCodes.OK)
+  }
+
   // wtf mode shows problems with plugins, commands, and extensions
-  if (cmd.wtf) {
+  if (commandLine.wtf) {
     printWtf(runtime)
-    process.exit(0)
+    process.exit(exitCodes.OK)
   }
 
   // run the command
