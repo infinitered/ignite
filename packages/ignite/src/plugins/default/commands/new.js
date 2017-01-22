@@ -1,6 +1,5 @@
 // @cliDescription  Generate a new React Native project with Ignite
 // ----------------------------------------------------------------------------
-const Shell = require('shelljs')
 
 const installWalkthrough = [
   {
@@ -44,7 +43,7 @@ module.exports = async function (context) {
   await system.run('yarn || npm i')
   // info('Link up all those unholy goodies')
   // the following never returns - without await it keeps the shell forever!
-  // system.run('react-native link')
+  system.run('react-native link &')
   info('Add ignite basic generators')
   await system.run('ignite add basic-generators')
 
