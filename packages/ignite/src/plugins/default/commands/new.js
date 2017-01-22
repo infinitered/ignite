@@ -18,7 +18,7 @@ const installWalkthrough = [
 module.exports = async function (context) {
   const { parameters, strings, print, system } = context
   const { isBlank } = strings
-  const { info, debug } = print
+  const { info, debug, colors } = print
 
   // validation
   const projectName = parameters.second
@@ -72,8 +72,15 @@ module.exports = async function (context) {
     await system.run(`ignite add ${igniteDevPackagePrefix}vector-icons`)
   }
 
-  debug(answers)
-
-  info(`Please type cd ${projectName}`)
-  info('YOU MUST NOW RUN `react-native link` Sorry we are not doing that for you yet')
+  info('')
+  info('Time to get cooking! 🍽 ')
+  info('')
+  info('To run in iOS:')
+  info(colors.yellow(`  cd ${projectName}`))
+  info(colors.yellow('  react-native run-ios'))
+  info('')
+  info('To run in Android:')
+  info(colors.yellow(`  cd ${projectName}`))
+  info(colors.yellow('  react-native run-android'))
+  info('')
 }
