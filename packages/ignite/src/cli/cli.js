@@ -25,9 +25,10 @@ module.exports = async function run (argv) {
   // parse the commandLine line
   const commandLine = minimist(argv.slice(2))
 
-  // are we asking for --version|-version|-v and nothing else?
-  const showVersionNumber = isEmpty(commandLine._) && commandLine.version || commandLine.v
-  if (showVersionNumber) {
+  // should we show the version number & jet?
+  const hasNoArguments = isEmpty(commandLine._)
+  const hasVersionOption = commandLine.version || commandLine.v
+  if (hasNoArguments && hasVersionOption) {
     runtime.run({ rawCommand: 'version' })
     process.exit(exitCodes.OK)
   }
