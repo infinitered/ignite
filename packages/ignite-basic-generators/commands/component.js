@@ -1,6 +1,6 @@
 // @cliDescription  Generates a component, styles, and an optional test.
+// @cliExample  ignite generate component MyComponent # TODO: Add example?
 // ----------------------------------------------------------------------------
-const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
@@ -16,24 +16,23 @@ module.exports = async function (context) {
 
   // read some configuration
   const { tests } = config.ignite
-
   const name = pascalCase(parameters.first)
-  const props = { name }
 
-  const component = {
-    template: 'component.ejs',
-    target: `App/Components/${name}.js`
-  }
-  const style = {
-    template: 'component-style.ejs',
-    target: `App/Components/Styles/${name}Style.js`
-  }
-  const test = {
-    template: 'component.ejs',
-    target: `Test/Components/${name}Test.js`
-  }
-  const jobs = [component, style, tests === 'ava' && test]
+  const copyJobs = [
+    {
+      template: 'component.ejs',
+      target: `App/Components/${name}.js`
+    },
+    {
+      template: 'component-style.ejs',
+      target: `App/Components/Styles/${name}Style.js`
+    },
+    (tests === 'ava') && {
+      template: 'component-test.ejs',
+      target: `Test/Components/${name}Test.js`
+    }
+  ]
 
   // make the templates
-  await generate(context, jobs, props)
+  await ignite.copyBatch(context, copyJobs, {name})
 }
