@@ -44,7 +44,7 @@ const add = async function (context) {
     if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
       patching.insertInFile(launchScreen, 'import styles', 'import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'\n', false)
     }
-    if (!patching.isInFile(launchScreen, '<DevscreensButton />')) {
+    if (!patching.isInFile(launchScreen, '          <DevscreensButton />')) {
       patching.insertInFile(launchScreen, '</ScrollView>', '<DevscreensButton />', false)
     }
   } else {
