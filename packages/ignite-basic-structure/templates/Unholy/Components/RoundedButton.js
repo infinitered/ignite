@@ -6,7 +6,7 @@ import styles from './Styles/RoundedButtonStyle'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Rounded Button', () =>
+ExamplesRegistry.addComponentExample('Rounded Button', () =>
   <RoundedButton
     text='real buttons have curves'
     onPress={() => window.alert('Rounded Button Pressed!')}

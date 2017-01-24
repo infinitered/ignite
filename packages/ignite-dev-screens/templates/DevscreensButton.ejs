@@ -4,6 +4,8 @@ import React from 'react'
 import { TouchableOpacity, Text, View } from 'react-native'
 import styles from './Styles/DevscreensButtonStyle'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import DebugConfig from '../../App/Config/DebugConfig'
+import RoundedButton from '../../App/Components/RoundedButton'
 
 type FullButtonProps = {
   styles?: Object
@@ -11,11 +13,11 @@ type FullButtonProps = {
 
 export default class DevscreensButton extends React.Component {
   render () {
-    if (DevSettings.showDevScreens) {
+    if (DebugConfig.showDevScreens) {
       return (
-        <TouchableOpacity onPress={NavigationActions.PresentationScreen}>
-          <Text>Open DevScreens</Text>
-        </TouchableOpacity>
+        <RoundedButton onPress={NavigationActions.PresentationScreen}>
+          Open DevScreens
+        </RoundedButton>
       )
     } else {
       return (<View />)

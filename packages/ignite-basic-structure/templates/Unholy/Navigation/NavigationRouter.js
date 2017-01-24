@@ -8,18 +8,19 @@ import NavItems from './NavItems'
 import CustomNavBar from '../Navigation/CustomNavBar'
 
 // screens identified by the router
-import PresentationScreen from '../Containers/PresentationScreen'
-import AllComponentsScreen from '../Containers/AllComponentsScreen'
-import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
+import LaunchScreen from '../Containers/LaunchScreen'
+import PresentationScreen from '../../ignite/DevScreens/PresentationScreen'
+import ComponentExamplesScreen from '../../ignite/DevScreens/ComponentExamplesScreen'
+import PluginExamplesScreen from '../../ignite/DevScreens/PluginExamplesScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import ListviewExample from '../Containers/ListviewExample'
 import ListviewGridExample from '../Containers/ListviewGridExample'
 import ListviewSectionsExample from '../Containers/ListviewSectionsExample'
 import ListviewSearchingExample from '../Containers/ListviewSearchingExample'
 import MapviewExample from '../Containers/MapviewExample'
-import APITestingScreen from '../Containers/APITestingScreen'
-import ThemeScreen from '../Containers/ThemeScreen'
-import DeviceInfoScreen from '../Containers/DeviceInfoScreen'
+import APITestingScreen from '../../ignite/DevScreens/APITestingScreen'
+import ThemeScreen from '../../ignite/DevScreens/ThemeScreen'
+import DeviceInfoScreen from '../../ignite/DevScreens/DeviceInfoScreen'
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -31,9 +32,10 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
-            <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
-            <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
+            <Scene initial key='launchScreen' component={LaunchScreen} title='LaunchScreen' />
+            <Scene key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
+            <Scene key='componentExamples' component={ComponentExamplesScreen} title='Components' />
+            <Scene key='pluginExamples' component={PluginExamplesScreen} title='Plugins' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
             <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
