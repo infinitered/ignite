@@ -1,5 +1,5 @@
 const NPM_MODULE_NAME = 'react-native-animatable'
-const EXAMPLE_FILE = 'animationsExample.js'
+const EXAMPLE_FILE = 'animatableExample.js'
 
 /**
  * Add ourself to the project.
@@ -8,10 +8,10 @@ const add = async function (context) {
   const { ignite } = context
 
   // install a npm module
-  await ignite.addModule(NPM_MODULE_NAME, { link: true })
+  await ignite.addModule(NPM_MODULE_NAME)
 
   // copy the example file (if examples are turned on)
-  await ignite.addComponentExample(EXAMPLE_FILE, { title: 'Animations Icons' })
+  await ignite.addComponentExample(EXAMPLE_FILE, { title: 'Animatable' })
 }
 
 /**
@@ -21,7 +21,7 @@ const remove = async function (context) {
   const { ignite } = context
 
   // remove the npm module
-  await ignite.removeModule(NPM_MODULE_NAME, { link: true })
+  await ignite.removeModule(NPM_MODULE_NAME)
 
   // remove the component example
   await ignite.removeComponentExample(EXAMPLE_FILE)
