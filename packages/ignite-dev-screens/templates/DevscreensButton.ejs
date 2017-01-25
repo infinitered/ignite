@@ -1,23 +1,89 @@
 // @flow
 
 import React from 'react'
-import { TouchableOpacity, Text, View } from 'react-native'
+import { TouchableOpacity, Text, View, Modal, Navigator } from 'react-native'
 import styles from './Styles/DevscreensButtonStyle'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import DebugConfig from '../../App/Config/DebugConfig'
 import RoundedButton from '../../App/Components/RoundedButton'
+import PresentationScreen from './PresentationScreen'
+import APITestingScreen from './APITestingScreen'
+import ComponentExamplesScreen from './ComponentExamplesScreen'
+import DeviceInfoScreen from './DeviceInfoScreen'
+import PluginExamplesScreen from './PluginExamplesScreen'
+import ThemeScreen from './ThemeScreen'
 
 type FullButtonProps = {
   styles?: Object
 }
 
 export default class DevscreensButton extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      showModal: false
+    }
+    this.toggleModal = this.toggleModal.bind(this)
+    this.back = this.back.bind(this)
+    this.close = this.close.bind(this)
+  }
+
+  toggleModal () {
+    this.setState({showModal: !this.state.showModal})
+  }
+
+  back (route, navigator, index, navState) {
+    return (
+      <TouchableOpacity onPress={navigator.pop}><Text>Back</Text></TouchableOpacity>
+    )
+  }
+
+  close (route, navigator, index, navState) {
+    return (
+      <TouchableOpacity onPress={this.toggleModal}><Text>Close</Text></TouchableOpacity>
+    )
+  }
+
   render () {
     if (DebugConfig.showDevScreens) {
+      const routes = [
+        { title: "Ignite DevScreens", key: 'PresentationScreen' },
+        { title: "API Testing Screen", key: 'APITestingScreen' },
+        { title: "Component Examples", key: 'ComponentExamplesScreen' },
+        { title: "Device Info", key: 'DeviceInfoScreen' },
+        { title: "Plugin Examples", key: 'PluginExamplesScreen' },
+        { title: "Theme", key: 'ThemeScreen'}
+      ]
+
       return (
-        <RoundedButton onPress={NavigationActions.presentationScreen}>
-          Open DevScreens
-        </RoundedButton>
+        <View>
+          <RoundedButton onPress={this.toggleModal}>
+            Open DevScreens
+          </RoundedButton>
+          <Modal visible={this.state.showModal}>
+            <Navigator
+              initialRoute={routes[0]}
+              initialRouteStack={routes}
+              renderScene={(route, navigator) => {
+                switch (route.key) {
+                  case 'PresentationScreen':
+                    return (<PresentationScreen navigator={navigator} routes={routes} />)
+                  case 'APITestingScreen':
+                    return (<APITestingScreen navigator={navigator} routes={routes} />)
+                  case 'ComponentExamplesScreen':
+                    return (<ComponentExamplesScreen navigator={navigator} routes={routes} />)
+                  case 'DeviceInfoScreen':
+                    return (<DeviceInfoScreen navigator={navigator} routes={routes} />)
+                  case 'PluginExamplesScreen':
+                    return (<PluginExamplesScreen navigator={navigator} routes={routes} />)
+                  case 'ThemeScreen':
+                    return (<ThemeScreen navigator={navigator} routes={routes} />)
+                }
+              }}
+              navigationBar={<Navigator.NavigationBar routeMapper={{ LeftButton: this.back, RightButton: this.close, Title: (route, navigator, index, navState) => { return (<Text>{route.title}</Text>); }, }} style={{backgroundColor: 'gray'}} />}
+              />
+          </Modal>
+        </View>
       )
     } else {
       return (<View />)

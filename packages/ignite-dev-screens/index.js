@@ -42,10 +42,10 @@ const add = async function (context) {
   const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
     if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
-      patching.insertInFile(launchScreen, 'import styles', 'import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'\n', false)
+      patching.insertInFile(launchScreen, 'from \'react-native\'', 'import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'\n')
     }
-    if (!patching.isInFile(launchScreen, '          <DevscreensButton />')) {
-      patching.insertInFile(launchScreen, '</ScrollView>', '<DevscreensButton />', false)
+    if (!patching.isInFile(launchScreen, '<DevscreensButton />')) {
+      patching.insertInFile(launchScreen, '</ScrollView>', '          <DevscreensButton />', false)
     }
   } else {
     warning('LaunchScreen.js not found. Please manually link the PresentationScreen from your primary screen/navigation.')
