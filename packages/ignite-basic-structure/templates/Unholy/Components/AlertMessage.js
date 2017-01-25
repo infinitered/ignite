@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Alert Message', () =>
+ExamplesRegistry.addComponentExample('Alert Message', () =>
   <View>
     <AlertMessage
       title='Alert Message with animation'

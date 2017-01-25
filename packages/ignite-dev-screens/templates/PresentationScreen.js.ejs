@@ -2,9 +2,8 @@
 
 import React from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
-import { Images } from '../Themes'
-import RoundedButton from '../Components/RoundedButton'
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Images } from '../../App/Themes'
+import RoundedButton from '../../App/Components/RoundedButton'
 
 // Styles
 import styles from './Styles/PresentationScreenStyle'
@@ -26,23 +25,23 @@ export default class PresentationScreen extends React.Component {
             </Text>
           </View>
 
-          <RoundedButton onPress={NavigationActions.componentExamples}>
+          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[2])}}>
             Component Examples Screen
           </RoundedButton>
 
-          <RoundedButton onPress={NavigationActions.usageExamples}>
-            Usage Examples Screen
+          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[4])}}>
+            Plugin Examples Screen
           </RoundedButton>
 
-          <RoundedButton onPress={NavigationActions.apiTesting}>
+          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[1])}}>
             API Testing Screen
           </RoundedButton>
 
-          <RoundedButton onPress={NavigationActions.theme}>
+          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[5])}}>
             Theme Screen
           </RoundedButton>
 
-          <RoundedButton onPress={NavigationActions.deviceInfo}>
+          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[3])}}>
             Device Info Screen
           </RoundedButton>
 
