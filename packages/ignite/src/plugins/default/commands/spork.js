@@ -1,12 +1,12 @@
-// @cliDescription  WUT?
+// @cliDescription  Copy templates as blueprints for this project
 // ----------------------------------------------------------------------------
-const { reduce, filter } = require('ramda')
+const { reduce, find } = require('ramda')
+const exitCodes = require('../../../lib/exitCodes')
 
 module.exports = async function (context) {
   // grab a fist-full of features...
-  const { system, print, filesystem, strings, ignite, patching } = context
-  const { trim, kebabCase } = strings
-  const { info, warning, success, debug, checkmark, error } = print
+  const { print, filesystem, patching } = context
+  const { warning, success } = print
 
   // ignite spork
   // -> lists all generator plugins (identified in toml)
@@ -23,7 +23,7 @@ module.exports = async function (context) {
   let selectedPlugin = ''
   if (pluginOptions.length === 0) {
     warning('No plugins with generators were detected!')
-    process.exit(1)
+    process.exit(exitCodes.SPORKABLES_NOT_FOUND)
   } else if (pluginOptions.length === 1) {
     selectedPlugin = pluginOptions[0]
   } else {
@@ -36,7 +36,7 @@ module.exports = async function (context) {
     selectedPlugin = answer.selectedPlugin
   }
 
-  const directory = filter(x => x.name === selectedPlugin, context.ignite.findIgnitePlugins())[0].directory
+  const directory = find(x => x.name === selectedPlugin, context.ignite.findIgnitePlugins()).directory
   const choices = filesystem.list(`${directory}/templates`)
 
   const copyFiles = await context.prompt.ask({
@@ -46,7 +46,10 @@ module.exports = async function (context) {
     choices
   })
 
+  // TODO: This will be wonky if you're not in root of your project
   copyFiles.selectedTemplates.map((template) => {
     filesystem.copyAsync(`${directory}/templates/${template}`, `ignite/Spork/${selectedPlugin}/${template}`)
   })
+
+  success('Sporked!')
 }
