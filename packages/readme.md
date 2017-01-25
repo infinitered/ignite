@@ -1,6 +1,6 @@
 # Ignite 2.0
 
-Hello.  Welcome to the 2.0 branch of Ignite.
+Hello.  Welcome to the 2.0 branch of Ignite, currently under heavy development.
 
 One of the big goals of Ignite was to make it modular. We will be living in `/packages` as this is a monorepo setup with [lerna](https://github.com/lerna/lerna).  Each sub-directory is a npm module.
 
@@ -8,13 +8,11 @@ One of the big goals of Ignite was to make it modular. We will be living in `/pa
 
 Here's the quick start.
 
-```sh
-git checkout next
-npm i
-npm run bootstrap
-```
-
-You'll only have to run bootstap once at the start.  And once again whenever we add new directories under `packages`. It doesn't hurt to run it more than once.  All it really does is setup symlinks for us to make it a really nice development experience.
+1. Clone down Ignite and change to the `next` branch
+2. Uninstall old Ignite with `npm uninstall -g react-native-ignite`
+3. CD into `./packages/ignite`
+4. Run `npm link`
+5. Run `ignite version`. You should see `2.0.0`.
 
 # Table of Contents
 

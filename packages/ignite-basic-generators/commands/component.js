@@ -1,10 +1,10 @@
 // @cliDescription  Generates a component, styles, and an optional test.
-// @cliExample  ignite generate component MyComponent # TODO: Add example?
+// @cliExample  ignite generate component MyComponent
 // ----------------------------------------------------------------------------
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, config, strings, print } = context
+  const { parameters, config, strings, print, ignite } = context
   const { pascalCase, isBlank } = strings
 
   // validation
