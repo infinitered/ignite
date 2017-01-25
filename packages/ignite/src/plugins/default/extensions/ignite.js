@@ -1,6 +1,7 @@
 const { pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const Shell = require('shelljs')
+const exitCodes = require('../../../lib/exitCodes')
 
 /**
  * The current executing ignite plugin path.
@@ -25,6 +26,11 @@ function ignitePluginPath () { return pluginPath }
 function attach (plugin, command, context) {
   const { template, config, runtime, system, parameters, print, filesystem } = context
   const { error, warning } = print
+
+  if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
+    error(`This is not an Ignite project root directory!`)
+    process.exit(exitCodes.GENERIC)
+  }
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
@@ -54,7 +60,7 @@ function attach (plugin, command, context) {
       return oldToml
     } else {
       error('No `ignite.toml` file found are you sure it is an Ignite project?')
-      process.exit(1)
+      process.exit(exitCodes.GENERIC)
     }
   }
 
@@ -68,7 +74,7 @@ function attach (plugin, command, context) {
    */
   async function addModule (moduleName, options = {}) {
     const depType = options.dev ? 'as dev dependency' : ''
-    print.info(` L⚙️  installing ${print.colors.cyan(moduleName)} ${depType}`)
+    print.info(` ⌙⚙️  installing ${print.colors.cyan(moduleName)} ${depType}`)
 
     // install the module
     if (useYarn) {
@@ -82,7 +88,7 @@ function attach (plugin, command, context) {
     // should we react-native link?
     if (options.link) {
       try {
-        print.info(` L⚙️  linking`)
+        print.info(` ⌙⚙️  linking`)
 
         await system.run(`react-native link ${moduleName}`)
       } catch (err) {
@@ -100,15 +106,15 @@ function attach (plugin, command, context) {
    * @param {boolean} options.dev - is this a dev dependency?
    */
   async function removeModule (moduleName, options = {}) {
-    print.info(` L⚙️  uninstalling ${moduleName}`)
+    print.info(` ⌙⚙️  uninstalling ${moduleName}`)
 
     // unlink
     if (options.unlink) {
-      print.info(` L⚙️  unlinking`)
+      print.info(` ⌙⚙️  unlinking`)
       await system.run(`react-native unlink ${moduleName}`)
     }
 
-    print.info(` L⚙️  removing`)
+    print.info(` ⌙⚙️  removing`)
     // uninstall
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
@@ -167,7 +173,7 @@ function attach (plugin, command, context) {
 
     // do we want to use examples in the classic format?
     if (dotPath('ignite.examples', config) === 'classic') {
-      print.info(` L⚙️  adding component example`)
+      print.info(` ⌙⚙️  adding component example`)
 
       // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
       // generate the file
@@ -191,7 +197,7 @@ function attach (plugin, command, context) {
    */
   function removeComponentExample (fileName) {
     const { filesystem, patching, print } = context
-    print.info(` L⚙️  removing component example`)
+    print.info(` ⌙⚙️  removing component example`)
     // remove file from Components/Examples folder
     filesystem.remove(`${process.cwd()}/ignite/Examples/Components/${fileName}`)
     // remove reference in usage example screen (if it exists)
@@ -256,7 +262,7 @@ function attach (plugin, command, context) {
 
     if (!filesystem.exists(debugConfig)) {
       error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an Ignite project?')
-      process.exit(1)
+      process.exit(exitCodes.GENERIC)
     }
 
     if (patching.isInFile(debugConfig, key)) {
@@ -285,7 +291,7 @@ function attach (plugin, command, context) {
 
     if (!filesystem.exists(debugConfig)) {
       error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an ignite project?')
-      process.exit(1)
+      process.exit(exitCodes.generic)
     }
 
     if (patching.isInFile(debugConfig, key)) {
