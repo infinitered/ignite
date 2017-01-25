@@ -20,6 +20,11 @@ module.exports = {
   /**
    * An ignite plugin bombed while installing.
    */
-  PLUGIN_INSTALL: 3
+  PLUGIN_INSTALL: 3,
+
+  /**
+   * You're trying to spork, but there's nothing to eat
+   */
+  SPORKABLES_NOT_FOUND: 4
 
 }
