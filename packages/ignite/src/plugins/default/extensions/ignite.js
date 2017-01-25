@@ -25,11 +25,18 @@ function ignitePluginPath () { return pluginPath }
  */
 function attach (plugin, command, context) {
   const { template, config, runtime, system, parameters, print, filesystem } = context
-  const { error, warning } = print
+  const { error, info, warning } = print
 
-  if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
-    error(`This is not an Ignite project root directory!`)
-    process.exit(exitCodes.GENERIC)
+  if (command.name === 'new') {
+    if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
+      info(`This is already an Ignite project root directory.`)
+      process.exit(exitCodes.GENERIC)
+    }
+  } else {
+    if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
+      error(`💩 This is not an Ignite project root directory!`)
+      process.exit(exitCodes.GENERIC)
+    }
   }
 
   // determine which package manager to use
@@ -59,7 +66,7 @@ function attach (plugin, command, context) {
     } else if (filesystem.exists(oldToml)) {
       return oldToml
     } else {
-      error('No `ignite.toml` file found are you sure it is an Ignite project?')
+      error('💩 No `ignite.toml` file found are you sure it is an Ignite project?')
       process.exit(exitCodes.GENERIC)
     }
   }
@@ -290,7 +297,7 @@ function attach (plugin, command, context) {
     const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
 
     if (!filesystem.exists(debugConfig)) {
-      error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an ignite project?')
+      error('💩 No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an ignite project?')
       process.exit(exitCodes.generic)
     }
 
