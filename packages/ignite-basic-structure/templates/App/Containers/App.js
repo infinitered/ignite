@@ -1,11 +1,8 @@
 // @flow
 
+import '../Config'
 import React, { Component } from 'react'
 import RootContainer from './RootContainer'
-import applyConfigSettings from '../Config'
-
-// Apply config overrides
-applyConfigSettings()
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
