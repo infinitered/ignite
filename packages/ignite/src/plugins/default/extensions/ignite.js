@@ -144,8 +144,9 @@ function attach (plugin, command, context) {
 
       // generate the React component
       if (await shouldGenerate(job.target)) {
+        const currentPluginPath = ignitePluginPath()
         await generate({
-          directory: `${ignitePluginPath()}/templates`,
+          directory: currentPluginPath && `${currentPluginPath}/templates`,
           template: job.template,
           target: job.target,
           props

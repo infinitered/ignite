@@ -131,5 +131,9 @@ module.exports = async function (context) {
     pluginName: registryItem.pluginName,
     rawCommand: newCommand,
     options: parameters.options
+  }).then((e) => {
+    if (e.error) {
+      print.debug(e.error)
+    }
   })
 }
