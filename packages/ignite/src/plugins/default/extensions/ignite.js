@@ -295,6 +295,21 @@ function attach (plugin, command, context) {
     }
   }
 
+  async function generate (generateParams) {
+    // Find plugin running
+    // Find template they want
+    // Sporked version?
+    //  YES?  Use that by setting directory on generate
+    //  NO? Directory is basically null
+
+    // template.generate({
+    //   directory: `${ignitePluginPath()}/templates`,
+    //   template: `${fileName}.ejs`,
+    //   target: `ignite/Examples/Components/${fileName}`,
+    //   props
+    // })
+  }
+
   // send back the extension
   return {
     ignitePluginPath,
