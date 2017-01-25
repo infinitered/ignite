@@ -17,7 +17,7 @@ const add = async function (context) {
 
   // Patch the I18n file in
   ignite.patchInFile(`${process.cwd()}/App/Config/AppConfig.js`, {
-    insert: `import './App/I18n/I18n'\n`,
+    insert: `import '../I18n/I18n'\n`,
     before: `export default {`
   })
 }
