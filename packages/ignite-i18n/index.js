@@ -15,11 +15,10 @@ const add = async function (context) {
     filesystem.copy(`${__dirname}/templates/I18n`, `${process.cwd()}/App/I18n`)
   }
 
-  // Patch the file
-  ignite.patchInFile(`${process.cwd()}/App/Containers/App.js`, {
-    before: `import RootContainer from './RootContainer'`,
-    match: `import '../I18n/I18n'`,
-    insert: `import '../I18n/I18n' // keep before root container`
+  // Patch the I18n file in
+  ignite.patchInFile(`${process.cwd()}/App/Config/AppConfig.js`, {
+    insert: `import './App/I18n/I18n'\n`,
+    before: `export default {`
   })
 }
 
