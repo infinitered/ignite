@@ -1,0 +1,8 @@
+{
+  "name": "ignite-i18n",
+  "version": "0.0.1",
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  }
+}
