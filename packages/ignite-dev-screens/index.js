@@ -10,11 +10,11 @@ const copyDevScreens = async function (context) {
   screens.map((screen) => {
     jobs.push(
       {
-        template: `${screen}.ejs`,
+        template: `${screen}.js.ejs`,
         target: `ignite/DevScreens/${screen}.js`
       },
       {
-        template: `${screen}Style.ejs`,
+        template: `${screen}Style.js.ejs`,
         target: `ignite/DevScreens/Styles/${screen}Style.js`
       }
     )
