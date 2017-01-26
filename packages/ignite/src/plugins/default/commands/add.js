@@ -112,20 +112,21 @@ Examples:
 
   // ok, are we ready?
   try {
-    if (filesystem.exists(modulePath) === 'file') {
+    if (filesystem.exists(modulePath + '/index.js') === 'file') {
       // bring the ignite plugin to life
       const pluginModule = require(modulePath)
+
+      if (!pluginModule.hasOwnProperty('add') || !pluginModule.hasOwnProperty('remove')) {
+        error(`💩  'add' or 'remove' method missing.`)
+        process.exit(exitCodes.PLUGIN_INVALID)
+      }
 
       // set the path to the current running ignite plugin
       ignite.setIgnitePluginPath(modulePath)
 
       // now let's try to run it
       try {
-        if (pluginModule.hasOwnProperty('add')) {
-          await pluginModule.add(context)
-        } else {
-          warning(`Warning: No 'add' method found. If this is intentional, please define an empty method.`)
-        }
+        await pluginModule.add(context)
 
         // We write the toml changes
         const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)

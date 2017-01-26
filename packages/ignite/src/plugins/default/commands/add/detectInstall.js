@@ -47,8 +47,8 @@ function detectInstall (context) {
       type: 'directory'
     }
   } else {
-    print.error(`${thing} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
-    process.exit(exitCodes.GENERIC)
+    print.error(`💩  ${thing} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
+    process.exit(exitCodes.PLUGIN_INVALID)
   }
 
   // this is a npmjs module

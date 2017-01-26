@@ -25,11 +25,11 @@ function ignitePluginPath () { return pluginPath }
  */
 function attach (plugin, command, context) {
   const { template, config, runtime, system, parameters, print, filesystem } = context
-  const { error, info, warning } = print
+  const { error, warning } = print
 
   if (command.name === 'new') {
     if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
-      info(`This is already an Ignite project root directory.`)
+      error(`This is already an Ignite project root directory.`)
       process.exit(exitCodes.GENERIC)
     }
   } else {

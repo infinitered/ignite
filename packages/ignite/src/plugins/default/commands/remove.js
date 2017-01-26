@@ -2,9 +2,10 @@
 // ----------------------------------------------------------------------------
 const Shell = require('shelljs')
 const R = require('ramda')
-const Toml = require('toml')
+// const Toml = require('toml')
 // Yeah, why would toml include this? :(
 const json2toml = require('json2toml')
+const exitCodes = require('../../../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
 const useYarn = false
@@ -37,7 +38,7 @@ const noMegusta = (moduleName) => {
 module.exports = async function (context) {
     // grab a fist-full of features...
   const { print, parameters, prompt, filesystem } = context
-  const { info, warning, xmark, error, success, debug } = print
+  const { info, warning, xmark, error, success } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   // prepend `ignite` as convention
@@ -60,16 +61,19 @@ module.exports = async function (context) {
         const localToml = `${process.cwd()}/ignite.toml`
         filesystem.write(localToml, json2toml(updatedConfig))
       } else {
-        process.exit(1)
+        process.exit(exitCodes.GENERIC)
       }
     }
 
     const modulePath = `${process.cwd()}/node_modules/${moduleName}`
-    if (filesystem.exists(modulePath) === 'file') {
+    if (filesystem.exists(modulePath + 'index.js') === 'file') {
       // Call remove functionality
       const pluginModule = require(modulePath)
       if (pluginModule.hasOwnProperty('remove')) {
         await pluginModule.remove(context)
+      } else {
+        error(`💩  'remove' method missing.`)
+        process.exit(exitCodes.PLUGIN_INVALID)
       }
     }
 
@@ -77,7 +81,7 @@ module.exports = async function (context) {
     noMegusta(moduleName)
     success(`${xmark}    Removed`)
   } else {
-    error("We couldn't find that ignite plugin")
+    error("💩  We couldn't find that ignite plugin")
     warning(`Please make sure ${moduleName} exists in package.json`)
     process.exit(1)
   }
