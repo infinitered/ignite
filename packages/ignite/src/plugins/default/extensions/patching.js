@@ -26,6 +26,7 @@ function attach (plugin, command, context) {
     // get the full line of first occurance
     const finder = new RegExp(`.*${findPattern}.*`, '')
     const matches = data.match(finder)
+
     // Quick error check
     if (matches === null) throw new Error(`'${findPattern}' was not found in file.`)
 
