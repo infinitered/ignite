@@ -32,6 +32,10 @@ const add = async function (context) {
     {
       template: '.editorconfig',
       target: '.editorconfig'
+    },
+    {
+      template: 'App/Config/AppConfig.js.ejs',
+      target: 'App/Config/AppConfig.js'
     }
   ]
 

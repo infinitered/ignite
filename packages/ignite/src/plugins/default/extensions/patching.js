@@ -53,7 +53,7 @@ function attach (plugin, command, context) {
     let finder = new RegExp(`.*${findPattern}.*`, '')
     let matches = data.match(finder)
     // Quick error check
-    if (matches.length > 0) {
+    if (matches && matches.length > 0) {
       // replace contents
       const newContents = data.replace(finder, `${content}`)
 
