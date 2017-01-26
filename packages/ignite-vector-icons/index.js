@@ -21,7 +21,7 @@ const remove = async function (context) {
   const { ignite } = context
 
   // remove the npm module
-  await ignite.removeModule(NPM_MODULE_NAME, { link: true })
+  await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })
 
   // remove the component example
   await ignite.removeComponentExample(EXAMPLE_FILE)
