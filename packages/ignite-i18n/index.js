@@ -29,16 +29,19 @@ const remove = async function (context) {
   const { ignite, filesystem } = context
 
   // remove the npm module
-  await ignite.removeModule(NPM_MODULE_NAME, { link: true })
+  await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })
 
   // remove the component example
   await ignite.removeComponentExample(EXAMPLE_FILE)
 
   // Remove App/I18n folder
-  const removeI18n = await context.prompt.confirm({
-    message: 'Do you want to remove all of your translation files in App/I18n?'
-  })
+  const removeI18n = await context.prompt.confirm(
+    'Do you want to remove all of your translation files in App/I18n?'
+  )
   if (removeI18n) { filesystem.remove(`${process.cwd()}/App/I18n`) }
+
+  // Remove i18n from AppConfig
+  patching.replaceInFile(`${process.cwd()}/App/Config/AppConfig.js`, `import '../I18n/I18n'\n`, '')
 }
 
 module.exports = { add, remove }

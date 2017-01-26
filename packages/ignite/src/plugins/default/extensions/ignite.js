@@ -182,10 +182,10 @@ function attach (plugin, command, context) {
     if (dotPath('ignite.examples', config) === 'classic') {
       print.info(` ⌙⚙️  adding component example`)
 
-      // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
       // generate the file
+      const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
       template.generate({
-        directory: `${ignitePluginPath()}/templates`,
+        directory: templatePath,
         template: `${fileName}.ejs`,
         target: `ignite/Examples/Components/${fileName}`,
         props
