@@ -64,9 +64,14 @@ module.exports = async function (context) {
       }
     }
 
-    // Call remove functionality
-    const pluginModule = require(`${process.cwd()}/node_modules/${moduleName}`)
-    await pluginModule.remove(context)
+    const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+    if (filesystem.exists(modulePath) === 'file') {
+      // Call remove functionality
+      const pluginModule = require(modulePath)
+      if (pluginModule.hasOwnProperty('remove')) {
+        await pluginModule.remove(context)
+      }
+    }
 
     // Uninstall dep from node modules
     noMegusta(moduleName)
