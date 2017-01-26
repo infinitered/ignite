@@ -39,10 +39,15 @@ async function importPlugin (context, opts) {
   const { system, ignite } = context
   const target = type === 'directory' ? directory : moduleName
 
-  if (ignite.useYarn) {
-    await system.run(`yarn add ${target} --dev`)
-  } else {
-    await system.run(`npm i ${target} --save-dev`)
+  try {
+    if (ignite.useYarn) {
+      await system.run(`yarn add ${target} --dev`)
+    } else {
+      await system.run(`npm i ${target} --save-dev`)
+    }
+  } catch (e) {
+    context.print.error(`💩  Package install failed for ${target}`)
+    process.exit(exitCodes.PLUGIN_INVALID)
   }
 }
 
