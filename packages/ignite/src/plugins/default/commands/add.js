@@ -46,7 +46,7 @@ async function importPlugin (context, opts) {
       await system.run(`npm i ${target} --save-dev`)
     }
   } catch (e) {
-    context.print.error(`💩  Package install failed for ${target}`)
+    context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
 }
