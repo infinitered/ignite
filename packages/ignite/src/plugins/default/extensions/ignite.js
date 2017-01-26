@@ -233,9 +233,9 @@ function attach (plugin, command, context) {
       }
     } else {
       if (isVariableName) {
-        patching.insertInFile(globalToml, '[ignite]', `${key} = ${value}`, false)
+        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = ${value}`)
       } else {
-        patching.insertInFile(globalToml, '[ignite]', `${key} = '${value}'`, false)
+        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = '${value}'`)
       }
     }
   }
