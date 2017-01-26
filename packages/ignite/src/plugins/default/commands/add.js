@@ -132,13 +132,16 @@ Examples:
 
       // now let's try to run it
       try {
-        await pluginModule.add(context)
-
         // We write the toml changes
         const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
         const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
         const localToml = `${process.cwd()}/ignite/ignite.toml`
-        filesystem.write(localToml, json2toml(updatedConfig))
+        // only write if new generators have ocurred
+        if (proposedGenerators !== {}) {
+          await filesystem.write(localToml, json2toml(updatedConfig))
+        }
+
+        await pluginModule.add(context)
 
         // Sweet! We did it!
         success('🍽  time to get cooking!')
