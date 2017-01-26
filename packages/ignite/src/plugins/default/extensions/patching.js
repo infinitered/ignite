@@ -40,6 +40,11 @@ function attach (plugin, command, context) {
     fs.writeFileSync(filePath, newContents, 'utf-8')
   }
 
+  const prependToFile = (filePath, prependString) => {
+    const data = fs.readFileSync(filePath, 'utf-8')
+    fs.writeFileSync(filePath, prependString + data, 'utf-8')
+  }
+
   /**
    * Replaces a given bit of matched content in a given file
    *
@@ -80,6 +85,7 @@ function attach (plugin, command, context) {
 
   // return back the feature set
   return {
+    prependToFile,
     insertInFile,
     replaceInFile,
     isInFile

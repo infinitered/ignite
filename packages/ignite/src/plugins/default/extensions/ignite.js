@@ -232,6 +232,11 @@ function attach (plugin, command, context) {
         patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
       }
     } else {
+      // Toml destroyed [ignite] again :rage5:
+      if (!patching.isInFile(globalToml, '\\[ignite\\]')) {
+        patching.prependToFile(globalToml, '[ignite]\n\n')
+      }
+
       if (isVariableName) {
         patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = ${value}`)
       } else {
