@@ -1,3 +1,6 @@
+// @cliDescription Checks your dev environment for dependencies.
+// ----------------------------------------------------------------------------
+
 const R = require('ramda')
 const Shell = require('shelljs')
 

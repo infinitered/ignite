@@ -1,4 +1,5 @@
-// @cliDescription  Add a new thingy
+// @cliDescription Adds an Ignite plugin.
+// @cliAlias a
 // ----------------------------------------------------------------------------
 
 const Toml = require('toml')
