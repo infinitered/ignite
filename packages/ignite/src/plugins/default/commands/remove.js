@@ -1,5 +1,7 @@
-// @cliDescription  Add a new thingy
+// @cliDescription Removes an Ignite plugin.
+// @cliAlias r
 // ----------------------------------------------------------------------------
+
 const Shell = require('shelljs')
 const R = require('ramda')
 const Toml = require('toml')

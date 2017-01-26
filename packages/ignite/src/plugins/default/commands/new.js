@@ -1,4 +1,5 @@
-// @cliDescription  Generate a new React Native project with Ignite
+// @cliDescription  Generate a new React Native project with Ignite.
+// @cliAlias n
 // ----------------------------------------------------------------------------
 
 const installWalkthrough = [
