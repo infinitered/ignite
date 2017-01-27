@@ -12,6 +12,11 @@ const installWalkthrough = [
     message: 'What kind of vector icon library will you use?',
     type: 'list',
     choices: ['react-native-vector-icons', 'none']
+  }, {
+    name: 'i18n',
+    message: 'What kind of internationalization library will you use?',
+    type: 'list',
+    choices: ['react-native-i18n', 'none']
   }
 
 ]
@@ -69,11 +74,18 @@ module.exports = async function (context) {
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] || parameters.options.max) {
+    info('Add ignite dev screens')
     await system.run(`ignite add ${igniteDevPackagePrefix}dev-screens`)
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons' || parameters.options.max) {
+    info('Add ignite vector icons')
     await system.run(`ignite add ${igniteDevPackagePrefix}vector-icons`)
+  }
+
+  if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
+    info('Add ignite i18n')
+    await system.run(`ignite add ${igniteDevPackagePrefix}i18n`)
   }
 
   info('')

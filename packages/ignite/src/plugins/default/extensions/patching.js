@@ -26,6 +26,7 @@ function attach (plugin, command, context) {
     // get the full line of first occurance
     const finder = new RegExp(`.*${findPattern}.*`, '')
     const matches = data.match(finder)
+
     // Quick error check
     if (matches === null) throw new Error(`'${findPattern}' was not found in file.`)
 
@@ -37,6 +38,11 @@ function attach (plugin, command, context) {
 
     // overwrite file with modified contents
     fs.writeFileSync(filePath, newContents, 'utf-8')
+  }
+
+  const prependToFile = (filePath, prependString) => {
+    const data = fs.readFileSync(filePath, 'utf-8')
+    fs.writeFileSync(filePath, prependString + data, 'utf-8')
   }
 
   /**
@@ -53,7 +59,7 @@ function attach (plugin, command, context) {
     let finder = new RegExp(`.*${findPattern}.*`, '')
     let matches = data.match(finder)
     // Quick error check
-    if (matches.length > 0) {
+    if (matches && matches.length > 0) {
       // replace contents
       const newContents = data.replace(finder, `${content}`)
 
@@ -79,6 +85,7 @@ function attach (plugin, command, context) {
 
   // return back the feature set
   return {
+    prependToFile,
     insertInFile,
     replaceInFile,
     isInFile

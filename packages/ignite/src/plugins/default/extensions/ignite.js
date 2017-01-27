@@ -97,7 +97,7 @@ function attach (plugin, command, context) {
       try {
         print.info(` ⌙⚙️  linking`)
 
-        await system.run(`react-native link ${moduleName}`)
+        system.run(`react-native link ${moduleName} &`)
       } catch (err) {
         throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
       }
@@ -182,10 +182,10 @@ function attach (plugin, command, context) {
     if (dotPath('ignite.examples', config) === 'classic') {
       print.info(` ⌙⚙️  adding component example`)
 
-      // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
       // generate the file
+      const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
       template.generate({
-        directory: `${ignitePluginPath()}/templates`,
+        directory: templatePath,
         template: `${fileName}.ejs`,
         target: `ignite/Examples/Components/${fileName}`,
         props
@@ -194,7 +194,7 @@ function attach (plugin, command, context) {
       // adds reference to usage example screen (if it exists)
       const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
       if (filesystem.exists(destinationPath)) {
-        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../../Examples/Components/${fileName}`)
+        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Examples/Components/${fileName}'`)
       }
     }
   }
@@ -210,7 +210,7 @@ function attach (plugin, command, context) {
     // remove reference in usage example screen (if it exists)
     const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
     if (filesystem.exists(destinationPath)) {
-      patching.replaceInFile(destinationPath, `import '../../Examples/Components/${fileName}`, '')
+      patching.replaceInFile(destinationPath, `import '../Examples/Components/${fileName}`, '')
     }
   }
 
@@ -232,10 +232,15 @@ function attach (plugin, command, context) {
         patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
       }
     } else {
+      // Toml destroyed [ignite] again :rage5:
+      if (!patching.isInFile(globalToml, '\\[ignite\\]')) {
+        patching.prependToFile(globalToml, '[ignite]\n\n')
+      }
+
       if (isVariableName) {
-        patching.insertInFile(globalToml, '[ignite]', `${key} = ${value}`, false)
+        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = ${value}`)
       } else {
-        patching.insertInFile(globalToml, '[ignite]', `${key} = '${value}'`, false)
+        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = '${value}'`)
       }
     }
   }
@@ -308,6 +313,28 @@ function attach (plugin, command, context) {
     }
   }
 
+  /**
+   * Conditionally inserts a string into a file before or after another string.
+   * TODO: Move to infinitered/gluegun eventually? Plugin or core?
+   *
+   * @param {string}  file            File to be patched
+   * @param {Object}  opts            Options
+   * @param {string}  opts.before     Insert before this string
+   * @param {string}  opts.after      Insert after this string
+   * @param {string}  opts.insert     String to be inserted
+   * @param {string}  opts.match      Skip if this string exists already
+   *
+   * @example
+   *   patchInFile('thing.js', { before: 'bar', insert: 'foo' })
+   *
+   */
+  function patchInFile (file, opts) {
+    const { patching } = context
+    if (!patching.isInFile(file, opts.match || opts.insert)) {
+      patching.insertInFile(file, opts.before || opts.after, opts.insert, !!opts.after)
+    }
+  }
+
   // send back the extension
   return {
     ignitePluginPath,
@@ -322,7 +349,8 @@ function attach (plugin, command, context) {
     setGlobalConfig,
     removeGlobalConfig,
     setDebugConfig,
-    removeDebugConfig
+    removeDebugConfig,
+    patchInFile
   }
 }
 
