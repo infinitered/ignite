@@ -194,7 +194,7 @@ function attach (plugin, command, context) {
       // adds reference to usage example screen (if it exists)
       const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
       if (filesystem.exists(destinationPath)) {
-        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../../Examples/Components/${fileName}`)
+        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../../Examples/Components/${fileName}'`)
       }
     }
   }
