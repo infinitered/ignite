@@ -6,15 +6,15 @@ import { Platform, View, ScrollView, Text, Image } from 'react-native'
 import { Images } from '../Themes'
 import styles from './Styles/AllComponentsScreenStyle'
 
-// Examples Render Engine
-import ExamplesRegistry from '../Services/ExamplesRegistry'
-
 // Components to show examples (only real point of merge conflict)
 import '../Components/AlertMessage'
 import '../Components/FullButton'
 import '../Components/RoundedButton'
 import '../Components/DrawerButton'
 // import '../Components/MapCallout'
+
+// Examples Render Engine
+import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 class AllComponentsScreen extends React.Component {
 

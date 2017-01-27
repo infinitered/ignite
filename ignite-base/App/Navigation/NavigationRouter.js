@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react'
-import DebugSettings from '../Config/DebugSettings'
 import { Scene, Router } from 'react-native-router-flux'
 import Styles from './Styles/NavigationContainerStyle'
 import NavigationDrawer from './NavigationDrawer'
@@ -9,7 +8,6 @@ import NavItems from './NavItems'
 import CustomNavBar from '../Navigation/CustomNavBar'
 
 // screens identified by the router
-import LaunchScreen from '../Containers/LaunchScreen'
 import PresentationScreen from '../Containers/PresentationScreen'
 import AllComponentsScreen from '../Containers/AllComponentsScreen'
 import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
@@ -33,31 +31,24 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='launchScreen' component={LaunchScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
-            <Scene key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
+            <Scene initial key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
+            <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
+            <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
             <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
             <Scene key='listviewSectionsExample' component={ListviewSectionsExample} title='Listview Sections' />
             <Scene key='listviewSearchingExample' component={ListviewSearchingExample} title='Listview Searching' navBar={CustomNavBar} />
             <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
-            {this.devScreens()}
-            {/* Custom navigation bar example */}
-            <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
-            <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
-            <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='theme' component={ThemeScreen} title='Theme' />
+
+            {/* Custom navigation bar example */}
+            <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
           </Scene>
         </Scene>
       </Router>
     )
-  }
-
-  devScreens () {
-    if (DebugSettings.showDevScreens) {
-
-    }
   }
 }
 
