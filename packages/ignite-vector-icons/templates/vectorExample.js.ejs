@@ -2,21 +2,15 @@
 
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
-import ExamplesRegistry from '../Services/ExamplesRegistry'
+import ExamplesRegistry from '../../../App/Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('<%= props.title %>', () =>
-  <View style={styles.groupContainer}>
-    <TouchableOpacity onPress={this.handlePressRocket}>
-      <Icon name='rocket' size={Metrics.icons.medium} color={Colors.ember} />
-    </TouchableOpacity>
-    <TouchableOpacity onPress={this.handlePressSend}>
-      <Icon name='send' size={Metrics.icons.medium} color={Colors.error} />
-    </TouchableOpacity>
-    <TouchableOpacity onPress={this.handlePressStar}>
-      <Icon name='star' size={Metrics.icons.medium} color={Colors.snow} />
-    </TouchableOpacity>
-    <Icon name='trophy' size={Metrics.icons.medium} color={Colors.error} />
-    <Icon name='warning' size={Metrics.icons.medium} color={Colors.ember} />
+ExamplesRegistry.addPluginExample('<%= props.title %>', () =>
+  <View>
+    <Icon name='rocket' size='40' color='white' />
+    <Icon name='send' size='40' color='white' />
+    <Icon name='star' size='40' color='white' />
+    <Icon name='trophy' size='40' color='white' />
+    <Icon name='warning' size='40' color='white' />
   </View>
 )
