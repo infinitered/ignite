@@ -210,7 +210,7 @@ function attach (plugin, command, context) {
     // remove reference in usage example screen (if it exists)
     const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
     if (filesystem.exists(destinationPath)) {
-      patching.replaceInFile(destinationPath, `import '../../Examples/Components/${fileName}`, '')
+      patching.replaceInFile(destinationPath, `import '../Examples/Components/${fileName}`, '')
     }
   }
 
