@@ -5,7 +5,7 @@ import Styles from './Styles/MapCalloutStyle'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Map Callout', () =>
+ExamplesRegistry.addComponentExample('Map Callout', () =>
   <MapCallout
     location={{
       title: 'Callout Example'

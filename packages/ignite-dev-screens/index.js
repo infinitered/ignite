@@ -3,33 +3,22 @@ const copyDevScreens = async function (context) {
   const { parameters, print, strings, ignite } = context
   const { isBlank } = strings
 
-  const screens = ["AllComponentsScreen", "APITestingScreen", "DeviceInfoScreen", "PresentationScreen", "ThemeScreen", "PluginExamplesScreen", "LaunchScreen"]
+  const screens = ["APITestingScreen", "ComponentExamplesScreen", "DeviceInfoScreen", "DevscreensButton", "PluginExamplesScreen", "PresentationScreen", "ThemeScreen"]
 
   const jobs = []
 
   screens.map((screen) => {
     jobs.push(
       {
-        template: `${screen}.ejs`,
+        template: `${screen}.js.ejs`,
         target: `ignite/DevScreens/${screen}.js`
       },
       {
-        template: `${screen}Style.ejs`,
+        template: `${screen}Style.js.ejs`,
         target: `ignite/DevScreens/Styles/${screen}Style.js`
       }
     )
   })
-
-  jobs.push(
-    {
-      template: 'DevscreensButton.ejs',
-      target: 'ignite/DevScreens/DevscreensButton.js'
-    },
-    {
-      template: 'DevscreensButtonStyle.ejs',
-      target: 'ignite/DevScreens/Styles/DevscreensButtonStyle.js'
-    }
-  )
 
   // make the templates
   await ignite.copyBatch(context, jobs, {})
@@ -53,10 +42,10 @@ const add = async function (context) {
   const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
     if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
-      patching.insertInFile(launchScreen, 'import styles', 'import DevscreensButton from \'./Components/DevscreensButton.js\'\n', false)
+      patching.insertInFile(launchScreen, 'from \'react-native\'', 'import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'\n')
     }
     if (!patching.isInFile(launchScreen, '<DevscreensButton />')) {
-      patching.insertInFile(launchScreen, '</ScrollView>', '<DevscreensButton />', false)
+      patching.insertInFile(launchScreen, '</ScrollView>', '          <DevscreensButton />', false)
     }
   } else {
     warning('LaunchScreen.js not found. Please manually link the PresentationScreen from your primary screen/navigation.')

@@ -9,7 +9,3 @@ generators = [
   "saga",
   "screen"
 ]
-
-[defaults]
-tests = 'ava'
-askToOverwrite = true

@@ -1,5 +1,7 @@
 // @cliDescription  WUT?
+// @cliHidden true
 // ----------------------------------------------------------------------------
+
 const { assoc } = require('ramda')
 
 module.exports = async function (context) {
