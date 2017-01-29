@@ -5,18 +5,19 @@
 const installWalkthrough = [
   {
     name: 'dev-screens',
-    message: 'Would you like Ignite Development Screens',
-    type: 'confirm'
+    message: 'Would you like Ignite Development Screens?',
+    type: 'list',
+    choices: ['No', 'Yes']
   }, {
     name: 'vector-icons',
-    message: 'What kind of vector icon library will you use?',
+    message: 'What vector icon library will you use?',
     type: 'list',
-    choices: ['react-native-vector-icons', 'none']
+    choices: ['none', 'react-native-vector-icons']
   }, {
     name: 'i18n',
-    message: 'What kind of internationalization library will you use?',
+    message: 'What internationalization library will you use?',
     type: 'list',
-    choices: ['react-native-i18n', 'none']
+    choices: ['none', 'react-native-i18n']
   }
 
 ]
@@ -73,7 +74,7 @@ module.exports = async function (context) {
   await system.run(`ignite add ${igniteDevPackagePrefix}basic-generators`)
 
   // now run install of Ignite Plugins
-  if (answers['dev-screens'] || parameters.options.max) {
+  if (answers['dev-screens'] === 'Yes' || parameters.options.max) {
     info('Add ignite dev screens')
     await system.run(`ignite add ${igniteDevPackagePrefix}dev-screens`)
   }
