@@ -1,6 +1,7 @@
 const { pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const Shell = require('shelljs')
+const exitCodes = require('../../../lib/exitCodes')
 
 /**
  * The current executing ignite plugin path.
@@ -25,6 +26,18 @@ function ignitePluginPath () { return pluginPath }
 function attach (plugin, command, context) {
   const { template, config, runtime, system, parameters, print, filesystem } = context
   const { error, warning } = print
+
+  if (command.name === 'new' || (command.name === 'add' && parameters.rawCommand.includes('ignite-basic-structure'))) {
+    if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
+      error(`This is already an Ignite project root directory.`)
+      process.exit(exitCodes.GENERIC)
+    }
+  } else {
+    if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
+      error(`💩 This is not an Ignite project root directory!`)
+      process.exit(exitCodes.GENERIC)
+    }
+  }
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
@@ -53,8 +66,8 @@ function attach (plugin, command, context) {
     } else if (filesystem.exists(oldToml)) {
       return oldToml
     } else {
-      error('No `ignite.toml` file found are you sure it is an Ignite project?')
-      process.exit(1)
+      error('💩 No `ignite.toml` file found are you sure it is an Ignite project?')
+      process.exit(exitCodes.GENERIC)
     }
   }
 
@@ -68,7 +81,7 @@ function attach (plugin, command, context) {
    */
   async function addModule (moduleName, options = {}) {
     const depType = options.dev ? 'as dev dependency' : ''
-    print.info(` L⚙️  installing ${print.colors.cyan(moduleName)} ${depType}`)
+    print.info(` ⌙⚙️  installing ${print.colors.cyan(moduleName)} ${depType}`)
 
     // install the module
     if (useYarn) {
@@ -82,9 +95,9 @@ function attach (plugin, command, context) {
     // should we react-native link?
     if (options.link) {
       try {
-        print.info(` L⚙️  linking`)
+        print.info(` ⌙⚙️  linking`)
 
-        await system.run(`react-native link ${moduleName}`)
+        system.run(`react-native link ${moduleName} &`)
       } catch (err) {
         throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
       }
@@ -100,15 +113,15 @@ function attach (plugin, command, context) {
    * @param {boolean} options.dev - is this a dev dependency?
    */
   async function removeModule (moduleName, options = {}) {
-    print.info(` L⚙️  uninstalling ${moduleName}`)
+    print.info(` ⌙⚙️  uninstalling ${moduleName}`)
 
     // unlink
     if (options.unlink) {
-      print.info(` L⚙️  unlinking`)
+      print.info(` ⌙⚙️  unlinking`)
       await system.run(`react-native unlink ${moduleName}`)
     }
 
-    print.info(` L⚙️  removing`)
+    print.info(` ⌙⚙️  removing`)
     // uninstall
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
@@ -144,8 +157,9 @@ function attach (plugin, command, context) {
 
       // generate the React component
       if (await shouldGenerate(job.target)) {
+        const currentPluginPath = ignitePluginPath()
         await generate({
-          directory: `${ignitePluginPath()}/templates`,
+          directory: currentPluginPath && `${currentPluginPath}/templates`,
           template: job.template,
           target: job.target,
           props
@@ -166,12 +180,12 @@ function attach (plugin, command, context) {
 
     // do we want to use examples in the classic format?
     if (dotPath('ignite.examples', config) === 'classic') {
-      print.info(` L⚙️  adding component example`)
+      print.info(` ⌙⚙️  adding component example`)
 
-      // NOTE(steve): would make sense here to detect the template to generate or fall back to a file.
       // generate the file
+      const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
       template.generate({
-        directory: `${ignitePluginPath()}/templates`,
+        directory: templatePath,
         template: `${fileName}.ejs`,
         target: `ignite/Examples/Components/${fileName}`,
         props
@@ -180,7 +194,7 @@ function attach (plugin, command, context) {
       // adds reference to usage example screen (if it exists)
       const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
       if (filesystem.exists(destinationPath)) {
-        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../../Examples/Components/${fileName}`)
+        patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Examples/Components/${fileName}'`)
       }
     }
   }
@@ -190,13 +204,13 @@ function attach (plugin, command, context) {
    */
   function removeComponentExample (fileName) {
     const { filesystem, patching, print } = context
-    print.info(` L⚙️  removing component example`)
+    print.info(` ⌙⚙️  removing component example`)
     // remove file from Components/Examples folder
     filesystem.remove(`${process.cwd()}/ignite/Examples/Components/${fileName}`)
     // remove reference in usage example screen (if it exists)
     const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
     if (filesystem.exists(destinationPath)) {
-      patching.replaceInFile(destinationPath, `import '../../Examples/Components/${fileName}`, '')
+      patching.replaceInFile(destinationPath, `import '../Examples/Components/${fileName}`, '')
     }
   }
 
@@ -218,10 +232,15 @@ function attach (plugin, command, context) {
         patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
       }
     } else {
+      // Toml destroyed [ignite] again :rage5:
+      if (!patching.isInFile(globalToml, '\\[ignite\\]')) {
+        patching.prependToFile(globalToml, '[ignite]\n\n')
+      }
+
       if (isVariableName) {
-        patching.insertInFile(globalToml, '[ignite]', `${key} = ${value}`, false)
+        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = ${value}`)
       } else {
-        patching.insertInFile(globalToml, '[ignite]', `${key} = '${value}'`, false)
+        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = '${value}'`)
       }
     }
   }
@@ -255,7 +274,7 @@ function attach (plugin, command, context) {
 
     if (!filesystem.exists(debugConfig)) {
       error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an Ignite project?')
-      process.exit(1)
+      process.exit(exitCodes.GENERIC)
     }
 
     if (patching.isInFile(debugConfig, key)) {
@@ -283,14 +302,36 @@ function attach (plugin, command, context) {
     const debugConfig = `${process.cwd()}/App/Config/DebugConfig.js`
 
     if (!filesystem.exists(debugConfig)) {
-      error('No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an ignite project?')
-      process.exit(1)
+      error('💩 No `App/Config/DebugConfig.js` file found in this folder, are you sure it is an ignite project?')
+      process.exit(exitCodes.generic)
     }
 
     if (patching.isInFile(debugConfig, key)) {
       patching.replaceInFile(debugConfig, key, '')
     } else {
       warning(`Debug Setting ${key} not found.`)
+    }
+  }
+
+  /**
+   * Conditionally inserts a string into a file before or after another string.
+   * TODO: Move to infinitered/gluegun eventually? Plugin or core?
+   *
+   * @param {string}  file            File to be patched
+   * @param {Object}  opts            Options
+   * @param {string}  opts.before     Insert before this string
+   * @param {string}  opts.after      Insert after this string
+   * @param {string}  opts.insert     String to be inserted
+   * @param {string}  opts.match      Skip if this string exists already
+   *
+   * @example
+   *   patchInFile('thing.js', { before: 'bar', insert: 'foo' })
+   *
+   */
+  function patchInFile (file, opts) {
+    const { patching } = context
+    if (!patching.isInFile(file, opts.match || opts.insert)) {
+      patching.insertInFile(file, opts.before || opts.after, opts.insert, !!opts.after)
     }
   }
 
@@ -308,7 +349,8 @@ function attach (plugin, command, context) {
     setGlobalConfig,
     removeGlobalConfig,
     setDebugConfig,
-    removeDebugConfig
+    removeDebugConfig,
+    patchInFile
   }
 }
 

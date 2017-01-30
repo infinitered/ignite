@@ -6,7 +6,7 @@ import styles from './Styles/FullButtonStyle'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Full Button', () =>
+ExamplesRegistry.addComponentExample('Full Button', () =>
   <FullButton
     text='Hey there'
     onPress={() => window.alert('Full Button Pressed!')}

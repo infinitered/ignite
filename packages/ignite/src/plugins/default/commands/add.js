@@ -1,4 +1,5 @@
-// @cliDescription  Add a new thingy
+// @cliDescription Adds an Ignite plugin.
+// @cliAlias a
 // ----------------------------------------------------------------------------
 
 const Toml = require('toml')
@@ -39,10 +40,15 @@ async function importPlugin (context, opts) {
   const { system, ignite } = context
   const target = type === 'directory' ? directory : moduleName
 
-  if (ignite.useYarn) {
-    await system.run(`yarn add ${target} --dev`)
-  } else {
-    await system.run(`npm i ${target} --save-dev`)
+  try {
+    if (ignite.useYarn) {
+      await system.run(`yarn add ${target} --dev`)
+    } else {
+      await system.run(`npm i ${target} --save-dev`)
+    }
+  } catch (e) {
+    context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
+    process.exit(exitCodes.PLUGIN_INVALID)
   }
 }
 
@@ -112,31 +118,41 @@ Examples:
 
   // ok, are we ready?
   try {
-    // bring the ignite plugin to life
-    const pluginModule = require(modulePath)
+    if (filesystem.exists(modulePath + '/index.js') === 'file') {
+      // bring the ignite plugin to life
+      const pluginModule = require(modulePath)
 
-    // set the path to the current running ignite plugin
-    ignite.setIgnitePluginPath(modulePath)
+      if (!pluginModule.hasOwnProperty('add') || !pluginModule.hasOwnProperty('remove')) {
+        error(`💩  'add' or 'remove' method missing.`)
+        process.exit(exitCodes.PLUGIN_INVALID)
+      }
 
-    // now let's try to run it
-    try {
-      await pluginModule.add(context)
+      // set the path to the current running ignite plugin
+      ignite.setIgnitePluginPath(modulePath)
 
-      // We write the toml changes
-      const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
-      const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
-      const localToml = `${process.cwd()}/ignite/ignite.toml`
-      filesystem.write(localToml, json2toml(updatedConfig))
+      // now let's try to run it
+      try {
+        // We write the toml changes
+        const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
+        const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
+        const localToml = `${process.cwd()}/ignite/ignite.toml`
+        // only write if new generators have ocurred
+        if (proposedGenerators !== {}) {
+          await filesystem.write(localToml, json2toml(updatedConfig))
+        }
 
-      // Sweet! We did it!
-      success('🍽  time to get cooking!')
-      process.exit(exitCodes.OK)
-    } catch (err) {
-      // it's up to the throwers of this error to ensure the error message is human friendly.
-      // to do this, we need to ensure all our core features like `addModule`, `addComponentExample`, etc
-      // all play along nicely.
-      error(err.message)
-      process.exit(exitCodes.PLUGIN_INSTALL)
+        await pluginModule.add(context)
+
+        // Sweet! We did it!
+        success('🍽  time to get cooking!')
+        process.exit(exitCodes.OK)
+      } catch (err) {
+        // it's up to the throwers of this error to ensure the error message is human friendly.
+        // to do this, we need to ensure all our core features like `addModule`, `addComponentExample`, etc
+        // all play along nicely.
+        error(err.message)
+        process.exit(exitCodes.PLUGIN_INSTALL)
+      }
     }
   } catch (err) {
     // we couldn't require the plugin, it probably has some nasty js!

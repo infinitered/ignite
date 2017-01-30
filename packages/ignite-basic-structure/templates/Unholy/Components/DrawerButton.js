@@ -6,7 +6,7 @@ import styles from './Styles/DrawerButtonStyles'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example
-ExamplesRegistry.add('Drawer Button', () =>
+ExamplesRegistry.addComponentExample('Drawer Button', () =>
   <DrawerButton
     text='Example left drawer button'
     onPress={() => window.alert('Your drawers are showing')}

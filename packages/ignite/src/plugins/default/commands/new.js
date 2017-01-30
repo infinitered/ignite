@@ -1,16 +1,23 @@
-// @cliDescription  Generate a new React Native project with Ignite
+// @cliDescription  Generate a new React Native project with Ignite.
+// @cliAlias n
 // ----------------------------------------------------------------------------
 
 const installWalkthrough = [
   {
     name: 'dev-screens',
-    message: 'Would you like Ignite Development Screens',
-    type: 'confirm'
+    message: 'Would you like Ignite Development Screens?',
+    type: 'list',
+    choices: ['No', 'Yes']
   }, {
     name: 'vector-icons',
-    message: 'What kind of vector icon library will you use?',
+    message: 'What vector icon library will you use?',
     type: 'list',
-    choices: ['react-native-vector-icons', 'none']
+    choices: ['none', 'react-native-vector-icons']
+  }, {
+    name: 'i18n',
+    message: 'What internationalization library will you use?',
+    type: 'list',
+    choices: ['none', 'react-native-i18n']
   }
 
 ]
@@ -18,7 +25,7 @@ const installWalkthrough = [
 module.exports = async function (context) {
   const { parameters, strings, print, system } = context
   const { isBlank } = strings
-  const { info, debug, colors } = print
+  const { info, colors } = print
 
   // validation
   const projectName = parameters.second
@@ -39,7 +46,10 @@ module.exports = async function (context) {
   const igniteDevPackagePrefix = parameters.options.live || `${__dirname}/../../../../../ignite-`
 
   // First we ask!
-  const answers = await context.prompt.ask(installWalkthrough)
+  let answers = {}
+  if (!parameters.options.min) {
+    answers = await context.prompt.ask(installWalkthrough)
+  }
   // then we kick off (TODO: Would be awesome to have this kick off during questions)
   // we need to lock the RN version here
   info('Creating new RN project')
@@ -64,12 +74,19 @@ module.exports = async function (context) {
   await system.run(`ignite add ${igniteDevPackagePrefix}basic-generators`)
 
   // now run install of Ignite Plugins
-  if (answers['dev-screens']) {
+  if (answers['dev-screens'] === 'Yes' || parameters.options.max) {
+    info('Add ignite dev screens')
     await system.run(`ignite add ${igniteDevPackagePrefix}dev-screens`)
   }
 
-  if (answers['vector-icons'] === 'react-native-vector-icons') {
+  if (answers['vector-icons'] === 'react-native-vector-icons' || parameters.options.max) {
+    info('Add ignite vector icons')
     await system.run(`ignite add ${igniteDevPackagePrefix}vector-icons`)
+  }
+
+  if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
+    info('Add ignite i18n')
+    await system.run(`ignite add ${igniteDevPackagePrefix}i18n`)
   }
 
   info('')

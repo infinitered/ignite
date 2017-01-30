@@ -1,3 +1,7 @@
+// @cliDescription Generates some files.
+// @cliAlias g
+// ----------------------------------------------------------------------------
+
 const {
   prop,
   groupBy,
@@ -15,8 +19,6 @@ const {
 } = require('ramda')
 const { dotPath } = require('ramdasauce')
 const header = require('../../../brand/header')
-
-// @cliDescription Generates some files.
 
 /**
  * Runs a generator.
@@ -131,5 +133,9 @@ module.exports = async function (context) {
     pluginName: registryItem.pluginName,
     rawCommand: newCommand,
     options: parameters.options
+  }).then((e) => {
+    if (e.error) {
+      print.debug(e.error)
+    }
   })
 }
