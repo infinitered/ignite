@@ -2,7 +2,6 @@ import React from 'react'
 import { Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './Styles/SearchBarStyle'
 import { Colors, Metrics } from '../Themes/'
-import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class SearchBar extends React.Component {
@@ -17,7 +16,7 @@ export default class SearchBar extends React.Component {
     const { onSearch, onCancel, searchTerm } = this.props
     const onSubmitEditing = () => onSearch(searchTerm)
     return (
-      <Animatable.View animation='slideInRight' duration={250} style={styles.container}>
+      <View style={styles.container}>
         <Icon name='search' size={Metrics.icons.tiny} style={styles.searchIcon} />
         <TextInput
           ref='searchText'
@@ -37,7 +36,7 @@ export default class SearchBar extends React.Component {
         <TouchableOpacity onPress={onCancel} style={styles.cancelButton}>
           <Text style={styles.buttonLabel}>Cancel</Text>
         </TouchableOpacity>
-      </Animatable.View>
+      </View>
     )
   }
 }

@@ -18,8 +18,12 @@ const installWalkthrough = [
     message: 'What internationalization library will you use?',
     type: 'list',
     choices: ['none', 'react-native-i18n']
+  }, {
+    name: 'animatable',
+    message: 'What animation library will you use?',
+    type: 'list',
+    choices: ['none', 'react-native-animatable']
   }
-
 ]
 
 module.exports = async function (context) {
@@ -87,6 +91,11 @@ module.exports = async function (context) {
   if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
     info('Add ignite i18n')
     await system.run(`ignite add ${igniteDevPackagePrefix}i18n`)
+  }
+
+  if (answers['animatable'] === 'react-native-animatable' || parameters.options.max) {
+    info('Add ignite animatable')
+    await system.run(`ignite add ${igniteDevPackagePrefix}animatable`)
   }
 
   info('')

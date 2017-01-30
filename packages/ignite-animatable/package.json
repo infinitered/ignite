@@ -1,0 +1,13 @@
+{
+  "name": "ignite-animatable",
+  "version": "0.0.1",
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  },
+  "files": [
+    "ignite.toml",
+    "index.js",
+    "templates"
+  ]
+}
