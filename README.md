@@ -83,7 +83,7 @@ For those of you unfamiliar with the new package manager Yarn, it's basically a 
   * for iOS
     * run the command `react-native run-ios`
   * for Android
-    * Run Genymotion
+    * Run Android Emulator ([Android Studio](https://developer.android.com/studio/index.html) or [Genymotion](https://www.genymotion.com/))
     * run the command `react-native run-android`
 3. If the packager does not automatically start, run `npm start` or `yarn start`
 4. _**Enjoy!**_
