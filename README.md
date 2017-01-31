@@ -15,6 +15,8 @@
 
 #### :earth_americas: [Tour Video and More on Ignite Web Page](https://infinite.red/ignite)
 
+[![Join the chat at https://gitter.im/infinitered/ignite](https://badges.gitter.im/infinitered/ignite.svg)](https://gitter.im/infinitered/ignite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ### Why Ignite?
 * **No Need to Fork!**  Command-line Generator
   * Apps
