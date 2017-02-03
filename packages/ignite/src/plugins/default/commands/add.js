@@ -79,7 +79,6 @@ Examples:
   const specs = detectInstall(context)
   const { moduleName } = specs
 
-
   // import the ignite plugin node module
   info(`🔥  adding ${print.colors.cyan(moduleName)}`)
 
@@ -96,14 +95,12 @@ Examples:
   // once installed, let's check on its toml
   const tomlFilePath = `${modulePath}/ignite.toml`
 
-
   if (!filesystem.exists(tomlFilePath)) {
     error('💩  no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
     await removeIgnitePlugin(moduleName, context)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
   const newConfig = Toml.parse(filesystem.read(tomlFilePath))
-
 
   const proposedGenerators = R.reduce((acc, k) => {
     acc[k] = moduleName
