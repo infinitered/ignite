@@ -1,7 +1,14 @@
 // @cliDescription  Generate a new React Native project with Ignite.
 // @cliAlias n
 // ----------------------------------------------------------------------------
+const { test } = require('ramda')
+const exitCodes = require('../../../lib/exitCodes')
 
+// The default version of React Native to install. We will want to upgrade
+// this when we test out new releases and they work well with our setup.
+const REACT_NATIVE_VERSION = '0.41.1'
+
+// Questions to ask during install if the chatty route is chosen.
 const installWalkthrough = [
   {
     name: 'dev-screens',
@@ -36,7 +43,7 @@ module.exports = async function (context) {
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
-    process.exit(1)
+    process.exit(exitCodes.PROJECT_NAME)
     return
   }
 
@@ -57,9 +64,19 @@ module.exports = async function (context) {
 
   // we need to lock the RN version here
   // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
-  const reactNativeVersion = '0.40.0'
+  const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION
   info('')
-  info(`🔥  igniting ${print.colors.yellow(projectName)} using ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
+  info(`🔥  igniting ${print.colors.yellow(projectName)}`)
+
+  // Check the version number and bail if we don't have it.
+  const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
+  const versionAvailable = test(new RegExp(reactNativeVersion, ''), versionCheck || '')
+  if (!versionAvailable) {
+    print.error(`💩  react native version ${reactNativeVersion} not found on NPM.  We recommend ${REACT_NATIVE_VERSION}.`)
+    process.exit(exitCodes.REACT_NATIVE_VERSION)
+  }
+  info(`🔥  using ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
+
   await system.run(`react-native init ${projectName} --version ${reactNativeVersion}`)
 
   // switch to the newly created project directory to continue the rest of these commands
