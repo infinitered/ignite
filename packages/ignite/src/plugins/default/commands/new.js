@@ -54,47 +54,51 @@ module.exports = async function (context) {
   if (!parameters.options.min) {
     answers = await context.prompt.ask(installWalkthrough)
   }
-  // then we kick off (TODO: Would be awesome to have this kick off during questions)
+
   // we need to lock the RN version here
-  info('Creating new RN project')
-  // TODO make sure `react-antive --version has react-native-cli 2.x otherwise failure`
+  // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
   const reactNativeVersion = '0.40.0'
+  info(`🌮  creating project with react native ${reactNativeVersion}`)
   await system.run(`react-native init ${projectName} --version ${reactNativeVersion}`)
 
   // switch to the newly created project directory to continue the rest of these commands
   process.chdir(projectName)
 
-  info('Add ignite basic structure with unholy')
+  info(`🌮  adding ${colors.cyan('ignite-basic-structure --unholy')}`)
   await system.run(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy`)
 
-  info('Install all those unholy goodies')
-  await system.run('yarn || npm i')
+  info(`🌮  installing ignite dependencies`)
+  if (context.ignite.useYarn) {
+    await system.run('yarn')
+  } else {
+    await system.run('npm i')
+  }
 
-  // info('Link up all those unholy goodies')
-  // the following never returns - without await it keeps the shell forever!
-  system.run('react-native link &')
+  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
+  info(`🌮  linking native libraries`)
+  await system.spawn('react-native link', { stdio: 'ignore' })
 
-  info('Add ignite basic generators')
+  info(`🌮  adding ${colors.cyan('ignite-basic-generators')}`)
   await system.run(`ignite add ${igniteDevPackagePrefix}basic-generators`)
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] === 'Yes' || parameters.options.max) {
-    info('Add ignite dev screens')
+    info(`🌮  adding ${colors.cyan('ignite-dev-screens')}`)
     await system.run(`ignite add ${igniteDevPackagePrefix}dev-screens`)
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons' || parameters.options.max) {
-    info('Add ignite vector icons')
+    info(`🌮  adding ${colors.cyan('react-native-vector-icons')}`)
     await system.run(`ignite add ${igniteDevPackagePrefix}vector-icons`)
   }
 
   if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
-    info('Add ignite i18n')
+    info(`🌮  adding ${colors.cyan('react-native-i18n')}`)
     await system.run(`ignite add ${igniteDevPackagePrefix}i18n`)
   }
 
   if (answers['animatable'] === 'react-native-animatable' || parameters.options.max) {
-    info('Add ignite animatable')
+    info(`🌮  adding ${colors.cyan('react-native-animatable')}`)
     await system.run(`ignite add ${igniteDevPackagePrefix}animatable`)
   }
 
