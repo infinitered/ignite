@@ -51,7 +51,7 @@ module.exports = async function (context) {
 
   // First we ask!
   let answers = {}
-  if (!parameters.options.min) {
+  if (!parameters.options.min && !parameters.options.max) {
     answers = await context.prompt.ask(installWalkthrough)
   }
 
