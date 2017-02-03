@@ -51,23 +51,23 @@ module.exports = async function (context) {
 
   // First we ask!
   let answers = {}
-  if (!parameters.options.min) {
+  if (!parameters.options.min && !parameters.options.max) {
     answers = await context.prompt.ask(installWalkthrough)
   }
 
   // we need to lock the RN version here
   // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
   const reactNativeVersion = '0.40.0'
-  info(`🌮  creating project with react native ${reactNativeVersion}`)
+  info('')
+  info(`🔥  igniting ${print.colors.yellow(projectName)} using ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
   await system.run(`react-native init ${projectName} --version ${reactNativeVersion}`)
 
   // switch to the newly created project directory to continue the rest of these commands
   process.chdir(projectName)
 
-  info(`🌮  adding ${colors.cyan('ignite-basic-structure --unholy')}`)
-  await system.run(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy`)
+  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy`, { stdio: 'inherit' })
 
-  info(`🌮  installing ignite dependencies`)
+  info(`🔥  installing ignite dependencies`)
   if (context.ignite.useYarn) {
     await system.run('yarn')
   } else {
@@ -75,31 +75,26 @@ module.exports = async function (context) {
   }
 
   // react native link -- must use spawn & stdio: ignore or it hangs!! :(
-  info(`🌮  linking native libraries`)
+  info(`🔥  linking native libraries`)
   await system.spawn('react-native link', { stdio: 'ignore' })
 
-  info(`🌮  adding ${colors.cyan('ignite-basic-generators')}`)
-  await system.run(`ignite add ${igniteDevPackagePrefix}basic-generators`)
+  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators`, { stdio: 'inherit' })
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] === 'Yes' || parameters.options.max) {
-    info(`🌮  adding ${colors.cyan('ignite-dev-screens')}`)
-    await system.run(`ignite add ${igniteDevPackagePrefix}dev-screens`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens`, { stdio: 'inherit' })
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons' || parameters.options.max) {
-    info(`🌮  adding ${colors.cyan('react-native-vector-icons')}`)
-    await system.run(`ignite add ${igniteDevPackagePrefix}vector-icons`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons`, { stdio: 'inherit' })
   }
 
   if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
-    info(`🌮  adding ${colors.cyan('react-native-i18n')}`)
-    await system.run(`ignite add ${igniteDevPackagePrefix}i18n`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n`, { stdio: 'inherit' })
   }
 
   if (answers['animatable'] === 'react-native-animatable' || parameters.options.max) {
-    info(`🌮  adding ${colors.cyan('react-native-animatable')}`)
-    await system.run(`ignite add ${igniteDevPackagePrefix}animatable`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable`, { stdio: 'inherit' })
   }
 
   info('')
@@ -112,5 +107,9 @@ module.exports = async function (context) {
   info('To run in Android:')
   info(colors.yellow(`  cd ${projectName}`))
   info(colors.yellow('  react-native run-android'))
+  info('')
+  info('To see what ignite can do for you:')
+  info(colors.yellow(`  cd ${projectName}`))
+  info(colors.yellow('  ignite'))
   info('')
 }

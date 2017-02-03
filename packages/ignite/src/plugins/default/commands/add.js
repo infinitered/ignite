@@ -37,17 +37,18 @@ const removeIgnitePlugin = async (moduleName, context) => {
  */
 async function importPlugin (context, opts) {
   const { moduleName, type, directory } = opts
-  const { system, ignite } = context
+  const { system } = context
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
 
   try {
-    if (ignite.useYarn) {
-      const yarnTarget = isDirectory ? `file:${directory}` : target
-      await system.run(`yarn add ${yarnTarget} --dev`)
-    } else {
-      await system.run(`npm i ${target} --save-dev`)
-    }
+    // NOTE(steve): disabling yarn again because their cache busting doesn't work
+    // if (ignite.useYarn) {
+    //   const yarnTarget = isDirectory ? `file:${target}` : target
+    //   await system.run(`yarn add ${yarnTarget} --dev --force`)
+    // } else {
+    await system.run(`npm i ${target} --save-dev`)
+    // }
   } catch (e) {
     context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
     process.exit(exitCodes.PLUGIN_INVALID)
@@ -57,7 +58,7 @@ async function importPlugin (context, opts) {
 module.exports = async function (context) {
     // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
-  const { info, warning, success, error } = print
+  const { info, warning, error } = print
   const currentGenerators = dotPath('config.ignite.generators', context) || {}
 
   // the thing we're trying to install
@@ -78,9 +79,8 @@ Examples:
   const specs = detectInstall(context)
   const { moduleName } = specs
 
-
   // import the ignite plugin node module
-  info(`🔥  installing ${print.colors.cyan(moduleName)}`)
+  info(`🔥  adding ${print.colors.cyan(moduleName)}`)
 
   if (specs.type) {
     await importPlugin(context, specs)
@@ -95,14 +95,12 @@ Examples:
   // once installed, let's check on its toml
   const tomlFilePath = `${modulePath}/ignite.toml`
 
-
   if (!filesystem.exists(tomlFilePath)) {
     error('💩  no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
     await removeIgnitePlugin(moduleName, context)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
   const newConfig = Toml.parse(filesystem.read(tomlFilePath))
-
 
   const proposedGenerators = R.reduce((acc, k) => {
     acc[k] = moduleName
@@ -150,7 +148,6 @@ Examples:
         await pluginModule.add(context)
 
         // Sweet! We did it!
-        success('🍽  time to get cooking!')
         process.exit(exitCodes.OK)
       } catch (err) {
         // it's up to the throwers of this error to ensure the error message is human friendly.

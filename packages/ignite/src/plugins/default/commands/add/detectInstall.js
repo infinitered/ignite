@@ -1,6 +1,5 @@
 const { startsWith } = require('ramdasauce')
 const { unless, concat } = require('ramda')
-const exitCodes = require('../../../../lib/exitCodes')
 
 /**
  * Ensures the given string starts with 'ignite-'.
@@ -23,7 +22,7 @@ const alwaysStartWithIgnite = function (value) {
  */
 function detectInstall (context) {
   // grab some gluegun goodies
-  const { filesystem, parameters, print } = context
+  const { filesystem, parameters } = context
 
   /**
    * Is this a valid ignite plugin?
