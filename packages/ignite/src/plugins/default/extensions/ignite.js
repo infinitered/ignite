@@ -97,7 +97,7 @@ function attach (plugin, command, context) {
       try {
         print.info(` ⌙⚙️  linking`)
 
-        system.run(`react-native link ${moduleName} &`)
+        await system.spawn(`react-native link ${moduleName}`, { stdio: 'ignore' })
       } catch (err) {
         throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
       }
