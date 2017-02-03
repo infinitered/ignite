@@ -20,6 +20,16 @@ module.exports = {
   /**
    * An ignite plugin bombed while installing.
    */
-  PLUGIN_INSTALL: 3
+  PLUGIN_INSTALL: 3,
+
+  /**
+   * Cannot find React Native version.
+   */
+  REACT_NATIVE_VERSION: 4,
+
+  /**
+   * Invalid Project name.
+   */
+  PROJECT_NAME: 5
 
 }
