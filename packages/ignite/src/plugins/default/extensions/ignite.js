@@ -27,17 +27,17 @@ function attach (plugin, command, context) {
   const { template, config, runtime, system, parameters, print, filesystem } = context
   const { error, warning } = print
 
-  if (command.name === 'new' || (command.name === 'add' && parameters.rawCommand.includes('ignite-basic-structure'))) {
-    if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
-      error(`This is already an Ignite project root directory.`)
-      process.exit(exitCodes.GENERIC)
-    }
-  } else {
-    if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
-      error(`💩 This is not an Ignite project root directory!`)
-      process.exit(exitCodes.GENERIC)
-    }
-  }
+  // if (command.name === 'new' || (command.name === 'add' && parameters.rawCommand.includes('ignite-basic-structure'))) {
+  //   if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
+  //     error(`This is already an Ignite project root directory.`)
+  //     process.exit(exitCodes.GENERIC)
+  //   }
+  // } else {
+  //   if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
+  //     error(`💩 This is not an Ignite project root directory!`)
+  //     process.exit(exitCodes.GENERIC)
+  //   }
+  // }
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
