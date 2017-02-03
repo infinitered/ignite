@@ -42,12 +42,13 @@ async function importPlugin (context, opts) {
   const target = isDirectory ? directory : moduleName
 
   try {
-    if (ignite.useYarn) {
-      const yarnTarget = isDirectory ? `file:${directory}` : target
-      await system.run(`yarn add ${yarnTarget} --dev`)
-    } else {
+    // NOTE(steve): disabling yarn again because their cache busting doesn't work
+    // if (ignite.useYarn) {
+    //   const yarnTarget = isDirectory ? `file:${target}` : target
+    //   await system.run(`yarn add ${yarnTarget} --dev --force`)
+    // } else {
       await system.run(`npm i ${target} --save-dev`)
-    }
+    // }
   } catch (e) {
     context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
     process.exit(exitCodes.PLUGIN_INVALID)
