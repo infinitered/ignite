@@ -43,7 +43,7 @@ function attach (plugin, command, context) {
   const forceNpm = parameters.options.npm
 
   // you know what?  just turn off yarn for now.
-  const useYarn = false && !forceNpm && Shell.which('yarn')
+  const useYarn = !forceNpm && Shell.which('yarn')
 
   /**
    * Finds the gluegun plugins that are also ignite plugins.

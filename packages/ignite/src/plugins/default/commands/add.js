@@ -38,11 +38,13 @@ const removeIgnitePlugin = async (moduleName, context) => {
 async function importPlugin (context, opts) {
   const { moduleName, type, directory } = opts
   const { system, ignite } = context
-  const target = type === 'directory' ? directory : moduleName
+  const isDirectory = type === 'directory'
+  const target = isDirectory ? directory : moduleName
 
   try {
     if (ignite.useYarn) {
-      await system.run(`yarn add ${target} --dev`)
+      const yarnTarget = isDirectory ? `file:${directory}` : target
+      await system.run(`yarn add ${yarnTarget} --dev`)
     } else {
       await system.run(`npm i ${target} --save-dev`)
     }
@@ -76,8 +78,10 @@ Examples:
   const specs = detectInstall(context)
   const { moduleName } = specs
 
+
   // import the ignite plugin node module
   info(`🔥  installing ${print.colors.cyan(moduleName)}`)
+
   if (specs.type) {
     await importPlugin(context, specs)
   } else {
@@ -91,12 +95,14 @@ Examples:
   // once installed, let's check on its toml
   const tomlFilePath = `${modulePath}/ignite.toml`
 
+
   if (!filesystem.exists(tomlFilePath)) {
     error('💩  no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
     await removeIgnitePlugin(moduleName, context)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
   const newConfig = Toml.parse(filesystem.read(tomlFilePath))
+
 
   const proposedGenerators = R.reduce((acc, k) => {
     acc[k] = moduleName
