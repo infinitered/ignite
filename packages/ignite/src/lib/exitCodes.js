@@ -23,8 +23,18 @@ module.exports = {
   PLUGIN_INSTALL: 3,
 
   /**
+   * Cannot find React Native version.
+   */
+  REACT_NATIVE_VERSION: 4,
+
+  /**
+   * Invalid Project name.
+   */
+  PROJECT_NAME: 5,
+  
+  /**
    * You're trying to spork, but there's nothing to eat
    */
-  SPORKABLES_NOT_FOUND: 4
+  SPORKABLES_NOT_FOUND: 6
 
 }

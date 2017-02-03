@@ -2,7 +2,7 @@ const NPM_MODULE_NAME = 'react-native-i18n'
 const EXAMPLE_FILE = 'i18nExample.js'
 
 const add = async function (context) {
-  const { ignite, filesystem, patching } = context
+  const { ignite, filesystem } = context
 
   // install a npm module
   await ignite.addModule(NPM_MODULE_NAME, { link: true })
@@ -23,10 +23,10 @@ const add = async function (context) {
 }
 
 /**
- * Remove ourself from the project.
+ * Remove yourself from the project.
  */
 const remove = async function (context) {
-  const { ignite, filesystem } = context
+  const { ignite, filesystem, patching } = context
 
   // remove the npm module
   await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })

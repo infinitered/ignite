@@ -1,7 +1,14 @@
 // @cliDescription  Generate a new React Native project with Ignite.
 // @cliAlias n
 // ----------------------------------------------------------------------------
+const { test } = require('ramda')
+const exitCodes = require('../../../lib/exitCodes')
 
+// The default version of React Native to install. We will want to upgrade
+// this when we test out new releases and they work well with our setup.
+const REACT_NATIVE_VERSION = '0.41.1'
+
+// Questions to ask during install if the chatty route is chosen.
 const installWalkthrough = [
   {
     name: 'dev-screens',
@@ -18,8 +25,12 @@ const installWalkthrough = [
     message: 'What internationalization library will you use?',
     type: 'list',
     choices: ['none', 'react-native-i18n']
+  }, {
+    name: 'animatable',
+    message: 'What animation library will you use?',
+    type: 'list',
+    choices: ['none', 'react-native-animatable']
   }
-
 ]
 
 module.exports = async function (context) {
@@ -32,7 +43,7 @@ module.exports = async function (context) {
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
-    process.exit(1)
+    process.exit(exitCodes.PROJECT_NAME)
     return
   }
 
@@ -47,46 +58,60 @@ module.exports = async function (context) {
 
   // First we ask!
   let answers = {}
-  if (!parameters.options.min) {
+  if (!parameters.options.min && !parameters.options.max) {
     answers = await context.prompt.ask(installWalkthrough)
   }
-  // then we kick off (TODO: Would be awesome to have this kick off during questions)
+
   // we need to lock the RN version here
-  info('Creating new RN project')
-  // TODO make sure `react-antive --version has react-native-cli 2.x otherwise failure`
-  const reactNativeVersion = '0.40.0'
+  // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
+  const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION
+  info('')
+  info(`🔥  igniting ${print.colors.yellow(projectName)}`)
+
+  // Check the version number and bail if we don't have it.
+  const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
+  const versionAvailable = test(new RegExp(reactNativeVersion, ''), versionCheck || '')
+  if (!versionAvailable) {
+    print.error(`💩  react native version ${reactNativeVersion} not found on NPM.  We recommend ${REACT_NATIVE_VERSION}.`)
+    process.exit(exitCodes.REACT_NATIVE_VERSION)
+  }
+  info(`🔥  using ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
+
   await system.run(`react-native init ${projectName} --version ${reactNativeVersion}`)
 
   // switch to the newly created project directory to continue the rest of these commands
   process.chdir(projectName)
 
-  info('Add ignite basic structure with unholy')
-  await system.run(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy`)
+  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy`, { stdio: 'inherit' })
 
-  info('Install all those unholy goodies')
-  await system.run('yarn || npm i')
+  info(`🔥  installing ignite dependencies`)
+  if (context.ignite.useYarn) {
+    await system.run('yarn')
+  } else {
+    await system.run('npm i')
+  }
 
-  // info('Link up all those unholy goodies')
-  // the following never returns - without await it keeps the shell forever!
-  system.run('react-native link &')
+  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
+  info(`🔥  linking native libraries`)
+  await system.spawn('react-native link', { stdio: 'ignore' })
 
-  info('Add ignite basic generators')
-  await system.run(`ignite add ${igniteDevPackagePrefix}basic-generators`)
+  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators`, { stdio: 'inherit' })
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] === 'Yes' || parameters.options.max) {
-    info('Add ignite dev screens')
-    await system.run(`ignite add ${igniteDevPackagePrefix}dev-screens`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens`, { stdio: 'inherit' })
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons' || parameters.options.max) {
-    info('Add ignite vector icons')
-    await system.run(`ignite add ${igniteDevPackagePrefix}vector-icons`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons`, { stdio: 'inherit' })
   }
 
   if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
-    info('Add ignite i18n')
-    await system.run(`ignite add ${igniteDevPackagePrefix}i18n`)
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n`, { stdio: 'inherit' })
+  }
+
+  if (answers['animatable'] === 'react-native-animatable' || parameters.options.max) {
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable`, { stdio: 'inherit' })
   }
 
   info('')
@@ -99,5 +124,9 @@ module.exports = async function (context) {
   info('To run in Android:')
   info(colors.yellow(`  cd ${projectName}`))
   info(colors.yellow('  react-native run-android'))
+  info('')
+  info('To see what ignite can do for you:')
+  info(colors.yellow(`  cd ${projectName}`))
+  info(colors.yellow('  ignite'))
   info('')
 }

@@ -27,23 +27,23 @@ function attach (plugin, command, context) {
   const { template, config, runtime, system, parameters, print, filesystem } = context
   const { error, warning } = print
 
-  if (command.name === 'new' || (command.name === 'add' && parameters.rawCommand.includes('ignite-basic-structure'))) {
-    if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
-      error(`This is already an Ignite project root directory.`)
-      process.exit(exitCodes.GENERIC)
-    }
-  } else {
-    if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
-      error(`💩 This is not an Ignite project root directory!`)
-      process.exit(exitCodes.GENERIC)
-    }
-  }
+  // if (command.name === 'new' || (command.name === 'add' && parameters.rawCommand.includes('ignite-basic-structure'))) {
+  //   if (filesystem.exists(`${process.cwd()}/ignite`) === 'dir') {
+  //     error(`This is already an Ignite project root directory.`)
+  //     process.exit(exitCodes.GENERIC)
+  //   }
+  // } else {
+  //   if (filesystem.exists(`${process.cwd()}/ignite`) !== 'dir') {
+  //     error(`💩 This is not an Ignite project root directory!`)
+  //     process.exit(exitCodes.GENERIC)
+  //   }
+  // }
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
 
   // you know what?  just turn off yarn for now.
-  const useYarn = false && !forceNpm && Shell.which('yarn')
+  const useYarn = !forceNpm && Shell.which('yarn')
 
   /**
    * Finds the gluegun plugins that are also ignite plugins.
@@ -81,7 +81,7 @@ function attach (plugin, command, context) {
    */
   async function addModule (moduleName, options = {}) {
     const depType = options.dev ? 'as dev dependency' : ''
-    print.info(` ⌙⚙️  installing ${print.colors.cyan(moduleName)} ${depType}`)
+    print.info(`    ${print.checkmark} installing ${print.colors.cyan(moduleName)} ${depType}`)
 
     // install the module
     if (useYarn) {
@@ -95,9 +95,9 @@ function attach (plugin, command, context) {
     // should we react-native link?
     if (options.link) {
       try {
-        print.info(` ⌙⚙️  linking`)
+        print.info(`    ${print.checkmark} linking`)
 
-        system.run(`react-native link ${moduleName} &`)
+        await system.spawn(`react-native link ${moduleName}`, { stdio: 'ignore' })
       } catch (err) {
         throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
       }
@@ -113,15 +113,15 @@ function attach (plugin, command, context) {
    * @param {boolean} options.dev - is this a dev dependency?
    */
   async function removeModule (moduleName, options = {}) {
-    print.info(` ⌙⚙️  uninstalling ${moduleName}`)
+    print.info(`    ${print.checkmark} uninstalling ${moduleName}`)
 
     // unlink
     if (options.unlink) {
-      print.info(` ⌙⚙️  unlinking`)
-      await system.run(`react-native unlink ${moduleName}`)
+      print.info(`    ${print.checkmark} unlinking`)
+      await system.spawn(`react-native unlink ${moduleName}`, { stdio: 'ignore' })
     }
 
-    print.info(` ⌙⚙️  removing`)
+    print.info(`    ${print.checkmark} removing`)
     // uninstall
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
@@ -180,7 +180,7 @@ function attach (plugin, command, context) {
 
     // do we want to use examples in the classic format?
     if (dotPath('ignite.examples', config) === 'classic') {
-      print.info(` ⌙⚙️  adding component example`)
+      print.info(`    ${print.checkmark} adding component example`)
 
       // generate the file
       const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
@@ -204,7 +204,7 @@ function attach (plugin, command, context) {
    */
   function removeComponentExample (fileName) {
     const { filesystem, patching, print } = context
-    print.info(` ⌙⚙️  removing component example`)
+    print.info(`    ${print.checkmark} removing component example`)
     // remove file from Components/Examples folder
     filesystem.remove(`${process.cwd()}/ignite/Examples/Components/${fileName}`)
     // remove reference in usage example screen (if it exists)
