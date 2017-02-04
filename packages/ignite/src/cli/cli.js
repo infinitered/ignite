@@ -15,7 +15,7 @@ module.exports = async function run (argv) {
   const runtime = build()
     .brand('ignite')
     .configFile('ignite/ignite.toml')
-    .loadDefault(`${__dirname}/../plugins/default`)
+    .loadDefault(`${__dirname}/..`)
     .loadAll(`${process.cwd()}/node_modules`, { matching: 'ignite-*', hidden: true })
     .token('commandName', 'cliCommand')
     .token('commandHidden', 'cliHidden')
