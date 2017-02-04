@@ -1,6 +1,5 @@
 const { merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
-const Shell = require('shelljs')
 const exitCodes = require('../lib/exitCodes')
 
 /**
@@ -43,7 +42,7 @@ function attach (plugin, command, context) {
   const forceNpm = parameters.options.npm
 
   // you know what?  just turn off yarn for now.
-  const useYarn = !forceNpm && Shell.which('yarn')
+  const useYarn = !forceNpm && context.system.which('yarn')
 
   /**
    * Finds the gluegun plugins that are also ignite plugins.
