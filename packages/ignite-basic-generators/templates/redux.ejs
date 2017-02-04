@@ -40,7 +40,7 @@ export const failure = state =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.{{ props.name | upperCase }}_REQUEST]: request,
-  [Types.{{ props.name | upperCase }}_SUCCESS]: success,
-  [Types.{{ props.name | upperCase }}_FAILURE]: failure
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_REQUEST]: request,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_SUCCESS]: success,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_FAILURE]: failure
 })

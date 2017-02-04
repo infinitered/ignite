@@ -6,8 +6,8 @@
  */
 module.exports = async function (context, jobs, props) {
   // grab some features
-  const { config, template, prompt, filesystem, print } = context
-  const { generate } = template
+  const { config, ignite, prompt, filesystem, print } = context
+  const { generate } = ignite
   const { confirm } = prompt
 
   // read some configuration

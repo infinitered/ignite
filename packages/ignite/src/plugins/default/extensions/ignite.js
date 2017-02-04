@@ -1,4 +1,4 @@
-const { pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
+const { merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const Shell = require('shelljs')
 const exitCodes = require('../../../lib/exitCodes')
@@ -135,7 +135,6 @@ function attach (plugin, command, context) {
   async function copyBatch (context, jobs, props) {
     // grab some features
     const { config, template, prompt, filesystem, print } = context
-    const { generate } = template
     const { confirm } = prompt
 
     // read some configuration
@@ -158,7 +157,7 @@ function attach (plugin, command, context) {
       // generate the React component
       if (await shouldGenerate(job.target)) {
         const currentPluginPath = ignitePluginPath()
-        await generate({
+        await template.generate({
           directory: currentPluginPath && `${currentPluginPath}/templates`,
           template: job.template,
           target: job.target,
@@ -335,6 +334,26 @@ function attach (plugin, command, context) {
     }
   }
 
+  /**
+   * Generates a file from a template with support for sporked template detection.
+   *
+   * @param  {{}} opts Generation options.
+   * @return {string}  The generated string.
+   */
+  async function generate (opts = {}) {
+    // checked for a sporked version
+    const sporkDirectory = `${filesystem.cwd()}/ignite/Spork/${context.plugin.name}`
+    const isSporked = filesystem.exists(`${sporkDirectory}/${opts.template}`)
+
+    // override the directory to point to the spork directory if we found one
+    const overrides = isSporked
+      ? { directory: sporkDirectory }
+      : {}
+
+    // now make the call to the gluegun generate
+    return await template.generate(merge(opts, overrides))
+  }
+
   // send back the extension
   return {
     ignitePluginPath,
@@ -350,7 +369,8 @@ function attach (plugin, command, context) {
     removeGlobalConfig,
     setDebugConfig,
     removeDebugConfig,
-    patchInFile
+    patchInFile,
+    generate
   }
 }
 
