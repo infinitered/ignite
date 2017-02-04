@@ -1,7 +1,7 @@
 const { merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const Shell = require('shelljs')
-const exitCodes = require('../../../lib/exitCodes')
+const exitCodes = require('../lib/exitCodes')
 
 /**
  * The current executing ignite plugin path.

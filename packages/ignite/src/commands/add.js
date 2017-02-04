@@ -6,9 +6,9 @@ const Toml = require('toml')
 const json2toml = require('json2toml')
 const R = require('ramda')
 const { dotPath } = require('ramdasauce')
-const detectedChanges = require('../../../lib/detectedChanges')
-const detectInstall = require('./add/detectInstall')
-const exitCodes = require('../../../lib/exitCodes')
+const detectedChanges = require('../lib/detectedChanges')
+const detectInstall = require('../lib/detectInstall')
+const exitCodes = require('../lib/exitCodes')
 
 /**
  * Removes the ignite plugin.

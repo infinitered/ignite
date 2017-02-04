@@ -2,7 +2,7 @@
 // @cliAlias n
 // ----------------------------------------------------------------------------
 const { test } = require('ramda')
-const exitCodes = require('../../../lib/exitCodes')
+const exitCodes = require('../lib/exitCodes')
 
 // The default version of React Native to install. We will want to upgrade
 // this when we test out new releases and they work well with our setup.
@@ -54,7 +54,7 @@ module.exports = async function (context) {
   // To test what live is like, you can run `ignite new FooTown --live`.
   //
   // TODO(steve): Don't forget to remove this when we launch... open to better ways of handling it.
-  const igniteDevPackagePrefix = parameters.options.live || `${__dirname}/../../../../../ignite-`
+  const igniteDevPackagePrefix = parameters.options.live || `${__dirname}/../../../ignite-`
 
   // First we ask!
   let answers = {}

@@ -7,7 +7,7 @@ const R = require('ramda')
 // const Toml = require('toml')
 // Yeah, why would toml include this? :(
 const json2toml = require('json2toml')
-const exitCodes = require('../../../lib/exitCodes')
+const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
 const useYarn = false

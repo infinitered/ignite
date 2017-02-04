@@ -1,7 +1,7 @@
 // @cliDescription  Copy templates as blueprints for this project
 // ----------------------------------------------------------------------------
 const { reduce, find } = require('ramda')
-const exitCodes = require('../../../lib/exitCodes')
+const exitCodes = require('../lib/exitCodes')
 
 module.exports = async function (context) {
   // grab a fist-full of features...

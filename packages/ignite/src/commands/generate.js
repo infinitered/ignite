@@ -18,7 +18,7 @@ const {
   trim
 } = require('ramda')
 const { dotPath } = require('ramdasauce')
-const header = require('../../../brand/header')
+const header = require('../brand/header')
 
 /**
  * Runs a generator.
