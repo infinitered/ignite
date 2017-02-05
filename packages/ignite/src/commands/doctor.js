@@ -26,11 +26,13 @@ module.exports = async function (context) {
   const nodePath = which('node')
   const npmVersion = await run('npm --version', { trim: true })
   const npmPath = which('npm')
+  const yarnVersion = await run('yarn --version', { trim: true })
+  const yarnPath = which('yarn')
   const nodeVersion = replace('v', '', await run('node --version', { trim: true }))
   const rnCli = split(/\s/, await run('react-native --version', { trim: true }))[1] // lulz
   const xcodeVersion = split(/\s/, await run('xcodebuild -version', { trim: true }))[1] // lulz
   const rnPkg = read(`${process.cwd()}/node_modules/react-native/package.json`, 'json')
-  const appReactNativeVersion = rnPkg ? rnPkg.version : '-'
+  const appReactNativeVersion = rnPkg && rnPkg.version
   const androidPath = process.env['ANDROID_HOME']
   const javaVersionCmd = process.platform === 'win32' ? 'java -version' : 'java -version 2>&1'
   const javaVersion = last(match(/"(.*)"/, await run(javaVersionCmd)))
@@ -56,15 +58,18 @@ module.exports = async function (context) {
   info(colors.cyan('JavaScript'))
   table([
     [column1('node'), column2(nodeVersion), column3(nodePath)],
-    [column1('npm'), column2(npmVersion), column3(npmPath)]
+    [column1('npm'), column2(npmVersion), column3(npmPath)],
+    [column1('yarn'), column2(yarnVersion), column3(yarnPath)]
   ])
 
   info('')
   info(colors.cyan('React Native'))
-  table([
-    [column1('react-native-cli'), column2(rnCli)],
-    [column1('app rn version'), column2(appReactNativeVersion)],
-  ])
+  const rnTable = []
+  rnTable.push([column1('react-native-cli'), column2(rnCli)])
+  if (appReactNativeVersion) {
+    rnTable.push([column1('app rn version'), column2(appReactNativeVersion)])
+  }
+  table(rnTable)
 
   info('')
   info(colors.cyan('Ignite'))
