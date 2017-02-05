@@ -4,6 +4,8 @@
 const { split, last, replace, head, match } = require('ramda')
 const header = require('../brand/header')
 const os = require('os')
+const isWindows = process.platform === 'win32'
+const isMac = process.platform === 'darwin'
 
 module.exports = async function (context) {
   // fistful of features
@@ -14,38 +16,21 @@ module.exports = async function (context) {
     strings: { padEnd }
   } = context
 
-  // ... be the CLI you wish to see in the world
+  // display helpers
+  const column1 = (label, length = 16) => padEnd(label || '', length)
+  const column2 = label => colors.yellow(padEnd(label || '-', 10))
+  const column3 = label => colors.muted(label)
+
+  header()
+  info('')
+
+  // -=-=-=- system -=-=-=-
   const platform = process.platform
   const arch = os.arch()
   const cpus = os.cpus() || []
   const firstCpu = head(cpus) || {}
   const cpu = `${firstCpu.model}`
   const cores = `${cpus.length} cores`
-  const ignitePath = which('ignite')
-  const igniteVersion = await run('ignite version', { trim: true })
-  const nodePath = which('node')
-  const npmVersion = await run('npm --version', { trim: true })
-  const npmPath = which('npm')
-  const yarnVersion = await run('yarn --version', { trim: true })
-  const yarnPath = which('yarn')
-  const nodeVersion = replace('v', '', await run('node --version', { trim: true }))
-  const rnCli = split(/\s/, await run('react-native --version', { trim: true }))[1] // lulz
-  const xcodeVersion = split(/\s/, await run('xcodebuild -version', { trim: true }))[1] // lulz
-  const rnPkg = read(`${process.cwd()}/node_modules/react-native/package.json`, 'json')
-  const appReactNativeVersion = rnPkg && rnPkg.version
-  const androidPath = process.env['ANDROID_HOME']
-  const javaVersionCmd = process.platform === 'win32' ? 'java -version' : 'java -version 2>&1'
-  const javaVersion = last(match(/"(.*)"/, await run(javaVersionCmd)))
-  const javaPath = which('java')
-
-  // display helpers
-  const column1 = (label, length = 16) => padEnd(label, length)
-  const column2 = label => colors.yellow(padEnd(label, 10))
-  const column3 = label => colors.muted(label)
-
-  // print ignite
-  header()
-  info('')
 
   info(colors.cyan('System'))
   table([
@@ -54,6 +39,14 @@ module.exports = async function (context) {
     [column1('cpu'), column2(cores), column3(cpu)]
   ])
 
+  // -=-=-=- javascript -=-=-=-
+  const nodePath = which('node')
+  const nodeVersion = replace('v', '', await run('node --version', { trim: true }))
+  const npmPath = which('npm')
+  const npmVersion = npmPath && await run('npm --version', { trim: true })
+  const yarnPath = which('yarn')
+  const yarnVersion = yarnPath && await run('yarn --version', { trim: true })
+
   info('')
   info(colors.cyan('JavaScript'))
   table([
@@ -61,6 +54,12 @@ module.exports = async function (context) {
     [column1('npm'), column2(npmVersion), column3(npmPath)],
     [column1('yarn'), column2(yarnVersion), column3(yarnPath)]
   ])
+
+  // -=-=-=- react native -=-=-=-
+  const rnPath = which('react-native')
+  const rnCli = rnPath && split(/\s/, await run('react-native --version', { trim: true }))[1] // lulz
+  const rnPkg = read(`${process.cwd()}/node_modules/react-native/package.json`, 'json')
+  const appReactNativeVersion = rnPkg && rnPkg.version
 
   info('')
   info(colors.cyan('React Native'))
@@ -71,17 +70,46 @@ module.exports = async function (context) {
   }
   table(rnTable)
 
+  // -=-=-=- ignite -=-=-=-
+  const ignitePath = which('ignite')
+  const igniteVersion = await run('ignite version', { trim: true })
+
   info('')
   info(colors.cyan('Ignite'))
   table([
     [column1('ignite'), column2(igniteVersion), column3(ignitePath)]
   ])
 
+  // -=-=-=- android -=-=-=-
+  const androidPath = process.env['ANDROID_HOME']
+  const javaPath = which('java')
+  const javaVersionCmd = isWindows ? 'java -version' : 'java -version 2>&1'
+  const javaVersion = javaPath && last(match(/"(.*)"/, await run(javaVersionCmd)))
+
   info('')
-  info(colors.cyan('Native Mobile Platforms'))
+  info(colors.cyan('Android'))
   table([
-    [column1('xcode'), column2(xcodeVersion)],
     [column1('java'), column2(javaVersion), column3(javaPath)],
     [column1('android home'), column2('-'), column3(androidPath)]
   ])
+
+  // -=-=-=- iOS -=-=-=-
+  if (isMac) {
+    const xcodePath = which('xcodebuild')
+    const xcodeVersion = xcodePath && split(/\s/, await run('xcodebuild -version', { trim: true }))[1] // lulz
+
+    info('')
+    info(colors.cyan('iOS'))
+    table([
+      [column1('xcode'), column2(xcodeVersion)]
+    ])
+  }
+
+  // -=-=-=- windows -=-=-=-
+  // TODO: what can we check on Windows?
+  if (isWindows) {
+    // info('')
+    // info(colors.cyan('Windows'))
+    // table([])
+  }
 }
