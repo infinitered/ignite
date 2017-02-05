@@ -26,14 +26,7 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='launchScreen' component={LaunchScreen} title='LaunchScreen' />
-            <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
-            <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
-            <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
-            <Scene key='listviewSectionsExample' component={ListviewSectionsExample} title='Listview Sections' />
-            <Scene key='listviewSearchingExample' component={ListviewSearchingExample} title='Listview Searching' navBar={CustomNavBar} />
-            <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
-            {/* Custom navigation bar example */}
+            <Scene initial key='launchScreen' component={LaunchScreen} title='LaunchScreen' hideNavBar />
           </Scene>
         </Scene>
       </Router>

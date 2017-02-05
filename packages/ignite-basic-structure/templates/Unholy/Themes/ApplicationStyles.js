@@ -11,7 +11,6 @@ const ApplicationStyles = {
   screen: {
     mainContainer: {
       flex: 1,
-      marginTop: Metrics.navBarHeight,
       backgroundColor: Colors.transparent
     },
     backgroundImage: {
@@ -47,8 +46,11 @@ const ApplicationStyles = {
     }
   },
   darkLabelContainer: {
-    backgroundColor: Colors.cloud,
-    padding: Metrics.smallMargin
+    padding: Metrics.smallMargin,
+    paddingBottom: Metrics.doubleBaseMargin,
+    borderBottomColor: Colors.border,
+    borderBottomWidth: 1,
+    marginBottom: Metrics.baseMargin
   },
   darkLabel: {
     fontFamily: Fonts.type.bold,

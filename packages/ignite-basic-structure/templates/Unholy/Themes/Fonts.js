@@ -1,8 +1,8 @@
 // @flow
 
 const type = {
-  base: 'HelveticaNeue',
-  bold: 'HelveticaNeue-Bold',
+  base: 'Avenir-Book',
+  bold: 'Avenir-Black',
   emphasis: 'HelveticaNeue-Italic'
 }
 

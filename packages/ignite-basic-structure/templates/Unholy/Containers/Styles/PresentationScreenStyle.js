@@ -11,6 +11,10 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   centered: {
-    alignItems: 'center'
+    // alignItems: 'center'
+  },
+  hello: {
+    marginBottom: Metrics.baseMargin,
+    color: 'blue'
   }
 })
