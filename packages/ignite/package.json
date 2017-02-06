@@ -1,6 +1,6 @@
 {
   "name": "ignite",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha.1",
   "description": "Ignite - The next version.",
   "main": "src/index.js",
   "bin": {
@@ -14,10 +14,13 @@
     "lint": "standard"
   },
   "author": {
-    "name": "Gant Laborde",
-    "email": "gantman@gmail.com",
+    "name": "Infinite Red",
+    "email": "reactnative@infinite.red",
     "url": "https://github.com/infinitered/ignite"
   },
+  "contributors": [
+    "https://github.com/infinitered/ignite/graphs/contributors"
+  ],
   "files": [
     "LICENSE",
     "readme.md",
