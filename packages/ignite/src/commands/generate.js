@@ -27,7 +27,8 @@ const header = require('../brand/header')
  */
 module.exports = async function (context) {
   // grab some features
-  const { ignite, config, print, parameters } = context
+  const { ignite, print, parameters } = context
+  const config = ignite.loadIgniteConfig()
 
   // little bit of branding
   header()
@@ -59,7 +60,7 @@ module.exports = async function (context) {
   // ---------------------
 
   // the list of what the user wants
-  const userPrefs = dotPath('ignite.generators', config) || {}
+  const userPrefs = config.generators || {}
 
   // find the exact match of plugin name & type
   const userRegistry = mapObjIndexed(

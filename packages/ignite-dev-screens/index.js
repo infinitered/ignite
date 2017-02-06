@@ -30,7 +30,7 @@ const add = async function (context) {
   const { warning } = print
 
   // Set Examples to "classic" in Ignite config
-  context.ignite.setGlobalConfig('examples', 'classic')
+  context.ignite.setIgniteConfig('examples', 'classic')
 
   // // Copy the the screens to containers folder
   await copyDevScreens(context)
@@ -62,7 +62,7 @@ const remove = async function (context) {
   console.log('Removing Ignite Dev Screens')
 
   // Set Examples to "false" in Ignite config
-  context.ignite.removeGlobalConfig('examples')
+  context.ignite.removeIgniteConfig('examples')
 
   // Delete screens from containers folder
   filesystem.remove('ignite/DevScreens')

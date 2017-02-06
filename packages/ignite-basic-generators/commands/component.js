@@ -4,8 +4,10 @@
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, config, strings, print, ignite } = context
+  const { parameters, strings, print, ignite } = context
   const { pascalCase, isBlank } = strings
+  const config = ignite.loadIgniteConfig()
+  const { tests } = config
 
   // validation
   if (isBlank(parameters.first)) {
@@ -15,9 +17,7 @@ module.exports = async function (context) {
   }
 
   // read some configuration
-  const { tests } = config.ignite
   const name = pascalCase(parameters.first)
-
   const copyJobs = [
     {
       template: 'component.ejs',

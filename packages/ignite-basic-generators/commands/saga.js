@@ -4,8 +4,10 @@ const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, config, print, strings } = context
+  const { parameters, ignite, print, strings } = context
   const { pascalCase, isBlank } = strings
+  const config = ignite.loadIgniteConfig()
+  const { tests } = config
 
   // validation
   if (isBlank(parameters.first)) {
@@ -14,7 +16,6 @@ module.exports = async function (context) {
     return
   }
 
-  const { tests } = config.ignite
   const name = pascalCase(parameters.first)
   const props = { name }
 

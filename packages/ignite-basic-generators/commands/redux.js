@@ -4,8 +4,9 @@ const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, config, strings, print } = context
+  const { parameters, ignite, strings, print } = context
   const { isBlank, pascalCase } = strings
+  const config = ignite.loadIgniteConfig()
 
   // validation
   if (isBlank(parameters.first)) {
@@ -20,9 +21,9 @@ module.exports = async function (context) {
   const jobs = [
     { template: `redux.ejs`, target: `App/Redux/${name}Redux.js` }
   ]
-  if (config.ignite.tests) {
+  if (config.tests) {
     jobs.push({
-      template: `redux-test-${config.ignite.tests}.ejs`,
+      template: `redux-test-${config.tests}.ejs`,
       target: `Tests/Redux/${name}ReduxTest.js`
     })
   }

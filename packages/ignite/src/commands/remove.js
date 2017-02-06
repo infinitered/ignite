@@ -4,9 +4,6 @@
 
 const Shell = require('shelljs')
 const R = require('ramda')
-// const Toml = require('toml')
-// Yeah, why would toml include this? :(
-const json2toml = require('json2toml')
 const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
@@ -39,7 +36,7 @@ const noMegusta = (moduleName) => {
 
 module.exports = async function (context) {
     // grab a fist-full of features...
-  const { print, parameters, prompt, filesystem } = context
+  const { print, parameters, prompt, filesystem, ignite } = context
   const { info, warning, xmark, error, success } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
@@ -48,20 +45,19 @@ module.exports = async function (context) {
   info(`🔎    Verifying Plugin`)
   // Make sure what they typed, exists locally
   if (existsLocally(moduleName)) {
+    const config = ignite.loadIgniteConfig()
     // Detect generator changes
-    const changes = detectRemovals(context.config.ignite.generators, moduleName)
+    const changes = detectRemovals(config.generators, moduleName)
     // Ask user if they are sure.
     if (changes.length > 0) {
       // we warn the user on changes
       warning(`The following generators would be removed: ${R.join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
       if (ok) {
-        const generatorsList = Object.assign({}, context.config.ignite.generators)
+        const generatorsList = Object.assign({}, config.ignite.generators)
         R.map((k) => delete generatorsList[k], changes)
-        const updatedConfig = R.assocPath(['ignite', 'generators'], generatorsList, context.config)
-        // We write the toml changes
-        const localToml = `${process.cwd()}/ignite.toml`
-        filesystem.write(localToml, json2toml(updatedConfig))
+        const updatedConfig = R.assoc('generators', generatorsList, config)
+        ignite.saveIgniteConfig(updatedConfig)
       } else {
         process.exit(exitCodes.GENERIC)
       }

@@ -3,7 +3,6 @@
 // ----------------------------------------------------------------------------
 
 const Toml = require('toml')
-const json2toml = require('json2toml')
 const R = require('ramda')
 const { dotPath } = require('ramdasauce')
 const detectedChanges = require('../lib/detectedChanges')
@@ -59,7 +58,8 @@ module.exports = async function (context) {
     // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
   const { info, warning, error } = print
-  const currentGenerators = dotPath('config.ignite.generators', context) || {}
+  const config = ignite.loadIgniteConfig()
+  const currentGenerators = config.generators || {}
 
   // the thing we're trying to install
   if (strings.isBlank(parameters.second)) {
@@ -136,13 +136,11 @@ Examples:
 
       // now let's try to run it
       try {
-        // We write the toml changes
-        const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
-        const updatedConfig = R.assocPath(['ignite', 'generators'], combinedGenerators, context.config)
-        const localToml = `${process.cwd()}/ignite/ignite.toml`
-        // only write if new generators have ocurred
+        // save new ignite config if something changed
         if (proposedGenerators !== {}) {
-          await filesystem.write(localToml, json2toml(updatedConfig))
+          const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
+          const updatedConfig = R.assoc('generators', combinedGenerators, ignite.loadIgniteConfig())
+          ignite.saveIgniteConfig(updatedConfig)
         }
 
         await pluginModule.add(context)

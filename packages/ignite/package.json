@@ -28,7 +28,6 @@
   "dependencies": {
     "gluegun": "0.11.0",
     "gluegun-patching": "^0.3.0",
-    "json2toml": "^1.0.6",
     "minimist": "^1.2.0",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.1",
