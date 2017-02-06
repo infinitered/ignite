@@ -4,7 +4,6 @@
 
 const Toml = require('toml')
 const R = require('ramda')
-const { dotPath } = require('ramdasauce')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
 const exitCodes = require('../lib/exitCodes')
@@ -36,18 +35,17 @@ const removeIgnitePlugin = async (moduleName, context) => {
  */
 async function importPlugin (context, opts) {
   const { moduleName, type, directory } = opts
-  const { system } = context
+  const { ignite, system } = context
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
 
   try {
-    // NOTE(steve): disabling yarn again because their cache busting doesn't work
-    // if (ignite.useYarn) {
-    //   const yarnTarget = isDirectory ? `file:${target}` : target
-    //   await system.run(`yarn add ${yarnTarget} --dev --force`)
-    // } else {
-    await system.run(`npm i ${target} --save-dev`)
-    // }
+    if (ignite.useYarn) {
+      const yarnTarget = isDirectory ? `file:${target}` : target
+      await system.run(`yarn add ${yarnTarget} --dev`)
+    } else {
+      await system.run(`npm i ${target} --save-dev`)
+    }
   } catch (e) {
     context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
     process.exit(exitCodes.PLUGIN_INVALID)
@@ -55,7 +53,7 @@ async function importPlugin (context, opts) {
 }
 
 module.exports = async function (context) {
-    // grab a fist-full of features...
+  // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
   const { info, warning, error } = print
   const config = ignite.loadIgniteConfig()
