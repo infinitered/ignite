@@ -82,7 +82,7 @@ module.exports = async function (context) {
   // switch to the newly created project directory to continue the rest of these commands
   process.chdir(projectName)
 
-  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy`, { stdio: 'inherit' })
+  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy --react-native-version ${reactNativeVersion}`, { stdio: 'inherit' })
 
   info(`🔥  installing ignite dependencies`)
   if (context.ignite.useYarn) {
