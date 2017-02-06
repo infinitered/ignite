@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { TouchableOpacity, Text, View, Modal, Navigator } from 'react-native'
+import { TouchableOpacity, Text, View, Modal, Navigator, Image } from 'react-native'
 import styles from './Styles/DevscreensButtonStyle'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import DebugConfig from '../../App/Config/DebugConfig'
@@ -12,10 +12,12 @@ import ComponentExamplesScreen from './ComponentExamplesScreen'
 import DeviceInfoScreen from './DeviceInfoScreen'
 import PluginExamplesScreen from './PluginExamplesScreen'
 import ThemeScreen from './ThemeScreen'
+import { Images } from '../../App/Themes'
+
 
 type FullButtonProps = {
   styles?: Object
-}
+};
 
 export default class DevscreensButton extends React.Component {
   constructor (props) {
@@ -24,7 +26,7 @@ export default class DevscreensButton extends React.Component {
       showModal: false
     }
     this.toggleModal = this.toggleModal.bind(this)
-    this.back = this.back.bind(this)
+    this.openDrawer = this.openDrawer.bind(this)
     this.close = this.close.bind(this)
   }
 
@@ -32,16 +34,16 @@ export default class DevscreensButton extends React.Component {
     this.setState({showModal: !this.state.showModal})
   }
 
-  back (route, navigator, index, navState) {
+  openDrawer (route, navigator, index, navState) {
     return (
-      <TouchableOpacity onPress={navigator.pop}><Text>Back</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.hamburgerImage} onPress={() => window.alert('KEVIN!!! Hook up the drawer!!')}>
+        <Image source={Images.hamburger} />
+      </TouchableOpacity>
     )
   }
 
   close (route, navigator, index, navState) {
-    return (
-      <TouchableOpacity onPress={this.toggleModal}><Text>Close</Text></TouchableOpacity>
-    )
+    return <View />
   }
 
   render () {
@@ -80,7 +82,14 @@ export default class DevscreensButton extends React.Component {
                     return (<ThemeScreen navigator={navigator} routes={routes} />)
                 }
               }}
-              navigationBar={<Navigator.NavigationBar routeMapper={{ LeftButton: this.back, RightButton: this.close, Title: (route, navigator, index, navState) => { return (<Text>{route.title}</Text>); }, }} style={{backgroundColor: 'gray'}} />}
+              navigationBar={
+                <Navigator.NavigationBar
+                  routeMapper={{
+                    LeftButton: this.openDrawer,
+                    RightButton: this.close,
+                    Title: (route, navigator, index, navState) => { return true }
+                  }}
+                  style={{height: 75, width: 60, top: 10, backgroundColor: 'transparent'}} />}
               />
           </Modal>
         </View>

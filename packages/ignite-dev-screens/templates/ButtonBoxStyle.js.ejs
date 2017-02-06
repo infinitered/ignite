@@ -6,15 +6,15 @@ import { Colors, Metrics, Fonts } from '../../../App/Themes/'
 export default StyleSheet.create({
   container: {
     width: Metrics.screenWidth / 2,
-    aspectRatio: 1,
+    aspectRatio: 0.9,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.eggplant
   },
-  hamburgerImage: {
-    width: Metrics.icons.large,
-    height: Metrics.icons.large,
-    marginHorizontal: 15
+  image: {
+    width: Metrics.icons.xl,
+    height: Metrics.icons.xl,
+    margin: Metrics.baseMargin
   },
   label: {
     ...Fonts.style.h2,
