@@ -1,4 +1,6 @@
-const sourceFolder = `${process.cwd()}/node_modules/ignite-basic-structure/templates/`
+const sourceFolder = `${process.cwd()}/node_modules/ignite-basic-structure/templates`
+
+const REACT_NATIVE_VERSION = '0.41.1'
 
 const add = async function (context) {
   const { filesystem, parameters, ignite, strings, print } = context
@@ -42,17 +44,23 @@ const add = async function (context) {
 
   if (parameters.options.unholy) {
     // copy far too many opinions
-    filesystem.copy(`${sourceFolder}Unholy`, `${process.cwd()}/App`, { overwrite: true })
+    filesystem.copy(`${sourceFolder}/Unholy`, `${process.cwd()}/App`, { overwrite: true })
     copyJobs.push({
       template: 'package.json.unholy.ejs',
       target: 'package.json'
     })
   } else {
     // copy minimal structure YAY!
-    filesystem.copy(`${sourceFolder}App`, `${process.cwd()}/App`, { overwrite: true })
+    filesystem.copy(`${sourceFolder}/App`, `${process.cwd()}/App`, { overwrite: true })
   }
 
-  await ignite.copyBatch(context, copyJobs, {name: parameters.third})
+  // grab the react native version from the command line
+  const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION
+
+  await ignite.copyBatch(context, copyJobs, {
+    name: parameters.third,
+    reactNativeVersion
+  })
 }
 
 // TODO
