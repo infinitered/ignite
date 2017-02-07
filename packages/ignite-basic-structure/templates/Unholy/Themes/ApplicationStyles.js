@@ -26,11 +26,7 @@ const ApplicationStyles = {
     },
     section: {
       margin: Metrics.section,
-      padding: Metrics.baseMargin,
-      borderTopColor: Colors.frost,
-      borderTopWidth: 0.5,
-      borderBottomColor: Colors.frost,
-      borderBottomWidth: 1
+      padding: Metrics.baseMargin
     },
     sectionText: {
       color: Colors.snow,
