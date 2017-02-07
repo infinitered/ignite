@@ -6,12 +6,13 @@
  */
 module.exports = async function (context, jobs, props) {
   // grab some features
-  const { config, ignite, prompt, filesystem, print } = context
+  const { ignite, prompt, filesystem, print } = context
   const { generate } = ignite
   const { confirm } = prompt
+  const config = ignite.loadIgniteConfig()
 
   // read some configuration
-  const { askToOverwrite } = config.ignite
+  const { askToOverwrite } = config
 
   // If the file exists
   const shouldGenerate = async (target) => {

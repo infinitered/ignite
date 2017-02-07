@@ -28,8 +28,8 @@ const add = async function (context) {
       target: 'README.md'
     },
     {
-      template: 'ignite.toml',
-      target: 'ignite/ignite.toml'
+      template: 'ignite.json.ejs',
+      target: 'ignite/ignite.json'
     },
     {
       template: '.editorconfig',
@@ -59,7 +59,8 @@ const add = async function (context) {
 
   await ignite.copyBatch(context, copyJobs, {
     name: parameters.third,
-    reactNativeVersion
+    reactNativeVersion,
+    igniteVersion: ignite.version
   })
 }
 

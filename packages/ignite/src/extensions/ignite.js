@@ -1,6 +1,8 @@
-const { merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
+const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const exitCodes = require('../lib/exitCodes')
+const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
+const igniteVersion = require('../../package.json').version
 
 /**
  * The current executing ignite plugin path.
@@ -56,18 +58,24 @@ function attach (plugin, command, context) {
     )(runtime.plugins)
   }
 
-  function getToml () {
-    const oldToml = `${process.cwd()}/ignite.toml`
-    const globalToml = `${process.cwd()}/ignite/ignite.toml`
+  /**
+   * Reads the contents of the ignite/ignite.json configuration.
+   *
+   * @return {Object} The configuration.
+   */
+  function loadIgniteConfig () {
+    return filesystem.exists(igniteConfigFilename)
+      ? filesystem.read(igniteConfigFilename, 'json') || {}
+      : {}
+  }
 
-    if (filesystem.exists(globalToml)) {
-      return globalToml
-    } else if (filesystem.exists(oldToml)) {
-      return oldToml
-    } else {
-      error('💩 No `ignite.toml` file found are you sure it is an Ignite project?')
-      process.exit(exitCodes.GENERIC)
-    }
+  /**
+   * Saves a new ignite config file.
+   *
+   * @param {Object} config The new configuration object to save.
+   */
+  function saveIgniteConfig (config = {}) {
+    filesystem.write(igniteConfigFilename, config, { jsonIndent: 2 })
   }
 
   /**
@@ -213,34 +221,15 @@ function attach (plugin, command, context) {
   }
 
   /**
-   * Sets Global Config setting
+   * Sets an ignite config setting
    *
-   * @param {string}  key             Key of setting to be defined
-   * @param {string}  value           Value to be set
-   * @param {bool}    isVariableName  Optional flag to set value as variable name instead of string
+   * @param {string} key Key of setting to be defined
+   * @param {string} value Value to be set
    */
-  function setGlobalConfig (key, value, isVariableName = false) {
-    const { patching } = context
-    const globalToml = getToml()
-
-    if (patching.isInFile(globalToml, key)) {
-      if (isVariableName) {
-        patching.replaceInFile(globalToml, key, `${key} = ${value}`)
-      } else {
-        patching.replaceInFile(globalToml, key, `${key} = '${value}'`)
-      }
-    } else {
-      // Toml destroyed [ignite] again :rage5:
-      if (!patching.isInFile(globalToml, '\\[ignite\\]')) {
-        patching.prependToFile(globalToml, '[ignite]\n\n')
-      }
-
-      if (isVariableName) {
-        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = ${value}`)
-      } else {
-        patching.insertInFile(globalToml, '\\[ignite\\]', `${key} = '${value}'`)
-      }
-    }
+  function setIgniteConfig (key, value, isVariableName = false) {
+    const igniteConfig = loadIgniteConfig()
+    igniteConfig[key] = value
+    saveIgniteConfig(igniteConfig)
   }
 
   /**
@@ -248,15 +237,9 @@ function attach (plugin, command, context) {
    *
    * @param {string}  key Key of setting to be removed
    */
-  function removeGlobalConfig (key) {
-    const { patching } = context
-    const globalToml = getToml()
-
-    if (patching.isInFile(globalToml, key)) {
-      patching.replaceInFile(globalToml, key, '')
-    } else {
-      warning(`Global Config '${key}' not found.`)
-    }
+  function removeIgniteConfig (key) {
+    const igniteConfig = dissoc(key, loadIgniteConfig())
+    saveIgniteConfig(igniteConfig)
   }
 
   /**
@@ -364,12 +347,15 @@ function attach (plugin, command, context) {
     copyBatch,
     addComponentExample,
     removeComponentExample,
-    setGlobalConfig,
-    removeGlobalConfig,
+    loadIgniteConfig,
+    saveIgniteConfig,
+    setIgniteConfig,
+    removeIgniteConfig,
     setDebugConfig,
     removeDebugConfig,
     patchInFile,
-    generate
+    generate,
+    version: igniteVersion
   }
 }
 
