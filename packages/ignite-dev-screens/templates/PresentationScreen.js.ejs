@@ -12,19 +12,22 @@ export default class PresentationScreen extends React.Component {
 
   openComponents = () => {
     this.props.navigator.push(this.props.routes[2])
-    // window.alert('HEY COMPONENTS')
   }
 
   openUsage = () => {
-    window.alert('HEY USAGE')
+    this.props.navigator.push(this.props.routes[4])
   }
 
   openApi = () => {
-    window.alert('HEY API')
+    this.props.navigator.push(this.props.routes[1])
   }
 
   openTheme = () => {
-    window.alert('HEY THEME')
+    this.props.navigator.push(this.props.routes[5])
+  }
+
+  openDevice = () => {
+    this.props.navigator.push(this.props.routes[3])
   }
 
   render () {
