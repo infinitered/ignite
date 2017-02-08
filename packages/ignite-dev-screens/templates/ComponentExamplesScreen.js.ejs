@@ -28,6 +28,10 @@ class ComponentExamplesScreen extends React.Component {
       <View style={[styles.container, styles.mainContainer]}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+          <View style={{alignItems: 'center', paddingTop: 60}}>
+            <Image source={Images.components} style={styles.logo} />
+            <Text style={styles.titleText}>Components</Text>
+          </View>
           <View style={styles.description}>
             {this.renderAndroidWarning()}
             <Text style={styles.sectionText}>

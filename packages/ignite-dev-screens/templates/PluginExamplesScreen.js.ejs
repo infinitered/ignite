@@ -19,6 +19,10 @@ class PluginExamplesScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
+          <View style={{alignItems: 'center', paddingTop: 60}}>
+            <Image source={Images.usageExamples} style={styles.logo} />
+            <Text style={styles.titleText}>Plugin Examples</Text>
+          </View>
           <View style={styles.section}>
             <Text style={styles.sectionText} >
               The Plugin Examples screen is a playground for 3rd party libs and logic proofs.
