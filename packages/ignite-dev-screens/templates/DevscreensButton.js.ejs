@@ -34,13 +34,13 @@ export default class DevscreensButton extends React.Component {
 
   back (route, navigator, index, navState) {
     return (
-      <TouchableOpacity onPress={navigator.pop}><Text>Back</Text></TouchableOpacity>
+      <TouchableOpacity onPress={navigator.pop} ><Image source={Images.backButton} style={{marginHorizontal: 10}} /></TouchableOpacity>
     )
   }
 
   close (route, navigator, index, navState) {
     return (
-      <TouchableOpacity onPress={this.toggleModal}><Text>Close</Text></TouchableOpacity>
+      <TouchableOpacity onPress={this.toggleModal}><Image source={Images.closeButton} style={{marginHorizontal: 10}} /></TouchableOpacity>
     )
   }
 
@@ -88,7 +88,7 @@ export default class DevscreensButton extends React.Component {
                     return (<ThemeScreen navigator={navigator} routes={routes} />)
                 }
               }}
-              navigationBar={<Navigator.NavigationBar routeMapper={{ LeftButton: this.back, RightButton: this.close, Title: (route, navigator, index, navState) => { return (<Text>{route.title}</Text>); }, }} style={{backgroundColor: 'gray'}} />}
+              navigationBar={<Navigator.NavigationBar routeMapper={{ LeftButton: this.back, RightButton: this.close, Title: (route, navigator, index, navState) => { return null; }, }} />}
               />
           </Modal>
         </View>
