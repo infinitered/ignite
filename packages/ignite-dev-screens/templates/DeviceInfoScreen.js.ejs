@@ -98,8 +98,11 @@ export default class DeviceInfoScreen extends React.Component {
 
   renderCard (cardTitle: string, rowData: Array<Object>) {
     return (
-      <View style={styles.cardContainer}>
-        <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
+      <View>
+        <View style={styles.sectionHeaderContainer}>
+          <Text style={styles.sectionHeader}>{cardTitle.toUpperCase()}</Text>
+        </View>
+
         {this.renderRows(rowData)}
       </View>
     )
@@ -135,10 +138,12 @@ export default class DeviceInfoScreen extends React.Component {
               Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour specific to a device.
             </Text>
           </View>
-          {this.renderCard('Device Hardware', HARDWARE_DATA)}
-          {this.renderCard('Device OS', OS_DATA)}
-          {this.renderCard('App Info', APP_DATA)}
-          {this.renderCard('Net Info', this.netInfo())}
+          <View style={{padding: 10}}>
+            {this.renderCard('Device Hardware', HARDWARE_DATA)}
+            {this.renderCard('Device OS', OS_DATA)}
+            {this.renderCard('App Info', APP_DATA)}
+            {this.renderCard('Net Info', this.netInfo())}
+          </View>
         </ScrollView>
       </View>
     )
