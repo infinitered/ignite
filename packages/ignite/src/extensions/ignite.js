@@ -141,11 +141,12 @@ function attach (plugin, command, context) {
 
   async function copyBatch (context, jobs, props) {
     // grab some features
-    const { config, template, prompt, filesystem, print } = context
+    const { template, prompt, filesystem, print, ignite } = context
     const { confirm } = prompt
+    const config = ignite.loadIgniteConfig()
 
     // read some configuration
-    const { askToOverwrite } = config.ignite || false
+    const askToOverwrite = config.askToOverwrite || false
 
     // If the file exists
     const shouldGenerate = async (target) => {
@@ -182,10 +183,11 @@ function attach (plugin, command, context) {
    * @param {Object} props - The properties to use for template expansion.
    */
   async function addComponentExample (fileName, props = {}) {
-    const { filesystem, patching } = context
+    const { filesystem, patching, ignite } = context
+    const config = ignite.loadIgniteConfig()
 
     // do we want to use examples in the classic format?
-    if (dotPath('ignite.examples', config) === 'classic') {
+    if (config.examples === 'classic') {
       print.info(`    ${print.checkmark} adding component example`)
 
       // generate the file
