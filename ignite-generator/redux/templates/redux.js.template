@@ -40,7 +40,7 @@ export const failure = state =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.<%= name.split(/(?=[A-Z])/).join('_') %>_REQUEST]: request,
-  [Types.<%= name.split(/(?=[A-Z])/).join('_') %>_SUCCESS]: success,
-  [Types.<%= name.split(/(?=[A-Z])/).join('_') %>_FAILURE]: failure
+  [Types.<%= name.split(/(?=[A-Z])/).join('_').toUpperCase() %>_REQUEST]: request,
+  [Types.<%= name.split(/(?=[A-Z])/).join('_').toUpperCase() %>_SUCCESS]: success,
+  [Types.<%= name.split(/(?=[A-Z])/).join('_').toUpperCase() %>_FAILURE]: failure
 })

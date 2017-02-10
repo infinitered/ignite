@@ -5,6 +5,9 @@
 <p align="center">
   :fire: The ideal starting app for React Native, best practices, generators, and more. :fire:
   <br/>
+  <a href="https://infiniteredcommunity.herokuapp.com/">
+    <img src="https://infiniteredcommunity.herokuapp.com/badge.svg">
+  </a>
   <a href="https://gitter.im/infinitered/ignite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" target="_blank"><img src="https://badges.gitter.im/infinitered/ignite.svg" alt="Join the chat at https://gitter.im/infinitered/ignite"></a>
   <a href="https://www.codacy.com/app/gantman/ignite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=infinitered/ignite&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/1c6e04abe7224bdc88095129b5eb43fb"/></a>
   <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
@@ -83,7 +86,7 @@ For those of you unfamiliar with the new package manager Yarn, it's basically a 
   * for iOS
     * run the command `react-native run-ios`
   * for Android
-    * Run Genymotion
+    * Run Android Emulator ([Android Studio](https://developer.android.com/studio/index.html) or [Genymotion](https://www.genymotion.com/))
     * run the command `react-native run-android`
 3. If the packager does not automatically start, run `npm start` or `yarn start`
 4. _**Enjoy!**_

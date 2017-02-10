@@ -22,8 +22,8 @@ import * as Utilities from '../utilities'
 import ora from 'ora'
 
 const igniteBase = 'ignite-base'
-const lockedReactNativeVersion = '0.37.0'
-const lockedIgniteVersion = '1.12.0'
+const lockedReactNativeVersion = '0.39.2'
+const lockedIgniteVersion = '1.13.0'
 
 const emptyFolder = (folder) => {
   Shell.rm('-rf', folder)
@@ -190,13 +190,13 @@ export class AppGenerator extends Generators.Base {
     const animation = Utilities.startStep('Finding react-native', this)
 
     if (!isCommandInstalled('react-native')) {
-      this.logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
+      this._logAndExit(`${xmark} Missing react-native - 'npm install -g react-native-cli'`)
     }
 
     const rnCli = Shell.exec('react-native --version', { silent: true }).stdout
     // verify 1.x.x or higher (we need react-native link)
     if (!rnCli.match(/react-native-cli:\s[1-9]\d*\.\d+\.\d+/)) {
-      this.logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
+      this._logAndExit(`${xmark} Must have at least version 1.x - 'npm install -g react-native-cli'`)
     }
 
     animation.finish()
@@ -229,7 +229,7 @@ export class AppGenerator extends Generators.Base {
     const animation = Utilities.startStep('Finding git', this)
 
     if (!isCommandInstalled('git')) {
-      this.logAndExit(`${xmark} Missing git`)
+      this._logAndExit(`${xmark} Missing git`)
     }
 
     animation.finish()
@@ -268,7 +268,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Get the git branch or tag that we should check out.
    */
-  getGitBranch () {
+  _getGitBranch () {
     const tag = this.options['tag'] || lockedIgniteVersion
     // read the user's choice from the source-branch command line option
     const branch = this.options['branch']
@@ -294,7 +294,7 @@ export class AppGenerator extends Generators.Base {
     const useCustomRepo = typeof requestedRepo !== 'undefined' && requestedRepo !== null && requestedRepo !== ''
     // the right repo to use
     const repo = useCustomRepo ? requestedRepo : defaultRepo
-    const branch = this.getGitBranch()
+    const branch = this._getGitBranch()
     // start spinner and message
     const animation = Utilities.startStep(`Downloading latest Ignite files from ${repo}#${branch}`, this)
 
@@ -307,7 +307,7 @@ export class AppGenerator extends Generators.Base {
         if (retCode === 0) {
           done()
         } else {
-          this.logAndExit(`Failed to clone ${repo} with branch ${branch}`)
+          this._logAndExit(`Failed to clone ${repo} with branch ${branch}`)
         }
       })
   }
@@ -315,7 +315,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Helper to copy a file to the destination.
    */
-  cpFile (fromFilename, toFilename) {
+  _cpFile (fromFilename, toFilename) {
     const from = this.templatePath(`${igniteBase}/${fromFilename}`)
     const to = this.destinationPath(`${this.name}/${toFilename}`)
     this.fs.copyTpl(from, to, { name: this.name, reactNativeVersion: lockedReactNativeVersion, igniteVersion: lockedIgniteVersion })
@@ -324,14 +324,14 @@ export class AppGenerator extends Generators.Base {
   /**
    * Helper to copy a template to the destination.
    */
-  cpTemplate (filename) {
-    this.cpFile(`${filename}.template`, filename)
+  _cpTemplate (filename) {
+    this._cpFile(`${filename}.template`, filename)
   }
 
   /**
    * Helper to copy a directory to the destination.
    */
-  cpDirectory (directory) {
+  _cpDirectory (directory) {
     this.directory(
       this.templatePath(`${igniteBase}/${directory}`),
       this.destinationPath(`${this.name}/${directory}`)
@@ -355,17 +355,19 @@ export class AppGenerator extends Generators.Base {
   copyExistingStuff () {
     const animation = Utilities.startStep('Copying Ignite goodies', this)
 
-    this.cpTemplate('README.md')
-    this.cpTemplate('package.json')
-    this.cpTemplate('.babelrc')
-    this.cpTemplate('.env')
-    this.cpFile('.ignite.template', '.ignite')
-    this.cpFile('index.js.template', 'index.ios.js')
-    this.cpFile('index.js.template', 'index.android.js')
-    this.cpFile('.editorconfig.template', '.editorconfig')
-    this.cpDirectory('Tests')
-    this.cpDirectory('App')
-    this.cpDirectory('fastlane')
+    this._cpTemplate('README.md')
+    this._cpTemplate('package.json')
+    this._cpTemplate('.babelrc')
+    this._cpTemplate('.env')
+    this._cpFile('.ignite.template', '.ignite')
+    this._cpFile('index.js.template', 'index.ios.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('index.js.template', 'index.android.js')
+    this._cpFile('.editorconfig.template', '.editorconfig')
+    this._cpDirectory('git_hooks')
+    this._cpDirectory('Tests')
+    this._cpDirectory('App')
+    this._cpDirectory('fastlane')
 
     animation.finish()
   }
@@ -373,7 +375,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Let's hand tweak the the android manifest,
    */
-  updateAndroid () {
+  _updateAndroid () {
     const animation = Utilities.startStep('Updating android manifest file', this)
 
     performInserts(this.name)
@@ -384,7 +386,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Let's hand tweak PList to allow our API example to work with Transport Security
    */
-  updatePList () {
+  _updatePList () {
     const animation = Utilities.startStep('Updating PList file', this)
 
     addAPITransportException(this.name)
@@ -395,7 +397,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Let's clean up any temp files.
    */
-  cleanAfterRunning () {
+  _cleanAfterRunning () {
     const animation = Utilities.startStep('Cleaning up after messy guests', this)
 
     emptyFolder(this.sourceRoot())
@@ -408,7 +410,7 @@ export class AppGenerator extends Generators.Base {
   /**
    * Log an error and exit gracefully.
    */
-  logAndExit (finalMessage) {
+  _logAndExit (finalMessage) {
     this.spinner.stop()
     this.log(finalMessage)
     process.exit(1)
@@ -458,10 +460,10 @@ export class AppGenerator extends Generators.Base {
             // Push notifications code, disabled for now
             // Causing issues :(
             // update the android manifest
-            this.updateAndroid()
+            this._updateAndroid()
 
             // then update Plist
-            this.updatePList()
+            this._updatePList()
             done()
           })
       })
@@ -471,7 +473,7 @@ export class AppGenerator extends Generators.Base {
    * Hold for applause.
    */
   end () {
-    this.cleanAfterRunning()
+    this._cleanAfterRunning()
     this.spinner.stop()
     this.log('')
     this.log('Time to get cooking! 🍽 ')
