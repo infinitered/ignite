@@ -5,6 +5,13 @@ import { Colors, Metrics, Fonts, ApplicationStyles } from '../../../App/Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
+  sectionHeaderContainer: {
+    ...ApplicationStyles.darkLabelContainer
+  },
+  sectionHeader: {
+    ...ApplicationStyles.darkLabel,
+    paddingTop: 50
+  },
   cardTitle: {
     alignSelf: 'center',
     fontSize: Fonts.size.regular,

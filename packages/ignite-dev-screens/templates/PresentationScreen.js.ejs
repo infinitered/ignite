@@ -3,53 +3,62 @@
 import React from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
 import { Images } from '../../App/Themes'
-import RoundedButton from '../../App/Components/RoundedButton'
+import ButtonBox from './ButtonBox'
 
 // Styles
 import styles from './Styles/PresentationScreenStyle'
 
 export default class PresentationScreen extends React.Component {
+
+  openComponents = () => {
+    this.props.navigator.push(this.props.routes[2])
+  }
+
+  openUsage = () => {
+    this.props.navigator.push(this.props.routes[4])
+  }
+
+  openApi = () => {
+    this.props.navigator.push(this.props.routes[1])
+  }
+
+  openTheme = () => {
+    this.props.navigator.push(this.props.routes[5])
+  }
+
+  openDevice = () => {
+    this.props.navigator.push(this.props.routes[3])
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <ScrollView style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false} style={styles.container}>
           <View style={styles.centered}>
-            <Image source={Images.clearLogo} style={styles.logo} />
+            <Image source={Images.igniteClear} style={styles.logo} />
           </View>
 
-          <View style={styles.section} >
-            <Text style={styles.sectionText} >
-              Default screens for development, debugging, and alpha testing
-              are available below.
-            </Text>
+          <Text style={styles.sectionText}>
+            Default screens for development, debugging, and alpha testing
+            are available below.
+          </Text>
+          <View style={styles.buttonsContainer}>
+            <ButtonBox onPress={this.openComponents} style={styles.componentButton} image={Images.components} text='Components' />
+            <ButtonBox onPress={this.openUsage} style={styles.usageButton} image={Images.usageExamples} text='Plugin Examples' />
           </View>
-
-          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[2])}}>
-            Component Examples Screen
-          </RoundedButton>
-
-          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[4])}}>
-            Plugin Examples Screen
-          </RoundedButton>
-
-          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[1])}}>
-            API Testing Screen
-          </RoundedButton>
-
-          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[5])}}>
-            Theme Screen
-          </RoundedButton>
-
-          <RoundedButton onPress={() => {this.props.navigator.push(this.props.routes[3])}}>
-            Device Info Screen
-          </RoundedButton>
-
-          <View style={styles.centered}>
-            <Text style={styles.subtitle}>Made with ❤️ by Infinite Red</Text>
+          <View style={styles.buttonsContainer}>
+            <ButtonBox onPress={this.openApi} style={styles.apiButton} image={Images.api} text='API Testing' />
+            <ButtonBox onPress={this.openTheme} image={Images.theme} text='Theme' />
           </View>
-
+          <View style={styles.buttonsContainer}>
+            <ButtonBox onPress={this.openDevice} style={styles.deviceButton} image={Images.deviceInfo} text='Device Info' />
+            <ButtonBox onPress={this.openDevice} style={styles.usageButton} image={Images.faq} text='FAQ' />
+          </View>
         </ScrollView>
+        <View style={styles.banner}>
+          <Text style={styles.bannerLabel}>Made with ❤️ by Infinite Red</Text>
+        </View>
       </View>
     )
   }

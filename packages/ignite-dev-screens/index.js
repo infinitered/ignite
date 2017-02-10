@@ -3,7 +3,7 @@ const copyDevScreens = async function (context) {
   const { parameters, print, strings, ignite } = context
   const { isBlank } = strings
 
-  const screens = ["APITestingScreen", "ComponentExamplesScreen", "DeviceInfoScreen", "DevscreensButton", "PluginExamplesScreen", "PresentationScreen", "ThemeScreen"]
+  const screens = ["APITestingScreen", "ComponentExamplesScreen", "DeviceInfoScreen", "DevscreensButton", "PluginExamplesScreen", "PresentationScreen", "ThemeScreen", "ButtonBox"]
 
   const jobs = []
 

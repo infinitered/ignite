@@ -98,8 +98,11 @@ export default class DeviceInfoScreen extends React.Component {
 
   renderCard (cardTitle: string, rowData: Array<Object>) {
     return (
-      <View style={styles.cardContainer}>
-        <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
+      <View>
+        <View style={styles.sectionHeaderContainer}>
+          <Text style={styles.sectionHeader}>{cardTitle.toUpperCase()}</Text>
+        </View>
+
         {this.renderRows(rowData)}
       </View>
     )
@@ -126,15 +129,21 @@ export default class DeviceInfoScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
+          <View style={{alignItems: 'center', paddingTop: 60}}>
+            <Image source={Images.deviceInfo} style={styles.logo} />
+            <Text style={styles.titleText}>Device Info</Text>
+          </View>
           <View style={styles.section}>
             <Text style={styles.sectionText} >
               Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour specific to a device.
             </Text>
           </View>
-          {this.renderCard('Device Hardware', HARDWARE_DATA)}
-          {this.renderCard('Device OS', OS_DATA)}
-          {this.renderCard('App Info', APP_DATA)}
-          {this.renderCard('Net Info', this.netInfo())}
+          <View style={{padding: 10}}>
+            {this.renderCard('Device Hardware', HARDWARE_DATA)}
+            {this.renderCard('Device OS', OS_DATA)}
+            {this.renderCard('App Info', APP_DATA)}
+            {this.renderCard('Net Info', this.netInfo())}
+          </View>
         </ScrollView>
       </View>
     )

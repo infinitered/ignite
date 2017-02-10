@@ -58,6 +58,10 @@ export default class ThemeScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
+          <View style={{alignItems: 'center', paddingTop: 60}}>
+            <Image source={Images.theme} style={styles.logo} />
+            <Text style={styles.titleText}>Themes</Text>
+          </View>
           <View style={styles.section} key='colors-header'>
             <Text style={styles.sectionText} key='colors'>List of Theme specific settings.  Auto-generated from Themes folder.</Text>
           </View>
