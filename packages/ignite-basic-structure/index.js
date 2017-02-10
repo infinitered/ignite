@@ -54,6 +54,9 @@ const add = async function (context) {
     filesystem.copy(`${sourceFolder}/App`, `${process.cwd()}/App`, { overwrite: true })
   }
 
+  // Create ./ignite/plugins
+  filesystem.dir(`${process.cwd()}/ignite/plugins`)
+
   // grab the react native version from the command line
   const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION
 

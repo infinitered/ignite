@@ -11,15 +11,10 @@ const exitCodes = require('../lib/exitCodes')
  * @returns {Object} The answers.
  */
 const walkthrough = async (context) => {
-  // Nothing!
-  if (context.parameters.options.min) {
-    return { template: 'No', command: 'No' }
-  }
-
-  // All the things!
-  if (context.parameters.options.max) {
-    return { template: 'Yes', command: 'Yes' }
-  }
+  const minOptions = { template: 'No', command: 'No' }
+  const maxOptions = { template: 'Yes', command: 'Yes' }
+  if (context.parameters.options.min) { return minOptions }
+  if (context.parameters.options.max) { return maxOptions }
 
   // Okay, we'll ask one by one, fine
   return await context.prompt.ask([

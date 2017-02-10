@@ -34,6 +34,25 @@ const installWalkthrough = [
   }
 ]
 
+const minOptions = {
+  'dev-screens': 'No',
+  'vector-icons': 'none',
+  'i18n': 'none',
+  'animatable': 'none'
+}
+const maxOptions = {
+  'dev-screens': 'Yes',
+  'vector-icons': 'react-native-vector-icons',
+  'i18n': 'react-native-i18n',
+  'animatable': 'react-native-animatable'
+}
+
+const walkthrough = async (context) => {
+  if (context.parameters.options.min) { return minOptions }
+  if (context.parameters.options.max) { return maxOptions }
+  return await context.prompt.ask(installWalkthrough)
+}
+
 module.exports = async function (context) {
   const { parameters, strings, print, system } = context
   const { isBlank } = strings
@@ -58,10 +77,7 @@ module.exports = async function (context) {
   const igniteDevPackagePrefix = parameters.options.live || path.resolve(`${__dirname}/../../..`) + '/ignite-'
 
   // First we ask!
-  let answers = {}
-  if (!parameters.options.min && !parameters.options.max) {
-    answers = await context.prompt.ask(installWalkthrough)
-  }
+  const answers = await walkthrough(context)
 
   // we need to lock the RN version here
   // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
@@ -99,19 +115,19 @@ module.exports = async function (context) {
   await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators`, { stdio: 'inherit' })
 
   // now run install of Ignite Plugins
-  if (answers['dev-screens'] === 'Yes' || parameters.options.max) {
+  if (answers['dev-screens'] === 'Yes') {
     await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens`, { stdio: 'inherit' })
   }
 
-  if (answers['vector-icons'] === 'react-native-vector-icons' || parameters.options.max) {
+  if (answers['vector-icons'] === 'react-native-vector-icons') {
     await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons`, { stdio: 'inherit' })
   }
 
-  if (answers['i18n'] === 'react-native-i18n' || parameters.options.max) {
+  if (answers['i18n'] === 'react-native-i18n') {
     await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n`, { stdio: 'inherit' })
   }
 
-  if (answers['animatable'] === 'react-native-animatable' || parameters.options.max) {
+  if (answers['animatable'] === 'react-native-animatable') {
     await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable`, { stdio: 'inherit' })
   }
 
