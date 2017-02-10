@@ -8,7 +8,7 @@ const add = async function (context) {
 
   // validation
   if (isBlank(parameters.third)) {
-    print.info(`${context.runtime.brand} add basic-structure <name>\n`)
+    print.info(`ignite add basic-structure <name>\n`)
     print.error('App name is required to properly brand structure')
     process.exit(1)
     return
@@ -54,8 +54,8 @@ const add = async function (context) {
     filesystem.copy(`${sourceFolder}/App`, `${process.cwd()}/App`, { overwrite: true })
   }
 
-  // Create ./ignite/plugins
-  filesystem.dir(`${process.cwd()}/ignite/plugins`)
+  // Create ./ignite/plugins/.gitkeep
+  filesystem.write(`${process.cwd()}/ignite/plugins/.gitkeep`, '')
 
   // grab the react native version from the command line
   const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION

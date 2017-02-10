@@ -6,7 +6,7 @@ const exitCodes = require('../lib/exitCodes')
 
 /**
  * Does a walkthrough of questions and returns the answers as an object.
- * 
+ *
  * @param {Object} context The gluegun context.
  * @returns {Object} The answers.
  */
@@ -35,33 +35,29 @@ const walkthrough = async (context) => {
 
 /**
  * Checks whether a plugin name was given and errors if not.
+ * Also prepends `ignite-*` if plugin name didn't include it.
  *
+ * @param {String} pluginName The provided plugin name.
  * @param {Object} context The gluegun context.
- * @returns {Boolean}
+ * @returns {String} The normalized name.
  */
-const checkName = (pluginName, context) => {
-  const { strings, print, runtime, parameters } = context
-  
+const validateName = (pluginName, context) => {
+  const { strings, print } = context
+
   if (strings.isBlank(pluginName)) {
-    print.info(`${runtime.brand} plugin new <${runtime.brand}-plugin-name>\n`)
+    print.info(`ignite plugin new ignite-foo\n`)
     print.error('Plugin name is required')
     process.exit(exitCodes.PLUGIN_NAME)
-    return false
-  }
-
-  if (pluginName.indexOf('ignite-') !== 0) {
-    // As passive-aggressively as possible
-    print.info(`Ignite plugins typically start with ignite-* -- but you do you.`)
   }
 
   // TODO: Make this better at detecting invalid plugin names
   if (!/^[a-z0-9].*/i.test(pluginName)) {
     print.error('Plugin name should be a valid folder name')
     process.exit(exitCodes.PLUGIN_NAME)
-    return false
   }
 
-  return true
+  // Force prepend `ignite-*` to plugin name
+  return /^ignite-/.test(pluginName) ? pluginName : 'ignite-' + pluginName
 }
 
 /**
@@ -70,12 +66,9 @@ const checkName = (pluginName, context) => {
  * @param {Object} context The gluegun context.
  */
 const createNewPlugin = async (context) => {
-  const { parameters, print, ignite, strings, filesystem } = context
-  const pluginName = parameters.third
-  const name = strings.pascalCase(pluginName.replace(/^ignite-/, ""))
-
-  // Validate plugin name
-  if (!checkName(pluginName, context)) { return }
+  const { parameters, print, ignite, strings } = context
+  const pluginName = validateName(parameters.third, context)
+  const name = strings.pascalCase(pluginName.replace(/^ignite-/, ''))
 
   // Plugin generation walkthrough
   const answers = await walkthrough(context)
@@ -91,7 +84,7 @@ const createNewPlugin = async (context) => {
     (answers.template === 'Yes') &&
       { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js` },
     (answers.command === 'Yes') &&
-      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js` },
+      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js` }
   ]
 
   // copy over the files
@@ -104,7 +97,7 @@ const createNewPlugin = async (context) => {
  * @param {Object} context The gluegun context.
  */
 const showHelp = (context) => {
-    const instructions = `
+  const instructions = `
 Generates an Ignite-compatible plugin in the current folder.
 Generally, you would run this from ./YourApp/ignite/plugins/
 
@@ -115,8 +108,8 @@ Commands:
 
 Example:
   ignite plugin new ignite-mobx`
-    context.print.info(instructions)
-    process.exit(exitCodes.OK)
+  context.print.info(instructions)
+  process.exit(exitCodes.OK)
 }
 
 module.exports = async function (context) {
@@ -130,16 +123,16 @@ module.exports = async function (context) {
   switch (parameters.second) {
     case 'new':
       await createNewPlugin(context)
-      break;
+      break
 
     case 'list':
       print.error(`ignite plugin list is not implemented yet.`)
-      break;
+      break
 
     case 'help':
     default:
       showHelp(context)
-      break;
+      break
   }
 }
 
