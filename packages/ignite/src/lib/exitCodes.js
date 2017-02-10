@@ -31,10 +31,15 @@ module.exports = {
    * Invalid Project name.
    */
   PROJECT_NAME: 5,
-  
+
   /**
    * You're trying to spork, but there's nothing to eat
    */
-  SPORKABLES_NOT_FOUND: 6
+  SPORKABLES_NOT_FOUND: 6,
 
+  /**
+   * Invalid Plugin name.
+   */
+  PLUGIN_NAME: 7
+  
 }
