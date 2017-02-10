@@ -1,6 +1,12 @@
 const { keys, intersection, reduce, concat } = require('ramda')
 
-// used for changes warnings
+/**
+ * Returns a list of keys whose values have changed.
+ *
+ * @param {Object} oldObject The original version.
+ * @param {Object} newObject The new version.
+ * @return {Array[String]} A list of keys with single quotes around them.
+ */
 const detectedChanges = (oldObject, newObject) => {
   let oldKeys = keys(oldObject)
   let newKeys = keys(newObject)

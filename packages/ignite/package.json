@@ -38,8 +38,9 @@
     "toml": "^2.3.1"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
+    "ava": "^0.18.1",
     "babel-eslint": "^7.1.1",
+    "mockery": "^2.0.0",
     "nyc": "^10.0.0",
     "standard": "^8.6.0"
   },
