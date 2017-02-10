@@ -5,6 +5,40 @@
 const exitCodes = require('../lib/exitCodes')
 
 /**
+ * Does a walkthrough of questions and returns the answers as an object.
+ * 
+ * @param {Object} context The gluegun context.
+ * @returns {Object} The answers.
+ */
+const walkthrough = async (context) => {
+  // Nothing!
+  if (context.parameters.options.min) {
+    return { template: 'No', command: 'No' }
+  }
+
+  // All the things!
+  if (context.parameters.options.max) {
+    return { template: 'Yes', command: 'Yes' }
+  }
+
+  // Okay, we'll ask one by one, fine
+  return await context.prompt.ask([
+    {
+      name: 'template',
+      message: 'Would you like to generate an example component?',
+      type: 'list',
+      choices: ['No', 'Yes']
+    },
+    {
+      name: 'command',
+      message: 'Would you like to generate an example command/generator?',
+      type: 'list',
+      choices: ['No', 'Yes']
+    }
+  ])
+}
+
+/**
  * Checks whether a plugin name was given and errors if not.
  *
  * @param {Object} context The gluegun context.
@@ -21,6 +55,7 @@ const checkName = (pluginName, context) => {
   }
 
   if (pluginName.indexOf('ignite-') !== 0) {
+    // As passive-aggressively as possible
     print.info(`Ignite plugins typically start with ignite-* -- but you do you.`)
   }
 
@@ -41,28 +76,30 @@ const checkName = (pluginName, context) => {
  */
 const createNewPlugin = async (context) => {
   const { parameters, print, ignite, strings, filesystem } = context
-
   const pluginName = parameters.third
-  if (!checkName(pluginName, context)) { return }
-
   const name = strings.pascalCase(pluginName.replace(/^ignite-/, ""))
 
+  // Validate plugin name
+  if (!checkName(pluginName, context)) { return }
+
+  // Plugin generation walkthrough
+  const answers = await walkthrough(context)
+
+  // Here we go!
   print.info(`Creating new plugin: ${pluginName}`)
 
-  // filesystem.dir(`${pluginName}/templates`)
-
   const copyJobs = [
-    {
-      template: 'plugin/index.js.ejs',
-      target: `${pluginName}/index.js`
-    },
-    {
-      template: 'plugin/templates/Example.js.ejs',
-      target: `${pluginName}/templates/${name}Example.js`
-    }
+    { template: 'plugin/.gitignore', target: `${pluginName}/.gitignore` },
+    { template: 'plugin/index.js.ejs', target: `${pluginName}/index.js` },
+    { template: 'plugin/ignite.toml.ejs', target: `${pluginName}/ignite.toml` },
+    { template: 'plugin/package.json.ejs', target: `${pluginName}/package.json` },
+    (answers.template === 'Yes') &&
+      { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js` },
+    (answers.command === 'Yes') &&
+      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js` },
   ]
 
-  // copy over the templates
+  // copy over the files
   await ignite.copyBatch(context, copyJobs, {name, pluginName})
 }
 
@@ -79,9 +116,9 @@ Generally, you would run this from ./YourApp/ignite/plugins/
 Commands:
   ignite plugin help
   ignite plugin new <your-plugin>
+  ignite plugin list (coming soon)
 
-Examples:
-  ignite plugin new ignite-my-plugin
+Example:
   ignite plugin new ignite-mobx`
     context.print.info(instructions)
     process.exit(exitCodes.OK)
