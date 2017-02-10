@@ -182,10 +182,11 @@ function attach (plugin, command, context) {
    * @param {Object} props - The properties to use for template expansion.
    */
   async function addComponentExample (fileName, props = {}) {
-    const { filesystem, patching } = context
+    const { filesystem, patching, ignite } = context
+    const config = ignite.loadIgniteConfig()
 
     // do we want to use examples in the classic format?
-    if (dotPath('ignite.examples', config) === 'classic') {
+    if (config.examples === 'classic') {
       print.info(`    ${print.checkmark} adding component example`)
 
       // generate the file
