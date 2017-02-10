@@ -53,7 +53,7 @@ export default class PresentationScreen extends React.Component {
           </View>
           <View style={styles.buttonsContainer}>
             <ButtonBox onPress={this.openDevice} style={styles.deviceButton} image={Images.deviceInfo} text='Device Info' />
-            <ButtonBox onPress={this.openDevice} style={styles.usageButton} image={Images.faq} text='FAQ' />
+            <ButtonBox onPress={() => window.alert('Coming Soon')} style={styles.usageButton} image={Images.faq} text='FAQ' />
           </View>
         </ScrollView>
         <View style={styles.banner}>
