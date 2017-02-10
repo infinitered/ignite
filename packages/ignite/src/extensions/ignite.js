@@ -141,11 +141,12 @@ function attach (plugin, command, context) {
 
   async function copyBatch (context, jobs, props) {
     // grab some features
-    const { config, template, prompt, filesystem, print } = context
+    const { template, prompt, filesystem, print, ignite } = context
     const { confirm } = prompt
+    const config = ignite.loadIgniteConfig()
 
     // read some configuration
-    const { askToOverwrite } = config.ignite || false
+    const askToOverwrite = config.askToOverwrite || false
 
     // If the file exists
     const shouldGenerate = async (target) => {
