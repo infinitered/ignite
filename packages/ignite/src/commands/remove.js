@@ -54,7 +54,7 @@ module.exports = async function (context) {
       warning(`The following generators would be removed: ${R.join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
       if (ok) {
-        const generatorsList = Object.assign({}, config.ignite.generators)
+        const generatorsList = Object.assign({}, config.generators)
         R.map((k) => delete generatorsList[k], changes)
         const updatedConfig = R.assoc('generators', generatorsList, config)
         ignite.saveIgniteConfig(updatedConfig)
