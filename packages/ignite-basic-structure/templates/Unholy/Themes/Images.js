@@ -14,6 +14,7 @@ const images = {
   api: require('../Images/Icons/icon-api-testing.png'),
   components: require('../Images/Icons/icon-components.png'),
   deviceInfo: require('../Images/Icons/icon-device-information.png'),
+  faq: require('../Images/Icons/faq-icon.png'),
   home: require('../Images/Icons/icon-home.png'),
   theme: require('../Images/Icons/icon-theme.png'),
   usageExamples: require('../Images/Icons/icon-usage-examples.png'),
