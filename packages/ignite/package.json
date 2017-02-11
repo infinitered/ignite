@@ -1,6 +1,6 @@
 {
   "name": "ignite",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "description": "Ignite - The next version.",
   "main": "src/index.js",
   "bin": {
@@ -29,19 +29,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gluegun": "0.11.0",
+    "gluegun": "^0.13.0",
     "gluegun-patching": "^0.3.0",
     "minimist": "^1.2.0",
-    "ramda": "^0.22.1",
-    "ramdasauce": "^1.1.1",
-    "shelljs": "^0.7.5",
+    "ramda": "^0.23.0",
+    "ramdasauce": "^1.2.0",
+    "shelljs": "^0.7.6",
     "toml": "^2.3.1"
   },
   "devDependencies": {
     "ava": "^0.18.1",
     "babel-eslint": "^7.1.1",
     "mockery": "^2.0.0",
-    "nyc": "^10.0.0",
+    "nyc": "^10.1.2",
     "standard": "^8.6.0"
   },
   "ava": {},

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { View, ScrollView, Text, Image } from 'react-native'
+import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors, Fonts, Images } from '../../App/Themes'
 import R from 'ramda'
 
@@ -57,6 +57,14 @@ export default class ThemeScreen extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
+        <TouchableOpacity onPress={()=> this.props.navigation.goBack()} style={{
+          position: 'absolute',
+          paddingTop: 30,
+          paddingHorizontal: 5,
+          zIndex: 10
+        }}>
+          <Image source={Images.backButton} />
+        </TouchableOpacity>
         <ScrollView style={styles.container}>
           <View style={{alignItems: 'center', paddingTop: 60}}>
             <Image source={Images.theme} style={styles.logo} />

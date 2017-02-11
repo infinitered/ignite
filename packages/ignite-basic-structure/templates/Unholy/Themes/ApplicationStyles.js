@@ -22,7 +22,8 @@ const ApplicationStyles = {
     },
     container: {
       flex: 1,
-      paddingTop: Metrics.baseMargin
+      paddingTop: Metrics.baseMargin,
+      backgroundColor: Colors.transparent
     },
     section: {
       margin: Metrics.section,
