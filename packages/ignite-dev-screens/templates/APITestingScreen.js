@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native'
-import { Metrics, Images } from '../../App/Themes'
+import { Metrics, Images } from './DevTheme'
 import FullButton from '../../App/Components/FullButton'
 
 // For API

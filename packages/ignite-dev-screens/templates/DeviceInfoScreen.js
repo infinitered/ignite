@@ -4,7 +4,7 @@
 import React from 'react'
 import { View, ScrollView, Text, Image, NetInfo, TouchableOpacity } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
-import { Metrics, Images } from '../../App/Themes'
+import { Metrics, Images } from './DevTheme'
 import styles from './Styles/DeviceInfoScreenStyle'
 
 const HARDWARE_DATA = [

@@ -6,7 +6,7 @@ import styles from './Styles/DevscreensButtonStyle'
 import DebugConfig from '../../App/Config/DebugConfig'
 import RoundedButton from '../../App/Components/RoundedButton'
 import PresentationScreen from './PresentationScreen'
-import { Images } from '../../App/Themes'
+import { Images } from './DevTheme'
 
 type FullButtonProps = {
   styles?: Object
