@@ -1,8 +1,7 @@
 const minimist = require('minimist')
-const { build, printCommands, printWtf } = require('gluegun')
+const { build, printCommands, printWtf, print } = require('gluegun')
 const header = require('../brand/header')
 const { isNil, isEmpty } = require('ramda')
-const exitCodes = require('../lib/exitCodes')
 
 /**
  * Kick off a run.
@@ -31,14 +30,14 @@ module.exports = async function run (argv) {
   const hasNoArguments = isEmpty(commandLine._)
   const hasVersionOption = commandLine.version || commandLine.v
   if (hasNoArguments && hasVersionOption) {
-    runtime.run({ rawCommand: 'version' })
-    process.exit(exitCodes.OK)
+    await runtime.run({ rawCommand: 'version' })
+    return
   }
 
   // wtf mode shows problems with plugins, commands, and extensions
   if (commandLine.wtf) {
     printWtf(runtime)
-    process.exit(exitCodes.OK)
+    return
   }
 
   // run the command
@@ -48,10 +47,11 @@ module.exports = async function run (argv) {
   if (isNil(context.plugin) || isNil(context.command)) {
     header()
     printCommands(context)
+    return context
   }
 
   if (context.error) {
-    console.dir(context.error)
+    print.debug(context.error)
   }
 
   // send it back to make testing easier
