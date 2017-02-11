@@ -1,9 +1,8 @@
 const copyDevScreens = async function (context) {
   // grab some features
-  const { parameters, print, strings, ignite } = context
-  const { isBlank } = strings
+  const { ignite } = context
 
-  const screens = ["APITestingScreen", "ComponentExamplesScreen", "DeviceInfoScreen", "DevscreensButton", "PluginExamplesScreen", "PresentationScreen", "ThemeScreen", "ButtonBox"]
+  const screens = ['APITestingScreen', 'ComponentExamplesScreen', 'DeviceInfoScreen', 'DevscreensButton', 'PluginExamplesScreen', 'PresentationScreen', 'ThemeScreen', 'ButtonBox']
 
   const jobs = []
 
@@ -24,13 +23,15 @@ const copyDevScreens = async function (context) {
   await ignite.copyBatch(context, jobs, {})
 }
 
-
 const add = async function (context) {
-  const { patching, filesystem, print, system } = context
+  const { patching, filesystem, print, ignite } = context
   const { warning } = print
 
   // Set Examples to "classic" in Ignite config
   context.ignite.setIgniteConfig('examples', 'classic')
+
+  // dev screens use react-navigation
+  await ignite.addModule('react-navigation')
 
   // // Copy the the screens to containers folder
   await copyDevScreens(context)
@@ -53,16 +54,18 @@ const add = async function (context) {
 
   // Call the function in the navigation, which adds/provides the dev screens
   // TODO: Use navigation generator to add screens
-
 }
 
 const remove = async function (context) {
-  const { filesystem } = context
+  const { filesystem, ignite, patching } = context
 
   console.log('Removing Ignite Dev Screens')
 
   // Set Examples to "false" in Ignite config
   context.ignite.removeIgniteConfig('examples')
+
+  // remove the npm module - probably should ask user here
+  await ignite.removeModule('react-navigation')
 
   // Delete screens from containers folder
   filesystem.remove('ignite/DevScreens')
@@ -79,7 +82,6 @@ const remove = async function (context) {
     patching.replaceInFile(launchScreen, 'import DevscreensButton', '')
     patching.replaceInFile(launchScreen, '<DevscreensButton />', '')
   }
-
 }
 
 module.exports = { add, remove }

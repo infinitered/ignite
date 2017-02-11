@@ -2,7 +2,7 @@
 
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
-import { Platform, View, ScrollView, Text, Image } from 'react-native'
+import { Platform, View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
 import { Images } from '../../App/Themes'
 import styles from './Styles/ComponentExamplesScreenStyle'
 
@@ -27,6 +27,14 @@ class ComponentExamplesScreen extends React.Component {
     return (
       <View style={[styles.container, styles.mainContainer]}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
+        <TouchableOpacity onPress={()=> this.props.navigation.goBack()} style={{
+          position: 'absolute',
+          paddingTop: 30,
+          paddingHorizontal: 5,
+          zIndex: 10
+        }}>
+          <Image source={Images.backButton} />
+        </TouchableOpacity>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
           <View style={{alignItems: 'center', paddingTop: 60}}>
             <Image source={Images.components} style={styles.logo} />
