@@ -56,7 +56,7 @@ const walkthrough = async (context) => {
 module.exports = async function (context) {
   const { parameters, strings, print, system } = context
   const { isBlank } = strings
-  const { info, colors } = print
+  const { info, colors, spin } = print
 
   // validation
   const projectName = parameters.second
@@ -82,8 +82,8 @@ module.exports = async function (context) {
   // we need to lock the RN version here
   // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
   const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION
+  info(`🔥 igniting ${print.colors.yellow(projectName)}`)
   info('')
-  info(`🔥  igniting ${print.colors.yellow(projectName)}`)
 
   // Check the version number and bail if we don't have it.
   const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
@@ -92,25 +92,30 @@ module.exports = async function (context) {
     print.error(`💩  react native version ${reactNativeVersion} not found on NPM.  We recommend ${REACT_NATIVE_VERSION}.`)
     process.exit(exitCodes.REACT_NATIVE_VERSION)
   }
-  info(`🔥  using ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
+  const spinner = spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
 
   await system.run(`react-native init ${projectName} --version ${reactNativeVersion}`)
+  spinner.succeed(`added ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
 
   // switch to the newly created project directory to continue the rest of these commands
   process.chdir(projectName)
 
   await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy --react-native-version ${reactNativeVersion}`, { stdio: 'inherit' })
 
-  info(`🔥  installing ignite dependencies`)
+  spinner.text = `▸ installing ignite dependencies`
+  spinner.start()
   if (context.ignite.useYarn) {
     await system.run('yarn')
   } else {
     await system.run('npm i')
   }
+  spinner.stop()
 
   // react native link -- must use spawn & stdio: ignore or it hangs!! :(
-  info(`🔥  linking native libraries`)
+  spinner.text = `▸ linking native libraries`
+  spinner.start()
   await system.spawn('react-native link', { stdio: 'ignore' })
+  spinner.stop()
 
   await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators`, { stdio: 'inherit' })
 
@@ -132,7 +137,7 @@ module.exports = async function (context) {
   }
 
   info('')
-  info('Time to get cooking! 🍽 ')
+  info('🍽 Time to get cooking!')
   info('')
   info('To run in iOS:')
   info(colors.yellow(`  cd ${projectName}`))

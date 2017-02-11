@@ -55,7 +55,7 @@ async function importPlugin (context, opts) {
 module.exports = async function (context) {
   // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
-  const { info, warning, error } = print
+  const { info, warning, error, spin } = print
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
 
@@ -78,12 +78,12 @@ Examples:
   const { moduleName } = specs
 
   // import the ignite plugin node module
-  info(`🔥  adding ${print.colors.cyan(moduleName)}`)
+  const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
 
   if (specs.type) {
     await importPlugin(context, specs)
   } else {
-    error(`💩  invalid ignite plugin`)
+    spinner.fail(`💩  invalid ignite plugin`)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
 
@@ -94,7 +94,7 @@ Examples:
   const tomlFilePath = `${modulePath}/ignite.toml`
 
   if (!filesystem.exists(tomlFilePath)) {
-    error('💩  no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
+    spinner.fail('no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
     await removeIgnitePlugin(moduleName, context)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
@@ -108,6 +108,7 @@ Examples:
   // we compare the toml changes against ours
   const changes = detectedChanges(currentGenerators, proposedGenerators)
   if (changes.length > 0) {
+    spinner.stop()
       // we warn the user on changes
     warning(`🔥  The following generators would be changed: ${R.join(', ', changes)}`)
     const ok = await prompt.confirm('You ok with that?')
@@ -116,6 +117,8 @@ Examples:
       await removeIgnitePlugin(moduleName, context)
       process.exit(exitCodes.OK)
     }
+    spinner.text = `adding ${print.colors.cyan(moduleName)}`
+    spinner.start()
   }
 
   // ok, are we ready?
@@ -125,7 +128,7 @@ Examples:
       const pluginModule = require(modulePath)
 
       if (!pluginModule.hasOwnProperty('add') || !pluginModule.hasOwnProperty('remove')) {
-        error(`💩  'add' or 'remove' method missing.`)
+        spinner.fail(`'add' or 'remove' method missing.`)
         process.exit(exitCodes.PLUGIN_INVALID)
       }
 
@@ -141,21 +144,26 @@ Examples:
           ignite.saveIgniteConfig(updatedConfig)
         }
 
+        spinner.stop()
+        // spinner.stopAndPersist({ symbol: '▸', text: `adding ${print.colors.cyan(moduleName)}` })
         await pluginModule.add(context)
+        spinner.text = `added ${print.colors.cyan(moduleName)}`
+        spinner.start()
+        spinner.succeed()
 
         // Sweet! We did it!
-        process.exit(exitCodes.OK)
+        return
       } catch (err) {
         // it's up to the throwers of this error to ensure the error message is human friendly.
         // to do this, we need to ensure all our core features like `addModule`, `addComponentExample`, etc
         // all play along nicely.
-        error(err.message)
+        spinner.fail(err.message)
         process.exit(exitCodes.PLUGIN_INSTALL)
       }
     }
   } catch (err) {
     // we couldn't require the plugin, it probably has some nasty js!
-    error('💩  problem loading the plugin JS')
+    spinner.fail('problem loading the plugin JS')
     await removeIgnitePlugin(moduleName, context)
     process.exit(exitCodes.PLUGIN_INVALID)
   }

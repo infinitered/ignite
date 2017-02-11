@@ -88,7 +88,7 @@ function attach (plugin, command, context) {
    */
   async function addModule (moduleName, options = {}) {
     const depType = options.dev ? 'as dev dependency' : ''
-    print.info(`    ${print.checkmark} installing ${print.colors.cyan(moduleName)} ${depType}`)
+    const spinner = print.spin(`▸ installing ${print.colors.cyan(moduleName)} ${depType}`)
 
     // install the module
     if (useYarn) {
@@ -98,14 +98,18 @@ function attach (plugin, command, context) {
       const installSwitch = options.dev ? '--save-dev' : '--save'
       await system.run(`npm i ${moduleName} ${installSwitch}`)
     }
+    spinner.stop()
+
 
     // should we react-native link?
     if (options.link) {
       try {
-        print.info(`    ${print.checkmark} linking`)
-
+        spinner.text = `▸ linking`
+        spinner.start()
         await system.spawn(`react-native link ${moduleName}`, { stdio: 'ignore' })
+        spinner.stop()
       } catch (err) {
+        spinner.fail()
         throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
       }
     }
@@ -171,7 +175,7 @@ function attach (plugin, command, context) {
           target: job.target,
           props
         })
-        print.info(`    ${print.checkmark}  ${job.target}`)
+        // print.info(`    ${print.checkmark} ${job.target}`)
       }
     }
   }
@@ -188,7 +192,7 @@ function attach (plugin, command, context) {
 
     // do we want to use examples in the classic format?
     if (config.examples === 'classic') {
-      print.info(`    ${print.checkmark} adding component example`)
+      const spinner = print.spin(`▸ adding component example`)
 
       // generate the file
       const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
@@ -204,6 +208,7 @@ function attach (plugin, command, context) {
       if (filesystem.exists(destinationPath)) {
         patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Examples/Components/${fileName}'`)
       }
+      spinner.stop()
     }
   }
 
