@@ -35,7 +35,8 @@
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
     "shelljs": "^0.7.6",
-    "toml": "^2.3.1"
+    "toml": "^2.3.1",
+    "inquirer": "^3.0.1"
   },
   "devDependencies": {
     "ava": "^0.18.1",
