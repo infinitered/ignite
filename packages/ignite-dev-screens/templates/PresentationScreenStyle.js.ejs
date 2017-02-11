@@ -7,12 +7,13 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     marginBottom: 36,
-    paddingTop: Metrics.navBarHeight
+    paddingTop: Metrics.section
   },
   logo: {
     height: Metrics.images.logo,
     width: Metrics.images.logo,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginTop: Metrics.doubleBaseMargin
   },
   buttonsContainer: {
     flexDirection: 'row',
