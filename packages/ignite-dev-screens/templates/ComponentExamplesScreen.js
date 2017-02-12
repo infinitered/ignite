@@ -3,7 +3,7 @@
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
 import { Platform, View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
-import { Images } from '../../App/Themes'
+import { Images } from './DevTheme'
 import styles from './Styles/ComponentExamplesScreenStyle'
 
 // Examples Render Engine

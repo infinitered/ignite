@@ -1,27 +1,4 @@
-const copyDevScreens = async function (context) {
-  // grab some features
-  const { ignite } = context
-
-  const screens = ['APITestingScreen', 'ComponentExamplesScreen', 'DeviceInfoScreen', 'DevscreensButton', 'PluginExamplesScreen', 'PresentationScreen', 'ThemeScreen', 'ButtonBox']
-
-  const jobs = []
-
-  screens.map((screen) => {
-    jobs.push(
-      {
-        template: `${screen}.js.ejs`,
-        target: `ignite/DevScreens/${screen}.js`
-      },
-      {
-        template: `${screen}Style.js.ejs`,
-        target: `ignite/DevScreens/Styles/${screen}Style.js`
-      }
-    )
-  })
-
-  // make the templates
-  await ignite.copyBatch(context, jobs, {})
-}
+const sourceFolder = `${process.cwd()}/node_modules/ignite-dev-screens/templates`
 
 const add = async function (context) {
   const { patching, filesystem, print, ignite } = context
@@ -33,8 +10,8 @@ const add = async function (context) {
   // dev screens use react-navigation
   await ignite.addModule('react-navigation')
 
-  // // Copy the the screens to containers folder
-  await copyDevScreens(context)
+  // Copy the the screens to containers folder
+  filesystem.copyAsync(`${sourceFolder}`, `${process.cwd()}/ignite/DevScreens`, { overwrite: true })
 
   // Set App/Config/DebugConfig.js showDevScreens to __DEV__
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)

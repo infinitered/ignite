@@ -1,7 +1,7 @@
 // @flow
 
 import { StyleSheet } from 'react-native'
-import { Metrics, Colors, Fonts, ApplicationStyles } from '../../../App/Themes/'
+import { Metrics, Colors, Fonts, ApplicationStyles } from '../DevTheme/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
