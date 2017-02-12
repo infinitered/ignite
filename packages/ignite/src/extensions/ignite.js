@@ -181,6 +181,45 @@ function attach (plugin, command, context) {
   }
 
   /**
+   * Generates an example screen for use with the dev screens.
+   *
+   * @param {string} fileName - The js file to create. (.ejs will be appended to pick up the template.)
+   * @param {Object} props - The properties to use for template expansion.
+   * 
+   * example:
+   * copyScreenExamples([
+   *   {title: 'Row Example', screen: 'Row.js', ancillary: ['files']},
+   *   {title: 'GridRow Example', screen: 'Grid.js', ancillary: ['files']},
+   *   {title: 'Section Example', screen: 'Section.js', ancillary: ['files']},
+   * ], 'Group Title')
+   */
+  async function addScreenExample (fileName, props = {}) {
+    const { filesystem, patching, ignite } = context
+    const config = ignite.loadIgniteConfig()
+
+    // currently only supporting 1 form of examples
+    if (config.examples === 'classic') {
+      const spinner = print.spin(`▸ adding screen example`)
+
+      // generate the file
+      // const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
+      // template.generate({
+      //   directory: templatePath,
+      //   template: `${fileName}.ejs`,
+      //   target: `ignite/Examples/Containers/${fileName}`,
+      //   props
+      // })
+
+      // adds reference to usage example screen (if it exists)
+      // const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
+      // if (filesystem.exists(destinationPath)) {
+      //   patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Examples/Components/${fileName}'`)
+      // }
+      spinner.stop()
+    }
+  }
+
+  /**
    * Generates an example for use with the dev screens.
    *
    * @param {string} fileName - The js file to create. (.ejs will be appended to pick up the template.)
