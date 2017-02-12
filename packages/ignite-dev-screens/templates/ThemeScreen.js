@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
-import { Colors, Fonts, Images } from '../../App/Themes'
+import { Colors, Fonts, Images } from './DevTheme'
 import R from 'ramda'
 
 // Styles

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ScrollView, Text, Image, View, TouchableOpacity } from 'react-native'
-import { Images } from '../../App/Themes'
+import { Images } from './DevTheme'
 import ButtonBox from './ButtonBox'
 import { StackNavigator } from 'react-navigation'
 // Screens
