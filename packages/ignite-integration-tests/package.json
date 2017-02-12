@@ -1,0 +1,22 @@
+{
+  "name": "ignite-integration",
+  "version": "0.1.0",
+  "description": "A place to run some long running integration tests.",
+  "scripts": {
+    "test": "ava -s",
+    "watch": "ava -s --watch"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.18.1"
+  },
+  "dependencies": {
+    "execa": "^0.6.0",
+    "fs-jetpack": "^0.11.0",
+    "ignite": "2.0.0-alpha.3",
+    "ramda": "^0.23.0",
+    "ramdasauce": "^1.2.0",
+    "shelljs": "^0.7.6",
+    "ignite-basic-generators": "0.2.0-alpha.2"
+  }
+}
