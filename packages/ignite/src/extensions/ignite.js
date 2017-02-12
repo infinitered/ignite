@@ -1,4 +1,5 @@
-const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
+// Steeeeeeeve I'm starting to not love this giant deconstruct - leaving it here to prove why
+const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter, reduce, flatten, map, pluck } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const exitCodes = require('../lib/exitCodes')
 const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
@@ -193,7 +194,7 @@ function attach (plugin, command, context) {
    *   {title: 'Section Example', screen: 'Section.js', ancillary: ['files']},
    * ], 'Group Title')
    */
-  async function addScreenExample (fileName, props = {}) {
+  async function addScreenExample (files, props = {}) {
     const { filesystem, patching, ignite } = context
     const config = ignite.loadIgniteConfig()
 
@@ -201,14 +202,35 @@ function attach (plugin, command, context) {
     if (config.examples === 'classic') {
       const spinner = print.spin(`▸ adding screen example`)
 
-      // generate the file
-      // const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
-      // template.generate({
-      //   directory: templatePath,
-      //   template: `${fileName}.ejs`,
-      //   target: `ignite/Examples/Containers/${fileName}`,
-      //   props
-      // })
+      // merge and flatten all dem files yo.
+      let allFiles = reduce((acc, v) => {
+        acc.push(v.screen)
+        if (v.ancillary) acc.push(v.ancillary)
+        return flatten(acc)
+      }, [], files)
+            
+      // generate stamped copy of all template files 
+      const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
+      map((fileName) => {
+        template.generate({
+          directory: templatePath,
+          template: `${fileName}.ejs`,
+          // It should copy to a folder so as not to collide with others
+          target: `ignite/Examples/Containers/${fileName}`,
+          props
+        })        
+      }, allFiles)
+
+      // all screens      
+      const screens = pluck('screen', files)
+
+      // insert screen route and buttons
+      map((screen) => {
+        // insert screen route 
+        console.log(screen)
+        // insert button 
+        console.log('insert button to screen')
+      }, screens)      
 
       // adds reference to usage example screen (if it exists)
       // const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
