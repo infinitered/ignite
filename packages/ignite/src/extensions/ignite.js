@@ -226,24 +226,25 @@ function attach (plugin, command, context) {
       // insert screen, route, and buttons in PluginExamples (if exists)
       const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
       map((file) => {
-        // turn things like "This File-Example.js" into "ThisFileExample"
+        // turn things like "examples/This File-Example.js" into "ThisFileExample"
         // for decent component names
         // TODO: check for collisions in the future
-        const componentName = replace(/.js|\s|-/g, '', file.screen)
+        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]        
+        const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
         if (filesystem.exists(destinationPath)) {
           // insert screen import
           patching.insertInFile(
             destinationPath, 
             'import RoundedButton', 
-            `import ${componentName} from '../Examples/Containers/${pluginName}/${fileName}'`
+            `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
           )
 
           // insert screen route 
           patching.insertInFile(
             destinationPath, 
             'screen: PluginExamplesScreen', 
-            `${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}}`
+            `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`
           )
 
           // insert launch button 

@@ -1,5 +1,4 @@
 const add = async function (context) {
-  console.log('Here we go!!!!!!!!!!!')
   // examples of generated screens
   await context.ignite.addScreenExamples([
     {
