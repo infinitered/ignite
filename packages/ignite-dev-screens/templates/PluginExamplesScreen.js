@@ -1,13 +1,17 @@
 // @flow
 
-import React, { PropTypes } from 'react'
+// Fair Warning:  PluginExamples has a good bit of Ignite automation in editing.
+// Though robust, if you should modify this file, review your changes with us
+// As to not break the automated addition/subtractions.
+import React from 'react'
 import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
-import { connect } from 'react-redux'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from './DevTheme'
 
 // Examples Render Engine
 import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
+
+// Screen examples
+import RoundedButton from '../../App/Components/RoundedButton'
 
 // Styles
 import styles from './Styles/PluginExamplesScreenStyle'
@@ -18,7 +22,7 @@ class PluginExamplesScreen extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <TouchableOpacity onPress={()=> this.props.navigation.goBack()} style={{
+        <TouchableOpacity onPress={() => this.props.navigation.goBack(null)} style={{
           position: 'absolute',
           paddingTop: 30,
           paddingHorizontal: 5,
@@ -40,23 +44,25 @@ class PluginExamplesScreen extends React.Component {
 
           {ExamplesRegistry.renderPluginExamples()}
 
+          <View style={styles.screenButtons}>
+          </View>
+
         </ScrollView>
       </View>
     )
   }
 }
 
-PluginExamplesScreen.propTypes = {
-}
-
-const mapStateToProps = (state) => {
-  return {
+export default StackNavigator({
+  PluginExamplesScreen: {screen: PluginExamplesScreen},
+}, {
+  headerMode: 'screen',
+  navigationOptions: {
+    header: {
+      visible: false,
+      style: {
+        backgroundColor: '#3e243f'
+      }
+    }
   }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PluginExamplesScreen)
+})

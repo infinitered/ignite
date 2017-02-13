@@ -1,9 +1,10 @@
 // Steeeeeeeve I'm starting to not love this giant deconstruct - leaving it here to prove why
-const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter, reduce, flatten, map, pluck } = require('ramda')
+const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter, reduce, flatten, map, takeLast, split, replace } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const exitCodes = require('../lib/exitCodes')
 const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
 const igniteVersion = require('../../package.json').version
+const path = require('path')
 
 /**
  * The current executing ignite plugin path.
@@ -184,19 +185,21 @@ function attach (plugin, command, context) {
   /**
    * Generates an example screen for use with the dev screens.
    *
-   * @param {string} fileName - The js file to create. (.ejs will be appended to pick up the template.)
+   * @param {Array} files - Array of Screens and properties
    * @param {Object} props - The properties to use for template expansion.
    * 
    * example:
    * copyScreenExamples([
-   *   {title: 'Row Example', screen: 'Row.js', ancillary: ['files']},
-   *   {title: 'GridRow Example', screen: 'Grid.js', ancillary: ['files']},
-   *   {title: 'Section Example', screen: 'Section.js', ancillary: ['files']},
+   *   {title: 'Row Example', screen: 'Row.js', ancillary: ['file1', 'file2']},
+   *   {title: 'Grid Example', screen: 'Grid.js', ancillary: ['file']},
+   *   {title: 'Section Example', screen: 'Section.js', ancillary: ['file']},
    * ], 'Group Title')
    */
-  async function addScreenExample (files, props = {}) {
+  async function addScreenExamples (files, props = {}) {
     const { filesystem, patching, ignite } = context
     const config = ignite.loadIgniteConfig()
+    // consider this being part of context.ignite
+    const pluginName = takeLast(1, split(path.sep, ignitePluginPath()))[0]
 
     // currently only supporting 1 form of examples
     if (config.examples === 'classic') {
@@ -208,35 +211,54 @@ function attach (plugin, command, context) {
         if (v.ancillary) acc.push(v.ancillary)
         return flatten(acc)
       }, [], files)
-            
+
       // generate stamped copy of all template files 
       const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
       map((fileName) => {
         template.generate({
           directory: templatePath,
           template: `${fileName}.ejs`,
-          // It should copy to a folder so as not to collide with others
-          target: `ignite/Examples/Containers/${fileName}`,
+          target: `ignite/Examples/Containers/${pluginName}/${fileName}`,
           props
         })        
       }, allFiles)
 
-      // all screens      
-      const screens = pluck('screen', files)
+      // insert screen, route, and buttons in PluginExamples (if exists)
+      const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
+      map((file) => {
+        // turn things like "This File-Example.js" into "ThisFileExample"
+        // for decent component names
+        // TODO: check for collisions in the future
+        const componentName = replace(/.js|\s|-/g, '', file.screen)
 
-      // insert screen route and buttons
-      map((screen) => {
-        // insert screen route 
-        console.log(screen)
-        // insert button 
-        console.log('insert button to screen')
-      }, screens)      
+        if (filesystem.exists(destinationPath)) {
+          // insert screen import
+          patching.insertInFile(
+            destinationPath, 
+            'import RoundedButton', 
+            `import ${componentName} from '../Examples/Containers/${pluginName}/${fileName}'`
+          )
 
-      // adds reference to usage example screen (if it exists)
-      // const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
-      // if (filesystem.exists(destinationPath)) {
-      //   patching.insertInFile(destinationPath, 'import ExamplesRegistry', `import '../Examples/Components/${fileName}'`)
-      // }
+          // insert screen route 
+          patching.insertInFile(
+            destinationPath, 
+            'screen: PluginExamplesScreen', 
+            `${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}}`
+          )
+
+          // insert launch button 
+          patching.insertInFile(
+            destinationPath, 
+            'styles.screenButtons', 
+            `
+            <RoundedButton onPress={() => this.props.navigation.navigate('${componentName}')}>
+              ${file.title}
+            </RoundedButton>            
+            `
+          )
+        } // if
+      }, files)      
+ 
       spinner.stop()
     }
   }
@@ -415,6 +437,7 @@ function attach (plugin, command, context) {
     copyBatch,
     addComponentExample,
     removeComponentExample,
+    addScreenExamples,
     loadIgniteConfig,
     saveIgniteConfig,
     setIgniteConfig,
