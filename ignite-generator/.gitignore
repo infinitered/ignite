@@ -47,3 +47,7 @@ redux/index.js
 saga/index.js
 screen/index.js
 testing/index.js
+
+# Secrets
+#
+.env
