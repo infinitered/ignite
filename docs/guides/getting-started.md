@@ -22,22 +22,38 @@ git fetch --all # to make sure your repo has a reference to the branch
 git checkout -b next origin/next
 ```
 
+Install dependencies
 
+`npm run bootstrap`
 
+Install react native globally
 
+`npm install -g react-native-ignite`
 
-Install node v7.5.0
-git clone git@github.com:infinitered/ignite.git
-git checkout -b origin next
-npm run bootstrap
-npm install lerna
-npm install -g react-native-ignite
-npm link (from packages/ignite)
-brew install watchman
-npm install -g react-native-cli
-ignite new HelloWorld
-cd HelloWorld/
-react-native run-ios
+Link ignite to React Native Ignite in packages/ignite
+
 ```
+cd packages/ignite
+npm link
+```
+
+Install watchman using Homebrew
+
+`brew install watchman`
+
+Install the React Native CLI
+
+`npm install -g react-native-cli`
+
+Now let's use Ignite to create a new project
+
+```
+ignite new HelloWorld
+cd HelloWorld
+```
+
+Start up the project using React Native
+
+`react-native run-ios`
 
 ## Release Version
