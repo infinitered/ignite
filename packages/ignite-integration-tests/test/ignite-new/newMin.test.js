@@ -33,7 +33,7 @@ test('ignite plugins', async t => {
     .cwd(`${APP}/node_modules`)
     .find({ matching: 'ignite-*', directories: true, recursive: false })
 
-  t.deepEqual(ignitePlugins, ['ignite-basic-generators'])
+  t.deepEqual(ignitePlugins, ['ignite-basic-generators', 'ignite-minimal-app-template'])
 })
 
 test('package.json', async t => {

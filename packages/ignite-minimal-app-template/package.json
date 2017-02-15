@@ -1,0 +1,28 @@
+{
+  "name": "ignite-minimal-app-template",
+  "description": "Adds a minimally Infinite Red opinioniated React Native application structure.",
+  "license": "MIT",
+  "repository": "https://github.com/infinitered/ignite/tree/master/packages/ignite-minimal-app-template",
+  "homepage": "https://github.com/infinitered/ignite",
+  "version": "0.1.0",
+  "author": {
+    "name": "Infinite Red",
+    "email": "reactnative@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  },
+  "contributors": [
+    "https://github.com/infinitered/ignite/graphs/contributors"
+  ],
+  "scripts": {
+    "lint": "standard"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
+  },
+  "devDependencies": {
+    "standard": "^8.6.0"
+  }
+}

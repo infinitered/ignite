@@ -1,6 +1,0 @@
-description = 'Ignite basic structure'
-
-[ignite]
-
-[defaults]
-askToOverwrite = true
