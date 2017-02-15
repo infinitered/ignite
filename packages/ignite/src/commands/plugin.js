@@ -81,6 +81,7 @@ const createNewPlugin = async (context) => {
     { template: 'plugin/index.js.ejs', target: `${pluginName}/index.js` },
     { template: 'plugin/ignite.toml.ejs', target: `${pluginName}/ignite.toml` },
     { template: 'plugin/package.json.ejs', target: `${pluginName}/package.json` },
+    { template: 'plugin/README.md', target: `${pluginName}/README.md` },
     (answers.template === 'Yes') &&
       { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js` },
     (answers.command === 'Yes') &&
