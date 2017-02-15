@@ -56,7 +56,7 @@ async function importPlugin (context, opts) {
 module.exports = async function (context) {
   // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
-  const { info, warning, error, spin } = print
+  const { info, warning, spin } = print
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
 
