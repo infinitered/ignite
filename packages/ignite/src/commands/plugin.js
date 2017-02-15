@@ -85,7 +85,7 @@ const createNewPlugin = async (context) => {
     (answers.template === 'Yes') &&
       { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js.ejs` },
     (answers.command === 'Yes') &&
-      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js.ejs` }
+      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js` }
   ]
 
   // copy over the files
