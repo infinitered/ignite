@@ -1,5 +1,5 @@
 {
-  "name": "ignite",
+  "name": "react-native-ignite",
   "version": "2.0.0-alpha.3",
   "description": "Ignite - The next version.",
   "main": "src/index.js",
