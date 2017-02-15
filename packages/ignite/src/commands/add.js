@@ -91,15 +91,11 @@ Examples:
   // the full path to the module installed within node_modules
   const modulePath = `${process.cwd()}/node_modules/${moduleName}`
 
-  // once installed, let's check on its toml
+  // optionally load some configuration from the ignite.toml from the plugin.
   const tomlFilePath = `${modulePath}/ignite.toml`
-
-  if (!filesystem.exists(tomlFilePath)) {
-    spinner.fail('no `ignite.toml` file found in this node module, are you sure it is an Ignite plugin?')
-    await removeIgnitePlugin(moduleName, context)
-    process.exit(exitCodes.PLUGIN_INVALID)
-  }
-  const newConfig = Toml.parse(filesystem.read(tomlFilePath))
+  const newConfig = filesystem.exists(tomlFilePath)
+    ? Toml.parse(filesystem.read(tomlFilePath))
+    : { ignite: {} }
 
   const proposedGenerators = R.reduce((acc, k) => {
     acc[k] = moduleName
