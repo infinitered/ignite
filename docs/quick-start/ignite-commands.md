@@ -32,6 +32,9 @@ This command checks your dev environment for dependencies. It will list the vers
 system, JavaScript, React Native, Ignite, Android, and iOS dependencies
 available on your machine, and where applicable, their location. This may be
 useful when debugging or when seeking help for an issue in forums.
+
+Especially handy is `ignite doctor --bug`, which opens webpage with pre-filled
+out issue on Ignite's github. ***[NOTE: this doesn't seem to work yet]***
   
   
 ### Generate
@@ -45,6 +48,9 @@ node_modules for folders starting with `ignite`, then looks in those for
 generators. Generators have a folder called `templates`, which (naturally)
 contain the templates that determine the contents of the files the generator
 generates.
+
+Run `ignite generate` by itself and it will list available generators. Run
+`ignite generate <generator name>` to use the desired generator.
   
 ### New
   
@@ -68,7 +74,7 @@ proejct structure.
 
 Manages ignite plugins
 
-This command allows you to add or list currently available plugins (coming
+This command allows you to create a plugin or list currently available plugins (coming
 soon).
 
 When creating a plugin, you can choose to include an example component and example
