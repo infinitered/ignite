@@ -67,6 +67,12 @@ proejct structure.
 `plugin (p)`
 
 Manages ignite plugins
+
+This command allows you to add or list currently available plugins (coming
+soon).
+
+When creating a plugin, you can choose to include an example component and example
+command or generator.
   
 ### Remove
 
@@ -74,12 +80,24 @@ Manages ignite plugins
 
 Removes an Ignite plugin.
   
+The opposite of `ignite add`, this removes a plugin from your project. Be warned
+that this may change other files in your project, e.g. to undo changes made by
+`add`. There is a potential for danger here, so you may want to consider using
+version control to be on the safe side.
   
 ### Spork  
 
 `spork`
 
 Copy templates as blueprints for this project
+
+ Ignite is opinionated. Spork lets you avoid those opinions by "forking" the
+ template. Like a 'fork' on a git repo. `ignite spork` looks at the generators,
+ then looks at the templates. You then select the things you want to make a copy
+ off. They then live in `ignite/Spork/...`.
+
+Spork lets you be kinda happy with someone else's template, but then change it
+to your liking. For example, different linting, new headers, etc.
   
   
 ### Version  
