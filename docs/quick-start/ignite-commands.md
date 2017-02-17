@@ -1,7 +1,7 @@
 # Ignite Commands
 
 This document reviews the commands that the Ignite 2.0 CLI provides. This guide
-assumes that you've installed Ignite; if you haven't, then check out our Getting
+assumes that you've installed Ignite. If you haven't, then check out our Getting
 Started Guide [here]().
 
 Enter `ignite` into your command line to see the commands offered by Ignite 2.0.
@@ -97,10 +97,10 @@ version control to be on the safe side.
 
 Copy templates as blueprints for this project
 
- Ignite is opinionated. Spork lets you avoid those opinions by "forking" the
- template. Like a 'fork' on a git repo. `ignite spork` looks at the generators,
- then looks at the templates. You then select the things you want to make a copy
- off. They then live in `ignite/Spork/...`.
+Ignite is opinionated. Spork lets you avoid those opinions by "forking" the
+template. Like a 'fork' on a git repo. `ignite spork` looks at the generators,
+then looks at the templates. You then select the things you want to make a copy
+off. They then live in `ignite/Spork/...`.
 
 Spork lets you be kinda happy with someone else's template, but then change it
 to your liking. For example, different linting, new headers, etc.
@@ -110,4 +110,4 @@ to your liking. For example, different linting, new headers, etc.
 
 `version (v)`
 
-Prints current version of installed ignite
+Prints current version of installed ignite.
