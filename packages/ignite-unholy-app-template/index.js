@@ -31,64 +31,34 @@ const maxOptions = {
 }
 
 const add = async function (context) {
-  const { filesystem, parameters, ignite, strings, print, system, prompt } = context
-  const { spin } = print
-  const { isBlank } = strings
+  const { filesystem, parameters, ignite, reactNative, print, system, prompt } = context
+  const name = parameters.third
+  const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
+  const spinner = print.spin(`using ${print.colors.cyan('unholy')} app template`).succeed()
 
-  // validation
-  if (isBlank(parameters.third)) {
-    print.info(`ignite add unholy-app-template <name>\n`)
-    print.error('Name is required.')
-    process.exit(1)
-    return
-  }
+  // attempt to install React Native or die trying
+  const rnExitCode = await reactNative.install({ name, skipJest: true })
+  if (rnExitCode > 0) process.exit(rnExitCode)
 
-  // TODO(steve): This is a developer quality-of-life switch that will go away when we :shipit: !
-  // see more details up in `new.js` as this is only set there.
-  const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix']
-
-  const copyJobs = [
-    {
-      template: 'index.js.ejs',
-      target: 'index.ios.js'
-    },
-    {
-      template: 'index.js.ejs',
-      target: 'index.android.js'
-    },
-    {
-      template: 'README.md',
-      target: 'README.md'
-    },
-    {
-      template: 'ignite.json.ejs',
-      target: 'ignite/ignite.json'
-    },
-    {
-      template: '.editorconfig',
-      target: '.editorconfig'
-    },
-    {
-      template: 'App/Config/AppConfig.js.ejs',
-      target: 'App/Config/AppConfig.js'
-    }
-  ]
-
-  // copy far too many opinions
+  // copy our App directory
+  spinner.text = '▸ copying files'
+  spinner.start()
   filesystem.copy(`${__dirname}/templates/App`, `${process.cwd()}/App`, { overwrite: true })
+  spinner.stop()
 
-  // TODO: merge, don't clobber here.
-  copyJobs.push({
-    template: 'package.json.ejs',
-    target: 'package.json'
-  })
-
-  // copy the things that make us unholy
-  const spinner = spin('▸ adding required files') // i struggled with the right wording here
-  await ignite.copyBatch(context, copyJobs, {
-    name: parameters.third,
-    igniteVersion: ignite.version
-  })
+  // generate some templates
+  spinner.text = '▸ generating files'
+  const templates = [
+    { template: 'index.js.ejs', target: 'index.ios.js' },
+    { template: 'index.js.ejs', target: 'index.android.js' },
+    { template: 'README.md', target: 'README.md' },
+    { template: 'ignite.json.ejs', target: 'ignite/ignite.json' },
+    { template: '.editorconfig', target: '.editorconfig' },
+    { template: 'App/Config/AppConfig.js.ejs', target: 'App/Config/AppConfig.js' },
+    { template: 'package.json.ejs', target: 'package.json' } // TODO: merge this, don't copy like we are
+  ]
+  const templateProps = { name, igniteVersion: ignite.version }
+  await ignite.copyBatch(context, templates, templateProps)
   spinner.stop()
 
   // figure out which parts of unholy to install
@@ -129,6 +99,23 @@ const add = async function (context) {
   if (answers['animatable'] === 'react-native-animatable') {
     await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable`, { stdio: 'inherit' })
   }
+
+  // Wrap it up with our success message.
+  print.info('')
+  print.info('🍽 Time to get cooking!')
+  print.info('')
+  print.info('To run in iOS:')
+  print.info(print.colors.yellow(`  cd ${name}`))
+  print.info(print.colors.yellow('  react-native run-ios'))
+  print.info('')
+  print.info('To run in Android:')
+  print.info(print.colors.yellow(`  cd ${name}`))
+  print.info(print.colors.yellow('  react-native run-android'))
+  print.info('')
+  print.info('To see what ignite can do for you:')
+  print.info(print.colors.yellow(`  cd ${name}`))
+  print.info(print.colors.yellow('  ignite'))
+  print.info('')
 }
 
 // TODO

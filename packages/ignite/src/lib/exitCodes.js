@@ -40,6 +40,10 @@ module.exports = {
   /**
    * Invalid Plugin name.
    */
-  PLUGIN_NAME: 7
-  
+  PLUGIN_NAME: 7,
+
+  /**
+   * This directory already exists
+   */
+  DIRECTORY_EXISTS: 8
 }

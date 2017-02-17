@@ -39,17 +39,15 @@ async function importPlugin (context, opts) {
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
 
-  try {
-    // yarn caches wierd for file-based deps, lets use npm for these.... gah!
-    if (ignite.useYarn && !isDirectory) {
-      await system.run(`yarn add ${target} --dev`)
-    } else {
-      const cacheBusting = isDirectory ? '--cache-min=0' : ''
-      await system.run(`npm i ${target} --save-dev ${cacheBusting}`)
-    }
-  } catch (e) {
-    context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
-    process.exit(exitCodes.PLUGIN_INVALID)
+  // yarn caches wierd for file-based deps, lets use npm for these.... gah!
+  // NOTE(steve): turning off again until we ship 1st beta of `react-native-ignite`
+  const stillFailing = false
+  if (stillFailing && ignite.useYarn && !isDirectory) {
+    await system.exec(`yarn add ${target} --dev`, { stdio: 'inherit' })
+  } else {
+    const cacheBusting = isDirectory ? '--cache-min=0' : ''
+    const cmd = `npm i ${target} --save-dev ${cacheBusting}`
+    await system.run(cmd)
   }
 }
 
@@ -59,6 +57,9 @@ module.exports = async function (context) {
   const { info, warning, spin } = print
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
+
+  // we need to know if this is an app template
+  const isAppTemplate = parameters.options['is-app-template']
 
   // the thing we're trying to install
   if (strings.isBlank(parameters.second)) {
@@ -77,19 +78,27 @@ Examples:
   // find out the type of install
   const specs = detectInstall(context)
   const { moduleName } = specs
+  const modulePath = `${process.cwd()}/node_modules/${moduleName}`
 
   // import the ignite plugin node module
-  const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
+  const spinner = spin({ isStarted: false })
+
+  if (!isAppTemplate) {
+    spinner.text = `adding ${print.colors.cyan(moduleName)}`
+    spinner.start()
+  }
 
   if (specs.type) {
-    await importPlugin(context, specs)
+    try {
+      await importPlugin(context, specs)
+    } catch (e) {
+      spinner.fail(`${moduleName} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
+      process.exit(exitCodes.PLUGIN_INVALID)
+    }
   } else {
     spinner.fail(`💩  invalid ignite plugin`)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
-
-  // the full path to the module installed within node_modules
-  const modulePath = `${process.cwd()}/node_modules/${moduleName}`
 
   // optionally load some configuration from the ignite.toml from the plugin.
   const tomlFilePath = `${modulePath}/ignite.toml`
@@ -144,12 +153,15 @@ Examples:
         spinner.stop()
         // spinner.stopAndPersist({ symbol: '▸', text: `adding ${print.colors.cyan(moduleName)}` })
         await pluginModule.add(context)
-        spinner.text = `added ${print.colors.cyan(moduleName)}`
-        spinner.start()
-        spinner.succeed()
+
+        if (!isAppTemplate) {
+          spinner.text = `added ${print.colors.cyan(moduleName)}`
+          spinner.start()
+          spinner.succeed()
+        }
 
         // Sweet! We did it!
-        return
+        return exitCodes.OK
       } catch (err) {
         // it's up to the throwers of this error to ensure the error message is human friendly.
         // to do this, we need to ensure all our core features like `addModule`, `addComponentExample`, etc
