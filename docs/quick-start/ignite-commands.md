@@ -9,7 +9,9 @@ Enter `ignite` into your command line to see the commands offered by Ignite 2.0.
 
 ### Add
 
-`add (a)`
+```
+ignite add {ignite plugin name}
+```
 
 Adds an Ignite plugin.
 
@@ -24,7 +26,9 @@ name.
 
 ### Doctor
 
-`doctor`
+```
+ignite doctor
+```
 
 Checks your dev environment for dependencies.
   
@@ -39,7 +43,9 @@ out issue on Ignite's github. ***[NOTE: this doesn't seem to work yet]***
   
 ### Generate
  
-`generate (g)`
+```
+ignite generate listview {listview name}
+```
 
 Generates some files.
 
@@ -54,7 +60,9 @@ Run `ignite generate` by itself and it will list available generators. Run
   
 ### New
   
-`new (n)`
+```
+ignite new {Project name}
+```
 
 Generate a new React Native project with Ignite.
 
@@ -63,14 +71,21 @@ Generate a new React Native project with Ignite.
 When you execute this command, Ignite 2.0 will give you a series of options for
 your new project regarding what libraries you would like to use.
 
-`ignite new` has various -- commands. ex: `ignite n MyApp --template
-infinitered` creates the project with a certain set of opinions regarding
+`ignite new` has various -- commands. ex:
+
+```
+ignite n MyApp --template infinitered
+```
+
+creates the project with a certain set of opinions regarding
 proejct structure.
 
   
 ### Plugin
 
-`plugin (p)`
+```
+ignite plugin new {plugin name}
+```
 
 Manages ignite plugins
 
@@ -82,7 +97,9 @@ command or generator.
   
 ### Remove
 
-`remove (r)`
+```
+ignite remove {ignite plugin name}
+```
 
 Removes an Ignite plugin.
   
@@ -93,7 +110,9 @@ version control to be on the safe side.
   
 ### Spork  
 
-`spork`
+```
+ignite spork
+```
 
 Copy templates as blueprints for this project
 
@@ -102,12 +121,18 @@ template. Like a 'fork' on a git repo. `ignite spork` looks at the generators,
 then looks at the templates. You then select the things you want to make a copy
 off. They then live in `ignite/Spork/...`.
 
+After entering ignite spork, you will be presented with a list of available
+templates to spork. Cycle through them with arrow keys, select the desired
+templates with `space` and finish with `enter`.
+
 Spork lets you be kinda happy with someone else's template, but then change it
 to your liking. For example, different linting, new headers, etc.
   
   
 ### Version  
 
-`version (v)`
+```
+ignite version
+```
 
 Prints current version of installed ignite.
