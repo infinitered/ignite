@@ -16,7 +16,7 @@ import * as Animatable from 'react-native-animatable'
 import I18n from 'react-native-i18n'
 
 // Styles
-import styles from './Styles/UsageExamplesScreenStyle'
+import styles from './Styles/UsageExamplesScreenStyles'
 
 class UsageExamplesScreen extends React.Component {
 

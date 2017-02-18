@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import AlertMessage from '../Components/AlertMessage'
 
 // Styles
-import styles from './Styles/ListviewExampleStyle'
+import styles from './Styles/ListviewExampleStyles'
 
 class ListviewSectionsExample extends React.Component {
 

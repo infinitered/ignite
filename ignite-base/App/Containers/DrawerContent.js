@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { ScrollView, Image, BackAndroid } from 'react-native'
-import styles from './Styles/DrawerContentStyle'
+import styles from './Styles/DrawerContentStyles'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'

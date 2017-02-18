@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Image, Animated, TouchableOpacity } from 'react-native'
 import { Images, Colors } from '../Themes'
-import Styles from './Styles/CustomNavBarStyle'
+import Styles from './Styles/CustomNavBarStyles'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
@@ -18,4 +18,3 @@ export default class CustomNavBar extends React.Component {
     )
   }
 }
-

@@ -13,7 +13,7 @@ import PluginExamplesScreen from './PluginExamplesScreen'
 import ThemeScreen from './ThemeScreen'
 
 // Styles
-import styles from './Styles/PresentationScreenStyle'
+import styles from './Styles/PresentationScreenStyles'
 
 class PresentationScreen extends React.Component {
 

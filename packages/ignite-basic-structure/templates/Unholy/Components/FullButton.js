@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
-import styles from './Styles/FullButtonStyle'
+import styles from './Styles/FullButtonStyles'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 // Example

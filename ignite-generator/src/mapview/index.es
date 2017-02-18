@@ -39,7 +39,7 @@ const copyOverMapviewFiles = (context) => {
   // copy mapcallout style template
   context.fs.copyTpl(
     context.templatePath('mapcallout-style.js.template'),
-    context.destinationPath(`./App/Components/Styles/MapCalloutStyle.js`),
+    context.destinationPath(`./App/Components/Styles/MapCalloutStyles.js`),
     { name: context.name }
   )
 }

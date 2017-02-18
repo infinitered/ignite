@@ -6,7 +6,7 @@ import { Colors, Fonts, Images } from '../Themes'
 import R from 'ramda'
 
 // Styles
-import styles from './Styles/ThemeScreenStyle'
+import styles from './Styles/ThemeScreenStyles'
 
 // Colors
 const colors = R.keys(Colors)
