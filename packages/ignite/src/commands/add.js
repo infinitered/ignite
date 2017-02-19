@@ -40,11 +40,12 @@ async function importPlugin (context, opts) {
   const target = isDirectory ? directory : moduleName
 
   try {
-    if (ignite.useYarn) {
-      const yarnTarget = isDirectory ? `file:${target}` : target
-      await system.run(`yarn add ${yarnTarget} --dev`)
+    // yarn caches wierd for file-based deps, lets use npm for these.... gah!
+    if (ignite.useYarn && !isDirectory) {
+      await system.run(`yarn add ${target} --dev`)
     } else {
-      await system.run(`npm i ${target} --save-dev`)
+      const cacheBusting = isDirectory ? '--cache-min=0' : ''
+      await system.run(`npm i ${target} --save-dev ${cacheBusting}`)
     }
   } catch (e) {
     context.print.error(`💩  ${target} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
