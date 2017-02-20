@@ -31,19 +31,33 @@ module.exports = async function (context) {
   filesystem.dir(projectName)
   process.chdir(projectName)
 
-  // are we looking for a minimal template?
-  const isMinimalAppTemplate =
-    context.parameters.template === 'min' ||
-    context.parameters.options.min ||
-    context.parameters.options.m
-
-  // pick an app template and run with it
-  const appTemplatePackage = isMinimalAppTemplate ? 'minimal-app-template' : 'unholy-app-template'
-
   // pretty bird, yes, pretty bird... petey is a pretty bird.
   header()
   print.newline()
   print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
+
+  /**
+   * Figures out which app template we'll be using (without the ignite- prefix).
+   *
+   * @return {string} The app template we'll be using.
+   */
+  function getAppTemplate () {
+    // check for a user-defined template
+    const cliTemplate = parameters.options.template || parameters.options.t
+    if (cliTemplate) return cliTemplate
+
+    // check for the minimal app template
+    if (parameters.options.min || parameters.options.m) return 'minimal-app-template'
+
+    // check for the empty app template
+    if (parameters.options.empty) return 'empty-app-template'
+
+    // default
+    return 'unholy-app-template'
+  }
+
+  // grab the right app template
+  const appTemplatePackage = getAppTemplate()
 
   // Install the ignite-* packages from the local dev directory.
   //
