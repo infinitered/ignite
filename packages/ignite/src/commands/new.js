@@ -4,6 +4,7 @@
 const { test } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
+const inquirer = require('inquirer')
 
 // The default version of React Native to install. We will want to upgrade
 // this when we test out new releases and they work well with our setup.
@@ -50,7 +51,10 @@ const maxOptions = {
 const walkthrough = async (context) => {
   if (context.parameters.options.min) { return minOptions }
   if (context.parameters.options.max) { return maxOptions }
-  return await context.prompt.ask(installWalkthrough)
+  // TODO: Switch back to context.prompt.ask when this issue is resolved:
+  // https://github.com/enquirer/prompt-list/issues/2
+  // return await context.prompt.ask(installWalkthrough)
+  return await inquirer.prompt(installWalkthrough)
 }
 
 module.exports = async function (context) {

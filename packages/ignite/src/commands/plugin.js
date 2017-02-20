@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------
 
 const exitCodes = require('../lib/exitCodes')
+const inquirer = require('inquirer')
 
 /**
  * Does a walkthrough of questions and returns the answers as an object.
@@ -17,7 +18,10 @@ const walkthrough = async (context) => {
   if (context.parameters.options.max) { return maxOptions }
 
   // Okay, we'll ask one by one, fine
-  return await context.prompt.ask([
+  // TODO: Switch back to context.prompt.ask when this issue is resolved:
+  // https://github.com/enquirer/prompt-list/issues/2
+  // return await context.prompt.ask([
+  return await inquirer.prompt([
     {
       name: 'template',
       message: 'Would you like to generate an example component?',
