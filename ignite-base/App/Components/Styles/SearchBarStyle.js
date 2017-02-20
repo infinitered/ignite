@@ -25,12 +25,14 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
   searchIcon: {
+    flex: 1,
     left: Metrics.doubleBaseMargin,
     alignSelf: 'center',
     color: Colors.snow,
     backgroundColor: Colors.transparent
   },
   cancelButton: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: Metrics.baseMargin
