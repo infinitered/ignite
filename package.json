@@ -5,7 +5,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "lint": "lerna run lint",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "clean": "lerna clean"
   },
   "license": "MIT",
   "devDependencies": {
