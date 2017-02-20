@@ -34,7 +34,7 @@ const add = async function (context) {
   const { filesystem, parameters, ignite, reactNative, print, system, prompt } = context
   const name = parameters.third
   const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
-  const spinner = print.spin(`using ${print.colors.cyan('unholy')} app template`).succeed()
+  const spinner = print.spin(`using Infinite Red's ${print.colors.cyan('unholy')} app template`).succeed()
 
   // attempt to install React Native or die trying
   const rnExitCode = await reactNative.install({ name, skipJest: true })
