@@ -1,6 +1,6 @@
 // Steeeeeeeve I'm starting to not love this giant deconstruct - leaving it here to prove why
 const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter, reduce, flatten, map, takeLast, split, replace } = require('ramda')
-const { startsWith, dotPath } = require('ramdasauce')
+const { startsWith } = require('ramdasauce')
 const exitCodes = require('../lib/exitCodes')
 const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
 const igniteVersion = require('../../package.json').version
@@ -27,7 +27,7 @@ function ignitePluginPath () { return pluginPath }
  * @return {Function} A function to attach to the context.
  */
 function attach (plugin, command, context) {
-  const { template, config, runtime, system, parameters, print, filesystem } = context
+  const { template, runtime, system, parameters, print, filesystem } = context
   const { error, warning } = print
 
   // if (command.name === 'new' || (command.name === 'add' && parameters.rawCommand.includes('ignite-basic-structure'))) {
@@ -102,7 +102,6 @@ function attach (plugin, command, context) {
     }
     spinner.stop()
 
-
     // should we react-native link?
     if (options.link) {
       try {
@@ -147,7 +146,7 @@ function attach (plugin, command, context) {
 
   async function copyBatch (context, jobs, props) {
     // grab some features
-    const { template, prompt, filesystem, print, ignite } = context
+    const { template, prompt, filesystem, ignite } = context
     const { confirm } = prompt
     const config = ignite.loadIgniteConfig()
 
@@ -187,7 +186,7 @@ function attach (plugin, command, context) {
    *
    * @param {Array} files - Array of Screens and properties
    * @param {Object} props - The properties to use for template expansion.
-   * 
+   *
    * example:
    * addScreenExamples([
    *   {title: 'Row Example', screen: 'Row.js', ancillary: ['file1', 'file2']},
@@ -212,7 +211,7 @@ function attach (plugin, command, context) {
         return flatten(acc)
       }, [], files)
 
-      // generate stamped copy of all template files 
+      // generate stamped copy of all template files
       const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
       map((fileName) => {
         template.generate({
@@ -220,7 +219,7 @@ function attach (plugin, command, context) {
           template: `${fileName}.ejs`,
           target: `ignite/Examples/Containers/${pluginName}/${fileName}`,
           props
-        })        
+        })
       }, allFiles)
 
       // insert screen, route, and buttons in PluginExamples (if exists)
@@ -229,36 +228,36 @@ function attach (plugin, command, context) {
         // turn things like "examples/This File-Example.js" into "ThisFileExample"
         // for decent component names
         // TODO: check for collisions in the future
-        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]        
+        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]
         const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
         if (filesystem.exists(destinationPath)) {
           // insert screen import
           patching.insertInFile(
-            destinationPath, 
-            'import RoundedButton', 
+            destinationPath,
+            'import RoundedButton',
             `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
           )
 
-          // insert screen route 
+          // insert screen route
           patching.insertInFile(
-            destinationPath, 
-            'screen: PluginExamplesScreen', 
+            destinationPath,
+            'screen: PluginExamplesScreen',
             `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`
           )
 
-          // insert launch button 
+          // insert launch button
           patching.insertInFile(
-            destinationPath, 
-            'styles.screenButtons', 
+            destinationPath,
+            'styles.screenButtons',
             `
             <RoundedButton onPress={() => this.props.navigation.navigate('${componentName}')}>
               ${file.title}
             </RoundedButton>`
           )
         } // if
-      }, files)      
- 
+      }, files)
+
       spinner.stop()
     }
   }
@@ -267,7 +266,7 @@ function attach (plugin, command, context) {
    * Remove example screens from dev screens.
    *
    * @param {Array} files - Array of Screens and properties
-   * 
+   *
    * example:
    * removeScreenExamples([
    *   {screen: 'Row.js', ancillary: ['file1', 'file2']},
@@ -294,7 +293,7 @@ function attach (plugin, command, context) {
 
       // delete all files that were inserted
       map((fileName) => {
-        filesystem.removeAsync(`ignite/Examples/Containers/${pluginName}/${fileName}`)       
+        filesystem.removeAsync(`ignite/Examples/Containers/${pluginName}/${fileName}`)
       }, allFiles)
 
       // delete screen, route, and buttons in PluginExamples (if exists)
@@ -302,36 +301,36 @@ function attach (plugin, command, context) {
       map((file) => {
         // turn things like "examples/This File-Example.js" into "ThisFileExample"
         // for decent component names
-        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]        
+        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]
         const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
         if (filesystem.exists(destinationPath)) {
           // remove screen import
           patching.replaceInFile(
-            destinationPath, 
+            destinationPath,
             `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`,
-            ''             
+            ''
           )
 
-          // remove screen route 
+          // remove screen route
           patching.replaceInFile(
-            destinationPath, 
+            destinationPath,
             `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`,
             ''
           )
 
-          // remove launch button 
+          // remove launch button
           patching.replaceInFile(
-            destinationPath, 
+            destinationPath,
             `<RoundedButton.+${componentName}.+[\\s\\S].+\\s*<\\/RoundedButton>`,
             ''
           )
         } // if
-      }, files)      
- 
+      }, files)
+
       spinner.stop()
     }
-  }  
+  }
 
   /**
    * Generates an example for use with the dev screens.
