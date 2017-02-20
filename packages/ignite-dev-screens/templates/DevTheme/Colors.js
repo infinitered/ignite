@@ -2,6 +2,7 @@
 
 const colors = {
   transparent: 'rgba(0,0,0,0)',
+  background: '#3e243f',
   silver: '#F7F7F7',
   frost: '#D8D8D8',
   windowTint: 'rgba(0, 0, 0, 0.4)',
