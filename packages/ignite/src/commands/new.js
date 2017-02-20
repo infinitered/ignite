@@ -38,8 +38,7 @@ module.exports = async function (context) {
     context.parameters.options.m
 
   // pick an app template and run with it
-  const appTemplate = isMinimalAppTemplate ? 'minimal' : 'unholy'
-  const appTemplatePackage = `${appTemplate}-app-template` // TODO: too restrictive :(
+  const appTemplatePackage = isMinimalAppTemplate ? 'minimal-app-template' : 'unholy-app-template'
 
   // pretty bird, yes, pretty bird... petey is a pretty bird.
   header()
