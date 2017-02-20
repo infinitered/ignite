@@ -1,3 +1,5 @@
+### 2.0 is slated for release at the end of February
+
 <p align="center">
   <a href="https://infinite.red/ignite"><img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="300px"></a>
 </p>
