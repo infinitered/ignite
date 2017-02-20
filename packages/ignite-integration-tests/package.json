@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A place to run some long running integration tests.",
   "scripts": {
-    "test": "ava -s",
+    "integration": "ava -s",
     "watch": "ava -s --watch"
   },
   "license": "MIT",
