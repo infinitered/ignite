@@ -90,5 +90,6 @@ module.exports = async function (context) {
       filename => filesystem.move(path.join(projectName, filename), filename)
       , filesystem.list(projectName)
     )
+    filesystem.remove(projectName)
   }
 }
