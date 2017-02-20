@@ -1,71 +1,63 @@
 // @cliDescription  Generate a new React Native project with Ignite.
 // @cliAlias n
 // ----------------------------------------------------------------------------
-const { test } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
-
-// The default version of React Native to install. We will want to upgrade
-// this when we test out new releases and they work well with our setup.
-const REACT_NATIVE_VERSION = '0.41.1'
-
-// Questions to ask during install if the chatty route is chosen.
-const installWalkthrough = [
-  {
-    name: 'dev-screens',
-    message: 'Would you like Ignite Development Screens?',
-    type: 'list',
-    choices: ['No', 'Yes']
-  }, {
-    name: 'vector-icons',
-    message: 'What vector icon library will you use?',
-    type: 'list',
-    choices: ['none', 'react-native-vector-icons']
-  }, {
-    name: 'i18n',
-    message: 'What internationalization library will you use?',
-    type: 'list',
-    choices: ['none', 'react-native-i18n']
-  }, {
-    name: 'animatable',
-    message: 'What animation library will you use?',
-    type: 'list',
-    choices: ['none', 'react-native-animatable']
-  }
-]
-
-const minOptions = {
-  'dev-screens': 'No',
-  'vector-icons': 'none',
-  'i18n': 'none',
-  'animatable': 'none'
-}
-const maxOptions = {
-  'dev-screens': 'Yes',
-  'vector-icons': 'react-native-vector-icons',
-  'i18n': 'react-native-i18n',
-  'animatable': 'react-native-animatable'
-}
-
-const walkthrough = async (context) => {
-  if (context.parameters.options.min) { return minOptions }
-  if (context.parameters.options.max) { return maxOptions }
-  return await context.prompt.ask(installWalkthrough)
-}
+const header = require('../brand/header')
+const { forEach } = require('ramda')
 
 module.exports = async function (context) {
-  const { parameters, strings, print, system } = context
+  const { parameters, strings, print, system, filesystem } = context
   const { isBlank } = strings
-  const { info, colors, spin } = print
 
-  // validation
+  // grab the project name
   const projectName = parameters.second
+
+  // verify the project name is a thing
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
     process.exit(exitCodes.PROJECT_NAME)
     return
   }
+
+  // verify the directory doesn't exist already
+  if (filesystem.exists(projectName) === 'dir') {
+    print.error(`Directory ${projectName} already exists.`)
+    process.exit(exitCodes.DIRECTORY_EXISTS)
+  }
+
+  // make & jump into the project directory
+  filesystem.dir(projectName)
+  process.chdir(projectName)
+
+  // pretty bird, yes, pretty bird... petey is a pretty bird.
+  header()
+  print.newline()
+  print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
+
+  /**
+   * Figures out which app template we'll be using (without the ignite- prefix).
+   *
+   * @return {string} The app template we'll be using.
+   */
+  function getAppTemplate () {
+    // check for a user-defined template
+    const cliTemplate = parameters.options.template || parameters.options.t
+    if (cliTemplate) return cliTemplate
+
+    // check for the minimal app template
+    if (parameters.options.min || parameters.options.m) return 'minimal-app-template'
+
+    // check for the empty app template
+    if (parameters.options.empty) return 'empty-app-template'
+
+    // default
+    return 'unholy-app-template'
+  }
+
+  // grab the right app template
+  const appTemplatePackage = getAppTemplate()
 
   // Install the ignite-* packages from the local dev directory.
   //
@@ -76,79 +68,42 @@ module.exports = async function (context) {
   // TODO(steve): Don't forget to remove this when we launch... open to better ways of handling it.
   const igniteDevPackagePrefix = parameters.options.live || path.resolve(`${__dirname}/../../..`) + '/ignite-'
 
-  // First we ask!
-  const answers = await walkthrough(context)
+  // some extra options we'll be passing through to the `ignite add <app-template>`
+  const extraAddOptions = ['--is-app-template']
 
-  // we need to lock the RN version here
-  // TODO make sure `react-native --version has react-native-cli 2.x otherwise failure`
-  const reactNativeVersion = parameters.options['react-native-version'] || REACT_NATIVE_VERSION
-  info(`🔥 igniting ${print.colors.yellow(projectName)}`)
-  info('')
-
-  // Check the version number and bail if we don't have it.
-  const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
-  const versionAvailable = test(new RegExp(reactNativeVersion, ''), versionCheck || '')
-  if (!versionAvailable) {
-    print.error(`💩  react native version ${reactNativeVersion} not found on NPM.  We recommend ${REACT_NATIVE_VERSION}.`)
-    process.exit(exitCodes.REACT_NATIVE_VERSION)
-  }
-  const spinner = spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
-
-  await system.run(`react-native init ${projectName} --version ${reactNativeVersion}`)
-  spinner.succeed(`added ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
-
-  // switch to the newly created project directory to continue the rest of these commands
-  process.chdir(projectName)
-
-  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-structure ${projectName} --unholy --react-native-version ${reactNativeVersion}`, { stdio: 'inherit' })
-
-  spinner.text = `▸ installing ignite dependencies`
-  spinner.start()
-  if (context.ignite.useYarn) {
-    await system.run('yarn')
-  } else {
-    await system.run('npm i')
-  }
-  spinner.stop()
-
-  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
-  spinner.text = `▸ linking native libraries`
-  spinner.start()
-  await system.spawn('react-native link', { stdio: 'ignore' })
-  spinner.stop()
-
-  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators`, { stdio: 'inherit' })
-
-  // now run install of Ignite Plugins
-  if (answers['dev-screens'] === 'Yes') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens`, { stdio: 'inherit' })
+  // pass along the ignite prefix if we have it
+  if (!parameters.options.live) {
+    extraAddOptions.push(`--ignite-dev-package-prefix ${igniteDevPackagePrefix}`)
   }
 
-  if (answers['vector-icons'] === 'react-native-vector-icons') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons`, { stdio: 'inherit' })
+  // pass through the --max flag
+  // NOTE(steve):
+  //   I'd like to see this go away by introducing a new addTemplate command... baby steps though.
+  //   Another thing to consider is just passing through *all* options.
+  if (parameters.options.max) {
+    extraAddOptions.push('--max')
   }
 
-  if (answers['i18n'] === 'react-native-i18n') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n`, { stdio: 'inherit' })
+  // let's kick off the template
+  let ok = false
+  try {
+    const command = `ignite add ${igniteDevPackagePrefix}${appTemplatePackage} ${projectName} ${extraAddOptions.join(' ')}`
+    await system.spawn(command, { stdio: 'inherit' })
+    ok = true
+  } catch (e) {
   }
 
-  if (answers['animatable'] === 'react-native-animatable') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable`, { stdio: 'inherit' })
-  }
+  // always clean up the app-template stuff
+  filesystem.remove('node_modules')
+  filesystem.remove('ignite')
 
-  info('')
-  info('🍽 Time to get cooking!')
-  info('')
-  info('To run in iOS:')
-  info(colors.yellow(`  cd ${projectName}`))
-  info(colors.yellow('  react-native run-ios'))
-  info('')
-  info('To run in Android:')
-  info(colors.yellow(`  cd ${projectName}`))
-  info(colors.yellow('  react-native run-android'))
-  info('')
-  info('To see what ignite can do for you:')
-  info(colors.yellow(`  cd ${projectName}`))
-  info(colors.yellow('  ignite'))
-  info('')
+  // did we install everything successfully?
+  if (ok) {
+    // move everything that's 1 deep back up to here
+    forEach(
+      filename => filesystem.move(path.join(projectName, filename), filename)
+      , filesystem.list(projectName)
+    )
+    filesystem.remove(projectName)
+  }
 }

@@ -1,0 +1,26 @@
+{
+  "name": "ignite-unholy-app-template",
+  "description": "Adds a React Native application structure from the good ol Ignite 1 days.",
+  "license": "MIT",
+  "repository": "https://github.com/infinitered/ignite/tree/master/packages/ignite-unholy-app-template",
+  "homepage": "https://github.com/infinitered/ignite",
+  "version": "0.1.0",
+  "author": {
+    "name": "Infinite Red",
+    "email": "reactnative@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  },
+  "scripts": {
+    "lint": "standard"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "standard": "^8.6.0"
+  }
+}
