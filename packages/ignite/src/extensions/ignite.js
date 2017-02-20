@@ -1,8 +1,10 @@
-const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter } = require('ramda')
+// Steeeeeeeve I'm starting to not love this giant deconstruct - leaving it here to prove why
+const { dissoc, merge, pipe, prop, sortBy, propSatisfies, filter, reduce, flatten, map, takeLast, split, replace } = require('ramda')
 const { startsWith, dotPath } = require('ramdasauce')
 const exitCodes = require('../lib/exitCodes')
 const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
 const igniteVersion = require('../../package.json').version
+const path = require('path')
 
 /**
  * The current executing ignite plugin path.
@@ -181,6 +183,157 @@ function attach (plugin, command, context) {
   }
 
   /**
+   * Generates example screens for in dev screens.
+   *
+   * @param {Array} files - Array of Screens and properties
+   * @param {Object} props - The properties to use for template expansion.
+   * 
+   * example:
+   * addScreenExamples([
+   *   {title: 'Row Example', screen: 'Row.js', ancillary: ['file1', 'file2']},
+   *   {title: 'Grid Example', screen: 'Grid.js', ancillary: ['file']},
+   *   {title: 'Section Example', screen: 'Section.js', ancillary: ['file']},
+   * ])
+   */
+  async function addScreenExamples (files, props = {}) {
+    const { filesystem, patching, ignite } = context
+    const config = ignite.loadIgniteConfig()
+    // consider this being part of context.ignite
+    const pluginName = takeLast(1, split(path.sep, ignitePluginPath()))[0]
+
+    // currently only supporting 1 form of examples
+    if (config.examples === 'classic') {
+      const spinner = print.spin(`▸ adding screen examples`)
+
+      // merge and flatten all dem files yo.
+      let allFiles = reduce((acc, v) => {
+        acc.push(v.screen)
+        if (v.ancillary) acc.push(v.ancillary)
+        return flatten(acc)
+      }, [], files)
+
+      // generate stamped copy of all template files 
+      const templatePath = ignitePluginPath() ? `${ignitePluginPath()}/templates` : `templates`
+      map((fileName) => {
+        template.generate({
+          directory: templatePath,
+          template: `${fileName}.ejs`,
+          target: `ignite/Examples/Containers/${pluginName}/${fileName}`,
+          props
+        })        
+      }, allFiles)
+
+      // insert screen, route, and buttons in PluginExamples (if exists)
+      const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
+      map((file) => {
+        // turn things like "examples/This File-Example.js" into "ThisFileExample"
+        // for decent component names
+        // TODO: check for collisions in the future
+        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]        
+        const componentName = replace(/.js|\s|-/g, '', exampleFileName)
+
+        if (filesystem.exists(destinationPath)) {
+          // insert screen import
+          patching.insertInFile(
+            destinationPath, 
+            'import RoundedButton', 
+            `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
+          )
+
+          // insert screen route 
+          patching.insertInFile(
+            destinationPath, 
+            'screen: PluginExamplesScreen', 
+            `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`
+          )
+
+          // insert launch button 
+          patching.insertInFile(
+            destinationPath, 
+            'styles.screenButtons', 
+            `
+            <RoundedButton onPress={() => this.props.navigation.navigate('${componentName}')}>
+              ${file.title}
+            </RoundedButton>`
+          )
+        } // if
+      }, files)      
+ 
+      spinner.stop()
+    }
+  }
+
+  /**
+   * Remove example screens from dev screens.
+   *
+   * @param {Array} files - Array of Screens and properties
+   * 
+   * example:
+   * removeScreenExamples([
+   *   {screen: 'Row.js', ancillary: ['file1', 'file2']},
+   *   {screen: 'Grid.js', ancillary: ['file']},
+   *   {screen: 'Section.js', ancillary: ['file']},
+   * ])
+   */
+  async function removeScreenExamples (files) {
+    const { filesystem, patching, ignite } = context
+    const config = ignite.loadIgniteConfig()
+    // consider this being part of context.ignite
+    const pluginName = takeLast(1, split(path.sep, ignitePluginPath()))[0]
+
+    // currently only supporting 1 form of examples
+    if (config.examples === 'classic') {
+      const spinner = print.spin(`▸ removing screen examples`)
+
+      // merge and flatten all dem files yo.
+      let allFiles = reduce((acc, v) => {
+        acc.push(v.screen)
+        if (v.ancillary) acc.push(v.ancillary)
+        return flatten(acc)
+      }, [], files)
+
+      // delete all files that were inserted
+      map((fileName) => {
+        filesystem.removeAsync(`ignite/Examples/Containers/${pluginName}/${fileName}`)       
+      }, allFiles)
+
+      // delete screen, route, and buttons in PluginExamples (if exists)
+      const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
+      map((file) => {
+        // turn things like "examples/This File-Example.js" into "ThisFileExample"
+        // for decent component names
+        const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]        
+        const componentName = replace(/.js|\s|-/g, '', exampleFileName)
+
+        if (filesystem.exists(destinationPath)) {
+          // remove screen import
+          patching.replaceInFile(
+            destinationPath, 
+            `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`,
+            ''             
+          )
+
+          // remove screen route 
+          patching.replaceInFile(
+            destinationPath, 
+            `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`,
+            ''
+          )
+
+          // remove launch button 
+          patching.replaceInFile(
+            destinationPath, 
+            `<RoundedButton.+${componentName}.+[\\s\\S].+\\s*<\\/RoundedButton>`,
+            ''
+          )
+        } // if
+      }, files)      
+ 
+      spinner.stop()
+    }
+  }  
+
+  /**
    * Generates an example for use with the dev screens.
    *
    * @param {string} fileName - The js file to create. (.ejs will be appended to pick up the template.)
@@ -354,6 +507,8 @@ function attach (plugin, command, context) {
     copyBatch,
     addComponentExample,
     removeComponentExample,
+    addScreenExamples,
+    removeScreenExamples,
     loadIgniteConfig,
     saveIgniteConfig,
     setIgniteConfig,

@@ -4,13 +4,10 @@ import React, { PropTypes } from 'react'
 import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
 
-// For empty lists
-// import AlertMessage from '../Components/AlertMessage'
-
 // Styles
-import styles from './Styles/<%= props.name %>Style'
+import styles from './Styles/RowExampleStyle'
 
-class <%= props.name %> extends React.Component {
+class RowExample extends React.Component {
 
   state: {
     dataSource: Object
@@ -127,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>)
+export default connect(mapStateToProps, mapDispatchToProps)(RowExample)
