@@ -306,27 +306,24 @@ function attach (plugin, command, context) {
         const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
         if (filesystem.exists(destinationPath)) {
-          // insert screen import
+          // remove screen import
           patching.replaceInFile(
             destinationPath, 
             `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`,
             ''             
           )
 
-          // insert screen route 
+          // remove screen route 
           patching.replaceInFile(
             destinationPath, 
             `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`,
             ''
           )
 
-          // insert launch button 
+          // remove launch button 
           patching.replaceInFile(
             destinationPath, 
-            `
-            <RoundedButton onPress={() => this.props.navigation.navigate('${componentName}')}>
-              ${file.title}
-            </RoundedButton>`,
+            `<RoundedButton.+${componentName}.+[\\s\\S].+\\s*<\\/RoundedButton>`,
             ''
           )
         } // if

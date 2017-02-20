@@ -20,7 +20,6 @@ const add = async function (context) {
 }
 
 const remove = async function (context) {
-  console.log('I got called')
   // remove screens
   await context.ignite.removeScreenExamples(screenExamples)
 }

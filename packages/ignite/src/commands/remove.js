@@ -30,7 +30,7 @@ const noMegusta = (moduleName) => {
   if (useYarn) {
     Shell.exec(`yarn remove ${moduleName}`, {silent: true})
   } else {
-    Shell.exec(`npm rm ${moduleName}`, {silent: true})
+    Shell.exec(`npm rm ${moduleName} --save-dev`, {silent: true})
   }
 }
 
@@ -64,9 +64,12 @@ module.exports = async function (context) {
     }
 
     const modulePath = `${process.cwd()}/node_modules/${moduleName}`
-    if (filesystem.exists(modulePath + 'index.js') === 'file') {
+    if (filesystem.exists(modulePath + '/index.js') === 'file') {
       // Call remove functionality
       const pluginModule = require(modulePath)
+      // set the path to the current running ignite plugin
+      ignite.setIgnitePluginPath(modulePath)
+
       if (pluginModule.hasOwnProperty('remove')) {
         await pluginModule.remove(context)
       } else {
