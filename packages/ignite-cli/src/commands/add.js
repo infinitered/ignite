@@ -36,6 +36,7 @@ const removeIgnitePlugin = async (moduleName, context) => {
 async function importPlugin (context, opts) {
   const { moduleName, type, directory } = opts
   const { ignite, system } = context
+  const { log } = ignite
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
 
@@ -43,11 +44,16 @@ async function importPlugin (context, opts) {
   // NOTE(steve): turning off again until we ship 1st beta of `react-native-ignite`
   const stillFailing = false
   if (stillFailing && ignite.useYarn && !isDirectory) {
-    await system.exec(`yarn add ${target} --dev`, { stdio: 'inherit' })
+    const cmd = `yarn add ${target} --dev`
+    log(cmd)
+    await system.exec(cmd, { stdio: 'inherit' })
+    log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
     const cmd = `npm i ${target} --save-dev ${cacheBusting}`
+    log(cmd)
     await system.run(cmd)
+    log('finished npm command')
   }
 }
 
@@ -55,6 +61,8 @@ module.exports = async function (context) {
   // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
   const { info, warning, spin } = print
+  const { log } = ignite
+  log('running add command')
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
 
@@ -80,10 +88,12 @@ Examples:
   const { moduleName } = specs
   const modulePath = `${process.cwd()}/node_modules/${moduleName}`
 
-  // import the ignite plugin node module
-  const spinner = spin({ isStarted: false })
+  log(`installing ${modulePath} from source ${specs.type}`)
 
-  if (!isAppTemplate) {
+  // import the ignite plugin node module
+  const spinner = spin({ enabled: false })
+
+  if (!isAppTemplate && !parameters.options.debug) {
     spinner.text = `adding ${print.colors.cyan(moduleName)}`
     spinner.start()
   }
@@ -131,6 +141,7 @@ Examples:
   try {
     if (filesystem.exists(modulePath + '/index.js') === 'file') {
       // bring the ignite plugin to life
+      log(`requiring ignite plugin from ${modulePath}`)
       const pluginModule = require(modulePath)
 
       if (!pluginModule.hasOwnProperty('add') || !pluginModule.hasOwnProperty('remove')) {
@@ -151,6 +162,7 @@ Examples:
         }
 
         spinner.stop()
+        log(`running add() on ignite plugin`)
         // spinner.stopAndPersist({ symbol: '▸', text: `adding ${print.colors.cyan(moduleName)}` })
         await pluginModule.add(context)
 
@@ -169,6 +181,9 @@ Examples:
         spinner.fail(err.message)
         process.exit(exitCodes.PLUGIN_INSTALL)
       }
+    } else {
+      log(`${modulePath}/index.js does not exist.  skipping.`)
+      spinner.stop()
     }
   } catch (err) {
     // we couldn't require the plugin, it probably has some nasty js!

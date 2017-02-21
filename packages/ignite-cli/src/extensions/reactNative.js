@@ -15,7 +15,8 @@ const REACT_NATIVE_VERSION = '0.41.2'
  */
 function attach (plugin, command, context) {
   // fist-full o features
-  const { parameters, print, system, filesystem, strings } = context
+  const { parameters, print, system, filesystem, strings, ignite } = context
+  const { log } = ignite
 
   /**
    * Installs React Native.
@@ -40,9 +41,6 @@ function attach (plugin, command, context) {
       return exitCodes.REACT_NATIVE_VERSION
     }
 
-    // ok, let's do this
-    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)} ${print.colors.muted('(~60 seconds)')}`)
-
     // craft the additional options to pass to the react-native cli
     const rnOptions = [ '--version', reactNativeVersion ]
     if (!strings.isBlank(opts.template)) {
@@ -55,13 +53,22 @@ function attach (plugin, command, context) {
 
     // react-native init
     const cmd = `react-native init ${name} ${rnOptions.join(' ')}`
-    await system.run(cmd)
+    log('initializing react native')
+    log(cmd)
+    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)} ${print.colors.muted('(~60 seconds)')}`)
+    if (parameters.options.debug) spinner.stop()
+
+    // ok, let's do this
+    const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
+    await system.exec(cmd, { stdio: stdioMode })
 
     // good news everyone!
-    spinner.succeed(`added ${print.colors.cyan('React Native ' + reactNativeVersion)}`)
+    const successMessage = `added ${print.colors.cyan('React Native ' + reactNativeVersion)}`
+    spinner.succeed(successMessage)
 
     // jump immediately into the new directory
     process.chdir(name)
+    log(`changed to directory ${process.cwd()}`)
 
     // Create ./ignite/plugins/.gitkeep
     filesystem.write(`${process.cwd()}/ignite/plugins/.gitkeep`, '')
