@@ -7,7 +7,7 @@ import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
-import styles from './Styles/PresentationScreenStyle'
+import styles from './Styles/PresentationScreenStyles'
 
 export default class PresentationScreen extends React.Component {
   render () {

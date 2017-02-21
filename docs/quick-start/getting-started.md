@@ -15,7 +15,7 @@ npm install -g react-native-ignite
 
 ## Testing your Ignite Installation
 
-To test your Ignite installation, let’s generate and run a new React Native project using Ignite. In your terminal, navigate to the directory you’d like to create a new Ignite project, then run the Ignite generate command:
+To test your Ignite installation, let’s generate and run a new React Native project using Ignite. In your terminal, navigate to the directory you’d like to create a new Ignite project, then run the Ignite new command:
 
 ```
 cd projects

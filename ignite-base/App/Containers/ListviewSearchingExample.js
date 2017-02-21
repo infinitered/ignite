@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 // For empty lists
 import AlertMessage from '../Components/AlertMessage'
 // Styles
-import styles from './Styles/ListviewExampleStyle'
+import styles from './Styles/ListviewExampleStyles'
 
 class ListviewExample extends React.Component {
   state: {

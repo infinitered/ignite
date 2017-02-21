@@ -10,7 +10,7 @@ import API from '../Services/Api'
 import FJSON from 'format-json'
 
 // Styles
-import styles from './Styles/APITestingScreenStyle'
+import styles from './Styles/APITestingScreenStyles'
 
 // API buttons here:
 const endpoints = [

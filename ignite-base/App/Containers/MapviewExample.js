@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import MapView from 'react-native-maps'
 import { calculateRegion } from '../Lib/MapHelpers'
 import MapCallout from '../Components/MapCallout'
-import Styles from './Styles/MapviewExampleStyle'
+import Styles from './Styles/MapviewExampleStyles'
 
 /* ***********************************************************
 * IMPORTANT!!! Before you get started, if you are going to support Android,

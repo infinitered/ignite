@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TextInput, TouchableOpacity } from 'react-native'
-import styles from './Styles/SearchBarStyle'
+import styles from './Styles/SearchBarStyles'
 import { Colors, Metrics } from '../Themes/'
 import Icon from 'react-native-vector-icons/FontAwesome'
 

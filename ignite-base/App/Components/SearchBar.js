@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TextInput, TouchableOpacity } from 'react-native'
-import styles from './Styles/SearchBarStyle'
+import styles from './Styles/SearchBarStyles'
 import I18n from 'react-native-i18n'
 import { Colors, Metrics } from '../Themes/'
 import * as Animatable from 'react-native-animatable'
