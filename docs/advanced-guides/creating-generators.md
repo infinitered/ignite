@@ -4,7 +4,7 @@ This document will walk you through creating your own Ignite 2.0 generator. A
 generator will allow your users to create customized files from templates by
 using the `ignite generate` command on the command line.
 
-A generator is a special kind of Ignite 2.0 module Generators are more advanced
+A generator is a special kind of Ignite 2.0 plugin. Generators are more advanced
 than common plugins. You should understand how to create plugins first; check
 out [Creating Plugins]() first if you need to review.  
 
