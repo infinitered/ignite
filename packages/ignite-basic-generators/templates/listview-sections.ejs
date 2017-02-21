@@ -5,7 +5,7 @@ import { View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 // For empty lists
-import AlertMessage from '../Components/AlertMessage'
+// import AlertMessage from '../Components/AlertMessage'
 
 // Styles
 import styles from './Styles/<%= props.name %>Style'
@@ -125,7 +125,6 @@ class ListviewSectionsExample extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <AlertMessage title='Nothing to See Here, Move Along' show={this._noRowData()} />
         <ListView
           renderSectionHeader={this._renderHeader}
           contentContainerStyle={styles.listContent}

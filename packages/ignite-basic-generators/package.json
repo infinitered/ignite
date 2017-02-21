@@ -1,8 +1,18 @@
 {
   "name": "ignite-basic-generators",
-  "version": "0.2.0-alpha.2",
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x"
+  "version": "0.2.0",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "ignite.toml",
+    "templates",
+    "shared",
+    "commands"
+  ],
+  "repository": "infinitered/ignite",
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
   }
 }

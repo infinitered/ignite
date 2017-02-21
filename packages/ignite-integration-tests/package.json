@@ -1,9 +1,10 @@
 {
   "name": "ignite-integration",
-  "version": "0.1.0",
+  "private": true,
+  "version": "0.2.0",
   "description": "A place to run some long running integration tests.",
   "scripts": {
-    "test": "ava -s",
+    "integration": "ava -s",
     "watch": "ava -s --watch"
   },
   "license": "MIT",
@@ -13,10 +14,19 @@
   "dependencies": {
     "execa": "^0.6.0",
     "fs-jetpack": "^0.11.0",
-    "react-native-ignite": "2.0.0-alpha.3",
+    "ignite-cli": "~0.2.0",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
-    "shelljs": "^0.7.6",
-    "ignite-basic-generators": "0.2.0-alpha.2"
+    "shelljs": "^0.7.6"
+  },
+  "files": [
+    "readme.md",
+    "test"
+  ],
+  "repository": "infinitered/ignite",
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
   }
 }

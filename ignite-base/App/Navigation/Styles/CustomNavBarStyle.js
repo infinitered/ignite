@@ -9,7 +9,7 @@ export default {
     height: Metrics.navBarHeight,
     paddingTop: Metrics.smallMargin,
     paddingHorizontal: 5,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.igniteBackground,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },

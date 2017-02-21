@@ -1,3 +1,13 @@
+### Version 2 Is Coming!
+
+:zap: Ignite 2.0 is heading towards Beta 1. :zap:
+
+All active development is taking place on the `master` branch.  If you're contributing to v2, welcome!  You're in the right place.
+
+We're aiming to release around the end of February.
+
+### Ignite
+
 <p align="center">
   <a href="https://infinite.red/ignite"><img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="300px"></a>
 </p>
