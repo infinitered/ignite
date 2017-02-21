@@ -28,6 +28,63 @@ Go into the directory Ignite created.
 
 Within your project you will find two directories, `commands` and `templates`.
 
-Commands hold the code that will run when users use the `ignite generate`
-command. They will then output the contents of a file in `templates`, customized
-according to the logic in your command.
+By answering `yes` to the generator question, you will be given the files
+necessary to create a functioning generator, with all the essential logic and
+content. 
+
+```
+.
+├── commands
+│   └── example.js
+├── ignite.toml
+├── index.js
+├── package.json
+└── templates
+    └── MyGeneratorExample.js
+```
+
+`commands/example.js` exports a function whose responsibility is to queue a job
+to copy the template to the project. `templates/MyGeneratorExample.js` (or
+`{generator name}Example.js`) is the template that will be copied over. Rename
+or copy these files appropriately for your generator. The other files are
+standard plugin files; again, see the plugin guide to review plugins.
+
+In the example `commands/example.js`, you can see that the generator function
+accepts a `context` parameter. You can use this to prompt the user to select
+options from a list. The following is an example of this from the ListView
+generator.
+
+```javascript
+  // which type of grid?
+  const message = 'What kind of ListView would you like to generate?'
+  const choices = ['Row', 'With Sections', 'Grid']
+
+  // pick one
+  let type = parameters.options.type
+  if (!type) {
+    const answers = await context.prompt.ask({ name: 'type', type: 'list', message, choices })
+    type = answers.type
+  }
+```
+
+This example uses the resulting `type` to select a template from several
+available to copy. It passes the name of that template when it queues its jobs,
+and the job handler copies the template with that name.
+
+```javascript
+  // commands/listview.js
+  const componentTemplate = type === 'With Sections' ? 'listview-sections' : 'listview'
+  const jobs = [
+    { template: `${componentTemplate}.ejs`, target: `App/Containers/${name}.js` },
+  ]
+  
+  // Job handler
+  await generate({
+    template: job.template,
+    target: job.target,
+    props
+  })
+```
+
+This is just one example to show you the basic idea of generators. Now you can
+get creative and do cool things with your own generators!
