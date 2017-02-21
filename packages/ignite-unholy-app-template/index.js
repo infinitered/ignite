@@ -32,6 +32,7 @@ const maxOptions = {
 
 const add = async function (context) {
   const { filesystem, parameters, ignite, reactNative, print, system, prompt } = context
+  const { log } = ignite
   const name = parameters.third
   const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
   const spinner = print.spin(`using Infinite Red's ${print.colors.cyan('unholy')} app template`).succeed()
@@ -81,23 +82,26 @@ const add = async function (context) {
   await system.spawn('react-native link', { stdio: 'ignore' })
   spinner.stop()
 
-  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators`, { stdio: 'inherit' })
+  // pass long the debug flag if we're running in that mode
+  const debugFlag = parameters.options.debug ? '--debug' : 'p'
+
+  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators ${debugFlag}`, { stdio: 'inherit' })
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] === 'Yes') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['i18n'] === 'react-native-i18n') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['animatable'] === 'react-native-animatable') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable ${debugFlag}`, { stdio: 'inherit' })
   }
 
   // Wrap it up with our success message.

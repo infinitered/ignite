@@ -35,7 +35,8 @@ const add = async function (context) {
   spinner.stop()
 
   // install the ignite-basic-generators
-  const basicGeneratorsCommand = `ignite add ${igniteDevPackagePrefix}basic-generators`
+  const debugFlag = parameters.options.debug ? '--debug' : 'p'
+  const basicGeneratorsCommand = `ignite add ${igniteDevPackagePrefix}basic-generators ${debugFlag}`
   await system.spawn(basicGeneratorsCommand, { stdio: 'inherit' })
 
   // Wrap it up with our success message.
