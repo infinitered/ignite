@@ -4,8 +4,6 @@
 
 All active development is taking place on the `master` branch.  If you're contributing to v2, welcome!  You're in the right place.
 
-If you're using Ignite 1.x during this transition, you can find it living over on the `legacy` tag.
-
 We're aiming to release around the end of February.
 
 ### Ignite
