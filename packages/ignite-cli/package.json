@@ -1,0 +1,55 @@
+{
+  "name": "ignite-cli",
+  "version": "0.2.0",
+  "description": "An unfair headstart for your React Native apps.",
+  "bin": {
+    "ignite": "bin/ignite"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "test": "node --harmony node_modules/.bin/ava",
+    "watch": "node --harmony node_modules/.bin/ava --watch",
+    "coverage": "nyc ava",
+    "start": "node --harmony src/index.js",
+    "lint": "standard"
+  },
+  "repository": "infinitered/ignite",
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  },
+  "contributors": [
+    "https://github.com/infinitered/ignite/graphs/contributors"
+  ],
+  "files": [
+    "readme.md",
+    "src",
+    "bin"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "gluegun": "^0.14.0",
+    "gluegun-patching": "^0.3.0",
+    "minimist": "^1.2.0",
+    "ramda": "^0.23.0",
+    "ramdasauce": "^1.2.0",
+    "shelljs": "^0.7.6",
+    "toml": "^2.3.1"
+  },
+  "devDependencies": {
+    "ava": "^0.18.1",
+    "babel-eslint": "^7.1.1",
+    "mockery": "^2.0.0",
+    "nyc": "^10.1.2",
+    "standard": "^8.6.0"
+  },
+  "ava": {},
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  }
+}

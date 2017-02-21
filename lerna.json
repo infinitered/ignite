@@ -1,0 +1,16 @@
+{
+  "lerna": "2.0.0-beta.37",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "commands": {
+    "publish": {
+      "ignore": [
+        "*.md",
+        "test",
+        "tests"
+      ]
+    }
+  }
+}

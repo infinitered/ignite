@@ -1,0 +1,21 @@
+import test from 'ava'
+import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/<%= props.name %>Redux'
+
+test('attempt', t => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Request('data'))
+
+  t.true(state.fetching)
+})
+
+test('success', t => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Success('hi'))
+
+  t.is(state.payload, 'hi')
+})
+
+test('failure', t => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Failure(99))
+
+  t.false(state.fetching)
+  t.true(state.error)
+})

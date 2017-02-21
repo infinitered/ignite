@@ -1,0 +1,24 @@
+{
+  "name": "ignite-monorepo",
+  "version": "0.2.0",
+  "private": true,
+  "description": "The Ignite universe.",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "clean": "lerna clean",
+    "publish": "lerna publish --npm-tag=alpha"
+  },
+  "repository": "infinitered/ignite",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "2.0.0-beta.37"
+  },
+  "dependencies": {},
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  }
+}

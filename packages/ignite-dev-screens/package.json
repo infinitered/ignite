@@ -1,0 +1,16 @@
+{
+  "name": "ignite-dev-screens",
+  "version": "0.2.0",
+  "license": "MIT",
+  "files": [
+    "templates",
+    "index.js",
+    "ignite.toml"
+  ],
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  },
+  "repository": "infinitered/ignite"
+}

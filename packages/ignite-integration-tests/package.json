@@ -1,0 +1,31 @@
+{
+  "name": "ignite-integration",
+  "private": true,
+  "version": "0.2.0",
+  "description": "A place to run some long running integration tests.",
+  "scripts": {
+    "integration": "ava -s",
+    "watch": "ava -s --watch"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.18.1"
+  },
+  "dependencies": {
+    "execa": "^0.6.0",
+    "fs-jetpack": "^0.11.0",
+    "ramda": "^0.23.0",
+    "ramdasauce": "^1.2.0",
+    "shelljs": "^0.7.6"
+  },
+  "files": [
+    "readme.md",
+    "test"
+  ],
+  "repository": "infinitered/ignite",
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  }
+}

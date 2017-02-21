@@ -342,7 +342,7 @@ export class AppGenerator extends Generators.Base {
     const animation = Utilities.startStep('Pre-rinse', this)
 
     // Been having reported issues
-    //with Multidex still so extra scrubbing!
+    // with Multidex still so extra scrubbing!
     Shell.rm('-rf', 'android/app/build')
     Shell.rm('-rf', 'node_modules/')
 

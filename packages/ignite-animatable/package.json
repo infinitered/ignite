@@ -1,0 +1,16 @@
+{
+  "name": "ignite-animatable",
+  "version": "0.2.0",
+  "license": "MIT",
+  "files": [
+    "ignite.toml",
+    "index.js",
+    "templates"
+  ],
+  "repository": "infinitered/ignite",
+  "author": {
+    "name": "Infinite Red",
+    "email": "npm@infinite.red",
+    "url": "https://github.com/infinitered/ignite"
+  }
+}

@@ -1,0 +1,26 @@
+// @cliDescription  Example <%= props.name %> command
+// @cliExample  ignite generate example <%= props.name %>
+// Feel free to remove this if you have no need to generate files
+// with your plugin.
+// ----------------------------------------------------------------------------
+module.exports = async function (context) {
+  const { parameters, strings, print, ignite } = context
+  const { pascalCase, isBlank } = strings
+
+  // validation
+  if (isBlank(parameters.first)) {
+    print.info(`ignite generate example <name>\n`)
+    print.info('A name is required.')
+    return
+  }
+
+  const name = pascalCase(parameters.first)
+
+  const copyJobs = [{
+    template: 'example.ejs',
+    target: `App/Examples/${name}.js`
+  }]
+
+  // make the templates
+  await ignite.copyBatch(context, copyJobs, {name})
+}
