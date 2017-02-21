@@ -64,7 +64,7 @@ Did it fail?  Come find me on our Slack at http://community.infinite.red in the 
 
 Ignite 2.0 lives under the `packages` directory.  We also have `package.json` and `lerna.json` in the root directory.
 
-Everything else is Ignite 1.0.  Why keep it?  Well, a step in the install process of Ignite 1.0 downloads our repo to use the base files.  So, we're going to keep those around until 2.0 launches.  Sorry about that.  Feel free to open your text editor starting at `packages` if you don't like the noise.
+:rotating_light::rotating_light::rotating_light: Everything else is Ignite 1.0.  Why keep it?  Well, a step in the install process of Ignite 1.0 downloads our repo to use the base files.  So, we're going to keep those around until 2.0 launches.  Sorry about that.  Feel free to open your text editor starting at `packages` if you don't like the noise. :rotating_light::rotating_light::rotating_light:
 
 Under the `packages` directory, you'll see:
 
@@ -81,11 +81,3 @@ Also, included is a bunch of 3rd party ignite plugins.  These will be plugins th
 * `ignite-animatable` - for `react-native-animatable`
 * `ignite-i18n` - for `react-native-i18n`
 * `ignite-vector-icons` for `react-native-vector-icons`
-
-## More Info
-
-There is more to say here.  How to create your own plugins & app templates will be covered, but for now... i'm off to bed.
-
-
-
-
