@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { Scene, Router } from 'react-native-router-flux'
-import Styles from './Styles/NavigationContainerStyle'
+import Styles from './Styles/NavigationContainerStyles'
 import NavigationDrawer from './NavigationDrawer'
 import NavItems from './NavItems'
 import CustomNavBar from '../Navigation/CustomNavBar'
