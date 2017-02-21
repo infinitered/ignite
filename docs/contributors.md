@@ -57,6 +57,8 @@ Answer a few questions and you're half way to disrupting the Grade 1 scalp hygie
 
 Did it fail?  Come find me on our Slack at http://community.infinite.red in the #ignite channel.
 
+<strong>For now, you can expect the version number to say 0.2.0.  I'm currently working on the build script and will bump this back up to 2.0.0-beta.1 (etc) when were ready. Today or tomorrow!  Sorry for the confusion.</strong>
+
 
 ## Important Directories
 
