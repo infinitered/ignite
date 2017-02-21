@@ -2,15 +2,18 @@
   "name": "ignite-empty-app-template",
   "description": "Adds Ignite support to a React Native project.  Nothing else.",
   "license": "MIT",
-  "repository": "https://github.com/infinitered/ignite/tree/master/packages/ignite-empty-app-template",
+  "repository": "infinitered/ignite",
   "homepage": "https://github.com/infinitered/ignite",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": {
     "name": "Infinite Red",
-    "email": "reactnative@infinite.red",
+    "email": "npm@infinite.red",
     "url": "https://github.com/infinitered/ignite"
   },
   "contributors": [
     "https://github.com/infinitered/ignite/graphs/contributors"
+  ],
+  "files": [
+    "index.js"
   ]
 }
