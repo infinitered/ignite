@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { TouchableOpacity, Text, View, Modal, Navigator, Image } from 'react-native'
-import styles from './Styles/DevscreensButtonStyle'
+import styles from './Styles/DevscreensButtonStyles'
 import DebugConfig from '../../App/Config/DebugConfig'
 import RoundedButton from '../../App/Components/RoundedButton'
 import PresentationScreen from './PresentationScreen'

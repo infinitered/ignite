@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { TouchableOpacity, Text, Image } from 'react-native'
-import styles from './Styles/ButtonBoxStyle'
+import styles from './Styles/ButtonBoxStyles'
 
 type ButtonBoxProps = {
   onPress: () => void,

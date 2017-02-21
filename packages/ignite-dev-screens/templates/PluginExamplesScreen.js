@@ -15,7 +15,7 @@ import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
 import RoundedButton from '../../App/Components/RoundedButton'
 
 // Styles
-import styles from './Styles/PluginExamplesScreenStyle'
+import styles from './Styles/PluginExamplesScreenStyles'
 
 class PluginExamplesScreen extends React.Component {
 

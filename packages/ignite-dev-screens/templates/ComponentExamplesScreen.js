@@ -4,7 +4,7 @@
 import React from 'react'
 import { Platform, View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
 import { Images } from './DevTheme'
-import styles from './Styles/ComponentExamplesScreenStyle'
+import styles from './Styles/ComponentExamplesScreenStyles'
 
 // Examples Render Engine
 import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
