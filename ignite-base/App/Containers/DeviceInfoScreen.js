@@ -5,7 +5,7 @@ import React from 'react'
 import { View, ScrollView, Text, Image, NetInfo } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import { Metrics, Images } from '../Themes'
-import styles from './Styles/DeviceInfoScreenStyle'
+import styles from './Styles/DeviceInfoScreenStyles'
 
 const HARDWARE_DATA = [
   {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},

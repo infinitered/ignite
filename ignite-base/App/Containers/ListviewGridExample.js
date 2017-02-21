@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import AlertMessage from '../Components/AlertMessage'
 
 // Styles
-import styles from './Styles/ListviewGridExampleStyle'
+import styles from './Styles/ListviewGridExampleStyles'
 
 class ListviewGridExample extends React.Component {
 

@@ -4,7 +4,7 @@
 import React from 'react'
 import { Platform, View, ScrollView, Text, Image } from 'react-native'
 import { Images } from '../Themes'
-import styles from './Styles/AllComponentsScreenStyle'
+import styles from './Styles/AllComponentsScreenStyles'
 
 // Examples Render Engine
 import ExamplesRegistry from '../Services/ExamplesRegistry'

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { Text, View, StatusBar } from 'react-native'
 
 // Styles
-import styles from './Styles/RootContainerStyle'
+import styles from './Styles/RootContainerStyles'
 
 class RootContainer extends Component {
   render () {

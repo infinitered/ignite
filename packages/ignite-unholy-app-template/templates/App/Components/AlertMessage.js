@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { View, Text } from 'react-native'
-import styles from './Styles/AlertMessageStyle'
+import styles from './Styles/AlertMessageStyles'
 
 type AlertMessageProps = {
   title: string,
