@@ -42,10 +42,11 @@ const add = async function (context) {
   const rnInstall = await reactNative.install({ name, skipJest: true })
   if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
 
-  // copy our App directory
+  // copy our App & Tests directories
   spinner.text = '▸ copying files'
   spinner.start()
   filesystem.copy(`${__dirname}/templates/App`, `${process.cwd()}/App`, { overwrite: true })
+  filesystem.copy(`${__dirname}/templates/Tests`, `${process.cwd()}/Tests`, { overwrite: true })
   spinner.stop()
 
   // generate some templates
