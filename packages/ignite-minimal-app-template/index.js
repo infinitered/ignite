@@ -10,8 +10,8 @@ const add = async function (context) {
   const spinner = print.spin(`using Infinite Red's ${print.colors.cyan('minimal')} app template`).succeed()
 
   // attempt to install React Native or die trying
-  const rnExitCode = await reactNative.install({ name })
-  if (rnExitCode > 0) process.exit(rnExitCode)
+  const rnInstall = await reactNative.install({ name })
+  if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
 
   // copy the App folder
   spinner.text = '▸ copying files'
