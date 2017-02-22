@@ -3,7 +3,7 @@
   "description": "Adds a minimally Infinite Red opinioniated React Native application structure.",
   "license": "MIT",
   "homepage": "https://github.com/infinitered/ignite",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "files": [
     "index.js",
     "templates"
