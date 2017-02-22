@@ -1,7 +1,7 @@
 {
   "name": "ignite-integration",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.0.1",
   "description": "A place to run some long running integration tests.",
   "scripts": {
     "integration": "ava -s",
