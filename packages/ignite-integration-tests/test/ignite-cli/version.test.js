@@ -2,8 +2,8 @@ const test = require('ava')
 const execa = require('execa')
 const jetpack = require('fs-jetpack')
 
-const IGNITE = 'node_modules/.bin/ignite'
-const VERSION = jetpack.read('node_modules/ignite-cli/package.json', 'json').version
+const IGNITE = '../ignite-cli/bin/ignite'
+const VERSION = jetpack.read('../ignite-cli/package.json', 'json').version
 
 test('ignite -v', async t => {
   const result = await execa(IGNITE, ['-v'])

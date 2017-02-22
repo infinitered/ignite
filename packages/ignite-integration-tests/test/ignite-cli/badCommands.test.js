@@ -2,7 +2,7 @@ const test = require('ava')
 const execa = require('execa')
 const { contains } = require('ramda')
 
-const IGNITE = 'node_modules/.bin/ignite'
+const IGNITE = '../ignite-cli/bin/ignite'
 
 test('unknown command', async t => {
   const result = await execa(IGNITE, ['OMGWTFBBQ'])
