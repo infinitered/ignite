@@ -98,6 +98,9 @@ module.exports = async function (context) {
   // pass debug down the chain
   if (parameters.options.debug) extraAddOptions.push('--debug')
 
+  // pass react-native version down the chain
+  if (parameters.options['react-native-version']) extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
+
   // let's kick off the template
   let ok = false
   try {

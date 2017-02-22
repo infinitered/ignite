@@ -38,7 +38,10 @@ function attach (plugin, command, context) {
     const versionAvailable = test(new RegExp(reactNativeVersion, ''), versionCheck || '')
     if (!versionAvailable) {
       print.error(`💩  react native version ${print.colors.yellow(reactNativeVersion)} not found on NPM -- ${print.colors.yellow(REACT_NATIVE_VERSION)} recommended`)
-      return exitCodes.REACT_NATIVE_VERSION
+      return {
+        exitCode: exitCodes.REACT_NATIVE_VERSION,
+        version: reactNativeVersion
+      }
     }
 
     // craft the additional options to pass to the react-native cli
@@ -55,7 +58,7 @@ function attach (plugin, command, context) {
     const cmd = `react-native init ${name} ${rnOptions.join(' ')}`
     log('initializing react native')
     log(cmd)
-    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)} ${print.colors.muted('(~60 seconds)')}`)
+    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)} ${print.colors.muted('(60 seconds-ish)')}`)
     if (parameters.options.debug) spinner.stop()
 
     // ok, let's do this
@@ -73,7 +76,10 @@ function attach (plugin, command, context) {
     // Create ./ignite/plugins/.gitkeep
     filesystem.write(`${process.cwd()}/ignite/plugins/.gitkeep`, '')
 
-    return 0
+    return {
+      exitCode: exitCodes.OK,
+      version: reactNativeVersion
+    }
   }
 
   return {
