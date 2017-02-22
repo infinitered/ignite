@@ -40,5 +40,4 @@ class MockGluegunBuilder {
   }
 }
 
-
 module.exports = MockGluegunBuilder

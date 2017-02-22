@@ -11,9 +11,6 @@ import { Images } from './DevTheme'
 // Examples Render Engine
 import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
 
-// Screen examples
-import RoundedButton from '../../App/Components/RoundedButton'
-
 // Styles
 import styles from './Styles/PluginExamplesScreenStyles'
 
@@ -45,8 +42,7 @@ class PluginExamplesScreen extends React.Component {
 
           {ExamplesRegistry.renderPluginExamples()}
 
-          <View style={styles.screenButtons}>
-          </View>
+          <View style={styles.screenButtons} />
 
         </ScrollView>
       </View>
@@ -55,7 +51,7 @@ class PluginExamplesScreen extends React.Component {
 }
 
 export default StackNavigator({
-  PluginExamplesScreen: {screen: PluginExamplesScreen},
+  PluginExamplesScreen: {screen: PluginExamplesScreen}
 }, {
   headerMode: 'screen',
   navigationOptions: {

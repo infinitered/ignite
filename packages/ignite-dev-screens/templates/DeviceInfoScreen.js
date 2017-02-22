@@ -128,7 +128,7 @@ export default class DeviceInfoScreen extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <TouchableOpacity onPress={()=> this.props.navigation.goBack()} style={{
+        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{
           position: 'absolute',
           paddingTop: 30,
           paddingHorizontal: 5,

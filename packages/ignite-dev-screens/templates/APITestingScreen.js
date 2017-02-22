@@ -65,7 +65,7 @@ export default class APITestingScreen extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <TouchableOpacity onPress={()=> this.props.navigation.goBack()} style={{
+        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{
           position: 'absolute',
           paddingTop: 30,
           paddingHorizontal: 5,
@@ -74,7 +74,7 @@ export default class APITestingScreen extends React.Component {
           <Image source={Images.backButton} />
         </TouchableOpacity>
         <ScrollView style={styles.container} ref='container'>
-         <View style={{alignItems: 'center', paddingTop: 60}}>
+          <View style={{alignItems: 'center', paddingTop: 60}}>
             <Image source={Images.api} style={styles.logo} />
             <Text style={styles.titleText}>API</Text>
           </View>
