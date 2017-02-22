@@ -1,3 +1,5 @@
+const { merge, pipe, assoc, omit, __ } = require('ramda')
+
 // Questions to ask during install if the chatty route is chosen.
 const installQuestions = [
   {
@@ -31,8 +33,7 @@ const maxOptions = {
 }
 
 const add = async function (context) {
-  const { filesystem, parameters, ignite, reactNative, print, system, prompt } = context
-  const { log } = ignite
+  const { filesystem, parameters, ignite, reactNative, print, system, prompt, template } = context
   const name = parameters.third
   const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
   const spinner = print.spin(`using Infinite Red's ${print.colors.cyan('unholy')} app template`).succeed()
@@ -55,11 +56,39 @@ const add = async function (context) {
     { template: 'README.md', target: 'README.md' },
     { template: 'ignite.json.ejs', target: 'ignite/ignite.json' },
     { template: '.editorconfig', target: '.editorconfig' },
-    { template: 'App/Config/AppConfig.js.ejs', target: 'App/Config/AppConfig.js' },
-    { template: 'package.json.ejs', target: 'package.json' } // TODO: merge this, don't copy like we are
+    { template: 'App/Config/AppConfig.js.ejs', target: 'App/Config/AppConfig.js' }
   ]
-  const templateProps = { name, igniteVersion: ignite.version }
+  const templateProps = { name, igniteVersion: ignite.version, reactNativeVersion: rnInstall.version }
   await ignite.copyBatch(context, templates, templateProps)
+
+  /**
+   * Merge the package.json from our template into the one provided from react-native init.
+   */
+  async function mergePackageJsons () {
+    // transform our package.json incase we need to replace variables
+    const rawJson = await template.generate({
+      directory: `${ignite.ignitePluginPath()}/templates`,
+      template: 'package.json.ejs',
+      props: templateProps
+    })
+    const newPackageJson = JSON.parse(rawJson)
+
+    // read in the react-native created package.json
+    const currentPackage = filesystem.read('package.json', 'json')
+
+    // deep merge, lol
+    const newPackage = pipe(
+      assoc('dependencies', merge(currentPackage.dependencies, newPackageJson.dependencies)),
+      assoc('devDependencies', merge(currentPackage.devDependencies, newPackageJson.devDependencies)),
+      assoc('scripts', merge(currentPackage.scripts, newPackageJson.scripts)),
+      merge(__, omit(['dependencies', 'devDependencies', 'scripts'], newPackageJson))
+    )(currentPackage)
+
+    // write this out
+    filesystem.write('package.json', newPackage, { jsonIndent: 2 })
+  }
+  await mergePackageJsons()
+
   spinner.stop()
 
   // figure out which parts of unholy to install
