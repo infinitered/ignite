@@ -35,18 +35,38 @@ const removeIgnitePlugin = async (moduleName, context) => {
  */
 async function importPlugin (context, opts) {
   const { moduleName, type, directory } = opts
-  const { ignite, system } = context
+  const { ignite, system, filesystem } = context
   const { log } = ignite
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
 
-  // yarn caches wierd for file-based deps, lets use npm for these.... gah!
-  // NOTE(steve): turning off again until we ship 1st beta of `react-native-ignite`
-  const stillFailing = false
-  if (stillFailing && ignite.useYarn && !isDirectory) {
-    const cmd = `yarn add ${target} --dev`
+  if (ignite.useYarn) {
+    if (isDirectory) {
+      // where is the yarn cache?
+      log(`checking for yarn cache`)
+      const rawCacheDir = await system.exec('yarn cache dir')
+
+      // look for a cached version of this
+      const dirs = filesystem
+        .cwd(rawCacheDir)
+        .find({ matching: `npm-${moduleName}-*`, directories: true, recursive: false })
+
+      // clear existing cache if we have one
+      if (!R.isEmpty(dirs)) {
+        R.forEach(
+          dir => {
+            log(`removing yarn cache ${rawCacheDir}/${dir}`)
+            filesystem.remove(`${rawCacheDir}/${dir}`)
+          },
+          dirs
+        )
+      }
+    }
+    const cmd = isDirectory
+      ? `yarn add file:${target} --force --dev`
+      : `yarn add ${target} --dev`
     log(cmd)
-    await system.exec(cmd, { stdio: 'inherit' })
+    await system.exec(cmd, { stdio: 'ignore' })
     log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
