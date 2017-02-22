@@ -45,10 +45,11 @@ const add = async function (context) {
   // remove the __tests__ directory that come with React Native
   filesystem.remove('__tests__')
 
-  // copy our App directory
+  // copy our App & Tests directories
   spinner.text = '▸ copying files'
   spinner.start()
   filesystem.copy(`${__dirname}/templates/App`, `${process.cwd()}/App`, { overwrite: true })
+  filesystem.copy(`${__dirname}/templates/Tests`, `${process.cwd()}/Tests`, { overwrite: true })
   spinner.stop()
 
   // generate some templates
