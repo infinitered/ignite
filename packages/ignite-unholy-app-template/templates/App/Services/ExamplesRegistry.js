@@ -8,9 +8,9 @@ import DebugConfig from '../Config/DebugConfig'
 let globalComponentExamplesRegistry = []
 let globalPluginExamplesRegistry = []
 
-export const addComponentExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalComponentExamplesRegistry.push({title, usage}) }
+export const addComponentExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalComponentExamplesRegistry.push({title, usage}) } // eslint-disable-line
 
-export const addPluginExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalPluginExamplesRegistry.push({title, usage})}
+export const addPluginExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalPluginExamplesRegistry.push({title, usage}) } // eslint-disable-line
 
 const renderComponentExample = (example: Object) => {
   return (
@@ -37,7 +37,6 @@ const renderPluginExample = (example: Object) => {
 export const renderComponentExamples = () => R.map(renderComponentExample, globalComponentExamplesRegistry)
 
 export const renderPluginExamples = () => R.map(renderPluginExample, globalPluginExamplesRegistry)
-
 
 // Default for readability
 export default {

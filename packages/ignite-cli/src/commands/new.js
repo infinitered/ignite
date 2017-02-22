@@ -79,7 +79,7 @@ module.exports = async function (context) {
   // To test what live is like, you can run `ignite new FooTown --live`.
   //
   // TODO(steve): Don't forget to remove this when we launch... open to better ways of handling it.
-  const igniteDevPackagePrefix = parameters.options.live || path.resolve(`${__dirname}/../../..`) + '/ignite-'
+  const igniteDevPackagePrefix = parameters.options.live ? '' : path.resolve(`${__dirname}/../../..`) + '/ignite-'
 
   // some extra options we'll be passing through to the `ignite add <app-template>`
   const extraAddOptions = ['--is-app-template']

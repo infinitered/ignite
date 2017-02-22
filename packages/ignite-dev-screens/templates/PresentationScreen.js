@@ -79,7 +79,7 @@ class PresentationScreen extends React.Component {
   }
 }
 
-export default DevScreenNav = StackNavigator({
+export default StackNavigator({
   PresentationScreen: {screen: PresentationScreen},
   APITestingScreen: {screen: APITestingScreen},
   ComponentExamplesScreen: {screen: ComponentExamplesScreen},
@@ -93,7 +93,7 @@ export default DevScreenNav = StackNavigator({
   navigationOptions: {
     header: {
       left: (
-        <TouchableOpacity onPress={()=> window.alert('pop')} ><Image source={Images.closeButton} style={{marginHorizontal: 10}} /></TouchableOpacity>
+        <TouchableOpacity onPress={() => window.alert('pop')} ><Image source={Images.closeButton} style={{marginHorizontal: 10}} /></TouchableOpacity>
       ),
       style: {
         backgroundColor: '#3e243f'

@@ -5,7 +5,7 @@
   "description": "The Ignite universe.",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "lint": "lerna run lint",
+    "lint": "lerna run lint --concurrency 1",
     "test": "lerna run test",
     "clean": "lerna clean",
     "publish": "lerna publish --skip-npm"
