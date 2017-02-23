@@ -32,6 +32,7 @@ function attach (plugin, command, context) {
     //  grab the name & version
     const name = opts.name || parameters.third
     const reactNativeVersion = opts.version || parameters.options['react-native-version'] || REACT_NATIVE_VERSION
+    const reactNativeTemplate = opts.template || parameters.options['react-native-template']
 
     // jet if the version isn't available
     const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
@@ -40,15 +41,16 @@ function attach (plugin, command, context) {
       print.error(`💩  react native version ${print.colors.yellow(reactNativeVersion)} not found on NPM -- ${print.colors.yellow(REACT_NATIVE_VERSION)} recommended`)
       return {
         exitCode: exitCodes.REACT_NATIVE_VERSION,
-        version: reactNativeVersion
+        version: reactNativeVersion,
+        template: reactNativeTemplate
       }
     }
 
     // craft the additional options to pass to the react-native cli
     const rnOptions = [ '--version', reactNativeVersion ]
-    if (!strings.isBlank(opts.template)) {
+    if (!strings.isBlank(reactNativeTemplate)) {
       rnOptions.push('--template')
-      rnOptions.push(opts.template)
+      rnOptions.push(reactNativeTemplate)
     }
     if (opts.skipJest) {
       rnOptions.push('--skip-jest')
@@ -58,15 +60,30 @@ function attach (plugin, command, context) {
     const cmd = `react-native init ${name} ${rnOptions.join(' ')}`
     log('initializing react native')
     log(cmd)
-    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)} ${print.colors.muted('(60 seconds-ish)')}`)
+    const withTemplate = reactNativeTemplate ? ` with ${print.colors.cyan(reactNativeTemplate)} template` : ''
+    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate} ${print.colors.muted('(60 seconds-ish)')}`)
     if (parameters.options.debug) spinner.stop()
 
     // ok, let's do this
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
-    await system.exec(cmd, { stdio: stdioMode })
+    try {
+      await system.exec(cmd, { stdio: stdioMode })
+    } catch (e) {
+      spinner.fail(`failed to add ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`)
+      if (reactNativeTemplate) {
+        // TODO: we can totally check, just stopping here until while https://github.com/facebook/react-native/pull/12548 settles in.
+        const fullTemplateName = `react-native-template-${reactNativeTemplate}`
+        spinner.fail(`Does ${print.colors.cyan(fullTemplateName)} exist on npm?`)
+      }
+      return {
+        exitCode: exitCodes.REACT_NATIVE_INSTALL,
+        version: reactNativeVersion,
+        template: reactNativeTemplate
+      }
+    }
 
     // good news everyone!
-    const successMessage = `added ${print.colors.cyan('React Native ' + reactNativeVersion)}`
+    const successMessage = `added ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`
     spinner.succeed(successMessage)
 
     // jump immediately into the new directory
@@ -78,7 +95,8 @@ function attach (plugin, command, context) {
 
     return {
       exitCode: exitCodes.OK,
-      version: reactNativeVersion
+      version: reactNativeVersion,
+      template: reactNativeTemplate
     }
   }
 

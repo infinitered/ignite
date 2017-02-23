@@ -45,5 +45,10 @@ module.exports = {
   /**
    * This directory already exists
    */
-  DIRECTORY_EXISTS: 8
+  DIRECTORY_EXISTS: 8,
+
+  /**
+   * Problem installing React Native
+   */
+  REACT_NATIVE_INSTALL: 9
 }
