@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------
 
 const exitCodes = require('../lib/exitCodes')
+const { pipe, keys, filter, map } = require('ramda')
 
 /**
  * Does a walkthrough of questions and returns the answers as an object.
@@ -105,7 +106,9 @@ Generally, you would run this from ./YourApp/ignite/plugins/
 Commands:
   ignite plugin help
   ignite plugin new <your-plugin>
-  ignite plugin list (coming soon)
+  ignite plugin list
+  ignite plugin search <search string>
+  ignite plugin info <plugin name>
 
 Example:
   ignite plugin new ignite-mobx`
@@ -113,21 +116,100 @@ Example:
   process.exit(exitCodes.OK)
 }
 
+/**
+ * Shows a list of known plugins.
+ *
+ * @param {Object} context The gluegun context.
+ * @param {String} search A search string (or null).
+ */
+const showPluginDirectory = (context, search) => {
+  const { print } = context
+  const { colors, newline, info, table, error } = print
+  const directory = require('./plugin/directory')
+
+  const pluginTable = pipe(
+    keys,
+    filter((k) => {
+      if (!search) return true
+      return k.includes(search)
+    }),
+    map((k) => {
+      const plugin = directory[k]
+      return [k, plugin.author]
+      // return plugin
+    })
+  )(directory)
+
+  newline()
+  info(colors.highlight("Ignite Plugins"))
+  newline()
+  if (pluginTable.length > 0) {
+    info(colors.muted("Install with `ignite add pluginname` and remove with `ignite remove pluginname`"))
+    newline()
+    table(pluginTable)
+  } else {
+    error(`No plugin with the search string '${search}'.`)
+  }
+  newline()
+
+  process.exit(exitCodes.OK)
+}
+
+/**
+ * Shows info about a particular plugin.
+ *
+ * @param {Object} context The gluegun context.
+ */
+const showPluginInfo = (context, name) => {
+  const { print } = context
+  const { colors, newline, info, table, error } = print
+  const directory = require('./plugin/directory')
+
+  name = validateName(name, context)
+  shortName = name.replace(/^(ignite\-)/, "")
+
+  const plugin = directory[name]
+  
+  newline()
+  info(colors.highlight(`Ignite Plugin: '${name}'`))
+  newline()
+
+  if (plugin) {
+    table([
+      [ "Name", name ],
+      [ "Description", plugin.description ],
+      [ "Author", plugin.author ],
+      [ "URL", plugin.url ],
+      [ "Email", plugin.email ]
+    ])
+  } else {
+    error('ok')
+  }
+
+  newline()
+  info("Install with " + colors.highlight(`ignite add ${shortName}`))
+  newline()
+}
+
+
 module.exports = async function (context) {
-  // They need to be in the folder /ignite or /packages to create plugins
-
-  // const { parameters, strings, print, system } = context
   const { parameters, print } = context
-  // const { debug, info, error } = print
 
-  // context.print.debug(context.parameters)
   switch (parameters.second) {
     case 'new':
       await createNewPlugin(context)
       break
 
     case 'list':
-      print.error(`ignite plugin list is not implemented yet.`)
+      showPluginDirectory(context, null)
+      break
+
+    case 'search':
+      showPluginDirectory(context, parameters.third)
+      break
+
+    case 'info':
+      showPluginInfo(context, parameters.third)
       break
 
     case 'help':
