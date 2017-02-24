@@ -20,13 +20,13 @@ const walkthrough = async (context) => {
   return await context.prompt.ask([
     {
       name: 'template',
-      message: 'Would you like to generate an example component?',
+      message: 'Will your plugin have an example component??',
       type: 'list',
       choices: ['No', 'Yes']
     },
     {
       name: 'command',
-      message: 'Would you like to generate an example command/generator?',
+      message: 'Will your plugin have a generator command? (e.g. ignite generate <mygenerator> <name>)',
       type: 'list',
       choices: ['No', 'Yes']
     }
@@ -85,11 +85,13 @@ const createNewPlugin = async (context) => {
     (answers.template === 'Yes') &&
       { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js.ejs` },
     (answers.command === 'Yes') &&
-      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js` }
+      { template: 'plugin/commands/thing.js.ejs', target: `${pluginName}/commands/thing.js` },
+    (answers.command === 'Yes') &&
+      { template: 'plugin/templates/thing.js.ejs.ejs', target: `${pluginName}/templates/thing.js.ejs` }
   ]
 
   // copy over the files
-  await ignite.copyBatch(context, copyJobs, {name, pluginName})
+  await ignite.copyBatch(context, copyJobs, {name, pluginName, answers})
 }
 
 /**
@@ -114,13 +116,8 @@ Example:
 }
 
 module.exports = async function (context) {
-  // They need to be in the folder /ignite or /packages to create plugins
-
-  // const { parameters, strings, print, system } = context
   const { parameters, print } = context
-  // const { debug, info, error } = print
 
-  // context.print.debug(context.parameters)
   switch (parameters.second) {
     case 'new':
       await createNewPlugin(context)

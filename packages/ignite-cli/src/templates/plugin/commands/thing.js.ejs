@@ -1,0 +1,27 @@
+// @cliDescription  Example <%= props.name %> command
+// @cliExample  ignite generate thing <%= props.name %>
+// Generates a "thing" (rename this to whatever -- component, model, anything).
+// ----------------------------------------------------------------------------
+module.exports = async function (context) {
+  const { parameters, strings, print, ignite } = context
+  const { pascalCase, isBlank } = strings
+
+  // validation
+  if (isBlank(parameters.first)) {
+    print.info(`ignite generate thing <name>\n`)
+    print.info('A name is required.')
+    return
+  }
+
+  const name = pascalCase(parameters.first)
+
+  // Copies the `thing.js.ejs` in your plugin's templates folder
+  // into App/Things/${name}.js.
+  const copyJobs = [{
+    template: 'thing.js.ejs',
+    target: `App/Things/${name}.js`
+  }]
+
+  // make the templates and pass in props with the third argument here
+  await ignite.copyBatch(context, copyJobs, { name: name })
+}

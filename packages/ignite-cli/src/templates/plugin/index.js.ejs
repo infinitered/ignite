@@ -2,18 +2,17 @@
 // ----------------------------------------------------------------------------
 
 const NPM_MODULE_NAME = 'react-native-MODULENAME'
-const EXAMPLE_FILE = '<%= props.name %>Example.js'
 const PLUGIN_PATH = __dirname
 const APP_PATH = process.cwd()
+<% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js'<% } %>
 
 const add = async function (context) {
   const { ignite, filesystem } = context
 
   // install a npm module and link it
   await ignite.addModule(NPM_MODULE_NAME, { link: true })
-
-  // copy the component example file (if examples are turned on)
-  await ignite.addComponentExample(EXAMPLE_FILE, { title: '<%= props.name %> Example' })
+  
+  <% if (props.answers.template === 'Yes') { %>await ignite.addComponentExample(EXAMPLE_FILE, { title: '<%= props.name %> Example' })<% } %>
 
   // Example of copying templates/<%= props.name %> to App/<%= props.name %>
   // if (!filesystem.exists(`${APP_PATH}/App/<%= props.name %>`)) {
@@ -35,9 +34,8 @@ const remove = async function (context) {
 
   // remove the npm module and unlink it
   await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })
-
-  // remove the component example
-  await ignite.removeComponentExample(EXAMPLE_FILE)
+  
+  <% if (props.answers.template === 'Yes') { %>await ignite.removeComponentExample(EXAMPLE_FILE)<% } %>
 
   // Example of removing App/<%= props.name %> folder
   // const remove<%= props.name %> = await context.prompt.confirm(
