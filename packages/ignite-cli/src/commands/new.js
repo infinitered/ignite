@@ -99,7 +99,14 @@ module.exports = async function (context) {
   if (parameters.options.debug) extraAddOptions.push('--debug')
 
   // pass react-native version down the chain
-  if (parameters.options['react-native-version']) extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
+  if (parameters.options['react-native-version']) {
+    extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
+  }
+
+  // pass react-native version down the chain
+  if (parameters.options['react-native-template']) {
+    extraAddOptions.push(`--react-native-template ${parameters.options['react-native-template']}`)
+  }
 
   // let's kick off the template
   let ok = false
