@@ -7,10 +7,10 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "node --harmony node_modules/.bin/ava",
-    "watch": "node --harmony node_modules/.bin/ava --watch",
+    "test": "ava",
+    "watch": "ava --watch",
     "coverage": "nyc ava",
-    "start": "node --harmony src/index.js",
+    "start": "node src/index.js",
     "lint": "standard"
   },
   "repository": "infinitered/ignite",
@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gluegun": "^0.14.0",
+    "gluegun": "^0.15.0",
     "gluegun-patching": "^0.3.0",
     "minimist": "^1.2.0",
     "ramda": "^0.23.0",
