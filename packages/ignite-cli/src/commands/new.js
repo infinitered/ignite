@@ -1,6 +1,7 @@
 // @cliDescription  Generate a new React Native project with Ignite.
 // @cliAlias n
 // ----------------------------------------------------------------------------
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
@@ -13,6 +14,12 @@ module.exports = async function (context) {
 
   // grab the project name
   const projectName = parameters.second
+
+  // ensure we're in a supported directory
+  if (isIgniteDirectory(process.cwd())) {
+    context.print.error('The `ignite new` command cannot be run within an already ignited project.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
 
   // verify the project name is a thing
   if (isBlank(projectName)) {

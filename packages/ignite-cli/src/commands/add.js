@@ -6,6 +6,7 @@ const Toml = require('toml')
 const R = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 
 /**
@@ -82,12 +83,19 @@ module.exports = async function (context) {
   const { print, filesystem, prompt, ignite, parameters, strings } = context
   const { info, warning, spin } = print
   const { log } = ignite
+
   log('running add command')
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
 
   // we need to know if this is an app template
   const isAppTemplate = parameters.options['is-app-template']
+
+  // ensure we're in a supported directory
+  if (!isIgniteDirectory(process.cwd()) && !isAppTemplate) {
+    context.print.error('The `ignite add` command must be run in an ignite-compatible directory.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
 
   // the thing we're trying to install
   if (strings.isBlank(parameters.second)) {
