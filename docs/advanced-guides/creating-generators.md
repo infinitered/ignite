@@ -6,7 +6,7 @@ using the `ignite generate` command on the command line.
 
 A generator is a special kind of Ignite 2.0 plugin. Generators are more advanced
 than common plugins. You should understand how to create plugins first; check
-out [Creating Plugins]() first if you need to review.  
+out [Creating Plugins]() first if you need to review.
 
 Since generators are plugins, you'll start out creating them the same as you
 would any plugin, with
@@ -30,13 +30,13 @@ Within your project you will find two directories, `commands` and `templates`.
 
 By answering `yes` to the generator question, you will be given the files
 necessary to create a functioning generator, with all the essential logic and
-content. 
+content.
 
 ```
 .
 ├── commands
 │   └── example.js
-├── ignite.toml
+├── ignite.json
 ├── index.js
 ├── package.json
 └── templates
@@ -77,7 +77,7 @@ and the job handler copies the template with that name.
   const jobs = [
     { template: `${componentTemplate}.ejs`, target: `App/Containers/${name}.js` },
   ]
-  
+
   // Job handler
   await generate({
     template: job.template,

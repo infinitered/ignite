@@ -2,7 +2,6 @@
 // @cliAlias a
 // ----------------------------------------------------------------------------
 
-const Toml = require('toml')
 const R = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
@@ -130,18 +129,18 @@ Examples:
     process.exit(exitCodes.PLUGIN_INVALID)
   }
 
-  // optionally load some configuration from the ignite.toml from the plugin.
-  const tomlFilePath = `${modulePath}/ignite.toml`
-  const newConfig = filesystem.exists(tomlFilePath)
-    ? Toml.parse(filesystem.read(tomlFilePath))
-    : { ignite: {} }
+  // optionally load some configuration from the ignite.json from the plugin.
+  const ignitePluginConfigPath = `${modulePath}/ignite.json`
+  const newConfig = filesystem.exists(ignitePluginConfigPath)
+    ? filesystem.read(ignitePluginConfigPath, 'json')
+    : {}
 
   const proposedGenerators = R.reduce((acc, k) => {
     acc[k] = moduleName
     return acc
-  }, {}, newConfig.ignite.generators || [])
+  }, {}, newConfig.generators || [])
 
-  // we compare the toml changes against ours
+  // we compare the generator config changes against ours
   const changes = detectedChanges(currentGenerators, proposedGenerators)
   if (changes.length > 0) {
     spinner.stop()

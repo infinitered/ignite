@@ -4,7 +4,6 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "ignite.toml",
     "templates"
   ],
   "repository": "infinitered/ignite",
