@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'http://api.openweathermap.org/data/2.5/') => {
+const create = (baseURL = 'https://api.github.com/') => {
   // ------
   // STEP 1
   // ------
@@ -18,11 +18,6 @@ const create = (baseURL = 'http://api.openweathermap.org/data/2.5/') => {
     },
     // 10 second timeout...
     timeout: 10000
-  })
-
-  // Force OpenWeather API Key on all requests
-  api.addRequestTransform((request) => {
-    request.params['APPID'] = '0e44183e8d1018fc92eb3307d885379c'
   })
 
   // Wrap api's addMonitor to allow the calling code to attach
@@ -46,7 +41,9 @@ const create = (baseURL = 'http://api.openweathermap.org/data/2.5/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getCity = (city) => api.get('weather', {q: city})
+  const getRoot = () => api.get('')
+  const getRate = () => api.get('rate_limit')
+  const getUser = (username) => api.get('search/users', {q: username})  
 
   // ------
   // STEP 3
@@ -62,7 +59,9 @@ const create = (baseURL = 'http://api.openweathermap.org/data/2.5/') => {
   //
   return {
     // a list of the API functions from step 2
-    getCity
+    getRoot,
+    getRate,
+    getUser
   }
 }
 
