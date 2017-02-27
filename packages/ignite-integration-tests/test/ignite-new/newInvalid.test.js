@@ -4,7 +4,7 @@ const jetpack = require('fs-jetpack')
 
 const RUN_DIR = 'out/new'
 const BACK_DIR = '../..'
-const IGNITE = '../../node_modules/.bin/ignite'
+const IGNITE = '../../../ignite-cli/bin/ignite'
 
 test.before(() => {
   jetpack.dir(RUN_DIR)

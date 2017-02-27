@@ -2,19 +2,28 @@
 // ----------------------------------------------------------------------------
 const { reduce, find } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
 
 module.exports = async function (context) {
+  // ensure we're in a supported directory
+  if (!isIgniteDirectory(process.cwd())) {
+    context.print.error('The `ignite spork` command must be run in an ignite-compatible directory.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
+
   // grab a fist-full of features...
-  const { print, filesystem, patching } = context
+  const { print, filesystem } = context
   const { warning, success } = print
 
   // ignite spork
-  // -> lists all generator plugins (identified in toml)
+  // -> lists all generator plugins (identified in json)
   const pluginOptions = reduce((a, k) => {
-    const tomlFile = `${k.directory}/ignite.toml`
-    // review them for toml files with generators
-    if (patching.isInFile(tomlFile, 'generators')) {
-      a.push(k.name)
+    const jsonFile = `${k.directory}/ignite.json`
+    if (filesystem.exists(jsonFile)) {
+      const jsonContents = filesystem.read(jsonFile, 'json') || {}
+      if (jsonContents.generators) {
+        a.push(k.name)
+      }
     }
     return a
   }, [], context.ignite.findIgnitePlugins())

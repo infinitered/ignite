@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------
 
 const exitCodes = require('../lib/exitCodes')
+const prependIgnite = require('../lib/prependIgnite')
 
 /**
  * Does a walkthrough of questions and returns the answers as an object.
@@ -20,13 +21,13 @@ const walkthrough = async (context) => {
   return await context.prompt.ask([
     {
       name: 'template',
-      message: 'Would you like to generate an example component?',
+      message: 'Will your plugin have an example component??',
       type: 'list',
       choices: ['No', 'Yes']
     },
     {
       name: 'command',
-      message: 'Would you like to generate an example command/generator?',
+      message: 'Will your plugin have a generator command? (e.g. ignite generate <mygenerator> <name>)',
       type: 'list',
       choices: ['No', 'Yes']
     }
@@ -57,7 +58,7 @@ const validateName = (pluginName, context) => {
   }
 
   // Force prepend `ignite-*` to plugin name
-  return /^ignite-/.test(pluginName) ? pluginName : 'ignite-' + pluginName
+  return prependIgnite(pluginName)
 }
 
 /**
@@ -79,17 +80,19 @@ const createNewPlugin = async (context) => {
   const copyJobs = [
     { template: 'plugin/.gitignore', target: `${pluginName}/.gitignore` },
     { template: 'plugin/index.js.ejs', target: `${pluginName}/index.js` },
-    { template: 'plugin/ignite.toml.ejs', target: `${pluginName}/ignite.toml` },
+    { template: 'plugin/ignite.json.ejs', target: `${pluginName}/ignite.json` },
     { template: 'plugin/package.json.ejs', target: `${pluginName}/package.json` },
     { template: 'plugin/README.md', target: `${pluginName}/README.md` },
     (answers.template === 'Yes') &&
       { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js.ejs` },
     (answers.command === 'Yes') &&
-      { template: 'plugin/commands/example.js.ejs', target: `${pluginName}/commands/example.js` }
+      { template: 'plugin/commands/thing.js.ejs', target: `${pluginName}/commands/thing.js` },
+    (answers.command === 'Yes') &&
+      { template: 'plugin/templates/thing.js.ejs.ejs', target: `${pluginName}/templates/thing.js.ejs` }
   ]
 
   // copy over the files
-  await ignite.copyBatch(context, copyJobs, {name, pluginName})
+  await ignite.copyBatch(context, copyJobs, {name, pluginName, answers, isGenerator: answers.command === 'Yes'})
 }
 
 /**
@@ -114,13 +117,8 @@ Example:
 }
 
 module.exports = async function (context) {
-  // They need to be in the folder /ignite or /packages to create plugins
-
-  // const { parameters, strings, print, system } = context
   const { parameters, print } = context
-  // const { debug, info, error } = print
 
-  // context.print.debug(context.parameters)
   switch (parameters.second) {
     case 'new':
       await createNewPlugin(context)

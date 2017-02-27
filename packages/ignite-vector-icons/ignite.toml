@@ -1,4 +1,0 @@
-description = 'Ignite installer for vector icons'
-
-[ignite]
-icons = "vector-icons"

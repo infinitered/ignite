@@ -1,6 +1,7 @@
 // @cliDescription  Generate a new React Native project with Ignite.
 // @cliAlias n
 // ----------------------------------------------------------------------------
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
@@ -13,6 +14,12 @@ module.exports = async function (context) {
 
   // grab the project name
   const projectName = parameters.second
+
+  // ensure we're in a supported directory
+  if (isIgniteDirectory(process.cwd())) {
+    context.print.error('The `ignite new` command cannot be run within an already ignited project.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
 
   // verify the project name is a thing
   if (isBlank(projectName)) {
@@ -66,7 +73,7 @@ module.exports = async function (context) {
     if (parameters.options.empty) return 'empty-app-template'
 
     // default
-    return 'unholy-app-template'
+    return 'infinite-red-app-template'
   }
 
   // grab the right app template
@@ -99,7 +106,14 @@ module.exports = async function (context) {
   if (parameters.options.debug) extraAddOptions.push('--debug')
 
   // pass react-native version down the chain
-  if (parameters.options['react-native-version']) extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
+  if (parameters.options['react-native-version']) {
+    extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
+  }
+
+  // pass react-native version down the chain
+  if (parameters.options['react-native-template']) {
+    extraAddOptions.push(`--react-native-template ${parameters.options['react-native-template']}`)
+  }
 
   // let's kick off the template
   let ok = false
