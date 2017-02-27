@@ -83,3 +83,16 @@ ignite add radio-buttons
 ```
 react-native run-ios
 ```
+
+### Gluegun
+
+`Gluegun` is a tool for building CLIs, and could be useful in building Ignite
+plugins. Gluegun allows you to "glue together" existing CLIs, whether third
+party or your own, into one. Ignite itself makes use of Gluegun.
+
+Gluegun comes equipped with some outstanding libraries that fulfill common CLI
+needs, such as templating, filesystem operations, command line handling, copy
+and paste, and more.
+
+For more information, check out the [Gluegun
+repo](https://github.com/infinitered/gluegun).
