@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------------
 
 const Shell = require('shelljs')
-const R = require('ramda')
+const { reduce, concat, keys, pathOr, join, map, assoc } = require('ramda')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 
@@ -11,18 +11,18 @@ const exitCodes = require('../lib/exitCodes')
 const useYarn = false
 
 const detectRemovals = (configObject, moduleName) => {
-  return R.reduce((acc, k) => {
+  return reduce((acc, k) => {
     if (configObject[k] === moduleName) {
-      return R.concat([`${k}`], acc)
+      return concat([`${k}`], acc)
     }
     return acc
-  }, [], R.keys(configObject))
+  }, [], keys(configObject))
 }
 
 const existsLocally = (moduleName) => {
   // we take a look at the local package.json
   const pack = require(`${process.cwd()}/package.json`)
-  return R.pathOr(null, ['devDependencies', moduleName], pack)
+  return pathOr(null, ['devDependencies', moduleName], pack)
 }
 
 const noMegusta = (moduleName) => {
@@ -58,12 +58,12 @@ module.exports = async function (context) {
     // Ask user if they are sure.
     if (changes.length > 0) {
       // we warn the user on changes
-      warning(`The following generators would be removed: ${R.join(', ', changes)}`)
+      warning(`The following generators would be removed: ${join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
       if (ok) {
         const generatorsList = Object.assign({}, config.generators)
-        R.map((k) => delete generatorsList[k], changes)
-        const updatedConfig = R.assoc('generators', generatorsList, config)
+        map((k) => delete generatorsList[k], changes)
+        const updatedConfig = assoc('generators', generatorsList, config)
         ignite.saveIgniteConfig(updatedConfig)
       } else {
         process.exit(exitCodes.GENERIC)
