@@ -44,7 +44,10 @@ const remove = async function (context) {
   // if (remove<%= props.name %>) { filesystem.remove(`${APP_PATH}/App/<%= props.name %>`) }
 
   // Example of unpatching a file
-  // patching.replaceInFile(`${APP_PATH}/App/Config/AppConfig.js`, `import '../<%= props.name %>/<%= props.name %>'\n`, '')
+  // ignite.patchInFile(`${APP_PATH}/App/Config/AppConfig.js`, {
+  //   insert: '',
+  //   replace: `import '../<%= props.name %>/<%= props.name %>'\n`
+  // )
 }
 
 // Required in all Ignite plugins

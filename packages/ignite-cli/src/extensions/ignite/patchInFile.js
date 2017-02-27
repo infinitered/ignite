@@ -7,6 +7,7 @@ module.exports = (plugin, command, context) => {
    * @param {Object}  opts            Options
    * @param {string}  opts.before     Insert before this string
    * @param {string}  opts.after      Insert after this string
+   * @param {string}  opts.replace    Replace this string
    * @param {string}  opts.insert     String to be inserted
    * @param {string}  opts.match      Skip if this string exists already
    *
@@ -17,12 +18,20 @@ module.exports = (plugin, command, context) => {
   function patchInFile (file, opts) {
     const { patching } = context
     if (!patching.isInFile(file, opts.match || opts.insert)) {
-      patching.insertInFile(
-        file,
-        opts.before || opts.after,
-        opts.insert,
-        !!opts.after
-      )
+      if (opts.replace) {
+        patching.replaceInFile(
+          file,
+          opts.replace,
+          opts.insert
+        )
+      } else {
+        patching.insertInFile(
+          file,
+          opts.before || opts.after,
+          opts.insert,
+          !!opts.after
+        )
+      }
     }
   }
 
