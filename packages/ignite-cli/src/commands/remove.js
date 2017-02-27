@@ -5,6 +5,7 @@
 const Shell = require('shelljs')
 const { reduce, concat, keys, pathOr, join, map, assoc } = require('ramda')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
+const prependIgnite = require('../lib/prependIgnite')
 const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
@@ -25,7 +26,7 @@ const existsLocally = (moduleName) => {
   return pathOr(null, ['devDependencies', moduleName], pack)
 }
 
-const noMegusta = (moduleName) => {
+const removeDependency = (moduleName) => {
   console.warn('Removing dev module')
 
   if (useYarn) {
@@ -47,9 +48,20 @@ module.exports = async function (context) {
   const { info, warning, xmark, error, success } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
+  const moduleParam = parameters.array.pop()
+
+  // Check if they used a directory path instead of a plugin name
+  if (moduleParam.includes('/')) {
+    context.print.error(`💩 When removing a package, you shouldn't use a path.
+    Try ${ context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`) } instead.`)
+    process.exit(exitCodes.PLUGIN_NAME)
+  }
+
   // prepend `ignite` as convention
-  const moduleName = `ignite-${parameters.array.pop()}`
+  const moduleName = prependIgnite(moduleParam)
+
   info(`🔎    Verifying Plugin`)
+
   // Make sure what they typed, exists locally
   if (existsLocally(moduleName)) {
     const config = ignite.loadIgniteConfig()
@@ -86,7 +98,7 @@ module.exports = async function (context) {
     }
 
     // Uninstall dep from node modules
-    noMegusta(moduleName)
+    removeDependency(moduleName)
     success(`${xmark}    Removed`)
   } else {
     error("💩  We couldn't find that ignite plugin")

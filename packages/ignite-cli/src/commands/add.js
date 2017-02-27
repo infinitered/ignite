@@ -7,6 +7,7 @@ const R = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
+const prependIgnite = require('../lib/prependIgnite')
 const exitCodes = require('../lib/exitCodes')
 
 /**
