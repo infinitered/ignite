@@ -3,29 +3,30 @@
 // ----------------------------------------------------------------------------
 
 const Shell = require('shelljs')
-const R = require('ramda')
+const { reduce, concat, keys, pathOr, join, map, assoc } = require('ramda')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
+const prependIgnite = require('../lib/prependIgnite')
 const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
 const useYarn = false
 
 const detectRemovals = (configObject, moduleName) => {
-  return R.reduce((acc, k) => {
+  return reduce((acc, k) => {
     if (configObject[k] === moduleName) {
-      return R.concat([`${k}`], acc)
+      return concat([`${k}`], acc)
     }
     return acc
-  }, [], R.keys(configObject))
+  }, [], keys(configObject))
 }
 
 const existsLocally = (moduleName) => {
   // we take a look at the local package.json
   const pack = require(`${process.cwd()}/package.json`)
-  return R.pathOr(null, ['devDependencies', moduleName], pack)
+  return pathOr(null, ['devDependencies', moduleName], pack)
 }
 
-const noMegusta = (moduleName) => {
+const removeDependency = (moduleName) => {
   console.warn('Removing dev module')
 
   if (useYarn) {
@@ -47,9 +48,20 @@ module.exports = async function (context) {
   const { info, warning, xmark, error, success } = print
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
+  const moduleParam = parameters.array.pop()
+
+  // Check if they used a directory path instead of a plugin name
+  if (moduleParam.includes('/')) {
+    context.print.error(`💩 When removing a package, you shouldn't use a path.
+    Try ${ context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`) } instead.`)
+    process.exit(exitCodes.PLUGIN_NAME)
+  }
+
   // prepend `ignite` as convention
-  const moduleName = `ignite-${parameters.array.pop()}`
+  const moduleName = prependIgnite(moduleParam)
+
   info(`🔎    Verifying Plugin`)
+
   // Make sure what they typed, exists locally
   if (existsLocally(moduleName)) {
     const config = ignite.loadIgniteConfig()
@@ -58,12 +70,12 @@ module.exports = async function (context) {
     // Ask user if they are sure.
     if (changes.length > 0) {
       // we warn the user on changes
-      warning(`The following generators would be removed: ${R.join(', ', changes)}`)
+      warning(`The following generators would be removed: ${join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
       if (ok) {
         const generatorsList = Object.assign({}, config.generators)
-        R.map((k) => delete generatorsList[k], changes)
-        const updatedConfig = R.assoc('generators', generatorsList, config)
+        map((k) => delete generatorsList[k], changes)
+        const updatedConfig = assoc('generators', generatorsList, config)
         ignite.saveIgniteConfig(updatedConfig)
       } else {
         process.exit(exitCodes.GENERIC)
@@ -86,7 +98,7 @@ module.exports = async function (context) {
     }
 
     // Uninstall dep from node modules
-    noMegusta(moduleName)
+    removeDependency(moduleName)
     success(`${xmark}    Removed`)
   } else {
     error("💩  We couldn't find that ignite plugin")

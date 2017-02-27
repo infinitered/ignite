@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------
 
 const exitCodes = require('../lib/exitCodes')
+const prependIgnite = require('../lib/prependIgnite')
 
 /**
  * Does a walkthrough of questions and returns the answers as an object.
@@ -57,7 +58,7 @@ const validateName = (pluginName, context) => {
   }
 
   // Force prepend `ignite-*` to plugin name
-  return /^ignite-/.test(pluginName) ? pluginName : 'ignite-' + pluginName
+  return prependIgnite(pluginName)
 }
 
 /**
