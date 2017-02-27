@@ -57,12 +57,13 @@ function attach (plugin, command, context) {
     }
 
     // install React Native CLI if it isn't found
-    const rncliSpinner = print.spin(`installing react-native-cli`)
-    try {
-      await system.exec('which react-native', { stdio: 'ignore' })
+    const rncliSpinner = print.spin(`checking react-native-cli`)
+    const cliInstalled = await system.which('react-native')
+    if (cliInstalled) {
       rncliSpinner.succeed(`checked react-native-cli`)
-    } catch (e) {
+    } else {
       // No React Native installed, let's get it
+      rncliSpinner.text = 'installing react-native-cli'
       await system.exec('npm install -g react-native-cli', { stdio: 'ignore' })
       rncliSpinner.succeed(`installed react-native-cli`)
     }
