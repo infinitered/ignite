@@ -1,6 +1,6 @@
 {
-  "name": "ignite-unholy-app-template",
-  "description": "Adds a React Native application structure from the good ol Ignite 1 days.",
+  "name": "ignite-infinite-red-app-template",
+  "description": "Infinite Red's recommended app structure",
   "license": "MIT",
   "repository": "infinitered/ignite",
   "homepage": "https://github.com/infinitered/ignite",

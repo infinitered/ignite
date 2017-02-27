@@ -36,7 +36,7 @@ const add = async function (context) {
   const { filesystem, parameters, ignite, reactNative, print, system, prompt, template } = context
   const name = parameters.third
   const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
-  const spinner = print.spin(`using Infinite Red's ${print.colors.cyan('unholy')} app template`).succeed()
+  const spinner = print.spin(`using the ${print.colors.red('Infinite Red')} app template`).succeed()
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({ name, skipJest: true })
@@ -95,7 +95,7 @@ const add = async function (context) {
 
   spinner.stop()
 
-  // figure out which parts of unholy to install
+  // all options with --max or ask each one?
   const answers = parameters.options.max
     ? maxOptions
     : await prompt.ask(installQuestions)

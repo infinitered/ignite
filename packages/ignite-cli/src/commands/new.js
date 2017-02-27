@@ -73,7 +73,7 @@ module.exports = async function (context) {
     if (parameters.options.empty) return 'empty-app-template'
 
     // default
-    return 'unholy-app-template'
+    return 'infinite-red-app-template'
   }
 
   // grab the right app template

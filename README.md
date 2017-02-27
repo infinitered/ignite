@@ -10,6 +10,7 @@ We're aiming to release around the first week of March.
 
 <p align="center">
   <a href="https://infinite.red/ignite"><img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="300px"></a>
+  <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite 2 screenshot" width="300px"></a>
 </p>
 
 <p align="center">
