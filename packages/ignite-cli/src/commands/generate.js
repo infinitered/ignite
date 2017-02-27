@@ -19,6 +19,8 @@ const {
 } = require('ramda')
 const { dotPath } = require('ramdasauce')
 const header = require('../brand/header')
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
+const exitCodes = require('../lib/exitCodes')
 
 /**
  * Runs a generator.
@@ -26,6 +28,12 @@ const header = require('../brand/header')
  * @params {RunContext} context The environment.
  */
 module.exports = async function (context) {
+  // ensure we're in a supported directory
+  if (!isIgniteDirectory(process.cwd())) {
+    context.print.error('The `ignite generate` command must be run in an ignite-compatible directory.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
+
   // grab some features
   const { ignite, print, parameters } = context
   const config = ignite.loadIgniteConfig()

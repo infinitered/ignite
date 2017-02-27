@@ -4,6 +4,7 @@
 
 const Shell = require('shelljs')
 const R = require('ramda')
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
@@ -35,7 +36,13 @@ const noMegusta = (moduleName) => {
 }
 
 module.exports = async function (context) {
-    // grab a fist-full of features...
+  // ensure we're in a supported directory
+  if (!isIgniteDirectory(process.cwd())) {
+    context.print.error('The `ignite remove` command must be run in an ignite-compatible directory.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
+
+  // grab a fist-full of features...
   const { print, parameters, prompt, filesystem, ignite } = context
   const { info, warning, xmark, error, success } = print
 

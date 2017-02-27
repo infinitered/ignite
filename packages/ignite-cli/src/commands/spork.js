@@ -2,8 +2,15 @@
 // ----------------------------------------------------------------------------
 const { reduce, find } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
 
 module.exports = async function (context) {
+  // ensure we're in a supported directory
+  if (!isIgniteDirectory(process.cwd())) {
+    context.print.error('The `ignite spork` command must be run in an ignite-compatible directory.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
+
   // grab a fist-full of features...
   const { print, filesystem, patching } = context
   const { warning, success } = print
