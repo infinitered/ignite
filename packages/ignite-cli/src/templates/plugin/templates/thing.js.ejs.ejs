@@ -1,3 +1,8 @@
 // Replace with your own template "thing".
 
-<%= props.name %> // Pass in props from your command.
+// Pass in props from your command.
+<%-
+  // i'm so sorry - the right answer is in
+  // https://github.com/mde/ejs/blob/master/docs/syntax.md somewhere
+  '<' + '%= props.name %' + '>'
+%>
