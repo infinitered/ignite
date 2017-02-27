@@ -21,6 +21,13 @@ const add = async function (context) {
     `${process.cwd()}/App`,       // to your ignited project's App
     { overwrite: true }           // clobber any existing files
   )
+  
+  // copy Jest tests
+  filesystem.copy(
+    `${__dirname}/templates/__tests__`, // from my templates/App
+    `${process.cwd()}/__tests__`,       // to your ignited project's App
+    { overwrite: true }           // clobber any existing files
+  )
 
   // generate some files from templates
   spinner.text = '▸ generating files'
