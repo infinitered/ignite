@@ -120,12 +120,7 @@ Examples:
   log(`installing ${modulePath} from source ${specs.type}`)
 
   // import the ignite plugin node module
-  const spinner = spin({ enabled: false })
-
-  if (!isAppTemplate && !parameters.options.debug) {
-    spinner.text = `adding ${print.colors.cyan(moduleName)}`
-    spinner.start()
-  }
+  const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
 
   if (specs.type) {
     try {
