@@ -116,7 +116,7 @@ const add = async function (context) {
   spinner.stop()
 
   // pass long the debug flag if we're running in that mode
-  const debugFlag = parameters.options.debug ? '--debug' : 'p'
+  const debugFlag = parameters.options.debug ? '--debug' : ''
 
   await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators ${debugFlag}`, { stdio: 'inherit' })
 
@@ -135,6 +135,22 @@ const add = async function (context) {
 
   if (answers['animatable'] === 'react-native-animatable') {
     await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable ${debugFlag}`, { stdio: 'inherit' })
+  }
+
+  // initial git
+  if (system.which('git')) {
+    spinner.text = `setting up git`
+    spinner.start()
+    ignite.log('git init .')
+    await system.run('git init .')
+    ignite.log('git add .')
+    await system.run('git add .')
+    ignite.log('git commit')
+    await system.run('git commit -m "Initial commit."')
+    // setup husky git hooks
+    spinner.text = 'setting up git hooks'
+    system.run(`node node_modules/husky/bin/install .`)
+    spinner.succeed()
   }
 
   // Wrap it up with our success message.
