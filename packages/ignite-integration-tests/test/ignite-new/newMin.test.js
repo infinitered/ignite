@@ -28,6 +28,19 @@ test('app directory', async t => {
   t.is(jetpack.exists(`${APP}/node_modules/react-native`), 'dir')
 })
 
+test('app tests', async t => {
+  process.chdir(APP)
+  try {
+    const testResult = await execa('npm', ['test'])
+    t.is(testResult.code, 0)
+    t.is(testResult.failed, false)
+  } catch (e) {
+    t.fail(`app tests failed: ${e.message}`)
+  } finally {
+    process.chdir('..')
+  }
+})
+
 test('ignite plugins', async t => {
   const ignitePlugins = jetpack
     .cwd(`${APP}/node_modules`)
