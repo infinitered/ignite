@@ -1,5 +1,12 @@
 const { merge, pipe, assoc, omit, __ } = require('ramda')
 
+// Hack to get around `ignite add <x>` spin-up delay
+const addTemporarySpinner = (package, spinner) => {
+  spinner.text = `initializing ${package}`
+  spinner.start()
+  setTimeout(() => spinner.stop(), 8000)
+}
+
 // Questions to ask during install if the chatty route is chosen.
 const installQuestions = [
   {
@@ -118,22 +125,27 @@ const add = async function (context) {
   // pass long the debug flag if we're running in that mode
   const debugFlag = parameters.options.debug ? '--debug' : 'p'
 
+  addTemporarySpinner('basic-generators', spinner)
   await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators ${debugFlag}`, { stdio: 'inherit' })
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] === 'Yes') {
+    addTemporarySpinner('dev-screens', spinner)
     await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons') {
+    addTemporarySpinner('vector-icons', spinner)
     await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['i18n'] === 'react-native-i18n') {
+    addTemporarySpinner('i18n', spinner)
     await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['animatable'] === 'react-native-animatable') {
+    addTemporarySpinner('animatable', spinner)
     await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable ${debugFlag}`, { stdio: 'inherit' })
   }
 
