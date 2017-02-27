@@ -4,8 +4,7 @@
   "license": "MIT",
   "files": [
     "templates",
-    "index.js",
-    "ignite.toml"
+    "index.js"
   ],
   "author": {
     "name": "Infinite Red",

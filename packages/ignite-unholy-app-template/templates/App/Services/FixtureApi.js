@@ -2,13 +2,25 @@
 
 export default {
   // Functions return fixtures
-  getCity: (city: string) => {
-    // This fixture only supports Boise or else returns toronto
-    const boiseData = require('../Fixtures/boise.json')
-    const torontoData = require('../Fixtures/toronto.json')
+  getRoot: () => {
     return {
       ok: true,
-      data: city.toLowerCase() === 'boise' ? boiseData : torontoData
+      data: require('../Fixtures/root.json')
+    }
+  },
+  getRate: () => {
+    return {
+      ok: true,
+      data: require('../Fixtures/rateLimit.json')
+    }
+  },
+  getUser: (username: string) => {
+    // This fixture only supports gantman or else returns skellock
+    const gantmanData = require('../Fixtures/gantman.json')
+    const skellockData = require('../Fixtures/skellock.json')
+    return {
+      ok: true,
+      data: username.toLowerCase() === 'gantman' ? gantmanData : skellockData
     }
   }
 }

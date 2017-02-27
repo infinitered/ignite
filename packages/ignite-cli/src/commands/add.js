@@ -2,10 +2,11 @@
 // @cliAlias a
 // ----------------------------------------------------------------------------
 
-const Toml = require('toml')
 const R = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
+const isIgniteDirectory = require('../lib/isIgniteDirectory')
+const prependIgnite = require('../lib/prependIgnite')
 const exitCodes = require('../lib/exitCodes')
 
 /**
@@ -82,12 +83,19 @@ module.exports = async function (context) {
   const { print, filesystem, prompt, ignite, parameters, strings } = context
   const { info, warning, spin } = print
   const { log } = ignite
+
   log('running add command')
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
 
   // we need to know if this is an app template
   const isAppTemplate = parameters.options['is-app-template']
+
+  // ensure we're in a supported directory
+  if (!isIgniteDirectory(process.cwd()) && !isAppTemplate) {
+    context.print.error('The `ignite add` command must be run in an ignite-compatible directory.')
+    process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
 
   // the thing we're trying to install
   if (strings.isBlank(parameters.second)) {
@@ -111,12 +119,7 @@ Examples:
   log(`installing ${modulePath} from source ${specs.type}`)
 
   // import the ignite plugin node module
-  const spinner = spin({ enabled: false })
-
-  if (!isAppTemplate && !parameters.options.debug) {
-    spinner.text = `adding ${print.colors.cyan(moduleName)}`
-    spinner.start()
-  }
+  const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
 
   if (specs.type) {
     try {
@@ -130,18 +133,18 @@ Examples:
     process.exit(exitCodes.PLUGIN_INVALID)
   }
 
-  // optionally load some configuration from the ignite.toml from the plugin.
-  const tomlFilePath = `${modulePath}/ignite.toml`
-  const newConfig = filesystem.exists(tomlFilePath)
-    ? Toml.parse(filesystem.read(tomlFilePath))
-    : { ignite: {} }
+  // optionally load some configuration from the ignite.json from the plugin.
+  const ignitePluginConfigPath = `${modulePath}/ignite.json`
+  const newConfig = filesystem.exists(ignitePluginConfigPath)
+    ? filesystem.read(ignitePluginConfigPath, 'json')
+    : {}
 
   const proposedGenerators = R.reduce((acc, k) => {
     acc[k] = moduleName
     return acc
-  }, {}, newConfig.ignite.generators || [])
+  }, {}, newConfig.generators || [])
 
-  // we compare the toml changes against ours
+  // we compare the generator config changes against ours
   const changes = detectedChanges(currentGenerators, proposedGenerators)
   if (changes.length > 0) {
     spinner.stop()

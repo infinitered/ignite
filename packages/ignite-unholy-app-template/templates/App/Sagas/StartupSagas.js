@@ -1,9 +1,9 @@
 import { put, select } from 'redux-saga/effects'
-import TemperatureActions from '../Redux/TemperatureRedux'
+import GithubActions from '../Redux/GithubRedux'
 import { is } from 'ramda'
 
 // exported to make available for tests
-export const selectTemperature = (state) => state.temperature.temperature
+export const selectAvatar = (state) => state.github.avatar
 
 // process STARTUP actions
 export function * startup (action) {
@@ -14,7 +14,7 @@ export function * startup (action) {
     // logging an object for better clarity
     console.tron.log({
       message: 'pass objects for better logging',
-      someGeneratorFunction: selectTemperature
+      someGeneratorFunction: selectAvatar
     })
 
     // fully customized!
@@ -28,13 +28,13 @@ export function * startup (action) {
         subObject,
         someInlineFunction: () => true,
         someGeneratorFunction: startup,
-        someNormalFunction: selectTemperature
+        someNormalFunction: selectAvatar
       }
     })
   }
-  const temp = yield select(selectTemperature)
-  // only fetch new temps when we don't have one yet
-  if (!is(Number, temp)) {
-    yield put(TemperatureActions.temperatureRequest('San Francisco'))
+  const avatar = yield select(selectAvatar)
+  // only get if we don't have it yet
+  if (!is(String, avatar)) {
+    yield put(GithubActions.userRequest('GantMan'))
   }
 }

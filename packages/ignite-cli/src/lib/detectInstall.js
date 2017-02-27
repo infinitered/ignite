@@ -1,18 +1,4 @@
-const { startsWith } = require('ramdasauce')
-const { unless, concat } = require('ramda')
-
-/**
- * Ensures the given string starts with 'ignite-'.
- *
- * @param {string} value The string to check.
- * @returns {string} The same string, but better.
- */
-const alwaysStartWithIgnite = function (value) {
-  return unless(
-    startsWith('ignite-'),
-    concat('ignite-')
-  )(value)
-}
+const prependIgnite = require('./prependIgnite')
 
 /**
  * Detects the type of install the user is requesting for this plugin.
@@ -49,7 +35,7 @@ function detectInstall (context) {
 
   // this is a npmjs module
   return {
-    moduleName: alwaysStartWithIgnite(thing),
+    moduleName: prependIgnite(thing),
     type: 'npm'
   }
 }

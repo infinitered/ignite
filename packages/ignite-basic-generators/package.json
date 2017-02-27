@@ -5,7 +5,7 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "ignite.toml",
+    "ignite.json",
     "templates",
     "shared",
     "commands"

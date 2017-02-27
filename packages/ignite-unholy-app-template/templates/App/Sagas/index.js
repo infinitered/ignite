@@ -6,7 +6,7 @@ import DebugConfig from '../Config/DebugConfig'
 /* ------------- Types ------------- */
 
 import { StartupTypes } from '../Redux/StartupRedux'
-import { TemperatureTypes } from '../Redux/TemperatureRedux'
+import { GithubTypes } from '../Redux/GithubRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 
@@ -14,7 +14,7 @@ import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 
 import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
-import { getTemperature } from './TemperatureSagas'
+import { getUserAvatar } from './GithubSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -33,6 +33,6 @@ export default function * root () {
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
 
     // some sagas receive extra parameters in addition to an action
-    takeLatest(TemperatureTypes.TEMPERATURE_REQUEST, getTemperature, api)
+    takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ]
 }

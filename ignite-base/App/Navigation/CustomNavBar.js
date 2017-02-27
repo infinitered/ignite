@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { View, Image, LayoutAnimation } from 'react-native'
 import NavItems from './NavItems'
-import styles from './Styles/CustomNavBarStyles'
+import styles from './Styles/CustomNavBarStyle'
 import SearchBar from '../Components/SearchBar'
 import { connect } from 'react-redux'
 import { Metrics, Images } from '../Themes'
@@ -33,35 +33,35 @@ class CustomNavBar extends React.Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     if (this.state.showSearchBar) {
       return <SearchBar onSearch={this.props.performSearch} searchTerm={this.props.searchTerm} onCancel={this.cancelSearch} />
-    } else {
-      return (
-        <Image resizeMode='cover' style={styles.logo} source={Images.clearLogo} />
-      )
     }
+
+    return (
+      <Image resizeMode='cover' style={styles.logo} source={Images.clearLogo} />
+    )
   }
 
   renderRightButtons () {
     if (this.state.showSearchBar) {
       return <View style={{width: Metrics.icons.medium}} />
-    } else {
-      return (
-        <View style={styles.rightButtons}>
-          {NavItems.searchButton(this.showSearchBar)}
-        </View>
-      )
     }
+
+    return (
+      <View style={styles.rightButtons}>
+        {NavItems.searchButton(this.showSearchBar)}
+      </View>
+    )
   }
 
   renderLeftButtons () {
     if (this.state.showSearchBar) {
       return null
-    } else {
-      return (
-        <View style={styles.leftButtons}>
-          {NavItems.backButton()}
-        </View>
-      )
     }
+
+    return (
+      <View style={styles.leftButtons}>
+        {NavItems.backButton()}
+      </View>
+    )
   }
 
   render () {
