@@ -92,7 +92,7 @@ const createNewPlugin = async (context) => {
   ]
 
   // copy over the files
-  await ignite.copyBatch(context, copyJobs, {name, pluginName, answers})
+  await ignite.copyBatch(context, copyJobs, {name, pluginName, answers, isGenerator: answers.command === 'Yes'})
 }
 
 /**
