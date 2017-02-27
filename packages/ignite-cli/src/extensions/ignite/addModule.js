@@ -6,23 +6,27 @@ module.exports = (plugin, command, context) => {
    * @param {Object}  options - Various installing flags.
    * @param {boolean} options.link - Should we run `react-native link`?
    * @param {boolean} options.dev - Should we install as a dev-dependency?
+   * @param {boolean} options.version - Install a particular version?
    */
   async function addModule (moduleName, options = {}) {
     const { print, system, ignite } = context
     const { useYarn } = ignite
+    const moduleFullName = options.version
+      ? `${moduleName}@${options.version}`
+      : moduleName
 
     const depType = options.dev ? 'as dev dependency' : ''
     const spinner = print.spin(
-      `▸ installing ${print.colors.cyan(moduleName)} ${depType}`
+      `▸ installing ${print.colors.cyan(moduleFullName)} ${depType}`
     )
 
     // install the module
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
-      await system.run(`yarn add ${moduleName} ${addSwitch}`)
+      await system.run(`yarn add ${moduleFullName} ${addSwitch}`)
     } else {
       const installSwitch = options.dev ? '--save-dev' : '--save'
-      await system.run(`npm i ${moduleName} ${installSwitch}`)
+      await system.run(`npm i ${moduleFullName} ${installSwitch}`)
     }
     spinner.stop()
 
