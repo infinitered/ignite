@@ -49,6 +49,10 @@ module.exports = async function (context) {
   }
   print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
 
+  // Display a temporary spinner to indicate something's happening
+  const spinner = print.spin('initializing Ignite')
+  setTimeout(() => spinner.stop(), 4000)
+
   /**
    * Figures out which app template we'll be using (without the ignite- prefix).
    *
