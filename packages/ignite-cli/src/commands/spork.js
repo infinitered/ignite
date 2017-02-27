@@ -12,16 +12,18 @@ module.exports = async function (context) {
   }
 
   // grab a fist-full of features...
-  const { print, filesystem, patching } = context
+  const { print, filesystem } = context
   const { warning, success } = print
 
   // ignite spork
-  // -> lists all generator plugins (identified in toml)
+  // -> lists all generator plugins (identified in json)
   const pluginOptions = reduce((a, k) => {
-    const tomlFile = `${k.directory}/ignite.toml`
-    // review them for toml files with generators
-    if (patching.isInFile(tomlFile, 'generators')) {
-      a.push(k.name)
+    const jsonFile = `${k.directory}/ignite.json`
+    if (filesystem.exists(jsonFile)) {
+      const jsonContents = filesystem.read(jsonFile, 'json') || {}
+      if (jsonContents.generators) {
+        a.push(k.name)
+      }
     }
     return a
   }, [], context.ignite.findIgnitePlugins())
