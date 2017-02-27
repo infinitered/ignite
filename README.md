@@ -15,7 +15,7 @@ We're aiming to release around the first week of March.
 <p align="center">
   :fire: The ideal starting app for React Native, best practices, generators, and more. :fire:
   <br/>
-  <a href="https://community.infinite.red/">
+  <a href="http://community.infinite.red/">
     <img src="https://infiniteredcommunity.herokuapp.com/badge.svg">
   </a>
   <a href="https://www.codacy.com/app/gantman/ignite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=infinitered/ignite&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/1c6e04abe7224bdc88095129b5eb43fb"/></a>
