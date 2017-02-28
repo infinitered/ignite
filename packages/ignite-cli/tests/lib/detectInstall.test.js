@@ -2,6 +2,10 @@ const test = require('ava')
 const filesystem = require('fs-jetpack')
 const detectInstall = require('../../src/lib/detectInstall')
 const path = require('path')
+const mockFs = require('mock-fs')
+
+// unhook the fs mocks
+test.afterEach.always(mockFs.restore)
 
 test('detects npm modules', async t => {
   const actual = detectInstall({
@@ -12,7 +16,7 @@ test('detects npm modules', async t => {
   t.deepEqual(actual, expected)
 })
 
-test('won\'t double prefix', async t => {
+test("won't double prefix", async t => {
   const actual = detectInstall({
     filesystem,
     parameters: { second: 'ignite-something' }
@@ -50,5 +54,35 @@ test('detects invalid plugin directories', async t => {
     parameters: { second: moduleName }
   })
   const expected = { type: 'npm', moduleName }
+  t.deepEqual(actual, expected)
+})
+
+test('plugins from a directory that is an override', async t => {
+  const moduleName = 'ignite-some-plugin'
+
+  // pretend we have a directory with a plugin
+  mockFs({
+    'override-land': {
+      'ignite-some-plugin': {
+        'package.json': `{ "name": "ignite-some-plugin" }`
+      }
+    }
+  })
+
+  // we're looking for the override version
+  const expected = {
+    type: 'directory',
+    moduleName,
+    override: true,
+    directory: 'override-land/ignite-some-plugin'
+  }
+
+  // detect
+  const actual = detectInstall({
+    filesystem,
+    parameters: { second: moduleName },
+    ignite: { pluginOverrides: ['override-land'] }
+  })
+
   t.deepEqual(actual, expected)
 })

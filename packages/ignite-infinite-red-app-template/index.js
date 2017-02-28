@@ -35,7 +35,6 @@ const maxOptions = {
 const add = async function (context) {
   const { filesystem, parameters, ignite, reactNative, print, system, prompt, template } = context
   const name = parameters.third
-  const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
   const spinner = print.spin(`using the ${print.colors.red('Infinite Red')} app template`).succeed()
 
   // attempt to install React Native or die trying
@@ -118,23 +117,23 @@ const add = async function (context) {
   // pass long the debug flag if we're running in that mode
   const debugFlag = parameters.options.debug ? '--debug' : ''
 
-  await system.spawn(`ignite add ${igniteDevPackagePrefix}basic-generators ${debugFlag}`, { stdio: 'inherit' })
+  await system.spawn(`ignite add basic-generators ${debugFlag}`, { stdio: 'inherit' })
 
   // now run install of Ignite Plugins
   if (answers['dev-screens'] === 'Yes') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}dev-screens ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['vector-icons'] === 'react-native-vector-icons') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}vector-icons ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['i18n'] === 'react-native-i18n') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}i18n ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
   }
 
   if (answers['animatable'] === 'react-native-animatable') {
-    await system.spawn(`ignite add ${igniteDevPackagePrefix}animatable ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
   }
 
   // initial git

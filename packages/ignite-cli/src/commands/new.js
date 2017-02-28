@@ -79,22 +79,8 @@ module.exports = async function (context) {
   // grab the right app template
   const appTemplatePackage = getAppTemplate()
 
-  // Install the ignite-* packages from the local dev directory.
-  //
-  // This is pretty much always what we while we dev.
-  //
-  // To test what live is like, you can run `ignite new FooTown --live`.
-  //
-  // TODO(steve): Don't forget to remove this when we launch... open to better ways of handling it.
-  const igniteDevPackagePrefix = parameters.options.live ? '' : path.resolve(`${__dirname}/../../..`) + '/ignite-'
-
   // some extra options we'll be passing through to the `ignite add <app-template>`
   const extraAddOptions = ['--is-app-template']
-
-  // pass along the ignite prefix if we have it
-  if (!parameters.options.live) {
-    extraAddOptions.push(`--ignite-dev-package-prefix ${igniteDevPackagePrefix}`)
-  }
 
   // pass through the --max flag
   // NOTE(steve):
@@ -118,7 +104,7 @@ module.exports = async function (context) {
   // let's kick off the template
   let ok = false
   try {
-    const command = `ignite add ${igniteDevPackagePrefix}${appTemplatePackage} ${projectName} ${extraAddOptions.join(' ')}`
+    const command = `ignite add ${appTemplatePackage} ${projectName} ${extraAddOptions.join(' ')}`
     log(`running app template: ${command}`)
     await system.spawn(command, { stdio: 'inherit' })
     log('finished app template')
