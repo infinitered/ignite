@@ -1,7 +1,9 @@
 // @flow
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
+import { connect } from 'react-redux'
+import { isLoadedFromStorage } from '../Redux/StartupRedux'
 import { Images } from '../Themes'
 import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -9,8 +11,9 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 // Styles
 import styles from './Styles/PresentationScreenStyles'
 
-export default class PresentationScreen extends React.Component {
+class PresentationScreen extends React.Component {
   render () {
+    const { loadedFromStorage } = this.props
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
@@ -25,6 +28,10 @@ export default class PresentationScreen extends React.Component {
               are available below.
             </Text>
           </View>
+
+          <Text style={styles.sectionText} >
+            {loadedFromStorage ? 'Storage loaded' : 'Loading from storage..'}
+          </Text>
 
           <RoundedButton onPress={NavigationActions.componentExamples}>
             Component Examples Screen
@@ -55,3 +62,15 @@ export default class PresentationScreen extends React.Component {
     )
   }
 }
+
+PresentationScreen.propTypes = {
+  loadedFromStorage: PropTypes.bool
+}
+
+const mapStateToProps = (state) => {
+  return {
+    loadedFromStorage: isLoadedFromStorage(state.startup)
+  }
+}
+
+export default connect(mapStateToProps, null)(PresentationScreen)
