@@ -30,7 +30,7 @@ const add = async function (context) {
  * Remove yourself from the project.
  */
 const remove = async function (context) {
-  const { ignite, filesystem, patching } = context
+  const { ignite, filesystem } = context
 
   // remove the npm module and unlink it
   await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })
