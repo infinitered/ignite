@@ -1,19 +1,19 @@
-# How To Contribute to Ignite 2.0
+# How to Contribute to Ignite
 
 First, thanks for reading this.
 
-This is the quick & dirty version on how to get your development environment setup and ready for PRs to Ignite.
+This is the quick & dirty version on how to get your development environment setup and ready for submitting pull requests to Ignite.
 
-We're on the `master` branch, so when you fork this repo, you can open PRs against `master.  This is all default so nothing changes.
+As you would expect, the `master` branch is Ignite's production branch. When you fork this repo, you can open pull requests against `master`. This is all common practice open source development, nothing surprising here.
 
-## Required Tools
+## Requirements
 
-* Node 7
-* NPM 4 (comes with Node 7)
+* Node 7.6+
+* NPM 4 (ships with Node 7)
 
 ## Getting Started
 
-Head over to https://github.com/infinitered/ignite and hit that shiny Fork button in the top right.
+Head over to [https://github.com/infinitered/ignite](https://github.com/infinitered/ignite) and hit that shiny Fork button in the top right.
 
 Next clone it and setup the dependencies.
 
@@ -26,7 +26,7 @@ npm run bootstrap
 
 Sweet.
 
-We now need to make the `ignite` command available globally.  Usually end users will type `npm i -g ignite-cli` but we've chosen a hard life for ourselves as developers so a few more steps are required.
+We now need to make the `ignite` command available globally. Usually end users will type `npm i -g ignite-cli` but we've chosen a hard life for ourselves as developers so a few more steps are required.
 
 We must use `npm link`.
 
@@ -41,7 +41,6 @@ If it was Ignite 1.0, `npm rm -g react-native-ignite` will sort you out.
 
 If it was an earlier version of 2.0, then `rm /usr/local/bin/ignite && rm /usr/local/lib/node_modules/ignite` is what you want.
 
-
 ## Did it work?
 
 Go to a brand new directory:
@@ -55,7 +54,7 @@ ignite new UberForHeadLice
 
 Answer a few questions and you're half way to disrupting the Grade 1 scalp hygiene industry.
 
-Did it fail?  Come find me on our Slack at http://community.infinite.red in the #ignite channel.
+Did it fail?  Come find us on our Slack at [http://community.infinite.red](http://community.infinite.red) in the #ignite channel.
 
 <strong>For now, you can expect the version number to say 0.2.0.  I'm currently working on the build script and will bump this back up to 2.0.0-beta.1 (etc) when were ready. Today or tomorrow!  Sorry for the confusion.</strong>
 
