@@ -79,7 +79,6 @@ Also, included is a bunch of 3rd party ignite plugins.  These will be plugins th
 
 * `ignite-animatable` - for `react-native-animatable`
 * `ignite-i18n` - for `react-native-i18n`
-* `ignite-vector-icons` for `react-native-vector-icons`
 
 ## Debugging
 
