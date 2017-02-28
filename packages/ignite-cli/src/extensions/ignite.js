@@ -18,6 +18,7 @@ const patchInFileExt = require('./ignite/patchInFile')
 const generateExt = require('./ignite/generate')
 const logExt = require('./ignite/log')
 const versionExt = require('./ignite/version')
+const pluginOverridesExt = require('./ignite/pluginOverrides')
 
 /**
  * Adds ignite goodies
@@ -69,7 +70,8 @@ function attach (plugin, command, context) {
     patchInFile: patchInFileExt(plugin, command, context),
     generate: generateExt(plugin, command, context),
     log: logExt(plugin, command, context),
-    version: versionExt(plugin, command, context)
+    version: versionExt(plugin, command, context),
+    pluginOverrides: pluginOverridesExt(plugin, command, context)
   }
 }
 

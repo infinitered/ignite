@@ -6,7 +6,6 @@
 const add = async function (context) {
   const { filesystem, system, parameters, ignite, print, reactNative } = context
   const name = parameters.third
-  const igniteDevPackagePrefix = parameters.options['ignite-dev-package-prefix'] // NOTE(steve): going away soon
   const spinner = print.spin(`using Infinite Red's ${print.colors.cyan('minimal')} app template`).succeed()
 
   // attempt to install React Native or die trying
@@ -43,7 +42,7 @@ const add = async function (context) {
 
   // install the ignite-basic-generators
   const debugFlag = parameters.options.debug ? '--debug' : 'p'
-  const basicGeneratorsCommand = `ignite add ${igniteDevPackagePrefix}basic-generators ${debugFlag}`
+  const basicGeneratorsCommand = `ignite add basic-generators ${debugFlag}`
   await system.spawn(basicGeneratorsCommand, { stdio: 'inherit' })
 
   // Wrap it up with our success message.

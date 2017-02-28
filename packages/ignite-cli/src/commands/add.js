@@ -6,8 +6,8 @@ const R = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
-const prependIgnite = require('../lib/prependIgnite')
 const exitCodes = require('../lib/exitCodes')
+const path = require('path')
 
 /**
  * Removes the ignite plugin.
@@ -41,6 +41,20 @@ async function importPlugin (context, opts) {
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
 
+  // check to see if it exists first
+  if (type === 'npm') {
+    try {
+      const json = JSON.parse(await system.run(`npm info ${target} --json`))
+      log(`${json.name} ${json.version} on npm.`)
+    } catch (e) {
+      log(`unable to find ${target} on npm`)
+      const boom = new Error(e.message)
+      boom.unavailable = true
+      boom.name = target
+      throw boom
+    }
+  }
+
   if (ignite.useYarn) {
     if (isDirectory) {
       // where is the yarn cache?
@@ -67,13 +81,13 @@ async function importPlugin (context, opts) {
       ? `yarn add file:${target} --force --dev`
       : `yarn add ${target} --dev`
     log(cmd)
-    await system.exec(cmd, { stdio: 'ignore' })
+    await system.exec(cmd, { stdio: 'pipe' })
     log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
     const cmd = `npm i ${target} --save-dev ${cacheBusting}`
     log(cmd)
-    await system.run(cmd)
+    await system.exec(cmd, { stdio: 'pipe' })
     log('finished npm command')
   }
 }
@@ -125,7 +139,24 @@ Examples:
     try {
       await importPlugin(context, specs)
     } catch (e) {
-      spinner.fail(`${moduleName} does not appear to be an NPM module. Does it exist and have a valid package.json?`)
+      if (e.unavailable) {
+        spinner.fail(`${print.colors.bold(moduleName)} is not available on npm.`)
+        print.info('')
+        print.info(print.colors.muted('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'))
+        print.error('  We also searched in these directories:\n')
+        ignite.pluginOverrides.forEach(dir => {
+          print.info(`    ▸ ${dir}`)
+        })
+        print.error('')
+        print.error('  During Ignite 2 alpha, please consider setting this\n  environment variable:\n')
+        print.info(`  export IGNITE_PLUGIN_PATH=${path.resolve(__dirname, '..', '..', '..')}`)
+        print.info(print.colors.muted('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'))
+      } else {
+        spinner.fail(`${print.colors.red(moduleName)} was not able to be installed. Is it a valid NPM module?`)
+        print.error('----------')
+        print.error(e.message)
+        print.error('----------')
+      }
       process.exit(exitCodes.PLUGIN_INVALID)
     }
   } else {
