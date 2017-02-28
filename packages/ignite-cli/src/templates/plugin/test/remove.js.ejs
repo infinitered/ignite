@@ -1,0 +1,17 @@
+const test = require('ava')
+const sinon = require('sinon')
+const plugin = require('../index')
+
+test('removes <%= props.name %>', async t => {
+  const removeModule = sinon.spy()
+  const removeComponentExample = sinon.spy()
+
+  const context = {
+    ignite: { removeModule, removeComponentExample }
+  }
+
+  await plugin.remove(context)
+
+  t.true(removeModule.calledWith('react-native-MODULENAME', { unlink: true }))
+  t.true(removeComponentExample.calledWith('<%= props.name %>Example.js'))
+})
