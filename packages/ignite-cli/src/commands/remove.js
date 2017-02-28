@@ -52,7 +52,7 @@ module.exports = async function (context) {
 
   // Check if they used a directory path instead of a plugin name
   if (moduleParam.includes('/')) {
-    context.print.error(`💩 When removing a package, you shouldn't use a path.
+    error(`💩 When removing a package, you shouldn't use a path.
     Try ${ context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`) } instead.`)
     process.exit(exitCodes.PLUGIN_NAME)
   }
@@ -70,8 +70,15 @@ module.exports = async function (context) {
     // Ask user if they are sure.
     if (changes.length > 0) {
       // we warn the user on changes
-      warning(`The following generators would be removed: ${join(', ', changes)}`)
-      const ok = await prompt.confirm('You ok with that?')
+      let ok
+      // print.debug(parameters)
+      if (parameters.options.confirm) {
+        ok = true
+      } else {
+        warning(`The following generators would be removed: ${join(', ', changes)}`)
+        ok = await prompt.confirm('You ok with that?')
+      }
+      
       if (ok) {
         const generatorsList = Object.assign({}, config.generators)
         map((k) => delete generatorsList[k], changes)
