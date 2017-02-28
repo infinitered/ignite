@@ -75,11 +75,6 @@ Under the `packages` directory, you'll see:
 * `ignite-dev-screens` - A set of awesome developer-facing screens to help you build your app.
 * `ignite-integration-tests` - is broken.  it makes me sad.  I will fix it.
 
-Also, included is a bunch of 3rd party ignite plugins.  These will be plugins that we maintain and pledge to keep up-to-date and working.
-
-* `ignite-animatable` - for `react-native-animatable`
-* `ignite-vector-icons` for `react-native-vector-icons`
-
 ## Debugging
 
 As we iron out the kinks, you might find that passing `--debug` (as in `ignite new Thing --debug`) might help debugging things.
