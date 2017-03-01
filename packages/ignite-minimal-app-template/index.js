@@ -20,7 +20,7 @@ const add = async function (context) {
     `${process.cwd()}/App`,       // to your ignited project's App
     { overwrite: true }           // clobber any existing files
   )
-  
+
   // copy Jest tests
   filesystem.copy(
     `${__dirname}/templates/__tests__`, // from my templates/App
@@ -37,7 +37,7 @@ const add = async function (context) {
     { template: 'ignite.json.ejs', target: 'ignite/ignite.json' }
   ]
   const templateProps = { name, igniteVersion: ignite.version }
-  await ignite.copyBatch(context, templates, templateProps)
+  await ignite.copyBatch(context, templates, templateProps, { quiet: true })
   spinner.stop()
 
   // install the ignite-basic-generators
