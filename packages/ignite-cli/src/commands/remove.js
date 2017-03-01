@@ -46,6 +46,7 @@ module.exports = async function (context) {
   // grab a fist-full of features...
   const { print, parameters, prompt, filesystem, ignite } = context
   const { info, warning, xmark, error, success } = print
+  const { options } = parameters
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   const moduleParam = parameters.array.pop()
@@ -71,8 +72,7 @@ module.exports = async function (context) {
     if (changes.length > 0) {
       // we warn the user on changes
       let ok
-      // print.debug(parameters)
-      if (parameters.options.confirm) {
+      if (options.y || options.yes || options.confirm) {
         ok = true
       } else {
         warning(`The following generators would be removed: ${join(', ', changes)}`)

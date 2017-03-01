@@ -98,11 +98,11 @@ command or generator.
 ### Remove
 
 ```
-ignite remove {ignite plugin name} [--confirm]
+ignite remove {ignite plugin name} [-y]
 ```
 
-Removes an Ignite plugin. You can add `--confirm` which automatically answers
-"yes" to the remove generator confirmation question.
+Removes an Ignite plugin. You can add `-y` which automatically answers
+"yes" to any confirmation questions.
   
 The opposite of `ignite add`, this removes a plugin from your project. Be warned
 that this may change other files in your project, e.g. to undo changes made by
