@@ -57,7 +57,18 @@ test('detects invalid plugin directories', async t => {
   t.deepEqual(actual, expected)
 })
 
-test('plugins from a directory that is an override', async t => {
+/**
+ * 🚨 SUPER DANGER SAUCE 🚨
+ *
+ * This test has a serial function on it.  That means, AVA will run this first
+ * before the other tests.  The reason why is because mockFs changes the environment.
+ * And the other test expects the environment to be sane.
+ *
+ * Both tests are legit, it's just they can't be run in parallel.
+ *
+ * Slow clap standing ovation to AVA for having test.serial!
+ */
+test.serial('plugins from a relative directory that is an override', async t => {
   const moduleName = 'ignite-some-plugin'
 
   // pretend we have a directory with a plugin
@@ -82,6 +93,27 @@ test('plugins from a directory that is an override', async t => {
     filesystem,
     parameters: { second: moduleName },
     ignite: { pluginOverrides: ['override-land'] }
+  })
+
+  t.deepEqual(actual, expected)
+})
+
+test('plugins from a absolute directory that is an override', async t => {
+  const fixturesPath = path.resolve(`${__dirname}/../fixtures`)
+
+  // we're looking for the override version
+  const expected = {
+    type: 'directory',
+    moduleName: 'ignite-valid-plugin',
+    override: true,
+    directory: `${fixturesPath}/ignite-valid-plugin`
+  }
+
+  // detect
+  const actual = detectInstall({
+    filesystem,
+    parameters: { second: 'valid-plugin' },
+    ignite: { pluginOverrides: [fixturesPath] }
   })
 
   t.deepEqual(actual, expected)

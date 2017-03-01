@@ -31,19 +31,20 @@ function detectInstall (context) {
       filesystem.exists(`${candidate}/package.json`) === 'file'
 
   // the plugin we're trying to install
-  const plugin = prependIgnite(parameters.second)
+  const plugin = parameters.second
+  const ignitePlugin = prependIgnite(plugin)
 
   // do we have overrides?
   if (pluginOverrides.length > 0) {
     // look for the plugin into one of our override paths
     const foundPath = find(
-      overridePath => isValidIgnitePluginDirectory(`${overridePath}/${plugin}`),
+      overridePath => isValidIgnitePluginDirectory(`${overridePath}/${ignitePlugin}`),
       pluginOverrides
     )
 
     // did we find it?
     if (foundPath) {
-      const path = `${foundPath}/${plugin}`
+      const path = `${foundPath}/${ignitePlugin}`
       return {
         directory: path,
         override: true,
@@ -65,7 +66,7 @@ function detectInstall (context) {
 
   // the default is to assume that npm can figure out where to get this
   return {
-    moduleName: plugin,
+    moduleName: ignitePlugin,
     type: 'npm'
   }
 }

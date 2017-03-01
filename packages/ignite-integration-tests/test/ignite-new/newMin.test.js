@@ -1,6 +1,7 @@
 const test = require('ava')
 const execa = require('execa')
 const jetpack = require('fs-jetpack')
+const path = require('path')
 
 const IGNITE = '../../../ignite-cli/bin/ignite'
 const VERSION = jetpack.read('../ignite-cli/package.json', 'json').version
@@ -15,7 +16,11 @@ test.before(async () => {
   jetpack.remove(RUN_DIR)
   jetpack.dir(RUN_DIR)
   process.chdir(RUN_DIR)
-  await execa(IGNITE, ['new', APP, '--min'])
+  await execa(IGNITE, ['new', APP, '--min'], {
+    env: {
+      IGNITE_PLUGIN_PATH: path.resolve(BACK_DIR, '..')
+    }
+  })
 })
 
 // always clean up
