@@ -3,7 +3,13 @@
 .DS_Store
 npm-debug.log
 npm-debug.log*
+coverage
+.nyc_output
 yarn.lock
 lerna-debug.log
 node_modules
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
