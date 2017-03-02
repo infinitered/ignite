@@ -27,7 +27,7 @@ const checkYarn = (yarnVersion) => {
 
 const hasYarn = Shell.which('yarn')
 if (hasYarn && !checkYarn(getYarnVersion())) {
-  console.log(`You have yarn installed but it's version ${yarnVersion.join('.')}. Ignite requires yarn 20.0+.`)
+  console.log(`You have yarn installed but it's version ${getYarnVersion().join('.')}. Ignite requires yarn 20.0+.`)
   console.log('Run `brew upgrade yarn` if you use Homebrew or visit https://yarnpkg.com/en/docs/install.')
   process.exit(3)
 }
