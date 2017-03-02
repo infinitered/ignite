@@ -5,18 +5,18 @@ const plugin = require('../index')
 test('adds the proper npm module and component example', async t => {
   // spy on few things so we know they're called
   const addModule = sinon.spy()
-  const addComponentExample = sinon.spy()
+  const addPluginComponentExample = sinon.spy()
   
   // mock a context
   const context = {
-    ignite: { addModule, addComponentExample }
+    ignite: { addModule, addPluginComponentExample }
   }
 
   await plugin.add(context)
   
   t.true(addModule.calledWith('react-native-MODULENAME', { link: true }))
   t.true(
-    addComponentExample.calledWith('<%= props.name %>Example.js', {
+    addPluginComponentExample.calledWith('<%= props.name %>Example.js', {
       title: '<%= props.name %> Example'
     })
   )
