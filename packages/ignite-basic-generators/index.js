@@ -18,12 +18,12 @@ const screenExamples = [
 
 const add = async function (context) {
   // examples of generated screens
-  await context.ignite.addScreenExamples(screenExamples)
+  await context.ignite.addPluginScreenExamples(screenExamples)
 }
 
 const remove = async function (context) {
   // remove screens
-  await context.ignite.removeScreenExamples(screenExamples)
+  await context.ignite.removePluginScreenExamples(screenExamples)
 }
 
 module.exports = { add, remove }

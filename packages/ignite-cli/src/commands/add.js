@@ -230,7 +230,7 @@ Examples:
         return exitCodes.OK
       } catch (err) {
         // it's up to the throwers of this error to ensure the error message is human friendly.
-        // to do this, we need to ensure all our core features like `addModule`, `addComponentExample`, etc
+        // to do this, we need to ensure all our core features like `addModule`, `addPluginComponentExample`, etc
         // all play along nicely.
         spinner.fail(err.message)
         process.exit(exitCodes.PLUGIN_INSTALL)

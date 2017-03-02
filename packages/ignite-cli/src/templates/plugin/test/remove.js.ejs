@@ -4,14 +4,14 @@ const plugin = require('../index')
 
 test('removes <%= props.name %>', async t => {
   const removeModule = sinon.spy()
-  const removeComponentExample = sinon.spy()
+  const removePluginComponentExample = sinon.spy()
 
   const context = {
-    ignite: { removeModule, removeComponentExample }
+    ignite: { removeModule, removePluginComponentExample }
   }
 
   await plugin.remove(context)
 
   t.true(removeModule.calledWith('react-native-MODULENAME', { unlink: true }))
-  t.true(removeComponentExample.calledWith('<%= props.name %>Example.js'))
+  t.true(removePluginComponentExample.calledWith('<%= props.name %>Example.js'))
 })
