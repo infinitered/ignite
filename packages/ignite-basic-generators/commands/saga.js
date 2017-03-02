@@ -1,6 +1,4 @@
 // @cliDescription  Generates a saga with an optional test.
-// ----------------------------------------------------------------------------
-const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
@@ -19,9 +17,7 @@ module.exports = async function (context) {
   const name = pascalCase(parameters.first)
   const props = { name }
 
-  const jobs = [
-    { template: `saga.ejs`, target: `App/Sagas/${name}Sagas.js` }
-  ]
+  const jobs = [{ template: `saga.ejs`, target: `App/Sagas/${name}Sagas.js` }]
   if (tests) {
     jobs.push({
       template: `saga-test-${tests}.ejs`,
@@ -30,5 +26,5 @@ module.exports = async function (context) {
   }
 
   // make the templates
-  await generate(context, jobs, props)
+  await ignite.copyBatch(context, jobs, props)
 }

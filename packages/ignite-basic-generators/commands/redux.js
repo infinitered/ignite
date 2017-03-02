@@ -1,6 +1,4 @@
 // @cliDescription  Generates a action/creator/reducer set for Redux.
-// ----------------------------------------------------------------------------
-const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
@@ -18,9 +16,7 @@ module.exports = async function (context) {
   const name = pascalCase(parameters.first)
   const props = { name }
 
-  const jobs = [
-    { template: `redux.ejs`, target: `App/Redux/${name}Redux.js` }
-  ]
+  const jobs = [{ template: `redux.ejs`, target: `App/Redux/${name}Redux.js` }]
   if (config.tests) {
     jobs.push({
       template: `redux-test-${config.tests}.ejs`,
@@ -28,6 +24,5 @@ module.exports = async function (context) {
     })
   }
 
-  // make the templates
-  await generate(context, jobs, props)
+  await ignite.copyBatch(context, jobs, props)
 }

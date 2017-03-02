@@ -1,10 +1,8 @@
 // @cliDescription  Generates an opinionated container.
-// ----------------------------------------------------------------------------
-const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, print, strings } = context
+  const { parameters, print, strings, ignite } = context
   const { pascalCase, isBlank } = strings
 
   // validation
@@ -29,5 +27,5 @@ module.exports = async function (context) {
   ]
 
   // make the templates
-  await generate(context, jobs, props)
+  await ignite.copyBatch(context, jobs, props)
 }

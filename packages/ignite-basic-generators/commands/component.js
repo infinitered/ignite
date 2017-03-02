@@ -1,6 +1,4 @@
 // @cliDescription  Generates a component, styles, and an optional test.
-// @cliExample  ignite generate component MyComponent
-// ----------------------------------------------------------------------------
 
 module.exports = async function (context) {
   // grab some features
@@ -18,7 +16,8 @@ module.exports = async function (context) {
 
   // read some configuration
   const name = pascalCase(parameters.first)
-  const copyJobs = [
+  const props = { name }
+  const jobs = [
     {
       template: 'component.ejs',
       target: `App/Components/${name}.js`
@@ -27,12 +26,12 @@ module.exports = async function (context) {
       template: 'component-style.ejs',
       target: `App/Components/Styles/${name}Style.js`
     },
-    (tests === 'ava') && {
-      template: 'component-test.ejs',
-      target: `Test/Components/${name}Test.js`
-    }
+    tests === 'ava' &&
+      {
+        template: 'component-test.ejs',
+        target: `Test/Components/${name}Test.js`
+      }
   ]
 
-  // make the templates
-  await ignite.copyBatch(context, copyJobs, {name})
+  await ignite.copyBatch(context, jobs, props)
 }

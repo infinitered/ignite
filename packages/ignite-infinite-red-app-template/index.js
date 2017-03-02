@@ -62,7 +62,7 @@ const add = async function (context) {
     { template: 'App/Config/AppConfig.js.ejs', target: 'App/Config/AppConfig.js' }
   ]
   const templateProps = { name, igniteVersion: ignite.version, reactNativeVersion: rnInstall.version }
-  await ignite.copyBatch(context, templates, templateProps)
+  await ignite.copyBatch(context, templates, templateProps, { quiet: true })
 
   /**
    * Merge the package.json from our template into the one provided from react-native init.

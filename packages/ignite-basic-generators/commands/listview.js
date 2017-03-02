@@ -1,10 +1,8 @@
 // @cliDescription  Generates a screen with a ListView + walkthrough.
-// ----------------------------------------------------------------------------
-const generate = require('../shared/generate-utils')
 
 module.exports = async function (context) {
   // grab some features
-  const { print, parameters, strings } = context
+  const { print, parameters, strings, ignite } = context
   const { pascalCase, isBlank } = strings
 
   // validation
@@ -24,19 +22,33 @@ module.exports = async function (context) {
   // pick one
   let type = parameters.options.type
   if (!type) {
-    const answers = await context.prompt.ask({ name: 'type', type: 'list', message, choices })
+    const answers = await context.prompt.ask({
+      name: 'type',
+      type: 'list',
+      message,
+      choices
+    })
     type = answers.type
   }
 
   // set appropriate templates to generate
-  const componentTemplate = type === 'With Sections' ? 'listview-sections' : 'listview'
-  const styleTemplate = type === 'Grid' ? 'listview-grid-style' : 'listview-style'
+  const componentTemplate = type === 'With Sections'
+    ? 'listview-sections'
+    : 'listview'
+  const styleTemplate = type === 'Grid'
+    ? 'listview-grid-style'
+    : 'listview-style'
 
   const jobs = [
-    { template: `${componentTemplate}.ejs`, target: `App/Containers/${name}.js` },
-    { template: `${styleTemplate}.ejs`, target: `App/Containers/Styles/${name}Style.js` }
+    {
+      template: `${componentTemplate}.ejs`,
+      target: `App/Containers/${name}.js`
+    },
+    {
+      template: `${styleTemplate}.ejs`,
+      target: `App/Containers/Styles/${name}Style.js`
+    }
   ]
 
-  // make the templates
-  await generate(context, jobs, props)
+  await ignite.copyBatch(context, jobs, props)
 }

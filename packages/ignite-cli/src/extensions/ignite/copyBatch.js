@@ -2,16 +2,19 @@ module.exports = (plugin, command, context) => {
   /**
    * Runs a series of jobs through the templating system.
    *
-   * @param {any} context - The Ignite context
-   * @param {any[]} jobs - A list of jobs to run.
-   * @param {any} props - The props to use for variable replacement.
+   * @param {any}   context    - The Ignite context
+   * @param {any[]} jobs       - A list of jobs to run.
+   * @param {any}   props      - The props to use for variable replacement.
+   * @param {any}   opts       - Additional options
+   * @param {bool}  opts.quiet - don't write anything
    */
-  async function copyBatch (context, jobs, props) {
+  async function copyBatch (context, jobs, props, opts = {}) {
     // grab some features
-    const { template, prompt, filesystem, ignite } = context
+    const { template, prompt, filesystem, ignite, print } = context
     const { confirm } = prompt
     const { ignitePluginPath } = ignite
     const config = ignite.loadIgniteConfig()
+    const quiet = opts && Boolean(opts.quiet)
 
     // read some configuration
     const askToOverwrite = config.askToOverwrite || false
@@ -39,7 +42,9 @@ module.exports = (plugin, command, context) => {
           target: job.target,
           props
         })
-        // print.info(`    ${print.checkmark} ${job.target}`)
+        if (!quiet) {
+          print.info(`${print.checkmark} ${job.target}`)
+        }
       }
     }
   }

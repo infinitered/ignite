@@ -1,6 +1,5 @@
 // @cliDescription  Generates a redux smart component.
-// @cliExample  ignite generate container MyContainer
-// ----------------------------------------------------------------------------
+
 module.exports = async function (context) {
   // grab some features
   const { parameters, strings, print, ignite } = context
@@ -14,15 +13,18 @@ module.exports = async function (context) {
   }
 
   const name = pascalCase(parameters.first)
+  const props = { name }
 
-  const copyJobs = [{
-    template: 'container.ejs',
-    target: `App/Containers/${name}.js`
-  }, {
-    template: 'container-style.ejs',
-    target: `App/Containers/Styles/${name}Style.js`
-  }]
+  const jobs = [
+    {
+      template: 'container.ejs',
+      target: `App/Containers/${name}.js`
+    },
+    {
+      template: 'container-style.ejs',
+      target: `App/Containers/Styles/${name}Style.js`
+    }
+  ]
 
-  // make the templates
-  await ignite.copyBatch(context, copyJobs, {name})
+  await ignite.copyBatch(context, jobs, props)
 }
