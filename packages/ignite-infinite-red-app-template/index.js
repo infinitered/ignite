@@ -32,6 +32,13 @@ const maxOptions = {
   'animatable': 'react-native-animatable'
 }
 
+const minOptions = {
+  'dev-screens': 'No',
+  'vector-icons': 'none',
+  'i18n': 'none',
+  'animatable': 'non'
+}
+
 const add = async function (context) {
   const { filesystem, parameters, ignite, reactNative, print, system, prompt, template } = context
   const name = parameters.third
@@ -94,10 +101,15 @@ const add = async function (context) {
 
   spinner.stop()
 
-  // all options with --max or ask each one?
-  const answers = parameters.options.max
-    ? maxOptions
-    : await prompt.ask(installQuestions)
+  // --max, --min, interactive
+  let answers
+  if (parameters.options.max) {
+    answers = maxOptions
+  } else if (parameters.options.min) {
+    answers = minOptions
+  } else {
+    answers = await prompt.ask(installQuestions)
+  }
 
   spinner.text = '▸ installing ignite dependencies'
   spinner.start()
