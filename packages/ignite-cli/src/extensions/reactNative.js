@@ -3,7 +3,7 @@ const exitCodes = require('../lib/exitCodes')
 
 // The default version of React Native to install. We will want to upgrade
 // this when we test out new releases and they work well with our setup.
-const REACT_NATIVE_VERSION = '0.41.2'
+const REACT_NATIVE_VERSION = '0.42.0'
 
 /**
  * Attach this extension to the context.
