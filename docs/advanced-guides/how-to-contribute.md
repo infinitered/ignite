@@ -69,7 +69,6 @@ Under the `packages` directory, you'll see:
 
 * `ignite-cli` - this is the entry point.  It's the CLI, the core commands, and the main infrastructure.
 * `ignite-infinite-red-app-template` - this is our recommended app template. It's what you get when you run `ignite new SweetApp`.
-* `ignite-minimal-app-template` - our slimmer version of `infinite-red-app-template`.
 * `ignite-empty-app-template` - an app template that is `react-native init` but Ignite-ready due to one extra file: `ignite/ignite.json`.
 * `ignite-basic-generators` - an Infinite Red set of generators that allow you to create components, screens, etc.
 * `ignite-dev-screens` - A set of awesome developer-facing screens to help you build your app.

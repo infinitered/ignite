@@ -5,7 +5,7 @@ const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
-const { forEach } = require('ramda')
+const { merge, forEach, keys, reduce, concat, trim } = require('ramda')
 
 module.exports = async function (context) {
   const { parameters, strings, print, system, filesystem, ignite } = context
@@ -63,9 +63,6 @@ module.exports = async function (context) {
     const cliTemplate = parameters.options.template || parameters.options.t
     if (cliTemplate) return cliTemplate
 
-    // check for the minimal app template
-    if (parameters.options.min || parameters.options.m) return 'minimal-app-template'
-
     // check for the empty app template
     if (parameters.options.empty) return 'empty-app-template'
 
@@ -76,32 +73,19 @@ module.exports = async function (context) {
   // grab the right app template
   const appTemplatePackage = getAppTemplate()
 
-  // some extra options we'll be passing through to the `ignite add <app-template>`
-  const extraAddOptions = ['--is-app-template']
+  // pick the inbound cli options and add our --is-app-template
+  const cliOpts = merge(parameters.options, { 'is-app-template': true })
 
-  // pass through the --max flag
-  // NOTE(steve):
-  //   I'd like to see this go away by introducing a new addTemplate command... baby steps though.
-  //   Another thing to consider is just passing through *all* options.
-  if (parameters.options.max) extraAddOptions.push('--max')
-
-  // pass debug down the chain
-  if (parameters.options.debug) extraAddOptions.push('--debug')
-
-  // pass react-native version down the chain
-  if (parameters.options['react-native-version']) {
-    extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
-  }
-
-  // pass react-native version down the chain
-  if (parameters.options['react-native-template']) {
-    extraAddOptions.push(`--react-native-template ${parameters.options['react-native-template']}`)
-  }
+  // turn this back into a string
+  const forwardingOptions = trim(reduce((src, k) => {
+    const v = cliOpts[k]
+    return concat(v === true ? `--${k} ` : `--${k} ${v} `, src)
+  })('', keys(cliOpts)))
 
   // let's kick off the template
   let ok = false
   try {
-    const command = `ignite add ${appTemplatePackage} ${projectName} ${extraAddOptions.join(' ')}`
+    const command = `ignite add ${appTemplatePackage} ${projectName} ${forwardingOptions}`
     log(`running app template: ${command}`)
     await system.spawn(command, { stdio: 'inherit' })
     log('finished app template')
