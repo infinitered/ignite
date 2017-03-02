@@ -2,7 +2,6 @@
 // ----------------------------------------------------------------------------
 
 const { split, last, replace, head, match } = require('ramda')
-const header = require('../brand/header')
 const os = require('os')
 const isWindows = process.platform === 'win32'
 const isMac = process.platform === 'darwin'
@@ -20,9 +19,6 @@ module.exports = async function (context) {
   const column1 = (label, length = 16) => padEnd(label || '', length)
   const column2 = label => colors.yellow(padEnd(label || '-', 10))
   const column3 = label => colors.muted(label)
-
-  header()
-  info('')
 
   // -=-=-=- system -=-=-=-
   const platform = process.platform

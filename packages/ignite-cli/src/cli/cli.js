@@ -43,11 +43,14 @@ module.exports = async function run (argv) {
   // run the command
   const context = await runtime.run()
 
-  // print the commands (TODO: but not if we just ran i guess)
-  if (isNil(context.plugin) || isNil(context.command)) {
+  if (commandLine.help || commandLine.h || isNil(context.plugin) || isNil(context.command)) {
+    // no args, show help
+    print.info('')
     header()
     printCommands(context)
-    return context
+    print.info('')
+    print.info(print.colors.magenta('If you need additional help, join our Slack at http://community.infinite.red'))
+    print.info('')
   }
 
   if (context.error) {

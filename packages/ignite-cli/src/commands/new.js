@@ -49,11 +49,8 @@ module.exports = async function (context) {
     license: 'MIT'
   })
 
-  // pretty bird, yes, pretty bird... petey is a pretty bird.
-  if (!parameters.options.debug) {
-    header()
-    print.newline()
-  }
+  header()
+  print.newline()
   print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
 
   /**
