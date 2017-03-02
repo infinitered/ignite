@@ -91,14 +91,15 @@ For those of you unfamiliar with the new package manager Yarn, it's basically a 
 ## :arrow_forward: How to Run Generated App
 
 1. cd to the repo
-2. Run Build for either OS
+2. `npm install` or `yarn install`
+3. Run Build for either OS
   * for iOS
     * run the command `react-native run-ios`
   * for Android
     * Run Android Emulator ([Android Studio](https://developer.android.com/studio/index.html) or [Genymotion](https://www.genymotion.com/))
     * run the command `react-native run-android`
-3. If the packager does not automatically start, run `npm start` or `yarn start`
-4. _**Enjoy!**_
+4. If the packager does not automatically start, run `npm start` or `yarn start`
+5. _**Enjoy!**_
 
 ![install](_art/screens.gif)
 
