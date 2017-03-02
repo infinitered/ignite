@@ -15,10 +15,10 @@ const {
   isNil,
   values,
   replace,
-  trim
+  trim,
+  isEmpty
 } = require('ramda')
 const { dotPath } = require('ramdasauce')
-const header = require('../brand/header')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 
@@ -30,26 +30,39 @@ const exitCodes = require('../lib/exitCodes')
 module.exports = async function (context) {
   // ensure we're in a supported directory
   if (!isIgniteDirectory(process.cwd())) {
-    context.print.error('The `ignite generate` command must be run in an ignite-compatible directory.')
+    context.print.error(
+      'The `ignite generate` command must be run in an ignite-compatible directory.'
+    )
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
   }
 
   // grab some features
-  const { ignite, print, parameters } = context
+  const { ignite, print, parameters, filesystem } = context
   const config = ignite.loadIgniteConfig()
 
-  // little bit of branding
-  header()
   print.newline()
 
   // keys are type of generate and values are a list of options...
   const registry = pipe(
-    map(
-      plugin => map(
-        type => ({ type, plugin, command: find(propEq('name', type), plugin.commands) }),
-        dotPath('ignite.generators', plugin) || []
+    // with each plugin
+    map(plugin => {
+      // load the list of generators they support within their ignite.json
+      const configFile = `${plugin.directory}/ignite.json`
+      const config = filesystem.exists(configFile)
+        ? filesystem.read(configFile, 'json')
+        : {}
+      const generators = config.generators || []
+
+      // then make a row out of them
+      return map(
+        type => ({
+          type,
+          plugin,
+          command: find(propEq('name', type), plugin.commands)
+        }),
+        generators
       )
-    ),
+    }),
     flatten,
     groupBy(prop('type'))
   )(ignite.findIgnitePlugins())
@@ -107,6 +120,43 @@ module.exports = async function (context) {
     userPrefs
   )
 
+  /**
+   * Prints a footer used when we're unable to run a generator.
+   */
+  const footer = () => {
+    print.info(
+      print.colors.muted(
+        '\n  --------------------------------------------------------------------------'
+      )
+    )
+    print.info(
+      print.colors.muted(
+        `  Check out ${print.colors.white(
+          'https://github.com/infinitered/ignite'
+        )} for instructions on how to`
+      )
+    )
+    print.info(
+      print.colors.muted('  install some or how to build some for yourself.')
+    )
+  }
+
+  // Avast! Thar be no generators ripe for tha plunder.
+  if (isEmpty(userRegistry)) {
+    print.warning('⚠️  No generators detected.\n')
+    print.info(
+      `  ${print.colors.bold(
+        'Generators'
+      )} allow you to quickly make frequently created files such as:\n`
+    )
+    print.info(`    * components`)
+    print.info(`    * screens`)
+    print.info(`    * models`)
+    print.info(`    * and more`)
+    footer()
+    return
+  }
+
   // TODO: do we want to add items that aren't conflicts it the list?
 
   // TODO: how do we want to handle conflicts?  up above, i'm just calling find()
@@ -117,18 +167,27 @@ module.exports = async function (context) {
 
   // didn't find what we wanted?
   if (isNil(registryItem)) {
+    print.info(
+      `✨ Type ${print.colors.bold('ignite generate')} ${print.colors.yellow(
+        '________'
+      )} to run one of these generators:\n`
+    )
+
+    const showSource = context.parameters.options.source
+
     // turn into data we can print
     const data = pipe(
       values,
       map(item => [
-        item.type,
+        print.colors.yellow(item.type),
         item.error || item.description,
-        print.colors.muted(item.pluginName)
+        showSource && print.colors.muted(item.pluginName)
       ])
     )(userRegistry)
 
     // and print it
     print.table(data)
+    footer()
 
     return
   }
@@ -138,13 +197,15 @@ module.exports = async function (context) {
   const newCommand = trim(replace(rx, '', parameters.string))
 
   // make the call to the real generator
-  context.runtime.run({
-    pluginName: registryItem.pluginName,
-    rawCommand: newCommand,
-    options: parameters.options
-  }).then((e) => {
-    if (e.error) {
-      print.debug(e.error)
-    }
-  })
+  context.runtime
+    .run({
+      pluginName: registryItem.pluginName,
+      rawCommand: newCommand,
+      options: parameters.options
+    })
+    .then(e => {
+      if (e.error) {
+        print.debug(e.error)
+      }
+    })
 }
