@@ -31,7 +31,7 @@ ignite doctor
 ```
 
 Checks your dev environment for dependencies.
-  
+
 This command checks your dev environment for dependencies. It will list the version of
 system, JavaScript, React Native, Ignite, Android, and iOS dependencies
 available on your machine, and where applicable, their location. This may be
@@ -39,10 +39,10 @@ useful when debugging or when seeking help for an issue in forums.
 
 Especially handy is `ignite doctor --bug`, which opens webpage with pre-filled
 out issue on Ignite's github. ***[NOTE: this doesn't seem to work yet]***
-  
-  
+
+
 ### Generate
- 
+
 ```
 ignite generate listview {listview name}
 ```
@@ -57,9 +57,9 @@ generates.
 
 Run `ignite generate` by itself and it will list available generators. Run
 `ignite generate <generator name>` to use the desired generator.
-  
+
 ### New
-  
+
 ```
 ignite new {Project name}
 ```
@@ -67,20 +67,23 @@ ignite new {Project name}
 Generate a new React Native project with Ignite.
 
 `ignite n` uses `react-native init`, then adds files specific to Ignite.
-  
+
 When you execute this command, Ignite 2.0 will give you a series of options for
 your new project regarding what libraries you would like to use.
 
-`ignite new` has various -- commands. ex:
+With `ignite new`, you have the option to pick your own boilerplate to install for your project.  The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`.
 
 ```
-ignite n MyApp --template infinitered
+ignite new MyAwesomeApp --boilerplate {some-boilerplate-package}
 ```
 
-creates the project with a certain set of opinions regarding
-proejct structure.
+If you would like to skip the boilerplate and use what is available out of the box with React Native, you can pass the `--no-boilerplate` option.
 
-  
+```
+ignite new MyBareBonesApp --no-boilerplate
+```
+
+
 ### Plugin
 
 ```
@@ -94,7 +97,7 @@ soon).
 
 When creating a plugin, you can choose to include an example component and example
 command or generator.
-  
+
 ### Remove
 
 ```
@@ -103,13 +106,13 @@ ignite remove {ignite plugin name} [-y]
 
 Removes an Ignite plugin. You can add `-y` which automatically answers
 "yes" to any confirmation questions.
-  
+
 The opposite of `ignite add`, this removes a plugin from your project. Be warned
 that this may change other files in your project, e.g. to undo changes made by
 `add`. There is a potential for danger here, so you may want to consider using
 version control to be on the safe side.
-  
-### Spork  
+
+### Spork
 
 ```
 ignite spork
@@ -128,9 +131,9 @@ templates with `space` and finish with `enter`.
 
 Spork lets you be kinda happy with someone else's template, but then change it
 to your liking. For example, different linting, new headers, etc.
-  
-  
-### Version  
+
+
+### Version
 
 ```
 ignite version

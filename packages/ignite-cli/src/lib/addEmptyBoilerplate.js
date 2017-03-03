@@ -1,7 +1,7 @@
 module.exports = async function (context) {
   const { filesystem, parameters, ignite, print, reactNative } = context
   const name = parameters.second
-  const spinner = print.spin(`using an ${print.colors.cyan('empty')} app template`).succeed()
+  const spinner = print.spin(`skipping boilerplate`).succeed()
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({ name })

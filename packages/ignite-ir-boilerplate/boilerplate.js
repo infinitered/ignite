@@ -58,7 +58,7 @@ async function install (context) {
 
   const name = parameters.third
   const spinner = print
-    .spin(`using the ${print.colors.red('Infinite Red')} app template`)
+    .spin(`using the ${print.colors.red('Infinite Red')} boilerplate`)
     .succeed()
 
   // attempt to install React Native or die trying

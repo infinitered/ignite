@@ -10,7 +10,7 @@ To use Ignite, you will need to install React Native. The best way to install Re
 Installing Ignite is easy with one simple terminal command:
 
 ```
-npm install -g react-native-ignite
+npm install -g ignite-cli
 ```
 
 ## Testing your Ignite Installation
