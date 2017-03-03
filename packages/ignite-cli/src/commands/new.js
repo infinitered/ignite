@@ -6,7 +6,7 @@ const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
 const addEmptyTemplate = require('../lib/addEmptyTemplate')
-const { merge, forEach, keys, reduce, concat, trim } = require('ramda')
+const { forEach, keys, reduce, concat, trim } = require('ramda')
 
 module.exports = async function (context) {
   const { parameters, strings, print, system, filesystem, ignite } = context
@@ -65,20 +65,20 @@ module.exports = async function (context) {
    *
    * @return {string} The app template we'll be using.
    */
-  function getAppTemplate () {
+  function getBoilerplate () {
     // check for a user-defined template
     const cliTemplate = parameters.options.template || parameters.options.t
     if (cliTemplate) return cliTemplate
 
     // default
-    return 'infinite-red-app-template'
+    return 'ir-boilerplate'
   }
 
   // grab the right app template
-  const appTemplatePackage = getAppTemplate()
+  const appTemplatePackage = getBoilerplate()
 
-  // pick the inbound cli options and add our --is-app-template
-  const cliOpts = merge(parameters.options, { 'is-app-template': true })
+  // pick the inbound cli options
+  const cliOpts = parameters.options
 
   // turn this back into a string
   const forwardingOptions = trim(reduce((src, k) => {
@@ -89,7 +89,7 @@ module.exports = async function (context) {
   // let's kick off the template
   let ok = false
   try {
-    const command = `ignite add ${appTemplatePackage} ${projectName} ${forwardingOptions}`
+    const command = `ignite boilerplate-install ${appTemplatePackage} ${projectName} ${forwardingOptions} --boilerplate-mode`
     log(`running app template: ${command}`)
     await system.spawn(command, { stdio: 'inherit' })
     log('finished app template')

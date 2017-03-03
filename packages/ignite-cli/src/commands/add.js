@@ -5,9 +5,9 @@
 const R = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
+const importPlugin = require('../lib/importPlugin')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
-const path = require('path')
 
 /**
  * Removes the ignite plugin.
@@ -27,86 +27,17 @@ const removeIgnitePlugin = async (moduleName, context) => {
   }
 }
 
-/**
- * Install this module.
- *
- * @param {Object} context         The gluegun context
- * @param {Object} opts            The options used to install
- * @param {string} opts.moduleName The module to install
- */
-async function importPlugin (context, opts) {
-  const { moduleName, type, directory } = opts
-  const { ignite, system, filesystem } = context
-  const { log } = ignite
-  const isDirectory = type === 'directory'
-  const target = isDirectory ? directory : moduleName
-
-  // check to see if it exists first
-  if (type === 'npm') {
-    try {
-      const json = JSON.parse(await system.run(`npm info ${target} --json`))
-      log(`${json.name} ${json.version} on npm.`)
-    } catch (e) {
-      log(`unable to find ${target} on npm`)
-      const boom = new Error(e.message)
-      boom.unavailable = true
-      boom.name = target
-      throw boom
-    }
-  }
-
-  if (ignite.useYarn) {
-    if (isDirectory) {
-      // where is the yarn cache?
-      log(`checking for yarn cache`)
-      const rawCacheDir = await system.exec('yarn cache dir')
-
-      // look for a cached version of this
-      const dirs = filesystem
-        .cwd(rawCacheDir)
-        .find({ matching: `npm-${moduleName}-*`, directories: true, recursive: false })
-
-      // clear existing cache if we have one
-      if (!R.isEmpty(dirs)) {
-        R.forEach(
-          dir => {
-            log(`removing yarn cache ${rawCacheDir}/${dir}`)
-            filesystem.remove(`${rawCacheDir}/${dir}`)
-          },
-          dirs
-        )
-      }
-    }
-    const cmd = isDirectory
-      ? `yarn add file:${target} --force --dev`
-      : `yarn add ${target} --dev`
-    log(cmd)
-    await system.exec(cmd, { stdio: 'pipe' })
-    log('finished yarn command')
-  } else {
-    const cacheBusting = isDirectory ? '--cache-min=0' : ''
-    const cmd = `npm i ${target} --save-dev ${cacheBusting}`
-    log(cmd)
-    await system.exec(cmd, { stdio: 'pipe' })
-    log('finished npm command')
-  }
-}
-
 module.exports = async function (context) {
   // grab a fist-full of features...
   const { print, filesystem, prompt, ignite, parameters, strings } = context
-  const { info, warning, spin } = print
   const { log } = ignite
 
   log('running add command')
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
 
-  // we need to know if this is an app template
-  const isAppTemplate = parameters.options['is-app-template']
-
   // ensure we're in a supported directory
-  if (!isIgniteDirectory(process.cwd()) && !isAppTemplate) {
+  if (!isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite add` command must be run in an ignite-compatible directory.')
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
   }
@@ -121,7 +52,7 @@ Examples:
   ignite add vector-icons
   ignite add gantman/ignite-react-native-config
   ignite add /path/to/plugin/you/are/building`
-    info(instructions)
+    print.info(instructions)
     process.exit(exitCodes.OK)
   }
 
@@ -133,35 +64,12 @@ Examples:
   log(`installing ${modulePath} from source ${specs.type}`)
 
   // import the ignite plugin node module
-  const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
+  // const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
+  const spinner = print.spin('')
 
-  if (specs.type) {
-    try {
-      await importPlugin(context, specs)
-    } catch (e) {
-      if (e.unavailable) {
-        spinner.fail(`${print.colors.bold(moduleName)} is not available on npm.`)
-        print.info('')
-        print.info(print.colors.muted('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'))
-        print.error('  We also searched in these directories:\n')
-        ignite.pluginOverrides.forEach(dir => {
-          print.info(`    ▸ ${dir}`)
-        })
-        print.error('')
-        print.error('  During Ignite 2 alpha, please consider setting this\n  environment variable:\n')
-        print.info(`  export IGNITE_PLUGIN_PATH=${path.resolve(__dirname, '..', '..', '..')}`)
-        print.info(print.colors.muted('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'))
-      } else {
-        spinner.fail(`${print.colors.red(moduleName)} was not able to be installed. Is it a valid NPM module?`)
-        print.error('----------')
-        print.error(e.message)
-        print.error('----------')
-      }
-      process.exit(exitCodes.PLUGIN_INVALID)
-    }
-  } else {
-    spinner.fail(`💩  invalid ignite plugin`)
-    process.exit(exitCodes.PLUGIN_INVALID)
+  const exitCode = await importPlugin(context, specs)
+  if (exitCode) {
+    process.exist(exitCode)
   }
 
   // optionally load some configuration from the ignite.json from the plugin.
@@ -180,7 +88,7 @@ Examples:
   if (changes.length > 0) {
     spinner.stop()
       // we warn the user on changes
-    warning(`🔥  The following generators would be changed: ${R.join(', ', changes)}`)
+    print.warning(`🔥  The following generators would be changed: ${R.join(', ', changes)}`)
     const ok = await prompt.confirm('You ok with that?')
       // if they refuse, then npm/yarn uninstall
     if (!ok) {
@@ -217,14 +125,11 @@ Examples:
 
         spinner.stop()
         log(`running add() on ignite plugin`)
-        // spinner.stopAndPersist({ symbol: '▸', text: `adding ${print.colors.cyan(moduleName)}` })
         await pluginModule.add(context)
 
-        if (!isAppTemplate) {
-          spinner.text = `added ${print.colors.cyan(moduleName)}`
-          spinner.start()
-          spinner.succeed()
-        }
+        spinner.text = `added ${print.colors.cyan(moduleName)}`
+        spinner.start()
+        spinner.succeed()
 
         // Sweet! We did it!
         return exitCodes.OK
