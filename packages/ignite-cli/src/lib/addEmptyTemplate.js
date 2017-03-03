@@ -1,11 +1,6 @@
-/**
- * Fires when the ignite plugin is added.
- *
- * @param {Object} context - The ignite context.
- */
-const add = async function (context) {
+module.exports = async function (context) {
   const { filesystem, parameters, ignite, print, reactNative } = context
-  const name = parameters.third
+  const name = parameters.second
   const spinner = print.spin(`using an ${print.colors.cyan('empty')} app template`).succeed()
 
   // attempt to install React Native or die trying
@@ -37,13 +32,3 @@ const add = async function (context) {
   print.info(print.colors.yellow('  ignite'))
   print.info('')
 }
-
-/**
- * Fires when the ignite plugin is removed.
- *
- * @param {Object} context - The ignite context.
- */
-const remove = async function (context) {
-}
-
-module.exports = { add, remove }

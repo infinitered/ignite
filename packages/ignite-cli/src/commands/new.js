@@ -5,6 +5,7 @@ const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
+const addEmptyTemplate = require('../lib/addEmptyTemplate')
 const { merge, forEach, keys, reduce, concat, trim } = require('ramda')
 
 module.exports = async function (context) {
@@ -35,6 +36,17 @@ module.exports = async function (context) {
     process.exit(exitCodes.DIRECTORY_EXISTS)
   }
 
+  // print a header
+  header()
+  print.newline()
+  print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
+
+  // empty template has a shorter route
+  if (parameters.options.empty) {
+    addEmptyTemplate(context)
+    return
+  }
+
   // make & jump into the project directory
   log(`making directory ${projectName}`)
   filesystem.dir(projectName)
@@ -49,10 +61,6 @@ module.exports = async function (context) {
     license: 'MIT'
   })
 
-  header()
-  print.newline()
-  print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
-
   /**
    * Figures out which app template we'll be using (without the ignite- prefix).
    *
@@ -62,9 +70,6 @@ module.exports = async function (context) {
     // check for a user-defined template
     const cliTemplate = parameters.options.template || parameters.options.t
     if (cliTemplate) return cliTemplate
-
-    // check for the empty app template
-    if (parameters.options.empty) return 'empty-app-template'
 
     // default
     return 'infinite-red-app-template'
