@@ -69,7 +69,8 @@ Examples:
 
   const exitCode = await importPlugin(context, specs)
   if (exitCode) {
-    process.exist(exitCode)
+    spinner.stop()
+    process.exit(exitCode)
   }
 
   // optionally load some configuration from the ignite.json from the plugin.
