@@ -1,5 +1,3 @@
-// @flow
-
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 import { filter } from 'ramda'
@@ -37,12 +35,12 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-export const performSearch = (state: Object, { searchTerm }: Object) => {
+export const performSearch = (state, { searchTerm }) => {
   const results = filter(startsWith(searchTerm), LIST_DATA)
   return state.merge({ searching: true, searchTerm, results })
 }
 
-export const cancelSearch = (state: Object) => INITIAL_STATE
+export const cancelSearch = (state) => INITIAL_STATE
 
 /* ------------- Hookup Reducers To Types ------------- */
 

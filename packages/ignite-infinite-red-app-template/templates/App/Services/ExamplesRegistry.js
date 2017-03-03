@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { Text, View } from 'react-native'
 import R from 'ramda'
@@ -8,11 +6,11 @@ import DebugConfig from '../Config/DebugConfig'
 let globalComponentExamplesRegistry = []
 let globalPluginExamplesRegistry = []
 
-export const addComponentExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalComponentExamplesRegistry.push({title, usage}) } // eslint-disable-line
+export const addComponentExample = (title, usage = () => {}) => { if (DebugConfig.includeExamples) globalComponentExamplesRegistry.push({title, usage}) } // eslint-disable-line
 
-export const addPluginExample = (title: string, usage: () => React$Element<*>) => { if (DebugConfig.includeExamples) globalPluginExamplesRegistry.push({title, usage}) } // eslint-disable-line
+export const addPluginExample = (title, usage = () => {}) => { if (DebugConfig.includeExamples) globalPluginExamplesRegistry.push({title, usage}) } // eslint-disable-line
 
-const renderComponentExample = (example: Object) => {
+const renderComponentExample = (example) => {
   return (
     <View key={example.title}>
       <View style={ApplicationStyles.darkLabelContainer}>
@@ -23,7 +21,7 @@ const renderComponentExample = (example: Object) => {
   )
 }
 
-const renderPluginExample = (example: Object) => {
+const renderPluginExample = (example) => {
   return (
     <View key={example.title}>
       <View style={ApplicationStyles.darkLabelContainer}>

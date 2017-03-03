@@ -16,7 +16,6 @@
     "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
-    "flow": "flow --show-all-errors",
     "precommit": "npm run git-hook",
     "prepush": "npm run git-hook",
     "git-hook": "npm run lint -s && npm test -s"
@@ -43,7 +42,6 @@
     "babel-eslint": "^7.1.1",
     "babel-preset-es2015": "^6.18.0",
     "enzyme": "^2.6.0",
-    "flow-bin": "0.38.0",
     "mockery": "^2.0.0",
     "husky": "^0.13.1",
     "nyc": "^10.1.2",
@@ -55,8 +53,7 @@
     "reactotron-redux": "^1.7.0",
     "reactotron-redux-saga": "^1.7.0",
     "snazzy": "^6.0.0",
-    "standard": "8.6.0",
-    "standard-flow": "^1.0.0"
+    "standard": "8.6.0"
   },
   "ava": {
     "files": [

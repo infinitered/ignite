@@ -50,8 +50,6 @@ The `index.js` is the entrypoint for your plugin and provides the add/remove fun
 `templates/RadioButtonsExample.js.ejs`
 
 ```
-// @flow
-
 import React from 'react'
 import { View, Text } from 'react-native'
 import ExamplesRegistry from '../../../App/Services/ExamplesRegistry'

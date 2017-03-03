@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { View, Modal } from 'react-native'
 import DebugConfig from '../../App/Config/DebugConfig'

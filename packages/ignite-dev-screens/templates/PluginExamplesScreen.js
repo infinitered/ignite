@@ -1,5 +1,3 @@
-// @flow
-
 // Fair Warning:  PluginExamples has a good bit of Ignite automation in editing.
 // Though robust, if you should modify this file, review your changes with us
 // As to not break the automated addition/subtractions.

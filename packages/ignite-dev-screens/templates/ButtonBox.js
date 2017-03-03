@@ -1,18 +1,15 @@
-// @flow
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { TouchableOpacity, Text, Image } from 'react-native'
 import styles from './Styles/ButtonBoxStyles'
 
-type ButtonBoxProps = {
-  onPress: () => void,
-  image?: string,
-  style?: Object,
-  text?: string
-};
-
 export default class ButtonBox extends React.Component {
-  props: ButtonBoxProps
-
+  static propTypes = {
+    onPress: PropTypes.func,
+    image: PropTypes.string,
+    style: PropTypes.object,
+    text: PropTypes.string
+  }
+  
   render () {
     return (
       <TouchableOpacity style={[styles.container, this.props.style]} onPress={this.props.onPress}>

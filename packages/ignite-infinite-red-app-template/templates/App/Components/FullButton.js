@@ -1,6 +1,4 @@
-// @flow
-
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import styles from './Styles/FullButtonStyles'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
@@ -13,14 +11,12 @@ ExamplesRegistry.addComponentExample('Full Button', () =>
   />
 )
 
-type FullButtonProps = {
-  text: string,
-  onPress: () => void,
-  styles?: Object
-}
-
 export default class FullButton extends React.Component {
-  props: FullButtonProps
+  static propTypes = {
+    text: PropTypes.string,
+    onPress: PropTypes.func,
+    styles: PropTypes.object
+  }
 
   render () {
     return (

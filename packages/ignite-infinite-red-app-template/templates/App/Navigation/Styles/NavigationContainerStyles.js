@@ -1,5 +1,3 @@
-// @flow
-
 import {Colors} from '../../Themes/'
 
 export default {

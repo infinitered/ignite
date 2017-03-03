@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react'
 import { ScrollView, Image, BackAndroid } from 'react-native'
 import styles from './Styles/DrawerContentStyles'

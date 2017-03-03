@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
@@ -11,9 +9,6 @@ import AlertMessage from '../Components/AlertMessage'
 import styles from './Styles/ListviewExampleStyles'
 
 class ListviewExample extends React.Component {
-  state: {
-    dataSource: Object
-  }
 
   constructor (props) {
     super(props)
