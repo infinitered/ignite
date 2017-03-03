@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
@@ -12,8 +10,8 @@ import styles from './Styles/ListviewExampleStyles'
 
 class ListviewSectionsExample extends React.Component {
 
-  state: {
-    dataSource: Object
+  state = {
+    dataSource: {}
   }
 
   constructor (props) {

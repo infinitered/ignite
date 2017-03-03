@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {
   View,
@@ -17,30 +15,19 @@ import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
-type LoginScreenProps = {
-  dispatch: () => any,
-  fetching: boolean,
-  attemptLogin: () => void
-}
-
 class LoginScreen extends React.Component {
 
-  props: LoginScreenProps
-
-  state: {
-    username: string,
-    password: string,
-    visibleHeight: number,
-    topLogo: {
-      width: number
-    }
+  props = {
+    dispatch: () => null,
+    fetching: false,
+    attemptLogin: () => null
   }
 
-  isAttempting: boolean
-  keyboardDidShowListener: Object
-  keyboardDidHideListener: Object
+  isAttempting = false
+  keyboardDidShowListener = {}
+  keyboardDidHideListener = {}
 
-  constructor (props: LoginScreenProps) {
+  constructor (props) {
     super(props)
     this.state = {
       username: 'reactnative@infinite.red',

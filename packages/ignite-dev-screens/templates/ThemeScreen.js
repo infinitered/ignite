@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors, Fonts, Images } from './DevTheme'

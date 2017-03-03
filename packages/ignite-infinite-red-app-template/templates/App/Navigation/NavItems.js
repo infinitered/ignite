@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import styles from './Styles/NavItemsStyles'
@@ -39,7 +37,7 @@ export default {
     )
   },
 
-  searchButton (callback: Function) {
+  searchButton (callback) {
     return (
       <TouchableOpacity onPress={callback}>
         <Icon name='search'

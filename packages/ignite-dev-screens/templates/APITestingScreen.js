@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Images } from './DevTheme'
@@ -21,13 +19,13 @@ const endpoints = [
 ]
 
 export default class APITestingScreen extends React.Component {
-  api: Object
+  api = {}
 
-  state: {
-    visibleHeight: number
+  state = {
+    visibleHeight: 0
   }
 
-  constructor (props: Object) {
+  constructor (props) {
     super(props)
     this.state = {
       visibleHeight: Metrics.screenHeight
@@ -36,7 +34,7 @@ export default class APITestingScreen extends React.Component {
     this.api = API.create()
   }
 
-  showResult (response: Object, title: string = 'Response') {
+  showResult (response, title = 'Response') {
     this.refs.container.scrollTo({x: 0, y: 0, animated: true})
     if (response.ok) {
       this.refs.result.setState({message: FJSON.plain(response.data), title: title})
@@ -45,14 +43,14 @@ export default class APITestingScreen extends React.Component {
     }
   }
 
-  tryEndpoint (apiEndpoint: Object) {
+  tryEndpoint (apiEndpoint) {
     const { label, endpoint, args = [''] } = apiEndpoint
     this.api[endpoint].apply(this, args).then((result) => {
       this.showResult(result, label || `${endpoint}(${args.join(', ')})`)
     })
   }
 
-  renderButton (apiEndpoint: Object) {
+  renderButton (apiEndpoint) {
     const { label, endpoint, args = [''] } = apiEndpoint
     return (
       <FullButton text={label || `${endpoint}(${args.join(', ')})`} onPress={this.tryEndpoint.bind(this, apiEndpoint)} styles={{marginTop: 10}} key={`${endpoint}-${args.join('-')}`} />
@@ -99,9 +97,9 @@ export default class APITestingScreen extends React.Component {
 
 class APIResult extends React.Component {
 
-  state: {
-    message: boolean,
-    title: boolean
+  state = {
+    message: true,
+    title: true
   }
 
   constructor (props) {

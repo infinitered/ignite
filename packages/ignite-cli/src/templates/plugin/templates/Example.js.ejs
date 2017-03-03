@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import { View, Text } from 'react-native'
 import ExamplesRegistry from '../../../App/Services/ExamplesRegistry'

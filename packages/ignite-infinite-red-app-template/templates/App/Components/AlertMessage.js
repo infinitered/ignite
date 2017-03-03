@@ -1,20 +1,16 @@
-// @flow
-
 import React from 'react'
 import { View, Text } from 'react-native'
 import styles from './Styles/AlertMessageStyles'
 
-type AlertMessageProps = {
-  title: string,
-  icon?: string,
-  style?: Object,
-  show?: bool
-}
-
 export default class AlertMessage extends React.Component {
-  static defaultProps: { show: boolean }
+  static defaultProps = { show: true }
 
-  props: AlertMessageProps
+  props = {
+    title: "",
+    icon: null,
+    style: {},
+    show: true
+  }
 
   render () {
     let messageComponent = null

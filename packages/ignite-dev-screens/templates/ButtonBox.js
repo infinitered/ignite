@@ -1,17 +1,14 @@
-// @flow
 import React from 'react'
 import { TouchableOpacity, Text, Image } from 'react-native'
 import styles from './Styles/ButtonBoxStyles'
 
-type ButtonBoxProps = {
-  onPress: () => void,
-  image?: string,
-  style?: Object,
-  text?: string
-};
-
 export default class ButtonBox extends React.Component {
-  props: ButtonBoxProps
+  props = {
+    onPress: () => null,
+    image: null,
+    style: {},
+    text: null
+  }
 
   render () {
     return (

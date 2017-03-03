@@ -1,5 +1,3 @@
-// @flow
-
 import React, { PropTypes, Component } from 'react'
 import Drawer from 'react-native-drawer'
 import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'

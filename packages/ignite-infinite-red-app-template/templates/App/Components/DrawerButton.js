@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 import styles from './Styles/DrawerButtonStyles'
@@ -13,13 +11,11 @@ ExamplesRegistry.addComponentExample('Drawer Button', () =>
   />
 )
 
-type DrawerButtonProps = {
-  text: string,
-  onPress: () => void
-}
-
 class DrawerButton extends Component {
-  props: DrawerButtonProps
+  props = {
+    text: "",
+    onPress: () => null
+  }
 
   render () {
     return (

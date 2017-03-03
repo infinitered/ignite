@@ -1,5 +1,3 @@
-// @flow
-
 const colors = {
   transparent: 'rgba(0,0,0,0)',
   background: '#3e243f',
