@@ -27,7 +27,6 @@ module.exports = async function (context) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
     process.exit(exitCodes.PROJECT_NAME)
-    return
   }
 
   // verify the directory doesn't exist already
@@ -97,7 +96,7 @@ module.exports = async function (context) {
     ok = true
   } catch (e) {
     log('error running app template')
-    log(e.message)
+    log(e)
   }
 
   // always clean up the app-template stuff

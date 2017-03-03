@@ -10,9 +10,11 @@ let printDebug
 mockery.enable({ warnOnUnregistered: false })
 
 // mock the header and gluegun
+const noop = () => {}
 mockery.registerMock('gluegun', {
   build: () => mockGluegunBuilder,
   print: {
+    info: noop,
     debug: thing => { printDebug = thing }
   }
 })

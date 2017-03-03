@@ -42,6 +42,7 @@
     "mock-fs": "^4.1.0",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
+    "pretty-error": "^2.0.2",
     "standard": "^8.6.0"
   },
   "ava": {},
