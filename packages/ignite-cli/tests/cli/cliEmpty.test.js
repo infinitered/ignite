@@ -11,10 +11,12 @@ let printHeader
 mockery.enable({ warnOnUnregistered: false })
 
 // mock the header and gluegun
+const noop = () => {}
 mockery.registerMock('../brand/header', () => { printHeader = true })
 mockery.registerMock('gluegun', {
   build: () => mockGluegunBuilder,
-  printCommands: context => { printCommands = context }
+  printCommands: context => { printCommands = context },
+  print: { info: noop, debug: noop, colors: { magenta: noop } }
 })
 
 // our cli

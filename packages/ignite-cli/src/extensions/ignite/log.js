@@ -1,9 +1,12 @@
+const PrettyError = require('pretty-error')
+
 module.exports = (plugin, command, context) => {
   /**
    * Prints a debug message to the console.  Used when the user wants to run in --debug.
    *
    * @param {string|Object} message - The message to write
    */
+  const pe = new PrettyError()
   function log (message) {
     // jet if we're not running in debug mode
     if (!context.parameters.options.debug) return
@@ -15,7 +18,7 @@ module.exports = (plugin, command, context) => {
 
     if (typeof message === 'object') {
       console.log(`${prefix}`)
-      console.dir(message)
+      console.log(pe.render(message))
     } else {
       console.log(`${prefix} ${message}`)
     }
