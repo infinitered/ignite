@@ -21,10 +21,6 @@ const endpoints = [
 export default class APITestingScreen extends React.Component {
   api = {}
 
-  state = {
-    visibleHeight: 0
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -96,11 +92,6 @@ export default class APITestingScreen extends React.Component {
 }
 
 class APIResult extends React.Component {
-
-  state = {
-    message: true,
-    title: true
-  }
 
   constructor (props) {
     super(props)

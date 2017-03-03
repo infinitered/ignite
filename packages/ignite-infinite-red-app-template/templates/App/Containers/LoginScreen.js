@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import {
   View,
   ScrollView,
@@ -17,10 +17,10 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 
 class LoginScreen extends React.Component {
 
-  props = {
-    dispatch: () => null,
-    fetching: false,
-    attemptLogin: () => null
+  static propTypes = {
+    dispatch: PropTypes.func,
+    fetching: PropTypes.bool,
+    attemptLogin: PropTypes.func
   }
 
   isAttempting = false

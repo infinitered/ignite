@@ -10,10 +10,6 @@ import styles from './Styles/ListviewGridExampleStyles'
 
 class ListviewGridExample extends React.Component {
 
-  state = {
-    dataSource: {}
-  }
-
   constructor (props) {
     super(props)
     /* ***********************************************************

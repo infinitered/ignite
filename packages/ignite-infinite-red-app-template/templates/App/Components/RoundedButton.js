@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import styles from './Styles/RoundedButtonStyles'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
@@ -12,11 +12,11 @@ ExamplesRegistry.addComponentExample('Rounded Button', () =>
 )
 
 export default class RoundedButton extends React.Component {
-  props = {
-    onPress: () => null,
-    text: null,
-    children: null,
-    navigator: null
+  static propTypes = {
+    onPress: PropTypes.func,
+    text: PropTypes.string,
+    children: PropTypes.string,
+    navigator: PropTypes.object
   }
 
   getText () {
