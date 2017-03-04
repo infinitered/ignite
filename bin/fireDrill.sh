@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo 'Warning: fireDrill.sh is deprecated and will be removed soon.'
+exit 1
+
 SOMETHING_FAILED=0
 function test_command {
     "$@"

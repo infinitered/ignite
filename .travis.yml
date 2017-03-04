@@ -1,7 +1,7 @@
 # Validate with http://lint.travis-ci.org/
 sudo: required
 language: node_js
-node_js: "6.1"
+node_js: "7.6"
 
 install:
   - pwd
@@ -17,4 +17,4 @@ install:
 env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
 script:
-  - ./testRelease.sh master_check latest
+  - ./bin/testRelease

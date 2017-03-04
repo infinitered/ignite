@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo 'testRelease.sh is no longer supported'
+exit 1
+
 #################### Running this Script #######################
 # Verify Git status is clean
 # Verify current git is what you're testing
