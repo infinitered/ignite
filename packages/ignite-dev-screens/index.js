@@ -30,7 +30,7 @@ const add = async function (context) {
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
 
   // Insert a function that renders the dev screens as part of the JSX in the navigation
-  const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen2.js`
+  const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
   if (filesystem.exists(launchScreen)) {
     if (!patching.isInFile(launchScreen, 'import DevscreensButton')) {
       patching.insertInFile(launchScreen, 'from \'react-native\'', 'import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'\n')
