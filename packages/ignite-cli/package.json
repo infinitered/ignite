@@ -39,7 +39,7 @@
   "devDependencies": {
     "ava": "^0.18.1",
     "babel-eslint": "^7.1.1",
-    "mock-fs": "^4.1.0",
+    "mock-fs": "git://github.com/not-an-aardvark/mock-fs/#06868bbd7724707f9324b237bdde28f05f7a01d5",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
     "pretty-error": "^2.0.2",
