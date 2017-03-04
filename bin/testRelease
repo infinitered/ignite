@@ -2,8 +2,7 @@
 
 #################### Running this Script #######################
 # Verify Git status is clean
-# Verify current git is what you're testing
-# Run this with `./bin/testRelease
+# Run this with `./bin/testRelease`
 ################################################################
 
 SOMETHING_FAILED=0
@@ -22,19 +21,21 @@ echo '#########################################################'
 
 # Runs command and on failure turns on the SOMETHING_FAILED flag
 function test_command {
-    "$@"
-    local status=$?
-    if [ $status -ne 0 ]; then
-        echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
-        SOMETHING_FAILED=$1
-    fi
-    return $status
+  "$@"
+  local status=$?
+  if [ $status -ne 0 ]; then
+      echo "👎 👎 👎 👎 👎 👎 👎 👎 - $1 Failed" >&2
+      SOMETHING_FAILED=$1
+  fi
+  return $status
 }
 
 setup()
 {
+  rm -rf ./testgrounds
+
   echo '~~~🌟 Preparing packages'
-  test_command lerna run bootstrap
+  test_command lerna bootstrap
 
   echo '~~~🌟 Linking local for Testing'
   cd packages/ignite-cli
@@ -54,11 +55,16 @@ verify_code()
 
 check_builds()
 {
-  cd testgrounds/
+  export IGNITE_PLUGIN_PATH=$(pwd)/packages
+
+  mkdir testgrounds
+  cd ./testgrounds
   echo '~~~🌟 Generating Project'
   test_command ignite new TestProj --min
 
   echo '~~~🌟 Checking Builds'
+  cd ./TestProj
+  
   if [ ! -d "android" ]; then
     echo 'Android folder did not generate'
     SOMETHING_FAILED=1
@@ -75,7 +81,7 @@ check_builds()
   echo '~ Build android'
   # A failed android build will not exit with a non-zero return!
   # This makes it a bit trickier to test for - look for the fail message instead
-  cd android
+  cd ./android
   ./gradlew assembleRelease | grep -q 'BUILD FAILED'
   if [[ $? -eq 0 ]]; then
     echo 'Android build failed'
@@ -83,30 +89,31 @@ check_builds()
   fi
   cd ..
 
-  # back to root
-  cd ..
-}
+  echo '~ Test adding vector-icons plugin from npm'
+  test_command ignite add vector-icons
 
-clean_up()
-{
+  # back to root
+  cd ../..
+
   echo '~~~🌟 Cleanup'
   rm -rf testgrounds
 }
 
 # This is where the magic happens
-setup
-verify_code
-check_builds
-clean_up
+setup;
+
+verify_code;
+
+check_builds;
 
 # Done
 if [ "$SOMETHING_FAILED" != "0" ]; then
-  echo "~~~👎 Done with errors" 1>&2
-  echo "$SOMETHING_FAILED"
-  exit 1
+  echo "~~~👎 Done with errors";
+  echo "$SOMETHING_FAILED";
+  exit 1;
 else
-  echo "~~~👍 Everything looks good!"
+  echo "~~~👍 Everything looks good!";
   # depends on $SECONDS being part of sh
-  printf '%dh:%dm:%ds\n' $(($SECONDS/3600)) $(($SECONDS%3600/60)) $(($SECONDS%60))
-  exit 0
+  printf '%dh:%dm:%ds\n' $(($SECONDS/3600)) $(($SECONDS%3600/60)) $(($SECONDS%60));
+  exit 0;
 fi

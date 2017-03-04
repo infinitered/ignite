@@ -17,4 +17,4 @@ install:
 env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
 script:
-  - ./testRelease.sh
+  - ./bin/testRelease
