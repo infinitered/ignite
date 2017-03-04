@@ -70,7 +70,7 @@ async function command (context) {
 
   // grab the right boilerplate
   const cliBoilerplate = parameters.options.boilerplate || parameters.options.b
-  const boilerplateName = strings.isBlank(cliBoilerplate) ? 'ir-boilerplate' : cliBoilerplate
+  const boilerplateName = strings.isBlank(cliBoilerplate) ? 'ir-boilerplate-2016' : cliBoilerplate
 
   // pick the inbound cli options
   const cliOpts = parameters.options

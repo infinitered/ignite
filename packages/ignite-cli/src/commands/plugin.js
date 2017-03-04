@@ -79,7 +79,7 @@ const createNewPlugin = async (context) => {
 
   const copyJobs = [
     { template: 'plugin/.gitignore', target: `${pluginName}/.gitignore` },
-    { template: 'plugin/index.js.ejs', target: `${pluginName}/index.js` },
+    { template: 'plugin/plugin.js.ejs', target: `${pluginName}/plugin.js` },
     { template: 'plugin/ignite.json.ejs', target: `${pluginName}/ignite.json` },
     { template: 'plugin/package.json.ejs', target: `${pluginName}/package.json` },
     { template: 'plugin/README.md', target: `${pluginName}/README.md` },

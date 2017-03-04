@@ -7,6 +7,7 @@ const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
 const importPlugin = require('../lib/importPlugin')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
+const findPluginFile = require('../lib/findPluginFile')
 const exitCodes = require('../lib/exitCodes')
 
 /**
@@ -18,7 +19,7 @@ const exitCodes = require('../lib/exitCodes')
 const removeIgnitePlugin = async (moduleName, context) => {
   const { print, system, ignite } = context
 
-  print.warning('Rolling back...')
+  print.warning('Rolling back...run with --debug to see more info')
 
   if (ignite.useYarn) {
     system.run(`yarn remove ${moduleName} --dev`)
@@ -47,9 +48,9 @@ module.exports = async function (context) {
     const instructions = `An ignite plugin is required.
 
 Examples:
-  ignite add ignite-basic-structure
-  ignite add ignite-basic-generators
+  ignite add i18n
   ignite add vector-icons
+  ignite add maps
   ignite add gantman/ignite-react-native-config
   ignite add /path/to/plugin/you/are/building`
     print.info(instructions)
@@ -102,10 +103,12 @@ Examples:
 
   // ok, are we ready?
   try {
-    if (filesystem.exists(modulePath + '/index.js') === 'file') {
+
+    let pluginFile = findPluginFile(context, modulePath)
+    if (pluginFile) {
       // bring the ignite plugin to life
       log(`requiring ignite plugin from ${modulePath}`)
-      const pluginModule = require(modulePath)
+      const pluginModule = require(pluginFile)
 
       if (!pluginModule.hasOwnProperty('add') || !pluginModule.hasOwnProperty('remove')) {
         spinner.fail(`'add' or 'remove' method missing.`)
@@ -142,13 +145,14 @@ Examples:
         process.exit(exitCodes.PLUGIN_INSTALL)
       }
     } else {
-      log(`${modulePath}/index.js does not exist.  skipping.`)
+      spinner.fail(`${modulePath}/plugin.js does not exist.  skipping.`)
       spinner.stop()
     }
   } catch (err) {
     // we couldn't require the plugin, it probably has some nasty js!
     spinner.fail('problem loading the plugin JS')
     await removeIgnitePlugin(moduleName, context)
+    log(err)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
 }

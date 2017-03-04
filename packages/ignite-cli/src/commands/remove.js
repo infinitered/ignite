@@ -6,6 +6,7 @@ const Shell = require('shelljs')
 const { reduce, concat, keys, pathOr, join, map, assoc } = require('ramda')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const prependIgnite = require('../lib/prependIgnite')
+const findPluginFile = require('../lib/findPluginFile')
 const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
@@ -90,14 +91,20 @@ module.exports = async function (context) {
     }
 
     const modulePath = `${process.cwd()}/node_modules/${moduleName}`
-    if (filesystem.exists(modulePath + '/index.js') === 'file') {
+    let pluginFile = findPluginFile(context, modulePath)
+    if (pluginFile) {
       // Call remove functionality
-      const pluginModule = require(modulePath)
+      const pluginModule = require(pluginFile)
       // set the path to the current running ignite plugin
       ignite.setIgnitePluginPath(modulePath)
 
       if (pluginModule.hasOwnProperty('remove')) {
-        await pluginModule.remove(context)
+        try {
+          await pluginModule.remove(context)
+        } catch (e) {
+          ignite.log(e)
+          process.exit(exitCodes.GENERIC)
+        }
       } else {
         error(`💩  'remove' method missing.`)
         process.exit(exitCodes.PLUGIN_INVALID)
