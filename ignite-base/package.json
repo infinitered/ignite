@@ -39,7 +39,7 @@
     "react-native-device-info": "^0.9.6",
     "react-native-drawer": "^2.3.0",
     "react-native-i18n": "^0.1.1",
-    "react-native-maps": "^0.11.0",
+    "react-native-maps": "^0.12.2",
     "react-native-router-flux": "^3.37.0",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.6",
