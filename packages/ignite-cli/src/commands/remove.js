@@ -45,7 +45,7 @@ module.exports = async function (context) {
   }
 
   // grab a fist-full of features...
-  const { print, parameters, prompt, filesystem, ignite } = context
+  const { print, parameters, prompt, ignite } = context
   const { info, warning, xmark, error, success } = print
   const { options } = parameters
 
@@ -55,7 +55,7 @@ module.exports = async function (context) {
   // Check if they used a directory path instead of a plugin name
   if (moduleParam.includes('/')) {
     error(`💩 When removing a package, you shouldn't use a path.
-    Try ${ context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`) } instead.`)
+    Try ${context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`)} instead.`)
     process.exit(exitCodes.PLUGIN_NAME)
   }
 
@@ -79,7 +79,7 @@ module.exports = async function (context) {
         warning(`The following generators would be removed: ${join(', ', changes)}`)
         ok = await prompt.confirm('You ok with that?')
       }
-      
+
       if (ok) {
         const generatorsList = Object.assign({}, config.generators)
         map((k) => delete generatorsList[k], changes)

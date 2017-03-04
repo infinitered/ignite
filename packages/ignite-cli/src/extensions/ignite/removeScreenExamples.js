@@ -1,6 +1,3 @@
-const { flatten, replace, reduce, map, takeLast, split } = require('ramda')
-const path = require('path')
-
 module.exports = (plugin, command, context) => {
   /**
    * Remove example screens from dev screens.
@@ -16,7 +13,7 @@ module.exports = (plugin, command, context) => {
    */
   // DEPRECATED as of 3/2/17 as part of Ignite 2 Beta (https://github.com/infinitered/ignite/issues/636)
   async function removeScreenExamples (files) {
-    const { filesystem, patching, ignite, print } = context
+    const { ignite, print } = context
     print.warning('DEPRECATION_WARNING: Heads up! `ignite.removeScreenExamples` is deprecated. Please use `ignite.removePluginScreenExamples` instead.')
     ignite.removePluginScreenExamples(files)
   }

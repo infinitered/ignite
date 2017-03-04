@@ -103,7 +103,6 @@ Examples:
 
   // ok, are we ready?
   try {
-
     let pluginFile = findPluginFile(context, modulePath)
     if (pluginFile) {
       // bring the ignite plugin to life

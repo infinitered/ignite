@@ -20,9 +20,9 @@ module.exports = (plugin, command, context) => {
    */
   function patchInFile (file, opts) {
     const { patching } = context
-    
+
     const data = jetpack.read(file, 'utf8')
-    
+
     // If the file already includes opts.match, no-op
     if (data.includes(opts.match)) return
 

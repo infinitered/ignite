@@ -1,6 +1,3 @@
-const { reduce, flatten, takeLast, split, map, replace } = require('ramda')
-const path = require('path')
-
 module.exports = (plugin, command, context) => {
   /**
    * Generates example screens for in dev screens.
@@ -17,7 +14,7 @@ module.exports = (plugin, command, context) => {
    */
   // DEPRECATED as of 3/2/17 as part of Ignite 2 Beta (https://github.com/infinitered/ignite/issues/636)
   async function addScreenExamples (files, props = {}) {
-    const { filesystem, patching, ignite, print, template } = context
+    const { ignite, print } = context
     print.warning('DEPRECATION_WARNING: Heads up! `ignite.addScreenExamples` is deprecated. Please use `ignite.addPluginScreenExamples` instead.')
     ignite.addPluginScreenExamples(files, props)
   }
