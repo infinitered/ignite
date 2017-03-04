@@ -4,7 +4,7 @@
   "license": "MIT",
   "files": [
     "templates",
-    "index.js"
+    "plugin.js"
   ],
   "author": {
     "name": "Infinite Red",
