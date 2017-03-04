@@ -47,6 +47,7 @@ setup()
 verify_code()
 {
   echo '~~~🌟 Checking Code'
+  npm install -g standard
   test_command standard ./packages
   test_command npm test
   
