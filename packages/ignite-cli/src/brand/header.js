@@ -3,7 +3,7 @@ const { print } = require('gluegun')
 module.exports = function () {
   const {
     info,
-    colors: { red, yellow, cyan }
+    colors: { red, yellow }
   } = print
 
   info('-----------------------------------------------')

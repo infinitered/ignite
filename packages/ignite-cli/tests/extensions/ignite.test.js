@@ -23,13 +23,9 @@ test('has the right interface', t => {
   t.is(typeof extension.addModule, 'function')
   t.is(typeof extension.removeModule, 'function')
   t.is(typeof extension.copyBatch, 'function')
-  t.is(typeof extension.addComponentExample, 'function') //Deprecated 3/2/17 Ignite 2 Beta
   t.is(typeof extension.addPluginComponentExample, 'function')
-  t.is(typeof extension.removeComponentExample, 'function') //Deprecated 3/2/17 Ignite 2 Beta
+  t.is(typeof extension.addPluginScreenExamples, 'function')
   t.is(typeof extension.removePluginComponentExample, 'function')
-  //t.is(typeof extension.addScreenExamples, 'function') //Deprecated 3/2/17 Ignite 2 Beta
-  //t.is(typeof extension.addPluginScreenExamples, 'function')
-  t.is(typeof extension.removeScreenExamples, 'function') //Deprecated 3/2/17 Ignite 2 Beta
   t.is(typeof extension.removePluginScreenExamples, 'function')
   t.is(typeof extension.loadIgniteConfig, 'function')
   t.is(typeof extension.saveIgniteConfig, 'function')
