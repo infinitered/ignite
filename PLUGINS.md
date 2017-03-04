@@ -6,4 +6,10 @@
 * `redux-logger` by [Gant Laborde](https://github.com/gantman) - [Plugin](https://github.com/GantMan/ignite-redux-logger) : [Node Module](https://github.com/evgenyrodionov/redux-logger)
 
 ### Maintained by IR
-* list coming soon
+
+name | supporting
+-----|-----------
+[animatable](https://github.com/infinitered/ignite-animatable) | [react-native-animatable](https://github.com/oblador/react-native-animatable)
+[vector-icons](https://github.com/infinitered/ignite-vector-icons) | [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+[i18n](https://github.com/infinitered/ignite-i18n) | [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
+[maps](https://github.com/infinitered/ignite-maps) | [react-native-maps](https://github.com/airbnb/react-native-maps)
