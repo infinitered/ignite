@@ -43,7 +43,7 @@ const finish = async function (context) {
   print.info(print.colors.yellow(`  cd ${name}`))
   print.info(print.colors.yellow('  react-native run-ios'))
   print.info('')
-  if (verifyAndroidInstalled()) {
+  if (verifyAndroidInstalled(context)) {
     print.info('To run in Android:')
     print.info(print.colors.yellow(`  cd ${name}`))
     print.info(print.colors.yellow('  react-native run-android'))
