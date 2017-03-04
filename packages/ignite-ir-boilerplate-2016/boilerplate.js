@@ -1,6 +1,22 @@
 const options = require('./options')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
 
+/**
+ * Is Android installed?
+ *
+ * $ANDROID_HOME/tools folder has to exist.
+ *
+ * @param {*} context - The gluegun context.
+ * @returns {boolean}
+ */
+const isAndroidInstalled = function (context) {
+  const androidHome = process.env['ANDROID_HOME']
+  const hasAndroidEnv = !context.strings.isBlank(androidHome)
+  const hasAndroid = hasAndroidEnv && context.filesystem.exists(`${androidHome}/tools`) === 'dir'
+
+  return Boolean(hasAndroid)
+}
+
 const finish = async function (context) {
   const { parameters, system, print, ignite } = context
   const name = parameters.third
@@ -25,16 +41,20 @@ const finish = async function (context) {
   print.info('🍽 Time to get cooking!')
   print.info('')
   print.info('To run in iOS:')
-  print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  react-native run-ios'))
+  print.info(print.colors.bold(`  cd ${name}`))
+  print.info(print.colors.bold('  react-native run-ios'))
   print.info('')
-  print.info('To run in Android:')
-  print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  react-native run-android'))
+  if (isAndroidInstalled(context)) {
+    print.info('To run in Android:')
+  } else {
+    print.info(`To run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.bold('react-native run-android')} successfully until you have. Then:`)
+  }
+  print.info(print.colors.bold(`  cd ${name}`))
+  print.info(print.colors.bold('  react-native run-android'))
   print.info('')
   print.info('To see what ignite can do for you:')
-  print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  ignite'))
+  print.info(print.colors.bold(`  cd ${name}`))
+  print.info(print.colors.bold('  ignite'))
   print.info('')
 }
 
