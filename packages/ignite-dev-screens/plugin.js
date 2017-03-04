@@ -1,22 +1,21 @@
 const sourceFolder = `${process.cwd()}/node_modules/ignite-dev-screens/templates`
 
-const MANUAL_INSTALL_INFO = `
-✨ DevScreens installed!
-
-We couldn't automatically add them to your project. But it's pretty easy!
-Just add the following to your primary screen or navigation:
-
-${print.colors.bold('import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'')}
-
-${print.colors.darkGray('// In your view JSX somewhere...')}
-
-<DevscreensButton />
-`
 
 const add = async function (context) {
   const { patching, filesystem, print, ignite } = context
-  const { warning } = print
 
+  const MANUAL_INSTALL_INFO = `
+  ✨ DevScreens installed!
+
+  We couldn't automatically add them to your project. But it's pretty easy!
+  Just add the following to your primary screen or navigation:
+
+  ${print.colors.bold('import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'')}
+
+  ${print.colors.muted('// In your view JSX somewhere...')}
+
+  <DevscreensButton />
+  `
   // Set Examples to "classic" in Ignite config
   context.ignite.setIgniteConfig('examples', 'classic')
 
