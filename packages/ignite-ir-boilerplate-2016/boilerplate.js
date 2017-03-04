@@ -4,7 +4,7 @@ const { merge, pipe, assoc, omit, __ } = require('ramda')
 
 const verifyAndroidInstalled = function (context) {
   let androidInstalled = true
-  if (!Shell.which('android')) {
+  if (!context.system.which('android')) {
     console.log(`Unable to find 'android' in your PATH.`)
     androidInstalled = false
   }
