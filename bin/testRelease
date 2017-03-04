@@ -57,6 +57,7 @@ verify_code()
 check_builds()
 {
   export IGNITE_PLUGIN_PATH=$(pwd)/packages
+  echo "$IGNITE_PLUGIN_PATH"
 
   mkdir testgrounds
   cd ./testgrounds
