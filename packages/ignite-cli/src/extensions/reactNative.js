@@ -60,7 +60,7 @@ function attach (plugin, command, context) {
     const rncliSpinner = print.spin(`checking react-native-cli`)
     const cliInstalled = await system.which('react-native')
     if (cliInstalled) {
-      rncliSpinner.succeed(`checked react-native-cli`)
+      rncliSpinner.stop()
     } else {
       // No React Native installed, let's get it
       rncliSpinner.text = 'installing react-native-cli'

@@ -2,11 +2,12 @@ module.exports = (plugin, command, context) => {
   /**
    * Runs a series of jobs through the templating system.
    *
-   * @param {any}   context    - The Ignite context
-   * @param {any[]} jobs       - A list of jobs to run.
-   * @param {any}   props      - The props to use for variable replacement.
-   * @param {any}   opts       - Additional options
-   * @param {bool}  opts.quiet - don't write anything
+   * @param {any}   context        - The Ignite context
+   * @param {any[]} jobs           - A list of jobs to run.
+   * @param {any}   props          - The props to use for variable replacement.
+   * @param {any}   opts           - Additional options
+   * @param {bool}  opts.quiet     - don't write anything (optional)
+   * @param {bool}  opts.directory - the directory to use as the template source (optional)
    */
   async function copyBatch (context, jobs, props, opts = {}) {
     // grab some features
@@ -15,6 +16,7 @@ module.exports = (plugin, command, context) => {
     const { ignitePluginPath } = ignite
     const config = ignite.loadIgniteConfig()
     const quiet = opts && Boolean(opts.quiet)
+    const directory = opts.directory
 
     // read some configuration
     const askToOverwrite = config.askToOverwrite || false
@@ -37,7 +39,7 @@ module.exports = (plugin, command, context) => {
       if (await shouldGenerate(job.target)) {
         const currentPluginPath = ignitePluginPath()
         await template.generate({
-          directory: currentPluginPath && `${currentPluginPath}/templates`,
+          directory: directory || currentPluginPath && `${currentPluginPath}/templates`,
           template: job.template,
           target: job.target,
           props

@@ -5,10 +5,15 @@ const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
-const addEmptyTemplate = require('../lib/addEmptyTemplate')
-const { merge, forEach, keys, reduce, concat, trim } = require('ramda')
+const addEmptyBoilerplate = require('../lib/addEmptyBoilerplate')
+const { forEach, keys, reduce, concat, trim } = require('ramda')
 
-module.exports = async function (context) {
+/**
+ * Creates a new ignite project based on an optional boilerplate.
+ *
+ * @param {any} context - The gluegun context.
+ */
+async function command (context) {
   const { parameters, strings, print, system, filesystem, ignite } = context
   const { isBlank } = strings
   const { log } = ignite
@@ -40,9 +45,11 @@ module.exports = async function (context) {
   print.newline()
   print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
 
-  // empty template has a shorter route
-  if (parameters.options.empty) {
-    addEmptyTemplate(context)
+  // skip the boilerplate?
+  // NOTE(steve): this expression is intentionally evaluating against false because of
+  // --no-boilerplate and how minimist works.
+  if (parameters.options.boilerplate === false) {
+    addEmptyBoilerplate(context)
     return
   }
 
@@ -53,6 +60,7 @@ module.exports = async function (context) {
   log(`switched directory to ${process.cwd()}`)
 
   // make a temporary package.json file so node stops walking up the diretories
+  // NOTE(steve): a lot of pain went into this 1 function call
   filesystem.write('package.json', {
     name: 'ignite-shim',
     description: 'A temporary package.json created to prevent node from wandering too far.',
@@ -60,25 +68,12 @@ module.exports = async function (context) {
     license: 'MIT'
   })
 
-  /**
-   * Figures out which app template we'll be using (without the ignite- prefix).
-   *
-   * @return {string} The app template we'll be using.
-   */
-  function getAppTemplate () {
-    // check for a user-defined template
-    const cliTemplate = parameters.options.template || parameters.options.t
-    if (cliTemplate) return cliTemplate
+  // grab the right boilerplate
+  const cliBoilerplate = parameters.options.boilerplate || parameters.options.b
+  const boilerplateName = strings.isBlank(cliBoilerplate) ? 'ir-boilerplate-2016' : cliBoilerplate
 
-    // default
-    return 'infinite-red-app-template'
-  }
-
-  // grab the right app template
-  const appTemplatePackage = getAppTemplate()
-
-  // pick the inbound cli options and add our --is-app-template
-  const cliOpts = merge(parameters.options, { 'is-app-template': true })
+  // pick the inbound cli options
+  const cliOpts = parameters.options
 
   // turn this back into a string
   const forwardingOptions = trim(reduce((src, k) => {
@@ -89,13 +84,13 @@ module.exports = async function (context) {
   // let's kick off the template
   let ok = false
   try {
-    const command = `ignite add ${appTemplatePackage} ${projectName} ${forwardingOptions}`
-    log(`running app template: ${command}`)
+    const command = `ignite boilerplate-install ${boilerplateName} ${projectName} ${forwardingOptions}`
+    log(`running boilerplate: ${command}`)
     await system.spawn(command, { stdio: 'inherit' })
-    log('finished app template')
+    log('finished boilerplate')
     ok = true
   } catch (e) {
-    log('error running app template')
+    log('error running boilerplate')
     log(e)
   }
 
@@ -111,10 +106,12 @@ module.exports = async function (context) {
     // move everything that's 1 deep back up to here
     forEach(
       filename => filesystem.move(path.join(projectName, filename), filename)
-      , filesystem.list(projectName)
+      , filesystem.list(projectName) || []
     )
     log(`removing unused sub directory ${projectName}`)
     filesystem.remove(projectName)
   }
   log('finished running new')
 }
+
+module.exports = command

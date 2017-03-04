@@ -16,14 +16,28 @@ const screenExamples = [
   }
 ]
 
-const add = async function (context) {
+/**
+ * Adds the screen examples.
+ *
+ * @param {any} context The gluegun context.
+ */
+async function add (context) {
   // examples of generated screens
   await context.ignite.addPluginScreenExamples(screenExamples)
 }
 
-const remove = async function (context) {
+/**
+ * Removes the screen examples.
+ *
+ * @param {any} context The gluegun context.
+ */
+async function remove (context) {
   // remove screens
   await context.ignite.removePluginScreenExamples(screenExamples)
 }
 
-module.exports = { add, remove }
+module.exports = {
+  add, remove
+}
+
+

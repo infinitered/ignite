@@ -1,5 +1,5 @@
 {
-  "name": "ignite-infinite-red-app-template",
+  "name": "ignite-ir-boilerplate-2016",
   "description": "Infinite Red's recommended app structure",
   "license": "MIT",
   "repository": "infinitered/ignite",
@@ -7,7 +7,11 @@
   "version": "0.1.0",
   "files": [
     "index.js",
-    "templates"
+    "ignite.json",
+    "templates",
+    "boilerplate",
+    "shared",
+    "commands"
   ],
   "author": {
     "name": "Infinite Red",

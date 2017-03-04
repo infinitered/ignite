@@ -14,7 +14,7 @@ This is a list of documentation ideas.
 
 ## Quick Start
 
-* Creating app templates
+* Using boilerplates
 * Removing plugins you don't like
 * Project plugins vs 3rd party plugins
 * Gluegun and its features
