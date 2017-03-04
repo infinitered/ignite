@@ -1,5 +1,20 @@
+const Shell = require('shelljs')
 const options = require('./options')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
+
+const verifyAndroidInstalled = function (context) {
+  let androidInstalled = true
+  if (!Shell.which('android')) {
+    console.log(`Unable to find 'android' in your PATH.`)
+    androidInstalled = false
+  }
+  const androidPath = process.env['ANDROID_HOME']
+  if (!androidPath || !Shell.test('-d', androidPath)) {
+    console.log(`Unable to find 'ANDROID_HOME' environment variable.`)
+    androidInstalled = false
+  }
+  return androidInstalled
+}
 
 const finish = async function (context) {
   const { parameters, system, print, ignite } = context
@@ -28,9 +43,14 @@ const finish = async function (context) {
   print.info(print.colors.yellow(`  cd ${name}`))
   print.info(print.colors.yellow('  react-native run-ios'))
   print.info('')
-  print.info('To run in Android:')
-  print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  react-native run-android'))
+  if (verifyAndroidInstalled()) {
+    print.info('To run in Android:')
+    print.info(print.colors.yellow(`  cd ${name}`))
+    print.info(print.colors.yellow('  react-native run-android'))
+  } else {
+    print.info('Android not set up properly!')
+    print.info(`Make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.yellow('react-native run-android')} successfully until you have.`)
+  }
   print.info('')
   print.info('To see what ignite can do for you:')
   print.info(print.colors.yellow(`  cd ${name}`))
