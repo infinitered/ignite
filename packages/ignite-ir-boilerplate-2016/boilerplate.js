@@ -1,6 +1,5 @@
 const options = require('./options')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
-const screenExamples = require('./screenExamples')
 
 const finish = async function (context) {
   const { parameters, system, print, ignite } = context
@@ -8,7 +7,7 @@ const finish = async function (context) {
 
   // initial git
   if (system.which('git')) {
-    const spinner = print.spin('setting up git')
+    const spinner = print.spin('configuring git')
     ignite.log('git init .')
     await system.run('git init .')
     ignite.log('git add .')
@@ -18,7 +17,7 @@ const finish = async function (context) {
     // setup husky git hooks
     spinner.text = 'setting up git hooks'
     system.run(`node node_modules/husky/bin/install .`)
-    spinner.succeed()
+    spinner.succeed('configured git')
   }
 
   // Wrap it up with our success message.
@@ -207,17 +206,4 @@ async function install (context) {
   await finish(context)
 }
 
-async function add (context) {
-  await screenExamples.add(context)
-}
-
-/**
- * Time to remove the plugin.
- *
- * @param {any} context The gluegun context.
- */
-async function remove (context) {
-  await screenExamples.remove(context)
-}
-
-module.exports = { install, add, remove }
+module.exports = { install }
