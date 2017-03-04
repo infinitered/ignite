@@ -1,5 +1,18 @@
 const sourceFolder = `${process.cwd()}/node_modules/ignite-dev-screens/templates`
 
+const MANUAL_INSTALL_INFO = `
+✨ DevScreens installed!
+
+We couldn't automatically add them to your project. But it's pretty easy!
+Just add the following to your primary screen or navigation:
+
+${print.colors.bold('import DevscreensButton from \'../../ignite/DevScreens/DevscreensButton.js\'')}
+
+${print.colors.darkGray('// In your view JSX somewhere...')}
+
+<DevscreensButton />
+`
+
 const add = async function (context) {
   const { patching, filesystem, print, ignite } = context
   const { warning } = print
@@ -13,7 +26,7 @@ const add = async function (context) {
   // Copy the the screens to containers folder
   filesystem.copyAsync(`${sourceFolder}`, `${process.cwd()}/ignite/DevScreens`, { overwrite: true })
 
-  // Set App/Config/DebugConfig.js showDevScreens to __DEV__
+  // Set showDevScreens to __DEV__
   context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
 
   // Insert a function that renders the dev screens as part of the JSX in the navigation
@@ -26,7 +39,7 @@ const add = async function (context) {
       patching.insertInFile(launchScreen, '</ScrollView>', '          <DevscreensButton />', false)
     }
   } else {
-    warning('LaunchScreen.js not found. Please manually link the PresentationScreen from your primary screen/navigation.')
+    print.info(MANUAL_INSTALL_INFO)
   }
 
   // Call the function in the navigation, which adds/provides the dev screens
