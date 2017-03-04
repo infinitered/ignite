@@ -6,12 +6,14 @@
   "homepage": "https://github.com/infinitered/ignite",
   "version": "0.1.0",
   "files": [
-    "index.js",
-    "ignite.json",
-    "templates",
     "boilerplate",
-    "shared",
-    "commands"
+    "commands",
+    "templates",
+    "boilerplate.js",
+    "ignite.json",
+    "options.js",
+    "plugin.js",
+    "screenExamples.js"
   ],
   "author": {
     "name": "Infinite Red",
