@@ -1,19 +1,20 @@
-const Shell = require('shelljs')
 const options = require('./options')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
 
-const verifyAndroidInstalled = function (context) {
-  let androidInstalled = true
-  if (!context.system.which('android')) {
-    console.log(`Unable to find 'android' in your PATH.`)
-    androidInstalled = false
-  }
-  const androidPath = process.env['ANDROID_HOME']
-  if (!androidPath || !Shell.test('-d', androidPath)) {
-    console.log(`Unable to find 'ANDROID_HOME' environment variable.`)
-    androidInstalled = false
-  }
-  return androidInstalled
+/**
+ * Is Android installed?
+ *
+ * $ANDROID_HOME/tools folder has to exist.
+ *
+ * @param {*} context - The gluegun context.
+ * @returns {boolean}
+ */
+const isAndroidInstalled = function (context) {
+  const androidHome = process.env['ANDROID_HOME']
+  const hasAndroidEnv = !context.strings.isBlank(androidHome)
+  const hasAndroid = hasAndroidEnv && context.filesystem.exists(`${androidHome}/tools`) === 'dir'
+
+  return Boolean(hasAndroid)
 }
 
 const finish = async function (context) {
@@ -40,21 +41,20 @@ const finish = async function (context) {
   print.info('🍽 Time to get cooking!')
   print.info('')
   print.info('To run in iOS:')
-  print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  react-native run-ios'))
+  print.info(print.colors.bold(`  cd ${name}`))
+  print.info(print.colors.bold('  react-native run-ios'))
   print.info('')
-  if (verifyAndroidInstalled(context)) {
+  if (isAndroidInstalled(context)) {
     print.info('To run in Android:')
-    print.info(print.colors.yellow(`  cd ${name}`))
-    print.info(print.colors.yellow('  react-native run-android'))
   } else {
-    print.info('Android not set up properly!')
-    print.info(`Make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.yellow('react-native run-android')} successfully until you have.`)
+    print.info(`To run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.bold('react-native run-android')} successfully until you have. Then:`)
   }
+  print.info(print.colors.bold(`  cd ${name}`))
+  print.info(print.colors.bold('  react-native run-android'))
   print.info('')
   print.info('To see what ignite can do for you:')
-  print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  ignite'))
+  print.info(print.colors.bold(`  cd ${name}`))
+  print.info(print.colors.bold('  ignite'))
   print.info('')
 }
 
