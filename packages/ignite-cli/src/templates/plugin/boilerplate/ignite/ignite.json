@@ -1,0 +1,3 @@
+{
+  "createdWith": "<%= props.name %>"
+}

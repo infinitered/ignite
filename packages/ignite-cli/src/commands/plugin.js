@@ -20,8 +20,14 @@ const walkthrough = async (context) => {
   // Okay, we'll ask one by one, fine
   return await context.prompt.ask([
     {
+      name: 'boilerplate',
+      message: 'Is this an app boilerplate plugin?',
+      type: 'list',
+      choices: ['No', 'Yes']
+    },
+    {
       name: 'template',
-      message: 'Will your plugin have an example component??',
+      message: 'Will your plugin have an example component?',
       type: 'list',
       choices: ['No', 'Yes']
     },
@@ -93,6 +99,13 @@ const createNewPlugin = async (context) => {
     (answers.command === 'Yes') &&
       { template: 'plugin/templates/thing.js.ejs.ejs', target: `${pluginName}/templates/thing.js.ejs` }
   ]
+  if (answers.boilerplate === 'Yes') {
+    copyJobs.push({ template: 'plugin/boilerplate.js.ejs', target: `${pluginName}/boilerplate.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/index.js.ejs.ejs', target: `${pluginName}/boilerplate/index.js.ejs` })
+    copyJobs.push({ template: 'plugin/boilerplate/App/App.js', target: `${pluginName}/boilerplate/App/App.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/Tests/AppTest.js', target: `${pluginName}/boilerplate/Tests/AppTest.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/ignite/ignite.json', target: `${pluginName}/boilerplate/ignite/ignite.json` })
+  }
 
   // copy over the files
   await ignite.copyBatch(context, copyJobs, {name, pluginName, answers, isGenerator: answers.command === 'Yes'})
