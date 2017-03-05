@@ -6,7 +6,7 @@ export default class ButtonBox extends React.Component {
   static propTypes = {
     onPress: PropTypes.func,
     image: PropTypes.number,
-    style: PropTypes.number,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     text: PropTypes.string
   }
 
