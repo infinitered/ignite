@@ -1,8 +1,0 @@
-{
-  "presets": [ "react-native" ],
-  "env": {
-    "development": {
-      "sourceMaps": "inline"
-    }
-  }
-}
