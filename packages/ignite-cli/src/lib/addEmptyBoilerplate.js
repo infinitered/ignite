@@ -10,6 +10,7 @@ module.exports = async function (context) {
   // ignite/ignite.json
   const igniteJson = {
     'createdWith': ignite.version,
+    'boilerplate': 'empty',
     'examples': 'none'
   }
   filesystem.write(`ignite/ignite.json`, igniteJson)
