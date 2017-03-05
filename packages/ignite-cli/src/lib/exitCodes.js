@@ -33,7 +33,7 @@ module.exports = {
   PROJECT_NAME: 5,
 
   /**
-   * You're trying to spork, but there's nothing to eat
+   * You're trying to spork, but there's nothing to eat.
    */
   SPORKABLES_NOT_FOUND: 6,
 
@@ -43,17 +43,22 @@ module.exports = {
   PLUGIN_NAME: 7,
 
   /**
-   * This directory already exists
+   * This directory already exists.
    */
   DIRECTORY_EXISTS: 8,
 
   /**
-   * Problem installing React Native
+   * Problem installing React Native.
    */
   REACT_NATIVE_INSTALL: 9,
 
   /**
    * This is not a compatible Ignite directory.
    */
-  NOT_IGNITE_PROJECT: 10
+  NOT_IGNITE_PROJECT: 10,
+
+  /**
+   * Needed environment settings not met.
+   */
+  HOSTILE_ENVIRONMENT: 11  
 }
