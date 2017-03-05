@@ -6,167 +6,85 @@
 <a href="https://www.codacy.com/app/gantman/ignite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=infinitered/ignite&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/1c6e04abe7224bdc88095129b5eb43fb"/></a>
 <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
 
-### Version 2 Is Coming!
-
-:zap: Ignite 2.0 is heading towards Beta 1. :zap:
-
-All active development is taking place on the `master` branch.  If you're contributing to v2, welcome!  You're in the right place.
-
-We're aiming to release around the first week of March.
-
 ### Ignite
 
 <p align="center">
-  <a href="https://infinite.red/ignite"><img src="https://raw.githubusercontent.com/infinitered/ignite/master/_art/in_use.jpg" alt="React Native Ignite logo" width="300px"></a>
   <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite 2 screenshot" width="300px"></a>
 </p>
 
 <p align="center">
-  :fire: The ideal starting app for React Native, best practices, generators, and more. :fire:
+  :fire: The hottest CLI for React Native, boilerplates, plugins, generators, and more. :fire:
   <br/>
 </p>
 
-#### :earth_americas: [Tour Video and More on Ignite Web Page](https://infinite.red/ignite)
+### Ignite 2 is here!
+
+After months of work and sweat and tears, Ignite 2 (beta) has landed! We're incredibly proud of where Ignite 2 is and where it's headed.
+
+Cliff notes version of the difference between Ignite 1 and 2:
+
+Ignite 1 was a (very nice!) React Native boilerplate. Ignite 2 is a CLI and generator for React Native with boilerplates, plugins, and more. Where before you had one choice -- [Infinite Red](https://infinite.red)'s boilerplate -- now you can choose from many boilerplates and also add standalone plugins as you need them. It's much more modular and extensible than Ignite 1.
+
+If you really liked Ignite 1 as it was, then not much has changed! You just run `ignite new MyApp --max` and everything feels pretty normal from there.
+
+
+### Quick Example
+
+```
+$ npm install -g ignite-cli
+$ ignite new PizzaApp
+$ cd PizzaApp
+$ ignite add maps
+$ ignite add vector-icons
+$ ignite generate screen PizzaLocationList
+$ ignite generate component PizzaLocation
+$ ignite generate map StoreLocator
+$ ignite add i18n
+$ ignite remove i18n
+$ ignite i love you
+```
 
 ### Why Ignite?
-* **No Need to Fork!**  Command-line Generator
-  * Apps
-  * Components/Styles
-  * Containers (smart components)
-  * Screens (opinionated containers)
-  * _and more..._
-* JS Code Standard - Standard Compliant
-* ALL CODE works with iOS and Android
-* Documented Structure
-* **Battle Tested** - We use this!
-* Redux State Management
-* Optional Redux Persistence (uses AsyncStorage via [redux-persist](https://github.com/rt2zz/redux-persist))
-* Redux Sagas
-* Githooks
-* AVA Tests - even React Native components!
-* Code Coverage Reports
-* API Ready
-* Reactotron Ready
-* Included Common Libs:
-  * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
-  * [react-native-animatable](https://github.com/oblador/react-native-animatable)
-  * [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n)
-  * [react-native-drawer](https://github.com/root-two/react-native-drawer)
-  * [apisauce](https://github.com/skellock/apisauce)
-  * [reduxsauce](https://github.com/skellock/reduxsauce)
-  * [react-native-maps](https://github.com/lelandrichardson/react-native-maps)
-  * [rn-translate-template](https://github.com/hiaw/rn-translate-template)
-* Included Developer Libs:
-  * [reactotron](https://github.com/skellock/reactotron)
-  * [AVA](https://github.com/avajs/ava)
-  * [enzyme](https://github.com/airbnb/enzyme)
-  * [react-native-mock](https://github.com/lelandrichardson/react-native-mock)
-  * [mockery](https://github.com/mfncooper/mockery)
-  * [nyc](https://github.com/bcoe/nyc)
 
+* Easily spin up a new React Native app with best practices built-in
+* No runtime! This is a developer tool only, not a library you have to depend on
+* An ever-expanding list of boilerplates and plugins
+* Powerful but well-defined behavior
+* Battle tested and used every day by the developers at Infinite Red
 
-To view the generated example project, just pull down the code and run ignite-base!
+And you also get (by default) all of the sweet, sweet goodness of our default boilerplate:
+
+* Works with iOS and Android out of the box
+* Useful generators, including components, screens, styles, and more
+* API-ready -- hook it up and start talking to your server
+* Standard-js compliant code
+* Redux and redux-sagas state management
+* Well-documented code
+* Gorgeous Ava tests
+* and much, much more... [go check out the readme](https://github.com/infinitered/ignite-ir-boilerplate-2016) (WIP during alpha)
 
 ## :arrow_down: Install
 
-Make sure you're set up for [React Native](https://facebook.github.io/react-native/docs/getting-started.html#content)
+First, make sure you're set up for [React Native](https://facebook.github.io/react-native/docs/getting-started.html#content)
 
-**Step 1: Install**
+then...
 
-`npm install -g react-native-ignite`
-
-or
-
-`yarn global add react-native-ignite`
-
-NOTE: If you seem to not have `ignite` available on your path, check that your correct yarn bin directory is on your path by checking that the output of `yarn global bin` is listed as a directory in `$PATH` environment variable.
-
-For those of you unfamiliar with the new package manager Yarn, it's basically a 1 for 1 replacement for npm, but with a significant speed boost. Check out this [yarn cheatsheet](https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc#.1ckrhd77a) for more info.
-
-**Step 2: Use**
-
-`ignite new MyApplication`
-
-![install](_art/install.gif)
-
-## :arrow_forward: How to Run Generated App
-
-1. cd to the repo
-2. Run Build for either OS
-  * for iOS
-    * run the command `react-native run-ios`
-  * for Android
-    * Run Android Emulator ([Android Studio](https://developer.android.com/studio/index.html) or [Genymotion](https://www.genymotion.com/))
-    * run the command `react-native run-android`
-3. If the packager does not automatically start, run `npm start` or `yarn start`
-4. _**Enjoy!**_
-
-![install](_art/screens.gif)
+```
+$ npm install -g ignite-cli
+$ ignite new MyNewAppName
+```
 
 ## :arrow_forward: Troubleshooting
-These are some common issues you may run into while setting up Ignite. If you encounter something that is not listed here, try searching for the [issue in GitHub](https://github.com/infinitered/ignite/issues).
 
-*Android*
-
-   * **Problem**:
-
-       After running `react-native android` you get the following error:
-
-           com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException:
-           Process 'command '     /usr/lib/jvm/java-8-oracle/bin/java'' finished with non-zero exit value 2
-
-       Solution:
-
-           (cd android && ./gradlew clean)
-
-
-## :arrow_up: Built-In Generators
-
-#### Generate an app: `ignite new MyApplication`
-* The application generator uses the `ignite-base` template to provide a fresh application with all the common tech wired up and ready to roll.  Base applications come with common development screens, tools, and components.  _As for now, this is a 'Kitchen Sink' plan of attack.  Eventually to be pared down, and adjustable in v2.0_
-
-#### Generate a component: `ignite generate component SmoothButton`
-* The component generator creates a new 'dumb component' with the stylesheet.  Both files are created and placed in their appropriate folders.
-
-#### Generate a container: `ignite generate container SubMenu`
-* A generated container is a smart component that is connected to Redux.  Usually for containing other components.  The component and stylesheet are placed in the `Containers` folder.
-
-#### Generate a screen: `ignite generate screen Settings`
-* A generated screen is an opinionated container with a generated route.  Keyboard avoiding and other base code is placed in this connected smart component.
-
-#### Generate a listview: `ignite generate listview HotDates`
-* React Native listview container with easy step-by-step instructions on how to get started with an easy list template.
-
-#### Generate a redux: `ignite generate redux Login`
-* Generate a reducer with three actions and three types: `request`, `success` and `failure`, all hooked together into a reducer.
-
-#### Generate a saga: `ignite generate saga Login`
-* Generate a saga - the generated example handles connecting to a third party api. Designed for use in tandem with redux generator.
-
-#### Generate a mapview: `ignite generate mapview MapScreen`
-* react-native-maps container, component, and map helpers with easy step-by-step instructions on how to get started with an simple map screen.
-
-#### Import images: `ignite import imagesfile`
-* Imports all files in `Images` folder and converts the names into **key: value** pairs in the _image_ object inside of the `Images.js` file in the `Themes` folder.
-
-## :arrow_upper_right: This Repo Explained
-* **ignite-base** aka [BASE] - is the generated default app. Some files are different and have a `.template` extension.
-* **ignite-cli** aka [CLI] - is the app that wraps our yeoman generators, and other commands.  This is the `react-native-ignite` node module.
-* **ignite-generator** aka [GEN] - Yeoman generators for Ignite.  This is the `generator-react-native-ignite` node module that the CLI depends on for generating app items.
-* **fireDrill.sh** - A shell script for verifying the necessary relationship between folders and files is in good shape.  Since versions, templates, and linting is enforce, we have it all in one friendly script for developers and CI.
-* **testRelease.sh** - A shell script that automatically ignites a project based on the repo to make sure it generates correctly, and functions to the best of automated testability.  This script is run before every release.
-
-## :up: Ignite Versions
-##### Ignite is tested on every release: See [release history](https://github.com/infinitered/ignite/releases) for changes and upgrades.
-##### Ignite `master` branch is tested against facebook's react-native `master` branch every 24 hours.  Though this doesn't immediately affect the current release of Ignite, it helps us detect early issues with upgrading:  Current status [![Build Status](https://travis-ci.org/infinitered/ignite.svg?branch=master)](https://travis-ci.org/infinitered/ignite)
+If you run into problems, first search the issues in this repository. If you don't find anything, you can either [file an issue](https://github.com/infinitered/ignite/issues) or come talk to our friendly developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
 
 ## :twisted_rightwards_arrows: Where to Go From Here
+
 #### [Contribute to Ignite](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
-#### [Chat with us on Gitter](https://gitter.im/infinitered/ignite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - Infinite Red devs standing by
-#### [Chosen Tech Docs](https://github.com/infinitered/ignite/wiki/Chosen-Tech) - Understand the Tech Inside
-#### [Roadmap Wiki Page](https://github.com/infinitered/ignite/wiki/Roadmap) - Future Plans of Ignite
+#### [Chat with us on the IR Community](http://community.infinite.red) - Infinite Red devs standing by
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
-#### [Project Web Page](http://infinitered.github.io/ignite/) - Our Github Page
+#### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
 
 ## :heart: Special Thanks :heart:
-Thank you to the numerous [contributors of Ignite](https://github.com/infinitered/ignite/graphs/contributors).  Additionally, our Gitter/Slack integration has been most graciously donated by [SameRoom.io](https://sameroom.io/).  Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite.
+Thank you to the numerous [contributors of Ignite](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite.
+
