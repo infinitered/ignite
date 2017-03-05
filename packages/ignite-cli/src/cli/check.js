@@ -20,7 +20,7 @@ let angryGit = Shell.exec('git config --global core.safecrlf', {silent: true})
 if (angryGit.stdout === 'true\n') {
   console.error(`
     Git safecrlf with the current version of react-native is likely to fail.
-    Consider turning this off, or adding your opinion to the open RN ticket.
+    Consider turning this off or adding your opinion to the open RN ticket.
     See here for more info:  https://github.com/facebook/react-native/issues/12724
   `)
   process.exit(HOSTILE_ENVIRONMENT)
