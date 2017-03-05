@@ -10,3 +10,5 @@ Welllllll, it just might be.  Do me a favor and check the following.
 
 Also, for the quickest assistance please run `ignite doctor` and paste in
 everything (including the lines with 3 backticks).
+
+~~~~~ Please Delete This Line And Everything Above Before Submitting!  :) ~~~~~ 
