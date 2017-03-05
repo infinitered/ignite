@@ -1,6 +1,6 @@
 {
   "name": "ignite-monorepo",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "description": "The Ignite universe.",
   "scripts": {
@@ -8,7 +8,7 @@
     "lint": "lerna run lint --concurrency 1",
     "test": "lerna run test",
     "clean": "lerna clean",
-    "publish": "lerna publish --skip-npm"
+    "publish": "lerna publish --npm-tag next"
   },
   "repository": "infinitered/ignite",
   "license": "MIT",
