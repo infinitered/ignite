@@ -1,6 +1,6 @@
 {
   "name": "ignite-dev-screens",
-  "version": "1.9.1",
+  "version": "1.9.3-beta.1",
   "license": "MIT",
   "files": [
     "templates",
