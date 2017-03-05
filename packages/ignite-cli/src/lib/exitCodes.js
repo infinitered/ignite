@@ -60,5 +60,5 @@ module.exports = {
   /**
    * Needed environment settings not met.
    */
-  HOSTILE_ENVIRONMENT: 11  
+  HOSTILE_ENVIRONMENT: 11
 }
