@@ -1,7 +1,8 @@
 ## Please verify the following:
 - [ ] Everything works on iOS/Android
-- [ ] `ignite-base` **ava** tests pass
-- [ ] `fireDrill.sh` passed
+- [ ] `npm test` **ava** tests pass with new tests, if relevant
+- [ ] `./docs/` has been updated with your changes, if relevant
 
 ## Describe your PR
+
 
