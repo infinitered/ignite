@@ -34,7 +34,8 @@
     "minimist": "^1.2.0",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
-    "shelljs": "^0.7.6"
+    "shelljs": "^0.7.6",
+    "pretty-error": "^2.0.2"
   },
   "devDependencies": {
     "ava": "^0.18.1",
@@ -42,7 +43,6 @@
     "mock-fs": "git://github.com/not-an-aardvark/mock-fs/#06868bbd7724707f9324b237bdde28f05f7a01d5",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
-    "pretty-error": "^2.0.2",
     "standard": "^8.6.0"
   },
   "ava": {},
