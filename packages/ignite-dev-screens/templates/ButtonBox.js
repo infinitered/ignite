@@ -5,8 +5,8 @@ import styles from './Styles/ButtonBoxStyles'
 export default class ButtonBox extends React.Component {
   static propTypes = {
     onPress: PropTypes.func,
-    image: PropTypes.string,
-    style: PropTypes.object,
+    image: PropTypes.number,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     text: PropTypes.string
   }
 
