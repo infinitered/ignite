@@ -84,9 +84,9 @@ async function command (context) {
   // let's kick off the template
   let ok = false
   try {
-    const command = `ignite boilerplate-install ${boilerplateName} ${projectName} ${forwardingOptions}`
+    const command = trim(`ignite boilerplate-install ${boilerplateName} ${projectName} ${forwardingOptions}`)
     log(`running boilerplate: ${command}`)
-    await system.spawn(command, { stdio: 'inherit' })
+    await system.exec(command, { stdio: 'inherit' })
     log('finished boilerplate')
     ok = true
   } catch (e) {
