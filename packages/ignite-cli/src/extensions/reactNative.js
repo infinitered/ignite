@@ -64,7 +64,7 @@ function attach (plugin, command, context) {
     } else {
       // No React Native installed, let's get it
       rncliSpinner.text = 'installing react-native-cli'
-      await system.exec('npm install -g react-native-cli', { stdio: 'ignore' })
+      await system.spawn('npm install -g react-native-cli', { stdio: 'ignore' })
       rncliSpinner.succeed(`installed react-native-cli`)
     }
 
@@ -79,7 +79,7 @@ function attach (plugin, command, context) {
     // ok, let's do this
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
     try {
-      await system.exec(cmd, { stdio: stdioMode })
+      await system.spawn(cmd, { stdio: stdioMode })
     } catch (e) {
       spinner.fail(`failed to add ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`)
       if (reactNativeTemplate) {

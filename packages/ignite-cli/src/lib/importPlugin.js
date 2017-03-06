@@ -60,13 +60,13 @@ async function importPlugin (context, opts) {
       ? `yarn add file:${target} --force --dev`
       : `yarn add ${target} --dev`
     log(cmd)
-    await system.exec(cmd, { stdio: 'pipe' })
+    await system.spawn(cmd, { stdio: 'ignore' })
     log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
     const cmd = `npm i ${target} --save-dev ${cacheBusting}`
     log(cmd)
-    await system.exec(cmd, { stdio: 'pipe' })
+    await system.spawn(cmd, { stdio: 'ignore' })
     log('finished npm command')
   }
 }
