@@ -23,10 +23,14 @@ module.exports = (plugin, command, context) => {
     // install the module
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
-      await system.run(`yarn add ${moduleFullName} ${addSwitch}`)
+      const cmd = `yarn add ${moduleFullName} ${addSwitch}`
+      ignite.log(cmd)
+      await system.spawn(cmd, { stdio: 'ignore' })
     } else {
       const installSwitch = options.dev ? '--save-dev' : '--save'
-      await system.run(`npm i ${moduleFullName} ${installSwitch}`)
+      const cmd = `npm i ${moduleFullName} ${installSwitch}`
+      ignite.log(cmd)
+      await system.spawn(cmd, { stdio: 'ignore' })
     }
     spinner.stop()
 
