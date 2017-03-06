@@ -1,4 +1,4 @@
-const { test } = require('ramda')
+const { test, trim } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 
 // The default version of React Native to install. We will want to upgrade
@@ -64,12 +64,12 @@ function attach (plugin, command, context) {
     } else {
       // No React Native installed, let's get it
       rncliSpinner.text = 'installing react-native-cli'
-      await system.spawn('npm install -g react-native-cli', { stdio: 'ignore' })
+      await system.run('npm install -g react-native-cli')
       rncliSpinner.succeed(`installed react-native-cli`)
     }
 
     // react-native init
-    const cmd = `react-native init ${name} ${rnOptions.join(' ')}`
+    const cmd = trim(`react-native init ${name} ${rnOptions.join(' ')}`)
     log('initializing react native')
     log(cmd)
     const withTemplate = reactNativeTemplate ? ` with ${print.colors.cyan(reactNativeTemplate)} template` : ''
@@ -79,7 +79,7 @@ function attach (plugin, command, context) {
     // ok, let's do this
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
     try {
-      await system.spawn(cmd, { stdio: stdioMode })
+      await system.exec(cmd, { stdio: stdioMode })
     } catch (e) {
       spinner.fail(`failed to add ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`)
       if (reactNativeTemplate) {
