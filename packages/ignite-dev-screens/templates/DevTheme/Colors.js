@@ -8,6 +8,7 @@ const colors = {
   charcoal: '#595959',
   snow: 'white',
   ember: 'rgba(164, 0, 48, 0.5)',
+  fire: '#ff3832',
   eggplant: '#251a34',
   border: '#483F53',
   text: '#E0D7E5'
