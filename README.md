@@ -77,6 +77,8 @@ You can check your version of node by running
 node -v
 ```
 
+then...
+
 ```
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
