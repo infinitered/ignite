@@ -12,6 +12,9 @@ test('has the right interface', t => {
     },
     system: {
       which: () => true
+    },
+    filesystem: {
+      separator: '/'
     }
   }
   const extension = attach(plugin, command, context)
