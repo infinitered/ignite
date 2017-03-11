@@ -26,6 +26,10 @@ test('ignite', async t => {
       brand: 'ignite',
       loadAlls: [
         {
+          dir: `${process.cwd()}/ignite/plugins`,
+          opts: {}
+        },
+        {
           dir: `${process.cwd()}/node_modules`,
           opts: { hidden: true, matching: 'ignite-*' }
         }

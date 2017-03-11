@@ -21,7 +21,7 @@ Open up `package.json` and add your desired info.
 {
   "name": "ignite-radio-buttons",
   "version": "0.0.1",
-  "description": "",
+  "description": "An Ignite plugin for react-native-radio-buttons.",
   "license": "MIT",
   "devDependencies": {},
   "url": "https://github.com/infinitered/ignite-radio-buttons/issues",
@@ -29,17 +29,13 @@ Open up `package.json` and add your desired info.
     "name": "Robin Heinze",
     "email": "robin@infinite.red",
     "url": "https://infinite.red"
-  },
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x"
   }
 }
 ```
 
 ### Edit the `index.js`
 
-The `index.js` is the entrypoint for your plugin and provides the add/remove functionality. We need to make sure that the npm packages installed and component examples are copied over. 
+The `index.js` is the entrypoint for your plugin and provides the add/remove functionality. We need to make sure that the npm packages installed and component examples are copied over.
 
 1. Change the `NPM_MODULE_NAME` to `react-native-radio-buttons`
 2. Since this npm package does not require a linking step, we will change `ignite.addModule` to have `link: false` and `ignite.removeModule` to have `unlink: false`
