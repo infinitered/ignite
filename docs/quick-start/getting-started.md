@@ -52,6 +52,22 @@ To see what ignite can do for you:
   ignite
 ```
 
+## Attaching to Existing Projects
+
+If you already have an existing project on the go, you can make it enable ignite support by typing `ignite attach` in the project directory.  This creates a `ignite` directory with a file called `ignite.json` and an empty `plugins` directory (with a `.gitkeep` to play nice with `git`).
+
+You're now ready to start using ignite plugins!
+
+This works great for:
+
+* [create-react-native-app](https://github.com/react-community/create-react-native-app)
+* [Expo](https://expo.io)
+* [create-react-app](https://github.com/facebookincubator/create-react-app)
+* normal React JS projects
+* empty directories ( not even joking! you can use this with other programming languages.  :O )
+
+Not all plugins work in all environments, but you can certainly take advantage of the many features of Ignite (such as the code generators).
+
 ## Continue your Learning
 
 To continue your introduction to Ignite, see the Editing an Ignite App (working title) page.
