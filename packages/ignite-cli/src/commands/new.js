@@ -6,7 +6,7 @@ const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
 const addEmptyBoilerplate = require('../lib/addEmptyBoilerplate')
-const { forEach, keys, reduce, concat, trim } = require('ramda')
+const { forEach, keys, reduce, concat, trim, isEmpty, match, not } = require('ramda')
 
 /**
  * Creates a new ignite project based on an optional boilerplate.
@@ -15,11 +15,17 @@ const { forEach, keys, reduce, concat, trim } = require('ramda')
  */
 async function command (context) {
   const { parameters, strings, print, system, filesystem, ignite } = context
-  const { isBlank } = strings
+  const { isBlank, upperFirst, camelCase } = strings
   const { log } = ignite
 
   // grab the project name
   const projectName = parameters.second
+
+  // check for kebabs
+  const isKebabCase = not(isEmpty(match(/.-/g, projectName)))
+
+  // camelCase the project name for user example
+  const projectNameCamel = upperFirst(camelCase(projectName))
 
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
@@ -31,6 +37,12 @@ async function command (context) {
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
+    process.exit(exitCodes.PROJECT_NAME)
+  }
+
+  // verify the project name isn't kebab cased
+  if (isKebabCase) {
+    print.error(`Please use camel case for your project name. Ex: ${projectNameCamel}`)
     process.exit(exitCodes.PROJECT_NAME)
   }
 
