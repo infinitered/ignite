@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Modal, Platform } from 'react-native'
+import { View, Modal } from 'react-native'
 import DebugConfig from '../../App/Config/DebugConfig'
 import RoundedButton from '../../App/Components/RoundedButton'
 import PresentationScreen from './PresentationScreen'
@@ -25,10 +25,7 @@ export default class DevscreensButton extends React.Component {
           </RoundedButton>
           <Modal
             visible={this.state.showModal}
-            onRequestClose={
-              Platform.OS === 'android' ? this.toggleModal : undefined
-            }
-          >
+            onRequestClose={this.toggleModal}>
             <PresentationScreen screenProps={{ toggle: this.toggleModal }} />
           </Modal>
         </View>
