@@ -9,6 +9,7 @@ const buildIgnite = () => {
   return build()
     .brand('ignite')
     .loadDefault(`${__dirname}/..`)
+    .loadAll(`${process.cwd()}/ignite/plugins`)
     .loadAll(`${process.cwd()}/node_modules`, { matching: 'ignite-*', hidden: true })
     .token('commandName', 'cliCommand')
     .token('commandHidden', 'cliHidden')

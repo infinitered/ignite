@@ -1,4 +1,4 @@
-const { isEmpty, forEach } = require('ramda')
+const { isEmpty, forEach, trim } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 
@@ -60,13 +60,13 @@ async function importPlugin (context, opts) {
       ? `yarn add file:${target} --force --dev`
       : `yarn add ${target} --dev`
     log(cmd)
-    await system.spawn(cmd, { stdio: 'ignore' })
+    await system.run(cmd)
     log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
-    const cmd = `npm i ${target} --save-dev ${cacheBusting}`
+    const cmd = trim(`npm i ${target} --save-dev ${cacheBusting}`)
     log(cmd)
-    await system.spawn(cmd, { stdio: 'ignore' })
+    await system.run(cmd)
     log('finished npm command')
   }
 }

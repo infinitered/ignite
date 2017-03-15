@@ -1,3 +1,5 @@
+const { trim } = require('ramda')
+
 module.exports = (plugin, command, context) => {
   /**
    * Adds a npm-based module to the project.
@@ -23,14 +25,14 @@ module.exports = (plugin, command, context) => {
     // install the module
     if (useYarn) {
       const addSwitch = options.dev ? '--dev' : ''
-      const cmd = `yarn add ${moduleFullName} ${addSwitch}`
+      const cmd = trim(`yarn add ${moduleFullName} ${addSwitch}`)
       ignite.log(cmd)
-      await system.spawn(cmd, { stdio: 'ignore' })
+      await system.run(cmd)
     } else {
       const installSwitch = options.dev ? '--save-dev' : '--save'
-      const cmd = `npm i ${moduleFullName} ${installSwitch}`
+      const cmd = trim(`npm i ${moduleFullName} ${installSwitch}`)
       ignite.log(cmd)
-      await system.spawn(cmd, { stdio: 'ignore' })
+      await system.run(cmd)
     }
     spinner.stop()
 
