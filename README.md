@@ -69,6 +69,16 @@ First, make sure you're set up for [React Native](https://facebook.github.io/rea
 
 then...
 
+Make sure you have Node 7.6+. 
+
+You can check your version of node by running 
+
+```
+node -v
+```
+
+then...
+
 ```
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
