@@ -5,7 +5,7 @@
   <img src="https://infiniteredcommunity.herokuapp.com/badge.svg">
 </a>
 <a href="https://www.codacy.com/app/gantman/ignite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=infinitered/ignite&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/1c6e04abe7224bdc88095129b5eb43fb"/></a>
-<img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat alt='js-standard-style'/>
+<img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style%3Dflat alt='js-standard-style'/>
 
 ### Ignite
 
