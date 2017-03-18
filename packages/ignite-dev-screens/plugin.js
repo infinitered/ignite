@@ -16,7 +16,10 @@ const add = async function (context) {
   <DevscreensButton />
   `
   // Set Examples to "classic" in Ignite config
-  context.ignite.setIgniteConfig('examples', 'classic')
+  ignite.setIgniteConfig('examples', 'classic')
+
+  // Set Android Permission for NetInfo module
+  ignite.addAndroidPermission('ACCESS_NETWORK_STATE')
 
   // dev screens use react-navigation
   await ignite.addModule('react-navigation')
@@ -25,7 +28,7 @@ const add = async function (context) {
   filesystem.copyAsync(`${sourceFolder}`, `${process.cwd()}/ignite/DevScreens`, { overwrite: true })
 
   // Set showDevScreens to __DEV__
-  context.ignite.setDebugConfig('showDevScreens', '__DEV__', true)
+  ignite.setDebugConfig('showDevScreens', '__DEV__', true)
 
   // Insert a function that renders the dev screens as part of the JSX in the navigation
   const launchScreen = `${process.cwd()}/App/Containers/LaunchScreen.js`
@@ -50,16 +53,18 @@ const remove = async function (context) {
   console.log('Removing Ignite Dev Screens')
 
   // Set Examples to "false" in Ignite config
-  context.ignite.removeIgniteConfig('examples')
+  ignite.removeIgniteConfig('examples')
 
   // remove the npm module - probably should ask user here
   await ignite.removeModule('react-navigation')
+  // Set Android Permission for NetInfo module
+  ignite.removeAndroidPermission('ACCESS_NETWORK_STATE')
 
   // Delete screens from containers folder
   filesystem.remove('ignite/DevScreens')
 
   // Remove App/Config/DebugSettings.js showDevScreens value
-  context.ignite.removeDebugConfig('showDevScreens')
+  ignite.removeDebugConfig('showDevScreens')
 
   // Remove function and call from navigation
   // TODO: Use navigation generator to remove screens
