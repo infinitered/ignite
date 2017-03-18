@@ -13,10 +13,10 @@ module.exports = (plugin, command, context) => {
     const manifestFile = `${APP_PATH}/android/app/src/main/AndroidManifest.xml`
 
     if (!filesystem.exists(manifestFile)) {
-      const msg = 'No `${manifestFile}` file found in this folder, are you sure it is a valid React Native project?'
+      const msg = `No '${manifestFile}' file found in this folder, are you sure it is a valid React Native project?`
       print.error(msg)
       process.exit(exitCodes.GENERIC)
-    } else if (patching.isInFile(debugConfig, key)) {
+    } else if (patching.isInFile(manifestFile, permissionString)) {
       // Remove permission from AndroidManifest
       ignite.patchInFile(manifestFile, {
         delete: permissionString
