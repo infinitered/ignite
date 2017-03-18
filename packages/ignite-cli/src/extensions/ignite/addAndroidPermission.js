@@ -9,7 +9,7 @@ module.exports = (plugin, command, context) => {
    */
   function addAndroidPermission (key) {
     const { filesystem, patching, print, ignite } = context
-    const permissionString = `<uses-permission android:name="android.permission.${key.toUpperCase()}" />`
+    const permissionString = `    <uses-permission android:name="android.permission.${key.toUpperCase()}" />`
     const manifestFile = `${APP_PATH}/android/app/src/main/AndroidManifest.xml`
 
     if (!filesystem.exists(manifestFile)) {
