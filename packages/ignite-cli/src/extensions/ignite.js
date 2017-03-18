@@ -6,6 +6,7 @@ const ignitePluginPathExt = require('./ignite/ignitePluginPath')
 const igniteConfigExt = require('./ignite/igniteConfig')
 const findIgnitePluginsExt = require('./ignite/findIgnitePlugins')
 const addModuleExt = require('./ignite/addModule')
+const addAndroidPermissionExt = require('./ignite/addAndroidPermission')
 const removeModuleExt = require('./ignite/removeModule')
 const addScreenExamplesExt = require('./ignite/addScreenExamples') // Deprecated 3/2/17, Ignite 2 Beta
 const addPluginScreenExamplesExt = require('./ignite/addPluginScreenExamples')
@@ -16,6 +17,7 @@ const addComponentExampleExt = require('./ignite/addComponentExample') // Deprec
 const addPluginComponentExampleExt = require('./ignite/addPluginComponentExample')
 const removeComponentExampleExt = require('./ignite/removeComponentExample') // Deprecated 3/2/17, Ignite 2 Beta
 const removePluginComponentExampleExt = require('./ignite/removePluginComponentExample')
+const removeAndroidPermissionExt = require('./ignite/removeAndroidPermission')
 const setDebugConfigExt = require('./ignite/setDebugConfig')
 const removeDebugConfigExt = require('./ignite/removeDebugConfig')
 const patchInFileExt = require('./ignite/patchInFile')
@@ -63,6 +65,7 @@ function attach (plugin, command, context) {
     removeIgniteConfig,
     findIgnitePlugins: findIgnitePluginsExt(plugin, command, context),
     addModule: addModuleExt(plugin, command, context),
+    addAndroidPermission: addAndroidPermissionExt(plugin, command, context),
     removeModule: removeModuleExt(plugin, command, context),
     copyBatch: copyBatchExt(plugin, command, context),
     addComponentExample: addComponentExampleExt(plugin, command, context), // Deprecated 3/2/17, Ignite 2 Beta
@@ -73,6 +76,7 @@ function attach (plugin, command, context) {
     addPluginScreenExamples: addPluginScreenExamplesExt(plugin, command, context),
     removeScreenExamples: removeScreenExamplesExt(plugin, command, context), // Deprecated 3/2/17, Ignite 2 Beta
     removePluginScreenExamples: removePluginScreenExamplesExt(plugin, command, context),
+    removeAndroidPermission: removeAndroidPermissionExt(plugin, command, context),
     setDebugConfig: setDebugConfigExt(plugin, command, context),
     removeDebugConfig: removeDebugConfigExt(plugin, command, context),
     patchInFile: patchInFileExt(plugin, command, context),
