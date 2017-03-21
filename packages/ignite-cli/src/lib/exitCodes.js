@@ -60,5 +60,10 @@ module.exports = {
   /**
    * node_modules/react-native already exists.
    */
-  EXISTING_REACT_NATIVE: 11
+  EXISTING_REACT_NATIVE: 11,
+
+  /**
+   * One of the global dependencies are not met.
+   */
+  INVALID_GLOBAL_DEPENDENCY: 12
 }
