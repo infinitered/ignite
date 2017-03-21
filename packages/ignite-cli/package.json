@@ -32,10 +32,11 @@
     "gluegun": "^0.16.0",
     "gluegun-patching": "^0.3.0",
     "minimist": "^1.2.0",
+    "pretty-error": "^2.0.2",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
-    "shelljs": "^0.7.6",
-    "pretty-error": "^2.0.2"
+    "semver": "^5.3.0",
+    "shelljs": "^0.7.6"
   },
   "devDependencies": {
     "ava": "^0.18.1",

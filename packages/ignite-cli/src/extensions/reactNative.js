@@ -56,18 +56,6 @@ function attach (plugin, command, context) {
       rnOptions.push('--skip-jest')
     }
 
-    // install React Native CLI if it isn't found
-    const rncliSpinner = print.spin(`checking react-native-cli`)
-    const cliInstalled = await system.which('react-native')
-    if (cliInstalled) {
-      rncliSpinner.stop()
-    } else {
-      // No React Native installed, let's get it
-      rncliSpinner.text = 'installing react-native-cli'
-      await system.run('npm install -g react-native-cli')
-      rncliSpinner.succeed(`installed react-native-cli`)
-    }
-
     // react-native init
     const cmd = trim(`react-native init ${name} ${rnOptions.join(' ')}`)
     log('initializing react native')
