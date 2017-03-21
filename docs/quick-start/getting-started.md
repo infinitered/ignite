@@ -4,6 +4,8 @@ Welcome to Ignite, the ideal starting app for React Native, best practices, gene
 
 To use Ignite, you will need to install React Native. The best way to install React Native is to follow the React Native installation instructions found on official React Native website, [here](http://facebook.github.io/react-native/docs/getting-started.html). These instructions will walk your through installing React Native on your specific platform.
 
+You will also need to have Node 7.6+ installed. We recommend using [n](https://github.com/tj/n) to manage node versions. If you already use [nvm](https://github.com/creationix/nvm) and would like to switch, follow [these steps](./nvm-to-n.md).
+
 ## Installing Ignite 2.0
 
 
