@@ -70,7 +70,11 @@ First, make sure you're set up for [React Native](https://facebook.github.io/rea
 
 then...
 
-Make sure you have Node 7.6+.
+Make sure you have Node 7.6+
+
+While you are free to use whichever node version manager you like, we like using [n](https://github.com/tj/n)
+
+If you currently use [nvm](https://github.com/creationix/nvm) and would like to switch, follow [these steps](./docs/quick-start/nvm-to-n.md)
 
 You can check your version of node by running
 
