@@ -33,6 +33,13 @@ async function command (context) {
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
   }
 
+  // prevent installing when node_modules/react-native exists
+  if (filesystem.exists('node_modules/react-native')) {
+    context.print.error('The `ignite new` command cannot be run within a directory with `node_modules/react-native` installed.')
+    context.print.error('Try installing from a directory without a `node_modules` directory.')
+    process.exit(exitCodes.EXISTING_REACT_NATIVE)
+  }
+
   // verify the project name is a thing
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)

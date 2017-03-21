@@ -55,5 +55,10 @@ module.exports = {
   /**
    * This is not a compatible Ignite directory.
    */
-  NOT_IGNITE_PROJECT: 10
+  NOT_IGNITE_PROJECT: 10,
+
+  /**
+   * node_modules/react-native already exists.
+   */
+  EXISTING_REACT_NATIVE: 11
 }
