@@ -1,4 +1,4 @@
-<a href="https://badge.fury.io/js/react-native-ignite" target="_blank"><img src="https://badge.fury.io/js/react-native-ignite.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 <a href="https://semaphoreci.com/ir/ignite" target="_blank"><img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/></a>
 [![Coverage Status](https://coveralls.io/repos/github/infinitered/ignite/badge.svg?branch=master)](https://coveralls.io/github/infinitered/ignite?branch=master)
 <a href="http://community.infinite.red/">
