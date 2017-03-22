@@ -65,7 +65,6 @@ module.exports = (plugin, command, context) => {
           const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
           if (filesystem.exists(destinationPath)) {
-
             // insert screen import
             patching.insertInFile(
               destinationPath,
