@@ -36,6 +36,7 @@ function defaultVersionMatcher (raw) {
  * @param  {boolean}  opts.optional       Is this an optional dependency?
  * @param  {string}   opts.range          The semver range to test against.
  * @param  {string}   opts.which          The command to run `which` on.
+ * @param  {string}   opts.packageName    The npm package we're checking for.
  * @param  {string}   opts.versionCommand The command to run which returns text containing the version number.
  * @param  {string}   opts.installMessage What to print should we fail.
  * @param  {function} opts.versionMatcher A way to override the method to discover the version number.
@@ -46,6 +47,7 @@ function enforce (opts = {}) {
   var optional = opts.optional || false
   var range = opts.range
   var which = opts.which
+  var packageName = opts.packageName || opts.which
   var versionCommand = opts.versionCommand
   var installMessage = opts.installMessage
   var versionMatcher = opts.versionMatcher || defaultVersionMatcher
@@ -56,7 +58,7 @@ function enforce (opts = {}) {
    * @param {string} installedVersion - current version if installed.
    */
   function printNotMetMessage (installedVersion) {
-    console.log('Ignite requires ' + which + ' ' + range + ' to be installed.')
+    console.log('Ignite requires ' + packageName + ' ' + range + ' to be installed.')
     if (installedVersion) {
       console.log('')
       console.log('You currently have ' + installedVersion + ' installed.')

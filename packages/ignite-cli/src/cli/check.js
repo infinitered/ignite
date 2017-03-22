@@ -30,6 +30,7 @@ var rnCli = enforceGlobalDependency({
   optional: false,
   range: '>=2.0.0',
   which: 'react-native',
+  package: 'react-native-cli',
   versionCommand: 'react-native --version',
   installMessage: 'To install: npm i -g react-native-cli'
 })
