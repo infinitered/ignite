@@ -7,6 +7,7 @@ const NPM_MODULE_NAME = 'react-native-MODULENAME'
 <% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js'<% } %>
 
 const add = async function (context) {
+  // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
   const { ignite, filesystem } = context
 
   // install a npm module and link it
@@ -30,6 +31,7 @@ const add = async function (context) {
  * Remove yourself from the project.
  */
 const remove = async function (context) {
+  // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
   const { ignite, filesystem } = context
 
   // remove the npm module and unlink it
