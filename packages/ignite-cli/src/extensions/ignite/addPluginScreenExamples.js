@@ -65,10 +65,11 @@ module.exports = (plugin, command, context) => {
           const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
           if (filesystem.exists(destinationPath)) {
+
             // insert screen import
             patching.insertInFile(
               destinationPath,
-              'import RoundedButton',
+              'import ExamplesRegistry',
               `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
             )
 

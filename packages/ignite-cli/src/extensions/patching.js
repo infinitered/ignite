@@ -28,7 +28,7 @@ function attach (plugin, command, context) {
     const matches = data.match(finder)
 
     // Quick error check
-    if (matches === null) throw new Error(`'${findPattern}' was not found in file.`)
+    if (matches === null) throw new Error(`'${findPattern}' was not found in file ${filePath}.`)
 
     if (insertAfter) {
       newContents = data.replace(finder, `${matches[0]}\n${content}`)
