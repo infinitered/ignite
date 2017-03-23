@@ -1,5 +1,4 @@
 class MockGluegunBuilder {
-
   constructor () {
     this.reset()
   }
