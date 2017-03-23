@@ -18,7 +18,7 @@ function detectInstall (context) {
   const { filesystem, parameters, ignite } = context
 
   // grab the plugin overrides
-  const pluginOverrides = ignite && ignite.pluginOverrides || []
+  const pluginOverrides = (ignite && ignite.pluginOverrides) || []
 
   /**
    * Is this a valid ignite plugin?

@@ -29,4 +29,3 @@ test('ignite version', async t => {
   const result = await execa(IGNITE, ['version'])
   t.is(result.stdout, VERSION)
 })
-
