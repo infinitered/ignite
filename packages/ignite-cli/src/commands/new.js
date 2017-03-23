@@ -22,7 +22,7 @@ async function command (context) {
   const projectName = parameters.second
 
   // check for kebabs
-  const isKebabCase = not(isEmpty(match(/.-/g, projectName)))
+  const isKebabCase = not(isEmpty(match(/.-/g, projectName || '')))
 
   // camelCase the project name for user example
   const projectNameCamel = upperFirst(camelCase(projectName))
