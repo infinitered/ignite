@@ -1,7 +1,7 @@
 // NOTE:  this file is intentionally written with es3
 
-// check the node version
 var Sniff = require('gluegun/sniff')
+var shell = require('shelljs')
 
 // check the node version
 if (!Sniff.isNewEnough) {
@@ -30,12 +30,27 @@ var rnCli = enforceGlobalDependency({
   optional: false,
   range: '>=2.0.0',
   which: 'react-native',
-  package: 'react-native-cli',
+  packageName: 'react-native-cli',
   versionCommand: 'react-native --version',
   installMessage: 'To install: npm i -g react-native-cli'
 })
 
 if (!rnCli) {
+  // If `react-native` is installed, it can cause problems with `react-native-cli`
+  // and cause this to fail. Let's check for that potential issue.
+  console.log('\nChecking for \'react-native\' npm package conflict...')
+  var badRN = shell.exec(`npm list -g react-native`, { silent: true })
+  if (badRN.code === 0) {
+    console.log('\n\
+It appears you have the global npm package \'react-native\' installed. This causes problems\n\
+with Ignite. You may have installed this by mistake. Instead, you probably want the\n\
+react-native-cli npm package.\n\
+\n\
+npm uninstall -g react-native\n\
+npm install -g react-native-cli\n\
+')
+  }
+
   process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY)
 }
 
