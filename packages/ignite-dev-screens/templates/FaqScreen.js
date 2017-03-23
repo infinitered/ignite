@@ -5,7 +5,6 @@ import { Images } from './DevTheme'
 import styles from './Styles/FaqScreenStyles'
 
 class ComponentExamplesScreen extends React.Component {
-
   render () {
     return (
       <View style={[styles.container, styles.mainContainer]}>

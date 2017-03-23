@@ -48,5 +48,3 @@ test(`doesn't let you overwrite a folder`, async t => {
     jetpack.remove('Chicken')
   }
 })
-
-

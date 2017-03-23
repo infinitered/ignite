@@ -8,7 +8,6 @@ import styles from './Styles/ComponentExamplesScreenStyles'
 import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
 
 class ComponentExamplesScreen extends React.Component {
-
   renderAndroidWarning () {
     if (Platform.OS === 'android') {
       return (

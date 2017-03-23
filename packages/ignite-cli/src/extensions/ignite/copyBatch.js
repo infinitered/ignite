@@ -39,7 +39,7 @@ module.exports = (plugin, command, context) => {
       if (await shouldGenerate(job.target)) {
         const currentPluginPath = ignitePluginPath()
         await template.generate({
-          directory: directory || currentPluginPath && `${currentPluginPath}/templates`,
+          directory: directory || (currentPluginPath && `${currentPluginPath}/templates`),
           template: job.template,
           target: job.target,
           props
