@@ -41,14 +41,14 @@ if (!rnCli) {
   console.log('\nChecking for \'react-native\' npm package conflict...')
   var badRN = shell.exec(`npm list -g react-native`, { silent: true })
   if (badRN.code === 0) {
-    console.log('\n\
-It appears you have the global npm package \'react-native\' installed. This causes problems\n\
-with Ignite. You may have installed this by mistake. Instead, you probably want the\n\
-react-native-cli npm package.\n\
-\n\
-npm uninstall -g react-native\n\
-npm install -g react-native-cli\n\
-')
+    console.log('\n' +
+      'It appears you have the global npm package \'react-native\' installed. This causes problems\n' +
+      'with Ignite. You may have installed this by mistake. Instead, you probably want the\n' +
+      'react-native-cli npm package.\n' +
+      '\n' +
+      'npm uninstall -g react-native\n' +
+      'npm install -g react-native-cli\n'
+    )
   }
 
   process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY)
