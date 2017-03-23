@@ -6,7 +6,7 @@ using the `ignite generate` command on the command line.
 
 A generator is a special kind of Ignite 2.0 plugin. Generators are more advanced
 than common plugins. You should understand how to create plugins first; check
-out [Creating Plugins]() first if you need to review.
+out [Creating Plugins](./creating-plugins.md) first if you need to review.
 
 Since generators are plugins, you'll start out creating them the same as you
 would any plugin, with

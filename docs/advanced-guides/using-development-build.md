@@ -76,7 +76,8 @@ echo "export IGNITE_PLUGIN_PATH=$(pwd)"
 ^ then copy the output of that into your `.bashrc` or `.zshrc` or just run it in place if you're kicking tires. For example, on my computer, I can do this:
 
 ```sh
-IGNITE_PLUGIN_PATH=~/src/ir/ignite/packages ignite new MyIgniteProject --max
+export IGNITE_PLUGIN_PATH=~/src/ir/ignite/packages
+ignite new MyIgniteProject --max
 ```
 
 > Once we ship to `npm` we can remove this step. When we type `ignite add vector-icons` it will install from npm.  But in the meantime, this offers a way to write your own plugins.
