@@ -11,4 +11,3 @@ test('with no arguments', async t => {
   t.is(result.stderr, '')
   t.true(contains('https://infinite.red/ignite', result.stdout))
 })
-
