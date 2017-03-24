@@ -84,7 +84,7 @@ const createNewPlugin = async (context) => {
   print.info(`Creating new plugin: ${pluginName}`)
 
   const copyJobs = [
-    { template: 'plugin/.gitignore', target: `${pluginName}/.gitignore` },
+    { template: 'plugin/gitignore', target: `${pluginName}/.gitignore` },
     { template: 'plugin/plugin.js.ejs', target: `${pluginName}/plugin.js` },
     { template: 'plugin/ignite.json.ejs', target: `${pluginName}/ignite.json` },
     { template: 'plugin/package.json.ejs', target: `${pluginName}/package.json` },
@@ -150,4 +150,3 @@ module.exports = async function (context) {
       break
   }
 }
-

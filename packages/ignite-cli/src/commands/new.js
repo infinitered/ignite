@@ -22,7 +22,7 @@ async function command (context) {
   const projectName = parameters.second
 
   // check for kebabs
-  const isKebabCase = not(isEmpty(match(/.-/g, projectName)))
+  const isKebabCase = not(isEmpty(match(/.-/g, projectName || '')))
 
   // camelCase the project name for user example
   const projectNameCamel = upperFirst(camelCase(projectName))
@@ -31,6 +31,13 @@ async function command (context) {
   if (isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite new` command cannot be run within an already ignited project.')
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
+  }
+
+  // prevent installing when node_modules/react-native exists
+  if (filesystem.exists('node_modules/react-native')) {
+    context.print.error('The `ignite new` command cannot be run within a directory with `node_modules/react-native` installed.')
+    context.print.error('Try installing from a directory without a `node_modules` directory.')
+    process.exit(exitCodes.EXISTING_REACT_NATIVE)
   }
 
   // verify the project name is a thing

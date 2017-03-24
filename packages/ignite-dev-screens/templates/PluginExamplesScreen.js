@@ -13,7 +13,6 @@ import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
 import styles from './Styles/PluginExamplesScreenStyles'
 
 class PluginExamplesScreen extends React.Component {
-
   render () {
     return (
       <View style={styles.mainContainer}>

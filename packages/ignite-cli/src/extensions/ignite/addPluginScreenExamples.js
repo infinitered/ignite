@@ -68,7 +68,7 @@ module.exports = (plugin, command, context) => {
             // insert screen import
             patching.insertInFile(
               destinationPath,
-              'import RoundedButton',
+              'import ExamplesRegistry',
               `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
             )
 

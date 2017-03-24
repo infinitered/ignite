@@ -9,14 +9,14 @@ module.exports = (plugin, command, context) => {
    */
   function addAndroidPermission (key) {
     const { filesystem, patching, print, ignite } = context
-    const permissionString = `<uses-permission android:name="android.permission.${key.toUpperCase()}" />`
+    const permissionString = `    <uses-permission android:name="android.permission.${key.toUpperCase()}" />`
     const manifestFile = `${APP_PATH}/android/app/src/main/AndroidManifest.xml`
 
     if (!filesystem.exists(manifestFile)) {
-      const msg = 'No `${manifestFile}` file found in this folder, are you sure it is a valid React Native project?'
+      const msg = `No '${manifestFile}' file found in this folder, are you sure it is a valid React Native project?`
       print.error(msg)
       process.exit(exitCodes.GENERIC)
-    } else if (!patching.isInFile(debugConfig, key)) {
+    } else if (!patching.isInFile(manifestFile, permissionString)) {
       // Insert permission to AndroidManifest
       ignite.patchInFile(manifestFile, {
         after: 'uses-permission',

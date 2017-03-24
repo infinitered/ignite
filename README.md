@@ -1,4 +1,4 @@
-<a href="https://badge.fury.io/js/react-native-ignite" target="_blank"><img src="https://badge.fury.io/js/react-native-ignite.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 <a href="https://semaphoreci.com/ir/ignite" target="_blank"><img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/></a>
 [![Coverage Status](https://coveralls.io/repos/github/infinitered/ignite/badge.svg?branch=master)](https://coveralls.io/github/infinitered/ignite?branch=master)
 <a href="http://community.infinite.red/">
@@ -70,9 +70,13 @@ First, make sure you're set up for [React Native](https://facebook.github.io/rea
 
 then...
 
-Make sure you have Node 7.6+. 
+Make sure you have Node 7.6+
 
-You can check your version of node by running 
+While you are free to use whichever node version manager you like, we like using [n](https://github.com/tj/n)
+
+If you currently use [nvm](https://github.com/creationix/nvm) and would like to switch, follow [these steps](./docs/quick-start/nvm-to-n.md)
+
+You can check your version of node by running
 
 ```
 node -v
@@ -84,6 +88,9 @@ then...
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
 ```
+## :arrow_forward: Documentation
+
+Want to dive into the Ignite 2 documentation? [Go here](./docs/README.md)
 
 ## :arrow_forward: Troubleshooting
 
