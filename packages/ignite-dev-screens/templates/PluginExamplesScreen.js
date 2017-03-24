@@ -51,6 +51,7 @@ export default StackNavigator({
   PluginExamplesScreen: {screen: PluginExamplesScreen}
 }, {
   headerMode: 'screen',
+  initialRouteName: 'PluginExamplesScreen',
   navigationOptions: {
     header: {
       visible: false,
