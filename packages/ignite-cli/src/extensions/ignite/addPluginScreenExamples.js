@@ -65,7 +65,14 @@ module.exports = (plugin, command, context) => {
           const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 
           if (filesystem.exists(destinationPath)) {
+            // make sure we have RoundedButton
+            ignite.patchInFile(destinationPath, {
+              insert: `import RoundedButton from '../../App/Components/RoundedButton'`,
+              after: 'import ExamplesRegistry'
+            })
+
             // insert screen import
+            // TODO switch to patchInFile
             patching.insertInFile(
               destinationPath,
               'import ExamplesRegistry',
@@ -73,13 +80,13 @@ module.exports = (plugin, command, context) => {
             )
 
             // insert screen route
-            patching.insertInFile(
-              destinationPath,
-              'screen: PluginExamplesScreen',
-              `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`
-            )
+            ignite.patchInFile(destinationPath, {
+              insert: `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`,
+              before: 'screen: PluginExamplesScreen'
+            })
 
             // insert launch button
+            // TODO use patchInFile
             patching.insertInFile(
               destinationPath,
               'styles.screenButtons',
