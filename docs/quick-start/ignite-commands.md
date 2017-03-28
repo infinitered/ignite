@@ -66,7 +66,7 @@ ignite new {Project name}
 
 Generate a new React Native project with Ignite.
 
-`ignite n` uses `react-native init`, then adds files specific to Ignite.
+`ignite new` uses `react-native init`, then adds files specific to Ignite.
 
 When you execute this command, Ignite 2.0 will give you a series of options for
 your new project regarding what libraries you would like to use.
