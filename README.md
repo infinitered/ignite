@@ -82,7 +82,9 @@ You can check your version of node by running
 node -v
 ```
 
-then...
+then install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system
+
+finally...
 
 ```
 $ npm install -g ignite-cli
