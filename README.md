@@ -82,7 +82,9 @@ You can check your version of node by running
 node -v
 ```
 
-then...
+then install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system
+
+finally...
 
 ```
 $ npm install -g ignite-cli
@@ -106,3 +108,6 @@ If you run into problems, first search the issues in this repository. If you don
 ## :heart: Special Thanks :heart:
 Thank you to the numerous [contributors of Ignite](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite.
 
+## Premium Support
+
+[Ignite](https://infinite.red/ignite), as open source projects, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Ignite support and general mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch with us for more details.
