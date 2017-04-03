@@ -33,12 +33,12 @@ Open up `package.json` and add your desired info.
 }
 ```
 
-### Edit the `index.js`
+### Edit the `plugin.js`
 
-The `index.js` is the entrypoint for your plugin and provides the add/remove functionality. We need to make sure that the npm packages installed and component examples are copied over.
+The `plugin.js` file is the entrypoint for your plugin and provides the add/remove functionality. We need to make sure that the npm packages installed and component examples are copied over.
 
 1. Change the `NPM_MODULE_NAME` to `react-native-radio-buttons`
-2. Since this npm package does not require a linking step, we will change `ignite.addModule` to have `link: false` and `ignite.removeModule` to have `unlink: false`
+2. Since this npm package does not require a linking step, we remove `{link: true}` from `ignite.addModule` and remove `{unlink: false}` from `ignite.removeModule`.
 3. Make sure `EXAMPLE_FILE` matches the filename under `templates`
 
 ### Add content to the example template
