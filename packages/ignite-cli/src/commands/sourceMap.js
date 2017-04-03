@@ -27,7 +27,7 @@ const handleFile = (smc, stackData, colors) => {
       line: matchez[1],
       column: matchez[2]
     }, colors)
-    matchez = regexString.exec(stackData);
+    matchez = regexString.exec(stackData)
   }
 }
 
@@ -61,7 +61,7 @@ module.exports = async function (context) {
     process.exit(exitCodes.INVALID_PARAMETERS)
   }
 
-  //consume sourcemap
+  // consume sourcemap
   const rawSourceMap = filesystem.read(mapfile)
   const smc = new SourceMapConsumer(rawSourceMap)
 
