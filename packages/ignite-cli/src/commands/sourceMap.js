@@ -5,6 +5,25 @@
 const SourceMapConsumer = require('source-map').SourceMapConsumer
 const exitCodes = require('../lib/exitCodes')
 
+const printSourceResult = (smc, position) => {
+  console.log(smc.originalPositionFor(position))
+}
+
+const handleFile = (smc, stackData) => {
+  // parse file for all line:column numbers
+  const regexString = /(\d+):(\d+)\)/g
+  let matchez = regexString.exec(stackData)
+
+  // Loop through matches and print
+  while (matchez) {
+    printSourceResult(smc, {
+      line: matchez[1],
+      column: matchez[2]
+    })
+    matchez = regexString.exec(stackData);
+  }
+}
+
 /*
 * Example 1:  To get one specific mapping
 * ignite source-map --map ./someFolder/index.ios.map --line 32 --column 76
@@ -35,9 +54,14 @@ module.exports = async function (context) {
   }
 
   //consume sourcemap
-  const rawSourceMap = filesystem.read(options.mapfile)
+  const rawSourceMap = filesystem.read(mapfile)
   const smc = new SourceMapConsumer(rawSourceMap)
 
-  print.info(smc.originalPositionFor({line, column}))
+  if (stackfile) {
+    const stackData = filesystem.read(stackfile)
+    handleFile(smc, stackData)
+  } else {
+    printSourceResult(smc, {line, column})
+  }
 }
 
