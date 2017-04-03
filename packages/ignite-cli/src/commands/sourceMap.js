@@ -5,11 +5,18 @@
 const SourceMapConsumer = require('source-map').SourceMapConsumer
 const exitCodes = require('../lib/exitCodes')
 
-const printSourceResult = (smc, position) => {
-  console.log(smc.originalPositionFor(position))
+const printSourceResult = (smc, position, colors) => {
+  const {source, line, column, name} = smc.originalPositionFor(position)
+  const styledName = colors.red(name)
+  const styledSource = colors.yellow(source)
+
+  console.log(`${styledName}: ${styledSource}
+  Line: ${line}
+  Column: ${column}
+  `)
 }
 
-const handleFile = (smc, stackData) => {
+const handleFile = (smc, stackData, colors) => {
   // parse file for all line:column numbers
   const regexString = /(\d+):(\d+)\)/g
   let matchez = regexString.exec(stackData)
@@ -19,7 +26,7 @@ const handleFile = (smc, stackData) => {
     printSourceResult(smc, {
       line: matchez[1],
       column: matchez[2]
-    })
+    }, colors)
     matchez = regexString.exec(stackData);
   }
 }
@@ -35,6 +42,7 @@ const handleFile = (smc, stackData) => {
 */
 module.exports = async function (context) {
   const { print, parameters, filesystem } = context
+  const { colors, error } = print
   const { options } = parameters
   // get options
   const mapfile = options.mapfile || options.m
@@ -45,7 +53,7 @@ module.exports = async function (context) {
   // make sure mapfile is passed with line+column || stackfile supplied
   const optionsValid = (mapfile && ((line && column) || stackfile))
   if (!optionsValid) {
-    context.print.error(`You must pass a mapfile AND either a line+column or a stackfile.
+    error(`You must pass a mapfile AND either a line+column or a stackfile.
     e.g.
     ignite source-map --map ./someFolder/index.ios.map --line 32 --column 76
     ignite source-map --mapfile ./someFolder/index.ios.map --stackfile stackTrace.txt
@@ -59,9 +67,9 @@ module.exports = async function (context) {
 
   if (stackfile) {
     const stackData = filesystem.read(stackfile)
-    handleFile(smc, stackData)
+    handleFile(smc, stackData, colors)
   } else {
-    printSourceResult(smc, {line, column})
+    printSourceResult(smc, {line, column}, colors)
   }
 }
 
