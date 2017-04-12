@@ -91,6 +91,10 @@ export default StackNavigator({
   ThemeScreen: {screen: ThemeScreen},
   FaqScreen: {screen: FaqScreen}
 }, {
+  cardStyle: {
+    opacity: 1,
+    backgroundColor: '#3e243f'
+  },
   initialRouteName: 'PresentationScreen',
   headerMode: 'none',
   // Keeping this here for future when we can make
