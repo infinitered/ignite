@@ -50,6 +50,10 @@ class PluginExamplesScreen extends React.Component {
 export default StackNavigator({
   PluginExamplesScreen: {screen: PluginExamplesScreen}
 }, {
+  cardStyle: {
+    opacity: 1,
+    backgroundColor: '#3e243f'
+  },
   headerMode: 'screen',
   initialRouteName: 'PluginExamplesScreen',
   navigationOptions: {

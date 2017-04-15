@@ -35,7 +35,7 @@ setup()
   rm -rf ./testgrounds
 
   echo '~~~🌟 Preparing packages'
-  npm install -g lerna@2.0.0-beta.37
+  npm install -g lerna@2.0.0-beta.38
   test_command lerna bootstrap
 
   echo '~~~🌟 Linking local for Testing'
