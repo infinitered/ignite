@@ -31,7 +31,7 @@ var rnCli = enforceGlobalDependency({
   range: '>=2.0.0',
   which: 'react-native',
   packageName: 'react-native-cli',
-  versionCommand: 'react-native --version',
+  versionCommand: '--version',
   installMessage: 'To install: npm i -g react-native-cli'
 })
 
@@ -59,7 +59,7 @@ var yarn = enforceGlobalDependency({
   optional: true,
   range: '>=0.21.0',
   which: 'yarn',
-  versionCommand: 'yarn --version',
+  versionCommand: '--version',
   installMessage: 'See https://yarnpkg.com/en/docs/install on how to upgrade for your OS.'
 })
 
