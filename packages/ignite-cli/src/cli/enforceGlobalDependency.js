@@ -2,6 +2,7 @@
 var shell = require('shelljs')
 var semver = require('semver')
 var ramda = require('ramda')
+var which = require('which')
 
 /**
  * Extracts the version number from a somewhere within a string.
@@ -46,7 +47,7 @@ function enforce (opts = {}) {
   // opts to pass in
   var optional = opts.optional || false
   var range = opts.range
-  var which = opts.which
+  var whichExec = opts.which
   var packageName = opts.packageName || opts.which
   var versionCommand = opts.versionCommand
   var installMessage = opts.installMessage
@@ -75,8 +76,11 @@ function enforce (opts = {}) {
   function getVersion () {
     // parse the version number
     try {
+      // find the executable
+      var resolvedPath = which.sync(whichExec)
+
       // grab the raw output
-      var result = shell.exec(versionCommand, { silent: true })
+      var result = shell.exec(resolvedPath + ' ' + versionCommand, { silent: true })
       var rawOut = ramda.trim(result.stdout || '')
       var rawErr = ramda.trim(result.stderr || '') // java -version does this... grr
 
@@ -97,7 +101,7 @@ function enforce (opts = {}) {
   }
 
   // are we installed?
-  var isInstalled = Boolean(shell.which(which))
+  var isInstalled = Boolean(shell.which(whichExec))
 
   if (!isInstalled) {
     if (optional) {
