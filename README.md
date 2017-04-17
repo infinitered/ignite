@@ -84,6 +84,7 @@ node -v
 
 _Currently, Yarn global doesn't work on Windows - so feel free to skip installing Yarn if you're running on Windows_
 _...otherwise..._
+
 install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system
 
 finally...
