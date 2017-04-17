@@ -86,6 +86,7 @@ then install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system
 
 finally...
 
+_All global installs below are using npm over yarn because of [this bug](https://github.com/yarnpkg/yarn/issues/859) on Windows._
 ```
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
