@@ -8,6 +8,8 @@ name | supporting | author
 [tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3)
 [redux-logger](https://github.com/GantMan/ignite-redux-logger) | [redux-logger](https://github.com/evgenyrodionov/redux-logger) | [Gant Laborde](https://github.com/gantman)
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
+[fetch-blob](https://github.com/skellock/ignite-fetch-blob) | [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) | [Steve Kellock](https://github.com/skellock)
+[img-cache](https://github.com/skellock/ignite-img-cache) | [react-native-img-cache](https://github.com/wcandillon/react-native-img-cache) | [Steve Kellock](https://github.com/skellock)
 
 ### Maintained by IR
 
