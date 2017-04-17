@@ -82,13 +82,11 @@ You can check your version of node by running
 node -v
 ```
 
-_Currently, Yarn global doesn't work on Windows - so feel free to skip installing Yarn if you're running on Windows_
-_...otherwise..._
-
-install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system
+then install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system
 
 finally...
 
+_All global installs below are using npm over yarn because of [this bug](https://github.com/yarnpkg/yarn/issues/859) on Windows._
 ```
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
