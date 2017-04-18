@@ -24,7 +24,7 @@ After months of work and sweat and tears, Ignite 2 (beta) has landed! We're incr
 
 Cliff notes version of the difference between Ignite 1 and 2:
 
-Ignite 1 was a (very nice!) React Native boilerplate. Ignite 2 is a CLI and generator for React Native with boilerplates, plugins, and more. Where before you had one choice -- [Infinite Red](https://infinite.red)'s boilerplate -- now you can choose from many boilerplates and also add standalone plugins as you need them. It's much more modular and extensible than Ignite 1.
+Ignite 1 was a (very nice!) [React Native](http://facebook.github.io/react-native/docs/getting-started.html) boilerplate. Ignite 2 is a CLI and generator for React Native with boilerplates, plugins, and more. Where before you had one choice -- [Infinite Red](https://infinite.red)'s boilerplate -- now you can choose from many boilerplates and also add standalone plugins as you need them. It's much more modular and extensible than Ignite 1.
 
 If you really liked Ignite 1 as it was, then not much has changed! You just run `ignite new MyApp --max` and everything feels pretty normal from there.
 
@@ -94,6 +94,7 @@ $ ignite new MyNewAppName
 ## :arrow_forward: Documentation
 
 Want to dive into the Ignite 2 documentation? [Go here](./docs/README.md)
+Looking for React Native's documentation? [Go here](http://facebook.github.io/react-native/docs/getting-started.html) 
 
 ## :arrow_forward: Troubleshooting
 
