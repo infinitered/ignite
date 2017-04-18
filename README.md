@@ -91,16 +91,20 @@ _All global installs below are using npm over yarn because of [this bug](https:/
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
 ```
-## :arrow_forward: Documentation
+## :clipboard: Documentation :clipboard:
 
 Want to dive into the Ignite 2 documentation? [Go here](./docs/README.md)
 Looking for React Native's documentation? [Go here](http://facebook.github.io/react-native/docs/getting-started.html) 
 
-## :arrow_forward: Troubleshooting
+## :electric_plug: Plugins :electric_plug:
+
+Check out the list of [Plugins](./PLUGINS.md)
+
+## :poop: Troubleshooting :poop:
 
 If you run into problems, first search the issues in this repository. If you don't find anything, you can either [file an issue](https://github.com/infinitered/ignite/issues) or come talk to our friendly developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
 
-## :twisted_rightwards_arrows: Where to Go From Here
+## :telescope: Where to Go From Here :telescope:
 
 #### [Contribute to Ignite](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
 #### [Chat with us on the IR Community](http://community.infinite.red) - Infinite Red devs standing by
