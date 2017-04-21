@@ -6,7 +6,7 @@ module.exports = (plugin, command, context) => {
    * @param {Object} props - The properties to use for template expansion.
    */
   async function addPluginComponentExample (fileName, props = {}) {
-    const { filesystem, patching, ignite, print, template } = context
+    const { filesystem, ignite, print, template } = context
     const { ignitePluginPath } = ignite
     const config = ignite.loadIgniteConfig()
 
@@ -28,11 +28,10 @@ module.exports = (plugin, command, context) => {
       // adds reference to usage example screen (if it exists)
       const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
       if (filesystem.exists(destinationPath)) {
-        patching.insertInFile(
-          destinationPath,
-          'import ExamplesRegistry',
-          `import '../Examples/Components/${fileName}'`
-        )
+        ignite.patchInFile(destinationPath, {
+          after: 'import ExamplesRegistry',
+          insert: `import '../Examples/Components/${fileName}'`
+        })
       }
       spinner.stop()
     }
