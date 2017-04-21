@@ -34,7 +34,7 @@ module.exports = (plugin, command, context) => {
         ignite.patchInFile(debugConfig, {
           after: 'export default {',
           insert: `  ${key}: '${value}',`
-        )
+        })
       }
     }
   }
