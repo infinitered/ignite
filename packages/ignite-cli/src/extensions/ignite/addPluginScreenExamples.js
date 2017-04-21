@@ -16,7 +16,7 @@ module.exports = (plugin, command, context) => {
    * ])
    */
   async function addPluginScreenExamples (files, props = {}) {
-    const { filesystem, patching, ignite, print, template } = context
+    const { filesystem, ignite, print, template } = context
     const { ignitePluginPath } = ignite
 
     const config = ignite.loadIgniteConfig()
@@ -72,12 +72,10 @@ module.exports = (plugin, command, context) => {
             })
 
             // insert screen import
-            // TODO switch to patchInFile
-            patching.insertInFile(
-              destinationPath,
-              'import ExamplesRegistry',
-              `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
-            )
+            ignite.patchInFile(destinationPath, {
+              after: 'import ExamplesRegistry',
+              insert: `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
+            })
 
             // insert screen route
             ignite.patchInFile(destinationPath, {
@@ -86,15 +84,13 @@ module.exports = (plugin, command, context) => {
             })
 
             // insert launch button
-            // TODO use patchInFile
-            patching.insertInFile(
-              destinationPath,
-              'styles.screenButtons',
-              `
+            ignite.patchInFile(destinationPath, {
+              after: 'styles.screenButtons',
+              insert: `
             <RoundedButton onPress={() => this.props.navigation.navigate('${componentName}')}>
               ${file.title}
             </RoundedButton>`
-            )
+            })
           } // if
         },
         files
