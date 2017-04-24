@@ -3,10 +3,31 @@
   "description": "A description of your plugin.",
   "version": "0.0.1",
   "license": "MIT",
-  "author": "Your Name",
+  "author": {
+    "name": "Your Name",
+    "email": "test@example.com",
+    "url": "https://example.com/path/to/your/plugin"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava",
+    "shipit": "np"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "url": "https://example.com/path/to/your/plugin",
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x"
+  "repository": "githuborg/reponame",
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "babel-eslint": "^7.1.1",
+    "np": "^2.12.0",
+    "nyc": "^10.1.2",
+    "sinon": "^1.17.7",
+    "standard": "^8.6.0"
   }
 }
+
+

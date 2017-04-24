@@ -2,7 +2,6 @@
 // ----------------------------------------------------------------------------
 
 const { split, last, replace, head, match } = require('ramda')
-const header = require('../brand/header')
 const os = require('os')
 const isWindows = process.platform === 'win32'
 const isMac = process.platform === 'darwin'
@@ -21,9 +20,6 @@ module.exports = async function (context) {
   const column2 = label => colors.yellow(padEnd(label || '-', 10))
   const column3 = label => colors.muted(label)
 
-  header()
-  info('')
-
   // -=-=-=- system -=-=-=-
   const platform = process.platform
   const arch = os.arch()
@@ -31,12 +27,14 @@ module.exports = async function (context) {
   const firstCpu = head(cpus) || {}
   const cpu = `${firstCpu.model}`
   const cores = `${cpus.length} cores`
+  const directory = `${process.cwd()}`
 
   info(colors.cyan('System'))
   table([
     [column1('platform'), column2(platform)],
     [column1('arch'), column2(arch)],
-    [column1('cpu'), column2(cores), column3(cpu)]
+    [column1('cpu'), column2(cores), column3(cpu)],
+    [column1('directory'), column2(directory)]
   ])
 
   // -=-=-=- javascript -=-=-=-

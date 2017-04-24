@@ -6,6 +6,7 @@ const Shell = require('shelljs')
 const { reduce, concat, keys, pathOr, join, map, assoc } = require('ramda')
 const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const prependIgnite = require('../lib/prependIgnite')
+const findPluginFile = require('../lib/findPluginFile')
 const exitCodes = require('../lib/exitCodes')
 
 // use yarn or use npm? hardcode for now
@@ -44,16 +45,17 @@ module.exports = async function (context) {
   }
 
   // grab a fist-full of features...
-  const { print, parameters, prompt, filesystem, ignite } = context
+  const { print, parameters, prompt, ignite } = context
   const { info, warning, xmark, error, success } = print
+  const { options } = parameters
 
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   const moduleParam = parameters.array.pop()
 
   // Check if they used a directory path instead of a plugin name
   if (moduleParam.includes('/')) {
-    context.print.error(`💩 When removing a package, you shouldn't use a path.
-    Try ${ context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`) } instead.`)
+    error(`💩 When removing a package, you shouldn't use a path.
+    Try ${context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`)} instead.`)
     process.exit(exitCodes.PLUGIN_NAME)
   }
 
@@ -70,8 +72,14 @@ module.exports = async function (context) {
     // Ask user if they are sure.
     if (changes.length > 0) {
       // we warn the user on changes
-      warning(`The following generators would be removed: ${join(', ', changes)}`)
-      const ok = await prompt.confirm('You ok with that?')
+      let ok
+      if (options.y || options.yes || options.confirm) {
+        ok = true
+      } else {
+        warning(`The following generators would be removed: ${join(', ', changes)}`)
+        ok = await prompt.confirm('You ok with that?')
+      }
+
       if (ok) {
         const generatorsList = Object.assign({}, config.generators)
         map((k) => delete generatorsList[k], changes)
@@ -83,14 +91,20 @@ module.exports = async function (context) {
     }
 
     const modulePath = `${process.cwd()}/node_modules/${moduleName}`
-    if (filesystem.exists(modulePath + '/index.js') === 'file') {
+    let pluginFile = findPluginFile(context, modulePath)
+    if (pluginFile) {
       // Call remove functionality
-      const pluginModule = require(modulePath)
+      const pluginModule = require(pluginFile)
       // set the path to the current running ignite plugin
       ignite.setIgnitePluginPath(modulePath)
 
       if (pluginModule.hasOwnProperty('remove')) {
-        await pluginModule.remove(context)
+        try {
+          await pluginModule.remove(context)
+        } catch (e) {
+          ignite.log(e)
+          process.exit(exitCodes.GENERIC)
+        }
       } else {
         error(`💩  'remove' method missing.`)
         process.exit(exitCodes.PLUGIN_INVALID)

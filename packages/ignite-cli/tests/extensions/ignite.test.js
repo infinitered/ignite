@@ -12,6 +12,9 @@ test('has the right interface', t => {
     },
     system: {
       which: () => true
+    },
+    filesystem: {
+      separator: '/'
     }
   }
   const extension = attach(plugin, command, context)
@@ -23,10 +26,10 @@ test('has the right interface', t => {
   t.is(typeof extension.addModule, 'function')
   t.is(typeof extension.removeModule, 'function')
   t.is(typeof extension.copyBatch, 'function')
-  t.is(typeof extension.addComponentExample, 'function')
-  t.is(typeof extension.removeComponentExample, 'function')
-  // t.is(typeof extension.addScreenExamples, 'function')
-  t.is(typeof extension.removeScreenExamples, 'function')
+  t.is(typeof extension.addPluginComponentExample, 'function')
+  t.is(typeof extension.addPluginScreenExamples, 'function')
+  t.is(typeof extension.removePluginComponentExample, 'function')
+  t.is(typeof extension.removePluginScreenExamples, 'function')
   t.is(typeof extension.loadIgniteConfig, 'function')
   t.is(typeof extension.saveIgniteConfig, 'function')
   t.is(typeof extension.setIgniteConfig, 'function')

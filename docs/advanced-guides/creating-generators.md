@@ -6,7 +6,7 @@ using the `ignite generate` command on the command line.
 
 A generator is a special kind of Ignite 2.0 plugin. Generators are more advanced
 than common plugins. You should understand how to create plugins first; check
-out [Creating Plugins]() first if you need to review.
+out [Creating Plugins](./creating-plugins.md) first if you need to review.
 
 Since generators are plugins, you'll start out creating them the same as you
 would any plugin, with
@@ -88,3 +88,17 @@ and the job handler copies the template with that name.
 
 This is just one example to show you the basic idea of generators. Now you can
 get creative and do cool things with your own generators!
+
+
+## Gluegun
+
+The [Gluegun](https://github.com/infinitered/gluegun) toolkit can be very
+helpful in writing generators. `Gluegun` is a tool for building CLIs (we
+mentioned it in the Creating Plugins guide).
+
+Gluegun's included libraries handle templating, filesystem operations, command
+line handling, copy and paste, and more. These features can make writing
+generators a breeze.
+
+For more information, check out the [Gluegun
+repo](https://github.com/infinitered/gluegun).

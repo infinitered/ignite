@@ -1,0 +1,56 @@
+// Ignite plugin for <%= props.name %>
+// ----------------------------------------------------------------------------
+
+const NPM_MODULE_NAME = 'react-native-MODULENAME'
+// const PLUGIN_PATH = __dirname
+// const APP_PATH = process.cwd()
+<% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js'<% } %>
+
+const add = async function (context) {
+  // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
+  const { ignite, filesystem } = context
+
+  // install a npm module and link it
+  await ignite.addModule(NPM_MODULE_NAME, { link: true })
+
+  <% if (props.answers.template === 'Yes') { %>await ignite.addPluginComponentExample(EXAMPLE_FILE, { title: '<%= props.name %> Example' })<% } %>
+
+  // Example of copying templates/<%= props.name %> to App/<%= props.name %>
+  // if (!filesystem.exists(`${APP_PATH}/App/<%= props.name %>`)) {
+  //   filesystem.copy(`${PLUGIN_PATH}/templates/<%= props.name %>`, `${APP_PATH}/App/<%= props.name %>`)
+  // }
+
+  // Example of patching a file
+  // ignite.patchInFile(`${APP_PATH}/App/Config/AppConfig.js`, {
+  //   insert: `import '../<%= props.name %>/<%= props.name %>'\n`,
+  //   before: `export default {`
+  // })
+}
+
+/**
+ * Remove yourself from the project.
+ */
+const remove = async function (context) {
+  // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
+  const { ignite, filesystem } = context
+
+  // remove the npm module and unlink it
+  await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })
+
+  <% if (props.answers.template === 'Yes') { %>await ignite.removePluginComponentExample(EXAMPLE_FILE)<% } %>
+
+  // Example of removing App/<%= props.name %> folder
+  // const remove<%= props.name %> = await context.prompt.confirm(
+  //   'Do you want to remove App/<%= props.name %>?'
+  // )
+  // if (remove<%= props.name %>) { filesystem.remove(`${APP_PATH}/App/<%= props.name %>`) }
+
+  // Example of unpatching a file
+  // ignite.patchInFile(`${APP_PATH}/App/Config/AppConfig.js`, {
+  //   delete: `import '../<%= props.name %>/<%= props.name %>'\n`
+  // )
+}
+
+// Required in all Ignite plugins
+module.exports = { add, remove }
+

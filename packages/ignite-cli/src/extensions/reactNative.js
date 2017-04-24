@@ -1,9 +1,9 @@
-const { test } = require('ramda')
+const { test, trim } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 
 // The default version of React Native to install. We will want to upgrade
 // this when we test out new releases and they work well with our setup.
-const REACT_NATIVE_VERSION = '0.41.2'
+const REACT_NATIVE_VERSION = '0.42.0'
 
 /**
  * Attach this extension to the context.
@@ -56,20 +56,8 @@ function attach (plugin, command, context) {
       rnOptions.push('--skip-jest')
     }
 
-    // install React Native CLI if it isn't found
-    const rncliSpinner = print.spin(`checking react-native-cli`)
-    const cliInstalled = await system.which('react-native')
-    if (cliInstalled) {
-      rncliSpinner.succeed(`checked react-native-cli`)
-    } else {
-      // No React Native installed, let's get it
-      rncliSpinner.text = 'installing react-native-cli'
-      await system.exec('npm install -g react-native-cli', { stdio: 'ignore' })
-      rncliSpinner.succeed(`installed react-native-cli`)
-    }
-
     // react-native init
-    const cmd = `react-native init ${name} ${rnOptions.join(' ')}`
+    const cmd = trim(`react-native init ${name} ${rnOptions.join(' ')}`)
     log('initializing react native')
     log(cmd)
     const withTemplate = reactNativeTemplate ? ` with ${print.colors.cyan(reactNativeTemplate)} template` : ''

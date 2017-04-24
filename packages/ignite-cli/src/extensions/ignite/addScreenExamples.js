@@ -1,6 +1,3 @@
-const { reduce, flatten, takeLast, split, map, replace } = require('ramda')
-const path = require('path')
-
 module.exports = (plugin, command, context) => {
   /**
    * Generates example screens for in dev screens.
@@ -15,86 +12,11 @@ module.exports = (plugin, command, context) => {
    *   {title: 'Section Example', screen: 'Section.js', ancillary: ['file']},
    * ])
    */
+  // DEPRECATED as of 3/2/17 as part of Ignite 2 Beta (https://github.com/infinitered/ignite/issues/636)
   async function addScreenExamples (files, props = {}) {
-    const { filesystem, patching, ignite, print, template } = context
-    const { ignitePluginPath } = ignite
-
-    const config = ignite.loadIgniteConfig()
-    // consider this being part of context.ignite
-    const pluginName = takeLast(1, split(path.sep, ignitePluginPath()))[0]
-
-    // currently only supporting 1 form of examples
-    if (config.examples === 'classic') {
-      const spinner = print.spin(`▸ adding screen examples`)
-
-      // merge and flatten all dem files yo.
-      let allFiles = reduce(
-        (acc, v) => {
-          acc.push(v.screen)
-          if (v.ancillary) acc.push(v.ancillary)
-          return flatten(acc)
-        },
-        [],
-        files
-      )
-
-      // generate stamped copy of all template files
-      const templatePath = ignitePluginPath()
-        ? `${ignitePluginPath()}/templates`
-        : `templates`
-      map(
-        fileName => {
-          template.generate({
-            directory: templatePath,
-            template: `${fileName}.ejs`,
-            target: `ignite/Examples/Containers/${pluginName}/${fileName}`,
-            props
-          })
-        },
-        allFiles
-      )
-
-      // insert screen, route, and buttons in PluginExamples (if exists)
-      const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
-      map(
-        file => {
-          // turn things like "examples/This File-Example.js" into "ThisFileExample"
-          // for decent component names
-          // TODO: check for collisions in the future
-          const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]
-          const componentName = replace(/.js|\s|-/g, '', exampleFileName)
-
-          if (filesystem.exists(destinationPath)) {
-            // insert screen import
-            patching.insertInFile(
-              destinationPath,
-              'import RoundedButton',
-              `import ${componentName} from '../Examples/Containers/${pluginName}/${file.screen}'`
-            )
-
-            // insert screen route
-            patching.insertInFile(
-              destinationPath,
-              'screen: PluginExamplesScreen',
-              `  ${componentName}: {screen: ${componentName}, navigationOptions: {header: {visible: true}}},`
-            )
-
-            // insert launch button
-            patching.insertInFile(
-              destinationPath,
-              'styles.screenButtons',
-              `
-            <RoundedButton onPress={() => this.props.navigation.navigate('${componentName}')}>
-              ${file.title}
-            </RoundedButton>`
-            )
-          } // if
-        },
-        files
-      )
-
-      spinner.stop()
-    }
+    const { ignite, print } = context
+    print.warning('DEPRECATION_WARNING: Heads up! `ignite.addScreenExamples` is deprecated. Please use `ignite.addPluginScreenExamples` instead.')
+    ignite.addPluginScreenExamples(files, props)
   }
 
   return addScreenExamples

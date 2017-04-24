@@ -5,37 +5,11 @@ module.exports = (plugin, command, context) => {
    * @param {string} fileName - The js file to create. (.ejs will be appended to pick up the template.)
    * @param {Object} props - The properties to use for template expansion.
    */
+  // DEPRECATED as of 3/2/17 as part of Ignite 2 Beta (https://github.com/infinitered/ignite/issues/636)
   async function addComponentExample (fileName, props = {}) {
-    const { filesystem, patching, ignite, print, template } = context
-    const { ignitePluginPath } = ignite
-    const config = ignite.loadIgniteConfig()
-
-    // do we want to use examples in the classic format?
-    if (config.examples === 'classic') {
-      const spinner = print.spin(`▸ adding component example`)
-
-      // generate the file
-      const templatePath = ignitePluginPath()
-        ? `${ignitePluginPath()}/templates`
-        : `templates`
-      template.generate({
-        directory: templatePath,
-        template: `${fileName}.ejs`,
-        target: `ignite/Examples/Components/${fileName}`,
-        props
-      })
-
-      // adds reference to usage example screen (if it exists)
-      const destinationPath = `${process.cwd()}/ignite/DevScreens/PluginExamplesScreen.js`
-      if (filesystem.exists(destinationPath)) {
-        patching.insertInFile(
-          destinationPath,
-          'import ExamplesRegistry',
-          `import '../Examples/Components/${fileName}'`
-        )
-      }
-      spinner.stop()
-    }
+    const { ignite, print } = context
+    print.warning('DEPRECATION WARNING: Heads up! `ignite.addComponentExample` is deprecated. Please use `ignite.addPluginComponentExample` instead!')
+    ignite.addPluginComponentExample(fileName, props)
   }
 
   return addComponentExample

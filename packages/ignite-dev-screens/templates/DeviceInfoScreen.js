@@ -1,5 +1,3 @@
-// @flow
-
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
 import { View, ScrollView, Text, Image, NetInfo, TouchableOpacity } from 'react-native'
@@ -33,13 +31,7 @@ const APP_DATA = [
 ]
 
 export default class DeviceInfoScreen extends React.Component {
-  state: {
-    isConnected: boolean,
-    connectionInfo: Object | null,
-    connectionInfoHistory: Array<any>
-  }
-
-  constructor (props: Object) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -74,15 +66,15 @@ export default class DeviceInfoScreen extends React.Component {
     NetInfo.removeEventListener('change', this.updateConnectionInfoHistory)
   }
 
-  setConnected = (isConnected: boolean) => {
+  setConnected = (isConnected) => {
     this.setState({isConnected})
   }
 
-  setConnectionInfo = (connectionInfo: Object) => {
+  setConnectionInfo = (connectionInfo) => {
     this.setState({connectionInfo})
   }
 
-  updateConnectionInfoHistory = (connectionInfo: Object) => {
+  updateConnectionInfoHistory = (connectionInfo) => {
     const connectionInfoHistory = this.state.connectionInfoHistory.slice()
     connectionInfoHistory.push(connectionInfo)
     this.setState({connectionInfoHistory})
@@ -96,7 +88,7 @@ export default class DeviceInfoScreen extends React.Component {
     ])
   }
 
-  renderCard (cardTitle: string, rowData: Array<Object>) {
+  renderCard (cardTitle, rowData) {
     return (
       <View>
         <View style={styles.sectionHeaderContainer}>
@@ -108,7 +100,7 @@ export default class DeviceInfoScreen extends React.Component {
     )
   }
 
-  renderRows (rowData: Array<Object>) {
+  renderRows (rowData) {
     return rowData.map((cell) => {
       const {title, info} = cell
       return (

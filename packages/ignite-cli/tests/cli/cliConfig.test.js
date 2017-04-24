@@ -8,10 +8,12 @@ let mockGluegunBuilder = new MockGluegunBuilder()
 mockery.enable({ warnOnUnregistered: false })
 
 // mock the header & gluegun
+const noop = () => {}
 mockery.registerMock('../brand/header', () => true)
 mockery.registerMock('gluegun', {
   build: () => mockGluegunBuilder,
-  printCommands: context => true
+  printCommands: context => true,
+  print: { info: noop, debug: noop, colors: { magenta: noop } }
 })
 
 // our cli
@@ -24,8 +26,16 @@ test('ignite', async t => {
       brand: 'ignite',
       loadAlls: [
         {
+          dir: `${process.cwd()}/ignite/plugins`,
+          opts: {}
+        },
+        {
           dir: `${process.cwd()}/node_modules`,
           opts: { hidden: true, matching: 'ignite-*' }
+        },
+        {
+          dir: `${process.cwd()}/node_modules`,
+          opts: { hidden: true, matching: 'gluegun-*' }
         }
       ],
       loadDefault: `${process.cwd()}/src/cli/..`,

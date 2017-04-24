@@ -21,8 +21,14 @@ const walkthrough = async (context) => {
   // Okay, we'll ask one by one, fine
   return await context.prompt.ask([
     {
+      name: 'boilerplate',
+      message: 'Is this an app boilerplate plugin?',
+      type: 'list',
+      choices: ['No', 'Yes']
+    },
+    {
       name: 'template',
-      message: 'Will your plugin have an example component??',
+      message: 'Will your plugin have an example component?',
       type: 'list',
       choices: ['No', 'Yes']
     },
@@ -79,11 +85,14 @@ const createNewPlugin = async (context) => {
   print.info(`Creating new plugin: ${pluginName}`)
 
   const copyJobs = [
-    { template: 'plugin/.gitignore', target: `${pluginName}/.gitignore` },
-    { template: 'plugin/index.js.ejs', target: `${pluginName}/index.js` },
+    { template: 'plugin/gitignore', target: `${pluginName}/.gitignore` },
+    { template: 'plugin/plugin.js.ejs', target: `${pluginName}/plugin.js` },
     { template: 'plugin/ignite.json.ejs', target: `${pluginName}/ignite.json` },
     { template: 'plugin/package.json.ejs', target: `${pluginName}/package.json` },
     { template: 'plugin/README.md', target: `${pluginName}/README.md` },
+    { template: 'plugin/test/add.js.ejs', target: `${pluginName}/test/add.js` },
+    { template: 'plugin/test/remove.js.ejs', target: `${pluginName}/test/remove.js` },
+    { template: 'plugin/test/interface.js.ejs', target: `${pluginName}/test/interface.js` },
     (answers.template === 'Yes') &&
       { template: 'plugin/templates/Example.js.ejs', target: `${pluginName}/templates/${name}Example.js.ejs` },
     (answers.command === 'Yes') &&
@@ -91,9 +100,16 @@ const createNewPlugin = async (context) => {
     (answers.command === 'Yes') &&
       { template: 'plugin/templates/thing.js.ejs.ejs', target: `${pluginName}/templates/thing.js.ejs` }
   ]
+  if (answers.boilerplate === 'Yes') {
+    copyJobs.push({ template: 'plugin/boilerplate.js.ejs', target: `${pluginName}/boilerplate.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/index.js.ejs.ejs', target: `${pluginName}/boilerplate/index.js.ejs` })
+    copyJobs.push({ template: 'plugin/boilerplate/App/App.js', target: `${pluginName}/boilerplate/App/App.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/Tests/AppTest.js', target: `${pluginName}/boilerplate/Tests/AppTest.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/ignite/ignite.json', target: `${pluginName}/boilerplate/ignite/ignite.json` })
+  }
 
   // copy over the files
-  await ignite.copyBatch(context, copyJobs, {name, pluginName, answers})
+  await ignite.copyBatch(context, copyJobs, {name, pluginName, answers, igniteVersion: ignite.version, isGenerator: answers.command === 'Yes'})
 }
 
 /**
@@ -221,4 +237,3 @@ module.exports = async function (context) {
       break
   }
 }
-

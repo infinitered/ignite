@@ -25,3 +25,26 @@ test('requires a name', async t => {
     t.is(err.code, 5)
   }
 })
+
+test(`doesn't allow kebab-case`, async t => {
+  try {
+    await execa(IGNITE, ['new', 'chicken-kebab'])
+    t.fail()
+  } catch (err) {
+    t.is(err.stdout, 'Please use camel case for your project name. Ex: ChickenKebab\n')
+    t.is(err.code, 5)
+  }
+})
+
+test(`doesn't let you overwrite a folder`, async t => {
+  try {
+    jetpack.dir('Chicken')
+    await execa(IGNITE, ['new', 'Chicken'])
+    t.fail()
+  } catch (err) {
+    t.is(err.stdout, 'Directory Chicken already exists.\n')
+    t.is(err.code, 8)
+  } finally {
+    jetpack.remove('Chicken')
+  }
+})

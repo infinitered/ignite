@@ -13,7 +13,7 @@ module.exports = async function (context) {
 
   // grab a fist-full of features...
   const { print, filesystem } = context
-  const { warning, success } = print
+  const { warning, success, info } = print
 
   // ignite spork
   // -> lists all generator plugins (identified in json)
@@ -57,7 +57,9 @@ module.exports = async function (context) {
 
   // TODO: This will be wonky if you're not in root of your project
   copyFiles.selectedTemplates.map((template) => {
-    filesystem.copyAsync(`${directory}/templates/${template}`, `ignite/Spork/${selectedPlugin}/${template}`)
+    const destination = `ignite/Spork/${selectedPlugin}/${template}`
+    filesystem.copyAsync(`${directory}/templates/${template}`, destination)
+    info(` 🔘 ${destination}`)
   })
 
   success('Sporked!')

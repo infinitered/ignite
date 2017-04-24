@@ -1,5 +1,3 @@
-// @flow
-
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
 import { Platform, View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
@@ -10,7 +8,6 @@ import styles from './Styles/ComponentExamplesScreenStyles'
 import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
 
 class ComponentExamplesScreen extends React.Component {
-
   renderAndroidWarning () {
     if (Platform.OS === 'android') {
       return (

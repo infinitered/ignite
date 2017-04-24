@@ -1,5 +1,3 @@
-// @flow
-
 // Fair Warning:  PluginExamples has a good bit of Ignite automation in editing.
 // Though robust, if you should modify this file, review your changes with us
 // As to not break the automated addition/subtractions.
@@ -15,7 +13,6 @@ import ExamplesRegistry from '../../App/Services/ExamplesRegistry'
 import styles from './Styles/PluginExamplesScreenStyles'
 
 class PluginExamplesScreen extends React.Component {
-
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -53,7 +50,12 @@ class PluginExamplesScreen extends React.Component {
 export default StackNavigator({
   PluginExamplesScreen: {screen: PluginExamplesScreen}
 }, {
+  cardStyle: {
+    opacity: 1,
+    backgroundColor: '#3e243f'
+  },
   headerMode: 'screen',
+  initialRouteName: 'PluginExamplesScreen',
   navigationOptions: {
     header: {
       visible: false,

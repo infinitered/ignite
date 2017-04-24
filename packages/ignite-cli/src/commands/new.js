@@ -5,15 +5,27 @@ const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
-const { forEach } = require('ramda')
+const addEmptyBoilerplate = require('../lib/addEmptyBoilerplate')
+const { forEach, keys, reduce, concat, trim, isEmpty, match, not } = require('ramda')
 
-module.exports = async function (context) {
+/**
+ * Creates a new ignite project based on an optional boilerplate.
+ *
+ * @param {any} context - The gluegun context.
+ */
+async function command (context) {
   const { parameters, strings, print, system, filesystem, ignite } = context
-  const { isBlank } = strings
+  const { isBlank, upperFirst, camelCase } = strings
   const { log } = ignite
 
   // grab the project name
   const projectName = parameters.second
+
+  // check for kebabs
+  const isKebabCase = not(isEmpty(match(/.-/g, projectName || '')))
+
+  // camelCase the project name for user example
+  const projectNameCamel = upperFirst(camelCase(projectName))
 
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
@@ -21,18 +33,43 @@ module.exports = async function (context) {
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
   }
 
+  // prevent installing when node_modules/react-native exists
+  if (filesystem.exists('node_modules/react-native')) {
+    context.print.error('The `ignite new` command cannot be run within a directory with `node_modules/react-native` installed.')
+    context.print.error('Try installing from a directory without a `node_modules` directory.')
+    process.exit(exitCodes.EXISTING_REACT_NATIVE)
+  }
+
   // verify the project name is a thing
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
     process.exit(exitCodes.PROJECT_NAME)
-    return
+  }
+
+  // verify the project name isn't kebab cased
+  if (isKebabCase) {
+    print.error(`Please use camel case for your project name. Ex: ${projectNameCamel}`)
+    process.exit(exitCodes.PROJECT_NAME)
   }
 
   // verify the directory doesn't exist already
   if (filesystem.exists(projectName) === 'dir') {
     print.error(`Directory ${projectName} already exists.`)
     process.exit(exitCodes.DIRECTORY_EXISTS)
+  }
+
+  // print a header
+  header()
+  print.newline()
+  print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
+
+  // skip the boilerplate?
+  // NOTE(steve): this expression is intentionally evaluating against false because of
+  // --no-boilerplate and how minimist works.
+  if (parameters.options.boilerplate === false) {
+    addEmptyBoilerplate(context)
+    return
   }
 
   // make & jump into the project directory
@@ -42,6 +79,7 @@ module.exports = async function (context) {
   log(`switched directory to ${process.cwd()}`)
 
   // make a temporary package.json file so node stops walking up the diretories
+  // NOTE(steve): a lot of pain went into this 1 function call
   filesystem.write('package.json', {
     name: 'ignite-shim',
     description: 'A temporary package.json created to prevent node from wandering too far.',
@@ -49,83 +87,30 @@ module.exports = async function (context) {
     license: 'MIT'
   })
 
-  // pretty bird, yes, pretty bird... petey is a pretty bird.
-  if (!parameters.options.debug) {
-    header()
-    print.newline()
-  }
-  print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
+  // grab the right boilerplate
+  const cliBoilerplate = parameters.options.boilerplate || parameters.options.b
+  const boilerplateName = strings.isBlank(cliBoilerplate) ? 'ir-boilerplate-2016' : cliBoilerplate
 
-  /**
-   * Figures out which app template we'll be using (without the ignite- prefix).
-   *
-   * @return {string} The app template we'll be using.
-   */
-  function getAppTemplate () {
-    // check for a user-defined template
-    const cliTemplate = parameters.options.template || parameters.options.t
-    if (cliTemplate) return cliTemplate
+  // pick the inbound cli options
+  const cliOpts = parameters.options
 
-    // check for the minimal app template
-    if (parameters.options.min || parameters.options.m) return 'minimal-app-template'
-
-    // check for the empty app template
-    if (parameters.options.empty) return 'empty-app-template'
-
-    // default
-    return 'unholy-app-template'
-  }
-
-  // grab the right app template
-  const appTemplatePackage = getAppTemplate()
-
-  // Install the ignite-* packages from the local dev directory.
-  //
-  // This is pretty much always what we while we dev.
-  //
-  // To test what live is like, you can run `ignite new FooTown --live`.
-  //
-  // TODO(steve): Don't forget to remove this when we launch... open to better ways of handling it.
-  const igniteDevPackagePrefix = parameters.options.live ? '' : path.resolve(`${__dirname}/../../..`) + '/ignite-'
-
-  // some extra options we'll be passing through to the `ignite add <app-template>`
-  const extraAddOptions = ['--is-app-template']
-
-  // pass along the ignite prefix if we have it
-  if (!parameters.options.live) {
-    extraAddOptions.push(`--ignite-dev-package-prefix ${igniteDevPackagePrefix}`)
-  }
-
-  // pass through the --max flag
-  // NOTE(steve):
-  //   I'd like to see this go away by introducing a new addTemplate command... baby steps though.
-  //   Another thing to consider is just passing through *all* options.
-  if (parameters.options.max) extraAddOptions.push('--max')
-
-  // pass debug down the chain
-  if (parameters.options.debug) extraAddOptions.push('--debug')
-
-  // pass react-native version down the chain
-  if (parameters.options['react-native-version']) {
-    extraAddOptions.push(`--react-native-version ${parameters.options['react-native-version']}`)
-  }
-
-  // pass react-native version down the chain
-  if (parameters.options['react-native-template']) {
-    extraAddOptions.push(`--react-native-template ${parameters.options['react-native-template']}`)
-  }
+  // turn this back into a string
+  const forwardingOptions = trim(reduce((src, k) => {
+    const v = cliOpts[k]
+    return concat(v === true ? `--${k} ` : `--${k} ${v} `, src)
+  })('', keys(cliOpts)))
 
   // let's kick off the template
   let ok = false
   try {
-    const command = `ignite add ${igniteDevPackagePrefix}${appTemplatePackage} ${projectName} ${extraAddOptions.join(' ')}`
-    log(`running app template: ${command}`)
-    await system.spawn(command, { stdio: 'inherit' })
-    log('finished app template')
+    const command = trim(`ignite boilerplate-install ${boilerplateName} ${projectName} ${forwardingOptions}`)
+    log(`running boilerplate: ${command}`)
+    await system.exec(command, { stdio: 'inherit' })
+    log('finished boilerplate')
     ok = true
   } catch (e) {
-    log('error running app template')
-    log(e.message)
+    log('error running boilerplate')
+    log(e)
   }
 
   // always clean up the app-template stuff
@@ -140,10 +125,12 @@ module.exports = async function (context) {
     // move everything that's 1 deep back up to here
     forEach(
       filename => filesystem.move(path.join(projectName, filename), filename)
-      , filesystem.list(projectName)
+      , filesystem.list(projectName) || []
     )
     log(`removing unused sub directory ${projectName}`)
     filesystem.remove(projectName)
   }
   log('finished running new')
 }
+
+module.exports = command

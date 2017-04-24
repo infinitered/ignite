@@ -1,12 +1,19 @@
-### Hiya! So you think it's broken or missing a feature eh?
+### Hey there! Ignite seems to be having a problem, eh?
 
-Welllllll, it just might be.  Do me a favor and check the following.
+Welllllll, it just might be. First, search the issues to make sure it's not already
+here, and if not head over to http://community.infinite.red to
+get some help. If you've identified that it's really an Ignite issue, then:
 
-- [ ] Issue does not already exist
-- Identify exactly what aspect your issue is about
-  - [ ] ignite base application
-  - [ ] ignite the cli
-  - [ ] ignite generated code
+- Explain what's going on and preferably how to replicate the issue (bonus points for a repro app)
+- Run `ignite doctor` and paste the result below, including the lines with 3 backticks
+- Delete these instructions! We don't want to look at them. ;)
 
-Also, for the quickest assistance please run `ignite doctor` and paste in
-everything (including the lines with 3 backticks).
+---
+What's going on?
+
+---
+Steps to reproduce
+
+---
+`ignite doctor` results:
+
