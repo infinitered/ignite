@@ -10,6 +10,9 @@ name | supporting | author
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
 [fetch-blob](https://github.com/skellock/ignite-fetch-blob) | [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) | [Steve Kellock](https://github.com/skellock)
 [img-cache](https://github.com/skellock/ignite-img-cache) | [react-native-img-cache](https://github.com/wcandillon/react-native-img-cache) | [Steve Kellock](https://github.com/skellock)
+[video](https://github.com/ryanlntn/ignite-video) | [react-native-video](https://github.com/react-native-community/react-native-video) | [Ryan Linton](https://github.com/ryanlntn)
+[push-notification](https://github.com/ryanlntn/ignite-push-notification) | [react-native-push-notification](https://github.com/zo0r/react-native-push-notification) | [Ryan Linton](https://github.com/ryanlntn)
+[radio-buttons](https://github.com/robinheinze/ignite-radio-buttons) | [react-native-radio-buttons](https://github.com/ArnaudRinquin/react-native-radio-buttons) | [Robin Heinze](https://github.com/robinheinze)
 
 ### Maintained by IR
 
