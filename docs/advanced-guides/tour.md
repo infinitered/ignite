@@ -26,7 +26,7 @@ Whenever you see `context` in `ignite-cli`, it is a gluegun runtime context. Thi
 
 In addition, Ignite adds some of its own Ignite-specific functions and parameters to `context` ... those are found under `context.ignite`.
 
-If you're curious what's in the context object, check out Gluegun's [nice context docs](https://infinitered.github.io/gluegun/#/context-api.md), or just inspect it with `console.dir(context, {depth: 3, colors true})`.
+If you're curious what's in the context object, check out Gluegun's [nice context docs](https://infinitered.github.io/gluegun/#/context-api.md), or just inspect it with `console.dir(context, {depth: 3, colors: true})`.
 
 ## ignite-cli
 
@@ -51,6 +51,8 @@ Any file exports in this directory will get automatically added to the `context`
 
 Notice that there are several functions under the `ignite` extension. For example, `context.ignite.addModule()` is in `./src/extensions/ignite/addModule.js`.
 
+We often use extensions for namespacing and organizing various tools and data that we need in the CLI.
+
 #### Tests
 
 `ignite-cli` tests are fairly straightforward. For any new commands or extensions you might add, we recommend adding tests for them here.
@@ -61,7 +63,7 @@ This is an [Ignite plugin](./creating-plugins.md) that adds Ignite development s
 
 ## Documentation and Github
 
-Github-specific templates and docs are in `./.github`. Other 
+Github-specific templates and docs are in `./.github`. Other documentation is found in `./docs`. If you add any new features or update old features, please include appropriate documentation changes in your pull request as well.
 
 ## CI Tests
 
