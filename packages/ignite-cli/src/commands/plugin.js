@@ -105,7 +105,7 @@ Example:
 }
 
 module.exports = async function (context) {
-  const { parameters, print } = context
+  const { parameters } = context
 
   switch (parameters.second) {
     case 'new':

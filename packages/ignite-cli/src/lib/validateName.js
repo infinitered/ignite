@@ -1,3 +1,4 @@
+const exitCodes = require('./exitCodes')
 const prependIgnite = require('./prependIgnite')
 
 /**

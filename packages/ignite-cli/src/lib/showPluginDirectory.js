@@ -26,10 +26,10 @@ module.exports = async function (context) {
   )(directory)
 
   newline()
-  info(colors.highlight("Ignite Plugins"))
+  info(colors.highlight('Ignite Plugins'))
   newline()
   if (pluginTable.length > 0) {
-    info(colors.muted("Install with `ignite add pluginname` and remove with `ignite remove pluginname`"))
+    info(colors.muted('Install with `ignite add pluginname` and remove with `ignite remove pluginname`'))
     newline()
     table(pluginTable)
   } else {
