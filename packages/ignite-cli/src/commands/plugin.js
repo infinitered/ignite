@@ -3,8 +3,7 @@
 // ----------------------------------------------------------------------------
 
 const exitCodes = require('../lib/exitCodes')
-const { pipe, keys, filter, map } = require('ramda')
-const prependIgnite = require('../lib/prependIgnite')
+const validateName = require('../lib/validateName')
 
 /**
  * Does a walkthrough of questions and returns the answers as an object.
@@ -39,33 +38,6 @@ const walkthrough = async (context) => {
       choices: ['No', 'Yes']
     }
   ])
-}
-
-/**
- * Checks whether a plugin name was given and errors if not.
- * Also prepends `ignite-*` if plugin name didn't include it.
- *
- * @param {String} pluginName The provided plugin name.
- * @param {Object} context The gluegun context.
- * @returns {String} The normalized name.
- */
-const validateName = (pluginName, context) => {
-  const { strings, print } = context
-
-  if (strings.isBlank(pluginName)) {
-    print.info(`ignite plugin new ignite-foo\n`)
-    print.error('Plugin name is required')
-    process.exit(exitCodes.PLUGIN_NAME)
-  }
-
-  // TODO: Make this better at detecting invalid plugin names
-  if (!/^[a-z0-9].*/i.test(pluginName)) {
-    print.error('Plugin name should be a valid folder name')
-    process.exit(exitCodes.PLUGIN_NAME)
-  }
-
-  // Force prepend `ignite-*` to plugin name
-  return prependIgnite(pluginName)
 }
 
 /**
@@ -125,9 +97,6 @@ Generally, you would run this from ./YourApp/ignite/plugins/
 Commands:
   ignite plugin help
   ignite plugin new <your-plugin>
-  ignite plugin list
-  ignite plugin search <search string>
-  ignite plugin info <plugin name>
 
 Example:
   ignite plugin new ignite-mobx`
@@ -135,100 +104,12 @@ Example:
   process.exit(exitCodes.OK)
 }
 
-/**
- * Shows a list of known plugins.
- *
- * @param {Object} context The gluegun context.
- * @param {String} search A search string (or null).
- */
-const showPluginDirectory = (context, search) => {
-  const { print } = context
-  const { colors, newline, info, table, error } = print
-  const directory = require('./plugin/directory')
-
-  const pluginTable = pipe(
-    keys,
-    filter((k) => {
-      if (!search) return true
-      return k.includes(search)
-    }),
-    map((k) => {
-      const plugin = directory[k]
-      return [k, plugin.author]
-      // return plugin
-    })
-  )(directory)
-
-  newline()
-  info(colors.highlight("Ignite Plugins"))
-  newline()
-  if (pluginTable.length > 0) {
-    info(colors.muted("Install with `ignite add pluginname` and remove with `ignite remove pluginname`"))
-    newline()
-    table(pluginTable)
-  } else {
-    error(`No plugin with the search string '${search}'.`)
-  }
-  newline()
-
-  process.exit(exitCodes.OK)
-}
-
-/**
- * Shows info about a particular plugin.
- *
- * @param {Object} context The gluegun context.
- */
-const showPluginInfo = (context, name) => {
-  const { print } = context
-  const { colors, newline, info, table, error } = print
-  const directory = require('./plugin/directory')
-
-  name = validateName(name, context)
-  shortName = name.replace(/^(ignite\-)/, "")
-
-  const plugin = directory[name]
-  
-  newline()
-  info(colors.highlight(`Ignite Plugin: '${name}'`))
-  newline()
-
-  if (plugin) {
-    table([
-      [ "Name", name ],
-      [ "Description", plugin.description ],
-      [ "Author", plugin.author ],
-      [ "URL", plugin.url ],
-      [ "Email", plugin.email ]
-    ])
-  } else {
-    error('ok')
-  }
-
-  newline()
-  info("Install with " + colors.highlight(`ignite add ${shortName}`))
-  newline()
-}
-
-
 module.exports = async function (context) {
   const { parameters, print } = context
 
   switch (parameters.second) {
     case 'new':
       await createNewPlugin(context)
-      break
-
-    case 'list':
-      showPluginDirectory(context, null)
-      break
-
-    case 'search':
-      showPluginDirectory(context, parameters.third)
-      break
-
-    case 'info':
-      showPluginInfo(context, parameters.third)
       break
 
     case 'help':
