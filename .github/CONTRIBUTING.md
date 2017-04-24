@@ -14,9 +14,14 @@ Before submitting a pull request, you will want to make sure that your branch me
 * Code is compliant with StandardJS (`npm run lint` or `yarn lint`)
 * Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
+## Requirements
+
+* Node 7.6+
+* NPM 4 (ships with Node 7)
+
 ## Getting Started
 
-1. Clone the repo (`git clone git@github.com:infinitered/ignite.git`)
+1. Fork and then clone the repo (`git clone git@github.com:<YOURGITHUBUSER>/ignite.git`)
 2. CD into the directory (`cd ignite`)
 3. Uninstall npm version (`npm u -g ignite-cli && npm u -g react-native-ignite`)
 4. Pull all package dependencies (`npm i && npm run bootstrap`)
@@ -30,9 +35,15 @@ $ ignite --version
 2.0.0-beta.x
 $ which ignite
 /usr/local/bin/ignite
+$ ignite new UberForHeadLice
+...
 ```
 
 Now you're ready to check out a new branch and get hacking on Ignite!
+
+## Source Code
+
+To get familiarized with Ignite's source code, read the [Tour of Ignite's source code](../docs/advanced-guides/tour.md).
 
 ## How to Build and Run App
 
