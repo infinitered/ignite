@@ -21,14 +21,11 @@ If you're on a Mac, you can use one of these techniques:
 
 First, if you already have a copy of Ignite installed with `npm`, uninstall it with the commands listed below.
 
-For Ignite 2.0 and above: (exact one depends on what you may have installed previously)
+Exact one depends on what you may have installed previously:
+
 ```sh
 npm rm -g ignite
 npm rm -g ignite-cli
-```
-
-For Ignite 1.x:
-```sh
 npm rm -g react-native-ignite
 ```
 
@@ -43,7 +40,7 @@ git@github.com:infinitered/ignite.git
 cd ignite
 ```
 
-Now install use `npm` to install and bootstrap Ignite:
+Now use `npm` to install and bootstrap Ignite:
 
 ```sh
 npm install
@@ -57,34 +54,21 @@ cd packages/ignite-cli
 npm link
 ```
 
-When we launch, this will be replaced with `npm install -g ignite-cli`.
-
->Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite. See the commands above to uninstall Ignite.
+> Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite. See the commands above to uninstall Ignite.
 
 #### Setup Overrides
 
-We're not quite ready to push everything up to NPM yet.  We're a few days away from this.
-
-So in the meantime, we have to trick Ignite into installing from our hard drive instead of from npmjs.com.
-
-We can do this by setting an environment variable.
+Now set up an environment variable so Ignite knows where to find its own plugins. Make sure you're in the main `ignite` folder first -- you may have to run `cd ../..`.
 
 ```sh
-cd ..
-echo "export IGNITE_PLUGIN_PATH=$(pwd)"
+export IGNITE_PLUGIN_PATH=$(pwd)
 ```
-^ then copy the output of that into your `.bashrc` or `.zshrc` or just run it in place if you're kicking tires. For example, on my computer, I can do this:
+
+If you want to add this to your local `.bashrc` or `.zshrc` so it's available on every terminal session, just do this:
 
 ```sh
-export IGNITE_PLUGIN_PATH=~/src/ir/ignite/packages
-ignite new MyIgniteProject --max
+echo "export IGNITE_PLUGIN_PATH=$(pwd)" >> ~/.zshrc
 ```
-
-> Once we ship to `npm` we can remove this step. When we type `ignite add vector-icons` it will install from npm.  But in the meantime, this offers a way to write your own plugins.
-
-
->If you cannot resolve your issue, the Infinite Red Community Slack may be able to help. You can find us by visiting [http://community.infinite.red](http://community.infinite.red) and then joining the `#ignite` channel.
-
 
 ## Testing Your Installation
 
@@ -95,7 +79,7 @@ cd ~
 ignite new MyApp
 ```
 
->Again, if you are having issues, the Infinite Red Community Slack may be able to help. You can find us by visiting [http://community.infinite.red](http://community.infinite.red) and then joining the `#ignite` channel.
+> Again, if you are having issues, the Infinite Red Community Slack may be able to help. You can find us by visiting [http://community.infinite.red](http://community.infinite.red) and then joining the `#ignite` channel.
 
 
 

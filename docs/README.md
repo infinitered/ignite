@@ -16,7 +16,6 @@
 * [Creating project plugins](./advanced-guides/creating-project-plugins.md)
 * [Creating boilerplates](./advanced-guides/creating-boilerplates.md)
 * [Creating generators](./advanced-guides/creating-generators.md)
-* [How to Contribute](./advanced-guides/how-to-contribute.md)
 * [Using development build](./advanced-guides/using-development-build.md)
 * Writing tests for plugins
 * Releasing plugins
