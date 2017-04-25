@@ -25,7 +25,7 @@ module.exports = (plugin, command, context) => {
     const shouldGenerate = async target => {
       if (!askToOverwrite) return true
       if (!filesystem.exists(target)) return true
-      return await confirm(`overwrite ${target}`)
+      return confirm(`overwrite ${target}`)
     }
 
     // old school loop because of async stuff

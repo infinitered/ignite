@@ -30,7 +30,7 @@ const removeIgnitePlugin = async (moduleName, context) => {
 
 module.exports = async function (context) {
   // grab a fist-full of features...
-  const { print, filesystem, prompt, ignite, parameters, strings } = context
+  const { print, prompt, ignite, parameters, strings } = context
   const { log } = ignite
 
   log('running add command')
@@ -117,7 +117,6 @@ Examples:
     spinner.text = `adding ${print.colors.cyan(moduleName)}`
     spinner.start()
   }
-
 
   // ok, are we ready?
   try {

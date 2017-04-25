@@ -5,6 +5,7 @@ module.exports = async function (context) {
   // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
   const { parameters, strings, print, ignite } = context
   const { pascalCase, isBlank } = strings
+  const { paths } = ignite.loadIgniteConfig()
 
   // validation
   if (isBlank(parameters.first)) {
@@ -16,11 +17,11 @@ module.exports = async function (context) {
   const name = pascalCase(parameters.first)
   const props = { name }
 
-  // Copies the `thing.js.ejs` in your plugin's templates folder
-  // into App/Things/${name}.js.
+  // copies the `thing.js.ejs` in your plugin's templates folder
+  // into App/Components/${name}.js, or some customized version of this path
   const jobs = [{
     template: 'thing.js.ejs',
-    target: `App/Things/${name}.js`
+    target: `${paths.app}/${paths.components}/${name}.js`
   }]
 
   // make the templates and pass in props with the third argument here

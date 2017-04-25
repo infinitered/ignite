@@ -193,5 +193,35 @@ For example, you may:
 
 ## Ignite directory
 
-TODO:
 The Ignite directory stores all things Ignite. Here you will find generators, plugins and examples to help you get started with React Native.
+
+The `ignite.json` file is where you can customize how Ignite behaves in your project to some degree. For example, you can edit the paths that your plugin generators use when creating new components, screens, and the like.
+
+```json
+{
+  "generators": {
+    "component": "ignite-ir-next",
+    "container": "ignite-ir-next",
+    "listview": "ignite-ir-next",
+    "redux": "ignite-ir-next",
+    "saga": "ignite-ir-next",
+    "screen": "ignite-ir-next"
+  },
+  "paths": {
+    "app": "App",
+    "tests": "Tests",
+    "components": "Components",
+    "config": "Config",
+    "containers": "Containers",
+    "fixtures": "Fixtures",
+    "images": "Images",
+    "navigation": "Navigation",
+    "services": "Services"
+  },
+  "createdWith": "2.0.0-beta.8",
+  "examples": "classic",
+  "navigation": "react-navigation"
+}
+```
+
+_TODO: Need more info on the ignite directory._

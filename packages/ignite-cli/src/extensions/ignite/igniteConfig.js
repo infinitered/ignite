@@ -4,15 +4,15 @@ const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
 const defaultConfig = {
   generators: {},
   paths: {
-    app: "App",
-    tests: "Tests",
-    components: "Components",
-    config: "Config",
-    containers: "Containers",
-    fixtures: "Fixtures",
-    images: "Images",
-    navigation: "Navigation",
-    services: "Services"
+    app: 'App',
+    tests: 'Tests',
+    components: 'Components',
+    config: 'Config',
+    containers: 'Containers',
+    fixtures: 'Fixtures',
+    images: 'Images',
+    navigation: 'Navigation',
+    services: 'Services'
   }
 }
 
