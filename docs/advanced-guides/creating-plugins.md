@@ -47,29 +47,64 @@ The `plugin.js` file is the entrypoint for your plugin and provides the add/remo
 
 ```
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import ExamplesRegistry from '../../../App/Services/ExamplesRegistry'
+import { RadioButtons } from 'react-native-radio-buttons'
 
 // Example
 ExamplesRegistry.addPluginExample('RadioButtons', () =>
-  <View>
-    <Text style={{color: '#ffffff'}}>Hello Radio Button</Text>
+  <View style={{margin: 20}}>
+    <RadioButtons
+      options={options}
+      onSelection={ setSelectedOption.bind(this) }
+      selectedOption={ options.first } // In your application, this would be { this.state.selectedOption }
+      renderOption={ renderOption }
+      renderContainer={ renderContainer }
+    />
   </View>
 )
+
+const options = [
+  "Option 1",
+  "Option 2"
+]
+
+const setSelectedOption = (selectedOption) => {
+  // In your application code, you would set selectedOption in state: `this.setState({selectedOption: selectedOption})`
+  window.alert(`${selectedOption} pressed`)
+}
+
+const renderOption = (option, selected, onSelect, index) => {
+  const style = selected ? { fontWeight: 'bold'} : {}
+
+  return (
+    <TouchableWithoutFeedback onPress={onSelect} key={index}>
+      <View>
+        <Text style={[style, { color: 'white'}]}>{option}</Text>
+      </View>
+    </TouchableWithoutFeedback>
+  )
+}
+
+const renderContainer = (optionNodes) => {
+  return <View>{optionNodes}</View>
+}
+
 ```
 
 ### Add the plugin to the Ignite application
 
-Since we are still developing our plugin, and it doesn't exist on npm yet, From within the root of `OurApp`, we run:
-
-```
-ignite add ~/path/to/ignite-radio-buttons
-```
-
-If we had already published our new plugin to npm as `ignite-radio-buttons`, we would instead run:
-
 ```
 ignite add radio-buttons
+```
+
+NOTE: If your plugin is not on npm yet, Make sure you have `IGNITE_PLUGIN_PATH` set as an ENV variable in your shell profile. It should point to the directory that contains the plugin you are writing.
+
+```
+~/.bash_profile
+
+
+export IGNITE_PLUGIN_PATH="/Users/robinheinze/Code/packages/"
 ```
 
 ### Build your app!
@@ -77,6 +112,8 @@ ignite add radio-buttons
 ```
 react-native run-ios
 ```
+
+You can view your plugin example in the Plugin Examples section of the dev screens.
 
 ### Gluegun
 
