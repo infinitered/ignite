@@ -1,17 +1,41 @@
-const { dissoc } = require('ramda')
+const { dissoc, merge } = require('ramda')
 const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
+
+const defaultConfig = {
+  generators: {},
+  paths: {
+    app: "App",
+    tests: "Tests",
+    components: "Components",
+    config: "Config",
+    containers: "Containers",
+    fixtures: "Fixtures",
+    images: "Images",
+    navigation: "Navigation",
+    services: "Services"
+  }
+}
 
 module.exports = (plugin, command, context) => {
   const { filesystem } = context
 
   /**
    * Reads the contents of the ignite/ignite.json configuration.
+   * Sets some defaults if not set.
    *
    * @return {Object} The configuration.
    */
   function loadIgniteConfig () {
-    return filesystem.exists(igniteConfigFilename)
-      ? filesystem.read(igniteConfigFilename, 'json') || {}
+    const appConfig = loadConfig(igniteConfigFilename)
+    return merge(defaultConfig, appConfig)
+  }
+
+  /**
+   * Reads the contents of a configuration file.
+   */
+  function loadConfig (filename) {
+    return filesystem.exists(filename)
+      ? filesystem.read(filename, 'json') || {}
       : {}
   }
 
@@ -50,6 +74,7 @@ module.exports = (plugin, command, context) => {
     setIgniteConfig,
     removeIgniteConfig,
     saveIgniteConfig,
-    loadIgniteConfig
+    loadIgniteConfig,
+    loadConfig
   }
 }

@@ -47,10 +47,7 @@ module.exports = async function (context) {
     // with each plugin
     map(plugin => {
       // load the list of generators they support within their ignite.json
-      const configFile = `${plugin.directory}/ignite.json`
-      const config = filesystem.exists(configFile)
-        ? filesystem.read(configFile, 'json')
-        : {}
+      const config = context.ignite.loadConfig(`${plugin.directory}/ignite.json`)
       const generators = config.generators || []
 
       // then make a row out of them
@@ -67,19 +64,6 @@ module.exports = async function (context) {
     groupBy(prop('type'))
   )(ignite.findIgnitePlugins())
 
-  // ---------------------
-  // NOTE(steve): Saving these next two for potential useful stuff
-
-  // the plugins with only 1 slot registered per type
-  // const unique = pipe(
-  //   pickBy(v => v.length === 1),
-  //   map(head)
-  // )(registry)
-
-  // the plugins that are competing for slots
-  // const many = pickBy(v => v.length > 1, registry)
-  // ---------------------
-
   // the list of what the user wants
   const userPrefs = config.generators || {}
 
@@ -88,7 +72,7 @@ module.exports = async function (context) {
     (pluginName, type) => {
       // let's find what the user has asked for in the list
       const lookup = find(
-        option => equals(pluginName, dotPath('plugin.name', option)),
+        option => pluginName.plugin.name == option,
         registry[type] || []
       )
 
@@ -157,10 +141,6 @@ module.exports = async function (context) {
     return
   }
 
-  // TODO: do we want to add items that aren't conflicts it the list?
-
-  // TODO: how do we want to handle conflicts?  up above, i'm just calling find()
-
   // the type of template to generate (it's actually the 2nd because we rewrite the pluginName to be first)
   const type = parameters.second
   const registryItem = type ? userRegistry[type] : null
@@ -197,15 +177,15 @@ module.exports = async function (context) {
   const newCommand = trim(replace(rx, '', parameters.string))
 
   // make the call to the real generator
-  context.runtime
-    .run({
+  try {
+    await context.runtime.run({
       pluginName: registryItem.pluginName,
       rawCommand: newCommand,
       options: parameters.options
     })
-    .then(e => {
-      if (e.error) {
-        print.debug(e.error)
-      }
-    })
+  } catch e {
+    if (e.error) {
+      print.debug(e.error)
+    }
+  }
 }

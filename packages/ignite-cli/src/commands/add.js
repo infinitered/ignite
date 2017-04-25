@@ -2,7 +2,7 @@
 // @cliAlias a
 // ----------------------------------------------------------------------------
 
-const R = require('ramda')
+const { reduce, join, assoc, keys } = require('ramda')
 const detectedChanges = require('../lib/detectedChanges')
 const detectInstall = require('../lib/detectInstall')
 const importPlugin = require('../lib/importPlugin')
@@ -36,6 +36,7 @@ module.exports = async function (context) {
   log('running add command')
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
+  const currentPaths = config.paths || {}
 
   // ensure we're in a supported directory
   if (!isIgniteDirectory(process.cwd())) {
@@ -76,30 +77,47 @@ Examples:
 
   // optionally load some configuration from the ignite.json from the plugin.
   const ignitePluginConfigPath = `${modulePath}/ignite.json`
-  const newConfig = filesystem.exists(ignitePluginConfigPath)
-    ? filesystem.read(ignitePluginConfigPath, 'json')
-    : {}
+  const newConfig = ignite.loadConfig(ignitePluginConfigPath)
 
-  const proposedGenerators = R.reduce((acc, k) => {
+  const proposedGenerators = reduce((acc, k) => {
     acc[k] = moduleName
     return acc
   }, {}, newConfig.generators || [])
 
   // we compare the generator config changes against ours
-  const changes = detectedChanges(currentGenerators, proposedGenerators)
-  if (changes.length > 0) {
+  const generatorChanges = detectedChanges(currentGenerators, proposedGenerators)
+
+  // load file paths from the plugin.
+  const proposedPaths = reduce((acc, k) => {
+    acc[k] = newConfig.paths[k]
+    return acc
+  }, {}, keys(newConfig.paths) || [])
+
+  // we compare the paths config changes against ours
+  const pathChanges = detectedChanges(currentPaths, proposedPaths)
+
+  // if any changes, let's ask the user first
+  if ((generatorChanges.length + pathChanges.length) > 0) {
     spinner.stop()
-      // we warn the user on changes
-    print.warning(`🔥  The following generators would be changed: ${R.join(', ', changes)}`)
+
+    if (generatorChanges.length > 0) {
+      print.warning(`🔥  The following generators would be changed: ${join(', ', generatorChanges)}`)
+    }
+    if (pathChanges.length > 0) {
+      print.warning(`🔥  The following paths would be changed: ${join(', ', pathChanges)}`)
+    }
+
     const ok = await prompt.confirm('You ok with that?')
       // if they refuse, then npm/yarn uninstall
     if (!ok) {
       await removeIgnitePlugin(moduleName, context)
       process.exit(exitCodes.OK)
     }
+
     spinner.text = `adding ${print.colors.cyan(moduleName)}`
     spinner.start()
   }
+
 
   // ok, are we ready?
   try {
@@ -120,9 +138,11 @@ Examples:
       // now let's try to run it
       try {
         // save new ignite config if something changed
-        if (proposedGenerators !== {}) {
+        if (proposedGenerators !== {} || proposedPaths !== {}) {
           const combinedGenerators = Object.assign({}, currentGenerators, proposedGenerators)
-          const updatedConfig = R.assoc('generators', combinedGenerators, ignite.loadIgniteConfig())
+          const combinedPaths = Object.assign({}, currentPaths, proposedPaths)
+          const configWithGenerator = assoc('generators', combinedGenerators, ignite.loadIgniteConfig())
+          const updatedConfig = assoc('paths', combinedPaths, configWithGenerator)
           ignite.saveIgniteConfig(updatedConfig)
         }
 
