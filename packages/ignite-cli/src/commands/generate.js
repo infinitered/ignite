@@ -38,6 +38,7 @@ module.exports = async function (context) {
 
   // grab some features
   const { ignite, print, parameters, filesystem } = context
+  const { colors } = print
   const config = ignite.loadIgniteConfig()
 
   print.newline()
@@ -47,7 +48,7 @@ module.exports = async function (context) {
     // with each plugin
     map(plugin => {
       // load the list of generators they support within their ignite.json
-      const config = context.ignite.loadConfig(`${plugin.directory}/ignite.json`)
+      const config = ignite.loadConfig(`${plugin.directory}/ignite.json`)
       const generators = config.generators || []
 
       // then make a row out of them
@@ -72,7 +73,7 @@ module.exports = async function (context) {
     (pluginName, type) => {
       // let's find what the user has asked for in the list
       const lookup = find(
-        option => pluginName.plugin.name == option,
+        option => equals(pluginName, dotPath('plugin.name', option)),
         registry[type] || []
       )
 
@@ -109,19 +110,19 @@ module.exports = async function (context) {
    */
   const footer = () => {
     print.info(
-      print.colors.muted(
+      colors.muted(
         '\n  --------------------------------------------------------------------------'
       )
     )
     print.info(
-      print.colors.muted(
-        `  Check out ${print.colors.white(
+      colors.muted(
+        `  Check out ${colors.white(
           'https://github.com/infinitered/ignite'
         )} for instructions on how to`
       )
     )
     print.info(
-      print.colors.muted('  install some or how to build some for yourself.')
+      colors.muted('  install some or how to build some for yourself.')
     )
   }
 
@@ -129,7 +130,7 @@ module.exports = async function (context) {
   if (isEmpty(userRegistry)) {
     print.warning('⚠️  No generators detected.\n')
     print.info(
-      `  ${print.colors.bold(
+      `  ${colors.bold(
         'Generators'
       )} allow you to quickly make frequently created files such as:\n`
     )
@@ -148,7 +149,7 @@ module.exports = async function (context) {
   // didn't find what we wanted?
   if (isNil(registryItem)) {
     print.info(
-      `✨ Type ${print.colors.bold('ignite generate')} ${print.colors.yellow(
+      `✨ Type ${colors.bold('ignite generate')} ${colors.yellow(
         '________'
       )} to run one of these generators:\n`
     )
@@ -159,9 +160,9 @@ module.exports = async function (context) {
     const data = pipe(
       values,
       map(item => [
-        print.colors.yellow(item.type),
+        colors.yellow(item.type),
         item.error || item.description,
-        showSource && print.colors.muted(item.pluginName)
+        showSource && colors.muted(item.pluginName)
       ])
     )(userRegistry)
 
@@ -183,7 +184,7 @@ module.exports = async function (context) {
       rawCommand: newCommand,
       options: parameters.options
     })
-  } catch e {
+  } catch (e) {
     if (e.error) {
       print.debug(e.error)
     }
