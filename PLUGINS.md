@@ -10,6 +10,7 @@ name | supporting | author
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
 [fetch-blob](https://github.com/skellock/ignite-fetch-blob) | [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) | [Steve Kellock](https://github.com/skellock)
 [img-cache](https://github.com/skellock/ignite-img-cache) | [react-native-img-cache](https://github.com/wcandillon/react-native-img-cache) | [Steve Kellock](https://github.com/skellock)
+[radio-buttons](https://github.com/robinheinze/ignite-radio-buttons) | [react-native-radio-buttons](https://github.com/ArnaudRinquin/react-native-radio-buttons)
 
 ### Maintained by IR
 
