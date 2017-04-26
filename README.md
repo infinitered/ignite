@@ -100,6 +100,10 @@ Looking for React Native's documentation? [Go here](http://facebook.github.io/re
 
 Check out the list of [Plugins](./PLUGINS.md)
 
+## :plate_with_cutlery: Boilerplates :plate_with_cutlery:
+
+Check out the list of [Boilerplates](./BOILERPLATES.md)
+
 ## :poop: Troubleshooting :poop:
 
 If you run into problems, first search the issues in this repository. If you don't find anything, you can either [file an issue](https://github.com/infinitered/ignite/issues) or come talk to our friendly developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
