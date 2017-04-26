@@ -89,6 +89,9 @@ check_builds()
   echo '~ Test adding maps plugin from npm'
   test_command ignite add maps
 
+  echo '~ LINT ALL THE THINGS!'
+  test_command npm run lint
+
   echo '~ Build ios'
   test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js --dev false --platform ios --assets-dest iosAssets
   if [ ! -d "iosAssets" ]; then
