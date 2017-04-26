@@ -48,9 +48,10 @@ verify_code()
 {
   echo '~~~🌟 Checking Code'
   npm install -g standard
+  npm install -g ava
   test_command standard ./packages
   test_command npm test
-  
+
   # run integration tests
   cd ./packages/ignite-integration-tests && npm run integration && cd -
 }
@@ -67,7 +68,7 @@ check_builds()
 
   echo '~~~🌟 Checking Builds'
   cd ./TestProj
-  
+
   if [ ! -d "android" ]; then
     echo 'Android folder did not generate'
     SOMETHING_FAILED=1
@@ -78,10 +79,29 @@ check_builds()
     SOMETHING_FAILED=1
   fi
 
+  echo 'Testing Blessed Plugins'
+  echo '~ Test adding vector-icons plugin from npm'
+  test_command ignite add vector-icons
+  echo '~ Test adding animatable plugin from npm'
+  test_command ignite add animatable
+  echo '~ Test adding i18n plugin from npm'
+  test_command ignite add i18n
+  echo '~ Test adding maps plugin from npm'
+  test_command ignite add maps
+
   echo '~ Build ios'
-  test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js
+  test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js --dev false --platform ios --assets-dest iosAssets
+  if [ ! -d "iosAssets" ]; then
+    echo 'iosAssets folder did not generate'
+    SOMETHING_FAILED=1
+  fi
 
   echo '~ Build android'
+  test_command react-native bundle --entry-file index.android.js --bundle-output test.android.js --dev false --platform android --assets-dest androidAssets
+  if [ ! -d "androidAssets" ]; then
+    echo 'androidAssets folder did not generate'
+    SOMETHING_FAILED=1
+  fi
   # A failed android build will not exit with a non-zero return!
   # This makes it a bit trickier to test for - look for the fail message instead
   cd ./android
@@ -92,8 +112,6 @@ check_builds()
   fi
   cd ..
 
-  echo '~ Test adding vector-icons plugin from npm'
-  test_command ignite add vector-icons
 
   # back to root
   cd ../..
