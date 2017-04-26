@@ -65,7 +65,7 @@ check_builds()
   mkdir testgrounds
   cd ./testgrounds
   echo '~~~🌟 Generating Project'
-  test_command ignite new TestProj --min
+  test_command ignite new TestProj --min --skip-git
 
   echo '~~~🌟 Checking Builds'
   cd ./TestProj
