@@ -49,6 +49,7 @@ verify_code()
   echo '~~~🌟 Checking Code'
   npm install -g standard
   npm install -g ava
+  npm i -g react-native-cli
   test_command standard ./packages
   test_command npm test
 
