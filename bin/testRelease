@@ -108,13 +108,14 @@ check_builds()
   fi
   # A failed android build will not exit with a non-zero return!
   # This makes it a bit trickier to test for - look for the fail message instead
-  cd ./android
-  ./gradlew assembleRelease | grep -q 'BUILD FAILED'
-  if [[ $? -eq 0 ]]; then
-    echo 'Android build failed'
-    SOMETHING_FAILED=1
-  fi
-  cd ..
+  # Temporary disable this until we separate CI needs from here
+  # cd ./android
+  # ./gradlew assembleRelease | grep -q 'BUILD FAILED'
+  # if [[ $? -eq 0 ]]; then
+  #   echo 'Android build failed'
+  #   SOMETHING_FAILED=1
+  # fi
+  # cd ..
 
 
   # back to root
