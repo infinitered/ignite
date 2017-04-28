@@ -11,6 +11,7 @@ const buildIgnite = () => {
     .loadDefault(`${__dirname}/..`)
     .loadAll(`${process.cwd()}/ignite/plugins`)
     .loadAll(`${process.cwd()}/node_modules`, { matching: 'ignite-*', hidden: true })
+    .loadAll(`${process.cwd()}/node_modules`, { matching: 'gluegun-*', hidden: true })
     .token('commandName', 'cliCommand')
     .token('commandHidden', 'cliHidden')
     .token('commandAlias', 'cliAlias')

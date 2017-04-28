@@ -32,6 +32,10 @@ test('ignite', async t => {
         {
           dir: `${process.cwd()}/node_modules`,
           opts: { hidden: true, matching: 'ignite-*' }
+        },
+        {
+          dir: `${process.cwd()}/node_modules`,
+          opts: { hidden: true, matching: 'gluegun-*' }
         }
       ],
       loadDefault: `${process.cwd()}/src/cli/..`,
