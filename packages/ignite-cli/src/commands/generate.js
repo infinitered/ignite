@@ -37,7 +37,8 @@ module.exports = async function (context) {
   }
 
   // grab some features
-  const { ignite, print, parameters, filesystem } = context
+  const { ignite, print, parameters } = context
+  const { colors } = print
   const config = ignite.loadIgniteConfig()
 
   print.newline()
@@ -47,10 +48,7 @@ module.exports = async function (context) {
     // with each plugin
     map(plugin => {
       // load the list of generators they support within their ignite.json
-      const configFile = `${plugin.directory}/ignite.json`
-      const config = filesystem.exists(configFile)
-        ? filesystem.read(configFile, 'json')
-        : {}
+      const config = ignite.loadConfig(`${plugin.directory}/ignite.json`)
       const generators = config.generators || []
 
       // then make a row out of them
@@ -66,19 +64,6 @@ module.exports = async function (context) {
     flatten,
     groupBy(prop('type'))
   )(ignite.findIgnitePlugins())
-
-  // ---------------------
-  // NOTE(steve): Saving these next two for potential useful stuff
-
-  // the plugins with only 1 slot registered per type
-  // const unique = pipe(
-  //   pickBy(v => v.length === 1),
-  //   map(head)
-  // )(registry)
-
-  // the plugins that are competing for slots
-  // const many = pickBy(v => v.length > 1, registry)
-  // ---------------------
 
   // the list of what the user wants
   const userPrefs = config.generators || {}
@@ -125,19 +110,19 @@ module.exports = async function (context) {
    */
   const footer = () => {
     print.info(
-      print.colors.muted(
+      colors.muted(
         '\n  --------------------------------------------------------------------------'
       )
     )
     print.info(
-      print.colors.muted(
-        `  Check out ${print.colors.white(
+      colors.muted(
+        `  Check out ${colors.white(
           'https://github.com/infinitered/ignite'
         )} for instructions on how to`
       )
     )
     print.info(
-      print.colors.muted('  install some or how to build some for yourself.')
+      colors.muted('  install some or how to build some for yourself.')
     )
   }
 
@@ -145,7 +130,7 @@ module.exports = async function (context) {
   if (isEmpty(userRegistry)) {
     print.warning('⚠️  No generators detected.\n')
     print.info(
-      `  ${print.colors.bold(
+      `  ${colors.bold(
         'Generators'
       )} allow you to quickly make frequently created files such as:\n`
     )
@@ -157,10 +142,6 @@ module.exports = async function (context) {
     return
   }
 
-  // TODO: do we want to add items that aren't conflicts it the list?
-
-  // TODO: how do we want to handle conflicts?  up above, i'm just calling find()
-
   // the type of template to generate (it's actually the 2nd because we rewrite the pluginName to be first)
   const type = parameters.second
   const registryItem = type ? userRegistry[type] : null
@@ -168,7 +149,7 @@ module.exports = async function (context) {
   // didn't find what we wanted?
   if (isNil(registryItem)) {
     print.info(
-      `✨ Type ${print.colors.bold('ignite generate')} ${print.colors.yellow(
+      `✨ Type ${colors.bold('ignite generate')} ${colors.yellow(
         '________'
       )} to run one of these generators:\n`
     )
@@ -179,9 +160,9 @@ module.exports = async function (context) {
     const data = pipe(
       values,
       map(item => [
-        print.colors.yellow(item.type),
+        colors.yellow(item.type),
         item.error || item.description,
-        showSource && print.colors.muted(item.pluginName)
+        showSource && colors.muted(item.pluginName)
       ])
     )(userRegistry)
 
@@ -197,15 +178,15 @@ module.exports = async function (context) {
   const newCommand = trim(replace(rx, '', parameters.string))
 
   // make the call to the real generator
-  context.runtime
-    .run({
+  try {
+    await context.runtime.run({
       pluginName: registryItem.pluginName,
       rawCommand: newCommand,
       options: parameters.options
     })
-    .then(e => {
-      if (e.error) {
-        print.debug(e.error)
-      }
-    })
+  } catch (e) {
+    if (e.error) {
+      print.debug(e.error)
+    }
+  }
 }

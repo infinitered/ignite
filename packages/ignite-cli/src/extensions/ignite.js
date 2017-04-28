@@ -46,12 +46,13 @@ function attach (plugin, command, context) {
     setIgnitePluginPath
   } = ignitePluginPathExt(plugin, command, context)
 
-  // a 4-pack of ignite config
+  // a 5-pack of ignite config
   const {
     loadIgniteConfig,
     saveIgniteConfig,
     setIgniteConfig,
-    removeIgniteConfig
+    removeIgniteConfig,
+    loadConfig
   } = igniteConfigExt(plugin, command, context)
 
   // here's the extension's abilities
@@ -63,6 +64,7 @@ function attach (plugin, command, context) {
     saveIgniteConfig,
     setIgniteConfig,
     removeIgniteConfig,
+    loadConfig,
     findIgnitePlugins: findIgnitePluginsExt(plugin, command, context),
     addModule: addModuleExt(plugin, command, context),
     addAndroidPermission: addAndroidPermissionExt(plugin, command, context),

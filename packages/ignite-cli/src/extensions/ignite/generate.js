@@ -18,7 +18,7 @@ module.exports = (plugin, command, context) => {
     const overrides = isSporked ? { directory: sporkDirectory } : {}
 
     // now make the call to the gluegun generate
-    return await template.generate(merge(opts, overrides))
+    return template.generate(merge(opts, overrides))
   }
 
   return generate
