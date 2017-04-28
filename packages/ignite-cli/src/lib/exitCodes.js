@@ -65,5 +65,15 @@ module.exports = {
   /**
    * One of the global dependencies are not met.
    */
-  INVALID_GLOBAL_DEPENDENCY: 12
+  INVALID_GLOBAL_DEPENDENCY: 12,
+
+  /**
+   * There is no 13th floor.. only Zuul
+   */
+  TRISKAIDEKAPHOBIA_DETECTED: 13,
+
+  /**
+   * Invalid parameters
+   */
+  INVALID_PARAMETERS: 14
 }
