@@ -2,7 +2,7 @@
 
 First read the [creating plugins guide](./creating-plugins.md).  It covers the structure of plugins.
 
-Project-based plugins are plugins which stay within your repo.  They're a great way to add some features to Ignite without going through the hassle or commitment of publishing to NPM.
+Project-based plugins are plugins which stay within your repo.  They're a great way to add some features to Ignite CLI without going through the hassle or commitment of publishing to NPM.
 
 Some examples of this might be:
 
