@@ -1,15 +1,15 @@
-# Getting Started with Ignite and React Native
+# Getting Started with Ignite CLI and React Native
 
-Welcome to Ignite, the ideal starting app for React Native, best practices, generators, and more. This page will walk you through installing Ignite and using Ignite to generate a React Native Project.
+Welcome to Ignite CLI, a command line tool for generating React Native projects, components, and more. This page will walk you through installing Ignite CLI and using Ignite CLI to generate a React Native Project.
 
-To use Ignite, you will need to install React Native. The best way to install React Native is to follow the React Native installation instructions found on official React Native website, [here](http://facebook.github.io/react-native/docs/getting-started.html). These instructions will walk your through installing React Native on your specific platform.
+To use Ignite CLI, you will need to install React Native. The best way to install React Native is to follow the React Native installation instructions found on official React Native website, [here](http://facebook.github.io/react-native/docs/getting-started.html). These instructions will walk your through installing React Native on your specific platform.
 
 You will also need to have Node 7.6+ installed. We recommend using [n](https://github.com/tj/n) to manage node versions. If you already use [nvm](https://github.com/creationix/nvm) and would like to switch, follow [these steps](./nvm-to-n.md).
 
-## Installing Ignite 2.0
+## Installing Ignite CLI
 
 
-Installing Ignite is easy with one simple terminal command:
+Installing Ignite CLI is easy with one simple terminal command:
 
 ```
 npm install -g ignite-cli
@@ -17,7 +17,7 @@ npm install -g ignite-cli
 
 ## Testing your Ignite Installation
 
-To test your Ignite installation, let’s generate and run a new React Native project using Ignite. In your terminal, navigate to the directory you’d like to create a new Ignite project, then run the Ignite new command:
+To test your Ignite CLI installation, let’s generate and run a new React Native project. In your terminal, navigate to the directory you’d like to create a new React Native project, then run the Ignite CLI new command:
 
 ```
 cd projects
@@ -31,9 +31,9 @@ ignite new MyIgniteProject
 ...
 ```
 
-The `ignite new` command will ask you if you’d like to add several different plugins. We recommend you use these plugins that ship with Ignite. This way, your new Ignite project will be a playground to learn about React Native and best practices.
+The `ignite new` command will ask you if you’d like to add several different plugins. We recommend you use these plugins that ship with Ignite CLI. This way, your new Ignite CLI project will be a playground to learn about React Native and best practices.
 
-After Ignite creates your project, navigate into the project’s directory and start the application with the following commands:
+After Ignite CLI creates your project, navigate into the project’s directory and start the application with the following commands:
 
 
 ```
@@ -46,10 +46,10 @@ To run in Android:
   react-native run-android
 ```
 
-You can also learn more about Ignite in the command line:
+You can also learn more about Ignite CLI in the command line:
 
 ```
-To see what ignite can do for you:
+To see what Ignite CLI can do for you:
   cd MyIgniteProject
   ignite
 ```
@@ -68,8 +68,4 @@ This works great for:
 * normal React JS projects
 * empty directories ( not even joking! you can use this with other programming languages.  :O )
 
-Not all plugins work in all environments, but you can certainly take advantage of the many features of Ignite (such as the code generators).
-
-## Continue your Learning
-
-To continue your introduction to Ignite, see the Editing an Ignite App (working title) page.
+Not all plugins work in all environments, but you can certainly take advantage of the many features of Ignite CLI (such as the code generators).
