@@ -1,5 +1,5 @@
 const test = require('ava')
-const extension = require('../../src/extensions/ignite/findIgnitePlugins')
+const extension = require('../../../src/extensions/ignite/findIgnitePlugins')
 
 test('has the right interface', t => {
   t.is(typeof extension, 'function')

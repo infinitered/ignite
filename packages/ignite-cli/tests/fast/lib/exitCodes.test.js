@@ -1,5 +1,5 @@
 const test = require('ava')
-const exitCodes = require('../../src/lib/exitCodes')
+const exitCodes = require('../../../src/lib/exitCodes')
 const { values, sortBy, identity, pipe, uniq, length } = require('ramda')
 const { rangeStep } = require('ramdasauce')
 

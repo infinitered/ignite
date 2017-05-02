@@ -1,6 +1,6 @@
 const test = require('ava')
 const filesystem = require('fs-jetpack')
-const detectInstall = require('../../src/lib/detectInstall')
+const detectInstall = require('../../../src/lib/detectInstall')
 const path = require('path')
 const mockFs = require('mock-fs')
 
@@ -38,7 +38,7 @@ test('detects plugins from a full path', async t => {
 
 test('detects plugins from a relative path', async t => {
   const moduleName = 'ignite-valid-plugin'
-  const directory = `tests/fixtures/${moduleName}`
+  const directory = `tests/fast/fixtures/${moduleName}`
   const actual = detectInstall({
     filesystem,
     parameters: { second: directory }
