@@ -1,5 +1,5 @@
 const test = require('ava')
-const isIgniteDirectory = require('../../src/lib/isIgniteDirectory')
+const isIgniteDirectory = require('../../../src/lib/isIgniteDirectory')
 const mockFs = require('mock-fs')
 
 // unhook the fs mocks

@@ -1,5 +1,5 @@
 const test = require('ava')
-const attach = require('../../src/extensions/ignite.js')
+const attach = require('../../../src/extensions/ignite.js')
 
 test('has the right interface', t => {
   t.is(typeof attach, 'function')

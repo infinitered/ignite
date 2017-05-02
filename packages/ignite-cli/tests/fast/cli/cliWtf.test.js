@@ -15,7 +15,7 @@ mockery.registerMock('gluegun', {
 })
 
 // our cli
-const cli = require('../../src/cli/cli')
+const cli = require('../../../src/cli/cli')
 
 test('ignite', async t => {
   const mockRuntime = { whatever: 69 }

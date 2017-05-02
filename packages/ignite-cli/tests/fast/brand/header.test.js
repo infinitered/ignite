@@ -14,7 +14,7 @@ mockery.registerMock('gluegun', {
 })
 
 // now we can bring in header
-const header = require('../../src/brand/header')
+const header = require('../../../src/brand/header')
 
 // our mock will be pushing print statements here
 let infos

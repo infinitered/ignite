@@ -14,7 +14,7 @@ mockery.registerMock('gluegun', {
 })
 
 // our cli
-const cli = require('../../src/cli/cli')
+const cli = require('../../../src/cli/cli')
 
 test('ignite --version or -v', async t => {
   t.plan(4)

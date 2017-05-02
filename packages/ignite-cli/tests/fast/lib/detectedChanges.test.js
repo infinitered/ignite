@@ -1,5 +1,5 @@
 const test = require('ava')
-const detectedChanges = require('../../src/lib/detectedChanges')
+const detectedChanges = require('../../../src/lib/detectedChanges')
 
 test('empty objects', t => {
   const actual = detectedChanges({}, {})

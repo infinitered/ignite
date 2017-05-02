@@ -7,11 +7,12 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "ava",
-    "watch": "ava --watch",
+    "test": "ava tests/fast",
+    "watch": "ava tests/fast --watch",
     "coverage": "nyc ava",
     "start": "node src/index.js",
-    "lint": "standard"
+    "lint": "standard",
+    "integration": "ava -s tests/integration"
   },
   "repository": "infinitered/ignite",
   "author": {
@@ -29,6 +30,8 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "execa": "^0.6.0",
+    "fs-jetpack": "^0.11.0",
     "gluegun": "^0.17.1",
     "gluegun-patching": "^0.3.0",
     "minimist": "^1.2.0",
@@ -49,7 +52,10 @@
   },
   "ava": {},
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
   },
   "devEngines": {
     "node": ">=7.x",
