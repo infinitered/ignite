@@ -80,7 +80,7 @@ function enforce (opts = {}) {
       var resolvedPath = which.sync(whichExec)
 
       // grab the raw output
-      var result = shell.exec(resolvedPath + ' ' + versionCommand, { silent: true })
+      var result = shell.exec(`"${resolvedPath}" ${versionCommand}`, { silent: true })
       var rawOut = ramda.trim(result.stdout || '')
       var rawErr = ramda.trim(result.stderr || '') // java -version does this... grr
 

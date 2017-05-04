@@ -1,6 +1,5 @@
 const { isEmpty, forEach, trim } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
-const path = require('path')
 
 /**
  * Install this module.
