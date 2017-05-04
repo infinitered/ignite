@@ -10,11 +10,11 @@ install:
   - tar -xvf android-sdk_r24.4-linux.tgz
   # list possible installs
   # - ./android-sdk-linux/tools/android list sdk --all --extended
-  # -u means no ui / -a means all / -t means filter to specifc SDK items / -a means 
+  # -u means no ui / -a means all / -t means filter to specifc SDK items / -a means
   # pipe echo y to automatically accept android licenses
   # Libs selected: SDK Build Tools 23.0.3, .2, and .1, SDK Platform 23, Google APIs 23, Support Repo, Google Repo
   - echo y | ./android-sdk-linux/tools/android update sdk -u -a -t android-23,build-tools-23.0.3,build-tools-23.0.2,build-tools-23.0.1,addon-google_apis-google-23,extra-android-m2repository,extra-google-m2repository
 env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
 script:
-  - ./bin/testRelease
+  - ./bin/ci
