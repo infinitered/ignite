@@ -2,7 +2,7 @@
 
 #################### Running this Script #######################
 # Verify Git status is clean
-# Run this with `./bin/testRelease`
+# Run this with `./bin/ci`
 ################################################################
 
 SOMETHING_FAILED=0
