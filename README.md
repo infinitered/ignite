@@ -7,10 +7,10 @@
 <a href="https://www.codacy.com/app/gantman/ignite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=infinitered/ignite&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/1c6e04abe7224bdc88095129b5eb43fb"/></a>
 <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style%3Dflat alt='js-standard-style'/>
 
-### Ignite
+### Ignite CLI
 
 <p align="center">
-  <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite 2 screenshot" width="300px"></a>
+  <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite CLI screenshot" width="300px"></a>
 </p>
 
 <p align="center">
@@ -18,13 +18,13 @@
   <br/>
 </p>
 
-### Ignite 2 is here!
+### Ignite CLI is here!
 
-After months of work and sweat and tears, Ignite 2 (beta) has landed! We're incredibly proud of where Ignite 2 is and where it's headed.
+After months of work and sweat and tears, Ignite CLI has landed! We're incredibly proud of where Ignite CLI is and where it's headed.
 
-Cliff notes version of the difference between Ignite 1 and 2:
+Cliff notes version of the difference between Ignite 1 and Ignite CLI:
 
-Ignite 1 was a (very nice!) [React Native](http://facebook.github.io/react-native/docs/getting-started.html) boilerplate. Ignite 2 is a CLI and generator for React Native with boilerplates, plugins, and more. Where before you had one choice -- [Infinite Red](https://infinite.red)'s boilerplate -- now you can choose from many boilerplates and also add standalone plugins as you need them. It's much more modular and extensible than Ignite 1.
+Ignite 1 was a (very nice!) [React Native](http://facebook.github.io/react-native/docs/getting-started.html) boilerplate. Ignite CLI is a generator for React Native with boilerplates, plugins, and more. Where before you had one choice -- [Infinite Red](https://infinite.red)'s boilerplate -- now you can choose from many boilerplates and also add standalone plugins as you need them. It's much more modular and extensible than Ignite 1.
 
 If you really liked Ignite 1 as it was, then not much has changed! You just run `ignite new MyApp --max` and everything feels pretty normal from there.
 
@@ -45,24 +45,15 @@ $ ignite remove i18n
 $ ignite i love you
 ```
 
-### Why Ignite?
+### Why Ignite CLI?
 
 * Easily spin up a new React Native app with best practices built-in
 * No runtime! This is a developer tool only, not a library you have to depend on
-* An ever-expanding list of boilerplates and plugins
+* An ever-expanding list of [boilerplates](./BOILERPLATES.md) and [plugins](./PLUGINS.md)
 * Powerful but well-defined behavior
 * Battle tested and used every day by the developers at Infinite Red
 
-And you also get (by default) all of the sweet, sweet goodness of our default boilerplate:
-
-* Works with iOS and Android out of the box
-* Useful generators, including components, screens, styles, and more
-* API-ready -- hook it up and start talking to your server
-* Standard-js compliant code
-* Redux and redux-sagas state management
-* Well-documented code
-* Gorgeous Ava tests
-* and much, much more... [go check out the readme](https://github.com/infinitered/ignite-ir-boilerplate-2016) (WIP during alpha)
+And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-2016), or choose [one of many others](./BOILERPLATES.md).
 
 ## :arrow_down: Install
 
@@ -93,12 +84,16 @@ $ ignite new MyNewAppName
 ```
 ## :clipboard: Documentation :clipboard:
 
-Want to dive into the Ignite 2 documentation? [Go here](./docs/README.md)
+Want to dive into the Ignite CLI documentation? [Go here](./docs/README.md)
 Looking for React Native's documentation? [Go here](http://facebook.github.io/react-native/docs/getting-started.html) 
 
 ## :electric_plug: Plugins :electric_plug:
 
 Check out the list of [Plugins](./PLUGINS.md)
+
+## :plate_with_cutlery: Boilerplates :plate_with_cutlery:
+
+Check out the list of [Boilerplates](./BOILERPLATES.md)
 
 ## :poop: Troubleshooting :poop:
 
@@ -106,16 +101,16 @@ If you run into problems, first search the issues in this repository. If you don
 
 ## :telescope: Where to Go From Here :telescope:
 
-#### [Contribute to Ignite](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
-#### [Take a tour of Ignite source code](https://github.com/infinitered/ignite/blob/master/docs/advanced-guides/tour.md)
+#### [Contribute to Ignite CLI](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
+#### [Take a tour of Ignite CLI source code](https://github.com/infinitered/ignite/blob/master/docs/advanced-guides/tour.md)
 #### [Chat with us on the IR Community](http://community.infinite.red) - Infinite Red devs standing by
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
 #### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
 
 ## :heart: Special Thanks :heart:
-Thank you to the numerous [contributors of Ignite](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite.
+Thank you to the numerous [contributors of Ignite CLI](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite CLI.
 
 ## Premium Support
 
-[Ignite](https://infinite.red/ignite), as open source projects, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Ignite support and general mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch with us for more details.
+[Ignite CLI](https://infinite.red/ignite), as open source projects, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Ignite CLI and boilerplate support and general mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch with us for more details.
 

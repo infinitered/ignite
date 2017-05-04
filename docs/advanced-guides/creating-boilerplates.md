@@ -1,6 +1,6 @@
 # Creating Boilerplates
 
-A boilerplate is an Ignite plugin which runs only once: the moment you create a new project.  Its purpose is to bootstrap your brand new React Native project with files, directories, libraries, images, fonts, other ignite plugins, or whatever you need on every project you create.
+A boilerplate is an Ignite CLI plugin which runs only once: the moment you create a new project.  Its purpose is to bootstrap your brand new React Native project with files, directories, libraries, images, fonts, other ignite plugins, or whatever you need on every project you create.
 
 Like we do in [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016), it's helpful to make parts of your boilerplate optional.  For example, if you know you're not wanting to want animations, you might not want to install that library.
 

@@ -1,6 +1,6 @@
-# How use an Ignite Development Build
+# How use an Ignite CLI Development Build
 
-This guide will walk you through how to setup and use a pre-release or experimental build of Ignite.
+This guide will walk you through how to setup and use a pre-release or experimental build of Ignite CLI.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ If you're on a Mac, you can use one of these techniques:
 
 #### Out With The Old
 
-First, if you already have a copy of Ignite installed with `npm`, uninstall it with the commands listed below.
+First, if you already have a copy of Ignite 1 or Ignite CLI installed with `npm`, uninstall it with the commands listed below.
 
 Exact one depends on what you may have installed previously:
 
@@ -31,48 +31,32 @@ npm rm -g react-native-ignite
 
 #### In With The New
 
-Clone Ignite's repository from https://github.com/infinitered/ignite to your local development machine.
+Clone Ignite CLI's repository from https://github.com/infinitered/ignite to your local development machine.
 
-> Note: Depending on the version of Ignite you are targeting, you may be cloning a forked repository of Ignite and the git URLs may look different.
+> Note: Depending on the version of Ignite CLI you are targeting, you may be cloning a forked repository of Ignite CLI and the git URLs may look different.
 
 ```sh
 git@github.com:infinitered/ignite.git
 cd ignite
 ```
 
-Now use `npm` to install and bootstrap Ignite:
+Now use `yarn` to install Ignite CLI:
 
 ```sh
-npm install
-npm run bootstrap
+yarn
 ```
 
-Next make the `ignite` command available globally. To do this, navigate to the `packages/ignite-cli` directory (found in the repository) and run the `npm link`:
+Next make the `ignite` command available globally. To do this, run `yarn link`:
 
 ```sh
-cd packages/ignite-cli
-npm link
+yarn link
 ```
 
-> Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite. See the commands above to uninstall Ignite.
-
-#### Setup Overrides
-
-Now set up an environment variable so Ignite knows where to find its own plugins. Make sure you're in the main `ignite` folder first -- you may have to run `cd ../..`.
-
-```sh
-export IGNITE_PLUGIN_PATH=$(pwd)
-```
-
-If you want to add this to your local `.bashrc` or `.zshrc` so it's available on every terminal session, just do this:
-
-```sh
-echo "export IGNITE_PLUGIN_PATH=$(pwd)" >> ~/.zshrc
-```
+> Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite CLI. See the commands above to uninstall Ignite CLI.
 
 ## Testing Your Installation
 
-To test your installation of Ignite, let's try generating a new project. Navigate to a new directory where you'd like to create a new project and run the `ignite new` command:
+To test your installation of Ignite CLI, let's try generating a new project. Navigate to a new directory where you'd like to create a new project and run the `ignite new` command:
 
 ```sh
 cd ~

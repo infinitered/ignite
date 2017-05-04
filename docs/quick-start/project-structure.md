@@ -1,8 +1,10 @@
 # Project Structure
 
-When creating a new React Native project with Ignite, your project will include a number of nested files and folders. This structure is one the React Native best practices included with Ignite. With this structure, your project already has a head start. Let's take a closer look at Ignite's structure and explain how to leverage its benefits.
+When creating a new React Native project with Ignite CLI, your project will include a number of nested files and folders. This structure is one the React Native best practices included with Ignite's default boilerplate. With this structure, your project already has a head start. Let's take a closer look at Ignite's default structure and explain how to leverage its benefits.
 
-## Ignite React Native vs Vanilla React Native
+_NOTE: If you're using a different boilerplate, your project structure will likely look quite different._
+
+## Ignite Boilerplate Structure vs Vanilla React Native Structure
 
 First let's take a look at a "Vanilla" React Native project's structure. To start, navigate to directory you'd like to create a new React Native project and run the `react-native init` command to create a project without Ignite.
 
@@ -41,9 +43,9 @@ VanillaProject
 └── package.json
 ```
 
-Now create a new Ignite project and lets compare the folder structure:
+Now create a new Ignite boilerplate project and lets compare the folder structure:
 
-Note: TODO: Maybe like what options we select when creating a new Ignite project?
+Note: TODO: Maybe like what options we select when creating a new Ignite boilerplate project?
 
 ```
 cd ..
@@ -51,7 +53,7 @@ ignite new IgniteProject
 cd IgniteProject
 ```
 
-The Ignite project's structure will look similar to this:
+The Ignite boilerplate project's structure will look similar to this:
 
 ```
 IgniteProject
@@ -97,7 +99,7 @@ IgniteProject
 
 ## App directory
 
-Included in an Ignite project is the App directory. This is a directory you would normal have to create when using vanilla React Native.
+Included in an Ignite boilerplate project is the App directory. This is a directory you would normal have to create when using vanilla React Native.
 
 The inside of the App directory looks similar to the following:
 
@@ -139,7 +141,7 @@ Also located here are two special containers: `App.js` and `RootContainer.js`.
 
 `RootContainer.js` is the first visual component in the app. It is the ancestor of all other screens and components.
 
-You'll probably find you can get quite far in an Ignite app without even touching these two files. They, of course, belong to you, so when you're ready to add something non-visual, like Firebase, or something visual, like an overlay, you have places for these additions.
+You'll probably find you can get quite far in an Ignite boilerplate app without even touching these two files. They, of course, belong to you, so when you're ready to add something non-visual, like Firebase, or something visual, like an overlay, you have places for these additions.
 
 **Containers ── Styles**
 This `/Containers/Styles` folder will house your container styles. Each container component will likely have a companion styles file, just like `/Components`.
@@ -193,5 +195,4 @@ For example, you may:
 
 ## Ignite directory
 
-TODO:
-The Ignite directory stores all things Ignite. Here you will find generators, plugins and examples to help you get started with React Native.
+The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find generators, plugins and examples to help you get started with React Native.

@@ -6,7 +6,6 @@ npm-debug.log*
 coverage
 .nyc_output
 yarn.lock
-lerna-debug.log
 node_modules
 .vscode/*
 !.vscode/settings.json
@@ -14,3 +13,5 @@ node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 testgrounds
+generated
+tests/out
