@@ -33,6 +33,8 @@ module.exports = async function (context) {
   const { print, filesystem, prompt, ignite, parameters, strings } = context
   const { log } = ignite
 
+  const perfStart = (new Date()).getTime()
+
   log('running add command')
   const config = ignite.loadIgniteConfig()
   const currentGenerators = config.generators || {}
@@ -130,7 +132,9 @@ Examples:
         log(`running add() on ignite plugin`)
         await pluginModule.add(context)
 
-        spinner.text = `added ${print.colors.cyan(moduleName)}`
+        const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
+
+        spinner.text = `added ${print.colors.cyan(moduleName)} in ${perfDuration}s`
         spinner.start()
         spinner.succeed()
 

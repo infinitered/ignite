@@ -55,6 +55,7 @@ async function importPlugin (context, opts) {
         )
       }
     }
+    
     const cmd = isDirectory
       ? `yarn add file:${target} --force --dev`
       : `yarn add ${target} --dev`

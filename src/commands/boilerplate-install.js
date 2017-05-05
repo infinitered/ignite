@@ -31,7 +31,7 @@ async function installBoilerplate (context) {
 
   // we cannot be in an ignite directory
   if (isIgniteDirectory(process.cwd())) {
-    print.error('The `ignite add` command must be run in an ignite-compatible directory.')
+    print.error('The `ignite boilerplate-install` command must be run in an ignite-compatible directory.')
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
   }
 
