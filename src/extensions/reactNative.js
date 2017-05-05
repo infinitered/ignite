@@ -34,7 +34,10 @@ function attach (plugin, command, context) {
     const reactNativeVersion = opts.version || parameters.options['react-native-version'] || REACT_NATIVE_VERSION
     const reactNativeTemplate = opts.template || parameters.options['react-native-template']
 
+    const perfStart = (new Date()).getTime()
+
     // jet if the version isn't available
+    // note that npm and yarn don't differ significantly in perf here, so use npm
     const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
     const versionAvailable = test(new RegExp(reactNativeVersion, ''), versionCheck || '')
     if (!versionAvailable) {
@@ -61,10 +64,11 @@ function attach (plugin, command, context) {
     log('initializing react native')
     log(cmd)
     const withTemplate = reactNativeTemplate ? ` with ${print.colors.cyan(reactNativeTemplate)} template` : ''
-    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate} ${print.colors.muted('(60 seconds-ish)')}`)
+    const spinner = print.spin(`adding ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate} ${print.colors.muted('(30 seconds-ish)')}`)
     if (parameters.options.debug) spinner.stop()
 
     // ok, let's do this
+    // react-native init takes about 20s to execute
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
     try {
       await system.exec(cmd, { stdio: stdioMode })
@@ -81,9 +85,11 @@ function attach (plugin, command, context) {
         template: reactNativeTemplate
       }
     }
+    
+    const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
 
     // good news everyone!
-    const successMessage = `added ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`
+    const successMessage = `added ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate} in ${perfDuration}s`
     spinner.succeed(successMessage)
 
     // jump immediately into the new directory
