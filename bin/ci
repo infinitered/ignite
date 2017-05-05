@@ -109,6 +109,37 @@ check_builds()
   # fi
   # cd ..
 
+  # back to playground
+  cd ..
+
+  echo '~~~🌟 Generating ir-next Project'
+  test_command ignite new NextProj --min --skip-git -b ir-next
+
+  echo '~~~🌟 Checking Builds'
+  cd ./NextProj
+
+  if [ ! -d "android" ]; then
+    echo 'Android folder did not generate'
+    SOMETHING_FAILED=1
+  fi
+
+  if [ ! -d "ios" ]; then
+    echo 'ios folder did not generate'
+    SOMETHING_FAILED=1
+  fi
+
+  echo 'Testing Blessed Plugins'
+  echo '~ Test adding vector-icons plugin from npm'
+  test_command ignite add vector-icons
+  echo '~ Test adding animatable plugin from npm'
+  test_command ignite add animatable
+  echo '~ Test adding i18n plugin from npm'
+  test_command ignite add i18n
+  echo '~ Test adding maps plugin from npm'
+  test_command ignite add maps
+
+  echo '~ LINT ALL THE THINGS!'
+  test_command npm run lint
 
   # back to root
   cd ../..
