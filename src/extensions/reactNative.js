@@ -1,8 +1,8 @@
 const { test, trim } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 
-// The default version of React Native to install. We will want to upgrade
-// this when we test out new releases and they work well with our setup.
+// DEPRECATED: Please specify React Native version when invoking install
+// Example: const rnInstall = await reactNative.install({ name, version: '0.42.0' })
 const REACT_NATIVE_VERSION = '0.42.0'
 
 /**
@@ -31,7 +31,13 @@ function attach (plugin, command, context) {
   async function install (opts = {}) {
     //  grab the name & version
     const name = opts.name || parameters.third
-    const reactNativeVersion = opts.version || parameters.options['react-native-version'] || REACT_NATIVE_VERSION
+    let reactNativeVersion = opts.version || parameters.options['react-native-version']
+    if (!reactNativeVersion) {
+      print.warning(`💩  unspecified react native version in ignite cli has been deprecated `)
+      print.warning(`   please use version property in project's boilerplate file to set a react native version`)
+      print.warning(`   falling back to react native version: ${REACT_NATIVE_VERSION}`)
+      reactNativeVersion = REACT_NATIVE_VERSION
+    }
     const reactNativeTemplate = opts.template || parameters.options['react-native-template']
 
     const perfStart = (new Date()).getTime()
@@ -85,7 +91,7 @@ function attach (plugin, command, context) {
         template: reactNativeTemplate
       }
     }
-    
+
     const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
 
     // good news everyone!
