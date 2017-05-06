@@ -1,4 +1,4 @@
 {
- " createdWith": "<%= props.igniteVersion %>",
+  "createdWith": "<%= props.igniteVersion %>",
   "boilerplate": "<%= props.name %>"
 }

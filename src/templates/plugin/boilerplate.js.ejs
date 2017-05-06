@@ -2,11 +2,12 @@
  * This file provides an `install` function that should install React Native,
  * copy over any folders and template files, and install any desired plugins.
  * 
- * It's a simpler version of the one found in the Ignite CLI source called
- * `ignite-ir-boilerplate-2016`. Refer to that one to see a more full featured
- * example of what you can do.
+ * It's a simpler version of the one found in https://github.com/infinitered/ignite-ir-boilerplate-2016.
+ * Refer to that one to see a more full featured example of what you can do.
  * 
  */
+
+const REACT_NATIVE_VERSION = '0.42.0'
 
 /**
  * Let's install.
@@ -33,7 +34,7 @@ async function install (context) {
 
   // attempt to install React Native or die trying
   // this will also chdir into the new directory
-  const rnInstall = await reactNative.install({ name, skipJest: true })
+  const rnInstall = await reactNative.install({ name, version: REACT_NATIVE_VERSION })
   if (rnInstall.exitCode > 0) { process.exit(rnInstall.exitCode) }
 
   // copy our App & Tests directories
@@ -80,7 +81,7 @@ async function install (context) {
     // pass along the debug flag if we're running in that mode
     const debugFlag = parameters.options.debug ? '--debug' : ''
 
-    await system.spawn(`ignite add <%= props.pluginName %> ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${__dirname} ${debugFlag}`, { stdio: 'inherit' })
 
     // example of another plugin you could install
     // await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
