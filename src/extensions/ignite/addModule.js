@@ -1,6 +1,16 @@
 const { trim } = require('ramda')
 
 module.exports = (plugin, command, context) => {
+  const getModuleName = (moduleName, options) => {
+    if (options.version) {
+      return `${moduleName}@${options.version}`
+    } else if (!options.yolo) {
+      context.print.warning(`Plugin should specify specific version for NPM module ${moduleName} in addModule call.`)
+      context.print.warning(`Please add version: "<version here>" or to suppress this warning, pass in yolo: true`)
+    }
+    return moduleName
+  }
+
   /**
    * Adds a npm-based module to the project.
    *
@@ -13,9 +23,7 @@ module.exports = (plugin, command, context) => {
   async function addModule (moduleName, options = {}) {
     const { print, system, ignite } = context
     const { useYarn } = ignite
-    const moduleFullName = options.version
-      ? `${moduleName}@${options.version}`
-      : moduleName
+    const moduleFullName = getModuleName(moduleName, options)
 
     const depType = options.dev ? 'as dev dependency' : ''
     const spinner = print.spin(
