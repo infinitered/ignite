@@ -27,12 +27,6 @@ async function command (context) {
   // camelCase the project name for user example
   const projectNameCamel = upperFirst(camelCase(projectName))
 
-  // Guard against `ignite new ignite`
-  if (toLower(projectName) === 'ignite') {
-    context.print.error('Crossing the streams is bad! Please use another name for your project.')
-    process.exit(exitCodes.PROJECT_NAME)
-  }
-
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite new` command cannot be run within an already ignited project.')
@@ -50,6 +44,12 @@ async function command (context) {
   if (isBlank(projectName)) {
     print.info(`${context.runtime.brand} new <projectName>\n`)
     print.error('Project name is required')
+    process.exit(exitCodes.PROJECT_NAME)
+  }
+
+  // Guard against `ignite new ignite`
+  if (toLower(projectName) === 'ignite') {
+    context.print.error('Crossing the streams is bad! Please use another name for your project.')
     process.exit(exitCodes.PROJECT_NAME)
   }
 
