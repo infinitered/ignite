@@ -2,13 +2,18 @@ const { trim } = require('ramda')
 
 module.exports = (plugin, command, context) => {
   const getModuleName = (moduleName, options) => {
+    let name
     if (options.version) {
-      return `${moduleName}@${options.version}`
-    } else if (!options.yolo) {
+      name = `${moduleName}@${options.version}`
+    } else if (context.parameters.second.includes('/')) {
+      // If adding from a directory, then display a deprecation warning.
+      // This is to alert plugin authors to the issue without cluttering others' output.
+      context.print.warning(`DEPRECATION WARNING:`)
       context.print.warning(`Plugin should specify specific version for NPM module ${moduleName} in addModule call.`)
-      context.print.warning(`Please add version: "<version here>" or to suppress this warning, pass in yolo: true`)
+      context.print.warning(`In your addModule call, add the following:`)
+      context.print.warning(`   await ignite.addModule(NPM_MODULE_NAME, { version: 'VERSION HERE' })`)
     }
-    return moduleName
+    return name || moduleName
   }
 
   /**
