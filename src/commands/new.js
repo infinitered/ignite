@@ -6,7 +6,7 @@ const exitCodes = require('../lib/exitCodes')
 const path = require('path')
 const header = require('../brand/header')
 const addEmptyBoilerplate = require('../lib/addEmptyBoilerplate')
-const { forEach, keys, reduce, concat, trim, isEmpty, match, not } = require('ramda')
+const { forEach, keys, reduce, concat, trim, isEmpty, match, not, toLower } = require('ramda')
 
 /**
  * Creates a new ignite project based on an optional boilerplate.
@@ -28,7 +28,7 @@ async function command (context) {
   const projectNameCamel = upperFirst(camelCase(projectName))
 
   // Guard against `ignite new ignite`
-  if (projectNameCamel === 'ignite') {
+  if (toLower(projectName) === 'ignite') {
     context.print.error('Crossing the streams is bad! Please use another name for your project.')
     process.exit(exitCodes.PROJECT_NAME)
   }
