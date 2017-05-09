@@ -2,6 +2,8 @@
 // ----------------------------------------------------------------------------
 
 const NPM_MODULE_NAME = 'react-native-MODULENAME'
+const NPM_MODULE_VERSION = '0.0.1'
+
 // const PLUGIN_PATH = __dirname
 // const APP_PATH = process.cwd()
 <% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js'<% } %>
@@ -10,8 +12,8 @@ const add = async function (context) {
   // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
   const { ignite, filesystem } = context
 
-  // install a npm module and link it
-  await ignite.addModule(NPM_MODULE_NAME, { link: true })
+  // install an NPM module and link it
+  await ignite.addModule(NPM_MODULE_NAME, { link: true, version: NPM_MODULE_VERSION })
 
   <% if (props.answers.template === 'Yes') { %>await ignite.addPluginComponentExample(EXAMPLE_FILE, { title: '<%= props.name %> Example' })<% } %>
 
