@@ -49,7 +49,7 @@ async function command (context) {
 
   // Guard against `ignite new ignite`
   if (toLower(projectName) === 'ignite') {
-    context.print.error('Crossing the streams is bad! Please use another name for your project.')
+    context.print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
     process.exit(exitCodes.PROJECT_NAME)
   }
 
