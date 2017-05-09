@@ -78,6 +78,14 @@ async function command (context) {
     return
   }
 
+  // grab the right boilerplate
+  let boilerplateName = parameters.options.boilerplate || parameters.options.b || 'ir-boilerplate-2016'
+  
+  // If the name includes a slash, it's probably a path. Expand it so it's the full real path here.
+  if (boilerplateName.includes('/')) {
+    boilerplateName = filesystem.path(boilerplateName)
+  }
+
   // make & jump into the project directory
   log(`making directory ${projectName}`)
   filesystem.dir(projectName)
@@ -92,10 +100,6 @@ async function command (context) {
     repository: 'infinitered/ignite',
     license: 'MIT'
   })
-
-  // grab the right boilerplate
-  const cliBoilerplate = parameters.options.boilerplate || parameters.options.b
-  const boilerplateName = strings.isBlank(cliBoilerplate) ? 'ir-boilerplate-2016' : cliBoilerplate
 
   // pick the inbound cli options
   const cliOpts = parameters.options
