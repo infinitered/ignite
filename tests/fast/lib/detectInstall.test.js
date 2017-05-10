@@ -38,7 +38,7 @@ test('detects plugins from a full path', async t => {
 
 test('detects plugins from a relative path', async t => {
   const moduleName = 'ignite-valid-plugin'
-  const directory = `tests/fast/fixtures/${moduleName}`
+  const directory = `${process.cwd()}/tests/fast/fixtures/${moduleName}`
   const actual = detectInstall({
     filesystem,
     parameters: { second: directory }
