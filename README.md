@@ -93,6 +93,9 @@ Check out the list of [Plugins](./PLUGINS.md)
 ## :plate_with_cutlery: Boilerplates :plate_with_cutlery:
 
 Check out the list of [Boilerplates](./BOILERPLATES.md)
+```
+$ ignite new MyNewAppName -b ir-next
+```
 
 ## :poop: Troubleshooting :poop:
 
