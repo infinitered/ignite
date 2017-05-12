@@ -177,7 +177,7 @@ A place to store your Sagas (Redux side effects).
 API calls to external services?
 
 **Themes**
-A place to contain styles shared across you project (fonts, colors, etc.).
+A place to contain styles shared across your project (fonts, colors, etc.).
 
 **Transforms**
 A common pattern when working with APIs is to change data so that it plays nice between your app & the API.
