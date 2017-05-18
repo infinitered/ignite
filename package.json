@@ -31,8 +31,8 @@
   "license": "MIT",
   "dependencies": {
     "execa": "^0.6.0",
-    "fs-jetpack": "^0.11.0",
-    "gluegun": "^0.17.1",
+    "fs-jetpack": "^1.0.0",
+    "gluegun": "^0.18.0",
     "gluegun-patching": "^0.3.0",
     "minimist": "^1.2.0",
     "pretty-error": "^2.0.2",
@@ -43,12 +43,12 @@
     "which": "^1.2.14"
   },
   "devDependencies": {
-    "ava": "^0.18.1",
+    "ava": "^0.19.1",
     "babel-eslint": "^7.1.1",
     "mock-fs": "git://github.com/not-an-aardvark/mock-fs/#06868bbd7724707f9324b237bdde28f05f7a01d5",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
-    "standard": "^8.6.0"
+    "standard": "^10.0.2"
   },
   "ava": {},
   "standard": {
