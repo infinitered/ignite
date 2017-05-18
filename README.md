@@ -6,7 +6,7 @@
 </a>
 <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style%3Dflat alt='js-standard-style'/>
 
-### Ignite CLI
+# Ignite CLI
 
 <p align="center">
   <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite CLI screenshot" width="300px"></a>
