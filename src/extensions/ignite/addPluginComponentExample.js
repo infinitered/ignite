@@ -14,7 +14,7 @@ module.exports = (plugin, command, context) => {
     if (fileName.endsWith('.ejs')) {
       templateFile = fileName
     } else {
-      print.warning(`DEPRECATION WARNING: addPluginComponentExample called with '${filename}' and no .ejs extension. Add .ejs to your filename when calling this function.`)
+      print.warning(`DEPRECATION WARNING: addPluginComponentExample called with '${fileName}' and no .ejs extension. Add .ejs to your template filename when calling this function.`)
       templateFile = `${fileName}.ejs`
     }
 
