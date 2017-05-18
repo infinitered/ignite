@@ -54,6 +54,11 @@ module.exports = async function run (argv) {
     return
   }
 
+  if (commandLine.verbose && !commandLine.debug) {
+    print.error('Use --debug instead of --verbose.')
+    return
+  }
+
   // run the command
   let context
   try {
