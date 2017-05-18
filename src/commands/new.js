@@ -14,7 +14,7 @@ const { forEach, keys, reduce, concat, trim, isEmpty, match, not, toLower } = re
  * @param {any} context - The gluegun context.
  */
 async function command (context) {
-  const { parameters, strings, print, system, filesystem, ignite } = context
+  const { parameters, strings, print, system, filesystem, ignite, prompt } = context
   const { isBlank, upperFirst, camelCase } = strings
   const { log } = ignite
 
@@ -49,7 +49,7 @@ async function command (context) {
 
   // Guard against `ignite new ignite`
   if (toLower(projectName) === 'ignite') {
-    context.print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
+    print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
     process.exit(exitCodes.PROJECT_NAME)
   }
 
@@ -62,7 +62,14 @@ async function command (context) {
   // verify the directory doesn't exist already
   if (filesystem.exists(projectName) === 'dir') {
     print.error(`Directory ${projectName} already exists.`)
-    process.exit(exitCodes.DIRECTORY_EXISTS)
+    const askOverwrite = async () => { return await prompt.confirm('Do you want to overwrite this directory?') }
+    
+    if (parameters.options.overwrite || await askOverwrite()) {
+      print.info(`Overwriting ${projectName}...`)
+      filesystem.remove(projectName)
+    } else {
+      process.exit(exitCodes.DIRECTORY_EXISTS)
+    }
   }
 
   // print a header

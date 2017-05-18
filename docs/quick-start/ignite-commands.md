@@ -71,10 +71,12 @@ Generate a new React Native project with Ignite CLI.
 When you execute this command, Ignite CLI will give you a series of options for
 your new project regarding what libraries you would like to use.
 
-With `ignite new`, you have the option to pick your own boilerplate to install for your project.  The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`.
+With `ignite new`, you have the option to pick your own boilerplate to install for your project.  The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`. You can also point to a folder on your machine. `--boilerplate` can also be shortened to `-b`.
 
 ```
-ignite new MyAwesomeApp --boilerplate {some-boilerplate-package}
+ignite new MyAwesomeApp --boilerplate ir-next
+ignite new MyAwesomeApp -b boss-boilerplate
+ignite new MyAwesomeApp -b /path/to/my/ignite-cool-boilerplate
 ```
 
 If you would like to skip the boilerplate and use what is available out of the box with React Native, you can pass the `--no-boilerplate` option.
@@ -83,6 +85,9 @@ If you would like to skip the boilerplate and use what is available out of the b
 ignite new MyBareBonesApp --no-boilerplate
 ```
 
+You can (with most boilerplates) pass through a `--min` or `--max` flag to automatically choose maximum options or minimum options.
+
+If the new app's folder already exists, you can pass through `--overwrite` to overwrite the directory. If you don't, Ignite CLI will ask you if you want to overwrite it.
 
 ### Plugin
 
