@@ -38,6 +38,14 @@ module.exports = (plugin, command, context) => {
         files
       )
 
+      let templateFile
+      if (fileName.endsWith('.ejs')) {
+        templateFile = fileName
+      } else {
+        print.warning(`DEPRECATION WARNING: addPluginScreenExample called with '${fileName}' and no .ejs extension. Add .ejs to your template filename when calling this function.`)
+        templateFile = `${fileName}.ejs`
+      }
+
       // generate stamped copy of all template files
       const templatePath = ignitePluginPath()
         ? `${ignitePluginPath()}/templates`
@@ -46,7 +54,7 @@ module.exports = (plugin, command, context) => {
         fileName => {
           template.generate({
             directory: templatePath,
-            template: `${fileName}.ejs`,
+            template: templateFile,
             target: `ignite/Examples/Containers/${pluginName}/${fileName}`,
             props
           })

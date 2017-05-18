@@ -9,6 +9,14 @@ module.exports = (plugin, command, context) => {
     const { filesystem, ignite, print, template } = context
     const { ignitePluginPath } = ignite
     const config = ignite.loadIgniteConfig()
+    
+    let templateFile
+    if (fileName.endsWith('.ejs')) {
+      templateFile = fileName
+    } else {
+      print.warning(`DEPRECATION WARNING: addPluginComponentExample called with '${fileName}' and no .ejs extension. Add .ejs to your template filename when calling this function.`)
+      templateFile = `${fileName}.ejs`
+    }
 
     // do we want to use examples in the classic format?
     if (config.examples === 'classic') {
@@ -20,7 +28,7 @@ module.exports = (plugin, command, context) => {
         : `templates`
       template.generate({
         directory: templatePath,
-        template: `${fileName}.ejs`,
+        template: templateFile,
         target: `ignite/Examples/Components/${fileName}`,
         props
       })
