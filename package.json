@@ -12,7 +12,8 @@
     "coverage": "nyc ava",
     "start": "node src/index.js",
     "lint": "standard",
-    "integration": "ava -s tests/integration"
+    "integration": "ava -s tests/integration",
+    "shipit": "np"
   },
   "repository": "infinitered/ignite",
   "author": {
@@ -30,25 +31,26 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "execa": "^0.6.0",
-    "fs-jetpack": "^0.11.0",
-    "gluegun": "^0.17.1",
-    "gluegun-patching": "^0.3.0",
-    "minimist": "^1.2.0",
-    "pretty-error": "^2.0.2",
-    "ramda": "^0.23.0",
-    "ramdasauce": "^1.2.0",
-    "semver": "^5.3.0",
-    "shelljs": "^0.7.6",
-    "which": "^1.2.14"
+    "execa": "0.6.0",
+    "fs-jetpack": "1.0.0",
+    "gluegun": "0.17.1",
+    "gluegun-patching": "0.3.0",
+    "minimist": "1.2.0",
+    "pretty-error": "2.0.2",
+    "ramda": "0.23.0",
+    "ramdasauce": "1.2.0",
+    "semver": "5.3.0",
+    "shelljs": "0.7.6",
+    "which": "1.2.14",
+    "np": "2.12.0"
   },
   "devDependencies": {
-    "ava": "^0.18.1",
-    "babel-eslint": "^7.1.1",
+    "ava": "0.19.1",
+    "babel-eslint": "7.1.1",
     "mock-fs": "git://github.com/not-an-aardvark/mock-fs/#06868bbd7724707f9324b237bdde28f05f7a01d5",
-    "mockery": "^2.0.0",
-    "nyc": "^10.1.2",
-    "standard": "^8.6.0"
+    "mockery": "2.0.0",
+    "nyc": "10.3.2",
+    "standard": "10.0.2"
   },
   "ava": {},
   "standard": {
