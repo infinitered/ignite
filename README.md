@@ -17,6 +17,8 @@
   <br/>
 </p>
 
+_Note: if you're coming to [Chain React, the React Native Conference](https://infinite.red/ChainReactConf) in Portland July 10-11, we'll be handing out Ignite stickers! Be sure to say hi to an Infinite Red employee there._
+
 ### Ignite CLI is here!
 
 After months of work and sweat and tears, Ignite CLI has landed! We're incredibly proud of where Ignite CLI is and where it's headed.
@@ -26,7 +28,6 @@ Cliff notes version of the difference between Ignite 1 and Ignite CLI:
 Ignite 1 was a (very nice!) [React Native](http://facebook.github.io/react-native/docs/getting-started.html) boilerplate. Ignite CLI is a generator for React Native with boilerplates, plugins, and more. Where before you had one choice -- [Infinite Red](https://infinite.red)'s boilerplate -- now you can choose from many boilerplates and also add standalone plugins as you need them. It's much more modular and extensible than Ignite 1.
 
 If you really liked Ignite 1 as it was, then not much has changed! You just run `ignite new MyApp --max` and everything feels pretty normal from there.
-
 
 ### Quick Example
 
