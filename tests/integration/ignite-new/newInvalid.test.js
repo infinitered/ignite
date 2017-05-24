@@ -36,15 +36,3 @@ test(`doesn't allow kebab-case`, async t => {
   }
 })
 
-test(`doesn't let you overwrite a folder`, async t => {
-  try {
-    jetpack.dir('Chicken')
-    await execa(IGNITE, ['new', 'Chicken'])
-    t.fail()
-  } catch (err) {
-    t.is(err.stdout, 'Directory Chicken already exists.\n')
-    t.is(err.code, 8)
-  } finally {
-    jetpack.remove('Chicken')
-  }
-})
