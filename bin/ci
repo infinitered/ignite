@@ -57,7 +57,7 @@ check_builds()
   mkdir testgrounds
   cd ./testgrounds
   echo '~~~🌟 Generating Project'
-  test_command ignite new TestProj --min --skip-git
+  test_command ignite new TestProj --min --skip-git --overwrite
 
   echo '~~~🌟 Checking Builds'
   cd ./TestProj
@@ -113,7 +113,7 @@ check_builds()
   cd ..
 
   echo '~~~🌟 Generating ir-next Project'
-  test_command ignite new NextProj --min --skip-git -b ir-next
+  test_command ignite new NextProj --min --skip-git -b ir-next --overwrite
 
   echo '~~~🌟 Checking Builds'
   cd ./NextProj
