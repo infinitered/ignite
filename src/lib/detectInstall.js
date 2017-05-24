@@ -32,25 +32,27 @@ function detectInstall (context) {
 
   // the plugin we're trying to install
   let plugin = parameters.second
+  let packageName = plugin.split('@')[0]
+  let packageVersion = plugin.split('@')[1] || null
 
   // If a path, expand that path. If not, prepend with `ignite-*`.
-  if (plugin.includes('/')) {
-    plugin = filesystem.path(plugin)
+  if (packageName.includes('/')) {
+    packageName = filesystem.path(packageName)
   } else {
-    plugin = prependIgnite(plugin)
+    packageName = prependIgnite(packageName)
   }
 
   // do we have overrides?
   if (pluginOverrides.length > 0) {
     // look for the plugin into one of our override paths
     const foundPath = find(
-      overridePath => isValidIgnitePluginDirectory(`${overridePath}/${plugin}`),
+      overridePath => isValidIgnitePluginDirectory(`${overridePath}/${packageName}`),
       pluginOverrides
     )
 
     // did we find it?
     if (foundPath) {
-      const path = `${foundPath}/${plugin}`
+      const path = `${foundPath}/${packageName}`
       return {
         directory: path,
         override: true,
@@ -61,10 +63,10 @@ function detectInstall (context) {
   }
 
   // is this a directory?
-  if (isValidIgnitePluginDirectory(plugin)) {
-    const json = filesystem.read(`${plugin}/package.json`, 'json') || {}
+  if (isValidIgnitePluginDirectory(packageName)) {
+    const json = filesystem.read(`${packageName}/package.json`, 'json') || {}
     return {
-      directory: plugin,
+      directory: packageName,
       moduleName: json.name,
       type: 'directory'
     }
@@ -72,7 +74,8 @@ function detectInstall (context) {
 
   // the default is to assume that npm can figure out where to get this
   return {
-    moduleName: plugin,
+    moduleName: packageName,
+    version: packageVersion,
     type: 'npm'
   }
 }

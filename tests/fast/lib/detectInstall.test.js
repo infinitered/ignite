@@ -12,7 +12,7 @@ test('detects npm modules', async t => {
     filesystem,
     parameters: { second: 'something' }
   })
-  const expected = { moduleName: 'ignite-something', type: 'npm' }
+  const expected = { moduleName: 'ignite-something', type: 'npm', version: null }
   t.deepEqual(actual, expected)
 })
 
@@ -21,7 +21,16 @@ test("won't double prefix", async t => {
     filesystem,
     parameters: { second: 'ignite-something' }
   })
-  const expected = { moduleName: 'ignite-something', type: 'npm' }
+  const expected = { moduleName: 'ignite-something', type: 'npm', version: null }
+  t.deepEqual(actual, expected)
+})
+
+test("removes @ version", async t => {
+  const actual = detectInstall({
+    filesystem,
+    parameters: { second: 'ignite-something@">=2.0.0"' }
+  })
+  const expected = { moduleName: 'ignite-something', type: 'npm', version: '">=2.0.0"' }
   t.deepEqual(actual, expected)
 })
 
@@ -53,7 +62,7 @@ test('detects invalid plugin directories', async t => {
     filesystem,
     parameters: { second: moduleName }
   })
-  const expected = { type: 'npm', moduleName }
+  const expected = { type: 'npm', moduleName, version: null }
   t.deepEqual(actual, expected)
 })
 
