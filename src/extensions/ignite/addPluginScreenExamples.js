@@ -52,10 +52,12 @@ module.exports = (plugin, command, context) => {
             templateFile = `${fileName}.ejs`
           }
 
+          const filenameNoEjs = templateFile.slice(0, -4)
+
           template.generate({
             directory: templatePath,
             template: templateFile,
-            target: `ignite/Examples/Containers/${pluginName}/${fileName}`,
+            target: `ignite/Examples/Containers/${pluginName}/${filenameNoEjs}`,
             props
           })
         },
