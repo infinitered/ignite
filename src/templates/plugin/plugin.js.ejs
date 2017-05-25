@@ -6,7 +6,7 @@ const NPM_MODULE_VERSION = '0.0.1'
 
 // const PLUGIN_PATH = __dirname
 // const APP_PATH = process.cwd()
-<% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js'<% } %>
+<% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js.ejs'<% } %>
 
 const add = async function (context) {
   // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md

@@ -18,6 +18,8 @@ module.exports = (plugin, command, context) => {
       templateFile = `${fileName}.ejs`
     }
 
+    const fileNameNoExt = templateFile.slice(0, -4)
+
     // do we want to use examples in the classic format?
     if (config.examples === 'classic') {
       const spinner = print.spin(`▸ adding component example`)
@@ -29,7 +31,7 @@ module.exports = (plugin, command, context) => {
       template.generate({
         directory: templatePath,
         template: templateFile,
-        target: `ignite/Examples/Components/${fileName}`,
+        target: `ignite/Examples/Components/${fileNameNoExt}`,
         props
       })
 
@@ -38,7 +40,7 @@ module.exports = (plugin, command, context) => {
       if (filesystem.exists(destinationPath)) {
         ignite.patchInFile(destinationPath, {
           after: 'import ExamplesRegistry',
-          insert: `import '../Examples/Components/${fileName}'`
+          insert: `import '../Examples/Components/${fileNameNoExt}'`
         })
       }
       spinner.stop()
