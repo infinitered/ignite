@@ -74,7 +74,7 @@ your new project regarding what libraries you would like to use.
 With `ignite new`, you have the option to pick your own boilerplate to install for your project.  The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`. You can also point to a folder on your machine. `--boilerplate` can also be shortened to `-b`.
 
 ```
-ignite new MyAwesomeApp --boilerplate ir-next
+ignite new MyAwesomeApp --boilerplate ir-boilerplate
 ignite new MyAwesomeApp -b boss-boilerplate
 ignite new MyAwesomeApp -b /path/to/my/ignite-cool-boilerplate
 ```

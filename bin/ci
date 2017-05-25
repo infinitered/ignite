@@ -112,8 +112,8 @@ check_builds()
   # back to playground
   cd ..
 
-  echo '~~~🌟 Generating ir-next Project'
-  test_command ignite new NextProj --min --skip-git -b ir-next --overwrite
+  echo '~~~🌟 Generating ir-boilerplate Project'
+  test_command ignite new NextProj --min --skip-git -b ir-boilerplate --overwrite
 
   echo '~~~🌟 Checking Builds'
   cd ./NextProj
