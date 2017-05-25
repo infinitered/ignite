@@ -57,7 +57,7 @@ module.exports = (plugin, command, context) => {
           template.generate({
             directory: templatePath,
             template: templateFile,
-            target: `ignite/Examples/Containers/${pluginName}/${filenameNoEjs}`,
+            target: `ignite/Examples/Containers/${pluginName}/${filenameNoExt}`,
             props
           })
         },
