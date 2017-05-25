@@ -2,18 +2,11 @@ const test = require('ava')
 const execa = require('execa')
 const jetpack = require('fs-jetpack')
 
-const RUN_DIR = 'out/new'
-const BACK_DIR = '../..'
-const IGNITE = '../../bin/ignite'
+const IGNITE = `${process.cwd()}/bin/ignite`
 
-test.before(() => {
-  jetpack.dir(RUN_DIR)
-  process.chdir(RUN_DIR)
-})
-
-test.after.always(() => {
-  process.chdir(BACK_DIR)
-  jetpack.remove(RUN_DIR)
+test.before(t => {
+  const tempDir = tempy.directory()
+  process.chdir(tempDir)
 })
 
 test('requires a name', async t => {
