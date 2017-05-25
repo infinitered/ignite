@@ -14,5 +14,3 @@ node_modules
 !.vscode/extensions.json
 testgrounds
 generated
-tests/out
-out
