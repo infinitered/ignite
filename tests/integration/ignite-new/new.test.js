@@ -30,7 +30,7 @@ test('spins up a min app and performs various checks', async t => {
 
   // spork a screen and edit it
   await execa(IGNITE, ['spork', 'component.ejs'])
-  const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate-2016/component.ejs'
+  const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate/component.ejs'
   t.is(jetpack.inspect(sporkedFile).type, 'file')
   await jetpack.write(sporkedFile, 'SPORKED!')
   await execa(IGNITE, ['generate', 'component', 'Sporkified'])
