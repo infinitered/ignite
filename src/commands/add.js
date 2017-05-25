@@ -61,8 +61,8 @@ Examples:
 
   // we don't (yet) support scoped npm packages, so bail
   if (parameters.second.startsWith('@')) {
-    print.error(`Error: Ignite CLI doesn't support prefixed npm packages yet, sorry about that. Try it without the prefix.`)
-    process.exit(1)
+    print.error(`Error: Ignite CLI doesn't support scoped npm packages yet, sorry about that. Try it without the prefix.`)
+    process.exit(exitCodes.PLUGIN_NAME)
   }
 
   // find out the type of install
