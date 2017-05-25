@@ -1,4 +1,13 @@
 module.exports = (plugin, command, context) => {
+  
+  function findSpork(context, template) {
+    // console.dir(context, {colors: true, depth: 1})
+    const { filesystem } = context
+    const sporkDirectory = `${filesystem.cwd()}/ignite/Spork/${context.plugin.name}`
+
+    return filesystem.exists(`${sporkDirectory}/${template}`) ? sporkDirectory : false
+  }
+
   /**
    * Runs a series of jobs through the templating system.
    *
@@ -38,8 +47,11 @@ module.exports = (plugin, command, context) => {
       // generate the React component
       if (await shouldGenerate(job.target)) {
         const currentPluginPath = ignitePluginPath()
+
+        const sporkDirectory = findSpork(context, job.template)
+
         await template.generate({
-          directory: directory || (currentPluginPath && `${currentPluginPath}/templates`),
+          directory: directory || sporkDirectory || (currentPluginPath && `${currentPluginPath}/templates`),
           template: job.template,
           target: job.target,
           props
