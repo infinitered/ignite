@@ -52,7 +52,7 @@ module.exports = (plugin, command, context) => {
             templateFile = `${fileName}.ejs`
           }
 
-          const filenameNoEjs = templateFile.slice(0, -4)
+          const fileNameNoExt = path.basename(templateFile, 'ejs')
 
           template.generate({
             directory: templatePath,

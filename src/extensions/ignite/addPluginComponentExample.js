@@ -18,7 +18,7 @@ module.exports = (plugin, command, context) => {
       templateFile = `${fileName}.ejs`
     }
 
-    const fileNameNoExt = templateFile.slice(0, -4)
+    const fileNameNoExt = path.basename(templateFile, 'ejs')
 
     // do we want to use examples in the classic format?
     if (config.examples === 'classic') {
