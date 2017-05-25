@@ -12,7 +12,7 @@ module.exports = async function (context) {
   }
 
   // grab a fist-full of features...
-  const { print, filesystem } = context
+  const { print, filesystem, parameters } = context
   const { warning, success, info } = print
 
   // ignite spork
@@ -28,7 +28,6 @@ module.exports = async function (context) {
     return a
   }, [], context.ignite.findIgnitePlugins())
 
-  // Ask (if necessary)
   let selectedPlugin = ''
   if (pluginOptions.length === 0) {
     warning('No plugins with generators were detected!')
@@ -48,12 +47,23 @@ module.exports = async function (context) {
   const directory = find(x => x.name === selectedPlugin, context.ignite.findIgnitePlugins()).directory
   const choices = filesystem.list(`${directory}/templates`)
 
-  const copyFiles = await context.prompt.ask({
-    name: 'selectedTemplates',
-    message: 'Which templates would you like to spork?',
-    type: 'checkbox',
-    choices
-  })
+  // Ask (if necessary)
+  let copyFiles
+  if (parameters.second) {
+    if (choices.includes(parameters.second)) {
+      copyFiles = { selectedTemplates: [ parameters.second ] }
+    } else {
+      warning(`${parameters.second} is not a recognized generator template.`)
+      process.exit(exitCodes.SPORKABLES_NOT_FOUND)
+    }
+  } else {
+    copyFiles = await context.prompt.ask({
+      name: 'selectedTemplates',
+      message: 'Which templates would you like to spork?',
+      type: 'checkbox',
+      choices
+    })
+  }
 
   // TODO: This will be wonky if you're not in root of your project
   copyFiles.selectedTemplates.map((template) => {
