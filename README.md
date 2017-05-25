@@ -95,7 +95,7 @@ Check out the list of [Plugins](./PLUGINS.md)
 
 Check out the list of [Boilerplates](./BOILERPLATES.md)
 ```
-$ ignite new MyNewAppName -b ir-next
+$ ignite new MyNewAppName -b ir-boilerplate
 ```
 
 ## :poop: Troubleshooting :poop:
