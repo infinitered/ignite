@@ -53,7 +53,7 @@ $ ignite i love you
 * Powerful but well-defined behavior
 * Battle tested and used every day by the developers at Infinite Red
 
-And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-2016), or choose [one of many others](./BOILERPLATES.md).
+And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate](https://github.com/infinitered/ignite-ir-boilerplate), or choose [one of many others](./BOILERPLATES.md).
 
 ## :arrow_down: Install
 

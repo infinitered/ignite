@@ -86,7 +86,7 @@ async function command (context) {
   }
 
   // grab the right boilerplate
-  let boilerplateName = parameters.options.boilerplate || parameters.options.b || 'ir-boilerplate-2016'
+  let boilerplateName = parameters.options.boilerplate || parameters.options.b || 'ir-boilerplate'
   
   // If the name includes a slash, it's probably a path. Expand it so it's the full real path here.
   if (boilerplateName.includes('/')) {
