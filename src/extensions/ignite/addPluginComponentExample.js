@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = (plugin, command, context) => {
   /**
    * Generates an example for use with the dev screens.
