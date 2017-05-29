@@ -88,7 +88,7 @@ check_builds()
   echo '~ CHECK IMPORTS'
   # install eslint and import investigator
   test_command npm i -g eslint
-  test_command npm i eslint-plugin-import --save-dev
+  test_command npm i -g eslint-plugin-import
   # write eslint rules
   echo '{
     "parser": "babel-eslint",
