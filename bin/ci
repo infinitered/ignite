@@ -82,6 +82,17 @@ check_builds()
   echo '~ Test adding maps plugin from npm'
   test_command ignite add maps
 
+  echo '~ Test Generators'
+  test_command ignite g component PizzaItem
+  test_command ignite g screen PizzaLocation
+  test_command ignite g container PizzaMenu
+  test_command ignite g redux PizzaFeatures
+  test_command ignite g saga PizzaDelivered
+  test_command ignite g listview PizzaPlaces1 --type Row --dataType Single
+  test_command ignite g listview PizzaPlaces2 --type Grid --dataType Single
+  test_command ignite g listview PizzaPlaces3 --type Row --dataType Sectioned
+  test_command ignite g listview PizzaPlaces4 --type Grid --dataType Sectioned
+
   echo '~ LINT ALL THE THINGS!'
   test_command npm run lint
 
