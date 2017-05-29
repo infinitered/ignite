@@ -1,24 +1,67 @@
 {
-  "name": "ignite-monorepo",
-  "version": "2.0.0",
-  "private": true,
-  "description": "The Ignite universe.",
+  "name": "ignite-cli",
+  "version": "2.0.0-rc.2",
+  "description": "An unfair headstart for your React Native apps.",
+  "bin": {
+    "ignite": "bin/ignite"
+  },
+  "preferGlobal": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "lint": "lerna run lint --concurrency 1",
-    "test": "lerna run test",
-    "clean": "lerna clean",
-    "publish": "lerna publish --npm-tag next"
+    "test": "ava tests/fast",
+    "watch": "ava tests/fast --watch",
+    "coverage": "nyc ava",
+    "start": "node src/index.js",
+    "lint": "standard",
+    "integration": "ava -s tests/integration",
+    "shipit": "np"
   },
   "repository": "infinitered/ignite",
-  "license": "MIT",
-  "devDependencies": {
-    "lerna": "2.0.0-beta.38"
-  },
-  "dependencies": {},
   "author": {
     "name": "Infinite Red",
     "email": "npm@infinite.red",
     "url": "https://github.com/infinitered/ignite"
+  },
+  "contributors": [
+    "https://github.com/infinitered/ignite/graphs/contributors"
+  ],
+  "files": [
+    "readme.md",
+    "src",
+    "bin"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "execa": "0.6.0",
+    "fs-jetpack": "1.0.0",
+    "gluegun": "0.18.2",
+    "gluegun-patching": "0.3.0",
+    "minimist": "1.2.0",
+    "pretty-error": "2.0.2",
+    "ramda": "0.23.0",
+    "ramdasauce": "1.2.0",
+    "semver": "5.3.0",
+    "shelljs": "0.7.6",
+    "which": "1.2.14"
+  },
+  "devDependencies": {
+    "ava": "0.19.1",
+    "babel-eslint": "7.1.1",
+    "mock-fs": "git://github.com/not-an-aardvark/mock-fs/#06868bbd7724707f9324b237bdde28f05f7a01d5",
+    "mockery": "2.0.0",
+    "np": "2.12.0",
+    "nyc": "10.3.2",
+    "standard": "10.0.2",
+    "tempy": "^0.1.0"
+  },
+  "ava": {},
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
+  },
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
   }
 }

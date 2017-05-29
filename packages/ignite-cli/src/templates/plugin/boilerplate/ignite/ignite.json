@@ -1,4 +1,0 @@
-{
- " createdWith": "<%= props.igniteVersion %>",
-  "boilerplate": "<%= props.name %>"
-}

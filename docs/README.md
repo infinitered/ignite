@@ -1,10 +1,10 @@
-# Ignite Documentation
+# Ignite CLI Documentation
 
 ## Quick Start
 
 * Installing
 * [Getting started](./quick-start/getting-started.md)
-* [Ignite commands](./quick-start/ignite-commands.md)
+* [Ignite CLI commands](./quick-start/ignite-commands.md)
 * [Project Structure](./quick-start/project-structure.md)
 * [Using boilerplates](./quick-start/using-boilerplates.md)
 * Removing plugins

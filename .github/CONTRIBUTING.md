@@ -1,17 +1,19 @@
 
-#  Contributing to Ignite
+#  Contributing to Ignite CLI
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
-We welcome all contributors to Ignite! This contributing guide will help you get up and running to submit your first pull request.
+We welcome all contributors to Ignite CLI! This contributing guide will help you get up and running to submit your first pull request.
 
 Before submitting a pull request, you will want to make sure that your branch meets the following requirements:
 
+_These examples assume you're using yarn rather than npm. If you're not using yarn, replace these commands with the [appropriate npm alternative](https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc)_
+
 * Everything works on iOS/Android
-* AVA Tests pass in the root folder (`npm test` or `yarn test`)
-* Integration tests pass (`cd packages/ignite-integration && npm run integration && cd -`)
+* AVA Tests pass in the root folder (`yarn test`)
+* Integration tests pass (`yarn run integration`)
 * New tests are included for any new functionality
-* Code is compliant with StandardJS (`npm run lint` or `yarn lint`)
+* Code is compliant with StandardJS (`yarn lint`)
 * Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
 ## Requirements
@@ -23,10 +25,9 @@ Before submitting a pull request, you will want to make sure that your branch me
 
 1. Fork and then clone the repo (`git clone git@github.com:<YOURGITHUBUSER>/ignite.git`)
 2. CD into the directory (`cd ignite`)
-3. Uninstall npm version (`npm u -g ignite-cli && npm u -g react-native-ignite`)
-4. Pull all package dependencies (`npm i && npm run bootstrap`)
-5. Link the local binary (`cd packages/ignite-cli && npm link && cd -`)
-6. Set up your local plugin path (`export IGNITE_PLUGIN_PATH=$PWD/packages`)
+3. Uninstall npm version (`yarn global remove ignite-cli && yarn global remove react-native-ignite`)
+4. Pull all package dependencies (`yarn`)
+5. Link the local binary (`yarn link`)
 
 Test it out:
 
@@ -39,15 +40,15 @@ $ ignite new UberForHeadLice
 ...
 ```
 
-Now you're ready to check out a new branch and get hacking on Ignite!
+Now you're ready to check out a new branch and get hacking on Ignite CLI!
 
 ## Source Code
 
-To get familiarized with Ignite's source code, read the [Tour of Ignite's source code](../docs/advanced-guides/tour.md).
+To get familiarized with Ignite CLI's source code, read the [Tour of Ignite CLI's source code](../docs/advanced-guides/tour.md).
 
 ## How to Build and Run App
 
-Note that if you do not already have the React Native command line tools installed, you should run `npm install -g react-native-cli` or `yarn global add react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
+Note that if you do not already have the React Native command line tools installed, you should run `yarn global add react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
 
 ```
 $ cd ~/your/apps/directory
@@ -66,23 +67,18 @@ We use [AVA](https://github.com/avajs/ava) for testing.
 
 To run tests from the ignite-base folder:
 ```
-$ npm test
-or
 $ yarn test
 ```
 
 Or to run it in [intelligent watch mode](https://github.com/avajs/ava/blob/master/docs/recipes/watch-mode.md):
 ```
-$ npm test -- --watch
-or
 $ yarn test -- --watch
 ```
 
 You'll also want to run the integration tests before submitting a pull request:
 
 ```
-$ cd packages/ignite-cli
-$ npm run integration
+$ yarn run integration
 ```
 
 ## :no_entry_sign: Standard Compliant
@@ -93,8 +89,6 @@ This project adheres to Standard.  Our CI enforces this, so we suggest you enabl
 
 **To Run Lint** from ignite-base:
 ```
-$ npm run lint
-or
 $ yarn lint
 ```
 

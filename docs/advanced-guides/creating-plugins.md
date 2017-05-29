@@ -1,13 +1,13 @@
-# Creating an Ignite Plugin
+# Creating an Ignite CLI Plugin
 
-This document will walk you through creating your very own Ignite plugin from a 3rd party library
+This document will walk you through creating your very own Ignite CLI plugin from a 3rd party library
 
 We will be using https://github.com/ArnaudRinquin/react-native-radio-buttons as an example.
 
 ### Generate a basic plugin structure
 
 
-Run the provided plugin generator. Ignite will automatically prepend your package name with `ignite-`.
+Run the provided plugin generator. Ignite CLI will automatically prepend your package name with `ignite-`.
 
 ```
 $ ignite plugin new radio-buttons
@@ -21,7 +21,7 @@ Open up `package.json` and add your desired info.
 {
   "name": "ignite-radio-buttons",
   "version": "0.0.1",
-  "description": "An Ignite plugin for react-native-radio-buttons.",
+  "description": "An Ignite CLI plugin for react-native-radio-buttons.",
   "license": "MIT",
   "devDependencies": {},
   "url": "https://github.com/infinitered/ignite-radio-buttons/issues",
@@ -117,9 +117,9 @@ You can view your plugin example in the Plugin Examples section of the dev scree
 
 ### Gluegun
 
-`Gluegun` is a tool for building CLIs, and could be useful in building Ignite
-plugins. Gluegun allows you to "glue together" existing CLIs, whether third
-party or your own, into one. Ignite itself makes use of Gluegun.
+`Gluegun` is a tool for building CLIs, and is useful when you're building Ignite CLI
+plugins. Gluegun allows you to "glue together" existing CLIs, whether third party
+or your own, into one. Ignite CLI itself makes use of Gluegun.
 
 Gluegun comes equipped with some outstanding libraries that fulfill common CLI
 needs, such as templating, filesystem operations, command line handling, copy

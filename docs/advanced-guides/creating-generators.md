@@ -1,10 +1,10 @@
-# Creating an Ignite Generator
+# Creating an Ignite CLI Generator
 
-This document will walk you through creating your own Ignite 2.0 generator. A
+This document will walk you through creating your own Ignite CLI generator. A
 generator will allow your users to create customized files from templates by
 using the `ignite generate` command on the command line.
 
-A generator is a special kind of Ignite 2.0 plugin. Generators are more advanced
+A generator is a special kind of Ignite CLI plugin. Generators are more advanced
 than common plugins. You should understand how to create plugins first; check
 out [Creating Plugins](./creating-plugins.md) first if you need to review.
 
@@ -22,7 +22,7 @@ generate an example command/generator?`
 
 ## Setting up the generator
 
-Go into the directory Ignite created.
+Go into the directory Ignite CLI created.
 
 `cd {generator name}`
 
