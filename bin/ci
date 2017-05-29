@@ -86,8 +86,9 @@ check_builds()
   test_command npm run lint
 
   echo '~ CHECK IMPORTS'
-  # install eslint and import investigator
+  # install libs needed for eslint import investigator
   test_command npm i -g eslint
+  test_command npm i -g babel-eslint
   test_command npm i -g eslint-plugin-import
   # write eslint rules
   echo '{
