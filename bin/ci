@@ -96,25 +96,6 @@ check_builds()
   echo '~ LINT ALL THE THINGS!'
   test_command npm run lint
 
-#   echo '~ CHECK IMPORTS'
-#   # install libs needed for eslint import investigator
-#   test_command npm i -g eslint
-#   test_command npm i -g babel-eslint
-#   test_command npm i -g eslint-plugin-import
-#   # write eslint rules
-#   echo '{
-#     "parser": "babel-eslint",
-#     "plugins": [
-#         "import"
-#     ],
-#     "rules": {
-#         "import/no-unresolved": [
-#             2
-#         ]
-#     }
-# }' > .eslintrc.json
-#   test_command eslint ./App
-
   echo '~ Build ios'
   test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js --dev false --platform ios --assets-dest iosAssets
   if [ ! -d "iosAssets" ]; then
