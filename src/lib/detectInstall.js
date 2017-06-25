@@ -1,5 +1,6 @@
 const prependIgnite = require('./prependIgnite')
 const { find } = require('ramda')
+const path = require('path')
 
 /**
  * Detects the type of install the user is requesting for this plugin.
@@ -28,7 +29,7 @@ function detectInstall (context) {
    */
   const isValidIgnitePluginDirectory = candidate =>
     filesystem.exists(candidate) === 'dir' &&
-      filesystem.exists(`${candidate}/package.json`) === 'file'
+      filesystem.exists(`${candidate}${path.sep}package.json`) === 'file'
 
   // the plugin we're trying to install
   let plugin = parameters.second
@@ -38,7 +39,7 @@ function detectInstall (context) {
   let packageVersion = plugin.split('@')[1] || null
 
   // If a path, expand that path. If not, prepend with `ignite-*`.
-  if (packageName.includes('/')) {
+  if (packageName.includes(path.sep)) {
     packageName = filesystem.path(packageName)
   } else {
     packageName = prependIgnite(packageName)
@@ -48,7 +49,7 @@ function detectInstall (context) {
   if (pluginOverrides.length > 0) {
     // look for the plugin into one of our override paths
     const foundPath = find(
-      overridePath => isValidIgnitePluginDirectory(`${overridePath}/${packageName}`),
+      overridePath => isValidIgnitePluginDirectory(`${overridePath}${path.sep}${packageName}`),
       pluginOverrides
     )
 

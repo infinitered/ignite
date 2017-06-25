@@ -1,6 +1,7 @@
 const test = require('ava')
 const mockery = require('mockery')
 const MockGluegunBuilder = require('./_mockGluegunBuilder')
+const path = require('path')
 
 let mockGluegunBuilder = new MockGluegunBuilder()
 
@@ -38,7 +39,7 @@ test('ignite', async t => {
           opts: { hidden: true, matching: 'gluegun-*' }
         }
       ],
-      loadDefault: `${process.cwd()}/src/cli/..`,
+      loadDefault: `${process.cwd()}${path.sep}src${path.sep}cli/..`,
       tokens: {
         commandAlias: 'cliAlias',
         commandDescription: 'cliDescription',
