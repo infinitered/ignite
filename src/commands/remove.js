@@ -8,6 +8,7 @@ const isIgniteDirectory = require('../lib/isIgniteDirectory')
 const prependIgnite = require('../lib/prependIgnite')
 const findPluginFile = require('../lib/findPluginFile')
 const exitCodes = require('../lib/exitCodes')
+const path = require('path')
 
 // use yarn or use npm? hardcode for now
 const useYarn = false
@@ -53,9 +54,9 @@ module.exports = async function (context) {
   const moduleParam = parameters.array.pop()
 
   // Check if they used a directory path instead of a plugin name
-  if (moduleParam.includes('/')) {
+  if (moduleParam.includes(path.sep)) {
     error(`💩 When removing a package, you shouldn't use a path.
-    Try ${context.print.color.highlight(`ignite remove ${moduleParam.split('/').pop()}`)} instead.`)
+    Try ${context.print.color.highlight(`ignite remove ${moduleParam.split(path.sep).pop()}`)} instead.`)
     process.exit(exitCodes.PLUGIN_NAME)
   }
 

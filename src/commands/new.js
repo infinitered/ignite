@@ -63,7 +63,7 @@ async function command (context) {
   if (filesystem.exists(projectName) === 'dir') {
     print.error(`Directory ${projectName} already exists.`)
     const askOverwrite = async () => { return await prompt.confirm('Do you want to overwrite this directory?') }
-    
+
     if (parameters.options.overwrite || await askOverwrite()) {
       print.info(`Overwriting ${projectName}...`)
       filesystem.remove(projectName)
@@ -87,9 +87,9 @@ async function command (context) {
 
   // grab the right boilerplate
   let boilerplateName = parameters.options.boilerplate || parameters.options.b || 'ir-boilerplate'
-  
-  // If the name includes a slash, it's probably a path. Expand it so it's the full real path here.
-  if (boilerplateName.includes('/')) {
+
+  // If the name includes a file separator, it's probably a path. Expand it so it's the full real path here.
+  if (boilerplateName.includes(path.sep)) {
     boilerplateName = filesystem.path(boilerplateName)
   }
 

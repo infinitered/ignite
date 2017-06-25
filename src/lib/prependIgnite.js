@@ -1,3 +1,5 @@
+const path = require('path')
+
 /**
  * Ensures the given string starts with 'ignite-'.
  *
@@ -6,7 +8,7 @@
  */
 const prependIgnite = function (value) {
   // If a path, ignore, it's fine
-  if (value.includes('/')) return value
+  if (value.includes(path.sep)) return value
 
   return /^ignite-/.test(value) ? value : 'ignite-' + value
 }
