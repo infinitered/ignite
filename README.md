@@ -63,6 +63,8 @@ then...
 
 Make sure you have Node 7.6+
 
+**Note**: _July 2017_  Users of Node 8.0+ should beware of issues with debugging. V8 uses the `inspector` protocol and no longer allows `--debug` and `--debug-brk`. But `inspector` does not run well with Chrome debugger (and probably also not with VS Code debugger and node-inspector). Breakpoints are not hit, or debugger doesn't disconnect. So inform yourself well before going this route. See https://github.com/nodejs/node/issues/7593 (and many related issues) for more info.
+
 While you are free to use whichever node version manager you like, we like using [n](https://github.com/tj/n)
 
 If you currently use [nvm](https://github.com/creationix/nvm) and would like to switch, follow [these steps](./docs/quick-start/nvm-to-n.md)
