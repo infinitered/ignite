@@ -27,6 +27,9 @@ async function command (context) {
   // camelCase the project name for user example
   const projectNameCamel = upperFirst(camelCase(projectName))
 
+  // check for numbers-only names
+  const isNumericOnly = /^\d+$/.test(projectName)
+
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite new` command cannot be run within an already ignited project.')
@@ -56,6 +59,12 @@ async function command (context) {
   // verify the project name isn't kebab cased
   if (isKebabCase) {
     print.error(`Please use camel case for your project name. Ex: ${projectNameCamel}`)
+    process.exit(exitCodes.PROJECT_NAME)
+  }
+
+  // verify the project name isn't just numbers
+  if (isNumericOnly) {
+    print.error(`Please use at least one non-numeric character for your project name.`)
     process.exit(exitCodes.PROJECT_NAME)
   }
 
@@ -151,3 +160,4 @@ async function command (context) {
 }
 
 module.exports = command
+
