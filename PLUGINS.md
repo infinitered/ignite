@@ -23,3 +23,4 @@ name | supporting | author
 [push-notification](https://github.com/ryanlntn/ignite-push-notification) | [react-native-push-notification](https://github.com/zo0r/react-native-push-notification) | [Ryan Linton](https://github.com/ryanlntn)
 [radio-buttons](https://github.com/robinheinze/ignite-radio-buttons) | [react-native-radio-buttons](https://github.com/ArnaudRinquin/react-native-radio-buttons) | [Robin Heinze](https://github.com/robinheinze)
 [json-server](https://github.com/infinitered/ignite-json-server) | [json-server](https://github.com/typicode/json-server) | [Derek Greenberg](https://github.com/derekgreenberg)
+[redux-thunk](https://github.com/kusti8/ignite-redux-thunk) | [redux-thunk](https://github.com/gaearon/redux-thunk) | [Gustav Hansen](https://github.com/kusti8)
