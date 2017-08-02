@@ -78,6 +78,7 @@ function attach (plugin, command, context) {
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
     try {
       await system.exec(cmd, { stdio: stdioMode })
+      log('done')
     } catch (e) {
       spinner.fail(`failed to add ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`)
       if (reactNativeTemplate) {
