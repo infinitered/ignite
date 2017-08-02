@@ -2,8 +2,8 @@ const { test, trim } = require('ramda')
 const exitCodes = require('../lib/exitCodes')
 
 // DEPRECATED: Please specify React version when invoking install
-// Example: const rnInstall = await reactNative.install({ name, version: '0.42.0' })
-const REACT_VERSION = '15.6.1'
+// Example: const rnInstall = await reactNative.install({ name, version: '15.4.1' })
+const REACT_VERSION = '15.4.1'
 
 /**
  * Attach this extension to the context.
@@ -78,6 +78,7 @@ function attach (plugin, command, context) {
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
     try {
       await system.exec(cmd, { stdio: stdioMode })
+      log('done')
     } catch (e) {
       spinner.fail(`failed to add ${print.colors.cyan('React ' + reactVersion)}${withTemplate}`)
       if (reactTemplate) {
@@ -91,7 +92,7 @@ function attach (plugin, command, context) {
         template: reactTemplate
       }
     }
-    
+
     const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
 
     // good news everyone!
