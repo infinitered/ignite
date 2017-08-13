@@ -1,11 +1,12 @@
 const { trim } = require('ramda')
+const path = require('path')
 
 module.exports = (plugin, command, context) => {
   const getModuleName = (moduleName, options) => {
     let name
     if (options.version) {
       name = `${moduleName}@${options.version}`
-    } else if (context.parameters.second.includes('/')) {
+    } else if (context.parameters.second.includes(path.sep)) {
       // If adding from a directory, then display a deprecation warning.
       // This is to alert plugin authors to the issue without cluttering others' output.
       context.print.warning(`DEPRECATION WARNING:`)

@@ -1,6 +1,7 @@
 const test = require('ava')
 const execa = require('execa')
 const tempy = require('tempy')
+const { contains } = require('ramda')
 
 const IGNITE = `${process.cwd()}/bin/ignite`
 
@@ -29,3 +30,12 @@ test(`doesn't allow kebab-case`, async t => {
   }
 })
 
+test('numeric project name', async t => {
+  try {
+    await execa(IGNITE, ['new', '123456'])
+    t.fail()
+  } catch (err) {
+    t.is(err.code, 5)
+    t.true(contains('Please use at least one non-numeric', err.stdout))
+  }
+})

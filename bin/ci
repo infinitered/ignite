@@ -19,6 +19,8 @@ echo "#                           \\\\.-.//                     #"
 echo "#                            \`---'                      #"
 echo '#########################################################'
 
+IGNITE_DIRECTORY=$PWD
+
 # Runs command and on failure turns on the SOMETHING_FAILED flag
 function test_command {
   "$@"
@@ -32,13 +34,12 @@ function test_command {
 
 setup()
 {
-  rm -rf ./testgrounds
-
   echo '~~~🌟 NPM install'
   test_command npm install
 
   echo '~~~🌟 Linking local for Testing'
   test_command npm link
+
 }
 
 verify_code()
@@ -54,8 +55,9 @@ verify_code()
 
 check_builds()
 {
-  mkdir testgrounds
-  cd ./testgrounds
+  # Make a temporary directory and jump into it
+  cd $(mktemp -d)
+
   echo '~~~🌟 Generating Project'
   test_command ignite new TestProj --min --skip-git --overwrite
 
@@ -81,6 +83,17 @@ check_builds()
   test_command ignite add i18n
   echo '~ Test adding maps plugin from npm'
   test_command ignite add maps
+
+  echo '~ Test Generators'
+  test_command ignite g component PizzaItem
+  test_command ignite g screen PizzaLocation
+  test_command ignite g container PizzaMenu
+  test_command ignite g redux PizzaFeatures
+  test_command ignite g saga PizzaDelivered
+  test_command ignite g listview PizzaPlaces1 --type Row --dataType Single
+  test_command ignite g listview PizzaPlaces2 --type Grid --dataType Single
+  test_command ignite g listview PizzaPlaces3 --type Row --dataType Sectioned
+  test_command ignite g listview PizzaPlaces4 --type Grid --dataType Sectioned
 
   echo '~ LINT ALL THE THINGS!'
   test_command npm run lint
@@ -109,14 +122,12 @@ check_builds()
   # fi
   # cd ..
 
-  # back to root
-  cd ../..
-
-  echo '~~~🌟 Cleanup'
-  rm -rf testgrounds
+  echo '~~~🌟 Done'
+  
+  # Jump back into original directory
+  cd $IGNITE_DIRECTORY
 }
 
-# This is where the magic happens
 setup;
 
 verify_code;

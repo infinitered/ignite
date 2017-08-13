@@ -1,5 +1,6 @@
 const test = require('ava')
 const attach = require('../../../src/extensions/ignite.js')
+const path = require('path')
 
 test('has the right interface', t => {
   t.is(typeof attach, 'function')
@@ -14,7 +15,7 @@ test('has the right interface', t => {
       which: () => true
     },
     filesystem: {
-      separator: '/'
+      separator: path.sep
     }
   }
   const extension = attach(plugin, command, context)

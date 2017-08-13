@@ -27,6 +27,9 @@ async function command (context) {
   // camelCase the project name for user example
   const projectNameCamel = upperFirst(camelCase(projectName))
 
+  // check for numbers-only names
+  const isNumericOnly = /^\d+$/.test(projectName)
+
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite new` command cannot be run within an already ignited project.')
@@ -59,11 +62,17 @@ async function command (context) {
     process.exit(exitCodes.PROJECT_NAME)
   }
 
+  // verify the project name isn't just numbers
+  if (isNumericOnly) {
+    print.error(`Please use at least one non-numeric character for your project name.`)
+    process.exit(exitCodes.PROJECT_NAME)
+  }
+
   // verify the directory doesn't exist already
   if (filesystem.exists(projectName) === 'dir') {
     print.error(`Directory ${projectName} already exists.`)
     const askOverwrite = async () => { return await prompt.confirm('Do you want to overwrite this directory?') }
-    
+
     if (parameters.options.overwrite || await askOverwrite()) {
       print.info(`Overwriting ${projectName}...`)
       filesystem.remove(projectName)
@@ -87,9 +96,9 @@ async function command (context) {
 
   // grab the right boilerplate
   let boilerplateName = parameters.options.boilerplate || parameters.options.b || 'ir-boilerplate'
-  
-  // If the name includes a slash, it's probably a path. Expand it so it's the full real path here.
-  if (boilerplateName.includes('/')) {
+
+  // If the name includes a file separator, it's probably a path. Expand it so it's the full real path here.
+  if (boilerplateName.includes(path.sep)) {
     boilerplateName = filesystem.path(boilerplateName)
   }
 
@@ -151,3 +160,4 @@ async function command (context) {
 }
 
 module.exports = command
+
