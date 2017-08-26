@@ -8,7 +8,7 @@
 * [Project Structure](./quick-start/project-structure.md)
 * [Using boilerplates](./quick-start/using-boilerplates.md)
 * Removing plugins
-* Spork! - tweaking 3rd-party generators
+* [Spork! - tweaking 3rd-party generators](./quick-start/spork.md)
 
 ## Advanced Guides
 
