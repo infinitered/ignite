@@ -24,3 +24,4 @@ name | supporting | author
 [radio-buttons](https://github.com/robinheinze/ignite-radio-buttons) | [react-native-radio-buttons](https://github.com/ArnaudRinquin/react-native-radio-buttons) | [Robin Heinze](https://github.com/robinheinze)
 [json-server](https://github.com/infinitered/ignite-json-server) | [json-server](https://github.com/typicode/json-server) | [Derek Greenberg](https://github.com/derekgreenberg)
 [redux-thunk](https://github.com/kusti8/ignite-redux-thunk) | [redux-thunk](https://github.com/gaearon/redux-thunk) | [Gustav Hansen](https://github.com/kusti8)
+[firebase](https://github.com/stoneman1/ignite-firebase) | [react-native-firebase](https://github.com/invertase/react-native-firebase) | [Aleksi Pousar](https://github.com/stoneman1)
