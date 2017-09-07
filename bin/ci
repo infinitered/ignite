@@ -90,10 +90,14 @@ check_builds()
   test_command ignite g container PizzaMenu
   test_command ignite g redux PizzaFeatures
   test_command ignite g saga PizzaDelivered
-  test_command ignite g listview PizzaPlaces1 --type Row --dataType Single
-  test_command ignite g listview PizzaPlaces2 --type Grid --dataType Single
-  test_command ignite g listview PizzaPlaces3 --type Row --dataType Sectioned
-  test_command ignite g listview PizzaPlaces4 --type Grid --dataType Sectioned
+  test_command ignite g list PizzaPlaces1 --type Row --dataType Single --codeType flatlist
+  test_command ignite g list PizzaPlaces2 --type Grid --dataType Single --codeType flatlist
+  test_command ignite g list PizzaPlaces3 --type Row --dataType Sectioned --codeType flatlist
+  test_command ignite g list PizzaPlaces4 --type Grid --dataType Sectioned --codeType flatlist
+  test_command ignite g list PizzaPlaces5 --type Row --dataType Single --codeType listview
+  test_command ignite g list PizzaPlaces6 --type Grid --dataType Single --codeType listview
+  test_command ignite g list PizzaPlaces7 --type Row --dataType Sectioned --codeType listview
+  test_command ignite g list PizzaPlaces8 --type Grid --dataType Sectioned --codeType listview
 
   echo '~ LINT ALL THE THINGS!'
   test_command npm run lint
@@ -123,7 +127,7 @@ check_builds()
   # cd ..
 
   echo '~~~🌟 Done'
-  
+
   # Jump back into original directory
   cd $IGNITE_DIRECTORY
 }
