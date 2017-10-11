@@ -18,3 +18,5 @@ env:
   - ANDROID_HOME=~/build/infinitered/ignite/android-sdk-linux
 script:
   - ./bin/ci
+
+after_success: npm run coverage

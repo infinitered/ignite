@@ -7,9 +7,9 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "ava tests/fast",
+    "test": "nyc ava tests/fast",
     "watch": "ava tests/fast --watch",
-    "coverage": "nyc ava",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "node src/index.js",
     "lint": "standard",
     "integration": "ava -s tests/integration",
@@ -46,10 +46,11 @@
   "devDependencies": {
     "ava": "0.19.1",
     "babel-eslint": "7.1.1",
+    "coveralls": "^3.0.0",
     "mock-fs": "4.4.1",
     "mockery": "2.0.0",
     "np": "2.12.0",
-    "nyc": "10.3.2",
+    "nyc": "^10.3.2",
     "standard": "10.0.2",
     "tempy": "^0.1.0"
   },
