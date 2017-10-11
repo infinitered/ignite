@@ -51,6 +51,7 @@ verify_code()
   test_command standard ./src
   test_command npm test
   test_command npm run integration
+  npm run coverage
 }
 
 check_builds()
