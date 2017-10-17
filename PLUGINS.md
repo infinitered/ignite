@@ -22,6 +22,7 @@ name | supporting | author
 [radio-buttons](https://github.com/robinheinze/ignite-radio-buttons) | [react-native-radio-buttons](https://github.com/ArnaudRinquin/react-native-radio-buttons) | [Robin Heinze](https://github.com/robinheinze)
 [redux-devtools](https://github.com/infinitered/ignite-redux-devtools) | [remote-redux-devtools](https://github.com/zalmoxisus/remote-redux-devtools) | [Ryan Linton](https://github.com/ryanlntn)
 [redux-logger](https://github.com/GantMan/ignite-redux-logger) | [redux-logger](https://github.com/evgenyrodionov/redux-logger) | [Gant Laborde](https://github.com/gantman)
+[redux-persist](https://github.com/infinitered/ignite-redux-persist) | [redux-persist](https://github.com/rt2zz/redux-persist) | [Ryan Linton](https://github.com/ryanlntn)
 [redux-thunk](https://github.com/kusti8/ignite-redux-thunk) | [redux-thunk](https://github.com/gaearon/redux-thunk) | [Gustav Hansen](https://github.com/kusti8)
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
 [tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3)
