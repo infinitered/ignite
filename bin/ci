@@ -104,14 +104,14 @@ check_builds()
   test_command npm run lint
 
   echo '~ Build ios'
-  test_command react-native bundle --entry-file index.ios.js --bundle-output test.ios.js --dev false --platform ios --assets-dest iosAssets
+  test_command react-native bundle --entry-file index.js --bundle-output test.ios.js --dev false --platform ios --assets-dest iosAssets
   if [ ! -d "iosAssets" ]; then
     echo 'iosAssets folder did not generate'
     SOMETHING_FAILED=1
   fi
 
   echo '~ Build android'
-  test_command react-native bundle --entry-file index.android.js --bundle-output test.android.js --dev false --platform android --assets-dest androidAssets
+  test_command react-native bundle --entry-file index.js --bundle-output test.android.js --dev false --platform android --assets-dest androidAssets
   if [ ! -d "androidAssets" ]; then
     echo 'androidAssets folder did not generate'
     SOMETHING_FAILED=1
