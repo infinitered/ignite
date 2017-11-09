@@ -6,7 +6,7 @@
 
 *Question:* How do I upgrade an old ignite project's dependencies?
 
-*Answer:* It's still ReactNative ¯\\_(ツ)_/¯, but [#1124 may be what you're looking for.](https://github.com/infinitered/ignite/issues/1124)
+*Answer:* It's still ReactNative ¯\\\_(ツ)\_/¯, but [#1124 may be what you're looking for.](https://github.com/infinitered/ignite/issues/1124)
 
 *Question:* Why is `ignite new MyProject` not using latest react-native?
 
