@@ -9,6 +9,7 @@
 * [Using boilerplates](./quick-start/using-boilerplates.md)
 * Removing plugins
 * [Spork! - tweaking 3rd-party generators](./quick-start/spork.md)
+* [Frequently Asked Questions](./quick-start/frequently-asked-questions.md)
 
 ## Advanced Guides
 
