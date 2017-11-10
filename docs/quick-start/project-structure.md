@@ -6,7 +6,7 @@ _NOTE: If you're using a different boilerplate, your project structure will like
 
 ## Ignite Boilerplate Structure vs Vanilla React Native Structure
 
-First let's take a look at a "Vanilla" React Native project's structure. To start, navigate to directory you'd like to create a new React Native project and run the `react-native init` command to create a project without Ignite.
+First let's take a look at a "Vanilla" React Native project's structure. To start, navigate to the directory where you'd like to create a new React Native project and run the `react-native init` command to create a project without Ignite.
 
 ```
 cd projects
@@ -99,7 +99,7 @@ IgniteProject
 
 ## App directory
 
-Included in an Ignite boilerplate project is the App directory. This is a directory you would normal have to create when using vanilla React Native.
+Included in an Ignite boilerplate project is the App directory. This is a directory you would normally have to create when using vanilla React Native.
 
 The inside of the App directory looks similar to the following:
 
@@ -123,10 +123,10 @@ App
 ```
 
 **Components**
-"Dumb" components are stored here. All data is passed into dumb component. These components are often used inside a "Container Component". Container components are described in more detail further on.
+"Dumb" components are stored here. All data is passed into dumb components. These components are often used inside a "Container Component". Container components are described in more detail further on.
 
 **Components ── Styles**
-We separate component styles from component functionality. Use this folder to create and store style files that matches the naming of your components. For example, a component `AlertMessage.js` would have a matching styles file called `AlertMessageStyles.js`.
+We separate component styles from component functionality. Use this folder to create and store style files that match the naming of your components. For example, a component `AlertMessage.js` would have a matching styles file called `AlertMessageStyles.js`.
 
 **Config**
 All application specific configuration falls in this folder. For example, `DebugSettings.js` is used for development-wide globals and `ReactotronConfig.js` is used for Reactotron client settings.
@@ -174,13 +174,13 @@ A place to store your Redux files (reducers, stores, etc.).
 A place to store your Sagas (Redux side effects).
 
 **Services**
-API calls to external services?
+API calls to external services.
 
 **Themes**
 A place to contain styles shared across your project (fonts, colors, etc.).
 
 **Transforms**
-A common pattern when working with APIs is to change data so that it plays nice between your app & the API.
+A common pattern when working with APIs is to change data so that it plays nice between your app and the API.
 
 We've found this to be the case in every project we've worked on. So much so that we're recommending that you use this folder for these transformations.
 

@@ -1,6 +1,6 @@
 # Creating an Ignite CLI Plugin
 
-This document will walk you through creating your very own Ignite CLI plugin from a 3rd party library
+This document will walk you through creating your very own Ignite CLI plugin from a 3rd party library.
 
 We will be using https://github.com/ArnaudRinquin/react-native-radio-buttons as an example.
 

@@ -95,7 +95,7 @@ If the new app's folder already exists, you can pass through `--overwrite` to ov
 ignite plugin new {plugin name}
 ```
 
-Manages ignite plugins
+Manages ignite plugins.
 
 This command allows you to create a plugin or list currently available plugins (coming
 soon).
@@ -123,12 +123,12 @@ version control to be on the safe side.
 ignite spork
 ```
 
-Copy templates as blueprints for this project
+Copy templates as blueprints for this project.
 
 Ignite's boilerplates are generally pretty opinionated. Spork lets you avoid those
-opinions by "forking" the template. Like a 'fork' on a git repo. `ignite spork`
+opinions by "forking" the template. Like a 'fork' on a git repo `ignite spork`
 looks at the generators, then looks at the templates. You then select the things
-you want to make a copy off. They then live in `ignite/Spork/...`.
+you want to make a copy of. They then live in `ignite/Spork/...`.
 
 After entering `ignite spork`, you will be presented with a list of available
 templates to spork. Cycle through them with arrow keys, select the desired
