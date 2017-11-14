@@ -11,3 +11,7 @@
 *Question:* Why is `ignite new MyProject` not using latest react-native?
 
 *Answer:* From [#1078](https://github.com/infinitered/ignite/issues/1078): Because ignite is a collection of components and those components all need to play nicely together. And sometimes they don't all cooperate when React Native's version increases.
+
+*Question:* What is a good non-trivial real world example of an Ignite project?
+
+*Answer:* See the [ChainReact]https://github.com/infinitered/ChainReactApp app for the React-Native conference of the same name. It was created by the authors of Ignite.
