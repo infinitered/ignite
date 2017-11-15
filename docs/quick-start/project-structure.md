@@ -137,7 +137,7 @@ which knows about Redux. They are usually used as "Screens".
 
 Also located here are two special containers: `App.js` and `RootContainer.js`.
 
-`App.js` is first component loaded after `index.ios.js` or `index.android.js`. The purpose of this file is to setup Redux or any other non-visual "global" modules. Having Redux setup here helps with the hot-reloading process in React Native during development as it won't try to reload your sagas and reducers should your colors change (for example).
+`App.js` is first component loaded after `index.js`. The purpose of this file is to setup Redux or any other non-visual "global" modules. Having Redux setup here helps with the hot-reloading process in React Native during development as it won't try to reload your sagas and reducers should your colors change (for example).
 
 `RootContainer.js` is the first visual component in the app. It is the ancestor of all other screens and components.
 
