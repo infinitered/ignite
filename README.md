@@ -117,4 +117,4 @@ Thank you to the numerous [contributors of Ignite CLI](https://github.com/infini
 
 ## Premium Support
 
-[Ignite CLI](https://infinite.red/ignite), as open source projects, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Ignite CLI and boilerplate support and general mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch with us for more details.
+[Ignite CLI](https://infinite.red/ignite), as open source projects, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Ignite CLI and boilerplate support and general mobile app design/development services. Get in touch [here](https://infinite.red/contact) or email us at [hello@infinite.red](mailto:hello@infinite.red).
