@@ -19,8 +19,7 @@ Your new React Native project should have a file structure similar to the follow
 ```
 VanillaProject
 ├── __tests__
-│   ├── index.android.js
-│   └── index.ios.js
+│   ├── index.js
 ├── android
 │   ├── app
 │   ├── build.gradle
@@ -31,8 +30,7 @@ VanillaProject
 │   ├── keystores
 │   └── settings.gradle
 ├── app.json
-├── index.android.js
-├── index.ios.js
+├── index.js
 ├── ios
 │   ├── VanillaProject
 │   ├── VanillaProject-tvOS
@@ -72,8 +70,7 @@ IgniteProject
 │   └── Transforms
 ├── README.md
 ├── __tests__
-│   ├── index.android.js
-│   └── index.ios.js
+│   ├── index.js
 ├── android
 │   ├── app
 │   ├── build.gradle
@@ -86,8 +83,7 @@ IgniteProject
 ├── ignite
 │   ├── ignite.json
 │   └── plugins
-├── index.android.js
-├── index.ios.js
+├── index.js
 ├── ios
 │   ├── IgniteProject
 │   ├── IgniteProject-tvOS
