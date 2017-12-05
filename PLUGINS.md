@@ -29,3 +29,4 @@ name | supporting | author
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
 [tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3)
 [video](https://github.com/ryanlntn/ignite-video) | [react-native-video](https://github.com/react-native-community/react-native-video) | [Ryan Linton](https://github.com/ryanlntn)
+[camera](https://github.com/thisisjaiswal/ignite-camera) | [react-native-camera](https://github.com/lwansbrough/react-native-camera) | [Sandeep Jaiswal](https://github.com/thisisjaiswal)
