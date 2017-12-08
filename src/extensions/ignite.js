@@ -2,6 +2,7 @@
 // of the functions defined here are available as functions on that.
 
 // bring in each of the constituents
+const shell = require('shelljs')
 const ignitePluginPathExt = require('./ignite/ignitePluginPath')
 const igniteConfigExt = require('./ignite/igniteConfig')
 const findIgnitePluginsExt = require('./ignite/findIgnitePlugins')
@@ -38,7 +39,7 @@ function attach (plugin, command, context) {
   const forceNpm = parameters.options.npm
 
   // should we be using yarn?
-  const useYarn = !forceNpm && system.which('yarn')
+  const useYarn = !forceNpm && Boolean(shell.which('yarn'))
 
   // the ignite plugin path
   const {
