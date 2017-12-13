@@ -10,7 +10,7 @@ function isIgniteDirectory (directory) {
   const igniteConfigPath = `${directory}/ignite/ignite.json`
 
   // it must be a file
-  if (!jetpack.exists(igniteConfigPath) === 'file') return false
+  if (jetpack.exists(igniteConfigPath) !== 'file') return false
 
   // let's read it as a JSON file
   try {
