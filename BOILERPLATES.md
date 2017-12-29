@@ -15,3 +15,4 @@
 | [ignite-jhipster](https://github.com/ruddell/ignite-jhipster) | A React Native boilerplate for JHipster apps. | [John Ruddell](https://github.com/ruddell) |
 | [ignite-appclon-mobx](https://github.com/Appclon/ignite-appclon-mobx) | Appclon + Ignite Boilerplate | [Appclon](https://github.com/Appclon) |
 | [ignite-typescript-boilerplate](https://github.com/aerian-studios/ignite-typescript-boilerplate/) | A boilerplate for TypeScript apps, based on ignite-ir-boilerplate  | [Matt Kane](https://github.com/ascorbic) |
+| [ignite-expo-boilerplate](https://github.com/jbosse/ignite-expo-boilerplate) | Fork of ignite-ir-boilerplate modified to work with Expo.io  | [Jimmy Bosse](https://github.com/jbosse) |
