@@ -30,4 +30,5 @@ name | supporting | author
 [tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3)
 [video](https://github.com/ryanlntn/ignite-video) | [react-native-video](https://github.com/react-native-community/react-native-video) | [Ryan Linton](https://github.com/ryanlntn)
 [camera](https://github.com/thisisjaiswal/ignite-camera) | [react-native-camera](https://github.com/lwansbrough/react-native-camera) | [Sandeep Jaiswal](https://github.com/thisisjaiswal)
-[fabric / crashlytics](https://github.com/Osedea/ignite-fabric) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery) 
+[fabric / crashlytics](https://github.com/Osedea/ignite-fabric) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
+[onesignal](https://github.com/LighthouseIT/ignite-onesignal) | [react-native-onesignal](https://github.com/OneSignal/react-native-onesignal/) | [Donald Silveira](https://github.com/donnes) 
