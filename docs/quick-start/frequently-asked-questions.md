@@ -14,4 +14,4 @@
 
 *Question:* What is a good non-trivial real world example of an Ignite project?
 
-*Answer:* See the [ChainReact]https://github.com/infinitered/ChainReactApp app for the React-Native conference of the same name. It was created by the authors of Ignite.
+*Answer:* See the [ChainReact](https://github.com/infinitered/ChainReactApp) app for the React-Native conference of the same name. It was created by the authors of Ignite.
