@@ -55,22 +55,28 @@ The Ignite boilerplate project's structure will look similar to this:
 
 ```
 IgniteProject
-├── App
-│   ├── Components
-│   ├── Config
-│   ├── Containers
-│   ├── Fixtures
-│   ├── Images
-│   ├── Lib
-│   ├── Navigation
-│   ├── Redux
-│   ├── Sagas
-│   ├── Services
-│   ├── Themes
-│   └── Transforms
+├── src
+│   ├── app
+│   ├── i18n
+│   ├── lib
+│   ├── models
+│   ├── navigation
+│   ├── services
+│   ├── theme
+│   ├── views
+├── storybook
+│   ├── views
+│   ├── index.ts
+│   ├── storybook-registry.ts
+│   ├── storybook.ts
+├── test
+│   ├── __snapshots__
+│   ├── storyshots.test.ts.snap
+│   ├── mock-i18n.ts
+│   ├── mock-reactotron.ts
+│   ├── setup.ts
+│   ├── storyshots.test.ts
 ├── README.md
-├── __tests__
-│   ├── index.js
 ├── android
 │   ├── app
 │   ├── build.gradle
@@ -93,101 +99,58 @@ IgniteProject
 └── package.json
 ```
 
-## App directory
+The directory structure uses a ["feature first, function second"](https://alligator.io/react/index-js-public-interfaces/) approach to organization. Files are grouped by the feature they are supporting rather than the type of file.
 
-Included in an Ignite boilerplate project is the App directory. This is a directory you would normally have to create when using vanilla React Native.
+For example: A custom `Button` component would have the main component file, and test, and any assets or helper files all grouped together in one folder.
 
-The inside of the App directory looks similar to the following:
+This is a departure from the previous boilerplate, which grouped files by type (components together, styles together, tests together, images together, etc.). One feature of this new approach is the use of index files which export specific functions from files in the directory to create a public interface for each "thing", or "feature. You'll see that pattern quite a bit in this boilerplate.
+
+
+## src directory
+
+Included in an Ignite boilerplate project is the src directory. This is a directory you would normally have to create when using vanilla React Native.
+
+The inside of the src directory looks similar to the following:
 
 ```
-App
-├── Components
-│   └── Styles
-├── Config
-├── Containers
-│   └── Styles
-├── Fixtures
-├── Images
-├── Lib
-├── Navigation
-│   └── Styles
-├── Redux
-├── Sagas
-├── Services
-├── Themes
-└── Transforms
+src
+├── app
+│── i18n
+├── lib
+├── models
+├── navigation
+├── services
+├── theme
+├── views
 ```
 
-**Components**
-"Dumb" components are stored here. All data is passed into dumb components. These components are often used inside a "Container Component". Container components are described in more detail further on.
+**app**
+This is where a lot of your app's initialization takes place. Here you'll find:
+* root-component.tsx - This is the root component of your app that will render your navigators and other views.
 
-**Components ── Styles**
-We separate component styles from component functionality. Use this folder to create and store style files that match the naming of your components. For example, a component `AlertMessage.js` would have a matching styles file called `AlertMessageStyles.js`.
+**i18n**
+This is where your translations will live if you are using `react-native-i18n`.
 
-**Config**
-All application specific configuration falls in this folder. For example, `DebugSettings.js` is used for development-wide globals and `ReactotronConfig.js` is used for Reactotron client settings.
+**lib**
+This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
-**Containers**
-A container is what they call a "Smart Component" in Redux. It is a component
-which knows about Redux. They are usually used as "Screens".
+**models**
+This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc.
 
-Also located here are two special containers: `App.js` and `RootContainer.js`.
+**navigation**
+This is where your `react-navigation` navigators will live.
 
-`App.js` is first component loaded after `index.js`. The purpose of this file is to setup Redux or any other non-visual "global" modules. Having Redux setup here helps with the hot-reloading process in React Native during development as it won't try to reload your sagas and reducers should your colors change (for example).
+**services**
+Any services that interface with the outside world will live here (think REST APIs, Push Notifications, etc.).
 
-`RootContainer.js` is the first visual component in the app. It is the ancestor of all other screens and components.
+**theme**
+Here lives the theme for your application, including spacing, colors, and typography.
 
-You'll probably find you can get quite far in an Ignite boilerplate app without even touching these two files. They, of course, belong to you, so when you're ready to add something non-visual, like Firebase, or something visual, like an overlay, you have places for these additions.
+**views**
+This is where all of your components will live. Both dumb components and screen components will be located here. Each component will have a directory containing the `.tsx` file, along with a story file, and optionally `.presets`, and `.props` files for larger components.
 
-**Containers ── Styles**
-This `/Containers/Styles` folder will house your container styles. Each container component will likely have a companion styles file, just like `/Components`.
+You may choose to futher break down this directory by organizing your components into "domains", which represent cohesive areas of your application. For example, a "user" domain could hold all components and screens related to managing a user.
 
-**Fixtures**
-TODO: Correct this, the description is outdated.
-
-All key API responses are housed here.
-
-These API responses can be used for several reasons.  _E.G._:
-* To bypass logins when building any screen of the application
-* To quickly test API parsing in unit tests
-* To separate Network from Data concerns while coding
-
-**Images**
-Static images used in your project are stored here.
-
-**Lib**
-At first glance, this could appear to be a "miscellaneous" folder, but we recommend that you treat this as proving ground for components that could be reusable outside your project.
-
-Maybe you're writing a set of utilities that you could use outside your project, but they're not quite ready or battle tested. This folder would be a great place to put them. They would ideally be pure functions and have no dependencies related to other things in your App folder.
-
-**Navigation**
-TODO: Update with information about new navigation.
-
-**Redux**
-A place to store your Redux files (reducers, stores, etc.).
-
-**Sagas**
-A place to store your Sagas (Redux side effects).
-
-**Services**
-API calls to external services.
-
-**Themes**
-A place to contain styles shared across your project (fonts, colors, etc.).
-
-**Transforms**
-A common pattern when working with APIs is to change data so that it plays nice between your app and the API.
-
-We've found this to be the case in every project we've worked on. So much so that we're recommending that you use this folder for these transformations.
-
-Transforms are not necessarily a bad thing (although an API might have you transforming more than you'd like).
-
-For example, you may:
-
-* turn appropriate strings to date objects
-* convert snake case to camel case
-* normalize or denormalize things
-* create lookup tables
 
 ## Ignite directory
 
