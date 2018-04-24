@@ -95,11 +95,35 @@ async function command (context) {
   }
 
   // grab the right boilerplate
-  let boilerplateName = parameters.options.boilerplate || parameters.options.b || 'ir-boilerplate'
+  let boilerplateName = parameters.options.boilerplate || parameters.options.b
 
   // If the name includes a file separator, it's probably a path. Expand it so it's the full real path here.
-  if (boilerplateName.includes(path.sep)) {
+  if ((boilerplateName || '').includes(path.sep)) {
     boilerplateName = filesystem.path(boilerplateName)
+  }
+  const andross = 'Andross (React Navigation, Redux, & Redux Saga'
+  const bowser = 'Bowser (alpha) (React Navigation, MobX State Tree, & TypeScript)'
+  if (!boilerplateName) {
+    const { boilerplate } = await context.prompt.ask([
+      {
+        name: 'boilerplate',
+        message: 'Which boilerplate would you like to use?',
+        type: 'list',
+        choices: [
+          andross,
+          bowser
+        ]
+      }
+    ])
+    switch (boilerplate) {
+      case bowser:
+        boilerplateName = 'ir-boilerplate-bowser'
+        break
+      case andross:
+      default:
+        boilerplateName = 'ir-boilerplate-andross'
+        break
+    }
   }
 
   // make & jump into the project directory
