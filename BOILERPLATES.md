@@ -4,7 +4,8 @@
 
 | Name | Description |
 |------|-------------|
-| [ignite-ir-boilerplate](https://github.com/infinitered/ignite-ir-boilerplate) | The latest and greatest of Infinite Red opinions |
+| [ignite-ir-boilerplate-bowser](https://github.com/infinitered/ignite-ir-boilerplate-bowser) | React Navigation, MobX State Tree, & TypeScript |
+| [ignite-ir-boilerplate-andross](https://github.com/infinitered/ignite-ir-boilerplate-andross) | React Navigation, Redux, & Redux Sagas |
 | [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016) | InfiniteRed's 2016 tech stack |
 
 ## 3rd Party
