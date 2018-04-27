@@ -1,6 +1,6 @@
 # Project Structure
 
-When creating a new React Native project with Ignite CLI, your project will include a number of nested files and folders. This structure is one the React Native best practices included with Ignite's default boilerplate. With this structure, your project already has a head start. Let's take a closer look at Ignite's default structure and explain how to leverage its benefits.
+When creating a new React Native project with Ignite CLI, your project will include a number of nested files and folders. This structure is one the React Native best practices included with Ignite's latest Bowser boilerplate. With this structure, your project already has a head start. Let's take a closer look at Ignite's default structure and explain how to leverage its benefits.
 
 _NOTE: If you're using a different boilerplate, your project structure will likely look quite different._
 
@@ -47,14 +47,14 @@ Note: TODO: Maybe like what options we select when creating a new Ignite boilerp
 
 ```
 cd ..
-ignite new IgniteProject
-cd IgniteProject
+ignite new ignite-project
+cd ignite-project
 ```
 
-The Ignite boilerplate project's structure will look similar to this:
+The Ignite Bowser boilerplate project's structure will look similar to this:
 
 ```
-IgniteProject
+ignite-project
 ├── src
 │   ├── app
 │   ├── i18n
@@ -150,6 +150,14 @@ Here lives the theme for your application, including spacing, colors, and typogr
 This is where all of your components will live. Both dumb components and screen components will be located here. Each component will have a directory containing the `.tsx` file, along with a story file, and optionally `.presets`, and `.props` files for larger components.
 
 You may choose to futher break down this directory by organizing your components into "domains", which represent cohesive areas of your application. For example, a "user" domain could hold all components and screens related to managing a user.
+
+## storybook Directory
+
+This is where your stories will be registered and where the Storybook configs will live
+
+## test
+
+This directory will hold your Jest configs and mocks, as well as your [storyshots](https://github.com/storybooks/storybook/tree/master/addons/storyshots) test file. This is a file that contains the snapshots of all your component storybooks.
 
 
 ## Ignite directory
