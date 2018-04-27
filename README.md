@@ -31,6 +31,8 @@ If you really liked Ignite 1 as it was, then not much has changed! You just run 
 
 ### Quick Example
 
+If you'd like the latest and greatest [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser) with React Native 0.55.1, React Navigation, Mobx State Tree, Typescript, and more:
+
 ```
 $ npm install -g ignite-cli
 $ ignite new PizzaApp
@@ -40,6 +42,22 @@ $ ignite generate screen pizza-location-list
   ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
 $ ignite generate component pizza-location
   ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
+$ ignite i love you
+```
+
+If you'd prefer the tried and true [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross) with React Native 0.55.1, React Navigation, Redux, Redux Sagas, and more:
+```
+$ npm install -g ignite-cli
+$ ignite new PizzaApp
+  ( Choose Andross when prompted )
+$ cd PizzaApp
+$ ignite add maps
+$ ignite add vector-icons
+$ ignite generate screen PizzaLocationList
+$ ignite generate component PizzaLocation
+$ ignite generate map StoreLocator
+$ ignite add i18n
+$ ignite remove i18n
 $ ignite i love you
 ```
 
