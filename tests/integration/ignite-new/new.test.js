@@ -23,7 +23,7 @@ test('spins up a min app and performs various checks', async t => {
   // check the Containers/App.js file
   const appJS = jetpack.read('App/Containers/App.js')
   t.regex(appJS, /class App extends Component {/)
-  
+
   // run ignite g component
   await execa(IGNITE, ['g', 'component', 'Test'])
   t.is(jetpack.inspect('App/Components/Test.js').type, 'file')
@@ -38,4 +38,3 @@ test('spins up a min app and performs various checks', async t => {
 
   // TODO: add more end-to-end tests here
 })
-

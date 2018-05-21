@@ -1,6 +1,5 @@
 module.exports = (plugin, command, context) => {
-  
-  function findSpork(context, template) {
+  function findSpork (context, template) {
     // console.dir(context, {colors: true, depth: 1})
     const { filesystem } = context
     const sporkDirectory = `${filesystem.cwd()}/ignite/Spork/${context.plugin.name}`
