@@ -18,7 +18,7 @@ const walkthrough = async (context) => {
   if (context.parameters.options.max) { return maxOptions }
 
   // Okay, we'll ask one by one, fine
-  return await context.prompt.ask([
+  return context.prompt.ask([
     {
       name: 'boilerplate',
       message: 'Is this an app boilerplate plugin?',

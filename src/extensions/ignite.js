@@ -33,7 +33,7 @@ const pluginOverridesExt = require('./ignite/pluginOverrides')
  * @return {Function} A function to attach to the context.
  */
 function attach (plugin, command, context) {
-  const { parameters, system } = context
+  const { parameters } = context
 
   // determine which package manager to use
   const forceNpm = parameters.options.npm
