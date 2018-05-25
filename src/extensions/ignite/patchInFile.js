@@ -32,12 +32,23 @@ module.exports = (plugin, command, context) => {
     const newString = opts.insert || ''
 
     if (replaceString) {
-      if (data.includes(replaceString)) {
-        // Replace matching string with new string
-        const newContents = data.replace(replaceString, `${newString}`)
-        jetpack.write(file, newContents, { atomic: true })
+      if (typeof replaceString === 'string') {
+        if (data.includes(replaceString)) {
+          // Replace matching string with new string
+          const newContents = data.replace(replaceString, `${newString}`)
+          jetpack.write(file, newContents, { atomic: true })
+        } else {
+          console.warn(`${replaceString} not found`)
+        }
+      } else if (replaceString instanceof RegExp) {
+        if (data.match(replaceString)) {
+          const newContents = data.replace(replaceString, `${newString}`)
+          jetpack.write(file, newContents, { atomic: true })
+        } else {
+          console.warn(`${replaceString} not found`)
+        }
       } else {
-        console.warn(`${replaceString} not found`)
+        console.warn(`${replaceString} is neither a String or a RegExp?`)
       }
     } else {
       // Insert before/after a particular string
