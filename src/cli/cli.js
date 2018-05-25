@@ -15,7 +15,6 @@ const buildIgnite = () => {
     .token('commandName', 'cliCommand')
     .token('commandHidden', 'cliHidden')
     .token('commandAlias', 'cliAlias')
-    .token('commandName', 'cliCommand')
     .token('commandDescription', 'cliDescription')
     .token('extensionName', 'contextExtension')
     .createRuntime()
