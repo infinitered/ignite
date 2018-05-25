@@ -10,7 +10,6 @@
     "test": "nyc ava tests/fast",
     "watch": "ava tests/fast --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "start": "node src/index.js",
     "lint": "standard",
     "integration": "ava -s tests/integration",
     "shipit": "np"
@@ -35,6 +34,7 @@
     "fs-jetpack": "1.2.0",
     "gluegun": "0.20.0",
     "gluegun-patching": "0.3.0",
+    "ignore": "^3.3.8",
     "minimist": "1.2.0",
     "pretty-error": "2.0.2",
     "ramda": "0.24.1",
