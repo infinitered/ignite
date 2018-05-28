@@ -78,11 +78,15 @@ async function listAndCopy (folderName, context, acceptedForSubdirectories = fal
           answer = await context.prompt.ask([
             {
               name: 'includeFolder',
-              message: `Do you want to include the '${srcItemRelativePath}' folder in your boilerplate?`,
+              message: `Do you want to include the '${srcItemRelativePath}' folder in your boilerplate? (defaults to YES)`,
               type: 'radio',
               choices: ['Yes', 'Yes and all the subdirectories', 'No']
             }
           ])
+
+          if (!answer.includeFolder) {
+            answer = { includeFolder: 'Yes' }
+          }
         } else {
           answer = { includeFolder: 'Yes and all the subdirectories' }
         }
