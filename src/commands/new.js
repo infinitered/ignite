@@ -71,7 +71,7 @@ async function command (context) {
   // verify the directory doesn't exist already
   if (filesystem.exists(projectName) === 'dir') {
     print.error(`Directory ${projectName} already exists.`)
-    const askOverwrite = async () => { return await prompt.confirm('Do you want to overwrite this directory?') }
+    const askOverwrite = async () => { return prompt.confirm('Do you want to overwrite this directory?') }
 
     if (parameters.options.overwrite || await askOverwrite()) {
       print.info(`Overwriting ${projectName}...`)
@@ -184,4 +184,3 @@ async function command (context) {
 }
 
 module.exports = command
-

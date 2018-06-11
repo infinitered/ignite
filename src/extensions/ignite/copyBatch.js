@@ -1,6 +1,5 @@
 module.exports = (plugin, command, context) => {
-  
-  function findSpork(context, template) {
+  function findSpork (context, template) {
     // console.dir(context, {colors: true, depth: 1})
     const { filesystem } = context
     const sporkDirectory = `${filesystem.cwd()}/ignite/Spork/${context.plugin.name}`
@@ -34,7 +33,7 @@ module.exports = (plugin, command, context) => {
     const shouldGenerate = async target => {
       if (!askToOverwrite) return true
       if (!filesystem.exists(target)) return true
-      return await confirm(`overwrite ${target}`)
+      return confirm(`overwrite ${target}`)
     }
 
     // old school loop because of async stuff

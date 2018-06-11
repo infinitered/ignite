@@ -34,7 +34,7 @@ try {
   process.exit(3)
 }
 
-// Only check full dependencies if we're running in `--debug` or `--wtf` mode 
+// Only check full dependencies if we're running in `--debug` or `--wtf` mode
 var debugMode = (process.argv.indexOf('--debug') !== -1 || process.argv.indexOf('--wtf') !== -1)
 
 if (debugMode) {
@@ -87,4 +87,3 @@ if (debugMode) {
     process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY)
   }
 }
-

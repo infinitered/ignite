@@ -60,7 +60,7 @@ check_builds()
   cd $(mktemp -d)
 
   echo '~~~🌟 Generating Project'
-  test_command ignite new TestProj --min --skip-git --overwrite
+  test_command ignite new TestProj --min --skip-git --overwrite -b ignite-ir-boilerplate-andross
 
   echo '~~~🌟 Checking Builds'
   cd ./TestProj

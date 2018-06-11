@@ -25,7 +25,7 @@ test("won't double prefix", async t => {
   t.deepEqual(actual, expected)
 })
 
-test("removes @ version", async t => {
+test('removes @ version', async t => {
   const actual = detectInstall({
     filesystem,
     parameters: { second: 'ignite-something@">=2.0.0"' }

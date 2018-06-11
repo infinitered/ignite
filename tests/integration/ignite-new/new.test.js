@@ -12,7 +12,7 @@ test.before(t => {
 })
 
 test('spins up a min app and performs various checks', async t => {
-  await execa(IGNITE, ['new', APP_DIR, '--min'])
+  await execa(IGNITE, ['new', APP_DIR, '--min', '-b', 'ignite-ir-boilerplate-andross'])
   process.chdir(APP_DIR)
 
   // check the contents of ignite/ignite.json
@@ -23,14 +23,14 @@ test('spins up a min app and performs various checks', async t => {
   // check the Containers/App.js file
   const appJS = jetpack.read('App/Containers/App.js')
   t.regex(appJS, /class App extends Component {/)
-  
+
   // run ignite g component
   await execa(IGNITE, ['g', 'component', 'Test'])
   t.is(jetpack.inspect('App/Components/Test.js').type, 'file')
 
   // spork a screen and edit it
   await execa(IGNITE, ['spork', 'component.ejs'])
-  const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate/component.ejs'
+  const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate-andross/component.ejs'
   t.is(jetpack.inspect(sporkedFile).type, 'file')
   await jetpack.write(sporkedFile, 'SPORKED!')
   await execa(IGNITE, ['generate', 'component', 'Sporkified'])
@@ -38,4 +38,3 @@ test('spins up a min app and performs various checks', async t => {
 
   // TODO: add more end-to-end tests here
 })
-
