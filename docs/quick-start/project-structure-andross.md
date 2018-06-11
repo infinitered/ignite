@@ -1,6 +1,6 @@
 # Project Structure
 
-When creating a new React Native project with Ignite CLI, your project will include a number of nested files and folders. This structure is one the React Native best practices included with Ignite's default boilerplate. With this structure, your project already has a head start. Let's take a closer look at Ignite's default structure and explain how to leverage its benefits.
+When creating a new React Native project with Ignite CLI, your project will include a number of nested files and folders. This structure is one the React Native best practices included with Ignite's Andross boilerplate. With this structure, your project already has a head start. Let's take a closer look at Ignite's Andross structure and explain how to leverage its benefits.
 
 _NOTE: If you're using a different boilerplate, your project structure will likely look quite different._
 

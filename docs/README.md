@@ -5,7 +5,8 @@
 * Installing
 * [Getting started](./quick-start/getting-started.md)
 * [Ignite CLI commands](./quick-start/ignite-commands.md)
-* [Project Structure](./quick-start/project-structure.md)
+* [Project Structure - Andross](./quick-start/project-structure-andross.md)
+* [Project Structure - Bowser](./quick-start/project-structure-bowser.md)
 * [Using boilerplates](./quick-start/using-boilerplates.md)
 * Removing plugins
 * [Spork! - tweaking 3rd-party generators](./quick-start/spork.md)
