@@ -12,12 +12,17 @@ name | supporting
 ### 3rd Party
 name | supporting | author
 -----|------------|-------
+[camera](https://github.com/thisisjaiswal/ignite-camera) | [react-native-camera](https://github.com/lwansbrough/react-native-camera) | [Sandeep Jaiswal](https://github.com/thisisjaiswal)
+[crashlytics](https://github.com/Osedea/ignite-crashlytics) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
 [elements](https://github.com/dabit3/ignite-elements) | [react-native-elements](https://github.com/react-native-community/react-native-elements) | [Nadir Dabit](https://github.com/dabit3)
+[fabric](https://github.com/Osedea/ignite-fabric) (to be deprecated) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
 [fetch-blob](https://github.com/skellock/ignite-fetch-blob) | [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) | [Steve Kellock](https://github.com/skellock)
 [firebase](https://github.com/stoneman1/ignite-firebase) | [react-native-firebase](https://github.com/invertase/react-native-firebase) | [Aleksi Pousar](https://github.com/stoneman1)
 [img-cache](https://github.com/skellock/ignite-img-cache) | [react-native-img-cache](https://github.com/wcandillon/react-native-img-cache) | [Steve Kellock](https://github.com/skellock)
 [json-server](https://github.com/infinitered/ignite-json-server) | [json-server](https://github.com/typicode/json-server) | [Derek Greenberg](https://github.com/derekgreenberg)
 [keychain](https://github.com/juddey/ignite-keychain) | [react-native-keychain](https://github.com/oblador/react-native-keychain) | [Justin Lane](https://github.com/juddey)
+[native-navigation](https://github.com/Osedea/ignite-native-navigation/) | [react-native-navigation](https://github.com/wix/react-native-navigation/) | [Evan Glicakis](https://github.com/evang9410)
+[onesignal](https://github.com/LighthouseIT/ignite-onesignal) | [react-native-onesignal](https://github.com/OneSignal/react-native-onesignal/) | [Donald Silveira](https://github.com/donnes)
 [progress](https://github.com/deden/ignite-progress) | [react-native-progress](https://github.com/oblador/react-native-progress) | [Deden Ramadhan](https://github.com/deden)
 [push-notification](https://github.com/ryanlntn/ignite-push-notification) | [react-native-push-notification](https://github.com/zo0r/react-native-push-notification) | [Ryan Linton](https://github.com/ryanlntn)
 [radio-buttons](https://github.com/robinheinze/ignite-radio-buttons) | [react-native-radio-buttons](https://github.com/ArnaudRinquin/react-native-radio-buttons) | [Robin Heinze](https://github.com/robinheinze)
@@ -29,7 +34,3 @@ name | supporting | author
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
 [tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3)
 [video](https://github.com/ryanlntn/ignite-video) | [react-native-video](https://github.com/react-native-community/react-native-video) | [Ryan Linton](https://github.com/ryanlntn)
-[camera](https://github.com/thisisjaiswal/ignite-camera) | [react-native-camera](https://github.com/lwansbrough/react-native-camera) | [Sandeep Jaiswal](https://github.com/thisisjaiswal)
-[fabric](https://github.com/Osedea/ignite-fabric) (to be deprecated) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
-[crashlytics](https://github.com/Osedea/ignite-crashlytics) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
-[onesignal](https://github.com/LighthouseIT/ignite-onesignal) | [react-native-onesignal](https://github.com/OneSignal/react-native-onesignal/) | [Donald Silveira](https://github.com/donnes)
