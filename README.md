@@ -80,7 +80,7 @@ Infinite Red provides two boilerplates, they are:
 * Andross - the tried and true (React Navigation, Redux, & Redux Saga)
 * Bowser - the latest and greatest, which is currently in beta (React Navigation, MobX State Tree, & TypeScript)
 
-### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser) with React Native 0.55.1, React Navigation, Mobx State Tree, Typescript, and more:
+### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser)
 
 ```
 $ npm install -g ignite-cli
@@ -94,7 +94,7 @@ $ ignite generate component pizza-location
 $ ignite i love you
 ```
 
-### Use Ignite Andross [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross) with React Native 0.55.1, React Navigation, Redux, Redux Sagas, and more:
+### Use Ignite Andross [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross)
 
 ```
 $ npm install -g ignite-cli
