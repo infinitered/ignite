@@ -76,7 +76,11 @@ $ ignite new MyNewAppName
 
 ## Quick Example
 
-If you'd like the latest and greatest, which is currently in beta [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser) with React Native 0.55.1, React Navigation, Mobx State Tree, Typescript, and more:
+Infinite Red provides two boilerplates, they are:
+* Andross - the tried and true (React Navigation, Redux, & Redux Saga)
+* Bowser - the latest and greatest, which is currently in beta (React Navigation, MobX State Tree, & TypeScript)
+
+### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser) with React Native 0.55.1, React Navigation, Mobx State Tree, Typescript, and more:
 
 ```
 $ npm install -g ignite-cli
@@ -90,7 +94,8 @@ $ ignite generate component pizza-location
 $ ignite i love you
 ```
 
-If you'd prefer the tried and true [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross) with React Native 0.55.1, React Navigation, Redux, Redux Sagas, and more:
+### Use Ignite Andross [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross) with React Native 0.55.1, React Navigation, Redux, Redux Sagas, and more:
+
 ```
 $ npm install -g ignite-cli
 $ ignite new PizzaApp
