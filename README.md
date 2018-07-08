@@ -1,3 +1,5 @@
+<p align="center"><img src="http://ir_public.s3.amazonaws.com/projects/ignite/ignite-logo-red-on-white-1000w.jpg" alt="header image" width="500px"></p>
+
 <a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 <a href="https://semaphoreci.com/ir/ignite" target="_blank"><img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/></a>
 [![Coverage Status](https://coveralls.io/repos/github/infinitered/ignite/badge.svg?branch=master)](https://coveralls.io/github/infinitered/ignite?branch=master)
@@ -6,11 +8,8 @@
 </a>
 <img src=https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style%3Dflat alt='js-standard-style'/>
 
-# Ignite CLI
 
-<p align="center">
-  <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite CLI screenshot" width="300px"></a>
-</p>
+# Ignite CLI
 
 <p align="center">
   :fire: The hottest CLI for React Native, boilerplates, plugins, generators, and more. :fire:
@@ -19,7 +18,8 @@
 
 _Note: if you're coming to [Chain React, the React Native Conference](https://infinite.red/ChainReactConf) in Portland July 11-13, we'll be handing out Ignite stickers! Be sure to say hi to an Infinite Red employee there._
 
-### Ignite CLI is here!
+
+## Ignite CLI is here!
 
 After months of work and sweat and tears, Ignite CLI has landed! We're incredibly proud of where Ignite CLI is and where it's headed.
 
@@ -29,37 +29,6 @@ Ignite 1 was a (very nice!) [React Native](http://facebook.github.io/react-nativ
 
 If you really liked Ignite 1 as it was, then not much has changed! You just run `ignite new MyApp --max` and everything feels pretty normal from there.
 
-### Quick Example
-
-If you'd like the latest and greatest [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser) with React Native 0.55.1, React Navigation, Mobx State Tree, Typescript, and more:
-
-```
-$ npm install -g ignite-cli
-$ ignite new PizzaApp
-  ( Choose `Bowser (alpha)` when prompted )
-$ cd PizzaApp
-$ ignite generate screen pizza-location-list
-  ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
-$ ignite generate component pizza-location
-  ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
-$ ignite i love you
-```
-
-If you'd prefer the tried and true [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross) with React Native 0.55.1, React Navigation, Redux, Redux Sagas, and more:
-```
-$ npm install -g ignite-cli
-$ ignite new PizzaApp
-  ( Choose Andross when prompted )
-$ cd PizzaApp
-$ ignite add maps
-$ ignite add vector-icons
-$ ignite generate screen PizzaLocationList
-$ ignite generate component PizzaLocation
-$ ignite generate map StoreLocator
-$ ignite add i18n
-$ ignite remove i18n
-$ ignite i love you
-```
 
 ### Why Ignite CLI?
 
@@ -70,6 +39,7 @@ $ ignite i love you
 * Battle tested and used every day by the developers at Infinite Red
 
 And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate](https://github.com/infinitered/ignite-ir-boilerplate), or choose [one of many others](./BOILERPLATES.md).
+
 
 ## :arrow_down: Install
 
@@ -100,14 +70,56 @@ _All global installs below are using npm over yarn because of [this bug](https:/
 $ npm install -g ignite-cli
 $ ignite new MyNewAppName
 ```
+
+
+## Quick Example
+
+Infinite Red provides two boilerplates, they are:
+* Andross - the tried and true (React Navigation, Redux, & Redux Saga)
+* Bowser - the latest and greatest, which is currently in beta (React Navigation, MobX State Tree, & TypeScript)
+
+### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser)
+
+```
+$ npm install -g ignite-cli
+$ ignite new PizzaApp
+  ( Choose `Bowser (currently in beta)` when prompted )
+$ cd PizzaApp
+$ ignite generate screen pizza-location-list
+  ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
+$ ignite generate component pizza-location
+  ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
+$ ignite i love you
+```
+
+### Use Ignite Andross [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-andross)
+
+```
+$ npm install -g ignite-cli
+$ ignite new PizzaApp
+  ( Choose Andross when prompted )
+$ cd PizzaApp
+$ ignite add maps
+$ ignite add vector-icons
+$ ignite generate screen PizzaLocationList
+$ ignite generate component PizzaLocation
+$ ignite generate map StoreLocator
+$ ignite add i18n
+$ ignite remove i18n
+$ ignite i love you
+```
+
+
 ## :clipboard: Documentation :clipboard:
 
 Want to dive into the Ignite CLI documentation? [Go here](./docs/README.md)
 Looking for React Native's documentation? [Go here](http://facebook.github.io/react-native/docs/getting-started.html)
 
+
 ## :electric_plug: Plugins :electric_plug:
 
 Check out the list of [Plugins](./PLUGINS.md)
+
 
 ## :plate_with_cutlery: Boilerplates :plate_with_cutlery:
 
@@ -116,9 +128,11 @@ Check out the list of [Boilerplates](./BOILERPLATES.md)
 $ ignite new MyNewAppName -b ir-boilerplate
 ```
 
+
 ## :poop: Troubleshooting :poop:
 
 If you run into problems, first search the issues in this repository. If you don't find anything, you can either [file an issue](https://github.com/infinitered/ignite/issues) or come talk to our friendly developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
+
 
 ## :telescope: Where to Go From Here :telescope:
 
@@ -128,8 +142,10 @@ If you run into problems, first search the issues in this repository. If you don
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
 #### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
 
+
 ## :heart: Special Thanks :heart:
 Thank you to the numerous [contributors of Ignite CLI](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite CLI.
+
 
 ## Premium Support
 
