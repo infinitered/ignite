@@ -1,4 +1,4 @@
-<p align="center"><img src="http://ir_public.s3.amazonaws.com/projects/ignite/ignite-github-header.jpg" alt="header image" width="700px"></p>
+<p align="center"><img src="http://ir_public.s3.amazonaws.com/projects/ignite/ignite-logo-red-on-white-1000w.jpg" alt="header image" width="500px"></p>
 
 <a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 <a href="https://semaphoreci.com/ir/ignite" target="_blank"><img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/></a>
