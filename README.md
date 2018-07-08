@@ -1,3 +1,5 @@
+<p align="center"><img src="http://ir_public.s3.amazonaws.com/projects/ignite/ignite-github-header.jpg" alt="header image" width="700px"></p>
+
 <a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 <a href="https://semaphoreci.com/ir/ignite" target="_blank"><img src=https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg alt='Build Status'/></a>
 [![Coverage Status](https://coveralls.io/repos/github/infinitered/ignite/badge.svg?branch=master)](https://coveralls.io/github/infinitered/ignite?branch=master)
@@ -8,10 +10,6 @@
 
 
 # Ignite CLI
-
-<p align="center">
-  <a href="https://infinite.red/ignite"><img src="https://cloud.githubusercontent.com/assets/1479215/23348302/941b2d54-fc5d-11e6-9042-62501fa90b05.png" alt="Ignite CLI screenshot" width="300px"></a>
-</p>
 
 <p align="center">
   :fire: The hottest CLI for React Native, boilerplates, plugins, generators, and more. :fire:
