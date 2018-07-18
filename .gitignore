@@ -14,3 +14,4 @@ node_modules
 !.vscode/extensions.json
 testgrounds
 generated
+yarn-error.log
