@@ -32,5 +32,5 @@ name | supporting | author
 [redux-thunk](https://github.com/kusti8/ignite-redux-thunk) | [redux-thunk](https://github.com/gaearon/redux-thunk) | [Gustav Hansen](https://github.com/kusti8)
 [snap-carousel](https://github.com/deden/ignite-snap-carousel) | [react-native-snap-carousel](https://github.com/archriss/react-native-snap-carousel) | [Deden Ramadhan](https://github.com/deden)
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
-[tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3)
+[tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3) __BROKEN__ install with `yarn add react-native-tab-view` instead for now.
 [video](https://github.com/ryanlntn/ignite-video) | [react-native-video](https://github.com/react-native-community/react-native-video) | [Ryan Linton](https://github.com/ryanlntn)
