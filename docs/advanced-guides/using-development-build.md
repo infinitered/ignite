@@ -56,7 +56,7 @@ yarn link
 
 > Note: If you have run through the `npm rm` commands listed above and you get this error upon running `yarn link`
 
-  ```sh
+  ```
   warning There's already a package called "ignite-cli" registered. This command has had no effect. If this command was run in another folder with the same name, the other folder is still linked. Please run yarn unlink in the other folder if you want to register this folder.
   ```
 
@@ -64,7 +64,7 @@ yarn link
 
   If you see a symlink listed as `ignite-cli`, delete it. CD back to the `ignite` directory and run `yarn link`. It should run without errors and return something similar to the following in the terminal:
 
-  ```sh
+  ```
   yarn link v1.9.4
   success Registered "ignite-cli".
   info You can now run `yarn link "ignite-cli"` in the projects where you want to use this package and it will be used instead.
