@@ -76,14 +76,14 @@ $ ignite new MyNewAppName
 
 Infinite Red provides two boilerplates, they are:
 * Andross - the tried and true (React Navigation, Redux, & Redux Saga)
-* Bowser - the latest and greatest, which is currently in beta (React Navigation, MobX State Tree, & TypeScript)
+* Bowser - the latest and greatest (React Navigation, MobX State Tree, & TypeScript)
 
 ### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-ir-boilerplate-bowser)
 
 ```
 $ npm install -g ignite-cli
 $ ignite new PizzaApp
-  ( Choose `Bowser (currently in beta)` when prompted )
+  ( Choose `Bowser` when prompted )
 $ cd PizzaApp
 $ ignite generate screen pizza-location-list
   ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
