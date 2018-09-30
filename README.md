@@ -16,8 +16,6 @@
   <br/>
 </p>
 
-_Note: if you're coming to [Chain React, the React Native Conference](https://infinite.red/ChainReactConf) in Portland July 11-13, we'll be handing out Ignite stickers! Be sure to say hi to an Infinite Red employee there._
-
 
 ## Ignite CLI is here!
 
