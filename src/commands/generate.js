@@ -3,7 +3,9 @@
 // ----------------------------------------------------------------------------
 
 const {
+  cond,
   prop,
+  path,
   groupBy,
   map,
   flatten,
@@ -16,6 +18,7 @@ const {
   values,
   replace,
   trim,
+  T,
   isEmpty
 } = require('ramda')
 const { dotPath } = require('ramdasauce')
@@ -92,20 +95,19 @@ module.exports = async function (context) {
         registry[type] || []
       )
 
-      // figure out a friendly error to show the user
-      let error = null
-      let description = null
-      if (isNil(lookup)) {
-        error = 'missing'
-      } else if (isNil(lookup.command)) {
-        error = 'missing command'
-      } else if (lookup.plugin.errorState !== 'none') {
-        error = `command ${lookup.plugin.errorState}`
-      } else if (lookup.command.errorState !== 'none') {
-        error = `command ${lookup.command.errorState}`
-      } else {
-        description = lookup.command.description
-      }
+      const commandMissing = ({command}) => isNil(command)
+      const errorStateExists = a => lookup => path([a, 'errorState'], lookup) !== 'none'
+      const defaultError = T
+
+      const friendlyError = cond([
+        [isNil, () => 'missing'],
+        [commandMissing, () => 'missing command'],
+        [errorStateExists('plugin'), lookup => `command ${path(['plugin', 'errorState'], lookup)}`],
+        [errorStateExists('command'), lookup => `command ${path(['command', 'errorState'], lookup)}`],
+        [defaultError, () => null]
+      ])
+      const error = friendlyError(lookup)
+      const description = error === null ? lookup.command.description : null
 
       // what our new list will look like
       return {
