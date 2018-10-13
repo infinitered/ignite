@@ -71,12 +71,17 @@ module.exports = async function (context) {
   // -=-=-=- ignite -=-=-=-
   const ignitePath = which('ignite')
   const igniteVersion = await run('ignite version', { trim: true })
+  const igniteJson = read(`${process.cwd()}/ignite/ignite.json`, 'json')
+  const igniteBoilerplate = igniteJson && igniteJson.boilerplate
 
   info('')
   info(colors.cyan('Ignite'))
-  table([
-    [column1('ignite'), column2(igniteVersion), column3(ignitePath)]
-  ])
+  const igniteTable = []
+  igniteTable.push([column1('ignite'), column2(igniteVersion), column3(ignitePath)])
+  if (igniteBoilerplate) {
+    igniteTable.push([column1('boilerplate'), column2(igniteBoilerplate)])
+  }
+  table(igniteTable)
 
   // -=-=-=- android -=-=-=-
   const androidPath = process.env['ANDROID_HOME']
