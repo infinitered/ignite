@@ -14,7 +14,7 @@ async function importPlugin (context, opts) {
   const { log } = ignite
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
-  const packageVersion = `${(version && !isDirectory) ? `@${version}` : ''}`
+  const packageVersion = (version && !isDirectory) ? `@${version}` : ''
 
   // check to see if it exists first
   if (type === 'npm') {
