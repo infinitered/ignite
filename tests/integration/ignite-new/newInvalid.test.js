@@ -10,9 +10,9 @@ test.before(t => {
   process.chdir(tempDir)
 })
 
-test('requires a name', async t => {
+test('requires a name', async (t) => {
   try {
-    await execa(IGNITE, ['new'])
+    const result = await execa(IGNITE, ['new'])
     t.fail('Blank name did not return an error.')
   } catch (err) {
     t.is(err.stdout, 'ignite new <projectName>\n\nProject name is required\n')
@@ -20,7 +20,7 @@ test('requires a name', async t => {
   }
 })
 
-test(`doesn't allow kebab-case`, async t => {
+test(`doesn't allow kebab-case`, async (t) => {
   try {
     await execa(IGNITE, ['new', 'chicken-kebab'])
     t.fail('Kebab-case name did not return an error.')
@@ -30,17 +30,17 @@ test(`doesn't allow kebab-case`, async t => {
   }
 })
 
-test(`doesn't allow 'ignite'`, async t => {
+test(`doesn't allow 'ignite'`, async (t) => {
   try {
     await execa(IGNITE, ['new', 'ignite'])
     t.fail('ignite name did not return an error.')
   } catch (err) {
-    t.is(err.stdout, 'Hey...that\'s my name! Please name your project something other than ignite.\n')
+    t.is(err.stdout, 'Hey...that\'s my name! Please name your project something other than \'ignite\'.\n')
     t.is(err.code, 5)
   }
 })
 
-test('numeric project name', async t => {
+test('numeric project name', async (t) => {
   try {
     await execa(IGNITE, ['new', '123456'])
     t.fail('Numeric-only name did not return an error.')
@@ -50,7 +50,7 @@ test('numeric project name', async t => {
   }
 })
 
-test('project name starting with a number', async t => {
+test('project name starting with a number', async (t) => {
   try {
     await execa(IGNITE, ['new', '1foo'])
     t.fail('Project name starting with a number did not fail.')

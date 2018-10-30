@@ -31,7 +31,7 @@ async function command (context) {
   const isNumericOnly = /^\d+$/.test(projectName)
 
   // check for alphanumeric name, beginning with a letter
-  const isValidName = /^[a-z_][a-z0-9_]+$/i.test(name)
+  const isValidName = /^[a-z_][a-z0-9_]+$/i.test(projectName)
 
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
