@@ -11,7 +11,7 @@ test.before(t => {
   process.chdir(tempDir)
 })
 
-test('spins up a min app and performs various checks', async t => {
+test('spins up a min app and performs various checks', async (t) => {
   await execa(IGNITE, ['new', APP_DIR, '--min', '-b', 'ignite-ir-boilerplate-andross'])
   process.chdir(APP_DIR)
 
@@ -31,8 +31,8 @@ test('spins up a min app and performs various checks', async t => {
   // spork a screen and edit it
   await execa(IGNITE, ['spork', 'component.ejs'])
   const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate-andross/component.ejs'
-  t.is(jetpack.inspect(sporkedFile).type, 'file')
   await jetpack.write(sporkedFile, 'SPORKED!')
+  t.is(jetpack.inspect(sporkedFile).type, 'file')
   await execa(IGNITE, ['generate', 'component', 'Sporkified'])
   t.is(jetpack.read('App/Components/Sporkified.js'), 'SPORKED!')
 

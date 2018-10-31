@@ -30,6 +30,9 @@ async function command (context) {
   // check for numbers-only names
   const isNumericOnly = /^\d+$/.test(projectName)
 
+  // check for alphanumeric name, beginning with a letter
+  const isValidName = /^[a-z_][a-z0-9_]+$/i.test(projectName)
+
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite new` command cannot be run within an already ignited project.')
@@ -65,6 +68,12 @@ async function command (context) {
   // verify the project name isn't just numbers
   if (isNumericOnly) {
     print.error(`Please use at least one non-numeric character for your project name.`)
+    process.exit(exitCodes.PROJECT_NAME)
+  }
+
+  // verify the project name is valid
+  if (!isValidName) {
+    print.error(`The project name can only contain alphanumeric characters and underscore, but must not begin with a number.`)
     process.exit(exitCodes.PROJECT_NAME)
   }
 
