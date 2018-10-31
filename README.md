@@ -136,6 +136,7 @@ If you run into problems, first search the issues in this repository. If you don
 
 #### [Contribute to Ignite CLI](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
 #### [Take a tour of Ignite CLI source code](https://github.com/infinitered/ignite/blob/master/docs/advanced-guides/tour.md)
+#### [Get inspired by apps built with Ignite](https://github.com/infinitered/ignite/blob/master/docs/quick-start/built-with-ignite.md)
 #### [Chat with us on the IR Community](http://community.infinite.red) - Infinite Red devs standing by
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
 #### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
