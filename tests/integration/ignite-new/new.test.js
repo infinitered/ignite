@@ -15,7 +15,7 @@ const tempDir = tempy.directory()
 
 test('spins up a min app and performs various checks', async done => {
   await system.spawn(`cd ${tempDir} && ${IGNITE} new ${APP_DIR} --min -b ignite-ir-boilerplate-andross`)
-  process.chdir(APP_DIR)
+  // process.chdir(APP_DIR)
 
   // check the contents of ignite/ignite.json
   const igniteJSON = jetpack.read(`${tempDir}/ignite/ignite.json`)
