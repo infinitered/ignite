@@ -15,9 +15,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Set NPM global location
-          command: mkdir -p ~/repo/npm && npm set prefix=~/repo/npm && echo 'export PATH=$HOME/repo/npm' >> /home/circleci/.bashrc
       - restore_cache:
           name: Restore node modules
           keys:

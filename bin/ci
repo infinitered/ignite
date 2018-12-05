@@ -37,17 +37,16 @@ setup()
   echo '~~~🌟 NPM install'
   test_command npm install
 
-  echo '~~~🌟 Linking local for Testing'
-  test_command npm link
+  # Disabling this for CircleCI testing
+  # echo '~~~🌟 Linking local for Testing'
+  # test_command npm link
 }
 
 verify_code()
 {
   echo '~~~🌟 Checking Code'
-  npm install -g standard
-  npm install -g ava
-  npm i -g react-native-cli
-  test_command standard ./src
+  npm i react-native-cli
+  alias react-native="node $IGNITE_DIRECTORY/node_modules/react-native-cli/index.js"
   test_command npm test
   test_command npm run integration
   npm run coverage
@@ -59,7 +58,7 @@ check_builds()
   cd $(mktemp -d)
 
   echo '~~~🌟 Generating Project'
-  test_command ignite new TestProj --min --skip-git --overwrite -b ignite-ir-boilerplate-andross
+  test_command $IGNITE_DIRECTORY/bin/ignite new TestProj --min --skip-git --overwrite -b ignite-ir-boilerplate-andross
 
   echo '~~~🌟 Checking Builds'
   cd ./TestProj
@@ -76,28 +75,28 @@ check_builds()
 
   echo 'Testing Blessed Plugins'
   echo '~ Test adding vector-icons plugin from npm'
-  test_command ignite add vector-icons
+  test_command $IGNITE_DIRECTORY/bin/ignite add vector-icons
   echo '~ Test adding animatable plugin from npm'
-  test_command ignite add animatable
+  test_command $IGNITE_DIRECTORY/bin/ignite add animatable
   echo '~ Test adding i18n plugin from npm'
-  test_command ignite add i18n
+  test_command $IGNITE_DIRECTORY/bin/ignite add i18n
   echo '~ Test adding maps plugin from npm'
-  test_command ignite add maps
+  test_command $IGNITE_DIRECTORY/bin/ignite add maps
 
   echo '~ Test Generators'
-  test_command ignite g component PizzaItem
-  test_command ignite g screen PizzaLocation
-  test_command ignite g container PizzaMenu
-  test_command ignite g redux PizzaFeatures
-  test_command ignite g saga PizzaDelivered
-  test_command ignite g list PizzaPlaces1 --type Row --dataType Single --codeType flatlist
-  test_command ignite g list PizzaPlaces2 --type Grid --dataType Single --codeType flatlist
-  test_command ignite g list PizzaPlaces3 --type Row --dataType Sectioned --codeType flatlist
-  test_command ignite g list PizzaPlaces4 --type Grid --dataType Sectioned --codeType flatlist
-  test_command ignite g list PizzaPlaces5 --type Row --dataType Single --codeType listview
-  test_command ignite g list PizzaPlaces6 --type Grid --dataType Single --codeType listview
-  test_command ignite g list PizzaPlaces7 --type Row --dataType Sectioned --codeType listview
-  test_command ignite g list PizzaPlaces8 --type Grid --dataType Sectioned --codeType listview
+  test_command $IGNITE_DIRECTORY/bin/ignite g component PizzaItem
+  test_command $IGNITE_DIRECTORY/bin/ignite g screen PizzaLocation
+  test_command $IGNITE_DIRECTORY/bin/ignite g container PizzaMenu
+  test_command $IGNITE_DIRECTORY/bin/ignite g redux PizzaFeatures
+  test_command $IGNITE_DIRECTORY/bin/ignite g saga PizzaDelivered
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces1 --type Row --dataType Single --codeType flatlist
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces2 --type Grid --dataType Single --codeType flatlist
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces3 --type Row --dataType Sectioned --codeType flatlist
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces4 --type Grid --dataType Sectioned --codeType flatlist
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces5 --type Row --dataType Single --codeType listview
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces6 --type Grid --dataType Single --codeType listview
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces7 --type Row --dataType Sectioned --codeType listview
+  test_command $IGNITE_DIRECTORY/bin/ignite g list PizzaPlaces8 --type Grid --dataType Sectioned --codeType listview
 
   echo '~ LINT ALL THE THINGS!'
   test_command npm run lint
