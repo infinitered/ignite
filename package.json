@@ -13,7 +13,7 @@
     "start": "node src/index.js",
     "lint": "standard",
     "integration": "ava -s tests/integration",
-    "shipit": "np"
+    "ci:test": "./bin/ci"
   },
   "repository": "infinitered/ignite",
   "author": {
