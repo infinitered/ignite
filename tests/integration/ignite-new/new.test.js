@@ -8,25 +8,22 @@ const APP_DIR = 'Foo'
 jest.setTimeout(90 * 1000)
 
 const originalDir = process.cwd()
+const tempDir = tempy.directory()
 
-beforeAll(() => {
-  const tempDir = tempy.directory()
-  process.chdir(tempDir)
-})
-
-afterAll(() => process.chdir(originalDir))
+// beforeEach(() => process.chdir(tempDir))
+// afterEach(() => process.chdir(originalDir))
 
 test('spins up a min app and performs various checks', async done => {
-  await system.spawn(`${IGNITE} new ${APP_DIR} --min -b ignite-ir-boilerplate-andross`)
+  await system.spawn(`cd ${tempDir} && ${IGNITE} new ${APP_DIR} --min -b ignite-ir-boilerplate-andross`)
   process.chdir(APP_DIR)
 
   // check the contents of ignite/ignite.json
-  const igniteJSON = jetpack.read('ignite/ignite.json')
+  const igniteJSON = jetpack.read(`${tempDir}/ignite/ignite.json`)
   expect(typeof igniteJSON).toBe('string')
   expect(igniteJSON).toMatch(/"generators": {/)
 
   // check the Containers/App.js file
-  const appJS = jetpack.read('App/Containers/App.js')
+  const appJS = jetpack.read(`${tempDir}/App/Containers/App.js`)
   expect(appJS).toMatch(/class App extends Component {/)
 
   // run ignite g component
@@ -34,11 +31,11 @@ test('spins up a min app and performs various checks', async done => {
   expect(jetpack.inspect('App/Components/Test.js').type).toBe('file')
 
   // spork a screen and edit it
-  await system.spawn(`${IGNITE} spork component.ejs`)
-  const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate-andross/component.ejs'
+  await system.spawn(`cd ${tempDir} && ${IGNITE} spork component.ejs`)
+  const sporkedFile = `${tempDir}/ignite/Spork/ignite-ir-boilerplate-andross/component.ejs`
   await jetpack.write(sporkedFile, 'SPORKED!')
   expect(jetpack.inspect(sporkedFile).type).toBe('file')
-  await system.spawn(`${IGNITE} generate component Sporkified`)
+  await system.spawn(`cd ${tempDir} && ${IGNITE} generate component Sporkified`)
   expect(jetpack.read('App/Components/Sporkified.js')).toBe('SPORKED!')
 
   done()
