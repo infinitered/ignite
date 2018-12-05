@@ -13,7 +13,7 @@
     "start": "node src/index.js",
     "lint": "standard",
     "integration": "jest -i tests/integration",
-    "ci:test": "yarn jest tests/fast && yarn integration",
+    "ci:test": "yarn test && yarn integration",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },
