@@ -36,17 +36,13 @@ setup()
 {
   echo '~~~🌟 NPM install'
   test_command npm install
-
-  # Disabling this for CircleCI testing
-  # echo '~~~🌟 Linking local for Testing'
-  # test_command npm link
+  npm i react-native-cli
+  alias react-native="node $IGNITE_DIRECTORY/node_modules/react-native-cli/index.js"
 }
 
 verify_code()
 {
   echo '~~~🌟 Checking Code'
-  npm i react-native-cli
-  alias react-native="node $IGNITE_DIRECTORY/node_modules/react-native-cli/index.js"
   test_command npm test
   test_command npm run integration
   npm run coverage
@@ -135,7 +131,7 @@ setup;
 
 verify_code;
 
-check_builds;
+# check_builds;
 
 # Done
 if [ "$SOMETHING_FAILED" != "0" ]; then
