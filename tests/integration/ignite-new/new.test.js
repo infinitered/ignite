@@ -1,40 +1,47 @@
-const test = require('ava')
-const execa = require('execa')
+const { system } = require('gluegun')
 const tempy = require('tempy')
 const jetpack = require('fs-jetpack')
 
 const IGNITE = `${process.cwd()}/bin/ignite`
 const APP_DIR = 'Foo'
 
-test.before(t => {
+jest.setTimeout(90 * 1000)
+
+const originalDir = process.cwd()
+
+beforeAll(() => {
   const tempDir = tempy.directory()
   process.chdir(tempDir)
 })
 
-test('spins up a min app and performs various checks', async (t) => {
-  await execa(IGNITE, ['new', APP_DIR, '--min', '-b', 'ignite-ir-boilerplate-andross'])
+afterAll(() => process.chdir(originalDir))
+
+test('spins up a min app and performs various checks', async done => {
+  await system.spawn(`${IGNITE} new ${APP_DIR} --min -b ignite-ir-boilerplate-andross`)
   process.chdir(APP_DIR)
 
   // check the contents of ignite/ignite.json
   const igniteJSON = jetpack.read('ignite/ignite.json')
-  t.is(typeof igniteJSON, 'string')
-  t.regex(igniteJSON, /"generators": {/)
+  expect(typeof igniteJSON).toBe('string')
+  expect(igniteJSON).toMatch(/"generators": {/)
 
   // check the Containers/App.js file
   const appJS = jetpack.read('App/Containers/App.js')
-  t.regex(appJS, /class App extends Component {/)
+  expect(appJS).toMatch(/class App extends Component {/)
 
   // run ignite g component
-  await execa(IGNITE, ['g', 'component', 'Test'])
-  t.is(jetpack.inspect('App/Components/Test.js').type, 'file')
+  await system.spawn(`${IGNITE} g component Test`)
+  expect(jetpack.inspect('App/Components/Test.js').type).toBe('file')
 
   // spork a screen and edit it
-  await execa(IGNITE, ['spork', 'component.ejs'])
+  await system.spawn(`${IGNITE} spork component.ejs`)
   const sporkedFile = 'ignite/Spork/ignite-ir-boilerplate-andross/component.ejs'
   await jetpack.write(sporkedFile, 'SPORKED!')
-  t.is(jetpack.inspect(sporkedFile).type, 'file')
-  await execa(IGNITE, ['generate', 'component', 'Sporkified'])
-  t.is(jetpack.read('App/Components/Sporkified.js'), 'SPORKED!')
+  expect(jetpack.inspect(sporkedFile).type).toBe('file')
+  await system.spawn(`${IGNITE} generate component Sporkified`)
+  expect(jetpack.read('App/Components/Sporkified.js')).toBe('SPORKED!')
+
+  done()
 
   // TODO: add more end-to-end tests here
 })

@@ -1,4 +1,3 @@
-const test = require('ava')
 const mockery = require('mockery')
 const MockGluegunBuilder = require('./_mockGluegunBuilder')
 const path = require('path')
@@ -20,10 +19,10 @@ mockery.registerMock('gluegun', {
 // our cli
 const cli = require('../../../src/cli/cli')
 
-test('ignite', async t => {
+test('ignite', async () => {
   mockGluegunBuilder.onCreateRuntime(builderProps => {
     // we expect our CLI to be configured like this
-    t.deepEqual(builderProps, {
+    expect(builderProps).toEqual({
       brand: 'ignite',
       loadAlls: [
         {

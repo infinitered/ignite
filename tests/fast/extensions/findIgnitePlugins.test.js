@@ -1,15 +1,14 @@
-const test = require('ava')
 const extension = require('../../../src/extensions/ignite/findIgnitePlugins')
 const path = require('path')
 
-test('has the right interface', t => {
-  t.is(typeof extension, 'function')
+test('has the right interface', () => {
+  expect(typeof extension).toBe('function')
   const context = { filesystem: { separator: path.sep } }
   const findIgnitePlugin = extension(null, null, context)
-  t.is(typeof findIgnitePlugin, 'function')
+  expect(typeof findIgnitePlugin).toBe('function')
 })
 
-test('plugin-less', t => {
+test('plugin-less', () => {
   const context = {
     filesystem: { separator: path.sep },
     runtime: {
@@ -17,10 +16,10 @@ test('plugin-less', t => {
     }
   }
   const findIgnitePlugin = extension(null, null, context)
-  t.deepEqual(findIgnitePlugin(), [])
+  expect(findIgnitePlugin()).toEqual([])
 })
 
-test('skips non-ignite plugins', t => {
+test('skips non-ignite plugins', () => {
   const context = {
     filesystem: { separator: path.sep },
     runtime: {
@@ -28,10 +27,10 @@ test('skips non-ignite plugins', t => {
     }
   }
   const findIgnitePlugin = extension(null, null, context)
-  t.deepEqual(findIgnitePlugin(), [])
+  expect(findIgnitePlugin()).toEqual([])
 })
 
-test('finds ignite- prefixed plugins', t => {
+test('finds ignite- prefixed plugins', () => {
   const context = {
     filesystem: { separator: path.sep },
     runtime: {
@@ -39,10 +38,10 @@ test('finds ignite- prefixed plugins', t => {
     }
   }
   const findIgnitePlugin = extension(null, null, context)
-  t.deepEqual(findIgnitePlugin(), [{ name: 'ignite-foo', directory: 'y' }])
+  expect(findIgnitePlugin()).toEqual([{ name: 'ignite-foo', directory: 'y' }])
 })
 
-test('finds project plugins', t => {
+test('finds project plugins', () => {
   const dir = `${process.cwd()}${path.sep}ignite${path.sep}plugins${path.sep}y`
   const context = {
     filesystem: { separator: path.sep },
@@ -51,5 +50,5 @@ test('finds project plugins', t => {
     }
   }
   const findIgnitePlugin = extension(null, null, context)
-  t.deepEqual(findIgnitePlugin(), [{ name: 'x', directory: dir }])
+  expect(findIgnitePlugin()).toEqual([{ name: 'x', directory: dir }])
 })

@@ -7,13 +7,13 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "nyc ava tests/fast",
-    "watch": "ava tests/fast --watch",
+    "test": "jest tests/fast",
+    "watch": "jest tests/fast --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "node src/index.js",
     "lint": "standard",
-    "integration": "ava -s tests/integration",
-    "ci:test": "yarn nyc ava tests/fast && yarn integration",
+    "integration": "jest -i tests/integration",
+    "ci:test": "yarn jest tests/fast && yarn integration",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },
@@ -48,9 +48,9 @@
   },
   "devDependencies": {
     "@semantic-release/git": "^7.0.5",
-    "ava": "0.25.0",
     "babel-eslint": "7.1.1",
     "coveralls": "^3.0.0",
+    "jest": "^23.6.0",
     "mock-fs": "4.4.1",
     "mockery": "2.0.0",
     "nyc": "^10.3.2",
@@ -58,7 +58,6 @@
     "standard": "10.0.2",
     "tempy": "^0.1.0"
   },
-  "ava": {},
   "standard": {
     "parser": "babel-eslint",
     "globals": [
