@@ -10,7 +10,7 @@ const originalDir = process.cwd()
 const opts = { stdio: 'inherit' }
 
 beforeAll(() => {
-  system.exec(`alias ignite=${IGNITE}`, opts)
+  system.run(`alias ignite=${IGNITE}`)
 })
 
 beforeEach(() => {
@@ -21,10 +21,9 @@ beforeEach(() => {
 afterEach(() => process.chdir(originalDir))
 
 test('spins up a min app and performs various checks', async done => {
-  print.debug(IGNITE)
   // ignite the eternal flame
   // If you have to ignite it, how is it eternal?
-  await system.spawn(`${IGNITE} new ${APP_NAME} --min -b ignite-ir-boilerplate-andross --debug`, opts)
+  await system.exec(`${IGNITE} new ${APP_NAME} --min -b ignite-ir-boilerplate-andross --debug`, opts)
 
   // Jump into the app directory
   process.chdir(APP_NAME)
@@ -40,15 +39,15 @@ test('spins up a min app and performs various checks', async done => {
   expect(appJS).toMatch(/class App extends Component {/)
 
   // run ignite g component
-  await system.spawn(`${IGNITE} g component Test`, opts)
+  await system.exec(`${IGNITE} g component Test`, opts)
   expect(filesystem.inspect(`${process.cwd()}/App/Components/Test.js`).type).toBe('file')
 
   // spork a screen and edit it
-  await system.spawn(`${IGNITE} spork component.ejs`, opts)
+  await system.exec(`${IGNITE} spork component.ejs`, opts)
   const sporkedFile = `${process.cwd()}/ignite/Spork/ignite-ir-boilerplate-andross/component.ejs`
   await filesystem.write(sporkedFile, 'SPORKED!')
   expect(filesystem.inspect(sporkedFile).type).toBe('file')
-  await system.spawn(`${IGNITE} generate component Sporkified`, opts)
+  await system.exec(`${IGNITE} generate component Sporkified`, opts)
   expect(filesystem.read(`${process.cwd()}/App/Components/Sporkified.js`)).toBe('SPORKED!')
 
   done()
