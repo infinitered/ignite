@@ -10,7 +10,7 @@ const originalDir = process.cwd()
 const opts = { stdio: 'inherit' }
 
 beforeAll(() => {
-  process.run(`alias ignite=${IGNITE}`)
+  system.run(`alias ignite=${IGNITE}`)
 })
 
 beforeEach(() => {
@@ -21,7 +21,7 @@ beforeEach(() => {
 afterEach(() => process.chdir(originalDir))
 
 afterAll(() => {
-  process.run(`unalias ignite`)
+  system.run(`unalias ignite`)
 })
 
 test('spins up a min app and performs various checks', async done => {
