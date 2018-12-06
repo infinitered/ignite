@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const { system, filesystem, print } = require('gluegun')
-=======
 const { system, filesystem } = require('gluegun')
->>>>>>> CI
 const tempy = require('tempy')
 
 const IGNITE = `${process.cwd()}/bin/ignite`
@@ -18,13 +14,9 @@ beforeEach(() => {
   process.chdir(tempDir)
 })
 
-<<<<<<< HEAD
-afterEach(() => process.chdir(originalDir))
-=======
 afterEach(() => {
   process.chdir(originalDir)
 })
->>>>>>> CI
 
 test('spins up a min app and performs various checks', async done => {
   // ignite the eternal flame
