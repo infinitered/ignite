@@ -1,4 +1,4 @@
-const { system, filesystem } = require('gluegun')
+const { system, filesystem, print } = require('gluegun')
 const tempy = require('tempy')
 
 const IGNITE = `${process.cwd()}/bin/ignite`
@@ -9,6 +9,10 @@ jest.setTimeout(10 * 60 * 1000)
 const originalDir = process.cwd()
 const opts = { stdio: 'inherit' }
 
+beforeAll(() => {
+  process.run(`alias ignite=${IGNITE}`)
+})
+
 beforeEach(() => {
   const tempDir = tempy.directory()
   process.chdir(tempDir)
@@ -16,7 +20,12 @@ beforeEach(() => {
 
 afterEach(() => process.chdir(originalDir))
 
+afterAll(() => {
+  process.run(`unalias ignite`)
+})
+
 test('spins up a min app and performs various checks', async done => {
+  print.debug(IGNITE)
   // ignite the eternal flame
   // If you have to ignite it, how is it eternal?
   await system.spawn(`${IGNITE} new ${APP_NAME} --min -b ignite-ir-boilerplate-andross --debug`, opts)
