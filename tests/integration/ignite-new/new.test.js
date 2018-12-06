@@ -9,10 +9,6 @@ jest.setTimeout(10 * 60 * 1000)
 const originalDir = process.cwd()
 const opts = { stdio: 'inherit' }
 
-beforeAll(() => {
-  // system.run(`alias ignite=${IGNITE}`)
-})
-
 beforeEach(() => {
   const tempDir = tempy.directory()
   process.chdir(tempDir)
