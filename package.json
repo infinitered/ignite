@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "An unfair headstart for your React Native apps.",
   "bin": {
     "ignite": "bin/ignite"
