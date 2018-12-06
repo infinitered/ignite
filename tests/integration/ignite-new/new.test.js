@@ -1,8 +1,7 @@
 const { system, filesystem } = require('gluegun')
 const tempy = require('tempy')
 
-// const IGNITE = `${process.cwd()}/bin/ignite`
-const IGNITE = `ignite`
+const IGNITE = `${process.cwd()}/bin/ignite`
 const APP_NAME = 'Foo'
 
 jest.setTimeout(10 * 60 * 1000)
