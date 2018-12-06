@@ -56,7 +56,7 @@
     "jest": "^23.6.0",
     "mock-fs": "4.4.1",
     "mockery": "2.0.0",
-    "nyc": "^10.3.2",
+    "nyc": "^13.1.0",
     "semantic-release": "^15.12.4",
     "standard": "10.0.2",
     "tempy": "^0.1.0"
