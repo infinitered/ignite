@@ -10,7 +10,7 @@ const originalDir = process.cwd()
 const opts = { stdio: 'inherit' }
 
 beforeAll(() => {
-  system.run(`alias ignite=${IGNITE}`)
+  // system.run(`alias ignite=${IGNITE}`)
 })
 
 beforeEach(() => {

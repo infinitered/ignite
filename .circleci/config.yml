@@ -16,8 +16,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install React Native CLI Locally
-          command: npm i react-native-cli && alias react-native="node ~/repo/ignite/node_modules/react-native-cli/index.js"
+          name: Set up NPM
+          command: sudo chown -R $(whoami) ~/.npm
+      - run:
+          name: Install React Native CLI
+          command: npm i -g react-native-cli
       - restore_cache:
           name: Restore node modules
           keys:
@@ -32,6 +35,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Link Ignite CLI
+          command: npm link
 
   tests:
     <<: *defaults
