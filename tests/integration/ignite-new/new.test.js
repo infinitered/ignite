@@ -20,10 +20,6 @@ beforeEach(() => {
 
 afterEach(() => process.chdir(originalDir))
 
-afterAll(() => {
-  system.run(`unalias ignite`)
-})
-
 test('spins up a min app and performs various checks', async done => {
   print.debug(IGNITE)
   // ignite the eternal flame
