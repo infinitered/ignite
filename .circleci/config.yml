@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run:
           name: Set up NPM
-          command: sudo chown -R $(whoami) /usr/local/lib/node_modules
+          command: sudo chown -R $(whoami) /usr/local/lib/node_modules && sudo chown -R $(whoami) /usr/local/bin
       - run:
           name: Install React Native CLI
           command: npm i -g react-native-cli
