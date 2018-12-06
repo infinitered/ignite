@@ -19,3 +19,4 @@
 | [ignite-expo-boilerplate](https://github.com/jbosse/ignite-expo-boilerplate) | Fork of ignite-ir-boilerplate modified to work with Expo.io  | [Jimmy Bosse](https://github.com/jbosse) |
 | [ignite-kryptonite](https://github.com/juddey/ignite-kryptonite) | Your react web thing, ignitified.  | [Justin Lane](https://github.com/juddey) |
 | [ignite-kos-boilerplate](https://github.com/ArtemKosiakevych/ignite-boilerplate-kos) | Fork of ignite-ir-boilerplate-andross  | [Artem Kosiakevych](https://github.com/ArtemKosiakevych) |
+| [ignite-boilerplate-andross-typescript](https://github.com/lvlrSajjad/ignite-boilerplate-andross-typescript) | Customized version of ignite Andross With TypeScript Support. | [Sajjad Asadi](https://github.com/lvlrSajjad) |
