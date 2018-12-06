@@ -18,6 +18,9 @@ jobs:
       - run:
           name: Install React Native CLI Locally
           command: npm i react-native-cli && alias react-native="node ~/repo/ignite/node_modules/react-native-cli/index.js"
+      - run:
+          name: Install Ignite CLI Locally
+          command: npm i -g ignite-cli
       - restore_cache:
           name: Restore node modules
           keys:
