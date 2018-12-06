@@ -41,7 +41,7 @@ const removeDependency = (moduleName) => {
 module.exports = async function (context) {
   // ensure we're in a supported directory
   if (!isIgniteDirectory(process.cwd())) {
-    context.print.error('The `ignite remove` command must be run in an ignite-compatible directory.')
+    context.print.error('The `ignite remove` command must be run in an ignite-compatible directory.\nUse `ignite attach` to make compatible.')
     process.exit(exitCodes.NOT_IGNITE_PROJECT)
   }
 
