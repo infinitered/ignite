@@ -12,7 +12,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "node src/index.js",
     "lint": "standard",
-    "integration": "jest -i tests/integration",
+    "integration": "jest tests/integration",
     "ci:test": "yarn test && yarn integration",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"

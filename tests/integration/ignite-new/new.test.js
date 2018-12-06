@@ -1,4 +1,4 @@
-const { system, filesystem, print } = require('gluegun')
+const { system, filesystem } = require('gluegun')
 const tempy = require('tempy')
 
 const IGNITE = `${process.cwd()}/bin/ignite`
@@ -14,7 +14,9 @@ beforeEach(() => {
   process.chdir(tempDir)
 })
 
-afterEach(() => process.chdir(originalDir))
+afterEach(() => {
+  process.chdir(originalDir)
+})
 
 test('spins up a min app and performs various checks', async done => {
   // ignite the eternal flame

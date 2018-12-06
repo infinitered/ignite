@@ -8,12 +8,14 @@ jest.setTimeout(30 * 1000)
 
 const originalDir = process.cwd()
 
-beforeAll(() => {
+beforeEach(() => {
   const tempDir = tempy.directory()
   process.chdir(tempDir)
 })
 
-afterAll(() => process.chdir(originalDir))
+afterEach(() => {
+  process.chdir(originalDir)
+})
 
 test('requires a name', async done => {
   const result = await system.spawn(IGNITE + ' new')
