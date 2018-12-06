@@ -41,8 +41,33 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run:
+          name: Change Permissions
+          command: sudo chown -R $(whoami) /usr/local
+      - run:
+          name: Install React Native CLI
+          command: npm i -g react-native-cli
+      - run:
+          name: Link Ignite CLI
+          command: npm link
+      - run:
           name: Run tests
           command: yarn ci:test # this command will be added to/found in your package.json scripts
+
+publish:
+  <<: *defaults
+  steps:
+    - checkout
+    - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+    - restore_cache:
+        name: Restore node modules
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+    # Run semantic-release after all the above is set.
+    - run:
+        name: Publish to NPM
+        command: yarn ci:publish # this will be added to your package.json scripts
 
 workflows:
   version: 2
@@ -52,3 +77,9 @@ workflows:
       - tests:
           requires:
             - setup
+      - publish:
+          requires:
+            - tests
+          filters:
+            branches:
+              only: master

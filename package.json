@@ -7,13 +7,15 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "nyc ava tests/fast",
-    "watch": "ava tests/fast --watch",
+    "test": "jest tests/fast",
+    "watch": "jest tests/fast --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "node src/index.js",
     "lint": "standard",
-    "integration": "ava -s tests/integration",
-    "ci:test": "./bin/ci"
+    "integration": "jest -i tests/integration",
+    "ci:test": "yarn test && yarn integration",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
   },
   "repository": "infinitered/ignite",
   "author": {
@@ -39,22 +41,23 @@
     "pretty-error": "2.0.2",
     "ramda": "0.24.1",
     "ramdasauce": "2.1.0",
+    "react-native-cli": "^2.0.1",
     "semver": "5.4.1",
     "shelljs": "0.7.8",
     "which": "1.3.0"
   },
   "devDependencies": {
-    "ava": "0.19.1",
+    "@semantic-release/git": "^7.0.5",
     "babel-eslint": "7.1.1",
     "coveralls": "^3.0.0",
+    "jest": "^23.6.0",
     "mock-fs": "4.4.1",
     "mockery": "2.0.0",
-    "np": "2.12.0",
     "nyc": "^10.3.2",
+    "semantic-release": "^15.12.4",
     "standard": "10.0.2",
     "tempy": "^0.1.0"
   },
-  "ava": {},
   "standard": {
     "parser": "babel-eslint",
     "globals": [
@@ -64,5 +67,24 @@
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": "package.json",
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
   }
 }
