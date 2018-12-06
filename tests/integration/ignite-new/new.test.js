@@ -15,7 +15,7 @@ const opts = { cwd: appDir, stdio: 'inherit' }
 // afterEach(() => process.chdir(originalDir))
 
 test('spins up a min app and performs various checks', async done => {
-  await system.spawn(`${IGNITE} new ${APP_NAME} --min -b ignite-ir-boilerplate-andross`, { cwd: tempDir, stdio: 'inherit' })
+  await system.spawn(`${IGNITE} new ${APP_NAME} --min -b ignite-ir-boilerplate-andross --debug`, { cwd: tempDir, stdio: 'inherit' })
   // check the contents of ignite/ignite.json
   const igniteJSON = filesystem.read(`${appDir}/ignite/ignite.json`)
   expect(typeof igniteJSON).toBe('string')
