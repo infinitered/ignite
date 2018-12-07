@@ -126,11 +126,11 @@ async function command (context) {
     ])
     switch (boilerplate) {
       case bowser:
-        boilerplateName = 'ir-boilerplate-bowser'
+        boilerplateName = 'bowser'
         break
       case andross:
       default:
-        boilerplateName = 'ir-boilerplate-andross'
+        boilerplateName = 'andross'
         break
     }
   }
