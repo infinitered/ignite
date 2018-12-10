@@ -21,7 +21,7 @@ afterEach(() => {
 test('spins up a min app and performs various checks', async done => {
   // ignite the eternal flame
   // If you have to ignite it, how is it eternal?
-  await system.run(`${IGNITE} new ${APP_NAME} --min -b ignite-ir-boilerplate-andross --debug`, opts)
+  await system.run(`${IGNITE} new ${APP_NAME} --min -b ignite-andross --debug`, opts)
 
   // Jump into the app directory
   process.chdir(APP_NAME)
@@ -42,7 +42,7 @@ test('spins up a min app and performs various checks', async done => {
 
   // spork a screen and edit it
   await system.run(`${IGNITE} spork component.ejs`, opts)
-  const sporkedFile = `${process.cwd()}/ignite/Spork/ignite-ir-boilerplate-andross/component.ejs`
+  const sporkedFile = `${process.cwd()}/ignite/Spork/ignite-andross/component.ejs`
   await filesystem.write(sporkedFile, 'SPORKED!')
   expect(filesystem.inspect(sporkedFile).type).toBe('file')
   await system.run(`${IGNITE} generate component Sporkified`, opts)
