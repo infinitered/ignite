@@ -110,7 +110,7 @@ async function command (context) {
   if ((boilerplateName || '').includes(path.sep)) {
     boilerplateName = filesystem.path(boilerplateName)
   }
-  const andross = 'Andross (React Navigation, Redux, & Redux Saga'
+  const andross = 'Andross (React Navigation, Redux, & Redux Saga)'
   const bowser = 'Bowser (React Navigation, MobX State Tree, & TypeScript)'
   if (!boilerplateName) {
     const { boilerplate } = await context.prompt.ask([
