@@ -118,6 +118,7 @@ If you run into problems, first search the issues in this repository. If you don
 #### [Chat with us on the IR Community](http://community.infinite.red) - Infinite Red devs standing by
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
 #### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
+#### [Check out Gluegun](https://github.com/infinitered/gluegun) - Ignite CLI is powered by Gluegun, which lets you build CLI apps painlessly!
 
 
 ## :heart: Special Thanks :heart:
