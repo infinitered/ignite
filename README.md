@@ -12,6 +12,8 @@
   <br/>
 </p>
 
+<img width="794" alt="screen shot 2018-12-14 at 9 20 31 am" src="https://user-images.githubusercontent.com/1479215/50017668-a04c0200-ff81-11e8-9b61-a1ae28363798.png">
+
 ### Why Ignite CLI?
 
 * **Easily spin up a new React Native app** with best practices built-in
