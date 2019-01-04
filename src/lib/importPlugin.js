@@ -9,16 +9,17 @@ const exitCodes = require('../lib/exitCodes')
  * @param {string} opts.moduleName The module to install
  */
 async function importPlugin (context, opts) {
-  const { moduleName, type, directory } = opts
+  const { moduleName, version, type, directory } = opts
   const { ignite, system, filesystem } = context
   const { log } = ignite
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
+  const packageVersion = (version && !isDirectory) ? `@${version}` : ''
 
   // check to see if it exists first
   if (type === 'npm') {
     try {
-      const json = JSON.parse(await system.run(`npm info ${target} --json`))
+      const json = JSON.parse(await system.run(`npm info ${target}${packageVersion} --json`))
       log(`${json.name} ${json.version} on npm.`)
     } catch (e) {
       log(`unable to find ${target} on npm`)
@@ -55,16 +56,15 @@ async function importPlugin (context, opts) {
         )
       }
     }
-
     const cmd = isDirectory
       ? `yarn add file:${target} --force --dev`
-      : `yarn add ${target} --dev`
+      : `yarn add ${target}${packageVersion} --dev`
     log(cmd)
     await system.run(cmd)
     log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
-    const cmd = trim(`npm i ${target} --save-dev ${cacheBusting}`)
+    const cmd = trim(`npm i ${target}${packageVersion} --save-dev ${cacheBusting}`)
     log(cmd)
     await system.run(cmd)
     log('finished npm command')

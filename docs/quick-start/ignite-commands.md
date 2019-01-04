@@ -89,6 +89,8 @@ You can (with most boilerplates) pass through a `--min` or `--max` flag to autom
 
 If the new app's folder already exists, you can pass through `--overwrite` to overwrite the directory. If you don't, Ignite CLI will ask you if you want to overwrite it.
 
+If you want to use a specific version of a boilerplate, you can add the version to the boilerplate name.  For example, use `ignite new BetaApp -b ir-boilerplate-bowser@1.0.0-beta.1` to use the `1.0.0-beta.1` release of the Bowser boilerplate.
+
 ### Plugin
 
 ```
