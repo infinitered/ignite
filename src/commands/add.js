@@ -30,7 +30,7 @@ const removeIgnitePlugin = async (moduleName, context) => {
 
 module.exports = async function (context) {
   // grab a fist-full of features...
-  const { print, filesystem, prompt, ignite, parameters, strings } = context
+  const { print, filesystem, prompt, ignite, parameters, strings, system } = context
   const { log } = ignite
 
   const perfStart = (new Date()).getTime()
@@ -67,8 +67,24 @@ Examples:
 
   // find out the type of install
   const specs = detectInstall(context)
-  const { moduleName } = specs
-  const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+  const { moduleName, global } = specs
+  let modulePath
+  if (global) {
+    try {
+      cmd = ignite.useYarn
+        ? `yarn global dir` 
+        : `npm root -g`
+      print.info(`running ${cmd}`)
+      const res = await system.run(cmd)
+      modulePath = `${res}/node_modules/${moduleName}`
+      modulePath = modulePath.replace(/\s/g, '')
+    } catch (e) {
+      print.error(`${moduleName} not found in global modules. Exiting.`)
+      process.exit(-1)
+    }
+  } else {
+    modulePath = `${process.cwd()}/node_modules/${moduleName}`
+  }
 
   log(`installing ${modulePath} from source ${specs.type}`)
 

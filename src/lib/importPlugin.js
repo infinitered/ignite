@@ -9,11 +9,18 @@ const exitCodes = require('../lib/exitCodes')
  * @param {string} opts.moduleName The module to install
  */
 async function importPlugin (context, opts) {
-  const { moduleName, type, directory } = opts
+  const { moduleName, type, directory, global } = opts
   const { ignite, system, filesystem } = context
   const { log } = ignite
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
+
+  const globalMod =
+    global
+      ? ignite.useYarn
+        ? 'global'
+        : '-g'
+      : ''
 
   // check to see if it exists first
   if (type === 'npm') {
@@ -57,14 +64,14 @@ async function importPlugin (context, opts) {
     }
 
     const cmd = isDirectory
-      ? `yarn add file:${target} --force --dev`
+      ? `yarn ${globalMod} add file:${target} --force --dev`
       : `yarn add ${target} --dev`
     log(cmd)
     await system.run(cmd)
     log('finished yarn command')
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
-    const cmd = trim(`npm i ${target} --save-dev ${cacheBusting}`)
+    const cmd = trim(`npm i ${globalMod} ${target} --save-dev ${cacheBusting}`)
     log(cmd)
     await system.run(cmd)
     log('finished npm command')

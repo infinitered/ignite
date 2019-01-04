@@ -38,6 +38,12 @@ function detectInstall (context) {
   let packageName = plugin.split('@')[0]
   let packageVersion = plugin.split('@')[1] || null
 
+  let global = false
+  const basePackageName = plugin.split(path.sep).slice(-1)[0]
+  if (basePackageName=='ignite-library') {
+    global = true
+  }
+
   // If a path, expand that path. If not, prepend with `ignite-*`.
   if (packageName.includes(path.sep)) {
     packageName = filesystem.path(packageName)
@@ -60,7 +66,8 @@ function detectInstall (context) {
         directory: path,
         override: true,
         moduleName: filesystem.read(`${path}/package.json`, 'json').name,
-        type: 'directory'
+        type: 'directory',
+        global: global
       }
     }
   }
@@ -71,7 +78,8 @@ function detectInstall (context) {
     return {
       directory: packageName,
       moduleName: json.name,
-      type: 'directory'
+      type: 'directory',
+      global: global
     }
   }
 
@@ -79,7 +87,8 @@ function detectInstall (context) {
   return {
     moduleName: packageName,
     version: packageVersion,
-    type: 'npm'
+    type: 'npm',
+    global: global
   }
 }
 
