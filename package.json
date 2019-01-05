@@ -32,6 +32,10 @@
     "bin"
   ],
   "license": "MIT",
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x"
+  },
   "dependencies": {
     "cryptiles": ">=4.1.2",
     "execa": "0.8.0",
@@ -67,13 +71,14 @@
       "__DEV__"
     ]
   },
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x"
-  },
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "release": {
     "plugins": [
