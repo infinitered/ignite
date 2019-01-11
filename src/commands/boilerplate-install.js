@@ -61,6 +61,8 @@ async function installBoilerplate (context) {
   try {
     pluginModule = require(`${modulePath}/boilerplate.js`)
   } catch (e) {
+    print.error('Error call stack:')
+    print.error(e.stack)
     spinner.fail(`error loading the boilerplate`)
     process.exit(exitCodes.PLUGIN_INVALID)
   }
