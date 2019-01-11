@@ -64,6 +64,9 @@ function attach (plugin, command, context) {
     if (opts.skipJest) {
       rnOptions.push('--skip-jest')
     }
+    if (opts.useNpm) {
+      rnOptions.push('--npm')
+    }
 
     // react-native init
     const cmd = trim(`react-native init ${name} ${rnOptions.join(' ')}`)
