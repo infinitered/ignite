@@ -36,11 +36,11 @@ function detectInstall (context) {
   
   // extract the package name and (optionally) version
   let packageName, packageVersion
-  const re = /(?<!^|\/)@/
+  const versionSepRe = /(?<!^|\/)@/
   const scopedRe = /^@/
   const isScoped = scopedRe.test(plugin)
-  packageName = plugin.split(re)[0]
-  packageVersion = plugin.split(re)[1] || null
+  packageName = plugin.split(versionSepRe)[0]
+  packageVersion = plugin.split(versionSepRe)[1] || null
 
   // If a path, expand that path. If not, prepend with `ignite-*`.
   if (packageName.includes(path.sep) && !isScoped) {
