@@ -45,7 +45,7 @@ function detectInstall (context) {
   // If a path, expand that path. If not, prepend with `ignite-*`.
   if (packageName.includes(path.sep) && !isScoped) {
     packageName = filesystem.path(packageName)
-  } else {
+  } else if (!isScoped) {
     packageName = prependIgnite(packageName)
   }
 
