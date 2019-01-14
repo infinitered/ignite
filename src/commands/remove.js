@@ -53,15 +53,20 @@ module.exports = async function (context) {
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   const moduleParam = parameters.array.pop()
 
+  const isScoped = moduleParam.startsWith('@')
+
   // Check if they used a directory path instead of a plugin name
-  if (moduleParam.includes(path.sep)) {
+  if (moduleParam.includes(path.sep) && !isScoped) {
     error(`💩 When removing a package, you shouldn't use a path.
     Try ${context.print.color.highlight(`ignite remove ${moduleParam.split(path.sep).pop()}`)} instead.`)
     process.exit(exitCodes.PLUGIN_NAME)
   }
 
   // prepend `ignite` as convention
-  const moduleName = prependIgnite(moduleParam)
+  let moduleName = moduleParam
+  if (!isScoped) {
+    moduleName = prependIgnite(moduleParam)
+  }
 
   info(`🔎    Verifying Plugin`)
 

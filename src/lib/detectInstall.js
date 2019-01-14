@@ -33,15 +33,18 @@ function detectInstall (context) {
 
   // the plugin we're trying to install
   let plugin = parameters.second
-
+  
   // extract the package name and (optionally) version
-  let packageName = plugin.split('@')[0]
-  let packageVersion = plugin.split('@')[1] || null
+  let packageName, packageVersion
+  const versionSepRe = /(?<!^|\/)@/
+  const isScoped = plugin.startsWith('@')
+  packageName = plugin.split(versionSepRe)[0]
+  packageVersion = plugin.split(versionSepRe)[1] || null
 
   // If a path, expand that path. If not, prepend with `ignite-*`.
-  if (packageName.includes(path.sep)) {
+  if (packageName.includes(path.sep) && !isScoped) {
     packageName = filesystem.path(packageName)
-  } else {
+  } else if (!isScoped) {
     packageName = prependIgnite(packageName)
   }
 
