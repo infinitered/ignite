@@ -59,12 +59,6 @@ Examples:
     process.exit(exitCodes.OK)
   }
 
-  // we don't (yet) support scoped npm packages, so bail
-  if (parameters.second.startsWith('@')) {
-    print.error(`Error: Ignite CLI doesn't support scoped npm packages yet, sorry about that. Try it without the prefix.`)
-    process.exit(exitCodes.PLUGIN_NAME)
-  }
-
   // find out the type of install
   const specs = detectInstall(context)
   const { moduleName } = specs
