@@ -38,7 +38,7 @@ function detectInstall (context) {
   let packageName, packageVersion
   const versionSepRe = /(?<!^|\/)@/
   const scopedRe = /^@/
-  const isScoped = scopedRe.test(plugin)
+  const isScoped = plugin.startsWith('@')
   packageName = plugin.split(versionSepRe)[0]
   packageVersion = plugin.split(versionSepRe)[1] || null
 
