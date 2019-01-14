@@ -53,7 +53,7 @@ module.exports = async function (context) {
   // take the last parameter (because of https://github.com/infinitered/gluegun/issues/123)
   const moduleParam = parameters.array.pop()
 
-  const isScoped = /^@/.test(moduleParam)
+  const isScoped = moduleParam.startsWith('@')
 
   // Check if they used a directory path instead of a plugin name
   if (moduleParam.includes(path.sep) && !isScoped) {
