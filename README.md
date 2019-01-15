@@ -22,8 +22,13 @@
 * **An amazing [community](http://community.infinite.red)** of other Ignite / React Native developers when you need help
 * **Battle tested** and used every day by the developers at Infinite Red and thousands of developers around the world
 * **Works on macOS, Windows, and Linux** because not all React Native developers are on one platform
+* **Saves an average of two weeks** on your React Native development
 
 And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate, Bowser](https://github.com/infinitered/ignite-bowser), or choose [one of many others](./BOILERPLATES.md).
+
+> Ignite saved me a few weeks (if not months) getting started with React Native.
+
+_Jon Ruddell_
 
 
 ## :arrow_down: Install
