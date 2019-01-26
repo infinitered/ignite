@@ -33,7 +33,7 @@ function detectInstall (context) {
 
   // the plugin we're trying to install
   let plugin = parameters.second
-  
+
   // extract the package name and (optionally) version
   let packageName, packageVersion
   const versionSepRe = '@'
