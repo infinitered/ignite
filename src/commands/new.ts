@@ -20,17 +20,41 @@ module.exports = {
     // grab the project name
     const projectName = (parameters.first || '').toString()
 
-    // check for kebabs
-    const isKebabCase = not(isEmpty(match(/.-/g, `${projectName}`)))
+    // verify the project name is a thing
+    if (isBlank(projectName)) {
+      print.info(`${runtime.brand} new <projectName>\n`)
+      print.error('Project name is required')
+      process.exit(exitCodes.PROJECT_NAME)
+    }
 
-    // camelCase the project name for user example
-    const projectNameCamel = upperFirst(camelCase(projectName))
+    // Guard against `ignite new ignite`
+    if (toLower(projectName) === 'ignite') {
+      print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
+      process.exit(exitCodes.PROJECT_NAME)
+    }
+
+    // check for kebabs
+    if (not(isEmpty(match(/.-/g, `${projectName}`)))) {
+      // camelCase the project name for user example
+      const projectNameCamel = upperFirst(camelCase(projectName))
+
+      print.error(`Please use camel case for your project name. Ex: ${projectNameCamel}`)
+      process.exit(exitCodes.PROJECT_NAME)
+    }
 
     // check for numbers-only names
-    const isNumericOnly = /^\d+$/.test(projectName)
+    if (/^\d+$/.test(projectName)) {
+      print.error(`Please use at least one non-numeric character for your project name.`)
+      process.exit(exitCodes.PROJECT_NAME)
+    }
 
     // check for alphanumeric name, beginning with a letter
-    const isValidName = /^[a-z_][a-z0-9_]+$/i.test(projectName)
+    if (!/^[a-z_][a-z0-9_]+$/i.test(projectName)) {
+      print.error(
+        `The project name can only contain alphanumeric characters and underscore, but must not begin with a number.`,
+      )
+      process.exit(exitCodes.PROJECT_NAME)
+    }
 
     // ensure we're in a supported directory
     if (isIgniteDirectory(process.cwd())) {
@@ -45,39 +69,6 @@ module.exports = {
       )
       print.error('Try installing from a directory without a `node_modules` directory.')
       process.exit(exitCodes.EXISTING_REACT_NATIVE)
-    }
-
-    // verify the project name is a thing
-    if (isBlank(projectName)) {
-      print.info(`${runtime.brand} new <projectName>\n`)
-      print.error('Project name is required')
-      process.exit(exitCodes.PROJECT_NAME)
-    }
-
-    // Guard against `ignite new ignite`
-    if (toLower(projectName) === 'ignite') {
-      print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
-      process.exit(exitCodes.PROJECT_NAME)
-    }
-
-    // verify the project name isn't kebab cased
-    if (isKebabCase) {
-      print.error(`Please use camel case for your project name. Ex: ${projectNameCamel}`)
-      process.exit(exitCodes.PROJECT_NAME)
-    }
-
-    // verify the project name isn't just numbers
-    if (isNumericOnly) {
-      print.error(`Please use at least one non-numeric character for your project name.`)
-      process.exit(exitCodes.PROJECT_NAME)
-    }
-
-    // verify the project name is valid
-    if (!isValidName) {
-      print.error(
-        `The project name can only contain alphanumeric characters and underscore, but must not begin with a number.`,
-      )
-      process.exit(exitCodes.PROJECT_NAME)
     }
 
     // verify the directory doesn't exist already
