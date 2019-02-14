@@ -6,6 +6,8 @@
 if (['v', 'version', '-v', '--v', '-version', '--version'].includes(process.argv[2])) {
   var contents = require('fs').readFileSync(__dirname + '/../package.json')
   var package = JSON.parse(contents)
+
+  // now output the version and exit
   console.log(package.version)
   process.exit(0)
 }
