@@ -1,12 +1,11 @@
-// @cliDescription  Prints current version of installed ignite
-// @cliAlias i
-// @cliHidden true
-// ----------------------------------------------------------------------------
+import { IgniteToolbox } from '../types'
 
-module.exports = async function (context) {
-  const {parameters, print} = context
-  if (parameters.rawCommand.toLowerCase() === 'src love you') {
-    const heart = `
+module.exports = {
+  description: 'Prints current version of installed ignite',
+  run: async function(toolbox: IgniteToolbox) {
+    const { parameters, print } = toolbox
+    if (parameters.string.toLowerCase() === 'love you') {
+      const heart = `
         @@@@@@           @@@@@@
       @@@@@@@@@@       @@@@@@@@@@
     @@@@@@@@@@@@@@   @@@@@@@@@@@@@@
@@ -28,7 +27,8 @@ module.exports = async function (context) {
                   @@@
                    @
     `
-    print.info(print.colors.red(heart))
-    print.info(print.colors.rainbow('\t   We love you too!'))
-  }
+      print.info(print.colors.red(heart))
+      print.info(print.colors.rainbow('\t   We love you too!'))
+    }
+  },
 }

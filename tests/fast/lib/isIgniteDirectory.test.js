@@ -1,4 +1,4 @@
-const isIgniteDirectory = require('../../../src/lib/isIgniteDirectory')
+const isIgniteDirectory = require('../../../src/lib/is-ignite-directory').default
 
 test('bad inputs', () => {
   expect(isIgniteDirectory()).toBe(false)

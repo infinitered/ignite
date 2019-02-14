@@ -1,8 +1,5 @@
-// @cliDescription Generates some files.
-// @cliAlias g
-// ----------------------------------------------------------------------------
-
-const {
+import { IgnitePlugin, IgniteToolbox } from '../types'
+import {
   prop,
   groupBy,
   map,
@@ -16,81 +13,75 @@ const {
   values,
   replace,
   trim,
-  isEmpty
-} = require('ramda')
-const { dotPath } = require('ramdasauce')
-const isIgniteDirectory = require('../lib/isIgniteDirectory')
-const exitCodes = require('../lib/exitCodes')
+  isEmpty,
+} from 'ramda'
+import { dotPath } from 'ramdasauce'
+import isIgniteDirectory from '../lib/is-ignite-directory'
+import exitCodes from '../lib/exit-codes'
 
 /**
  * Runs a generator.
- *
- * @params {RunContext} context The environment.
  */
-module.exports = async function (context) {
-  // ensure we're in a supported directory
-  if (!isIgniteDirectory(process.cwd())) {
-    context.print.error(
-      'The `ignite generate` command must be run in an ignite-compatible directory.'
-    )
-    process.exit(exitCodes.NOT_IGNITE_PROJECT)
-  }
+module.exports = {
+  description: 'Generates some files.',
+  alias: ['g'],
+  run: async function(toolbox: IgniteToolbox) {
+    // ensure we're in a supported directory
+    if (!isIgniteDirectory(process.cwd())) {
+      toolbox.print.error('The `ignite generate` command must be run in an ignite-compatible directory.')
+      process.exit(exitCodes.NOT_IGNITE_PROJECT)
+    }
 
-  // grab some features
-  const { ignite, print, parameters, filesystem } = context
-  const config = ignite.loadIgniteConfig()
+    // grab some features
+    const { ignite, print, parameters, filesystem } = toolbox
+    const config = ignite.loadIgniteConfig()
 
-  print.newline()
+    print.newline()
 
-  // keys are type of generate and values are a list of options...
-  const registry = pipe(
-    // with each plugin
-    map(plugin => {
-      // load the list of generators they support within their ignite.json
-      const configFile = `${plugin.directory}/ignite.json`
-      const config = filesystem.exists(configFile)
-        ? filesystem.read(configFile, 'json')
-        : {}
-      const generators = config.generators || []
+    // keys are type of generate and values are a list of options...
+    const registry = pipe(
+      // with each plugin
+      map((plugin: IgnitePlugin) => {
+        // load the list of generators they support within their ignite.json
+        const configFile = `${plugin.directory}/ignite.json`
+        const config = filesystem.exists(configFile) ? filesystem.read(configFile, 'json') : {}
+        const generators = config.generators || []
 
-      // then make a row out of them
-      return map(
-        type => ({
-          type,
-          plugin,
-          command: find(propEq('name', type), plugin.commands)
-        }),
-        generators
-      )
-    }),
-    flatten,
-    groupBy(prop('type'))
-  )(ignite.findIgnitePlugins())
+        // then make a row out of them
+        return map(
+          type => ({
+            type,
+            plugin,
+            command: find(propEq('name', type), plugin.commands),
+          }),
+          generators,
+        )
+      }),
+      flatten,
+      // @ts-ignore i guess ... for now
+      groupBy(prop('type')),
+    )(ignite.findIgnitePlugins())
 
-  // ---------------------
-  // NOTE(steve): Saving these next two for potential useful stuff
+    // ---------------------
+    // NOTE(steve): Saving these next two for potential useful stuff
 
-  // the plugins with only 1 slot registered per type
-  // const unique = pipe(
-  //   pickBy(v => v.length === 1),
-  //   map(head)
-  // )(registry)
+    // the plugins with only 1 slot registered per type
+    // const unique = pipe(
+    //   pickBy(v => v.length === 1),
+    //   map(head)
+    // )(registry)
 
-  // the plugins that are competing for slots
-  // const many = pickBy(v => v.length > 1, registry)
-  // ---------------------
+    // the plugins that are competing for slots
+    // const many = pickBy(v => v.length > 1, registry)
+    // ---------------------
 
-  // the list of what the user wants
-  const userPrefs = config.generators || {}
+    // the list of what the user wants
+    const userPrefs = config.generators || {}
 
-  // find the exact match of plugin name & type
-  const userRegistry = mapObjIndexed(
-    (pluginName, type) => {
+    // find the exact match of plugin name & type
+    const userRegistry = mapObjIndexed((pluginName, type) => {
       // let's find what the user has asked for in the list
-      const lookup = find(
-        option => equals(pluginName, dotPath('plugin.name', option)),
-        registry[type] || []
-      )
+      const lookup: any = find(option => equals(pluginName, dotPath('plugin.name', option)), registry[type] || [])
 
       // figure out a friendly error to show the user
       let error = null
@@ -114,98 +105,80 @@ module.exports = async function (context) {
         error,
         description,
         plugin: lookup ? lookup.plugin : null,
-        command: lookup ? lookup.command : null
+        command: lookup ? lookup.command : null,
       }
-    },
-    userPrefs
-  )
+    }, userPrefs)
 
-  /**
-   * Prints a footer used when we're unable to run a generator.
-   */
-  const footer = () => {
-    print.info(
-      print.colors.muted(
-        '\n  --------------------------------------------------------------------------'
+    /**
+     * Prints a footer used when we're unable to run a generator.
+     */
+    const footer = () => {
+      print.info(print.colors.muted('\n  --------------------------------------------------------------------------'))
+      print.info(
+        print.colors.muted(
+          `  Check out ${print.colors.white('https://github.com/infinitered/ignite')} for instructions on how to`,
+        ),
       )
-    )
-    print.info(
-      print.colors.muted(
-        `  Check out ${print.colors.white(
-          'https://github.com/infinitered/ignite'
-        )} for instructions on how to`
+      print.info(print.colors.muted('  install some or how to build some for yourself.'))
+    }
+
+    // Avast! Thar be no generators ripe for tha plunder.
+    if (isEmpty(userRegistry)) {
+      print.warning('⚠️  No generators detected.\n')
+      print.info(`  ${print.colors.bold('Generators')} allow you to quickly make frequently created files such as:\n`)
+      print.info(`    * components`)
+      print.info(`    * screens`)
+      print.info(`    * models`)
+      print.info(`    * and more`)
+      footer()
+      return
+    }
+
+    // TODO: do we want to add items that aren't conflicts it the list?
+
+    // TODO: how do we want to handle conflicts?  up above, i'm just calling find()
+
+    // the type of template to generate (it's actually the 2nd because we rewrite the pluginName to be first)
+    const type = parameters.first
+    const registryItem = type ? userRegistry[type] : null
+
+    // didn't find what we wanted?
+    if (isNil(registryItem)) {
+      print.info(
+        `✨ Type ${print.colors.bold('ignite generate')} ${print.colors.yellow(
+          '________',
+        )} to run one of these generators:\n`,
       )
-    )
-    print.info(
-      print.colors.muted('  install some or how to build some for yourself.')
-    )
-  }
 
-  // Avast! Thar be no generators ripe for tha plunder.
-  if (isEmpty(userRegistry)) {
-    print.warning('⚠️  No generators detected.\n')
-    print.info(
-      `  ${print.colors.bold(
-        'Generators'
-      )} allow you to quickly make frequently created files such as:\n`
-    )
-    print.info(`    * components`)
-    print.info(`    * screens`)
-    print.info(`    * models`)
-    print.info(`    * and more`)
-    footer()
-    return
-  }
+      const showSource = toolbox.parameters.options.source
 
-  // TODO: do we want to add items that aren't conflicts it the list?
+      // turn into data we can print
+      const data = pipe(
+        values,
+        map((item: { type: string; pluginName: string; error: any; description: any; plugin: any; command: any }) => [
+          print.colors.yellow(item.type),
+          item.error || item.description,
+          showSource && print.colors.muted(item.pluginName),
+        ]),
+      )(userRegistry)
 
-  // TODO: how do we want to handle conflicts?  up above, i'm just calling find()
+      // and print it
+      print.table(data)
+      footer()
 
-  // the type of template to generate (it's actually the 2nd because we rewrite the pluginName to be first)
-  const type = parameters.second
-  const registryItem = type ? userRegistry[type] : null
+      return
+    }
 
-  // didn't find what we wanted?
-  if (isNil(registryItem)) {
-    print.info(
-      `✨ Type ${print.colors.bold('ignite generate')} ${print.colors.yellow(
-        '________'
-      )} to run one of these generators:\n`
-    )
+    // swap out the old command for the new one, keeping the same parameters
+    const rx = new RegExp('^' + parameters.first, 'g')
+    const newCommand = trim(replace(rx, '', parameters.string))
 
-    const showSource = context.parameters.options.source
-
-    // turn into data we can print
-    const data = pipe(
-      values,
-      map(item => [
-        print.colors.yellow(item.type),
-        item.error || item.description,
-        showSource && print.colors.muted(item.pluginName)
-      ])
-    )(userRegistry)
-
-    // and print it
-    print.table(data)
-    footer()
-
-    return
-  }
-
-  // swap out the old command for the new one, keeping the same parameters
-  const rx = new RegExp('^' + parameters.first, 'g')
-  const newCommand = trim(replace(rx, '', parameters.string))
-
-  // make the call to the real generator
-  context.runtime
-    .run({
-      pluginName: registryItem.pluginName,
+    // make the call to the real generator
+    const e = await toolbox.runtime.run({
+      pluginName: registryItem.pluginName as string,
       rawCommand: newCommand,
-      options: parameters.options
+      options: parameters.options,
     })
-    .then(e => {
-      if (e.error) {
-        print.debug(e.error)
-      }
-    })
+    if (e.error) print.debug(e.error)
+  },
 }

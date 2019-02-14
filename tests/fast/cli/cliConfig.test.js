@@ -13,7 +13,7 @@ mockery.registerMock('../brand/header', () => true)
 mockery.registerMock('gluegun', {
   build: () => mockGluegunBuilder,
   printCommands: context => true,
-  print: { info: noop, debug: noop, colors: { magenta: noop } }
+  print: { info: noop, debug: noop, colors: { magenta: noop } },
 })
 
 // our cli
@@ -27,16 +27,16 @@ test('ignite', async () => {
       loadAlls: [
         {
           dir: `${process.cwd()}/ignite/plugins`,
-          opts: {}
+          opts: {},
         },
         {
           dir: `${process.cwd()}/node_modules`,
-          opts: { hidden: true, matching: 'ignite-*' }
+          opts: { hidden: true, matching: 'ignite-*' },
         },
         {
           dir: `${process.cwd()}/node_modules`,
-          opts: { hidden: true, matching: 'gluegun-*' }
-        }
+          opts: { hidden: true, matching: 'gluegun-*' },
+        },
       ],
       loadDefault: `${process.cwd()}${path.sep}src${path.sep}cli/..`,
       tokens: {
@@ -44,16 +44,16 @@ test('ignite', async () => {
         commandDescription: 'cliDescription',
         commandHidden: 'cliHidden',
         commandName: 'cliCommand',
-        extensionName: 'contextExtension'
-      }
+        extensionName: 'contextExtension',
+      },
     })
 
     // minimal thing that won't make it crash.
     return {
-      run: () => ({})
+      run: () => ({}),
     }
   })
 
   // run the with nothing
-  await cli([null, null, ''])
+  await cli.run([null, null, ''])
 })

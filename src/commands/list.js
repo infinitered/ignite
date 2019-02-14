@@ -1,4 +1,7 @@
-// @cliDescription Lists known Ignite plugins.
-// ----------------------------------------------------------------------------
+import showPluginDirectory from '../lib/show-plugin-directory'
 
-module.exports = require('../lib/showPluginDirectory')
+module.exports = {
+  alias: ['ls'],
+  description: 'Lists known Ignite plugins.',
+  run: showPluginDirectory,
+}

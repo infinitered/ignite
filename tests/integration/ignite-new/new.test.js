@@ -1,7 +1,13 @@
 const { system, filesystem } = require('gluegun')
 const tempy = require('tempy')
+const stripANSI = require('strip-ansi')
 
-const IGNITE = `${process.cwd()}/bin/ignite`
+const IGNITE = 'node ' + filesystem.path(`${__dirname}/../../../bin/ignite`)
+
+// for local boilerplate testing
+// const IGNITE_BOILERPLATE = filesystem.path(__dirname, '..', '..', '..', '..', 'ignite-andross')
+const IGNITE_BOILERPLATE = 'ignite-andross'
+
 const APP_NAME = 'Foo'
 
 jest.setTimeout(10 * 60 * 1000)
@@ -21,16 +27,27 @@ afterEach(() => {
 test('spins up a min app and performs various checks', async done => {
   // ignite the eternal flame
   // If you have to ignite it, how is it eternal?
-  await system.run(`${IGNITE} new ${APP_NAME} --min -b ignite-andross --debug`, opts)
+  const resultANSI = await system.run(`${IGNITE} new ${APP_NAME} --min -b ${IGNITE_BOILERPLATE} --debug`, opts)
+  const result = stripANSI(resultANSI)
+
+  // Check the output
+  expect(result).toContain(`Ignite CLI ignited`)
+  expect(result).toContain(`${APP_NAME}`)
+  expect(result).toContain(`https://infinite.red/ignite`)
 
   // Jump into the app directory
   process.chdir(APP_NAME)
+
+  // check that the project was generated
+  const dirs = filesystem.subdirectories('.')
+  expect(dirs).toContain('ios')
+  expect(dirs).toContain('android')
+  expect(dirs).toContain('App')
 
   // check the contents of ignite/ignite.json
   const igniteJSON = filesystem.read(`${process.cwd()}/ignite/ignite.json`)
   expect(typeof igniteJSON).toBe('string')
   expect(igniteJSON).toMatch(/"generators": {/)
-
 
   // check the Containers/App.js file
   const appJS = filesystem.read(`${process.cwd()}/App/Containers/App.js`)
@@ -49,6 +66,4 @@ test('spins up a min app and performs various checks', async done => {
   expect(filesystem.read(`${process.cwd()}/App/Components/Sporkified.js`)).toBe('SPORKED!')
 
   done()
-
-  // TODO: add more end-to-end tests here
 })

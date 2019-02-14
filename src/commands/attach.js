@@ -1,26 +1,28 @@
-// @cliDescription Attaches Ignite CLI to an existing project.
+import isIgniteDirectory from '../lib/is-ignite-directory'
+import { IgniteToolbox } from '../types'
 
-const isIgniteDirectory = require('../lib/isIgniteDirectory')
+module.exports = {
+  description: 'Attaches Ignite CLI to an existing project.',
+  run: async function(toolbox: IgniteToolbox) {
+    const { filesystem, print, meta } = toolbox
 
-module.exports = async function (context) {
-  const { filesystem, ignite, print } = context
+    // ensure we're in a supported directory
+    if (isIgniteDirectory(process.cwd())) {
+      toolbox.print.info('🍻  Good news! This project is already Ignite CLI-enabled!')
+      return
+    }
 
-  // ensure we're in a supported directory
-  if (isIgniteDirectory(process.cwd())) {
-    context.print.info('🍻  Good news! This project is already Ignite CLI-enabled!')
-    return
-  }
+    // ignite/ignite.json
+    const igniteJson = {
+      createdWith: meta.version(),
+      boilerplate: 'empty',
+      examples: 'none',
+    }
+    filesystem.write('ignite/ignite.json', igniteJson)
 
-  // ignite/ignite.json
-  const igniteJson = {
-    'createdWith': ignite.version,
-    'boilerplate': 'empty',
-    'examples': 'none'
-  }
-  filesystem.write('ignite/ignite.json', igniteJson)
+    // the plugins folder
+    filesystem.write('ignite/plugins/.gitkeep', '')
 
-  // the plugins folder
-  filesystem.write('ignite/plugins/.gitkeep', '')
-
-  context.print.info(`🔥  Good to go! Type ${print.colors.bold('ignite')} to get started.`)
+    toolbox.print.info(`🔥  Good to go! Type ${print.colors.bold('ignite')} to get started.`)
+  },
 }

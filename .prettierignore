@@ -1,0 +1,3 @@
+*.ejs
+**/*.ejs
+src/templates

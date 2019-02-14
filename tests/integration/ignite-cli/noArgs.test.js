@@ -1,10 +1,9 @@
-const { system } = require('gluegun')
-const { contains } = require('ramda')
+const { system, filesystem } = require('gluegun')
 
-const IGNITE = './bin/ignite'
+const IGNITE = filesystem.path(`${__dirname}/../../../bin/ignite`)
 
 test('with no arguments', async () => {
   const result = await system.spawn(`${IGNITE}`)
   expect(result.status).toBe(0)
-  expect(contains('https://infinite.red/ignite', result.stdout)).toBe(true)
+  expect(result.stdout).toContain('https://infinite.red/ignite')
 })
