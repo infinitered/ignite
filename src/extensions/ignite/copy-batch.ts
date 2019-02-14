@@ -7,7 +7,6 @@ export type CopyBatchOptions = {
 
 export default (toolbox: IgniteToolbox) => {
   function findSpork(toolbox, template) {
-    // console.dir(toolbox, {colors: true, depth: 1})
     const { filesystem } = toolbox
     const sporkDirectory = `${filesystem.cwd()}/ignite/Spork/${toolbox.plugin.name}`
 
