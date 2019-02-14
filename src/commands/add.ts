@@ -10,7 +10,7 @@ import exitCodes from '../lib/exit-codes'
 /**
  * Removes the ignite plugin.
  */
-const removeIgnitePlugin = async (moduleName: string, toolbox: IgniteToolbox) => {
+const rollbackFailedIgnitePlugin = async (moduleName: string, toolbox: IgniteToolbox) => {
   const { print, system, ignite } = toolbox
 
   print.warning('Rolling back...run with --debug to see more info')
@@ -95,7 +95,7 @@ Examples:
       const ok = await prompt.confirm('You ok with that?')
       // if they refuse, then npm/yarn uninstall
       if (!ok) {
-        await removeIgnitePlugin(moduleName, toolbox)
+        await rollbackFailedIgnitePlugin(moduleName, toolbox)
         process.exit(exitCodes.OK)
       }
       spinner.text = `adding ${print.colors.cyan(moduleName)}`
@@ -153,7 +153,7 @@ Examples:
     } catch (err) {
       // we couldn't require the plugin, it probably has some nasty js!
       spinner.fail('problem loading the plugin JS')
-      await removeIgnitePlugin(moduleName, toolbox)
+      await rollbackFailedIgnitePlugin(moduleName, toolbox)
       log(err)
       process.exit(exitCodes.PLUGIN_INVALID)
     }
