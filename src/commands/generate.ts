@@ -119,7 +119,7 @@ module.exports = {
           `  Check out ${print.colors.white('https://github.com/infinitered/ignite')} for instructions on how to`,
         ),
       )
-      print.info(print.colors.muted('  install some or how to build some for yourself.'))
+      print.info(print.colors.muted('  install generators or how to build generators for yourself.'))
     }
 
     // Avast! Thar be no generators ripe for tha plunder.
