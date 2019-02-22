@@ -95,7 +95,7 @@ async function install (context) {
   if (!gitExists && !parameters.options['skip-git'] && system.which('git')) {
     spinner.text = 'setting up git'
     spinner.start()
-    await system.run('git init . && git add . && git commit -m "Initial commit."')
+    await system.run('git init && git add . && git commit -m"Initial commit"')
     spinner.succeed()
   }
 
