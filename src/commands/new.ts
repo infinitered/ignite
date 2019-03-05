@@ -5,6 +5,7 @@ import addEmptyBoilerplate from '../lib/add-empty-boilerplate'
 import { isEmpty, match, not, toLower } from 'ramda'
 import { IgniteToolbox } from '../types'
 import boilerplateInstall from '../lib/boilerplate-install'
+import { system } from 'gluegun'
 
 /**
  * Creates a new ignite project based on an optional boilerplate.
@@ -104,9 +105,12 @@ module.exports = {
     // grab the right boilerplate
     let boilerplateName = parameters.options.boilerplate || parameters.options.b
 
-    // If the name includes a file separator, it's probably a path. Expand it so it's the full real path here.
-    if ((boilerplateName || '').includes(path.sep)) {
+    // If the name starts with ., /, \, or ~, it's probably a path.
+    // Expand it so it's the full real path here.
+    if (['~', '.', '\\', '/'].includes((boilerplateName || '')[0])) {
       boilerplateName = filesystem.path(boilerplateName)
+      parameters.options.boilerplate = boilerplateName
+      parameters.options.b = boilerplateName
     }
     const bowser = 'Bowser (React Navigation, MobX State Tree, & TypeScript) - RECOMMENDED'
     const andross = 'Andross (React Navigation, Redux, & Redux Saga)'
@@ -149,10 +153,8 @@ module.exports = {
       process.exit(exitCodes.GENERIC)
     }
 
-    // always clean up the app-template stuff
-    // log('cleaning temporary files')
+    // remove the temporary node_modules
     filesystem.remove('node_modules')
-    // filesystem.remove('package.json')
 
     log(`switching back to ${appFolder}`)
     process.chdir(appFolder)
@@ -168,6 +170,12 @@ module.exports = {
     })
     log(`removing unused sub directory ${deepFolder}`)
     filesystem.remove(deepFolder)
+
+    // run yarn or NPM one last time
+    const yarnOrNPM = ignite.useYarn ? 'yarn' : 'npm i'
+    await system.run(yarnOrNPM)
+
+    // done
     log('finished running new')
   },
 }
