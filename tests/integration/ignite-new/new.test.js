@@ -6,7 +6,7 @@ const IGNITE = 'node ' + filesystem.path(`${__dirname}/../../../bin/ignite`)
 
 // for local boilerplate testing
 // const IGNITE_BOILERPLATE = filesystem.path(__dirname, '..', '..', '..', '..', 'ignite-andross')
-const IGNITE_BOILERPLATE = 'ignite-andross'
+const IGNITE_BOILERPLATE = 'ignite-andross@4.0.0-alpha.1'
 
 const APP_NAME = 'Foo'
 
@@ -47,7 +47,7 @@ test('spins up a min app and performs various checks', async done => {
   // check the contents of ignite/ignite.json
   const igniteJSON = filesystem.read(`${process.cwd()}/ignite/ignite.json`)
   expect(typeof igniteJSON).toBe('string')
-  expect(igniteJSON).toMatch(/"generators": {/)
+  expect(igniteJSON).toMatch(/"boilerplate": {/)
 
   // check the Containers/App.js file
   const appJS = filesystem.read(`${process.cwd()}/App/Containers/App.js`)
