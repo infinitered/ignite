@@ -47,7 +47,7 @@ test('spins up a min app and performs various checks', async done => {
   // check the contents of ignite/ignite.json
   const igniteJSON = filesystem.read(`${process.cwd()}/ignite/ignite.json`)
   expect(typeof igniteJSON).toBe('string')
-  expect(igniteJSON).toMatch(/"boilerplate": {/)
+  expect(igniteJSON).toMatch(/"boilerplate": \"/)
 
   // check the Containers/App.js file
   const appJS = filesystem.read(`${process.cwd()}/App/Containers/App.js`)
