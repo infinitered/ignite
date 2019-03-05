@@ -31,7 +31,7 @@
   ],
   "files": [
     "readme.md",
-    "src",
+    "build",
     "bin"
   ],
   "license": "MIT",
