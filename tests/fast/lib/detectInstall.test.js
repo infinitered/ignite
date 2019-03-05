@@ -31,7 +31,6 @@ test('detects plugins from a full path', async () => {
 
 test('detects plugins from a relative path', async () => {
   const moduleName = 'ignite-valid-plugin'
-  expect(process.cwd()).toContain('/ignite')
   const directory = `.${sep}tests${sep}fast${sep}fixtures${sep}${moduleName}`
   const actual = detectInstall(directory, { filesystem })
   expect(actual.type).toEqual('directory')
