@@ -14,7 +14,7 @@ const path = require('path')
  * @param  {object} context - an ignite context
  * @return {object}         - specs about the type of install
  */
-function detectInstall (context) {
+function detectInstall(context) {
   // grab some gluegun goodies
   const { filesystem, parameters, ignite } = context
 
@@ -29,17 +29,24 @@ function detectInstall (context) {
    */
   const isValidIgnitePluginDirectory = candidate =>
     filesystem.exists(candidate) === 'dir' &&
-      filesystem.exists(`${candidate}${path.sep}package.json`) === 'file'
+    filesystem.exists(`${candidate}${path.sep}package.json`) === 'file'
 
   // the plugin we're trying to install
   let plugin = parameters.second
-  
+
   // extract the package name and (optionally) version
   let packageName, packageVersion
-  const versionSepRe = /(?<!^|\/)@/
-  const isScoped = plugin.startsWith('@')
-  packageName = plugin.split(versionSepRe)[0]
-  packageVersion = plugin.split(versionSepRe)[1] || null
+  let regex = /((?:.+\/)?@?[^@]+)(?:@([^@]+))?/
+  let result = regex.exec(plugin)
+
+  if (!result) {
+    throw new Error(`"${plugin}" is not a valid plugin`)
+  }
+
+  packageName = result[1]
+  packageVersion = result[2] || null
+  const isScoped = /@[^@/]+$/.test(packageName)
+  console.log(`scoped? ${isScoped}`)
 
   // If a path, expand that path. If not, prepend with `ignite-*`.
   if (packageName.includes(path.sep) && !isScoped) {
