@@ -15,6 +15,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Set up git
+          command: git config --global user.email "reactotron@example.com" && git config --global user.name "Reactotron Tester"
       - restore_cache:
           name: Restore node modules
           keys:
@@ -52,7 +55,7 @@ jobs:
       - run:
           name: Run tests
           command: yarn ci:test # this command will be added to/found in your package.json scripts
-          
+
   publish:
     <<: *defaults
     steps:
