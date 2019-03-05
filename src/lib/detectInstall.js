@@ -46,7 +46,6 @@ function detectInstall(context) {
   packageName = result[1]
   packageVersion = result[2] || null
   const isScoped = /@[^@/]+$/.test(packageName)
-  console.log(`scoped? ${isScoped}`)
 
   // If a path, expand that path. If not, prepend with `ignite-*`.
   if (packageName.includes(path.sep) && !isScoped) {
