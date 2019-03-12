@@ -27,7 +27,7 @@ afterEach(() => {
 test('spins up a min app and performs various checks', async done => {
   // ignite the eternal flame
   // If you have to ignite it, how is it eternal?
-  const resultANSI = await system.exec(`${IGNITE} new ${APP_NAME} --min -b ${IGNITE_BOILERPLATE} --debug`)
+  const resultANSI = await system.spawn(`${IGNITE} new ${APP_NAME} --min -b ${IGNITE_BOILERPLATE} --debug`)
   const result = stripANSI(resultANSI.stdout.toString())
 
   // Check the output
