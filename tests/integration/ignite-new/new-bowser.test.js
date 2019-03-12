@@ -6,7 +6,7 @@ const IGNITE = 'node ' + filesystem.path(`${__dirname}/../../../bin/ignite`)
 
 // for local boilerplate testing
 // const IGNITE_BOILERPLATE = filesystem.path(__dirname, '..', '..', '..', '..', 'ignite-andross')
-const IGNITE_BOILERPLATE = 'ignite-bowser@4.0.0-alpha.2'
+const IGNITE_BOILERPLATE = 'ignite-bowser@4.0.0-alpha.3'
 
 const APP_NAME = 'Foo'
 
