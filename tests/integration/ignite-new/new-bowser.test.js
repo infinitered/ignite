@@ -25,7 +25,7 @@ afterEach(() => {
 })
 
 test('spins up a Bowser app and performs various checks', async done => {
-  const resultANSI = await system.spawn(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`)
+  const resultANSI = await system.exec(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`)
   const result = stripANSI(resultANSI.stdout.toString())
 
   // Check the output
