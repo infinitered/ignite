@@ -25,8 +25,8 @@ afterEach(() => {
 })
 
 test('spins up a Bowser app and performs various checks', async done => {
-  const resultANSI = await system.spawn(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`)
-  const result = stripANSI(resultANSI.stdout.toString())
+  const resultANSI = await system.run(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`, opts)
+  const result = stripANSI(resultANSI)
 
   // Check the output
   expect(result).toContain(`Ignite CLI ignited`)
