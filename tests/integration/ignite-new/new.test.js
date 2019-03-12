@@ -55,7 +55,7 @@ test('spins up a min app and performs various checks', async done => {
 
   // run ignite g component
   await system.run(`${IGNITE} g component Test`, opts)
-  expect(filesystem.inspect(`${process.cwd()}/App/Components/Test.js`).type).toBe('file')
+  expect(filesystem.read(`${process.cwd()}/App/Components/Test.js`)).toContain('Test')
 
   // spork a screen and edit it
   await system.run(`${IGNITE} spork component.ejs`, opts)
