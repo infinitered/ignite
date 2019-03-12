@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.0-alpha.5",
   "description": "An unfair headstart for your React Native apps.",
   "bin": {
     "ignite": "bin/ignite"
