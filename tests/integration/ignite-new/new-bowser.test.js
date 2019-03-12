@@ -25,8 +25,8 @@ afterEach(() => {
 })
 
 test('spins up a Bowser app and performs various checks', async done => {
-  const resultANSI = await system.spawn(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`, opts)
-  const result = stripANSI(resultANSI)
+  const resultANSI = await system.spawn(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`)
+  const result = stripANSI(resultANSI.stdout.toString())
 
   // Check the output
   expect(result).toContain(`Ignite CLI ignited`)
@@ -53,11 +53,20 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   // run generators
   await system.run(`${IGNITE} g component test`, opts)
-  expect(filesystem.read(`${process.cwd()}/app/components/test/test.jsx`)).toContain('Test')
+  expect(filesystem.list(`${process.cwd()}/app/components`)).toContain('test')
+  expect(filesystem.read(`${process.cwd()}/app/components/test/test.tsx`)).toContain(
+    'export function Test(props: TestProps) {',
+  )
+
   await system.run(`${IGNITE} g model mtest`, opts)
-  expect(filesystem.read(`${process.cwd()}/app/models/mtest/mtest.js`)).toContain('Mtest')
+  expect(filesystem.list(`${process.cwd()}/app/models`)).toContain('mtest')
+  expect(filesystem.read(`${process.cwd()}/app/models/mtest/mtest.ts`)).toContain('export const MtestModel')
+
   await system.run(`${IGNITE} g screen bowser`, opts)
-  expect(filesystem.read(`${process.cwd()}/app/screens/bowser/bowser.jsx`)).toContain('Bowser')
+  expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen')
+  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen/bowser-screen.tsx`)).toContain(
+    'export class BowserScreen',
+  )
 
   done()
 })
