@@ -6,7 +6,7 @@ const os = require('os')
 const isWindows = process.platform === 'win32'
 const isMac = process.platform === 'darwin'
 
-module.exports = async function (context) {
+module.exports = async function(context) {
   // fistful of features
   const {
     filesystem: { read },
@@ -41,9 +41,17 @@ module.exports = async function (context) {
   const nodePath = which('node')
   const nodeVersion = replace('v', '', await run('node --version', { trim: true }))
   const npmPath = which('npm')
-  const npmVersion = npmPath && await run('npm --version', { trim: true })
-  const yarnPath = which('yarn')
-  const yarnVersion = yarnPath && await run('yarn --version', { trim: true })
+  const npmVersion = npmPath && (await run('npm --version', { trim: true }))
+
+  let yarnVersion = undefined
+  let yarnPath = undefined
+  try {
+    yarnPath = which('yarn')
+    yarnVersion = yarnPath && (await run('yarn --version', { trim: true }))
+  } catch (e) {
+    yarnVersion = 'not installed'
+    yarnPath = ''
+  }
 
   info('')
   info(colors.cyan('JavaScript'))
@@ -99,13 +107,12 @@ module.exports = async function (context) {
   // -=-=-=- iOS -=-=-=-
   if (isMac) {
     const xcodePath = which('xcodebuild')
-    const xcodeVersion = xcodePath && split(/\s/, await run('xcodebuild -version', { trim: true }))[1] // lulz
+    const xcodeVersion =
+      xcodePath && split(/\s/, await run('xcodebuild -version', { trim: true }))[1] // lulz
 
     info('')
     info(colors.cyan('iOS'))
-    table([
-      [column1('xcode'), column2(xcodeVersion)]
-    ])
+    table([[column1('xcode'), column2(xcodeVersion)]])
   }
 
   // -=-=-=- windows -=-=-=-

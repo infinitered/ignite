@@ -73,7 +73,8 @@
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "printWidth": 100
   },
   "husky": {
     "hooks": {
