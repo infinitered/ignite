@@ -43,8 +43,9 @@ module.exports = {
     const nodeVersion = replace('v', '', await run('node --version', { trim: true }))
     const npmPath = which('npm')
     const npmVersion = npmPath && (await run('npm --version', { trim: true }))
-    const yarnPath = which('yarn')
+    let yarnPath = which('yarn')
     const yarnVersion = yarnPath && (await run('yarn --version', { trim: true }))
+    yarnPath = yarnPath || 'not installed'
 
     info('')
     info(colors.cyan('JavaScript'))
