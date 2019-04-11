@@ -33,6 +33,11 @@ async function command (context) {
   // check for alphanumeric name, beginning with a letter
   const isValidName = /^[a-z_][a-z0-9_]+$/i.test(projectName)
 
+  // Ensure not more than one argument is provided for <projectName>
+  if (process.argv.slice(3).length > 1) {
+    context.print.info('\n Info: You provided more than one argument for <projectName>. The first one will be used and the rest are ignored.')
+  }
+
   // ensure we're in a supported directory
   if (isIgniteDirectory(process.cwd())) {
     context.print.error('The `ignite new` command cannot be run within an already ignited project.')
