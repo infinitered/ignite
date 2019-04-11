@@ -35,8 +35,7 @@ async function command (context) {
 
   // Ensure not more than one argument is provided for <projectName>
   if (process.argv.slice(3).length > 1) {
-    context.print.error('\n Kindly provide only one argument as the <projectName>')
-    process.exit(exitCodes.GENERIC)
+    context.print.info('\n Info: You provided more than one argument for <projectName>. The first one will be used and the rest are ignored.')
   }
 
   // ensure we're in a supported directory
