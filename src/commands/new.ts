@@ -28,7 +28,12 @@ module.exports = {
       process.exit(exitCodes.PROJECT_NAME)
     }
 
-    // Guard against `ignite new ignite`
+    // warn if more than one argument is provided for <projectName>
+    if (process.argv.slice(3).length > 1) {
+      print.info(`Info: You provided more than one argument for <projectName>. The first one (${projectName}) will be used and the rest are ignored.`) // prettier-ignore
+    }
+
+    // guard against `ignite new ignite`
     if (toLower(projectName) === 'ignite') {
       print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
       process.exit(exitCodes.PROJECT_NAME)
