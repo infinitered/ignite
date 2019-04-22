@@ -129,7 +129,7 @@ module.exports = {
         },
       ])
       // turn the long-form sentence answer into 'andross' or 'bowser'
-      boilerplateName = { [andross]: 'andross', [bowser]: 'bowser' }[boilerplate]
+      boilerplateName = { [andross]: 'ignite-andross@4.0.0-alpha.2', [bowser]: 'bowser@4.0.0-alpha.4' }[boilerplate]
     }
 
     // make & jump into the project directory
