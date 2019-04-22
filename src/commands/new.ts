@@ -29,7 +29,7 @@ module.exports = {
     }
 
     // warn if more than one argument is provided for <projectName>
-    if (process.argv.slice(3).length > 1) {
+    if (parameters.second) {
       print.info(`Info: You provided more than one argument for <projectName>. The first one (${projectName}) will be used and the rest are ignored.`) // prettier-ignore
     }
 
@@ -96,7 +96,16 @@ module.exports = {
 
     // print a header
     require('../brand/header')()
+
     print.newline()
+
+    // warn on alpha/beta release
+    // TODO: remove this when Ignite 3.0.0 is released
+    print.warning(`🐉 You're using a prerelease version of Ignite CLI (ignite --version). Please report bugs!`)
+    print.warning(`   While it should be reasonably stable, we'd love more testing.`)
+    print.warning(`   Thank you for being a prerelease tester and please report bugs!`)
+    print.info(`   https://github.com/infinitered/ignite/issues\n\n`)
+
     print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
 
     // skip the boilerplate?
@@ -114,8 +123,6 @@ module.exports = {
     // Expand it so it's the full real path here.
     if (['~', '.', '\\', '/'].includes((boilerplateName || '')[0])) {
       boilerplateName = filesystem.path(boilerplateName)
-      parameters.options.boilerplate = boilerplateName
-      parameters.options.b = boilerplateName
     }
     const bowser = 'Bowser (React Navigation, MobX State Tree, & TypeScript) - RECOMMENDED'
     const andross = 'Andross (React Navigation, Redux, & Redux Saga)'
@@ -132,6 +139,14 @@ module.exports = {
       boilerplateName = { [andross]: 'ignite-andross@4.0.0-alpha.2', [bowser]: 'bowser@4.0.0-alpha.4' }[boilerplate]
     }
 
+    // update parameters for down the stack
+    parameters.options.boilerplate = boilerplateName
+    parameters.options.b = boilerplateName
+
+    if (boilerplateName.includes('alpha') || boilerplateName.includes('beta')) {
+      print.warning(`🐉 You're using a prerelease version of ${boilerplateName}.`)
+    }
+
     // make & jump into the project directory
     const originalFolder = process.cwd()
     const appFolder = path.join(originalFolder, projectName)
@@ -143,7 +158,6 @@ module.exports = {
     log(`switched directory to ${process.cwd()}`)
 
     // make a temporary package.json file so node stops walking up the directories
-    // NOTE(steve): a lot of pain went into this 1 function call
     filesystem.write('package.json', {
       name: 'ignite-shim',
       description: 'A temporary package.json created to prevent node from wandering too far.',
