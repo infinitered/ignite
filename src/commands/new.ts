@@ -136,7 +136,7 @@ module.exports = {
         },
       ])
       // turn the long-form sentence answer into 'andross' or 'bowser'
-      boilerplateName = { [andross]: 'ignite-andross@4.0.0-beta.1', [bowser]: 'bowser@4.0.0-beta.1' }[boilerplate]
+      boilerplateName = { [andross]: 'ignite-andross@4.0.0-beta.2', [bowser]: 'bowser@4.0.0-beta.2' }[boilerplate]
     }
 
     // update parameters for down the stack
