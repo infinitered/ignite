@@ -139,7 +139,6 @@ module.exports = {
       },
     ]
     if (!boilerplateName) {
-      // @ts-ignore // until https://github.com/infinitered/gluegun/pull/507 is merged
       const { boilerplate } = await prompt.ask([
         {
           name: 'boilerplate',
