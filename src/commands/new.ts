@@ -124,19 +124,31 @@ module.exports = {
     if (['~', '.', '\\', '/'].includes((boilerplateName || '')[0])) {
       boilerplateName = filesystem.path(boilerplateName)
     }
-    const bowser = 'Bowser (React Navigation, MobX State Tree, & TypeScript) - RECOMMENDED'
-    const andross = 'Andross (React Navigation, Redux, & Redux Saga)'
+
+    const boilerplates = [
+      { name: '---', message: 'Infinite Red boilerplates', value: 'sep', role: 'separator' },
+      {
+        value: 'ignite-bowser@beta4',
+        message: 'Bowser (React Navigation, MobX State Tree, & TypeScript) - RECOMMENDED',
+      },
+      { name: 'ignite-andross@beta4', message: 'Andross (React Navigation, Redux, & Redux Saga)' },
+      { name: '---', message: 'Third-party boilerplates', value: 'sep', role: 'separator' },
+      {
+        name: 'ignite-jhipster@beta',
+        message: 'JHipster (https://github.com/ruddell/ignite-jhipster)',
+      },
+    ]
     if (!boilerplateName) {
+      // @ts-ignore // until https://github.com/infinitered/gluegun/pull/507 is merged
       const { boilerplate } = await prompt.ask([
         {
           name: 'boilerplate',
           message: 'Which boilerplate would you like to use?',
-          type: 'list',
-          choices: [bowser, andross],
+          type: 'select',
+          choices: boilerplates,
         },
       ])
-      // turn the long-form sentence answer into 'andross' or 'bowser'
-      boilerplateName = { [andross]: 'ignite-andross@beta4', [bowser]: 'bowser@beta4' }[boilerplate]
+      boilerplateName = boilerplate
     }
 
     // update parameters for down the stack
