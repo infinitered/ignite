@@ -99,13 +99,6 @@ module.exports = {
 
     print.newline()
 
-    // warn on alpha/beta release
-    // TODO: remove this when Ignite 3.0.0 is released
-    print.warning(`🐉 You're using a prerelease version of Ignite CLI (ignite --version). Please report bugs!`)
-    print.warning(`   While it should be reasonably stable, we'd love more testing.`)
-    print.warning(`   Thank you for being a prerelease tester and please report bugs!`)
-    print.info(`   https://github.com/infinitered/ignite/issues\n\n`)
-
     print.info(`🔥 igniting app ${print.colors.yellow(projectName)}`)
 
     // skip the boilerplate?
