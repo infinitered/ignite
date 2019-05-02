@@ -6,7 +6,6 @@ Started Guide [here](./getting-started.md).
 
 Enter `ignite` into your command line to see the commands offered by Ignite CLI.
 
-
 ### Add
 
 ```
@@ -23,7 +22,6 @@ You can find published Ignite CLI plugins on npm, but you can also add unpublish
 plugins from source. To do so, simply pass the path to the plugin instead of its
 name.
 
-
 ### Doctor
 
 ```
@@ -38,8 +36,7 @@ available on your machine, and where applicable, their location. This may be
 useful when debugging or when seeking help for an issue in forums.
 
 Especially handy is `ignite doctor --bug`, which opens webpage with pre-filled
-out issue on Ignite CLI's github. ***[NOTE: this doesn't seem to work yet]***
-
+out issue on Ignite CLI's github. **_[NOTE: this doesn't seem to work yet]_**
 
 ### Generate
 
@@ -71,7 +68,7 @@ Generate a new React Native project with Ignite CLI.
 When you execute this command, Ignite CLI will give you a series of options for
 your new project regarding what libraries you would like to use.
 
-With `ignite new`, you have the option to pick your own boilerplate to install for your project.  The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`. You can also point to a folder on your machine. `--boilerplate` can also be shortened to `-b`.
+With `ignite new`, you have the option to pick your own boilerplate to install for your project. The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`. You can also point to a folder on your machine. `--boilerplate` can also be shortened to `-b`.
 
 ```
 ignite new MyAwesomeApp --boilerplate ir-boilerplate
@@ -89,7 +86,7 @@ You can (with most boilerplates) pass through a `--min` or `--max` flag to autom
 
 If the new app's folder already exists, you can pass through `--overwrite` to overwrite the directory. If you don't, Ignite CLI will ask you if you want to overwrite it.
 
-If you want to use a specific version of a boilerplate, you can add the version to the boilerplate name.  For example, use `ignite new BetaApp -b ir-boilerplate-bowser@1.0.0-beta.1` to use the `1.0.0-beta.1` release of the Bowser boilerplate.
+If you want to use a specific version of a boilerplate, you can add the version to the boilerplate name. For example, use `ignite new BetaApp -b ignite-bowser@3.0.0-beta.2` to use the `3.0.0-beta.2` release of the Bowser boilerplate.
 
 ### Plugin
 
@@ -138,7 +135,6 @@ templates with `space` and finish with `enter`.
 
 Spork lets you be kinda happy with someone else's template, but then change it
 to your liking. For example, different linting, new headers, etc.
-
 
 ### Version
 

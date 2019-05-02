@@ -4,22 +4,21 @@ This guide will walk you through how to setup and use a pre-release or experimen
 
 ## Requirements
 
-* Node 7.6+
-* NPM 4 (ships with Node 7)
-* Yarn 20.3+
+- Node 7.6+
+- NPM 4 (ships with Node 7)
+- Yarn 1.0+
 
 If you're on a Mac, you can use one of these techniques:
 
-* [n](https://github.com/tj/n) - with `npm i -g n && n 7.6`
-* [homebrew](https://brew.sh/) - with `brew install node`
-* [nvm](https://github.com/creationix/nvm) - with `nvm install v7.6.0`
-
+- [n](https://github.com/tj/n) - with `npm i -g n && n 7.6`
+- [homebrew](https://brew.sh/) - with `brew install node`
+- [nvm](https://github.com/creationix/nvm) - with `nvm install v7.6.0`
 
 ## Getting Started
 
 #### Out With The Old
 
-First, if you already have a copy of Ignite 1 or Ignite CLI installed with `npm`, uninstall it with the commands listed below.
+First, if you already have a copy of Ignite CLI installed with `npm`, uninstall it with the commands listed below.
 
 Exact one depends on what you may have installed previously:
 
@@ -52,23 +51,23 @@ Next make the `ignite` command available globally. To do this, run `yarn link`:
 yarn link
 ```
 
-> Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite CLI. See the commands above to uninstall Ignite CLI. 
+> Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite CLI. See the commands above to uninstall Ignite CLI.
 
 > Note: If you have run through the `npm rm` commands listed above and you get this error upon running `yarn link`
 
-  ```
-  warning There's already a package called "ignite-cli" registered. This command has had no effect. If this command was run in another folder with the same name, the other folder is still linked. Please run yarn unlink in the other folder if you want to register this folder.
-  ```
+```
+warning There's already a package called "ignite-cli" registered. This command has had no effect. If this command was run in another folder with the same name, the other folder is still linked. Please run yarn unlink in the other folder if you want to register this folder.
+```
 
-  You may have a symlink that must be removed. CD to `~/.config/yarn/link` and run `ls`
+You may have a symlink that must be removed. CD to `~/.config/yarn/link` and run `ls`
 
-  If you see a symlink listed as `ignite-cli`, delete it. CD back to the `ignite` directory and run `yarn link`. It should run without errors and return something similar to the following in the terminal:
+If you see a symlink listed as `ignite-cli`, delete it. CD back to the `ignite` directory and run `yarn link`. It should run without errors and return something similar to the following in the terminal:
 
-  ```
-  yarn link v1.9.4
-  success Registered "ignite-cli".
-  info You can now run `yarn link "ignite-cli"` in the projects where you want to use this package and it will be used instead.
-  ```
+```
+yarn link v1.13.0
+success Registered "ignite-cli".
+info You can now run `yarn link "ignite-cli"` in the projects where you want to use this package and it will be used instead.
+```
 
 ## Testing Your Installation
 

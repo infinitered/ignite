@@ -1,5 +1,4 @@
-
-#  Contributing to Ignite CLI
+# Contributing to Ignite CLI
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://semaphoreci.com/api/v1/ir/ignite/branches/master/shields_badge.svg)](https://semaphoreci.com/ir/react_native_base)
 
@@ -9,17 +8,17 @@ Before submitting a pull request, you will want to make sure that your branch me
 
 _These examples assume you're using yarn rather than npm. If you're not using yarn, replace these commands with the [appropriate npm alternative](https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc)_
 
-* Everything works on iOS/Android
-* AVA Tests pass in the root folder (`yarn test`)
-* Integration tests pass (`yarn run integration`)
-* New tests are included for any new functionality
-* Code is compliant with StandardJS (`yarn lint`)
-* Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
+- Everything works on iOS/Android
+- AVA Tests pass in the root folder (`yarn test`)
+- Integration tests pass (`yarn run integration`)
+- New tests are included for any new functionality
+- Code is compliant with StandardJS (`yarn lint`)
+- Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
 ## Requirements
 
-* Node 7.6+
-* NPM 4 (ships with Node 7)
+- Node 7.6+
+- NPM 4 (ships with Node 7)
 
 ## Getting Started
 
@@ -33,7 +32,7 @@ Test it out:
 
 ```
 $ ignite --version
-2.0.0-beta.x
+<current version here>
 $ which ignite
 /usr/local/bin/ignite
 $ ignite new UberForHeadLice
@@ -66,11 +65,13 @@ $ ignite new HackingOnBoilerplate -b /full/path/to/boilerplate
 We use [AVA](https://github.com/avajs/ava) for testing.
 
 To run tests from the ignite-base folder:
+
 ```
 $ yarn test
 ```
 
 Or to run it in [intelligent watch mode](https://github.com/avajs/ava/blob/master/docs/recipes/watch-mode.md):
+
 ```
 $ yarn test -- --watch
 ```
@@ -85,9 +86,10 @@ $ yarn run integration
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
+This project adheres to Standard. Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
 
 **To Run Lint** from ignite-base:
+
 ```
 $ yarn lint
 ```
@@ -103,4 +105,4 @@ If you have to bypass lint for a special commit that you will come back and clea
 
 **Understanding Linting Errors**
 
-The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
+The linting rules are from JS Standard and React-Standard. [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).

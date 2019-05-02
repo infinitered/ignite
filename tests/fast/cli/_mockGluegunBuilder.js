@@ -1,40 +1,40 @@
 class MockGluegunBuilder {
-  constructor () {
+  constructor() {
     this.reset()
   }
 
-  reset () {
+  reset() {
     this.props = {
       loadAlls: [],
-      tokens: {}
+      tokens: {},
     }
   }
 
-  onCreateRuntime (fn) {
+  onCreateRuntime(fn) {
     this.runtimeMaker = fn
   }
 
-  brand (brand) {
+  brand(brand) {
     this.props.brand = brand
     return this
   }
 
-  loadDefault (dir) {
+  loadDefault(dir) {
     this.props.loadDefault = dir
     return this
   }
 
-  loadAll (dir, opts = {}) {
+  loadAll(dir, opts = {}) {
     this.props.loadAlls.push({ dir, opts })
     return this
   }
 
-  token (key, value) {
+  token(key, value) {
     this.props.tokens[key] = value
     return this
   }
 
-  createRuntime () {
+  createRuntime() {
     return this.runtimeMaker(this.props)
   }
 }

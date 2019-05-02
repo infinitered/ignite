@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": false,
+    "experimentalDecorators": true,
+    "lib": ["es2016", "es2016.array.include", "scripthost"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "outDir": "build",
+    // Emits types for others to consume
+    "declaration": true,
+    "declarationDir": "build/types",
+    "strict": false,
+    "target": "es5",
+    "pretty": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.ejs", "src/templates/**/*.ejs"]
+}
