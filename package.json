@@ -17,7 +17,7 @@
     "lint": "tslint -p .",
     "integration": "jest tests/integration",
     "ci:test": "yarn test && yarn integration",
-    "ci:publish": "yarn semantic-release",
+    "ci:publish": "yarn build && yarn semantic-release",
     "semantic-release": "semantic-release"
   },
   "repository": "infinitered/ignite",
