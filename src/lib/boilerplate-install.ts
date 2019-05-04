@@ -1,6 +1,7 @@
 import detectInstall from './detect-install'
 import importPlugin from './import-plugin'
-import { IgniteToolbox } from '../types'
+import { IgniteToolbox, IgniteDetectInstall } from '../types'
+import attachIgnite from './attach-ignite'
 
 /**
  * Installs and runs an ignite boilerplate.
@@ -14,14 +15,14 @@ import { IgniteToolbox } from '../types'
  *
  */
 export default async (toolbox: IgniteToolbox): Promise<boolean> => {
-  const { print, ignite, filesystem, parameters } = toolbox
+  const { print, ignite, filesystem, parameters, meta } = toolbox
 
   ignite.log('running boilerplate-install command')
 
   const boilerplateName: string = parameters.options.boilerplate || parameters.options.b
 
   // determine where the package comes from
-  let installSource
+  let installSource: IgniteDetectInstall
   try {
     installSource = detectInstall(boilerplateName, toolbox)
   } catch (e) {
@@ -32,6 +33,7 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
   const { moduleName } = installSource
   const modulePath = `${process.cwd()}/node_modules/${moduleName}`
   const boilerplateJs = modulePath + '/boilerplate.js'
+  const boilerplatePackage = modulePath + '/package.json'
 
   // install the plugin
   const exitCode = await importPlugin(toolbox, installSource)
@@ -39,6 +41,14 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
 
   // start the spinner
   const spinner = print.spin('installing boilerplate')
+
+  // read the info from the boilerplate
+  type PackageJSON = { name: string; version: string } | void
+  const packageJSON: PackageJSON = filesystem.read(boilerplatePackage, 'json')
+  if (!packageJSON) {
+    spinner.fail(`${moduleName} does not have a package.json`)
+    return false
+  }
 
   // ensure we can find the boilerplate.js file
   if (!filesystem.exists(boilerplateJs)) {
@@ -72,10 +82,19 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
   // run the boilerplate
   try {
     await pluginModule.install(toolbox)
-    return true
   } catch (e) {
     print.error(`an error occured while installing ${moduleName} boilerplate.`)
     print.error(e)
     return false
   }
+
+  // attach Ignite
+  ignite.log('attaching Ignite')
+  await attachIgnite(toolbox, {
+    createdWith: meta.version(),
+    boilerplate: packageJSON.name,
+    boilerplateVersion: packageJSON.version,
+  })
+
+  return true
 }

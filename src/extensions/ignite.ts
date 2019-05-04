@@ -66,5 +66,7 @@ module.exports = (toolbox: IgniteToolbox) => {
     log: logExt(toolbox),
     pluginOverrides: pluginOverridesExt(toolbox),
     patching: patchingExt(toolbox),
+    boilerplateName: () => loadIgniteConfig().boilerplate,
+    boilerplateVersion: () => loadIgniteConfig().boilerplateVersion,
   }
 }

@@ -1,7 +1,8 @@
 import { IgniteToolbox, IgniteRNInstallResult } from '../types'
+import attachIgnite from './attach-ignite'
 
 export default async function(toolbox: IgniteToolbox) {
-  const { filesystem, parameters, meta, print, reactNative } = toolbox
+  const { parameters, print, reactNative } = toolbox
   const name = parameters.first
   const spinner = print.spin(`skipping boilerplate`).succeed()
 
@@ -9,13 +10,8 @@ export default async function(toolbox: IgniteToolbox) {
   const rnInstall: IgniteRNInstallResult = await reactNative.install({ name })
   if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
 
-  // ignite/ignite.json
-  const igniteJson = {
-    createdWith: meta.version(),
-    boilerplate: 'empty',
-    examples: 'none',
-  }
-  filesystem.write(`ignite/ignite.json`, igniteJson)
+  await attachIgnite(toolbox, { createdWith: 'empty', boilerplateVersion: '' })
+
   spinner.stop()
 
   // Wrap it up with our success message.

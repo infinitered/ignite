@@ -23,6 +23,8 @@ export type IgniteTools = {
   patchInFile: Function
   log: Function
   pluginOverrides: string[]
+  boilerplateName: () => string | void
+  boilerplateVersion: () => string | void
   patching: {
     prependToFile
     insertInFile
@@ -31,8 +33,19 @@ export type IgniteTools = {
   }
 }
 
+export type ReactNativeTools = {
+  install(opts: {
+    name?: string
+    version?: string
+    template?: string
+    skipJest?: boolean
+    useNpm?: boolean
+  }): Promise<IgniteRNInstallResult>
+}
+
 export interface IgniteToolbox extends GluegunToolbox {
   ignite: IgniteTools
+  reactNative: ReactNativeTools
 }
 
 export interface IgnitePlugin {
@@ -84,4 +97,11 @@ export type IgnitePluginScreenFile = {
 export type IgniteCopyJob = {
   target: string
   template: string
+}
+
+export type IgniteProjectConfig = {
+  createdWith?: string
+  boilerplate?: string
+  boilerplateVersion?: string
+  examples?: string[]
 }
