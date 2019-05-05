@@ -3,7 +3,6 @@ import * as R from 'ramda'
 import detectedChanges from '../lib/detected-changes'
 import detectInstall from '../lib/detect-install'
 import importPlugin from '../lib/import-plugin'
-import isIgniteDirectory from '../lib/is-ignite-directory'
 import findPluginFile from '../lib/find-plugin-file'
 import exitCodes from '../lib/exit-codes'
 
@@ -35,14 +34,6 @@ module.exports = {
     log('running add command')
     const config = ignite.loadIgniteConfig()
     const currentGenerators = config.generators || {}
-
-    // ensure we're in a supported directory
-    if (!isIgniteDirectory(process.cwd())) {
-      toolbox.print.error(
-        'The `ignite add` command must be run in an ignite-compatible directory.\nUse `ignite attach` to make compatible.',
-      )
-      process.exit(exitCodes.NOT_IGNITE_PROJECT)
-    }
 
     // the thing we're trying to install
     if (strings.isBlank(parameters.first)) {

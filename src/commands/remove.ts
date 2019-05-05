@@ -1,6 +1,5 @@
 import Shell from 'shelljs'
 import { concat, pathOr, join, map, assoc } from 'ramda'
-import isIgniteDirectory from '../lib/is-ignite-directory'
 import prependIgnite from '../lib/prepend-ignite'
 import findPluginFile from '../lib/find-plugin-file'
 import exitCodes from '../lib/exit-codes'
@@ -39,14 +38,6 @@ module.exports = {
   alias: ['r'],
   description: 'Removes an Ignite CLI plugin.',
   run: async function(toolbox: IgniteToolbox) {
-    // ensure we're in a supported directory
-    if (!isIgniteDirectory(process.cwd())) {
-      toolbox.print.error(
-        'The `ignite remove` command must be run in an ignite-compatible directory.\nUse `ignite attach` to make compatible.',
-      )
-      process.exit(exitCodes.NOT_IGNITE_PROJECT)
-    }
-
     // grab a fist-full of features...
     const { print, parameters, prompt, ignite } = toolbox
     const { info, warning, xmark, error, success } = print
