@@ -14,6 +14,7 @@ module.exports = {
       system: { run, which },
       print: { colors, info, table },
       strings: { padEnd },
+      ignite,
     } = toolbox
 
     // display helpers
@@ -73,16 +74,19 @@ module.exports = {
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which('ignite')
     const igniteVersion = await run('ignite version', { trim: true })
-    const igniteJson = read(`${process.cwd()}/ignite/ignite.json`, 'json')
-    const igniteBoilerplate = igniteJson && igniteJson.boilerplate
+    const igniteJson = ignite.loadIgniteConfig()
 
     info('')
     info(colors.cyan('Ignite'))
     const igniteTable = []
-    igniteTable.push([column1('ignite'), column2(igniteVersion), column3(ignitePath)])
-    if (igniteBoilerplate) {
-      igniteTable.push([column1('boilerplate'), column2(igniteBoilerplate)])
+    igniteTable.push([column1('ignite-cli'), column2(igniteVersion), column3(ignitePath)])
+    if (igniteJson) {
+      Object.keys(igniteJson).forEach(k => {
+        const v = typeof igniteJson[k] === 'object' ? JSON.stringify(igniteJson[k]) : igniteJson[k]
+        igniteTable.push([column1(k), column2(v), column3('')])
+      })
     }
+
     table(igniteTable)
 
     // -=-=-=- android -=-=-=-

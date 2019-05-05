@@ -1,11 +1,12 @@
+import * as path from 'path'
+import { system } from 'gluegun'
+import { isEmpty, match, not, toLower } from 'ramda'
+
 import isIgniteDirectory from '../lib/is-ignite-directory'
 import exitCodes from '../lib/exit-codes'
-import * as path from 'path'
 import addEmptyBoilerplate from '../lib/add-empty-boilerplate'
-import { isEmpty, match, not, toLower } from 'ramda'
-import { IgniteToolbox } from '../types'
 import boilerplateInstall from '../lib/boilerplate-install'
-import { system } from 'gluegun'
+import { IgniteToolbox } from '../types'
 
 /**
  * Creates a new ignite project based on an optional boilerplate.
@@ -14,7 +15,7 @@ module.exports = {
   alias: ['n'],
   description: 'Generate a new React Native project with Ignite CLI.',
   run: async function command(toolbox: IgniteToolbox) {
-    const { parameters, strings, print, filesystem, ignite, prompt, runtime } = toolbox
+    const { parameters, strings, print, filesystem, ignite, prompt, runtime, meta } = toolbox
     const { isBlank, upperFirst, camelCase } = strings
     const { log } = ignite
 
@@ -196,7 +197,18 @@ module.exports = {
 
     // run yarn or NPM one last time
     const yarnOrNPM = ignite.useYarn ? 'yarn' : 'npm i'
+    let spinner = print.spin(`running ${yarnOrNPM} one last time...`)
     await system.run(yarnOrNPM)
+    spinner.succeed(`${yarnOrNPM} complete`)
+
+    // initialize git if it isn't already initialized
+    if (!parameters.options['skip-git'] && !filesystem.exists('./.git') && system.which('git')) {
+      spinner = print.spin('setting up source control with git')
+      await system.run(
+        `git init . && git add -A && git commit -m "Initial commit\nIgnite CLI version ${meta.version()}"`,
+      )
+      spinner.succeed(`configured git`)
+    }
 
     // done
     log('finished running new')

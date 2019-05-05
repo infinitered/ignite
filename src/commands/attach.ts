@@ -1,10 +1,11 @@
 import isIgniteDirectory from '../lib/is-ignite-directory'
+import attachIgnite from '../lib/attach-ignite'
 import { IgniteToolbox } from '../types'
 
 module.exports = {
   description: 'Attaches Ignite CLI to an existing project.',
   run: async function(toolbox: IgniteToolbox) {
-    const { filesystem, print, meta } = toolbox
+    const { print, meta } = toolbox
 
     // ensure we're in a supported directory
     if (isIgniteDirectory(process.cwd())) {
@@ -12,16 +13,7 @@ module.exports = {
       return
     }
 
-    // ignite/ignite.json
-    const igniteJson = {
-      createdWith: meta.version(),
-      boilerplate: 'empty',
-      examples: 'none',
-    }
-    filesystem.write('ignite/ignite.json', igniteJson)
-
-    // the plugins folder
-    filesystem.write('ignite/plugins/.gitkeep', '')
+    await attachIgnite(toolbox, { createdWith: meta.version(), boilerplate: 'empty', boilerplateVersion: '' })
 
     toolbox.print.info(`🔥  Good to go! Type ${print.colors.bold('ignite')} to get started.`)
   },

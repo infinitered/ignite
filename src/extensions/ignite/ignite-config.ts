@@ -1,7 +1,7 @@
 import { dissoc } from 'ramda'
-import { IgniteToolbox } from '../../types'
+import { IgniteToolbox, IgniteProjectConfig } from '../../types'
 
-const igniteConfigFilename = `${process.cwd()}/ignite/ignite.json`
+const igniteConfigFilename = `./ignite/ignite.json`
 
 export default (toolbox: IgniteToolbox) => {
   const { filesystem } = toolbox
@@ -9,23 +9,27 @@ export default (toolbox: IgniteToolbox) => {
   /**
    * Reads the contents of the ignite/ignite.json configuration.
    */
-  function loadIgniteConfig(): Object {
+  function loadIgniteConfig(): IgniteProjectConfig {
     return filesystem.exists(igniteConfigFilename) ? filesystem.read(igniteConfigFilename, 'json') || {} : {}
   }
 
   /**
    * Saves a new ignite config file.
    */
-  function saveIgniteConfig(config: Object = {}) {
+  function saveIgniteConfig(config: IgniteProjectConfig = {}) {
     filesystem.write(igniteConfigFilename, config, { jsonIndent: 2 })
   }
 
   /**
-   * Sets an ignite config setting
+   * Sets an ignite config setting. Takes an object or a key/value pair.
    */
-  function setIgniteConfig(key: string, value: string) {
+  function setIgniteConfig(keyOrObject: string | object, value?: string) {
     const igniteConfig = loadIgniteConfig()
-    igniteConfig[key] = value
+    if (typeof keyOrObject === 'string') {
+      igniteConfig[keyOrObject] = value
+    } else {
+      Object.assign(igniteConfig, keyOrObject)
+    }
     saveIgniteConfig(igniteConfig)
   }
 
