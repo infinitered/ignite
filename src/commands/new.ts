@@ -127,7 +127,7 @@ module.exports = {
       { name: 'ignite-andross', message: 'Andross (React Navigation, Redux, & Redux Saga)' },
       { name: '---', message: 'Third-party boilerplates', value: 'sep', role: 'separator' },
       {
-        name: 'ignite-jhipster@beta',
+        name: 'ignite-jhipster',
         message: 'JHipster (https://github.com/ruddell/ignite-jhipster)',
       },
     ]
