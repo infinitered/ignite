@@ -6,7 +6,6 @@ We will be using https://github.com/ArnaudRinquin/react-native-radio-buttons as 
 
 ### Generate a basic plugin structure
 
-
 Run the provided plugin generator. Ignite CLI will automatically prepend your package name with `ignite-`.
 
 ```
@@ -98,7 +97,7 @@ const renderContainer = (optionNodes) => {
 ignite add radio-buttons
 ```
 
-NOTE: If your plugin is not on npm yet, Make sure you have `IGNITE_PLUGIN_PATH` set as an ENV variable in your shell profile. It should point to the directory that contains the plugin you are writing.
+NOTE: If your plugin is not on npm yet, make sure you have `IGNITE_PLUGIN_PATH` set as an ENV variable in your shell profile. It should point to the directory that contains the plugin you are writing.
 
 ```
 ~/.bash_profile

@@ -10,23 +10,24 @@
   },
   "scripts": {
     "lint": "standard",
+    "format": "prettier --write \"{**/*.ts,**/*.js}\" --loglevel error && standard --fix",
     "test": "ava",
     "watch": "ava --watch",
-    "coverage": "nyc ava",
     "shipit": "np"
   },
+  "prettier": {},
   "standard": {
     "parser": "babel-eslint"
   },
   "url": "https://example.com/path/to/your/plugin",
   "repository": "githuborg/reponame",
   "devDependencies": {
-    "ava": "^0.18.2",
-    "babel-eslint": "^7.1.1",
-    "np": "^2.12.0",
-    "nyc": "^10.1.2",
-    "sinon": "^1.17.7",
-    "standard": "^8.6.0"
+    "ava": "^1.4.1",
+    "babel-eslint": "^10.0.1",
+    "np": "^5.0.1",
+    "sinon": "^7.3.2",
+    "standard": "^12.0.1",
+    "prettier": "^1.17.1"
   }
 }
 
