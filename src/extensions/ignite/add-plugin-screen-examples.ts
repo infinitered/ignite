@@ -65,7 +65,6 @@ export default (toolbox: IgniteToolbox) => {
       map(file => {
         // turn things like "examples/This File-Example.js" into "ThisFileExample"
         // for decent component names
-        // TODO: check for collisions in the future
         const exampleFileName = takeLast(1, split(path.sep, file.screen))[0]
         const componentName = replace(/.js|\s|-/g, '', exampleFileName)
 

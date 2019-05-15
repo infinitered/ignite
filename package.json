@@ -15,7 +15,7 @@
     "test": "jest tests/fast",
     "watch": "jest tests/fast --watch",
     "lint": "tslint -p .",
-    "integration": "jest tests/integration",
+    "integration": "jest --runInBand tests/integration",
     "ci:test": "yarn test && yarn integration",
     "ci:publish": "yarn build && yarn semantic-release",
     "semantic-release": "semantic-release"

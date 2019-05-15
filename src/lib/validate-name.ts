@@ -9,6 +9,8 @@ import { IgniteToolbox } from '../types'
 export default (pluginName: string, toolbox: IgniteToolbox): string => {
   const { strings, print } = toolbox
 
+  pluginName = pluginName.toLowerCase()
+
   if (strings.isBlank(pluginName)) {
     print.info(`ignite plugin new ignite-foo\n`)
     print.error('Plugin name is required')

@@ -9,8 +9,8 @@ import { IgniteToolbox, IgniteCopyJob } from '../types'
  * @returns {Object} The answers.
  */
 const walkthrough = async (toolbox: IgniteToolbox) => {
-  const minOptions = { template: 'No', command: 'No' }
-  const maxOptions = { template: 'Yes', command: 'Yes' }
+  const minOptions = { boilerplate: 'No', generator: 'No' }
+  const maxOptions = { boilerplate: 'Yes', generator: 'Yes' }
   if (toolbox.parameters.options.min) {
     return minOptions
   }
@@ -27,13 +27,7 @@ const walkthrough = async (toolbox: IgniteToolbox) => {
       choices: ['No', 'Yes'],
     },
     {
-      name: 'template',
-      message: 'Will your plugin have an example component?',
-      type: 'list',
-      choices: ['No', 'Yes'],
-    },
-    {
-      name: 'command',
+      name: 'generator',
       message: 'Will your plugin have a generator command? (e.g. ignite generate <mygenerator> <name>)',
       type: 'list',
       choices: ['No', 'Yes'],
@@ -66,30 +60,23 @@ const createNewPlugin = async (toolbox: IgniteToolbox) => {
     { template: 'plugin/test/add.js.ejs', target: `${pluginName}/test/add.js` },
     { template: 'plugin/test/remove.js.ejs', target: `${pluginName}/test/remove.js` },
     { template: 'plugin/test/interface.js.ejs', target: `${pluginName}/test/interface.js` },
-    answers.template === 'Yes' && {
-      template: 'plugin/templates/Example.js.ejs',
-      target: `${pluginName}/templates/${name}Example.js.ejs`,
-    },
-    answers.command === 'Yes' && {
+    // generator command template example
+    answers.generator === 'Yes' && {
       template: 'plugin/commands/thing.js.ejs',
-      target: `${pluginName}/commands/thing.js`,
+      target: `${pluginName}/commands/generate/${pluginName}.js`,
     },
-    answers.command === 'Yes' && {
+    answers.generator === 'Yes' && {
       template: 'plugin/templates/thing.js.ejs.ejs',
-      target: `${pluginName}/templates/thing.js.ejs`,
+      target: `${pluginName}/templates/${pluginName}.js.ejs`,
     },
   ]
   if (answers.boilerplate === 'Yes') {
     copyJobs.push({ template: 'plugin/boilerplate.js.ejs', target: `${pluginName}/boilerplate.js` })
     copyJobs.push({ template: 'plugin/boilerplate/index.js.ejs.ejs', target: `${pluginName}/boilerplate/index.js.ejs` })
-    copyJobs.push({ template: 'plugin/boilerplate/App/App.js', target: `${pluginName}/boilerplate/App/App.js` })
+    copyJobs.push({ template: 'plugin/boilerplate/app/app.js', target: `${pluginName}/boilerplate/app/app.js` })
     copyJobs.push({
-      template: 'plugin/boilerplate/Tests/AppTest.js',
-      target: `${pluginName}/boilerplate/Tests/AppTest.js`,
-    })
-    copyJobs.push({
-      template: 'plugin/boilerplate/ignite/ignite.json',
-      target: `${pluginName}/boilerplate/ignite/ignite.json`,
+      template: 'plugin/boilerplate/tests/app.test.js',
+      target: `${pluginName}/boilerplate/tests/app.test.js`,
     })
   }
 
@@ -99,7 +86,7 @@ const createNewPlugin = async (toolbox: IgniteToolbox) => {
     pluginName,
     answers,
     igniteVersion: meta.version(),
-    isGenerator: answers.command === 'Yes',
+    isGenerator: answers.generator === 'Yes',
   })
 }
 

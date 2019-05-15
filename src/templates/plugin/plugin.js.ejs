@@ -6,25 +6,23 @@ const NPM_MODULE_VERSION = '0.0.1'
 
 // const PLUGIN_PATH = __dirname
 // const APP_PATH = process.cwd()
-<% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>Example.js.ejs'<% } %>
+<% if (props.answers.template === 'Yes') { %>const EXAMPLE_FILE = '<%= props.name %>.js.ejs'<% } %>
 
-const add = async function (context) {
-  // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
-  const { ignite, filesystem } = context
+const add = async function (toolbox) {
+  // Learn more about toolbox: https://infinitered.github.io/gluegun/#/toolbox-api.md
+  const { ignite } = toolbox
 
   // install an NPM module and link it
   await ignite.addModule(NPM_MODULE_NAME, { link: true, version: NPM_MODULE_VERSION })
 
-  <% if (props.answers.template === 'Yes') { %>await ignite.addPluginComponentExample(EXAMPLE_FILE, { title: '<%= props.name %> Example' })<% } %>
-
-  // Example of copying templates/<%= props.name %> to App/<%= props.name %>
-  // if (!filesystem.exists(`${APP_PATH}/App/<%= props.name %>`)) {
-  //   filesystem.copy(`${PLUGIN_PATH}/templates/<%= props.name %>`, `${APP_PATH}/App/<%= props.name %>`)
+  // Example of copying templates/<%= props.name %> to app/<%= props.pluginName %>
+  // if (!toolbox.filesystem.exists(`${APP_PATH}/app/<%= props.pluginName %>`)) {
+  //   toolbox.filesystem.copy(`${PLUGIN_PATH}/templates/<%= props.pluginName %>`, `${APP_PATH}/app/<%= props.pluginName %>`)
   // }
 
   // Example of patching a file
-  // ignite.patchInFile(`${APP_PATH}/App/Config/AppConfig.js`, {
-  //   insert: `import '../<%= props.name %>/<%= props.name %>'\n`,
+  // ignite.patchInFile(`${APP_PATH}/app/config/app-config.js`, {
+  //   insert: `import '../<%= props.pluginName %>/<%= props.pluginName %>'\n`,
   //   before: `export default {`
   // })
 }
@@ -32,24 +30,22 @@ const add = async function (context) {
 /**
  * Remove yourself from the project.
  */
-const remove = async function (context) {
-  // Learn more about context: https://infinitered.github.io/gluegun/#/context-api.md
-  const { ignite, filesystem } = context
+const remove = async function (toolbox) {
+  // Learn more about toolbox: https://infinitered.github.io/gluegun/#/toolbox-api.md
+  const { ignite } = toolbox
 
   // remove the npm module and unlink it
   await ignite.removeModule(NPM_MODULE_NAME, { unlink: true })
 
-  <% if (props.answers.template === 'Yes') { %>await ignite.removePluginComponentExample(EXAMPLE_FILE)<% } %>
-
-  // Example of removing App/<%= props.name %> folder
-  // const remove<%= props.name %> = await context.prompt.confirm(
-  //   'Do you want to remove App/<%= props.name %>?'
+  // Example of removing app/<%= props.name %> folder
+  // const remove<%= props.pluginName %> = await toolbox.prompt.confirm(
+  //   'Do you want to remove app/<%= props.pluginName %>?'
   // )
-  // if (remove<%= props.name %>) { filesystem.remove(`${APP_PATH}/App/<%= props.name %>`) }
+  // if (remove<%= props.pluginName %>) { toolbox.filesystem.remove(`${APP_PATH}/app/<%= props.pluginName %>`) }
 
   // Example of unpatching a file
-  // ignite.patchInFile(`${APP_PATH}/App/Config/AppConfig.js`, {
-  //   delete: `import '../<%= props.name %>/<%= props.name %>'\n`
+  // ignite.patchInFile(`${APP_PATH}/app/config/app-config.js`, {
+  //   delete: `import '../<%= props.pluginName %>/<%= props.pluginName %>'\n`
   // )
 }
 
