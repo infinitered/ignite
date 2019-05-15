@@ -48,7 +48,7 @@ const walkthrough = async (toolbox: IgniteToolbox) => {
  */
 const createNewPlugin = async (toolbox: IgniteToolbox) => {
   const { parameters, print, ignite, strings, meta } = toolbox
-  const pluginName = validateName(parameters.third, toolbox)
+  const pluginName = validateName(parameters.second, toolbox)
   const name = strings.pascalCase(pluginName.replace(/^ignite-/, ''))
 
   // Plugin generation walkthrough
