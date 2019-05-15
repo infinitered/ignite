@@ -34,7 +34,6 @@ test('spins up an Ignite plugin with min options and performs various checks', a
   expect(dirs).not.toContain('templates')
   expect(filesystem.exists('package.json')).toBeTruthy()
   expect(filesystem.exists('plugin.js')).toBeTruthy()
-  process.chdir(`..`)
 
   done()
 })
@@ -58,8 +57,6 @@ test('spins up an Ignite plugin with max options and performs various checks', a
   await system.run(`yarn format`)
   const testResults = await system.run(`yarn test`)
   expect(testResults).toContain(`4 tests passed`)
-
-  process.chdir(`..`)
 
   done()
 })
