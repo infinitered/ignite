@@ -33,10 +33,10 @@ By answering `yes` to the generator question, you will be given the files necess
 ├── index.js
 ├── package.json
 └── templates
-    └── MyGeneratorExample.js
+    └── my-generator-example.js
 ```
 
-`commands/generate/example.js` exports a function whose responsibility is to queue a job to copy the template to the project. `templates/MyGeneratorExample.js` (or `{generator name}Example.js`) is the template that will be copied over. Rename or copy these files appropriately for your generator. The other files are standard plugin files; see the plugin guide to review plugins.
+`commands/generate/example.js` exports a function whose responsibility is to queue a job to copy the template to the project. `templates/my-generator-example.js` (or `{generator name}-example.js`) is the template that will be copied over. Rename or copy these files appropriately for your generator. The other files are standard plugin files; see the plugin guide to review plugins.
 
 In the example `commands/generate/example.js`, you can see that the generator function accepts a `toolbox` parameter. You can use this to prompt the user to select options from a list. The following is an example of this from the ListView generator.
 
@@ -58,7 +58,7 @@ This example uses the resulting `type` to select a template from several availab
 ```javascript
 // commands/listview.js
 const componentTemplate = type === 'With Sections' ? 'listview-sections' : 'listview'
-const jobs = [{ template: `${componentTemplate}.ejs`, target: `App/Containers/${name}.js` }]
+const jobs = [{ template: `${componentTemplate}.ejs`, target: `app/components/${name}.js` }]
 
 // Job handler
 await generate({

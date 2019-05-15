@@ -42,26 +42,12 @@ The `plugin.js` file is the entrypoint for your plugin and provides the add/remo
 
 ### Add content to the example template
 
-`templates/RadioButtonsExample.js.ejs`
+`templates/radio-buttons-example.js.ejs`
 
 ```
 import React from 'react'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
-import ExamplesRegistry from '../../../App/Services/ExamplesRegistry'
 import { RadioButtons } from 'react-native-radio-buttons'
-
-// Example
-ExamplesRegistry.addPluginExample('RadioButtons', () =>
-  <View style={{margin: 20}}>
-    <RadioButtons
-      options={options}
-      onSelection={ setSelectedOption.bind(this) }
-      selectedOption={ options.first } // In your application, this would be { this.state.selectedOption }
-      renderOption={ renderOption }
-      renderContainer={ renderContainer }
-    />
-  </View>
-)
 
 const options = [
   "Option 1",
@@ -88,7 +74,6 @@ const renderOption = (option, selected, onSelect, index) => {
 const renderContainer = (optionNodes) => {
   return <View>{optionNodes}</View>
 }
-
 ```
 
 ### Add the plugin to the Ignite application
