@@ -1,4 +1,4 @@
-import { GluegunToolbox } from 'gluegun'
+import { GluegunToolbox, GluegunCommand } from 'gluegun'
 
 export type IgniteTools = {
   ignitePluginPath: Function
@@ -51,7 +51,7 @@ export interface IgniteToolbox extends GluegunToolbox {
 export interface IgnitePlugin {
   name: string
   directory: string
-  commands: any[]
+  commands: GluegunCommand<IgniteToolbox>[]
 }
 
 export type IgniteConfig = {

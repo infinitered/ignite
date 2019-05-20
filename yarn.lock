@@ -2531,10 +2531,10 @@ globby@^9.0.0:
     pify "^4.0.1"
     slash "^2.0.0"
 
-gluegun@^3.2.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/gluegun/-/gluegun-3.2.1.tgz#c141332af1baa9f4476f72aabeb88609947cc5ea"
-  integrity sha512-XrsVkiS9Nm2iZBW8G+tM/qG/wDtRi4I8ec5OgvoepKqlR65gcbU/h47YXX7pBcVgyJkdwNdupNyx6t5aZ2kRWg==
+gluegun@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/gluegun/-/gluegun-3.2.3.tgz#4b855e3dfd6721660328a318d16873899bca448f"
+  integrity sha512-JUywcK6I2TFwDJYvKVt5Ck9lC/0qcip5MAEsC4d5HZTUfh8h1CKjgQyqAoj+Or/1jjNGvb78kcfEMz/j8XGx5g==
   dependencies:
     apisauce "^1.0.1"
     app-module-path "^2.2.0"
