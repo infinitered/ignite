@@ -16,6 +16,6 @@
 | [ignite-jhipster](https://github.com/ruddell/ignite-jhipster) | A React Native boilerplate for JHipster apps. | [Jon Ruddell](https://github.com/ruddell) |
 | [ignite-appclon-mobx](https://github.com/Appclon/ignite-appclon-mobx) | Appclon + Ignite Boilerplate | [Appclon](https://github.com/Appclon) |
 | [ignite-typescript-boilerplate](https://github.com/aerian-studios/ignite-typescript-boilerplate/) | A boilerplate for TypeScript apps, based on ignite-ir-boilerplate  | [Matt Kane](https://github.com/ascorbic) |
-| [ignite-expo-boilerplate](https://github.com/jbosse/ignite-expo-boilerplate) | Fork of ignite-ir-boilerplate modified to work with Expo.io  | [Jimmy Bosse](https://github.com/jbosse) |
+| [ignite-expo-boilerplate](https://github.com/jbosse/ignite-expo-boilerplate) | [ARCHIVED] Fork of ignite-ir-boilerplate modified to work with Expo.io  | [Jimmy Bosse](https://github.com/jbosse) |
 | [ignite-kryptonite](https://github.com/juddey/ignite-kryptonite) | Your react web thing, ignitified.  | [Justin Lane](https://github.com/juddey) |
 | [ignite-boilerplate-andross-typescript](https://github.com/lvlrSajjad/ignite-boilerplate-andross-typescript) | Customized version of ignite Andross With TypeScript Support. | [Sajjad Asadi](https://github.com/lvlrSajjad) |
