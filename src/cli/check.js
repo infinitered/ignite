@@ -67,4 +67,13 @@ if (debugMode) {
   if (!yarn) {
     process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY)
   }
+  
+  var xCodeVersion = shell.exec('xcode-select -v',{silent:true}).stdout;
+  var xCodeInstalled = RegExp(/xcode-select version \d+/).test(xCodeVersion);
+  
+  if(!xCodeInstalled) {
+    console.log('We can\'t detect XCode installed on your machine. Check if XCode is installed and available in PATH');
+    process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY);
+  }
+  
 }
