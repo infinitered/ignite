@@ -67,4 +67,16 @@ if (debugMode) {
   if (!yarn) {
     process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY)
   }
+  
+  // If Mac OS, check if XCode is installed
+  if (process.platform === "darwin") {
+    var xCodeVersion = shell.exec('xcode-select -v',{silent:true}).stdout;
+    var xCodeInstalled = RegExp(/xcode-select version \d+/).test(xCodeVersion);
+  
+    if(!xCodeInstalled) {
+      console.log('We can\'t detect XCode installed on your machine. Check if XCode is installed and available in PATH');
+      process.exit(exitCodes.INVALID_GLOBAL_DEPENDENCY);
+    }
+  }
+  
 }
