@@ -10,7 +10,7 @@
     "clean-build": "rm -rf ./build",
     "format": "prettier --write \"{**/*.ts,**/*.js,.circleci/**/*.js}\" --loglevel error && tslint -p . --fix",
     "compile": "tsc -p .",
-    "copy-files": "mkdir -p ./build/cli && cp ./src/cli/*.js ./build/cli/",
+    "copy-files": "mkdir -p ./build/cli && cp ./src/cli/*.js ./build/cli/ && cp -a ./src/templates ./build/",
     "build": "yarn clean-build && yarn format && yarn compile && yarn copy-files",
     "test": "jest tests/fast",
     "watch": "jest tests/fast --watch",
