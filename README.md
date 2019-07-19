@@ -2,7 +2,7 @@
 
 <a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 <a href="http://community.infinite.red/">
-  <img src="https://infiniteredcommunity.herokuapp.com/badge.svg">
+<img src="https://infiniteredcommunity.herokuapp.com/badge.svg">
 </a>
 
 # Ignite CLI
@@ -16,20 +16,19 @@
 
 ### Why Ignite CLI?
 
-* **Easily spin up a new React Native app** with best practices built-in
-* **No runtime!** This is a developer tool only, not a library you have to depend on and figure out how to upgrade
-* **An ever-expanding list of [boilerplates](./BOILERPLATES.md) and [plugins](./PLUGINS.md)** to jump-start your app
-* **An amazing [community](http://community.infinite.red)** of other Ignite / React Native developers when you need help
-* **Battle tested** and used every day by the developers at Infinite Red and thousands of developers around the world
-* **Works on macOS, Windows, and Linux** because not all React Native developers are on one platform
-* **Saves an average of two weeks** on your React Native development
+- **Easily spin up a new React Native app** with best practices built-in
+- **No runtime!** This is a developer tool only, not a library you have to depend on and figure out how to upgrade
+- **An ever-expanding list of [boilerplates](./BOILERPLATES.md) and [plugins](./PLUGINS.md)** to jump-start your app
+- **An amazing [community](http://community.infinite.red)** of other Ignite / React Native developers when you need help
+- **Battle tested** and used every day by the developers at Infinite Red and thousands of developers around the world
+- **Works on macOS, Windows, and Linux** because not all React Native developers are on one platform
+- **Saves an average of two weeks** on your React Native development
 
 And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate, Bowser](https://github.com/infinitered/ignite-bowser), or choose [one of many others](./BOILERPLATES.md).
 
 > Ignite saved me a few weeks (if not months) getting started with React Native.
 
 _Jon Ruddell_
-
 
 ## :arrow_down: Install
 
@@ -58,8 +57,8 @@ $ ignite new MyNewAppName
 
 Infinite Red provides two primary boilerplates; they are:
 
-* **Andross** - the tried and true (React Navigation, Redux, & Redux Saga)
-* **Bowser** - the latest and greatest (React Navigation, MobX State Tree, & TypeScript)
+- **Andross** - the tried and true (React Navigation, Redux, & Redux Saga)
+- **Bowser** - the latest and greatest (React Navigation, MobX State Tree, & TypeScript). [Why MST over redux?](https://github.com/infinitered/ignite-bowser#why-this-stack)
 
 ### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-bowser)
 
@@ -92,45 +91,46 @@ $ ignite remove i18n
 $ ignite --help
 ```
 
-
 ## :clipboard: Documentation :clipboard:
 
-* Want to dive into the Ignite CLI documentation? [Go here](./docs/README.md)
-* Looking for React Native's documentation? [Go here](http://facebook.github.io/react-native/docs/getting-started.html).
-
+- Want to dive into the Ignite CLI documentation? [Go here](./docs/README.md)
+- Looking for React Native's documentation? [Go here](http://facebook.github.io/react-native/docs/getting-started.html).
 
 ## :electric_plug: Plugins :electric_plug:
 
 Check out the list of [Plugins](./PLUGINS.md).
 
-
 ## :plate_with_cutlery: Boilerplates :plate_with_cutlery:
 
 Check out the list of [Boilerplates](./BOILERPLATES.md).
+
 ```
 $ ignite new MyNewAppName -b ir-boilerplate
 ```
-
 
 ## :poop: Troubleshooting :poop:
 
 If you run into problems, first search the issues in this repository. If you don't find anything, you can either [file an issue](https://github.com/infinitered/ignite/issues) or come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
 
-
 ## :telescope: Where to Go From Here :telescope:
 
 #### [Contribute to Ignite CLI](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
+
 #### [Take a tour of Ignite CLI source code](https://github.com/infinitered/ignite/blob/master/docs/advanced-guides/tour.md)
+
 #### [Get inspired by apps built with Ignite](https://github.com/infinitered/ignite/blob/master/docs/quick-start/built-with-ignite.md)
+
 #### [Chat with us on the IR Community](http://community.infinite.red) - Infinite Red devs standing by
+
 #### [Who are We?](https://infinite.red) - Learn More About Infinite Red
+
 #### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
+
 #### [Check out Gluegun](https://github.com/infinitered/gluegun) - Ignite CLI is powered by Gluegun, which lets you build CLI apps painlessly!
 
-
 ## :heart: Special Thanks :heart:
-Thank you to the numerous [contributors of Ignite CLI](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite CLI.
 
+Thank you to the numerous [contributors of Ignite CLI](https://github.com/infinitered/ignite/graphs/contributors). Our awe and appreciation for the friendliness of Open Source is the fuel for all [Infinite Red](https://infinite.red/) projects like Ignite CLI.
 
 ## Premium Support
 
