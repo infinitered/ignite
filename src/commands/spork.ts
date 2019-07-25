@@ -59,7 +59,7 @@ module.exports = {
       copyFiles = await context.prompt.ask({
         name: 'selectedTemplates',
         message: 'Which templates would you like to spork?',
-        type: 'checkbox',
+        type: 'multiselect',
         choices,
       })
     }
