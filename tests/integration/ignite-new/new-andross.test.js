@@ -10,6 +10,7 @@ const IGNITE_BOILERPLATE = 'ignite-andross'
 
 const APP_NAME = 'Foo'
 
+// spinning up a new app is ... slow
 jest.setTimeout(10 * 60 * 1000)
 
 const originalDir = process.cwd()

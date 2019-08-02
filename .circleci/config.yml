@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: circleci/node:10.11
+    - image: circleci/node:11.10.1
   working_directory: ~/repo
 
 version: 2
@@ -52,6 +52,11 @@ jobs:
       - run:
           name: Link Ignite CLI
           command: npm link
+      - run:
+          # We don't want to install Cocoapods on ubuntu where we run the tests.
+          name: Set up dummy `pod` command
+          command: |
+            sudo ln /bin/true /usr/local/bin/pod
       - run:
           name: Run tests
           command: yarn ci:test # this command will be added to/found in your package.json scripts
