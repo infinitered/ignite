@@ -40,8 +40,8 @@
     "npm": ">=4.x"
   },
   "dependencies": {
-    "@types/ramda": "^0.26.18",
     "@hapi/cryptiles": ">=4.1.2",
+    "@types/ramda": "^0.26.18",
     "execa": "2.0.3",
     "fs-jetpack": "2.2.2",
     "gluegun": "^3.3.3",
