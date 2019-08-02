@@ -122,7 +122,7 @@ module.exports = {
     const boilerplates = [
       { name: '---', message: 'Infinite Red boilerplates', value: 'sep', role: 'separator' },
       {
-        value: 'ignite-bowser',
+        name: 'ignite-bowser',
         message: 'Bowser (React Navigation, MobX State Tree, & TypeScript) - RECOMMENDED',
       },
       { name: 'ignite-andross', message: 'Andross (React Navigation, Redux, & Redux Saga)' },
