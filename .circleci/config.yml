@@ -53,6 +53,11 @@ jobs:
           name: Link Ignite CLI
           command: npm link
       - run:
+          # We don't want to install Cocoapods on ubuntu where we run the tests.
+          name: Set up dummy `pod` command
+          command: |
+            sudo ln /bin/true /usr/local/bin/pod
+      - run:
           name: Run tests
           command: yarn ci:test # this command will be added to/found in your package.json scripts
 
