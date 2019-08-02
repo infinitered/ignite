@@ -3,9 +3,6 @@ const { system, filesystem } = require('gluegun')
 const IGNITE = filesystem.path(`${__dirname}/../../../bin/ignite`)
 const VERSION = filesystem.read('./package.json', 'json').version
 
-// these should never take longer than 1 second!
-beforeEach(() => jest.setTimeout(1000))
-
 test('ignite -v', async () => {
   const result = await system.spawn(`${IGNITE} -v`)
   expect(result.stdout.toString()).toContain(VERSION)

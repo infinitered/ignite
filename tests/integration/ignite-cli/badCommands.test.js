@@ -2,9 +2,6 @@ const { system, filesystem } = require('gluegun')
 
 const IGNITE = filesystem.path(`${__dirname}/../../../bin/ignite`)
 
-// shouldn't take longer than 2 seconds
-beforeEach(() => jest.setTimeout(2000))
-
 test('unknown command', async done => {
   const result = await system.spawn(`${IGNITE} OMGWTFBBQ`)
   expect(result.status).toBe(0)
