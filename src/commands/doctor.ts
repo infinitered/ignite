@@ -110,6 +110,11 @@ module.exports = {
       info('')
       info(colors.cyan('iOS'))
       table([[column1('xcode'), column2(xcodeVersion)]])
+
+      const cocoaPodsPath = which('pod')
+      const cocoaPodsVersion = await run('pod --version', { trim: true })
+
+      table([[column1('cocoapods'), column2(cocoaPodsVersion), column3(cocoaPodsPath)]])
     }
 
     // -=-=-=- windows -=-=-=-
