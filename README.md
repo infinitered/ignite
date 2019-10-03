@@ -61,6 +61,10 @@ Infinite Red provides two primary boilerplates; they are:
 
 ### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-bowser)
 
+Watch Jamon Holmgren's talk at React Live Amsterdam where he uses Ignite Bowser to build an app in less than 30 minutes:
+
+[https://www.youtube.com/watch?v=Pb8MWkQ9GOc](https://www.youtube.com/watch?v=Pb8MWkQ9GOc)
+
 ```
 $ yarn global add ignite-cli
 $ ignite new PizzaApp
@@ -112,6 +116,8 @@ $ ignite new MyNewAppName -b ir-boilerplate
 If you run into problems, first search the issues in this repository. If you don't find anything, you can either [file an issue](https://github.com/infinitered/ignite/issues) or come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
 
 ## :telescope: Where to Go From Here :telescope:
+
+#### [Watch a live coding talk](https://www.youtube.com/watch?v=Pb8MWkQ9GOc) using Ignite and Ignite Bowser
 
 #### [Contribute to Ignite CLI](https://github.com/infinitered/ignite/blob/master/.github/CONTRIBUTING.md) - Getting up and running for your first pull request
 
