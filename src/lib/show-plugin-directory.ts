@@ -13,6 +13,7 @@ export default async function(toolbox: IgniteToolbox) {
   const { print, parameters } = toolbox
   const { colors, newline, info, table, error } = print
   const directory = await fetchPluginRegistry(toolbox)
+  const plugins = installedPlugins(toolbox)
   const search = parameters.first
 
   const pluginTable = pipe(
@@ -23,7 +24,8 @@ export default async function(toolbox: IgniteToolbox) {
     }),
     map(k => {
       const plugin = directory[k]
-      return [k, plugin.author]
+      const installed = plugins.includes(k)
+      return [k, plugin.author, installed ? '[Installed]' : '']
     }),
   )(directory)
 
@@ -40,4 +42,17 @@ export default async function(toolbox: IgniteToolbox) {
   newline()
 
   process.exit(exitCodes.OK)
+}
+
+/**
+ * Return a list of installed Ignite plugins
+ */
+function installedPlugins(toolbox: IgniteToolbox) {
+  const { keys, filter, pipe } = require('ramda')
+
+  const packageJson = require(`${process.cwd()}/package.json`)
+  return pipe(filter(key => /(ignite\-[\w\-\@]+)/gi.test(key)))([
+    ...keys(packageJson.dependencies),
+    ...keys(packageJson.devDependencies),
+  ])
 }
