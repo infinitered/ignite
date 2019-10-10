@@ -49,7 +49,7 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   // check the app.js file
   const appJS = filesystem.read(`${process.cwd()}/app/app.tsx`)
-  expect(appJS).toMatch(/export class App extends React.Component/)
+  expect(appJS).toContain('export const App')
 
   // run generators
   await system.run(`${IGNITE} g component test`, opts)
@@ -65,7 +65,7 @@ test('spins up a Bowser app and performs various checks', async done => {
   await system.run(`${IGNITE} g screen bowser`, opts)
   expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen')
   expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen/bowser-screen.tsx`)).toContain(
-    'export class BowserScreen',
+    'export const BowserScreen',
   )
 
   done()
