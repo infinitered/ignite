@@ -68,6 +68,7 @@ async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
 export default async (toolbox: IgniteToolbox, specs: IgniteDetectInstall): Promise<number | void> => {
   const { moduleName } = specs
   const { print, ignite } = toolbox
+  const { log } = ignite
   const spinner = print.spin(`adding ${print.colors.cyan(moduleName)}`)
 
   if (specs.type) {
@@ -75,7 +76,7 @@ export default async (toolbox: IgniteToolbox, specs: IgniteDetectInstall): Promi
       await importPlugin(toolbox, specs)
     } catch (e) {
       if (e.unavailable) {
-        print.info(e)
+        log(e.message)
         spinner.fail(`${print.colors.bold(moduleName)} is not available on npm.`)
         print.info('')
         print.info(print.colors.muted('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'))
