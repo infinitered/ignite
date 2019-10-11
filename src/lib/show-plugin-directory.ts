@@ -10,9 +10,10 @@ import { IgniteToolbox } from '../types'
 export default async function(toolbox: IgniteToolbox) {
   const { pipe, keys, filter, map } = require('ramda')
 
-  const { print, parameters } = toolbox
+  const { print, parameters, runtime } = toolbox
   const { colors, newline, info, table, error } = print
   const directory = await fetchPluginRegistry(toolbox)
+  const plugins = runtime.plugins.map(p => p.name)
   const search = parameters.first
 
   const pluginTable = pipe(
@@ -23,7 +24,8 @@ export default async function(toolbox: IgniteToolbox) {
     }),
     map(k => {
       const plugin = directory[k]
-      return [k, plugin.author]
+      const installed = plugins.includes(k)
+      return [k, plugin.author, installed ? '[Installed]' : '']
     }),
   )(directory)
 
