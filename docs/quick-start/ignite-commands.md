@@ -6,6 +6,13 @@ Started Guide [here](./getting-started.md).
 
 Enter `ignite` into your command line to see the commands offered by Ignite CLI.
 
+#### General Options
+
+| Option    | Description                                                                           | Example                        |
+| --------- | ------------------------------------------------------------------------------------- | ------------------------------ |
+| `--debug` | Pass this flag to any command to get more verbose logging if something is going wrong | `ignite new My App --debug`    |
+| `--npm`   | Pass this flag if you want `npm` used for any package installs                        | `ignite add some-plugin --npm` |
+
 ### Add
 
 ```
@@ -55,6 +62,14 @@ generates.
 Run `ignite generate` by itself and it will list available generators. Run
 `ignite generate <generator name>` to use the desired generator.
 
+### Help
+
+```
+ignite help
+```
+
+Run this to list all of the available Ignite commands.
+
 ### New
 
 ```
@@ -82,11 +97,13 @@ If you would like to skip the boilerplate and use what is available out of the b
 ignite new MyBareBonesApp --no-boilerplate
 ```
 
-You can (with most boilerplates) pass through a `--min` or `--max` flag to automatically choose maximum options or minimum options.
-
-If the new app's folder already exists, you can pass through `--overwrite` to overwrite the directory. If you don't, Ignite CLI will ask you if you want to overwrite it.
-
 If you want to use a specific version of a boilerplate, you can add the version to the boilerplate name. For example, use `ignite new BetaApp -b ignite-bowser@3.0.0-beta.2` to use the `3.0.0-beta.2` release of the Bowser boilerplate.
+
+#### Other Options
+
+- `--skip-git`: Use this flag if you do not want to initiate a git repository for your app
+- `--overwrite`: If the new app's folder already exists, use this flag to overwrite the directory. If you don't, Ignite CLI will ask you if you want to overwrite it.
+- `--min` or `--max`: You can (with most boilerplates) pass through one of these flag to automatically choose maximum options or minimum options.
 
 ### Plugin
 
