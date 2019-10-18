@@ -15,6 +15,7 @@ module.exports = {
       print: { colors, info, table },
       strings: { padEnd },
       ignite,
+      runtime,
     } = toolbox
 
     // display helpers
@@ -75,6 +76,14 @@ module.exports = {
     const ignitePath = which('ignite')
     const igniteVersion = await run('ignite version', { trim: true })
     const igniteJson = ignite.loadIgniteConfig()
+    const installedGenerators = runtime.commands
+      .filter(cmd => cmd.commandPath.length > 1 && cmd.commandPath[0] === 'generate')
+      .sort((a, b) => (a.commandPath.join(' ') < b.commandPath.join(' ') ? -1 : 1))
+      .reduce((acc, k) => {
+        acc[k.name] = k.plugin.name
+        return acc
+      }, {})
+    igniteJson.generators = Object.assign({}, installedGenerators, igniteJson.generators)
 
     info('')
     info(colors.cyan('Ignite'))
