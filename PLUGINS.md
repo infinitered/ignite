@@ -15,7 +15,6 @@ name | supporting | author
 [camera](https://github.com/thisisjaiswal/ignite-camera) | [react-native-camera](https://github.com/lwansbrough/react-native-camera) | [Sandeep Jaiswal](https://github.com/thisisjaiswal)
 [crashlytics](https://github.com/Osedea/ignite-crashlytics) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
 [elements](https://github.com/dabit3/ignite-elements) | [react-native-elements](https://github.com/react-native-community/react-native-elements) | [Nadir Dabit](https://github.com/dabit3)
-[fabric](https://github.com/Osedea/ignite-fabric) (to be deprecated) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
 [fetch-blob](https://github.com/skellock/ignite-fetch-blob) | [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) | [Steve Kellock](https://github.com/skellock)
 [firebase](https://github.com/stoneman1/ignite-firebase) | [react-native-firebase](https://github.com/invertase/react-native-firebase) | [Aleksi Pousar](https://github.com/stoneman1)
 [img-cache](https://github.com/skellock/ignite-img-cache) | [react-native-img-cache](https://github.com/wcandillon/react-native-img-cache) | [Steve Kellock](https://github.com/skellock)
