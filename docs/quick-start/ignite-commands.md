@@ -13,7 +13,9 @@ Enter `ignite` into your command line to see the commands offered by Ignite CLI.
 | `--debug` | Pass this flag to any command to get more verbose logging if something is going wrong | `ignite new My App --debug`    |
 | `--npm`   | Pass this flag if you want `npm` used for any package installs                        | `ignite add some-plugin --npm` |
 
-### Add
+### Plugins
+
+#### Add
 
 ```
 ignite add {ignite plugin name}
@@ -28,6 +30,38 @@ desired plugin to your project. It may modify files in your project.
 You can find published Ignite CLI plugins on npm, but you can also add unpublished
 plugins from source. To do so, simply pass the path to the plugin instead of its
 name.
+
+The plugin NodeJS package name (i.e. the name of the package you will find it on npmjs.com) is `ignite-{ignite plugin name}`.
+
+Ex: You can find the `maps` ignite plugin (added to your project with `ignite add maps`) at https://www.npmjs.com/package/ignite-maps
+
+#### New
+
+```
+ignite plugin new {plugin name}
+```
+
+Creates an ignite plugin.
+
+This command allows you to create a plugin or list currently available plugins (coming
+soon).
+
+When creating a plugin, you can choose to include an example component and example
+command or generator.
+
+#### Remove
+
+```
+ignite remove {ignite plugin name} [-y]
+```
+
+Removes an Ignite CLI plugin. You can add `-y` which automatically answers
+"yes" to any confirmation questions.
+
+The opposite of `ignite add`, this removes a plugin from your project. Be warned
+that this may change other files in your project, e.g. to undo changes made by
+`add`. There is a potential for danger here, so you may want to consider using
+version control to be on the safe side.
 
 ### Doctor
 
@@ -68,7 +102,7 @@ Run `ignite generate` by itself and it will list available generators. Run
 ignite help
 ```
 
-Run this to list all of the available Ignite commands.
+Lists all of the available Ignite commands.
 
 ### New
 
@@ -76,7 +110,7 @@ Run this to list all of the available Ignite commands.
 ignite new {Project name}
 ```
 
-Generate a new React Native project with Ignite CLI.
+Generates a new React Native project with Ignite CLI.
 
 `ignite new` uses `react-native init`, then adds files specific to Ignite CLI.
 
@@ -105,41 +139,13 @@ If you want to use a specific version of a boilerplate, you can add the version 
 - `--overwrite`: If the new app's folder already exists, use this flag to overwrite the directory. If you don't, Ignite CLI will ask you if you want to overwrite it.
 - `--min` or `--max`: You can (with most boilerplates) pass through one of these flag to automatically choose maximum options or minimum options.
 
-### Plugin
-
-```
-ignite plugin new {plugin name}
-```
-
-Manages ignite plugins.
-
-This command allows you to create a plugin or list currently available plugins (coming
-soon).
-
-When creating a plugin, you can choose to include an example component and example
-command or generator.
-
-### Remove
-
-```
-ignite remove {ignite plugin name} [-y]
-```
-
-Removes an Ignite CLI plugin. You can add `-y` which automatically answers
-"yes" to any confirmation questions.
-
-The opposite of `ignite add`, this removes a plugin from your project. Be warned
-that this may change other files in your project, e.g. to undo changes made by
-`add`. There is a potential for danger here, so you may want to consider using
-version control to be on the safe side.
-
 ### Spork
 
 ```
 ignite spork
 ```
 
-Copy templates as blueprints for this project.
+Copies templates as blueprints for this project.
 
 Ignite's boilerplates are generally pretty opinionated. Spork lets you avoid those
 opinions by "forking" the template. Like a 'fork' on a git repo `ignite spork`
