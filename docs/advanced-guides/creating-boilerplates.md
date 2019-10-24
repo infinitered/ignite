@@ -28,19 +28,19 @@ The `install()` function is passed a `context` parameters which contains an army
 To test your boilerplate, pass a `boilerplate` argument to the `ignite new` command with the path to the boilerplate source code:
 
 ```sh
-ignite new TestProject --boilerplate=/User/Lib/BLAH
+$ ignite new TestProject --boilerplate=/User/Lib/BLAH
 ```
 
 If you want to test your new project with your boilerplate with all of the plugin options set to true, use the `--max` alias:
 
 ```sh
-ignite new TestProject --max --boilerplate=/User/Lib/BLAH
+$ ignite new TestProject --max --boilerplate=/User/Lib/BLAH
 ```
 
 You can use the `n` and `b` aliases to shorten your command even more!
 
 ```sh
-ignite n --max TestProject -b /User/Lib/BLAH
+$ ignite n --max TestProject -b /User/Lib/BLAH
 ```
 
 Once the command has executed, a new Ignited project will be generated from the boilerplate passed in to your `-b` or `boilerplate=` argument.

@@ -3,8 +3,8 @@
 You can use a boilerplate as the starting point for your app by creating a new
 Ignite CLI project with the `--boilerplate` (or `-b`) flag:
 
-```
-ignite new MyIgniteApp -b {boilerplate name}
+```sh
+$ ignite new MyIgniteApp -b {boilerplate name}
 ```
 
 Ignite CLI comes with a default boilerplate.

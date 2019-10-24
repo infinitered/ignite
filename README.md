@@ -37,8 +37,8 @@ then...
 
 Make sure you have a reasonably recent version of Node (7.6+ minimum). You can check your version of node by running
 
-```
-node -v
+```sh
+$ node -v
 ```
 
 then...
@@ -47,7 +47,7 @@ Install [Yarn](https://yarnpkg.com/lang/en/docs/install/) for your system.
 
 finally...
 
-```
+```sh
 $ yarn global add ignite-cli
 $ ignite new MyNewAppName
 ```
@@ -65,7 +65,7 @@ Watch Jamon Holmgren's talk at React Live Amsterdam where he uses Ignite Bowser 
 
 [https://www.youtube.com/watch?v=Pb8MWkQ9GOc](https://www.youtube.com/watch?v=Pb8MWkQ9GOc)
 
-```
+```sh
 $ yarn global add ignite-cli
 $ ignite new PizzaApp
   ( Choose `Bowser` when prompted )
@@ -79,7 +79,7 @@ $ ignite --help
 
 ### Use Ignite Andross [Infinite Red Andross boilerplate](https://github.com/infinitered/ignite-andross)
 
-```
+```sh
 $ yarn global add ignite-cli
 $ ignite new PizzaApp
   ( Choose Andross when prompted )
@@ -107,7 +107,7 @@ Check out the list of [Plugins](./PLUGINS.md).
 
 Check out the list of [Boilerplates](./BOILERPLATES.md).
 
-```
+```sh
 $ ignite new MyNewAppName -b ir-boilerplate
 ```
 

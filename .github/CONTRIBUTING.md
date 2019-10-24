@@ -30,7 +30,7 @@ _These examples assume you're using yarn rather than npm. If you're not using ya
 
 Test it out:
 
-```
+```sh
 $ ignite --version
 <current version here>
 $ which ignite
@@ -49,14 +49,14 @@ To get familiarized with Ignite CLI's source code, read the [Tour of Ignite CLI'
 
 Note that if you do not already have the React Native command line tools installed, you should run `yarn global add react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
 
-```
+```sh
 $ cd ~/your/apps/directory
 $ ignite new HackingOnIgnite
 ```
 
 If you want to play with a new boilerplate, reference it locally:
 
-```
+```sh
 $ ignite new HackingOnBoilerplate -b /full/path/to/boilerplate
 ```
 
@@ -66,19 +66,19 @@ We use [AVA](https://github.com/avajs/ava) for testing.
 
 To run tests from the ignite-base folder:
 
-```
+```sh
 $ yarn test
 ```
 
 Or to run it in [intelligent watch mode](https://github.com/avajs/ava/blob/master/docs/recipes/watch-mode.md):
 
-```
+```sh
 $ yarn test -- --watch
 ```
 
 You'll also want to run the integration tests before submitting a pull request:
 
-```
+```sh
 $ yarn run integration
 ```
 
@@ -90,7 +90,7 @@ This project adheres to Standard. Our CI enforces this, so we suggest you enable
 
 **To Run Lint** from ignite-base:
 
-```
+```sh
 $ yarn lint
 ```
 

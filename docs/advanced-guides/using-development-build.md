@@ -23,9 +23,9 @@ First, if you already have a copy of Ignite CLI installed with `npm`, uninstall 
 Exact one depends on what you may have installed previously:
 
 ```sh
-npm rm -g ignite
-npm rm -g ignite-cli
-npm rm -g react-native-ignite
+$ npm rm -g ignite
+$ npm rm -g ignite-cli
+$ npm rm -g react-native-ignite
 ```
 
 #### In With The New
@@ -35,20 +35,20 @@ Clone Ignite CLI's repository from https://github.com/infinitered/ignite to your
 > Note: Depending on the version of Ignite CLI you are targeting, you may be cloning a forked repository of Ignite CLI and the git URLs may look different.
 
 ```sh
-git@github.com:infinitered/ignite.git
-cd ignite
+$ git clone git@github.com:infinitered/ignite.git
+$ cd ignite
 ```
 
 Now use `yarn` to install Ignite CLI:
 
 ```sh
-yarn
+$ yarn
 ```
 
 Next make the `ignite` command available globally. To do this, run `yarn link`:
 
 ```sh
-yarn link
+$ yarn link
 ```
 
 > Note: If you get an error at this point, it is probably related to not removing a previously installed version of Ignite CLI. See the commands above to uninstall Ignite CLI.
@@ -74,8 +74,8 @@ info You can now run `yarn link "ignite-cli"` in the projects where you want to 
 To test your installation of Ignite CLI, let's try generating a new project. Navigate to a new directory where you'd like to create a new project and run the `ignite new` command:
 
 ```sh
-cd ~
-ignite new MyApp
+$ cd ~
+$ ignite new MyApp
 ```
 
 > Again, if you are having issues, the Infinite Red Community Slack may be able to help. You can find us by visiting [http://community.infinite.red](http://community.infinite.red) and then joining the `#ignite` channel.
