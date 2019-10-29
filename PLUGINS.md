@@ -21,6 +21,8 @@ name | supporting | author
 [json-server](https://github.com/infinitered/ignite-json-server) | [json-server](https://github.com/typicode/json-server) | [Derek Greenberg](https://github.com/derekgreenberg)
 [keychain](https://github.com/juddey/ignite-keychain) | [react-native-keychain](https://github.com/oblador/react-native-keychain) | [Justin Lane](https://github.com/juddey)
 [native-navigation](https://github.com/Osedea/ignite-native-navigation/) | [react-native-navigation](https://github.com/wix/react-native-navigation/) | [Evan Glicakis](https://github.com/evang9410)
+[navigation](https://github.com/Osedea/ignite-navigation/) | [react-navigation](https://github.com/react-navigation/react-navigation/) | [Adrien Thiery](https://github.com/adrienthiery)
+[netinfo](https://github.com/Osedea/ignite-netinfo/) | [@react-native-community/react-native-netinfo](https://github.com/react-native-community/react-native-netinfo/) | [Adrien Thiery](https://github.com/adrienthiery)
 [onesignal](https://github.com/LighthouseIT/ignite-onesignal) | [react-native-onesignal](https://github.com/OneSignal/react-native-onesignal/) | [Donald Silveira](https://github.com/donnes)
 [progress](https://github.com/deden/ignite-progress) | [react-native-progress](https://github.com/oblador/react-native-progress) | [Deden Ramadhan](https://github.com/deden)
 [push-notification](https://github.com/ryanlntn/ignite-push-notification) | [react-native-push-notification](https://github.com/zo0r/react-native-push-notification) | [Ryan Linton](https://github.com/ryanlntn)
@@ -33,3 +35,5 @@ name | supporting | author
 [source-map](https://github.com/GantMan/ignite-source-map) | [source-map](https://github.com/mozilla/source-map) | [Gant Laborde](https://github.com/gantman)
 [tab-view](https://github.com/dabit3/ignite-tab-view) | [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view) | [Nadir Dabit](https://github.com/dabit3) __BROKEN__ install with `yarn add react-native-tab-view` instead for now.
 [video](https://github.com/ryanlntn/ignite-video) | [react-native-video](https://github.com/react-native-community/react-native-video) | [Ryan Linton](https://github.com/ryanlntn)
+
+**Note** When adding your plugin list here, think to also add it to the [Registry](https://github.com/infinitered/ignite-plugins) to help our "Full CLI" friends find it!
