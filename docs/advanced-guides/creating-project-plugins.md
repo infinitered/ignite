@@ -34,18 +34,18 @@ description = "🔥🔥🔥 It's plugin time!🔥🔥🔥"
 Back in the project root, type:
 
 ```sh
-ignite
+$ ignite
 ```
 
 You should see your plugin appear.  Now, let's list the commands that you've made:
 
 ```sh
-ignite sample
+$ ignite sample
 ```
 
 Empty.  Let's make one by creating a new directory: `ignite/plugins/sample/commands`.  In that directory place this `online.js`.
 
-```js
+```javascript
 // @cliDescription Let's gather some useful data on this mission!
 
 module.exports = context => {
@@ -60,13 +60,13 @@ module.exports = context => {
 ```
 
 ```sh
-ignite sample
+$ ignite sample
 ```
 
 Now you have one.  Let's run it.
 
 ```sh
-ignite sample online
+$ ignite sample online
 ```
 
 For more details on creating commands (including generators), check out [the guide to plugins](./creating-plugins.md) and the [context API guide](https://infinitered.github.io/gluegun/#/context-api).

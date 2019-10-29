@@ -11,17 +11,17 @@ You will also need to have Node 7.6+ installed. We recommend using [n](https://g
 
 Installing Ignite CLI is easy with one simple terminal command:
 
-```
-npm install -g ignite-cli
+```sh
+$ npm install -g ignite-cli
 ```
 
 ## Testing your Ignite Installation
 
 To test your Ignite CLI installation, let’s generate and run a new React Native project. In your terminal, navigate to the directory you’d like to create a new React Native project, then run the Ignite CLI new command:
 
-```
-cd projects
-ignite new MyIgniteProject
+```sh
+$ cd projects
+$ ignite new MyIgniteProject
 ? Would you like Ignite Development Screens?
   No
 > Yes

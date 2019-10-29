@@ -8,7 +8,7 @@ We will be using https://github.com/ArnaudRinquin/react-native-radio-buttons as 
 
 Run the provided plugin generator. Ignite CLI will automatically prepend your package name with `ignite-`.
 
-```
+```sh
 $ ignite plugin new radio-buttons
 ```
 
@@ -44,7 +44,7 @@ The `plugin.js` file is the entrypoint for your plugin and provides the add/remo
 
 `templates/radio-buttons-example.js.ejs`
 
-```
+```javascript
 import React from 'react'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import { RadioButtons } from 'react-native-radio-buttons'
@@ -78,23 +78,22 @@ const renderContainer = (optionNodes) => {
 
 ### Add the plugin to the Ignite application
 
-```
-ignite add radio-buttons
+```sh
+$ ignite add radio-buttons
 ```
 
 NOTE: If your plugin is not on npm yet, make sure you have `IGNITE_PLUGIN_PATH` set as an ENV variable in your shell profile. It should point to the directory that contains the plugin you are writing.
 
-```
-~/.bash_profile
-
+```sh
+# In ~/.bash_profile
 
 export IGNITE_PLUGIN_PATH="/Users/robinheinze/Code/packages/"
 ```
 
 ### Build your app!
 
-```
-react-native run-ios
+```sh
+$ react-native run-ios
 ```
 
 You can view your plugin example in the Plugin Examples section of the dev screens.

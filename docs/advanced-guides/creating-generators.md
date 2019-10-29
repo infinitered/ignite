@@ -6,8 +6,8 @@ A generator is just a [Gluegun](https://github.com/infinitered/gluegun)-powered 
 
 Since generators are plugins, you'll start out creating them the same as you would any [plugin](./creating-plugins.md), with
 
-```
-ignite plugin new {generator name}
+```sh
+$ ignite plugin new {generator name}
 ```
 
 You should answer "yes" to
@@ -18,13 +18,15 @@ You should answer "yes" to
 
 Go into the directory Ignite CLI created.
 
-`cd {generator name}`
+```sh
+$ cd {generator name}
+```
 
 Within your project you will find two directories, `commands` and `templates`.
 
 By answering `yes` to the generator question, you will be given the files necessary to create a functioning generator, with all the essential logic and content.
 
-```
+```sh
 .
 ├── commands
 │   └── generate.js

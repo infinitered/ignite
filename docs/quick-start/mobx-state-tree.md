@@ -52,10 +52,10 @@ Not only have we switched to `mst` from `redux`, but we also switched from `Java
 
 ```sh
 # if you use npm
-npm i mobx-state-tree mobx mobx-react
+$ npm i mobx-state-tree mobx mobx-react
 
 # if you use yarn
-yarn add mobx-state-tree mobx mobx-react
+$ yarn add mobx-state-tree mobx mobx-react
 ```
 
 # Example
