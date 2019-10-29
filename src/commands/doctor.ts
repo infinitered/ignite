@@ -16,6 +16,7 @@ module.exports = {
       strings: { padEnd },
       ignite,
       runtime,
+      meta,
     } = toolbox
 
     // display helpers
@@ -74,6 +75,7 @@ module.exports = {
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which('ignite')
+    const igniteSrcPath = meta.src
     const igniteVersion = await run('ignite version', { trim: true })
     const igniteJson = ignite.loadIgniteConfig()
     const installedGenerators = runtime.commands
@@ -89,6 +91,7 @@ module.exports = {
     info(colors.cyan('Ignite'))
     const igniteTable = []
     igniteTable.push([column1('ignite-cli'), column2(igniteVersion), column3(ignitePath)])
+    igniteTable.push([column1('ignite src'), column2(igniteSrcPath), column3('')])
     if (igniteJson) {
       Object.keys(igniteJson).forEach(k => {
         const v = typeof igniteJson[k] === 'object' ? JSON.stringify(igniteJson[k]) : igniteJson[k]
