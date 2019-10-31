@@ -1,4 +1,4 @@
-import { split, last, replace, head, match } from 'ramda'
+import { split, last, replace, head, match, uniq } from 'ramda'
 import * as os from 'os'
 import { IgniteToolbox } from '../types'
 
@@ -83,7 +83,9 @@ module.exports = {
         acc[k.name] = k.plugin.name
         return acc
       }, {})
-    igniteJson.generators = Object.assign({}, installedGenerators, igniteJson.generators)
+    igniteJson.generators = uniq(Object.values(Object.assign({}, installedGenerators, igniteJson.generators))).join(
+      ', ',
+    )
 
     info('')
     info(colors.cyan('Ignite'))
