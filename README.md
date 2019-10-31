@@ -25,9 +25,7 @@
 
 And you also get (by default) all of the sweet, sweet goodness of [our default boilerplate, Bowser](https://github.com/infinitered/ignite-bowser), or choose [one of many others](./BOILERPLATES.md).
 
-> Ignite saved me a few weeks (if not months) getting started with React Native.
-
-_Jon Ruddell_
+<img width="946px" alt="Ignite saved me a few weeks (if not months) getting started with React Native - Jon Ruddell. Cofounder at SportsBooth. JHipster Core Team." src="https://i.imgur.com/etRUK0X.jpg">
 
 ## :arrow_down: Install
 
