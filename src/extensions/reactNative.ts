@@ -1,4 +1,4 @@
-import { test, trim } from 'ramda'
+import { trim } from 'ramda'
 import exitCodes from '../lib/exit-codes'
 import { IgniteToolbox, IgniteRNInstallResult } from '../types'
 
@@ -33,23 +33,6 @@ function attach(toolbox: IgniteToolbox) {
 
     const perfStart = new Date().getTime()
 
-    // jet if the version isn't available
-    // note that npm and yarn don't differ significantly in perf here, so use npm
-    const versionCheck = await system.run(`npm info react-native@${reactNativeVersion}`)
-    const versionAvailable = test(new RegExp(reactNativeVersion, ''), versionCheck || '')
-    if (!versionAvailable) {
-      print.error(
-        `💩  react native version ${print.colors.yellow(reactNativeVersion)} not found on NPM -- ${print.colors.yellow(
-          REACT_NATIVE_VERSION,
-        )} recommended`,
-      )
-      return {
-        exitCode: exitCodes.REACT_NATIVE_VERSION,
-        version: reactNativeVersion,
-        template: reactNativeTemplate,
-      }
-    }
-
     // craft the additional options to pass to the react-native cli
     const rnOptions = ['--version', reactNativeVersion]
     if (!strings.isBlank(reactNativeTemplate)) {
@@ -64,7 +47,7 @@ function attach(toolbox: IgniteToolbox) {
     }
 
     // react-native init
-    const cmd = trim(`react-native init ${name} ${rnOptions.join(' ')}`)
+    const cmd = trim(`npx react-native init ${name} ${rnOptions.join(' ')}`)
     log('initializing react native')
     log(cmd)
     const withTemplate = reactNativeTemplate ? ` with ${print.colors.cyan(reactNativeTemplate)} template` : ''
