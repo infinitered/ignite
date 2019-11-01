@@ -205,7 +205,7 @@ module.exports = {
     if (!parameters.options['skip-git'] && !filesystem.exists('./.git') && system.which('git')) {
       spinner = print.spin('setting up source control with git')
       await system.run(
-        `git init . && git add -A && git commit -m "Initial commit\nIgnite CLI version ${meta.version()}"`,
+        `git init . && git add -A && git commit -m "Initial commit\n\nIgnite CLI version ${meta.version()}"`,
       )
       spinner.succeed(`configured git`)
     }
