@@ -10,7 +10,6 @@ module.exports = {
   run: async function(toolbox: IgniteToolbox) {
     // fistful of features
     const {
-      filesystem: { read },
       system: { run, which },
       print: { colors, info, table },
       strings: { padEnd },
