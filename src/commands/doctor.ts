@@ -10,12 +10,13 @@ module.exports = {
   run: async function(toolbox: IgniteToolbox) {
     // fistful of features
     const {
-      filesystem: { read },
+      filesystem: { read, separator },
       system: { run, which },
       print: { colors, info, table },
       strings: { padEnd },
       ignite,
       runtime,
+      meta,
     } = toolbox
 
     // display helpers
@@ -34,10 +35,10 @@ module.exports = {
 
     info(colors.cyan('System'))
     table([
-      [column1('platform'), column2(platform)],
-      [column1('arch'), column2(arch)],
+      [column1('platform'), column2(platform), column3('')],
+      [column1('arch'), column2(arch), column3('')],
       [column1('cpu'), column2(cores), column3(cpu)],
-      [column1('directory'), column2(directory)],
+      [column1('directory'), column2(directory.split(separator).pop()), column3(directory)],
     ])
 
     // -=-=-=- javascript -=-=-=-
@@ -74,6 +75,7 @@ module.exports = {
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which('ignite')
+    const igniteSrcPath = `${meta.src}`
     const igniteVersion = await run('ignite version', { trim: true })
     const igniteJson = ignite.loadIgniteConfig()
     const installedGenerators = runtime.commands
@@ -89,6 +91,7 @@ module.exports = {
     info(colors.cyan('Ignite'))
     const igniteTable = []
     igniteTable.push([column1('ignite-cli'), column2(igniteVersion), column3(ignitePath)])
+    igniteTable.push([column1('ignite src'), column2(igniteSrcPath.split(separator).pop()), column3(igniteSrcPath)])
     if (igniteJson) {
       Object.keys(igniteJson).forEach(k => {
         const v = typeof igniteJson[k] === 'object' ? JSON.stringify(igniteJson[k]) : igniteJson[k]
