@@ -10,7 +10,7 @@ module.exports = {
   run: async function(toolbox: IgniteToolbox) {
     // fistful of features
     const {
-      filesystem: { read, separator },
+      filesystem: { separator },
       system: { run, which },
       print: { colors, info, table },
       strings: { padEnd },
@@ -57,21 +57,6 @@ module.exports = {
       [column1('npm'), column2(npmVersion), column3(npmPath)],
       [column1('yarn'), column2(yarnVersion), column3(yarnPath)],
     ])
-
-    // -=-=-=- react native -=-=-=-
-    const rnPath = which('react-native')
-    const rnCli = rnPath && split(/\s/, await run('react-native --version', { trim: true }))[1] // lulz
-    const rnPkg = read(`${process.cwd()}/node_modules/react-native/package.json`, 'json')
-    const appReactNativeVersion = rnPkg && rnPkg.version
-
-    info('')
-    info(colors.cyan('React Native'))
-    const rnTable = []
-    rnTable.push([column1('react-native-cli'), column2(rnCli)])
-    if (appReactNativeVersion) {
-      rnTable.push([column1('app rn version'), column2(appReactNativeVersion)])
-    }
-    table(rnTable)
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which('ignite')

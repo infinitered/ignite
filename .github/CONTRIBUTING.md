@@ -47,8 +47,6 @@ To get familiarized with Ignite CLI's source code, read the [Tour of Ignite CLI'
 
 ## How to Build and Run App
 
-Note that if you do not already have the React Native command line tools installed, you should run `yarn global add react-native-cli`. For additional information and troubleshooting go to the [React Native Getting Started Guide](https://facebook.github.io/react-native/docs/getting-started.html#content).
-
 ```sh
 $ cd ~/your/apps/directory
 $ ignite new HackingOnIgnite
