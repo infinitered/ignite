@@ -62,8 +62,10 @@ function attach(toolbox: IgniteToolbox) {
     // react-native init takes about 20s to execute
     const stdioMode = parameters.options.debug ? 'inherit' : 'ignore'
     try {
+      log('initializing react native project')
+      log(`command: ${cmd}`)
       await system.exec(cmd, { stdio: stdioMode })
-      log('done')
+      log('done initializing react native project')
     } catch (e) {
       spinner.fail(`failed to add ${print.colors.cyan('React Native ' + reactNativeVersion)}${withTemplate}`)
       if (reactNativeTemplate) {

@@ -1,7 +1,5 @@
 import * as path from 'path'
-import { system } from 'gluegun'
 import { isEmpty, match, not, toLower } from 'ramda'
-
 import isIgniteDirectory from '../lib/is-ignite-directory'
 import exitCodes from '../lib/exit-codes'
 import addEmptyBoilerplate from '../lib/add-empty-boilerplate'
@@ -13,9 +11,9 @@ import { IgniteToolbox } from '../types'
  */
 module.exports = {
   alias: ['n'],
-  description: 'Generate a new React Native project with Ignite CLI.',
+  description: 'Generate a new project with Ignite CLI.',
   run: async function command(toolbox: IgniteToolbox) {
-    const { parameters, strings, print, filesystem, ignite, prompt, runtime, meta } = toolbox
+    const { parameters, strings, print, filesystem, system, ignite, prompt, runtime, meta } = toolbox
     const { isBlank, upperFirst, camelCase } = strings
     const { log } = ignite
 
@@ -86,7 +84,7 @@ module.exports = {
         filesystem.remove(projectName)
       } else {
         const overwrite = await prompt.confirm('Do you want to overwrite this directory?')
-        if (overwrite) {
+        if (overwrite === true) {
           print.info(`Overwriting ${projectName}...`)
           filesystem.remove(projectName)
         } else {
@@ -185,7 +183,10 @@ module.exports = {
 
     // move everything that's 1 deep back up to here
     const deepFiles = filesystem.list(deepFolder) || []
-    if (parameters.options.debug) console.log(deepFiles)
+    if (parameters.options.debug) {
+      ignite.log('files that will be moved to main folder:')
+      console.log(deepFiles)
+    }
 
     log(`moving contents of ${projectName} into place`)
     deepFiles.forEach((filename: string) => {
@@ -197,6 +198,7 @@ module.exports = {
 
     // run yarn or NPM one last time
     const yarnOrNPM = ignite.useYarn ? 'yarn' : 'npm i'
+    log(`running ${yarnOrNPM} one last time...`)
     let spinner = print.spin(`running ${yarnOrNPM} one last time...`)
     await system.run(yarnOrNPM)
     spinner.succeed(`${yarnOrNPM} complete`)
@@ -204,13 +206,15 @@ module.exports = {
     // initialize git if it isn't already initialized
     if (!parameters.options['skip-git'] && !filesystem.exists('./.git') && system.which('git')) {
       spinner = print.spin('setting up source control with git')
-      await system.run(
-        `git init . && git add -A && git commit -m "Initial commit\n\nIgnite CLI version ${meta.version()}"`,
-      )
+      const gitCommand = `git init . && git add -A && git commit -m "Initial commit\n\nIgnite CLI version ${meta.version()}"`
+      ignite.log('setting up git repo with command:')
+      ignite.log(gitCommand)
+      await system.run(gitCommand)
       spinner.succeed(`configured git`)
     }
 
     // done
     log('finished running new')
+    return true
   },
 }

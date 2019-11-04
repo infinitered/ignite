@@ -36,6 +36,7 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
   const boilerplatePackage = modulePath + '/package.json'
 
   // install the plugin
+  ignite.log(`installing plugin ${moduleName} from ${installSource.type}`)
   const exitCode = await importPlugin(toolbox, installSource)
   if (exitCode) return false
 
@@ -43,6 +44,7 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
   const spinner = print.spin('installing boilerplate')
 
   // read the info from the boilerplate
+  ignite.log(`reading boilerplate package.json`)
   type PackageJSON = { name: string; version: string } | void
   const packageJSON: PackageJSON = filesystem.read(boilerplatePackage, 'json')
   if (!packageJSON) {
@@ -59,7 +61,9 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
   // load the boilerplate.js module
   let pluginModule
   try {
-    pluginModule = require(`${modulePath}/boilerplate.js`)
+    const boilerplatePath = `${modulePath}/boilerplate.js`
+    ignite.log(`loading boilerplate install script from ${boilerplatePath}`)
+    pluginModule = require(boilerplatePath)
   } catch (e) {
     print.error('Error call stack:')
     print.error(e.stack)
@@ -81,7 +85,9 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
 
   // run the boilerplate
   try {
+    ignite.log('running install function from boilerplate')
     await pluginModule.install(toolbox)
+    ignite.log('done running install function from boilerplate')
   } catch (e) {
     print.error(`an error occured while installing ${moduleName} boilerplate.`)
     print.error(e)
@@ -95,6 +101,6 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
     boilerplate: packageJSON.name,
     boilerplateVersion: packageJSON.version,
   })
-
+  ignite.log('boilerplate installed')
   return true
 }
