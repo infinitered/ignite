@@ -11,6 +11,7 @@ export type IgniteTools = {
   findIgnitePlugins: Function
   addModule: Function
   addAndroidPermission: Function
+  installCocoapods: Function
   removeModule: Function
   copyBatch: Function
   addPluginComponentExample: Function

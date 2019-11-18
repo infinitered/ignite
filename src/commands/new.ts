@@ -6,6 +6,8 @@ import addEmptyBoilerplate from '../lib/add-empty-boilerplate'
 import boilerplateInstall from '../lib/boilerplate-install'
 import { IgniteToolbox } from '../types'
 
+const isMac = process.platform === 'darwin'
+
 /**
  * Creates a new ignite project based on an optional boilerplate.
  */
@@ -15,7 +17,7 @@ module.exports = {
   run: async function command(toolbox: IgniteToolbox) {
     const { parameters, strings, print, filesystem, system, ignite, prompt, runtime, meta } = toolbox
     const { isBlank, upperFirst, camelCase } = strings
-    const { log } = ignite
+    const { log, installCocoapods } = ignite
 
     // grab the project name
     const projectName = (parameters.first || '').toString()
@@ -202,6 +204,11 @@ module.exports = {
     let spinner = print.spin(`running ${yarnOrNPM} one last time...`)
     await system.run(yarnOrNPM)
     spinner.succeed(`${yarnOrNPM} complete`)
+
+    // run install cocoapods
+    if (isMac === true) {
+      await installCocoapods()
+    }
 
     // initialize git if it isn't already initialized
     if (!parameters.options['skip-git'] && !filesystem.exists('./.git') && system.which('git')) {

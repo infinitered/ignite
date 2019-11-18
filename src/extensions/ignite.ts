@@ -8,6 +8,7 @@ import igniteConfigExt from './ignite/ignite-config'
 import findIgnitePluginsExt from './ignite/find-ignite-plugins'
 import addModuleExt from './ignite/add-module'
 import addAndroidPermissionExt from './ignite/add-android-permission'
+import installCocoapodsExt from './ignite/install-cocoapods'
 import removeModuleExt from './ignite/remove-module'
 import addPluginScreenExamplesExt from './ignite/add-plugin-screen-examples'
 import removePluginScreenExamplesExt from './ignite/remove-plugin-screen-examples'
@@ -53,6 +54,7 @@ module.exports = (toolbox: IgniteToolbox) => {
     findIgnitePlugins: findIgnitePluginsExt(toolbox),
     addModule: addModuleExt(toolbox),
     addAndroidPermission: addAndroidPermissionExt(toolbox),
+    installCocoapods: installCocoapodsExt(toolbox),
     removeModule: removeModuleExt(toolbox),
     copyBatch: copyBatchExt(toolbox),
     addPluginComponentExample: addPluginComponentExampleExt(toolbox),
