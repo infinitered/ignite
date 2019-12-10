@@ -139,8 +139,8 @@ Examples:
         }
       } else {
         spinner.fail(`${modulePath}/plugin.js does not exist.  skipping.`)
-        spinner.stop()
       }
+      spinner.stop()
     } catch (err) {
       // we couldn't require the plugin, it probably has some nasty js!
       spinner.fail('problem loading the plugin JS')

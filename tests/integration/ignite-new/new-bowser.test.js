@@ -63,8 +63,8 @@ test('spins up a Bowser app and performs various checks', async done => {
   expect(filesystem.read(`${process.cwd()}/app/models/mtest/mtest.ts`)).toContain('export const MtestModel')
 
   await system.run(`${IGNITE} g screen bowser`, opts)
-  expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen')
-  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen/bowser-screen.tsx`)).toContain(
+  expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen.tsx')
+  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain(
     'export const BowserScreen',
   )
 

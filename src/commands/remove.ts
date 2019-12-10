@@ -1,4 +1,3 @@
-import Shell from 'shelljs'
 import { concat, pathOr, join, map, assoc } from 'ramda'
 import prependIgnite from '../lib/prepend-ignite'
 import findPluginFile from '../lib/find-plugin-file'
@@ -24,22 +23,12 @@ const existsLocally = moduleName => {
   return pathOr(null, ['devDependencies', moduleName], pack)
 }
 
-const removeDependency = moduleName => {
-  console.warn('Removing dev module')
-
-  if (useYarn) {
-    Shell.exec(`yarn remove ${moduleName}`, { silent: true })
-  } else {
-    Shell.exec(`npm rm ${moduleName} --save-dev`, { silent: true })
-  }
-}
-
 module.exports = {
   alias: ['r'],
   description: 'Removes an Ignite CLI plugin.',
   run: async function(toolbox: IgniteToolbox) {
     // grab a fist-full of features...
-    const { print, parameters, prompt, ignite } = toolbox
+    const { print, parameters, prompt, ignite, system } = toolbox
     const { info, warning, xmark, error, success } = print
     const { options } = parameters
 
@@ -94,6 +83,7 @@ module.exports = {
       if (pluginFile) {
         // Call remove functionality
         const pluginModule = require(pluginFile)
+
         // set the path to the current running ignite plugin
         ignite.setIgnitePluginPath(modulePath)
 
@@ -105,13 +95,16 @@ module.exports = {
             process.exit(exitCodes.GENERIC)
           }
         } else {
-          error(`💩  'remove' method missing.`)
+          error(`💩  'remove' method missing from plugin file.`)
           process.exit(exitCodes.PLUGIN_INVALID)
         }
       }
 
-      // Uninstall dep from node modules
-      removeDependency(moduleName)
+      // remove via yarn or npm
+      const removeCommand = useYarn ? `yarn remove ${moduleName}` : `npm rm ${moduleName} --save-dev`
+      print.warning('Removing dev module')
+      await system.exec(removeCommand, { silent: true })
+
       success(`${xmark}    Removed`)
     } else {
       error("💩  We couldn't find that ignite plugin")
