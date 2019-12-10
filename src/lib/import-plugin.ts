@@ -4,7 +4,7 @@ import { IgniteDetectInstall, IgniteToolbox } from '../types'
 /**
  * Install this module.
  */
-async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
+async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall): Promise<string | void> {
   const { isEmpty, forEach, trim } = require('ramda')
   const { moduleName, version, type, directory } = opts
   const { ignite, system, filesystem } = toolbox
@@ -20,10 +20,30 @@ async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
       log(`${json.name} ${json.version} on npm.`)
     } catch (e) {
       log(`unable to find ${target} on npm`)
-      const boom = new Error(e.message) as any
-      boom.unavailable = true
-      boom.name = target
-      throw boom
+
+      // Try getting it from URL
+      const https = require('https')
+      let exists
+      if (!moduleName.includes('https://')) {
+        try {
+          exists = await https.get(`https://github.com/${moduleName}`)
+        } catch (err) {
+          log(`unable to fetch https://github.com/${moduleName}`)
+        }
+      } else {
+        try {
+          exists = await https.get(moduleName)
+        } catch (err) {
+          log(`unable to fetch ${moduleName}`)
+        }
+      }
+
+      if (!exists) {
+        const boom = new Error(e.message) as any
+        boom.unavailable = true
+        boom.name = target
+        throw boom
+      }
     }
   }
 
@@ -50,14 +70,22 @@ async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
     }
     const cmd = isDirectory ? `yarn add file:${target} --force --dev` : `yarn add ${target}${packageVersion} --dev`
     log(cmd)
-    await system.run(cmd)
+    const output = await system.run(cmd)
     log('finished yarn command')
+    const regexpMatch = output.match(/(@?[a-zA-Z0-9-\/]*)@.*/)
+    if (regexpMatch.length >= 2) {
+      return regexpMatch[1]
+    }
   } else {
     const cacheBusting = isDirectory ? '--cache-min=0' : ''
     const cmd = trim(`npm i ${target}${packageVersion} --save-dev ${cacheBusting}`)
     log(cmd)
-    await system.run(cmd)
+    const output = await system.run(cmd)
     log('finished npm command')
+    const regexpMatch = output.match(/\+ (@?[a-zA-Z0-9-\/]*)@.*/)
+    if (regexpMatch.length >= 2) {
+      return regexpMatch[1]
+    }
   }
 }
 
@@ -65,7 +93,7 @@ async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
  * This does everything around the periphery of importing a plugin such
  * as UI and safety checks.
  */
-export default async (toolbox: IgniteToolbox, specs: IgniteDetectInstall): Promise<number | void> => {
+export default async (toolbox: IgniteToolbox, specs: IgniteDetectInstall): Promise<number | string | void> => {
   const { moduleName } = specs
   const { print, ignite } = toolbox
   const { log } = ignite
@@ -73,7 +101,9 @@ export default async (toolbox: IgniteToolbox, specs: IgniteDetectInstall): Promi
 
   if (specs.type) {
     try {
-      await importPlugin(toolbox, specs)
+      const installedPackageName = await importPlugin(toolbox, specs)
+      spinner.succeed(`Added ${print.colors.cyan(moduleName)}`)
+      return installedPackageName
     } catch (e) {
       if (e.unavailable) {
         log(e.message)
@@ -97,5 +127,4 @@ export default async (toolbox: IgniteToolbox, specs: IgniteDetectInstall): Promi
     spinner.fail(`💩  invalid ignite plugin`)
     return exitCodes.PLUGIN_INVALID
   }
-  spinner.stop()
 }

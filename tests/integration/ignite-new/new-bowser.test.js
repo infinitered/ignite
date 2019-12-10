@@ -64,9 +64,23 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   await system.run(`${IGNITE} g screen bowser`, opts)
   expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen.tsx')
-  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain(
-    'export const BowserScreen',
-  )
+  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain('export const BowserScreen')
+
+  // Testing adding a plugin
+  await system.run(`${IGNITE} add webview`, opts)
+  expect(filesystem.read(`${process.cwd()}/package.json`)).toContain('react-native-webview')
+
+  // Testing removing a plugin
+  await system.run(`${IGNITE} remove webview`, opts)
+  expect(filesystem.read(`${process.cwd()}/package.json`)).not.toContain('react-native-webview')
+
+  // Testing adding a non-npm plugin
+  await system.run(`${IGNITE} add infinitered/ignite-webview`, opts)
+  expect(filesystem.read(`${process.cwd()}/package.json`)).toContain('react-native-webview')
+
+  // Testing adding a plugin from url
+  await system.run(`${IGNITE} add https://github.com/infinitered/ignite-vector-icons`, opts)
+  expect(filesystem.read(`${process.cwd()}/package.json`)).toContain('react-native-vector-icons')
 
   done()
 })

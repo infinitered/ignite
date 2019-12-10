@@ -31,14 +31,17 @@ export default async (toolbox: IgniteToolbox): Promise<boolean> => {
   }
 
   const { moduleName } = installSource
-  const modulePath = `${process.cwd()}/node_modules/${moduleName}`
-  const boilerplateJs = modulePath + '/boilerplate.js'
-  const boilerplatePackage = modulePath + '/package.json'
 
   // install the plugin
-  ignite.log(`installing plugin ${moduleName} from ${installSource.type}`)
-  const exitCode = await importPlugin(toolbox, installSource)
-  if (exitCode) return false
+  ignite.log(`installing plugin ${installSource.moduleName} from ${installSource.type}`)
+  const importReturn = await importPlugin(toolbox, installSource)
+  if (typeof importReturn === 'number' || !importReturn) return false
+
+  print.debug(importReturn)
+  const installedModuleName = importReturn ? `${importReturn}` : moduleName
+  const modulePath = `${process.cwd()}/node_modules/${installedModuleName}`
+  const boilerplateJs = modulePath + '/boilerplate.js'
+  const boilerplatePackage = modulePath + '/package.json'
 
   // start the spinner
   const spinner = print.spin('installing boilerplate')

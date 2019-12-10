@@ -51,20 +51,21 @@ Examples:
 
     // find out the type of install
     const specs = detectInstall(parameters.first, toolbox)
-    const moduleName = specs.moduleName
-    const modulePath = `${process.cwd()}/node_modules/${moduleName}`
-
-    log(`installing ${modulePath} from source ${specs.type}`)
 
     // import the ignite plugin node module
-    // const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
     const spinner = print.spin('')
 
-    const exitCode = await importPlugin(toolbox, specs)
-    if (exitCode) {
+    const packageNameOrExitCode = await importPlugin(toolbox, specs)
+
+    if (typeof packageNameOrExitCode === 'number') {
       spinner.stop()
-      process.exit(exitCode)
+      process.exit(packageNameOrExitCode)
     }
+
+    // Find out real moduleName from what got installed
+    const moduleName = packageNameOrExitCode ? `${packageNameOrExitCode}` : specs.moduleName
+    const modulePath = `${process.cwd()}/node_modules/${moduleName}`
+    log(`installing ${modulePath} from source ${specs.type}`)
 
     // optionally load some configuration from the ignite.json from the plugin.
     const ignitePluginConfigPath = `${modulePath}/ignite.json`
@@ -76,11 +77,11 @@ Examples:
       acc[k] = moduleName
       return acc
     }, {})
+    spinner.stop()
 
     // we compare the generator config changes against ours
     const changes = detectedChanges(currentGenerators, proposedGenerators)
     if (changes.length > 0) {
-      spinner.stop()
       // we warn the user on changes
       print.warning(`🔥  The following generators would be changed: ${R.join(', ', changes)}`)
       const ok = await prompt.confirm('You ok with that?')
@@ -89,11 +90,11 @@ Examples:
         await rollbackFailedIgnitePlugin(moduleName, toolbox)
         process.exit(exitCodes.OK)
       }
-      spinner.text = `adding ${print.colors.cyan(moduleName)}`
-      spinner.start()
     }
 
     // ok, are we ready?
+    spinner.text = `Check plugin file for ${moduleName}`
+    spinner.start()
     try {
       let pluginFile: string = findPluginFile(toolbox, modulePath)
       if (pluginFile) {
