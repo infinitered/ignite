@@ -51,3 +51,27 @@ test(`throws if plugin path doesn't exist`, async () => {
     `Couldn't find package at /ignite-invalid-plugin/package.json. Check path and try again.`,
   )
 })
+
+describe('Git Source', () => {
+  test('detects https git source', async () => {
+    const actual = detectInstall('https://github.com/infinitered/ignite.git', { filesystem })
+    const expectd = {
+      moduleName: 'ignite',
+      type: 'git',
+      url: 'https://github.com/infinitered/ignite.git',
+    }
+
+    expect(actual).toEqual(expectd)
+  })
+
+  test('detects & parse ssh git source', async () => {
+    const actual = detectInstall('git@github.com:infinitered/ignite.git', { filesystem })
+    const expectd = {
+      moduleName: 'ignite',
+      type: 'git',
+      url: 'ssh://git@github.com:infinitered/ignite.git',
+    }
+
+    expect(actual).toEqual(expectd)
+  })
+})
