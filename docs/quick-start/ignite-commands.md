@@ -117,12 +117,14 @@ Generates a new React Native project with Ignite CLI.
 When you execute this command, Ignite CLI will give you a series of options for
 your new project regarding what libraries you would like to use.
 
-With `ignite new`, you have the option to pick your own boilerplate to install for your project. The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`. You can also point to a folder on your machine. `--boilerplate` can also be shortened to `-b`.
+With `ignite new`, you have the option to pick your own boilerplate to install for your project. The default is `ignite-ir-boilerplate`, however you can change this by providing your own boilerplate available on `npm`. You can also point to a folder on your machine or public / private repository. `--boilerplate` can also be shortened to `-b`.
 
 ```sh
 $ ignite new MyAwesomeApp --boilerplate ir-boilerplate
 $ ignite new MyAwesomeApp -b boss-boilerplate
 $ ignite new MyAwesomeApp -b /path/to/my/ignite-cool-boilerplate
+$ ignite new MyAwesomeApp -b git@github.com:infinitered/ignite-andross.git
+$ ignite new MyAwesomeApp -b https://github.com/infinitered/ignite-andross.git
 ```
 
 If you would like to skip the boilerplate and use what is available out of the box with React Native, you can pass the `--no-boilerplate` option.

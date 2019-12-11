@@ -60,11 +60,12 @@ export type IgniteConfig = {
 
 export type IgniteDetectInstall = {
   moduleName: string
-  type: 'directory' | 'npm'
+  type: 'directory' | 'npm' | 'git'
   directory?: string
   override?: boolean
   version?: string
   error?: string
+  url?: string
 }
 
 export type IgniteNPMPackageParts = {
