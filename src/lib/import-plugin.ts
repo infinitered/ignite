@@ -6,15 +6,15 @@ import { IgniteDetectInstall, IgniteToolbox } from '../types'
  */
 async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
   const { isEmpty, forEach, trim } = require('ramda')
-  const { moduleName, version, type, directory } = opts
+  const { moduleName, version, type, directory, url } = opts
   const { ignite, system, filesystem } = toolbox
   const { log } = ignite
   const isDirectory = type === 'directory'
   const target = isDirectory ? directory : moduleName
   const packageVersion = version && !isDirectory ? `@${version}` : ''
 
-  // check to see if it exists first
-  if (type === 'npm') {
+  const getNPMPluginCommand = async () => {
+    // check to see if it exists first
     try {
       const json = JSON.parse(await system.run(`npm info ${target}${packageVersion} --json`))
       log(`${json.name} ${json.version} on npm.`)
@@ -25,10 +25,22 @@ async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
       boom.name = target
       throw boom
     }
+
+    // prepare command line
+    let command = ''
+    if (ignite.useYarn === true) {
+      command = `yarn add ${target}${packageVersion} --dev`
+    } else {
+      command = trim(`npm i ${target}${packageVersion} --save-dev`)
+    }
+
+    return command
   }
 
-  if (ignite.useYarn) {
-    if (isDirectory) {
+  const getDirectoryPluginCommand = async () => {
+    // prepare command line
+    let command = ''
+    if (ignite.useYarn === true) {
       // where is the yarn cache?
       log(`checking for yarn cache`)
       const rawCacheDir = await system.exec('yarn cache dir')
@@ -47,18 +59,46 @@ async function importPlugin(toolbox: IgniteToolbox, opts: IgniteDetectInstall) {
           filesystem.remove(`${rawCacheDir}/${dir}`)
         }, dirs)
       }
+
+      command = `yarn add file:${target} --force --dev`
+    } else {
+      command = trim(`npm i ${target} --save-dev --cache-min=0`)
     }
-    const cmd = isDirectory ? `yarn add file:${target} --force --dev` : `yarn add ${target}${packageVersion} --dev`
-    log(cmd)
-    await system.run(cmd)
-    log('finished yarn command')
-  } else {
-    const cacheBusting = isDirectory ? '--cache-min=0' : ''
-    const cmd = trim(`npm i ${target}${packageVersion} --save-dev ${cacheBusting}`)
-    log(cmd)
-    await system.run(cmd)
-    log('finished npm command')
+
+    return command
   }
+
+  const getGitPluginCommand = async () => {
+    // prepare command line
+    let command = ''
+    if (ignite.useYarn === true) {
+      command = `yarn add ${url} --force --dev`
+    } else {
+      command = `npm i ${url} --save-dev`
+    }
+
+    return command
+  }
+
+  let command = ''
+
+  switch (type) {
+    case 'npm':
+      command = await getNPMPluginCommand()
+      break
+
+    case 'directory':
+      command = await getDirectoryPluginCommand()
+      break
+
+    case 'git':
+      command = await getGitPluginCommand()
+      break
+  }
+
+  log(command)
+  await system.run(command)
+  log(`finished ${ignite.useYarn === true ? 'yarn' : 'npm'} command`)
 }
 
 /**

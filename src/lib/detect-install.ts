@@ -3,6 +3,8 @@ import prependIgnite from './prepend-ignite'
 import packageExtract from './package-extract'
 import * as path from 'path'
 
+const GIT_REGEX = /^(git|ssh|https)(?:@|:\/\/)(?:[github|gitlab|bitbucket]+[.\w]+)(?::|\/)?(.*?)\/(.*?)(?:\.git)?(\/?|\#[-\d\w._]+?)$/
+
 /**
  * Detects the type of install the user is requesting for this plugin.
  *
@@ -32,6 +34,15 @@ export default function detectInstall(plugin: string, toolbox: IgniteToolbox): I
     return isDir && packageIsFile
   }
 
+  /**
+   * Is this a valid git url?
+   *
+   * @param {string} candidate - The potential git url to check. (https|ssh)
+   */
+  const isValidGitURL = (candidate: string): boolean => {
+    return GIT_REGEX.test(candidate)
+  }
+
   // Normalize package name
   let packageName = plugin
   let packageVersion = undefined
@@ -51,6 +62,18 @@ export default function detectInstall(plugin: string, toolbox: IgniteToolbox): I
     let { name, scoped, version } = packageExtract(plugin)
     packageName = scoped ? name : prependIgnite(name)
     packageVersion = version
+  }
+
+  // check if plugin source url is a valid git
+  if (isValidGitURL(plugin) === true) {
+    const parsedURL = plugin.match(GIT_REGEX)
+    if (parsedURL !== null) {
+      return {
+        moduleName: parsedURL[3],
+        type: 'git',
+        url: parsedURL[1] === 'git' ? `ssh://${parsedURL[0]}` : `${parsedURL[0]}`,
+      }
+    }
   }
 
   // do we have overrides?
