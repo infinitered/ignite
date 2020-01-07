@@ -47,9 +47,6 @@ jobs:
           name: Change Permissions
           command: sudo chown -R $(whoami) /usr/local
       - run:
-          name: Install React Native CLI
-          command: npm i -g react-native-cli
-      - run:
           name: Link Ignite CLI
           command: npm link
       - run:

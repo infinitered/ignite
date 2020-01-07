@@ -54,13 +54,13 @@ export default (toolbox: IgniteToolbox) => {
       try {
         spinner.text = `▸ linking`
         spinner.start()
-        await system.spawn(`react-native link ${moduleName}`, {
+        await system.spawn(`npx react-native link ${moduleName}`, {
           stdio: 'ignore',
         })
         spinner.stop()
       } catch (err) {
         spinner.fail()
-        throw new Error(`Error running: react-native link ${moduleName}.\n${err.stderr}`)
+        throw new Error(`Error running: npx react-native link ${moduleName}.\n${err.stderr}`)
       }
     }
   }
