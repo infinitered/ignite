@@ -13,6 +13,7 @@ name | supporting
 name | supporting | author
 -----|------------|-------
 [camera](https://github.com/thisisjaiswal/ignite-camera) | [react-native-camera](https://github.com/lwansbrough/react-native-camera) | [Sandeep Jaiswal](https://github.com/thisisjaiswal)
+[code-push](https://github.com/Osedea/ignite-code-push) | [react-native-codepush](https://github.com/microsoft/react-native-code-push) | [Adrien Thiery](https://github.com/adrienthiery)
 [crashlytics](https://github.com/Osedea/ignite-crashlytics) | [react-native-fabric](https://github.com/corymsmith/react-native-fabric) | [Adrien Thiery](https://github.com/adrienthiery)
 [elements](https://github.com/dabit3/ignite-elements) | [react-native-elements](https://github.com/react-native-community/react-native-elements) | [Nadir Dabit](https://github.com/dabit3)
 [fetch-blob](https://github.com/skellock/ignite-fetch-blob) | [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) | [Steve Kellock](https://github.com/skellock)
