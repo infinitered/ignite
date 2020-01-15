@@ -8,7 +8,6 @@ You will also need to have Node 7.6+ installed. We recommend using [n](https://g
 
 ## Installing Ignite CLI
 
-
 Installing Ignite CLI is easy with one simple terminal command:
 
 ```sh
@@ -35,15 +34,14 @@ The `ignite new` command will ask you if you’d like to add several different p
 
 After Ignite CLI creates your project, navigate into the project’s directory and start the application with the following commands:
 
-
 ```
 To run in iOS:
   cd MyIgniteProject
-  react-native run-ios
+  npx react-native run-ios
 
 To run in Android:
   cd MyIgniteProject
-  react-native run-android
+  npx react-native run-android
 ```
 
 You can also learn more about Ignite CLI in the command line:
@@ -56,16 +54,16 @@ To see what Ignite CLI can do for you:
 
 ## Attaching to Existing Projects
 
-If you already have an existing project on the go, you can make it enable ignite support by typing `ignite attach` in the project directory.  This creates a `ignite` directory with a file called `ignite.json` and an empty `plugins` directory (with a `.gitkeep` to play nice with `git`).
+If you already have an existing project on the go, you can make it enable ignite support by typing `ignite attach` in the project directory. This creates a `ignite` directory with a file called `ignite.json` and an empty `plugins` directory (with a `.gitkeep` to play nice with `git`).
 
 You're now ready to start using ignite plugins!
 
 This works great for:
 
-* [create-react-native-app](https://github.com/react-community/create-react-native-app)
-* [Expo](https://expo.io)
-* [create-react-app](https://github.com/facebookincubator/create-react-app)
-* normal React JS projects
-* empty directories ( not even joking! you can use this with other programming languages.  :O )
+- [create-react-native-app](https://github.com/react-community/create-react-native-app)
+- [Expo](https://expo.io)
+- [create-react-app](https://github.com/facebookincubator/create-react-app)
+- normal React JS projects
+- empty directories ( not even joking! you can use this with other programming languages. :O )
 
 Not all plugins work in all environments, but you can certainly take advantage of the many features of Ignite CLI (such as the code generators).

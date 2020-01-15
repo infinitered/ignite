@@ -112,7 +112,7 @@ $ ignite new {Project name}
 
 Generates a new React Native project with Ignite CLI.
 
-`ignite new` uses `react-native init`, then adds files specific to Ignite CLI.
+`ignite new` uses `npx react-native init`, then adds files specific to Ignite CLI.
 
 When you execute this command, Ignite CLI will give you a series of options for
 your new project regarding what libraries you would like to use.

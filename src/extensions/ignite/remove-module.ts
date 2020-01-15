@@ -13,7 +13,7 @@ export default (toolbox: IgniteToolbox) => {
     // unlink
     if (options.unlink) {
       print.info(`    ${print.checkmark} unlinking`)
-      await system.spawn(`react-native unlink ${moduleName}`, {
+      await system.spawn(`npx react-native unlink ${moduleName}`, {
         stdio: 'ignore',
       })
     }

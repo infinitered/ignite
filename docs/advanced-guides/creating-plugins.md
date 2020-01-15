@@ -49,29 +49,26 @@ import React from 'react'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import { RadioButtons } from 'react-native-radio-buttons'
 
-const options = [
-  "Option 1",
-  "Option 2"
-]
+const options = ['Option 1', 'Option 2']
 
-const setSelectedOption = (selectedOption) => {
+const setSelectedOption = selectedOption => {
   // In your application code, you would set selectedOption in state: `this.setState({selectedOption: selectedOption})`
   window.alert(`${selectedOption} pressed`)
 }
 
 const renderOption = (option, selected, onSelect, index) => {
-  const style = selected ? { fontWeight: 'bold'} : {}
+  const style = selected ? { fontWeight: 'bold' } : {}
 
   return (
     <TouchableWithoutFeedback onPress={onSelect} key={index}>
       <View>
-        <Text style={[style, { color: 'white'}]}>{option}</Text>
+        <Text style={[style, { color: 'white' }]}>{option}</Text>
       </View>
     </TouchableWithoutFeedback>
   )
 }
 
-const renderContainer = (optionNodes) => {
+const renderContainer = optionNodes => {
   return <View>{optionNodes}</View>
 }
 ```
@@ -93,7 +90,7 @@ export IGNITE_PLUGIN_PATH="/Users/robinheinze/Code/packages/"
 ### Build your app!
 
 ```sh
-$ react-native run-ios
+$ npx react-native run-ios
 ```
 
 You can view your plugin example in the Plugin Examples section of the dev screens.
