@@ -13,6 +13,8 @@ export default (toolbox: IgniteToolbox) => {
   function patchInFile(file: string, opts: IgnitePatchInFileOptions) {
     const { ignite } = toolbox
 
+    if (!filesystem.exists(file)) return
+
     const data = filesystem.read(file, 'utf8')
 
     // If the file already has insert, no-op unless forced
