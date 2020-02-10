@@ -54,7 +54,20 @@ Examples:
     const moduleName = specs.moduleName
     const modulePath = `${process.cwd()}/node_modules/${moduleName}`
 
-    log(`installing ${modulePath} from source ${specs.type}`)
+    switch (specs.type) {
+      case 'directory':
+        log(`installing ${modulePath} from ignite overrides directory ${specs.directory}`)
+        break
+      case 'npm':
+        log(`installing ${modulePath} from source npm`)
+        break
+      case 'git':
+        log(`installing ${modulePath} from source git`)
+        break
+      default:
+        log(`installing ${modulePath} from source ${specs.type}`)
+        break
+    }
 
     // import the ignite plugin node module
     // const spinner = spin(`adding ${print.colors.cyan(moduleName)}`)
