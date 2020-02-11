@@ -44,7 +44,7 @@ module.exports = {
   description: 'Displays Ignite CLI help',
   run: async (toolbox: GluegunToolbox) => {
     const {
-      print: { printCommands, info, colors },
+      print: { info, colors },
     } = toolbox
 
     info('')
