@@ -64,10 +64,18 @@ module.exports = {
     const igniteVersion = await run('ignite version', { trim: true })
     const igniteJson = ignite.loadIgniteConfig()
     const installedGenerators = runtime.commands
-      .filter(cmd => cmd.commandPath.length > 1 && cmd.commandPath[0] === 'generate')
+      .filter(cmd => cmd.name === 'generate')
       .sort((a, b) => (a.commandPath.join(' ') < b.commandPath.join(' ') ? -1 : 1))
       .reduce((acc, k) => {
-        acc[k.name] = k.plugin.name
+        k.plugin.commands.map(c => {
+          if (c.plugin.name === k.plugin.name && k.plugin.name !== 'ignite' && c.name !== 'generate') {
+            if (!acc[c.name]) {
+              acc[c.name] = [k.plugin.name]
+            } else {
+              acc[c.name].push(k.plugin.name)
+            }
+          }
+        })
         return acc
       }, {})
     igniteJson.generators = Object.assign({}, installedGenerators, igniteJson.generators)
@@ -80,7 +88,15 @@ module.exports = {
     if (igniteJson) {
       Object.keys(igniteJson).forEach(k => {
         const v = typeof igniteJson[k] === 'object' ? JSON.stringify(igniteJson[k]) : igniteJson[k]
-        igniteTable.push([column1(k), column2(v), column3('')])
+        if (k === 'generators') {
+          igniteTable.push([column1(k), column2(' '), column3('')])
+          Object.keys(igniteJson[k]).forEach(t => {
+            const l = Array.isArray(igniteJson[k][t]) ? igniteJson[k][t].join(', ') : igniteJson[k][t]
+            igniteTable.push([column1(''), column2(t), column3(l)])
+          })
+        } else {
+          igniteTable.push([column1(k), column2(v), column3('')])
+        }
       })
     }
 
