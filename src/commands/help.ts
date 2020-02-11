@@ -14,9 +14,9 @@ function commandAvailableInContext(command): boolean {
   return availableCommands.includes(command.name)
 }
 
-function printCommands(toolbox: GluegunToolbox, commandRoot?: string[]) {
+function customPrintCommands(toolbox: GluegunToolbox, commandRoot?: string[]) {
   const {
-    print: { info },
+    print: { newline, table },
   } = toolbox
 
   const commandInfo = toolbox.runtime.commands.reduce((commands, command) => {
@@ -35,7 +35,8 @@ function printCommands(toolbox: GluegunToolbox, commandRoot?: string[]) {
 
     return commands
   }, [])
-  info(commandInfo)
+  newline()
+  table(commandInfo)
 }
 
 module.exports = {
@@ -49,7 +50,7 @@ module.exports = {
 
     info('')
     require('../brand/header')()
-    printCommands(toolbox)
+    customPrintCommands(toolbox)
     info('')
     info(colors.magenta('If you need additional help, join our Slack at http://community.infinite.red'))
     info('')
