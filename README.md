@@ -92,6 +92,10 @@ $ ignite remove i18n
 $ ignite --help
 ```
 
+### Jamon's React Native Amsterdam TrailBlazers Demo App
+[GitHub](https://github.com/jamonholmgren/TrailBlazers/tree/02-finished)
+[Talk](https://www.youtube.com/watch?v=Pb8MWkQ9GOc)
+
 ## :clipboard: Documentation :clipboard:
 
 - Want to dive into the Ignite CLI documentation? [Go here](./docs/README.md)
