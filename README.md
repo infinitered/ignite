@@ -93,6 +93,7 @@ $ ignite --help
 ```
 
 ### Jamon's React Native Amsterdam TrailBlazers Demo App
+
 [GitHub](https://github.com/jamonholmgren/TrailBlazers/tree/02-finished)
 [Talk](https://www.youtube.com/watch?v=Pb8MWkQ9GOc)
 
@@ -134,6 +135,10 @@ If you run into problems, first search the issues in this repository. If you don
 #### [Project Web Page](https://infinite.red/ignite/) - Ignite on Infinite Red
 
 #### [Check out Gluegun](https://github.com/infinitered/gluegun) - Ignite CLI is powered by Gluegun, which lets you build CLI apps painlessly!
+
+#### [Installing React Native on macOS](https://academy.infinite.red/p/installing-react-native-tutorial-on-macos) - Get set up for React Native development on macOS
+
+#### [Installing React Native on Windows 10](https://academy.infinite.red/p/installing-react-native-tutorial-on-windows-10) - Get set up for React Native development on Windows 10
 
 ## :heart: Special Thanks :heart:
 
