@@ -25,7 +25,10 @@ afterEach(() => {
 })
 
 test('spins up a Bowser app and performs various checks', async done => {
-  const resultANSI = await system.run(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`, opts)
+  const resultANSI = await system.run(
+    `${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug --no-expo`,
+    opts,
+  )
   const result = stripANSI(resultANSI)
 
   // Check the output
@@ -64,9 +67,7 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   await system.run(`${IGNITE} g screen bowser`, opts)
   expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen.tsx')
-  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain(
-    'export const BowserScreen',
-  )
+  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain('export const BowserScreen')
 
   done()
 })
