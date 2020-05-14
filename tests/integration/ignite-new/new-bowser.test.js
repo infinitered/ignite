@@ -52,7 +52,7 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   // check the app.js file
   const appJS = filesystem.read(`${process.cwd()}/app/app.tsx`)
-  expect(appJS).toContain('export const App')
+  expect(appJS).toContain('export default App')
 
   // run generators
   await system.run(`${IGNITE} g component test`, opts)
