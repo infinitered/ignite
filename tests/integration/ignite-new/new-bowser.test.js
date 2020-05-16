@@ -55,10 +55,10 @@ test('spins up a Bowser app and performs various checks', async done => {
   expect(appJS).toContain('export default App')
 
   // run generators
-  await system.run(`${IGNITE} g component test`, opts)
+  await system.run(`${IGNITE} g component test --function-component`, opts)
   expect(filesystem.list(`${process.cwd()}/app/components`)).toContain('test')
   expect(filesystem.read(`${process.cwd()}/app/components/test/test.tsx`)).toContain(
-    'export function Test(props: TestProps) {',
+    'export const Test: React.FunctionComponent<TestProps> = props => {',
   )
 
   await system.run(`${IGNITE} g model mtest`, opts)
