@@ -25,7 +25,10 @@ afterEach(() => {
 })
 
 test('spins up a Bowser app and performs various checks', async done => {
-  const resultANSI = await system.run(`${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug`, opts)
+  const resultANSI = await system.run(
+    `${IGNITE} new ${APP_NAME} --detox -b ${IGNITE_BOILERPLATE} --debug --no-expo`,
+    opts,
+  )
   const result = stripANSI(resultANSI)
 
   // Check the output
@@ -49,13 +52,13 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   // check the app.js file
   const appJS = filesystem.read(`${process.cwd()}/app/app.tsx`)
-  expect(appJS).toContain('export const App')
+  expect(appJS).toContain('export default App')
 
   // run generators
-  await system.run(`${IGNITE} g component test`, opts)
+  await system.run(`${IGNITE} g component test --function-component`, opts)
   expect(filesystem.list(`${process.cwd()}/app/components`)).toContain('test')
   expect(filesystem.read(`${process.cwd()}/app/components/test/test.tsx`)).toContain(
-    'export function Test(props: TestProps) {',
+    'export const Test: React.FunctionComponent<TestProps> = props => {',
   )
 
   await system.run(`${IGNITE} g model mtest`, opts)
@@ -64,9 +67,7 @@ test('spins up a Bowser app and performs various checks', async done => {
 
   await system.run(`${IGNITE} g screen bowser`, opts)
   expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen.tsx')
-  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain(
-    'export const BowserScreen',
-  )
+  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain('export const BowserScreen')
 
   done()
 })

@@ -1,11 +1,13 @@
 import { GluegunToolbox } from 'gluegun'
+import printCommands from '../lib/print-commands'
+
 module.exports = {
   dashed: true,
   alias: ['h'],
   description: 'Displays Ignite CLI help',
   run: async (toolbox: GluegunToolbox) => {
     const {
-      print: { printCommands, info, colors },
+      print: { info, colors },
     } = toolbox
 
     info('')
