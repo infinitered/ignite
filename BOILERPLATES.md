@@ -5,8 +5,15 @@
 | Name | Description |
 |------|-------------|
 | [Ignite Bowser](https://github.com/infinitered/ignite-bowser) | React Navigation, MobX State Tree, & TypeScript |
+
+
+## Formely maintained by IR (now on community support or no longer maintained)
+
+| Name | Description |
+|------|-------------|
 | [ignite-andross](https://github.com/infinitered/ignite-andross) | React Navigation, Redux, & Redux Sagas |
 | [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016) | InfiniteRed's 2016 tech stack |
+
 
 ## 3rd Party
 
