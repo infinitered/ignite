@@ -55,10 +55,10 @@ test('spins up a Bowser app and performs various checks', async done => {
   expect(appJS).toContain('export default App')
 
   // run generators
-  await system.run(`${IGNITE} g component test --function-component`, opts)
+  await system.run(`${IGNITE} g component test --no-observer`, opts)
   expect(filesystem.list(`${process.cwd()}/app/components`)).toContain('test')
   expect(filesystem.read(`${process.cwd()}/app/components/test/test.tsx`)).toContain(
-    'export const Test: React.FunctionComponent<TestProps> = props => {',
+    'export function Test(props: TestProps) {',
   )
 
   await system.run(`${IGNITE} g model mtest`, opts)
@@ -66,8 +66,10 @@ test('spins up a Bowser app and performs various checks', async done => {
   expect(filesystem.read(`${process.cwd()}/app/models/mtest/mtest.ts`)).toContain('export const MtestModel')
 
   await system.run(`${IGNITE} g screen bowser`, opts)
-  expect(filesystem.list(`${process.cwd()}/app/screens`)).toContain('bowser-screen.tsx')
-  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen.tsx`)).toContain('export const BowserScreen')
+  expect(filesystem.list(`${process.cwd()}/app/screens/bowser-screen`)).toContain('bowser-screen.tsx')
+  expect(filesystem.read(`${process.cwd()}/app/screens/bowser-screen/bowser-screen.tsx`)).toContain(
+    'export const BowserScreen',
+  )
 
   done()
 })
