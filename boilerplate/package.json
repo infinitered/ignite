@@ -1,0 +1,171 @@
+{
+  "name": "hello-world",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test:e2e": "detox test -c ios.sim.debug",
+    "build:e2e": "detox build -c ios.sim.debug",
+    "ci:test:e2e": "detox test -c ios.sim.release -l verbose --cleanup",
+    "ci:build:e2e": "detox build -c ios.sim.release",
+    "compile": "tsc --noEmit -p . --pretty",
+    "format": "npm-run-all format:*",
+    "format:js": "prettier --write '**/*.js'",
+    "format:json": "prettier --write '**/*.json'",
+    "format:md": "prettier --write '**/*.md'",
+    "format:ts": "prettier --write '**/*.ts{,x}'",
+    "hack:types-react-navigation": "rimraf node_modules/@types/react-navigation/node_modules/@types",
+    "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
+    "hack:types-react-test-renderer": "rimraf node_modules/@types/react-test-renderer/node_modules/@types",
+    "lint": "eslint index.js app storybook test --fix --ext .js,.ts,.tsx",
+    "patch": "patch-package",
+    "prepare": "npm-run-all patch hack:*",
+    "storybook": "start-storybook -p 9001 -c ./storybook",
+    "test": "jest",
+    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/native": "^5.1.5",
+    "@react-navigation/stack": "^5.2.10",
+    "apisauce": "1.1.2",
+    "expo-localization": "^8.2.1",
+    "i18n-js": "^3.0.11",
+    "lodash.throttle": "4.1.1",
+    "mobx": "^4.15.4",
+    "mobx-react-lite": "^1.4.1",
+    "mobx-state-tree": "^3.14.1",
+    "ramda": "0.27.1",
+    "react-native": "^0.63.2",
+    "react-native-gesture-handler": "1.8.0",
+    "react-native-keychain": "6.1.1",
+    "react-native-localize": "^1.0.0",
+    "react-native-safe-area-context": "0.7.3",
+    "react-native-safe-area-view": "1.1.1",
+    "react-native-screens": "^2.10.1",
+    "react-native-splash-screen": "3.2.0",
+    "react-native-unimodules": "^0.11.0",
+    "reactotron-mst": "^3.1.1",
+    "reactotron-react-native": "^5.0.0",
+    "validate.js": "0.13.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-optional-catch-binding": "^7.0.0",
+    "@storybook/addon-storyshots": "5.3.19",
+    "@storybook/react-native": "5.3.19",
+    "@storybook/react-native-server": "5.3.19",
+    "@types/jest": "^25.2.3",
+    "@types/ramda": "0.26.44",
+    "@types/react": "16.9.23",
+    "@types/react-native": "^0.63.2",
+    "@types/react-test-renderer": "^16.9.2",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "detox": "^16.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-native": "^3.6.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "25.5.4",
+    "jest-expo": "^38.0.2",
+    "jetifier": "^1.6.2",
+    "npm-run-all": "4.1.5",
+    "patch-package": "6.2.2",
+    "postinstall-prepare": "1.0.1",
+    "prettier": "^2.0.4",
+    "react-devtools-core": "4.8.2",
+    "react-powerplug": "1.0.0",
+    "rimraf": "3.0.2",
+    "solidarity": "3.0.0",
+    "typescript": "3.9.7"
+  },
+  "jest": {},
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "all"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/<%= props.pascalCaseName %>.app",
+        "build": "xcodebuild -workspace ios/<%= props.pascalCaseName %>.xcworkspace -scheme <%= props.pascalCaseName %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -UseModernBuildSystem=NO",
+        "type": "ios.simulator",
+        "name": "iPhone 8"
+      },
+      "ios.sim.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/<%= props.pascalCaseName %>.app",
+        "build": "xcodebuild -workspace ios/<%= props.pascalCaseName %>.xcworkspace -scheme <%= props.pascalCaseName %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -UseModernBuildSystem=NO",
+        "type": "ios.simulator",
+        "name": "iPhone 8"
+      }
+    }
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "prettier",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:react-native/all",
+      "standard"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "react",
+      "react-native"
+    ],
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+      }
+    },
+    "globals": {
+      "__DEV__": false,
+      "jasmine": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
+    },
+    "rules": {
+      "comma-dangle": 0,
+      "no-unused-vars": 0,
+      "no-undef": 0,
+      "quotes": 0,
+      "react/no-unescaped-entities": 0,
+      "react/prop-types": "off",
+      "react-native/no-raw-text": 0,
+      "space-before-function-paren": 0,
+      "@typescript-eslint/ban-ts-ignore": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/member-delimiter-style": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-var-requires": 0
+    }
+  }
+}
