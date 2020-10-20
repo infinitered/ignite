@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+#
+# Setup Script
+#
+# Runs all the needed commands to set up a developer's system to run this app.
+# Customize this as your app grows.
+
+# Check for macOS
+if [[ ! "$OSTYPE" =~ ^darwin ]]; then
+  echo "This script only works on macOS"
+  exit 1
+fi
+
+# Check for Homebrew
+command -v brew >/dev/null 2>&1 || {
+  echo "This setup script requires Homebrew, but it was not found on your system."
+  echo "Install it using the instructions at https://brew.sh/"
+  exit 1
+}
+
+# Ensure CocoaPods is installed
+command -v pod >/dev/null 2>&1 || {
+  echo "This app requires CocoaPods to run, but it was not found on your system."
+  echo "Install it using the instructions at https://guides.cocoapods.org/using/getting-started.html#installation"
+  exit 1
+}
+
+# Ensure Node.js is installed
+command -v npm >/dev/null 2>&1 || {
+  echo "This app requires Node.js to run, but it was not found on your system."
+  echo "Installing node with brew..."
+  brew install node
+}
+
+# Ensure Watchman is installed
+command -v watchman >/dev/null 2>&1 || {
+  echo "This app requires Watchman to watch file changes, but it was not found on your system."
+  echo "Installing watchman with brew..."
+  brew install watchman
+}
+
+# Ensure Yarn is installed
+command -v yarn >/dev/null 2>&1 || {
+  echo "This app requires Yarn package manager, but it was not found on your system."
+  echo "Installing yarn with brew..."
+  brew install yarn
+}
+
+# Ensure react-native-cli is installed
+command -v react-native >/dev/null 2>&1 || {
+  echo "This app requires react-native-cli, but it was not found on your system."
+  echo "Installing react-native-cli globally with yarn..."
+  yarn global add react-native-cli
+}
+
+# IF NEEDED: Ensure appleSimUtils is installed
+# command -v applesimutils >/dev/null 2>&1 || {
+#   echo "This app requires appleSimUtils to run end to end tests, but it was not found on your system."
+#   echo "Installing applesimutils with brew..."
+#   brew tap wix/brew
+#   brew install applesimutils
+# }
+
+# IF NEEDED: Ensure detox-cli is installed
+# command -v detox >/dev/null 2>&1 || {
+#   echo "This app requires detox-cli to run end to end tests, but it was not found on your system."
+#   echo "Installing detox globally with npm..."
+#   npm install -g detox-cli
+# }
+
+# IF NEEDED: Ensure phraseapp is installed
+# command -v phraseapp >/dev/null 2>&1 || {
+#   echo "This app requires phraseapp to run localizations, but it was not found on your system."
+#   echo "Installing phraseapp with brew..."
+#   brew tap phrase/brewed
+#   brew install phraseapp
+# }
+
+echo "----------------------------------------------------------"
+echo "Installing NPM Packages with Yarn"
+echo "----------------------------------------------------------"
+
+yarn || { echo "NPM Packages could not be installed!"; exit 1; };
+
+echo "----------------------------------------------------------"
+echo "Installing CocoaPods"
+echo "----------------------------------------------------------"
+
+cd ios/ && {
+  pod install || { echo "CocoaPods could not be installed!"; exit 1; };
+  cd -
+}
+
+# IF NEEDED
+# echo "----------------------------------------------------------"
+# echo "Running localizations"
+# echo "----------------------------------------------------------"
+
+# bin/localize
+
+echo "----------------------------------------------------------"
+echo "Running tests to verify setup is complete"
+echo "----------------------------------------------------------"
+
+yarn test || { exit 1; }
+
+echo "----------------------------------------------------------"
+echo "Setup complete!"
+echo "----------------------------------------------------------"
+
+echo "To run the app on iOS:"
+echo "react-native run-ios"

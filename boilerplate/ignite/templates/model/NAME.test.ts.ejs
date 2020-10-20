@@ -1,0 +1,7 @@
+import { <%= props.pascalCaseName %>Mod<%= props.pascalCaseName %> } from "./<%= props.kebabCaseName %>"
+
+test("can be created", () => {
+  const instance: <%= props.pascalCaseName %><%= props.pascalCaseName %>Model.create({})
+
+  expect(instance).toBeTruthy()
+})
