@@ -129,7 +129,8 @@ export default {
       ? ""
       : `\n\nTo run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run Android successfully until you have.`
 
-    const runInfo = expo ? "yarn start" : `npx react-native run-ios\n     npx react-native run-android${androidInfo}`
+    const runIos = process.platform === "darwin" ? "npx react-native run-ios\n     " : ""
+    const runInfo = expo ? "yarn start" : `${runIos}npx react-native run-android${androidInfo}`
 
     p()
     p()
