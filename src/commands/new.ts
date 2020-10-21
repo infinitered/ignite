@@ -38,7 +38,7 @@ export default {
 
     // welcome everybody!
     p("\n")
-    igniteHeading("🔥 Ignite 🔥\n")
+    igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite Bowser")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(cli)}`)
@@ -144,6 +144,6 @@ export default {
     direction("Join our Slack community at http://community.infinite.red.")
     p()
     heading("Now get cooking! 🍽")
-    p()
+    igniteHeading()
   },
 }
