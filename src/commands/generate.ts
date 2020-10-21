@@ -1,9 +1,9 @@
 import { GluegunToolbox } from "gluegun"
-import { p, command, heading, igniteHeading, warning, direction } from "../tools/pretty"
+import { p, command, heading, warning, direction } from "../tools/pretty"
 import {
-  isIgniteProject,
+  showGeneratorHelp,
+  updateGenerators,
   installedGenerators,
-  installGenerators,
   availableGenerators,
   generateFromTemplate,
 } from "../tools/generators"
@@ -15,7 +15,6 @@ module.exports = {
     const { parameters } = toolbox
 
     p()
-
     if (parameters.options.help || parameters.options.list) {
       // show help or list generators
       showGeneratorHelp(toolbox)
@@ -75,59 +74,4 @@ function generate(toolbox: GluegunToolbox) {
   const updatedFiles = generateFromTemplate(generator, { name: pascalName })
   heading(`Generated new files:`)
   updatedFiles.forEach((f) => p(f))
-}
-
-function showGeneratorHelp(toolbox: GluegunToolbox) {
-  const { parameters } = toolbox
-  const inIgnite = isIgniteProject()
-  const generators = inIgnite ? installedGenerators() : []
-
-  if (parameters.options.help) {
-    igniteHeading("Ignite Generators")
-    p()
-    p("When you create a new app with Ignite CLI, it will install several generator")
-    p("templates in the project folder under the `ignite/templates` folder.")
-    p()
-    heading("Commands")
-    p()
-    command("--list  ", "List installed generators", ["ignite g --list"])
-    command("--update", "Update installed generators", ["ignite g --update", `ignite g model --update`])
-    warning("          ⚠️  this erases any customizations you've made!")
-    p()
-    heading("Installed generators")
-  }
-  if (inIgnite) {
-    const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
-    generators.forEach((g) => {
-      command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
-    })
-  } else {
-    warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
-  }
-}
-
-function updateGenerators(toolbox: GluegunToolbox) {
-  const { parameters } = toolbox
-
-  let generatorsToUpdate
-  if (parameters.first) {
-    // only update the specified one
-    generatorsToUpdate = [parameters.first]
-  } else {
-    // update any available generators
-    generatorsToUpdate = availableGenerators()
-  }
-
-  const changes = installGenerators(generatorsToUpdate)
-  const distinct = (val, index, self) => self.indexOf(val) === index
-  const allGenerators = changes.concat(generatorsToUpdate).filter(distinct).sort()
-
-  heading(`Updated ${changes.length} generator${changes.length === 1 ? "" : "s"}`)
-  allGenerators.forEach((g) => {
-    if (changes.includes(g)) {
-      heading(`  ${g} - updated`)
-    } else {
-      p(`  ${g} - no changes`)
-    }
-  })
 }

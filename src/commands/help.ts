@@ -1,17 +1,22 @@
 import { GluegunToolbox } from "gluegun"
-import { p, command, heading, igniteHeading, direction } from "../tools/pretty"
+import { showGeneratorHelp } from "../tools/generators"
+import { p, command, heading, igniteHeading, direction, link } from "../tools/pretty"
 
 module.exports = {
   dashed: true,
   alias: ["h"],
   description: "Displays Ignite CLI help",
   run: async (toolbox: GluegunToolbox) => {
-    const { meta } = toolbox
-    // const { colors } = print
+    const { meta, parameters } = toolbox
 
     p()
-    igniteHeading("🔥 Ignite 🔥\n")
-    p()
+
+    // specific help -- generators
+    if (parameters.second && (parameters.second === "g" || parameters.second.startsWith("generat"))) {
+      return showGeneratorHelp(toolbox)
+    }
+
+    igniteHeading()
     heading(`Welcome to Ignite ${meta.version()}!`)
     p()
     p("Ignite is a CLI that helps you spin up a new React Native app using a")
@@ -22,18 +27,18 @@ module.exports = {
     command("new         ", "Creates a new React Native app", ["ignite new MyApp", "ignite new MyApp --expo"])
     p()
     command("generate (g)", "Generates components and other app features", [
-      "ignite generate --list",
+      "ignite generate --hello",
       "ignite generate component Hello",
       "ignite generate model User",
       "ignite generate screen Login",
     ])
     p()
-    command("doctor      ", "Checks your environment and displays versions of installed dependencies", [
-      "ignite doctor",
-    ])
+    command("doctor      ", "Checks your environment & displays versions of installed dependencies", ["ignite doctor"])
     p()
-    direction("See the documentation here: https://github.com/infinitered/ignite/tree/master/docs")
+    direction(`See the documentation: ${link("https://github.com/infinitered/ignite/tree/master/docs")}`)
     p()
-    direction("If you need additional help, join our Slack at http://community.infinite.red")
+    direction(`If you need additional help, join our Slack at ${link("http://community.infinite.red")}`)
+    p()
+    igniteHeading()
   },
 }

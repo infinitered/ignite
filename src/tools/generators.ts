@@ -1,5 +1,65 @@
-import { filesystem, strings } from "gluegun"
+import { filesystem, GluegunToolbox, strings } from "gluegun"
 import * as ejs from "ejs"
+import { command, heading, igniteHeading, p, warning } from "./pretty"
+
+export function showGeneratorHelp(toolbox: GluegunToolbox) {
+  const inIgnite = isIgniteProject()
+  const generators = inIgnite ? installedGenerators() : []
+
+  igniteHeading()
+  heading("Ignite Generators")
+  p()
+  p("When you create a new app with Ignite CLI, it will install several generator")
+  p("templates in the project folder under the `ignite/templates` folder.")
+  p()
+  heading("Commands")
+  p()
+  command("--list  ", "List installed generators", ["ignite g --list"])
+  command("--update", "Update installed generators. You can also use the 'ignite update X' format", [
+    "ignite g --update",
+    `ignite g model --update`,
+    `ignite update model`,
+    `ignite update --all`,
+  ])
+  warning("          ⚠️  this erases any customizations you've made!")
+  p()
+  heading("Installed generators")
+  p()
+  if (inIgnite) {
+    const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
+    generators.forEach((g) => {
+      command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
+    })
+  } else {
+    warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
+  }
+}
+
+export function updateGenerators(toolbox: GluegunToolbox) {
+  const { parameters } = toolbox
+
+  let generatorsToUpdate
+  if (parameters.first) {
+    // only update the specified one
+    generatorsToUpdate = [parameters.first]
+  } else {
+    // update any available generators
+    generatorsToUpdate = availableGenerators()
+  }
+
+  const changes = installGenerators(generatorsToUpdate)
+  const distinct = (val, index, self) => self.indexOf(val) === index
+  const allGenerators = changes.concat(generatorsToUpdate).filter(distinct).sort()
+
+  heading(`Updated ${changes.length} generator${changes.length === 1 ? "" : "s"}`)
+  allGenerators.forEach((g) => {
+    if (changes.includes(g)) {
+      heading(`  ${g} - updated`)
+    } else {
+      p(`  ${g} - no changes`)
+    }
+  })
+}
 
 export function isIgniteProject(): boolean {
   return filesystem.exists("./ignite") === "dir"
