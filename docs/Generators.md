@@ -73,4 +73,4 @@ You should feel free to make them your own! Just update the files in the `./igni
 
 ## Updating generators
 
-Just run `ignite generate <type> --update` from the root folder of your project to copy over the latest generators to your project. Note that this will remove any customizations you've made! If you omit `<type>`, it'll update any available ones in the CLI.
+Just run `ignite update <type>` or `ignite update --all` from the root folder of your project to copy over the latest generators to your project. Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back.

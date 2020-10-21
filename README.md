@@ -72,7 +72,7 @@ $ ignite generate component pizza-location
   ( Choose `example` domain when prompted. This determines where your new screen will go in the directory structure. )
 $ ignite --help
 ```
-ignite generate --list
+ignite generate --help
 ```
 
 ...will give you information on what generators are present. To learn more, check out our [Generators](https://github.com/infinitered/ignite/blob/master/docs/Generators.md) documentation.
