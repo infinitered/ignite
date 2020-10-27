@@ -2,6 +2,7 @@ import { filesystem, GluegunToolbox, strings } from "gluegun"
 import * as ejs from "ejs"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function showGeneratorHelp(toolbox: GluegunToolbox) {
   const inIgnite = isIgniteProject()
   const generators = inIgnite ? installedGenerators() : []
