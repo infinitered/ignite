@@ -1,3 +1,4 @@
+import * as tempy from "tempy"
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled } from "../tools/react-native"
@@ -30,11 +31,20 @@ export default {
     const cli = expo ? "expo-cli" : "react-native-cli"
     const bowserPath = path(`${meta.src}`, "..")
     const boilerplatePath = path(bowserPath, "boilerplate")
+    const boilerplateCopy = path(tempy.directory(), "boilerplate")
+    if (expo) {
+      filesystem.copy(boilerplatePath, boilerplateCopy)
+      const packageJsonPath = path(boilerplateCopy, "package.json")
+      const packageJson = filesystem.read(packageJsonPath, "json")
+      delete packageJson.scripts.prepare
+      filesystem.write(packageJsonPath, packageJson)
+    }
+
     const cliString = expo
-      ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
+      ? `npx expo-cli init ${projectName} --template ${boilerplateCopy}`
       : `npx react-native init ${projectName} --template ${bowserPath}`
 
-    log({ expo, cli, bowserPath, boilerplatePath, cliString })
+    log({ expo, cli, bowserPath, boilerplatePath, boilerplateCopy, cliString })
 
     // welcome everybody!
     p("\n")

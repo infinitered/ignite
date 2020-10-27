@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "prepare": "npm-run-all patch hack:*"
   },
   "dependencies": {
     "expo": "~39.0.2",
