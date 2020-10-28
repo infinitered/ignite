@@ -1,4 +1,3 @@
-import * as tempy from "tempy"
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled } from "../tools/react-native"
@@ -31,20 +30,11 @@ export default {
     const cli = expo ? "expo-cli" : "react-native-cli"
     const bowserPath = path(`${meta.src}`, "..")
     const boilerplatePath = path(bowserPath, "boilerplate")
-    const boilerplateCopy = path(tempy.directory(), "boilerplate")
-    if (expo) {
-      filesystem.copy(boilerplatePath, boilerplateCopy)
-      const packageJsonPath = path(boilerplateCopy, "package.json")
-      const packageJson = filesystem.read(packageJsonPath, "json")
-      delete packageJson.scripts.prepare
-      filesystem.write(packageJsonPath, packageJson)
-    }
-
     const cliString = expo
-      ? `npx expo-cli init ${projectName} --template ${boilerplateCopy}`
+      ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
       : `npx react-native init ${projectName} --template ${bowserPath}`
 
-    log({ expo, cli, bowserPath, boilerplatePath, boilerplateCopy, cliString })
+    log({ expo, cli, bowserPath, boilerplatePath, cliString })
 
     // welcome everybody!
     p("\n")
@@ -82,23 +72,24 @@ export default {
       filesystem.copy(path(boilerplatePath, ".gitignore"), gitPath)
     }
 
-    // expo-specific changes
+    // Update package.json. Having a "prepare" script in package.json
+    // messes up expo-cli init above (it fails because npm-run-all hasn't been
+    // installed yet), so we're adding it here; we also need to merge in our
+    // extra expo stuff.
+    let packageJson = filesystem.read("package.json", "json")
+    packageJson.scripts.prepare = "npm-run-all patch hack:*"
     if (expo) {
-      // merge package.json with Expo's (if Expo)
       const merge = require("deepmerge-json")
-      const dst = filesystem.read("package.json", "json")
-      const src = filesystem.read("package.expo.json", "json")
-      const pkgJob = filesystem.writeAsync("package.json", merge(dst, src))
+      const expoJson = filesystem.read("package.expo.json", "json")
+      packageJson = merge(expoJson, packageJson)
+    }
+    filesystem.write("package.json", packageJson)
 
-      // remove the ios and android folders if we're spinning up an Expo app
-      const iosJob = filesystem.removeAsync("ios")
-      const androidJob = filesystem.removeAsync("android")
-
-      // do all this concurrently for speed
-      await Promise.all([iosJob, androidJob, pkgJob])
-
-      // remove the expo-only package.json
-      filesystem.remove("package.expo.json")
+    // More Expo-specific changes
+    if (expo) {
+      // remove the ios and android folders
+      filesystem.remove("ios")
+      filesystem.remove("android")
 
       // rename the index.js to App.js, which expo expects
       filesystem.rename("index.js", "App.js")
@@ -110,6 +101,9 @@ export default {
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
       // await packager.add("react-native-safe-area-context", { expo: true })
     }
+
+    // remove the expo-only package.json
+    filesystem.remove("package.expo.json")
 
     // TODO: copy over generators
 
