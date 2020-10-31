@@ -19,7 +19,7 @@
 - **No runtime!** This is a developer tool only, not a library you have to depend on and figure out how to upgrade
 - **An ever-expanding list of [boilerplates](./BOILERPLATES.md) and [plugins](./PLUGINS.md)** to jump-start your app
 - **An amazing [community](http://community.infinite.red)** of other Ignite / React Native developers when you need help
-- **Battle tested** and used every day by the developers at Infinite Red and thousands of developers around the world
+- **Battle-tested** and used every day by the developers at Infinite Red and thousands of developers around the world
 - **Works on macOS, Windows, and Linux** because not all React Native developers are on one platform
 - **Saves an average of two weeks** on your React Native development
 
@@ -33,7 +33,7 @@ First, make sure you're set up for [React Native](https://facebook.github.io/rea
 
 then...
 
-Make sure you have a reasonably recent version of Node (7.6+ minimum). You can check your version of node by running
+Make sure you have a reasonably recent version of Node (7.6+ minimum). You can check your version of Node by running
 
 ```sh
 $ node -v
@@ -59,7 +59,7 @@ Infinite Red provides two primary boilerplates; they are:
 
 ### Use Ignite Bowser: [Infinite Red Bowser boilerplate](https://github.com/infinitered/ignite-bowser)
 
-Watch Jamon Holmgren's talk at React Live Amsterdam where he uses Ignite Bowser to build an app in less than 30 minutes:
+Watch Jamon Holmgren's talk at React Live Amsterdam, where he uses Ignite Bowser to build an app in less than 30 minutes:
 
 [https://www.youtube.com/watch?v=Pb8MWkQ9GOc](https://www.youtube.com/watch?v=Pb8MWkQ9GOc)
 
@@ -146,4 +146,4 @@ Thank you to the numerous [contributors of Ignite CLI](https://github.com/infini
 
 ## Premium Support
 
-[Ignite CLI](https://infinite.red/ignite), as an open source project, is free to use and always will be. To help support providing Ignite CLI and boilerplates for free, [Infinite Red](https://infinite.red/) offers premium [React Native](https://infinite.red/react-native) app design/development services. Get in touch [here](https://infinite.red/contact) or email us at [hello@infinite.red](mailto:hello@infinite.red).
+[Ignite CLI](https://infinite.red/ignite), as an open-source project, is free to use and always will be. To help support providing Ignite CLI and boilerplates for free, [Infinite Red](https://infinite.red/) offers premium [React Native](https://infinite.red/react-native) app design/development services. Get in touch [here](https://infinite.red/contact) or email us at [hello@infinite.red](mailto:hello@infinite.red).
