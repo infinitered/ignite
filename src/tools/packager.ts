@@ -49,6 +49,13 @@ function install() {
 }
 
 export const packager = {
+  run: async (command: string, options: PackageOptions = packageOptions) => {
+    if (yarn()) {
+      return spawnProgress(`yarn ${command}`, { onProgress: options.onProgress })
+    } else {
+      return spawnProgress(`npm run ${command}`, { onProgress: options.onProgress })
+    }
+  },
   add: async (pkg: string, options: PackageOptions = packageOptions) => {
     const cmd = add(pkg, options)
     return spawnProgress(cmd, { onProgress: options.onProgress })

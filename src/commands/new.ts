@@ -88,28 +88,33 @@ export default {
     // More Expo-specific changes
     if (expo) {
       // remove the ios and android folders
-      filesystem.remove("ios")
-      filesystem.remove("android")
+      filesystem.remove("./ios")
+      filesystem.remove("./android")
 
       // rename the index.js to App.js, which expo expects
-      filesystem.rename("index.js", "App.js")
+      filesystem.rename("./index.js", "App.js")
 
       p(`🧶 Unboxing NPM dependencies`)
       await packager.install({ onProgress: log })
 
+      // For Expo + Detox, this script has to run
+      p(`👩‍⚕️ Prepping Expo + Detox`)
+      await packager.run("downloadExpoApp")
+
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
       // await packager.add("react-native-safe-area-context", { expo: true })
+    } else {
+      // remove the Expo binary -- not needed
+      filesystem.remove(`./bin/downloadExpoApp.sh`)
+
+      // install pods
+      p(`☕️ Baking CocoaPods`)
+      await spawnProgress("npx pod-install", {})
     }
 
     // remove the expo-only package.json
     filesystem.remove("package.expo.json")
-
-    // TODO: copy over generators
-
-    // install pods
-    p(`☕️ Baking CocoaPods`)
-    await spawnProgress("npx pod-install", {})
 
     // commit any changes
     if (parameters.options.git !== false) {

@@ -69,7 +69,7 @@ const CONTINUE_TEXT: TextStyle = {
   fontSize: 13,
   letterSpacing: 2,
 }
-const FOOTER: ViewStyle = { backgroundColor: "#20162D" }
+const FOOTER: ViewStyle = { backgroundColor: "#20162D", marginBottom: 64 }
 const FOOTER_CONTENT: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],

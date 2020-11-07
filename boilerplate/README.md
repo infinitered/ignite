@@ -133,6 +133,10 @@ In `index.js`, change `SHOW_STORYBOOK` to `true` and reload the app.
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
 
+## Running e2e tests
+
+Read [e2e setup instructions](./e2e/README.md).
+
 ## Previous Boilerplates
 
 - [2018 aka Bowser](https://github.com/infinitered/ignite-bowser)

@@ -45,6 +45,8 @@ Note that in order to pick up elements by ID, we've added the `testID` prop to t
 yarn start
 ```
 
+_(Expo-only note: for testing [production code](https://docs.expo.io/workflow/development-mode/#production-mode), start the packager with `yarn start --no-dev --minify`)_
+
 2. Run the app
 
 In a separate terminal window from the packager:
@@ -52,6 +54,8 @@ In a separate terminal window from the packager:
 ```
 yarn build:e2e
 ```
+
+_(Expo-only note: this is unnecessary for Expo apps)_
 
 3. Run the tests
 

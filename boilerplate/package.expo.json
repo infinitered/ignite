@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test:e2e": "detox test --configuration ios.sim",
+    "downloadExpoApp": "./bin/downloadExpoApp.sh"
   },
   "dependencies": {
     "expo": "~39.0.2",
@@ -16,10 +18,24 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz"
   },
   "devDependencies": {
-    "react-native-web": "~0.13.12",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "expo-detox-hook": "^1.0.10",
+    "detox-expo-helpers": "^0.6.0",
+    "detox": "^17.6.1",
+    "react-native-web": "~0.13.12",
     "typescript": "~3.9.5"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim": {
+        "binaryPath": "bin/Exponent.app",
+        "type": "ios.simulator",
+        "name": "iPhone 11"
+      },
+      "ios.sim.debug": null,
+      "ios.sim.release": null
+    }
   }
 }
