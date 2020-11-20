@@ -65,6 +65,9 @@ buck-out/
 # VS Code
 .vscode
 
+# Expo
+.expo
+
 # Configurations
 app/config/env.*.js
 !env.js
