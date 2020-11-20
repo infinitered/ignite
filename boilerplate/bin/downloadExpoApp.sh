@@ -3,11 +3,11 @@
 # taken from https://github.com/expo/with-detox-tests/blob/master/setup.sh
 
 # query expo.io to find most recent ipaUrl
-IPA_URL=`curl https://expo.io/--/api/v2/versions |  python -c 'import sys, json; print json.load(sys.stdin)["iosUrl"]'`
+IPA_URL=`curl --silent --show-error https://expo.io/--/api/v2/versions |  python -c 'import sys, json; print json.load(sys.stdin)["iosUrl"]'`
 
 # download tar.gz
 TMP_PATH=./exponent.tar.gz
-wget -O $TMP_PATH $IPA_URL
+curl --silent --show-error --output $TMP_PATH $IPA_URL
 
 # recursively make app dir
 APP_PATH=./bin/Exponent.app
