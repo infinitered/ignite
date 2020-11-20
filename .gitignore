@@ -4,7 +4,6 @@
 .DS_Store
 npm-debug.log
 npm-debug.log*
-yarn.lock
 yarn-error.log
 lerna-debug.log
 node_modules
