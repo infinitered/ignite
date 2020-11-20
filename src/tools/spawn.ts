@@ -9,7 +9,7 @@ export function spawnProgress(commandLine: string, options: SpawnOptions): Promi
 
     spawned.stdout.on("data", (data) => options.onProgress && options.onProgress(data.toString()))
     spawned.stderr.on("data", (data) => errorOut.push(data))
-    spawned.on("close", (code) => (code === 0 ? resolve() : reject(errorOut.join())))
+    spawned.on("close", (code) => (code === 0 ? resolve("") : reject(errorOut.join())))
     spawned.on("error", (err) => reject(err))
   })
 }
