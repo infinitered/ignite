@@ -66,7 +66,15 @@ buck-out/
 .vscode
 
 # Expo
-.expo
+.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
 
 # Configurations
 app/config/env.*.js
