@@ -52,7 +52,7 @@ MobX and MobX State Tree can be a lot to learn if you're coming from Redux, so h
 
 - For help from real people in the community, make sure to check out the [Infinite Red Community Slack](https://community.infinite.red) as well as the [MobX State Tree spectrum channel](https://spectrum.chat/mobx-state-tree).
 
-- To see example code bases using Bowser (and MST), check out these repositories:
+- To see example code bases using Ignite (and MST), check out these repositories:
 - https://github.com/jamonholmgren/PlayerPopularity (simple implementation)
 - https://github.com/jamonholmgren/TrailBlazers (simple implementation with hooks)
 - https://github.com/infinitered/ChainReactApp2019 (more in-depth implementation)

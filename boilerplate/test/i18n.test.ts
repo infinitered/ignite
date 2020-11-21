@@ -25,7 +25,7 @@ function iterate(obj, stack, array) {
  * This tests your codebase for missing i18n strings so you can avoid error strings at render time
  *
  * It was taken from https://gist.github.com/Michaelvilleneuve/8808ba2775536665d95b7577c9d8d5a1
- * and modified slightly to account for our Bowser higher order components,
+ * and modified slightly to account for our Ignite higher order components,
  * which take 'tx' and 'fooTx' props.
  * The grep command is nasty looking, but it's essentially searching the codebase for 3 things:
  *

@@ -28,18 +28,18 @@ export default {
     // expo or no?
     const expo = Boolean(parameters.options.expo)
     const cli = expo ? "expo-cli" : "react-native-cli"
-    const bowserPath = path(`${meta.src}`, "..")
-    const boilerplatePath = path(bowserPath, "boilerplate")
+    const ignitePath = path(`${meta.src}`, "..")
+    const boilerplatePath = path(ignitePath, "boilerplate")
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
-      : `npx react-native init ${projectName} --template ${bowserPath}`
+      : `npx react-native init ${projectName} --template ${ignitePath}`
 
-    log({ expo, cli, bowserPath, boilerplatePath, cliString })
+    log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
     // welcome everybody!
     p("\n")
     igniteHeading()
-    p(` █ Creating ${magenta(projectName)} using ${red("Ignite Bowser")} ${meta.version()}`)
+    p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(cli)}`)
     p(` ────────────────────────────────────────────────\n`)
@@ -124,7 +124,7 @@ export default {
           \\rm -rf ./.git
           git init;
           git add -A;
-          git commit -m "New Ignite Bowser app";
+          git commit -m "New Ignite ${meta.version()} app";
         `),
       )
     }
