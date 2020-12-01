@@ -95,14 +95,14 @@
     "test-runner": "jest",
     "configurations": {
       "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/<%= props.pascalCaseName %>.app",
-        "build": "xcodebuild -workspace ios/<%= props.pascalCaseName %>.xcworkspace -scheme <%= props.pascalCaseName %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/HelloWorld.app",
+        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
         "type": "ios.simulator",
         "name": "iPhone 8"
       },
       "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/<%= props.pascalCaseName %>.app",
-        "build": "xcodebuild -workspace ios/<%= props.pascalCaseName %>.xcworkspace -scheme <%= props.pascalCaseName %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/HelloWorld.app",
+        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
         "type": "ios.simulator",
         "name": "iPhone 8"
       }
