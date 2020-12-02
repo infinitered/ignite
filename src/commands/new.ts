@@ -38,18 +38,18 @@ export default {
     // expo or no?
     const expo = Boolean(parameters.options.expo)
     const cli = expo ? "expo-cli" : "react-native-cli"
-    const bowserPath = path(`${meta.src}`, "..")
-    const boilerplatePath = path(bowserPath, "boilerplate")
+    const ignitePath = path(`${meta.src}`, "..")
+    const boilerplatePath = path(ignitePath, "boilerplate")
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
-      : `npx react-native init ${projectName} --template ${bowserPath}`
+      : `npx react-native init ${projectName} --template ${ignitePath}`
 
-    log({ expo, cli, bowserPath, boilerplatePath, cliString })
+    log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
     // welcome everybody!
     p("\n")
     igniteHeading()
-    p(` █ Creating ${magenta(projectName)} using ${red("Ignite Bowser")} ${meta.version()}`)
+    p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(cli)}`)
     p(` ────────────────────────────────────────────────\n`)
@@ -82,16 +82,22 @@ export default {
       filesystem.copy(path(boilerplatePath, ".gitignore"), gitPath)
     }
 
-    // Update package.json. Having a "prepare" script in package.json
-    // messes up expo-cli init above (it fails because npm-run-all hasn't been
-    // installed yet), so we're adding it here; we also need to merge in our
-    // extra expo stuff.
-    let packageJson = filesystem.read("package.json", "json")
+    // Update package.json:
+    // - We need to replace the app name in the detox paths. We do it on the
+    //   unparsed file content since that's easier than updating individual values
+    //   in the parsed structure, then we parse that as JSON.
+    // - Having a "prepare" script in package.json messes up expo-cli init above
+    //   (it fails because npm-run-all hasn't been installed yet), so we
+    //   add it.
+    // - If Expo, we also merge in our extra expo stuff.
+    // - Then write it back out.
+    const packageJsonRaw = filesystem.read("package.json")
+    let packageJson = JSON.parse(packageJsonRaw.replace(/HelloWorld/g, projectName))
     packageJson.scripts.prepare = "npm-run-all patch hack:*"
     if (expo) {
       const merge = require("deepmerge-json")
       const expoJson = filesystem.read("package.expo.json", "json")
-      packageJson = merge(expoJson, packageJson)
+      packageJson = merge(packageJson, expoJson)
     }
     filesystem.write("package.json", packageJson)
 
@@ -107,15 +113,11 @@ export default {
       p(`🧶 Unboxing NPM dependencies`)
       await packager.install({ onProgress: log })
 
-      // For Expo + Detox, this script has to run
-      p(`👩‍⚕️ Prepping Expo + Detox`)
-      await packager.run("downloadExpoApp")
-
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
       await packager.add("react-native-safe-area-context", { expo: true })
     } else {
-      // remove the Expo binary -- not needed
+      // remove the Expo binary downloader -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
 
       // install pods
@@ -134,7 +136,7 @@ export default {
           \\rm -rf ./.git
           git init;
           git add -A;
-          git commit -m "New Ignite Bowser app";
+          git commit -m "New Ignite ${meta.version()} app";
         `),
       )
     }
