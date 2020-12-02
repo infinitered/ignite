@@ -18,6 +18,16 @@ export default {
     const { validateProjectName } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
 
+    // if they pass in --boilerplate, warn them to use old Ignite
+    const bname = parameters.options.b || parameters.options.boilerplate
+    if (bname) {
+      p()
+      p(yellow(`Different boilerplates are no longer supported in Ignite v4+.`))
+      p(gray(`To use the old CLI to support different boilerplates, try:`))
+      p(cyan(`npx ignite-cli@3 new ${projectName} --boilerplate ${bname}`))
+      process.exit(1)
+    }
+
     // debug?
     const debug = Boolean(parameters.options.debug)
     const log = (m) => {
