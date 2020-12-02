@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: circleci/node:13.8.0
+    - image: circleci/node:14.15.1
   working_directory: ~/repo
 
 mac: &mac
