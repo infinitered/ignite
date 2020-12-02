@@ -80,7 +80,6 @@ export default {
     //   (it fails because npm-run-all hasn't been installed yet), so we
     //   add it.
     // - If Expo, we also merge in our extra expo stuff.
-    // - If not Detox, we remove the Detox config stuff.
     // - Then write it back out.
     const packageJsonRaw = filesystem.read("package.json")
     let packageJson = JSON.parse(packageJsonRaw.replace(/HelloWorld/g, projectName))
@@ -88,7 +87,7 @@ export default {
     if (expo) {
       const merge = require("deepmerge-json")
       const expoJson = filesystem.read("package.expo.json", "json")
-      packageJson = merge(expoJson, packageJson)
+      packageJson = merge(packageJson, expoJson)
     }
     filesystem.write("package.json", packageJson)
 
@@ -104,15 +103,11 @@ export default {
       p(`🧶 Unboxing NPM dependencies`)
       await packager.install({ onProgress: log })
 
-      // For Expo + Detox, this script has to run
-      p(`👩‍⚕️ Prepping Expo + Detox`)
-      await packager.run("downloadExpoApp")
-
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
       await packager.add("react-native-safe-area-context", { expo: true })
     } else {
-      // remove the Expo binary -- not needed
+      // remove the Expo binary downloader -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
 
       // install pods

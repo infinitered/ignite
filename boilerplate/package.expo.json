@@ -6,8 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test:e2e": "detox test --configuration ios.sim",
-    "downloadExpoApp": "./bin/downloadExpoApp.sh"
+    "test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim"
   },
   "dependencies": {
     "expo": "~39.0.2",
