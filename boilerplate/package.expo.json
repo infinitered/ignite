@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim"
+    "build:e2e": "detox build -c ios.sim.expo",
+    "test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
   },
   "dependencies": {
     "expo": "~39.0.2",
@@ -28,7 +29,7 @@
   },
   "detox": {
     "configurations": {
-      "ios.sim": {
+      "ios.sim.expo": {
         "binaryPath": "bin/Exponent.app",
         "type": "ios.simulator",
         "name": "iPhone 11"

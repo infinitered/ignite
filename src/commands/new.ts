@@ -114,6 +114,10 @@ export default {
       // rename the index.js to App.js, which expo expects
       filesystem.rename("./index.js", "App.js")
 
+      // use Detox Expo reload file
+      filesystem.remove("./e2e/reload.js")
+      filesystem.rename("./e2e/reload.expo.js", "reload.js")
+
       p(`🧶 Unboxing NPM dependencies`)
       await packager.install({ onProgress: log })
 
@@ -121,8 +125,9 @@ export default {
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
       await packager.add("react-native-safe-area-context", { expo: true })
     } else {
-      // remove the Expo binary downloader -- not needed
+      // remove the Expo-specific files -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
+      filesystem.remove("./e2e/reload.expo.js")
 
       // install pods
       p(`☕️ Baking CocoaPods`)
