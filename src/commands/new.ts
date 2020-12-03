@@ -6,7 +6,8 @@ import { p, heading, command, direction, igniteHeading } from "../tools/pretty"
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
-    const { print, filesystem, system, meta, parameters } = toolbox
+    const { print, filesystem, system, meta, parameters, strings } = toolbox
+    const { kebabCase } = strings
     const { path } = filesystem
     const { info, colors } = print
     const { gray, red, magenta, cyan, yellow } = colors
@@ -17,6 +18,7 @@ export default {
     // retrieve project name from toolbox
     const { validateProjectName } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
+    const projectNameKebab = kebabCase(projectName)
 
     // if they pass in --boilerplate, warn them to use old Ignite
     const bname = parameters.options.b || parameters.options.boilerplate
@@ -91,8 +93,10 @@ export default {
     //   add it.
     // - If Expo, we also merge in our extra expo stuff.
     // - Then write it back out.
-    const packageJsonRaw = filesystem.read("package.json")
-    let packageJson = JSON.parse(packageJsonRaw.replace(/HelloWorld/g, projectName))
+    let packageJsonRaw = filesystem.read("package.json")
+    packageJsonRaw = packageJsonRaw.replace(/HelloWorld/g, projectName).replace(/hello-world/g, projectNameKebab)
+    let packageJson = JSON.parse(packageJsonRaw)
+
     packageJson.scripts.prepare = "npm-run-all patch hack:*"
     if (expo) {
       const merge = require("deepmerge-json")
