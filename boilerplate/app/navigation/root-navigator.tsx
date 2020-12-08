@@ -30,8 +30,6 @@ const RootStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        gestureEnabled: true,
-        // stackPresentation: "modal",
       }}
     >
       <Stack.Screen
