@@ -1,6 +1,6 @@
 /**
  * Welcome to the main entry point of the app. In this file, we'll
- * be kicking off our app or storybook.
+ * be kicking off our app.
  *
  * Most of this file is boilerplate and you shouldn't need to modify
  * it very often. But take some time to look through and understand
@@ -24,6 +24,7 @@ import {
   useNavigationPersistence,
 } from "./navigation"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
+import { ToggleStorybook } from "../storybook/toggle-storybook"
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
@@ -63,15 +64,17 @@ function App() {
 
   // otherwise, we're ready to render the app
   return (
-    <RootStoreProvider value={rootStore}>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <RootNavigator
-          ref={navigationRef}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
-      </SafeAreaProvider>
-    </RootStoreProvider>
+    <ToggleStorybook>
+      <RootStoreProvider value={rootStore}>
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <RootNavigator
+            ref={navigationRef}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </SafeAreaProvider>
+      </RootStoreProvider>
+    </ToggleStorybook>
   )
 }
 

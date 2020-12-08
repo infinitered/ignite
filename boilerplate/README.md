@@ -35,6 +35,7 @@ ignite-project
 │   ├── index.ts
 │   ├── storybook-registry.ts
 │   ├── storybook.ts
+│   ├── toggle-storybook.tsx
 ├── test
 │   ├── __snapshots__
 │   ├── storyshots.test.ts.snap
@@ -110,7 +111,7 @@ Here lives the theme for your application, including spacing, colors, and typogr
 **utils**
 This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
-**app.tsx** This is the entry point to your app. This is where you will find the main App component which renders the rest of the application. This is also where you will specify whether you want to run the app in storybook mode.
+**app.tsx** This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
 ### ./ignite directory
 
@@ -118,7 +119,7 @@ The `ignite` directory stores all things Ignite, including CLI and boilerplate i
 
 ### ./storybook directory
 
-This is where your stories will be registered and where the Storybook configs will live
+This is where your stories will be registered and where the Storybook configs will live.
 
 ### ./test directory
 
@@ -127,9 +128,9 @@ This directory will hold your Jest configs and mocks, as well as your [storyshot
 ## Running Storybook
 
 From the command line in your generated app's root directory, enter `yarn run storybook`
-This starts up the storybook server.
-
-In `index.js`, change `SHOW_STORYBOOK` to `true` and reload the app.
+This starts up the storybook server and opens a story navigator in your browser. With your app
+running, choose Toggle Storybook from the developer menu to switch to Storybook; you can then
+use the story navigator in your browser to change stories.
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
 
