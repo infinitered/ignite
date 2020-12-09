@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage"
+import { AsyncStorage } from "./async-storage"
 
 /**
  * Loads a string from storage.

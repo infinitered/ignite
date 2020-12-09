@@ -118,6 +118,10 @@ export default {
       filesystem.remove("./e2e/reload.js")
       filesystem.rename("./e2e/reload.expo.js", "reload.js")
 
+      // use Expo AsyncStorage file
+      filesystem.remove("./app/utils/storage/async-storage.ts")
+      filesystem.rename("./app/utils/storage/async-storage.expo.ts", "async-storage.ts")
+
       p(`🧶 Unboxing NPM dependencies`)
       await packager.install({ onProgress: log })
 
@@ -128,6 +132,7 @@ export default {
       // remove the Expo-specific files -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
       filesystem.remove("./e2e/reload.expo.js")
+      filesystem.remove("./app/utils/storage/async-storage.expo.ts")
 
       // install pods
       p(`☕️ Baking CocoaPods`)
