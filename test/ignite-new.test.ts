@@ -88,6 +88,10 @@ test(`ignite new ${APP_NAME}`, async (done) => {
     "export const BowserScreen",
   )
 
+  // run the tests
+  const testOutput = await run(`yarn test`)
+  expect(testOutput).toContain("WHAT HERE?")
+
   // we're done!
   process.chdir("..")
   done()
@@ -144,6 +148,10 @@ test(`ignite new ${EXPO_APP_NAME} --expo`, async (done) => {
   expect(filesystem.read(`${process.cwd()}/app/screens/bowser/bowser-screen.tsx`)).toContain(
     "export const BowserScreen",
   )
+
+  // run the tests
+  const testOutput = await run(`yarn test`)
+  expect(testOutput).toContain("WHAT HERE?")
 
   // we're done!
   process.chdir("..")
