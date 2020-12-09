@@ -1,7 +1,7 @@
-import { run } from "./_test-helpers"
+import { runIgnite } from "./_test-helpers"
 
 test(`ignite help`, async (done) => {
-  const result = await run(`help`)
+  const result = await runIgnite(`help`)
 
   expect(result).toContain("Ignite")
   expect(result).toContain("new")

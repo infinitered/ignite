@@ -1,4 +1,4 @@
-import * as Font from "expo-font"
+// import * as Font from "expo-font"
 
 export const initFonts = async () => {
   // Refer to ./assets/fonts/custom-fonts.md for instructions.

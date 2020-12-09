@@ -1,6 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { run, runError } from "./_test-helpers"
+import { run, runIgnite, runError } from "./_test-helpers"
 
 const APP_NAME = "Foo"
 const EXPO_APP_NAME = "Bar"
@@ -25,7 +25,7 @@ test(`ignite new (no name)`, async (done) => {
 })
 
 test(`ignite new ${APP_NAME}`, async (done) => {
-  const result = await run(`new ${APP_NAME}`)
+  const result = await runIgnite(`new ${APP_NAME}`)
 
   expect(result).toContain(`Using react-native-cli`)
   expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
@@ -37,6 +37,16 @@ test(`ignite new ${APP_NAME}`, async (done) => {
   expect(dirs).toContain("ios")
   expect(dirs).toContain("android")
   expect(dirs).toContain("app")
+
+  // run typescript
+  let resultTS
+  try {
+    resultTS = await run(`yarn compile`)
+  } catch (e) {
+    resultTS = e.stdout
+    console.error(resultTS)
+  }
+  expect(resultTS).not.toContain("error")
 
   // check the contents of ignite/templates
   const templates = filesystem.list(`./ignite/templates`)
@@ -57,20 +67,20 @@ test(`ignite new ${APP_NAME}`, async (done) => {
 
   // now lets test generators too, since we have a properly spun-up app!
   // components
-  const componentGen = await run(`generate component WompBomp`)
+  const componentGen = await runIgnite(`generate component WompBomp`)
   expect(componentGen).toContain(`app/components/womp-bomp/womp-bomp.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/components`)).toContain("womp-bomp")
   expect(filesystem.read(`${process.cwd()}/app/components/womp-bomp/womp-bomp.tsx`)).toContain("export const WompBomp")
 
   // models
-  const modelGen = await run(`generate model mod-test`)
+  const modelGen = await runIgnite(`generate model mod-test`)
   expect(modelGen).toContain(`app/models/mod-test/mod-test.ts`)
   expect(modelGen).toContain(`app/models/mod-test/mod-test.test.ts`)
   expect(filesystem.list(`${process.cwd()}/app/models`)).toContain("mod-test")
   expect(filesystem.read(`${process.cwd()}/app/models/mod-test/mod-test.ts`)).toContain("export const ModTestModel")
 
   // screens
-  const screenGen = await run(`generate screen bowser-screen`)
+  const screenGen = await runIgnite(`generate screen bowser-screen`)
   expect(screenGen).toContain(`Stripping Screen from end of name`)
   expect(screenGen).toContain(`app/screens/bowser/bowser-screen.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/screens/bowser`)).toContain("bowser-screen.tsx")
@@ -84,7 +94,7 @@ test(`ignite new ${APP_NAME}`, async (done) => {
 })
 
 test(`ignite new ${EXPO_APP_NAME} --expo`, async (done) => {
-  const result = await run(`new ${EXPO_APP_NAME} --expo`)
+  const result = await runIgnite(`new ${EXPO_APP_NAME} --expo`)
 
   expect(result).toContain(`Using expo-cli`)
   expect(result).toContain(`Ignite CLI ignited ${EXPO_APP_NAME}`)
@@ -114,20 +124,20 @@ test(`ignite new ${EXPO_APP_NAME} --expo`, async (done) => {
 
   // now lets test generators too, since we have a properly spun-up app!
   // components
-  const componentGen = await run(`generate component WompBomp`)
+  const componentGen = await runIgnite(`generate component WompBomp`)
   expect(componentGen).toContain(`app/components/womp-bomp/womp-bomp.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/components`)).toContain("womp-bomp")
   expect(filesystem.read(`${process.cwd()}/app/components/womp-bomp/womp-bomp.tsx`)).toContain("export const WompBomp")
 
   // models
-  const modelGen = await run(`generate model mod-test`)
+  const modelGen = await runIgnite(`generate model mod-test`)
   expect(modelGen).toContain(`app/models/mod-test/mod-test.ts`)
   expect(modelGen).toContain(`app/models/mod-test/mod-test.test.ts`)
   expect(filesystem.list(`${process.cwd()}/app/models`)).toContain("mod-test")
   expect(filesystem.read(`${process.cwd()}/app/models/mod-test/mod-test.ts`)).toContain("export const ModTestModel")
 
   // screens
-  const screenGen = await run(`generate screen bowser-screen`)
+  const screenGen = await runIgnite(`generate screen bowser-screen`)
   expect(screenGen).toContain(`Stripping Screen from end of name`)
   expect(screenGen).toContain(`app/screens/bowser/bowser-screen.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/screens/bowser`)).toContain("bowser-screen.tsx")

@@ -6,8 +6,12 @@ const shellOpts = { stdio: "inherit" }
 
 jest.setTimeout(5 * 60 * 1000)
 
+export async function runIgnite(cmd: string): Promise<string> {
+  return run(`${IGNITE} ${cmd}`)
+}
+
 export async function run(cmd: string): Promise<string> {
-  const resultANSI = await system.run(`${IGNITE} ${cmd}`, shellOpts)
+  const resultANSI = await system.run(`${cmd}`, shellOpts)
   return stripANSI(resultANSI)
 }
 
