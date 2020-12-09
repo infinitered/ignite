@@ -13,7 +13,7 @@ PODS:
     - React-Core
     - UMCore
     - UMImageLoaderInterface
-  - EXLocalization (8.2.1):
+  - EXLocalization (9.1.0):
     - UMCore
   - EXPermissions (9.3.0):
     - UMCore
@@ -323,8 +323,6 @@ PODS:
     - React
   - RNKeychain (6.2.0):
     - React
-  - RNLocalize (1.4.3):
-    - React-Core
   - RNScreens (2.13.0):
     - React-Core
   - UMAppLoader (1.3.0)
@@ -406,7 +404,6 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
-  - RNLocalize (from `../node_modules/react-native-localize`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
@@ -511,8 +508,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
-  RNLocalize:
-    :path: "../node_modules/react-native-localize"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   UMAppLoader:
@@ -552,7 +547,7 @@ SPEC CHECKSUMS:
   EXConstants: f486f6b4a36b86e47ab258d4d2b7b2699786fdce
   EXFileSystem: afe9b1fd937d30270bf5108ba44e2f4a1d1ad694
   EXImageLoader: 7153fb1307ac643299a9072b71da0d276f4c7789
-  EXLocalization: b5bcfc925ed83123b585d46d3bd54d7b7118f307
+  EXLocalization: 8b9463c81843da214476b541a27811dd885c9a76
   EXPermissions: 30cbe5b72bd209b65c00884180ad058a60bb413d
   FBLazyVector: 878b59e31113e289e275165efbe4b54fa614d43d
   FBReactNativeSpec: 7da9338acfb98d4ef9e5536805a0704572d33c2f
@@ -563,8 +558,8 @@ SPEC CHECKSUMS:
   Flipper-PeerTalk: 116d8f857dc6ef55c7a5a75ea3ceaafe878aadc9
   Flipper-RSocket: 64e7431a55835eb953b0bf984ef3b90ae9fdddd7
   FlipperKit: ab353d41aea8aae2ea6daaf813e67496642f3d7d
-  Folly: b73c3869541e86821df3c387eb0af5f65addfab4
-  glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  Folly: aeb27d02cdff07ca01f8a8a5a6dd5bcaf6be6f70
+  glog: 2ad46e202fbaa5641fceb4b2af37dcd88fd8762d
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
   RCTTypeSafety: edf4b618033c2f1c5b7bc3d90d8e085ed95ba2ab
@@ -592,7 +587,6 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
-  RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNScreens: 13f23e5498fb4aa749d19a5eda7f8792fbb9d01f
   UMAppLoader: 5db5dc03176c6238da9c8b3657a370137882a4ad
   UMBarCodeScannerInterface: 017672479f93de88d94c3a50dfb66b5348b65989
@@ -612,4 +606,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d4ede385777da40f250b2cd7bd8a64e967f89b74
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.8.4
