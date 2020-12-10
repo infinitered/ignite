@@ -16,5 +16,5 @@
     "skipLibCheck": true
   },
   "exclude": ["node_modules"],
-  "include": ["index.js.txt", "app", "test", "storybook"]
+  "include": ["index.js", "app", "test", "storybook"]
 }
