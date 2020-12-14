@@ -43,8 +43,8 @@ export default {
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     const cliString = expo
-      ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
-      : `npx react-native init ${projectName} --template ${ignitePath}`
+      ? `${debug ? "EXPO_DEBUG=1 " : ""}npx expo-cli init ${projectName} --template ${boilerplatePath}`
+      : `npx react-native init ${projectName} --template ${ignitePath}${debug ? " --verbose" : ""}`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
