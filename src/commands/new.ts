@@ -42,8 +42,9 @@ export default {
     const cli = expo ? "expo-cli" : "react-native-cli"
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
+    const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     const cliString = expo
-      ? `${debug ? "EXPO_DEBUG=1 " : ""}npx expo-cli init ${projectName} --template ${boilerplatePath}`
+      ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
       : `npx react-native init ${projectName} --template ${ignitePath}${debug ? " --verbose" : ""}`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
@@ -59,6 +60,7 @@ export default {
 
     // generate the project
     await spawnProgress(log(cliString), {
+      env: cliEnv,
       onProgress: (out: string) => {
         out = log(out.toString())
 

@@ -1,5 +1,6 @@
 export type SpawnOptions = {
   onProgress?: (data: string) => void
+  env?: Record<string, unknown>
 }
 export function spawnProgress(commandLine: string, options: SpawnOptions): Promise<string> {
   return new Promise((resolve, reject) => {
