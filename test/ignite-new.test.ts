@@ -97,14 +97,18 @@ async function testSpunUpApp() {
   const componentGen = await runIgnite(`generate component WompBomp`)
   expect(componentGen).toContain(`app/components/womp-bomp/womp-bomp.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/components`)).toContain("womp-bomp")
-  expect(filesystem.read(`${process.cwd()}/app/components/womp-bomp/womp-bomp.tsx`)).toContain("export const WompBomp")
+  expect(filesystem.read(`${process.cwd()}/app/components/womp-bomp/womp-bomp.tsx`)).toContain(
+    "export const WompBomp",
+  )
 
   // models
   const modelGen = await runIgnite(`generate model mod-test`)
   expect(modelGen).toContain(`app/models/mod-test/mod-test.ts`)
   expect(modelGen).toContain(`app/models/mod-test/mod-test.test.ts`)
   expect(filesystem.list(`${process.cwd()}/app/models`)).toContain("mod-test")
-  expect(filesystem.read(`${process.cwd()}/app/models/mod-test/mod-test.ts`)).toContain("export const ModTestModel")
+  expect(filesystem.read(`${process.cwd()}/app/models/mod-test/mod-test.ts`)).toContain(
+    "export const ModTestModel",
+  )
 
   // screens
   const screenGen = await runIgnite(`generate screen bowser-screen`)
@@ -117,4 +121,7 @@ async function testSpunUpApp() {
 
   // run the tests; if they fail, run will raise and this test will fail
   await run(`yarn test --updateSnapshot`)
+  await run(`yarn lint`)
+  await run(`yarn compile`)
+  expect(await run("git diff HEAD")).toEqual("")
 }

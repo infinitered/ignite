@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { Button } from "./button"
 
-declare var module
+declare let module
 
 const buttonStyleArray: ViewStyle[] = [{ paddingVertical: 100 }, { borderRadius: 0 }]
 

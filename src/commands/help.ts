@@ -12,7 +12,10 @@ module.exports = {
     p()
 
     // specific help -- generators
-    if (parameters.second && (parameters.second === "g" || parameters.second.startsWith("generat"))) {
+    if (
+      parameters.second &&
+      (parameters.second === "g" || parameters.second.startsWith("generat"))
+    ) {
       return showGeneratorHelp(toolbox)
     }
 
@@ -24,7 +27,10 @@ module.exports = {
     p()
     heading("Commands")
     p()
-    command("new         ", "Creates a new React Native app", ["ignite new MyApp", "ignite new MyApp --expo"])
+    command("new         ", "Creates a new React Native app", [
+      "ignite new MyApp",
+      "ignite new MyApp --expo",
+    ])
     p()
     command("generate (g)", "Generates components and other app features", [
       "ignite generate --hello",
@@ -33,11 +39,19 @@ module.exports = {
       "ignite generate screen Login",
     ])
     p()
-    command("doctor      ", "Checks your environment & displays versions of installed dependencies", ["ignite doctor"])
+    command(
+      "doctor      ",
+      "Checks your environment & displays versions of installed dependencies",
+      ["ignite doctor"],
+    )
     p()
-    direction(`See the documentation: ${link("https://github.com/infinitered/ignite/tree/master/docs")}`)
+    direction(
+      `See the documentation: ${link("https://github.com/infinitered/ignite/tree/master/docs")}`,
+    )
     p()
-    direction(`If you need additional help, join our Slack at ${link("http://community.infinite.red")}`)
+    direction(
+      `If you need additional help, join our Slack at ${link("http://community.infinite.red")}`,
+    )
     p()
     igniteHeading()
   },

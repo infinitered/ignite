@@ -47,7 +47,7 @@ describe("i18n", () => {
     const command = `grep "Tx=\\"\\S*\\"\\|tx=\\"\\S*\\"\\|translate(\\"\\S*\\"" -ohr '../app' | grep -o "\\".*\\""`
     exec(command, (_, stdout) => {
       const allTranslationsDefined = iterate(en, "", [])
-      const allTranslationsUsed = stdout.replace(new RegExp('"', "g"), "").split("\n")
+      const allTranslationsUsed = stdout.replace(/"/g, "").split("\n")
       allTranslationsUsed.splice(-1, 1)
 
       for (let i = 0; i < allTranslationsUsed.length; i += 1) {

@@ -9,7 +9,11 @@ type PackageOptions = {
   expo?: boolean
   onProgress?: (out: string) => void
 }
-const packageOptions: PackageOptions = { dev: false, expo: false, onProgress: (out: string) => console.log(out) }
+const packageOptions: PackageOptions = {
+  dev: false,
+  expo: false,
+  onProgress: (out: string) => console.log(out),
+}
 
 let isYarn
 function yarn() {

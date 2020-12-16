@@ -8,7 +8,7 @@ import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { Toggle } from "react-powerplug"
 import { Switch } from "./switch"
 
-declare var module
+declare let module
 
 const styleArray: ViewStyle[] = [{ borderColor: "#686868" }]
 

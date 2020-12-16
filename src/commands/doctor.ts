@@ -86,7 +86,11 @@ module.exports = {
     info(colors.cyan("Ignite"))
     const igniteTable = []
     igniteTable.push([column1("ignite-cli"), column2(igniteVersion), column3(ignitePath)])
-    igniteTable.push([column1("ignite src"), column2(igniteSrcPath.split(separator).pop()), column3(igniteSrcPath)])
+    igniteTable.push([
+      column1("ignite src"),
+      column2(igniteSrcPath.split(separator).pop()),
+      column3(igniteSrcPath),
+    ])
     // if (igniteJson) {
     //   Object.keys(igniteJson).forEach(k => {
     //     const v = typeof igniteJson[k] === "object" ? JSON.stringify(igniteJson[k]) : igniteJson[k]
@@ -120,14 +124,17 @@ module.exports = {
     // -=-=-=- iOS -=-=-=-
     if (isMac) {
       const xcodePath = which("xcodebuild")
-      const xcodeVersion = xcodePath && (await run("xcodebuild -version", { trim: true })).split(/\s/)[1]
+      const xcodeVersion =
+        xcodePath && (await run("xcodebuild -version", { trim: true })).split(/\s/)[1]
 
       info("")
       info(colors.cyan("iOS"))
       table([[column1("xcode"), column2(xcodeVersion)]])
 
       const cocoaPodsPath = which("pod") || ""
-      const cocoaPodsVersion = cocoaPodsPath ? await run("pod --version", { trim: true }) : "Not installed"
+      const cocoaPodsVersion = cocoaPodsPath
+        ? await run("pod --version", { trim: true })
+        : "Not installed"
       table([[column1("cocoapods"), column2(cocoaPodsVersion), column3(cocoaPodsPath)]])
     }
 

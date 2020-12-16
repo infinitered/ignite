@@ -16,12 +16,11 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   heading("Commands")
   p()
   command("--list  ", "List installed generators", ["ignite g --list"])
-  command("--update", "Update installed generators. You can also use the 'ignite update X' format", [
-    "ignite g --update",
-    `ignite g model --update`,
-    `ignite update model`,
-    `ignite update --all`,
-  ])
+  command(
+    "--update",
+    "Update installed generators. You can also use the 'ignite update X' format",
+    ["ignite g --update", `ignite g model --update`, `ignite update model`, `ignite update --all`],
+  )
   warning("          ⚠️  this erases any customizations you've made!")
   p()
   heading("Installed generators")

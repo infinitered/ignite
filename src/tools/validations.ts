@@ -21,7 +21,9 @@ export function validateProjectName(toolbox: GluegunToolbox): string {
 
   // guard against `ignite new ignite`
   if (projectName.toLowerCase() === "ignite") {
-    print.error(`Hey...that's my name! Please name your project something other than '${projectName}'.`)
+    print.error(
+      `Hey...that's my name! Please name your project something other than '${projectName}'.`,
+    )
     process.exit(1)
   }
 

@@ -45,7 +45,9 @@ export default {
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
-      : `npx react-native init ${projectName} --template file://${ignitePath}${debug ? " --verbose" : ""}`
+      : `npx react-native init ${projectName} --template file://${ignitePath}${
+          debug ? " --verbose" : ""
+        }`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
@@ -96,7 +98,9 @@ export default {
     // - If Expo, we also merge in our extra expo stuff.
     // - Then write it back out.
     let packageJsonRaw = filesystem.read("package.json")
-    packageJsonRaw = packageJsonRaw.replace(/HelloWorld/g, projectName).replace(/hello-world/g, projectNameKebab)
+    packageJsonRaw = packageJsonRaw
+      .replace(/HelloWorld/g, projectName)
+      .replace(/hello-world/g, projectNameKebab)
     let packageJson = JSON.parse(packageJsonRaw)
 
     packageJson.scripts.prepare = "npm-run-all patch hack:*"
@@ -113,8 +117,13 @@ export default {
       filesystem.remove("./ios")
       filesystem.remove("./android")
 
-      // rename the index.js to App.js, which expo expects
+      // rename the index.js to App.js, which expo expects;
+      // update the reference to it in tsconfig, too
       filesystem.rename("./index.js", "App.js")
+      await toolbox.patching.update("tsconfig.json", (config) => {
+        config.include[0] = "App.js"
+        return config
+      })
 
       // use Detox Expo reload file
       filesystem.remove("./e2e/reload.js")
@@ -143,6 +152,9 @@ export default {
 
     // remove the expo-only package.json
     filesystem.remove("package.expo.json")
+
+    // Make sure all our modifications are formatted nicely
+    await spawnProgress("yarn format", {})
 
     // commit any changes
     if (parameters.options.git !== false) {
@@ -179,8 +191,12 @@ export default {
       if (isAndroidInstalled(toolbox)) {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
-        direction("instructions at https://facebook.github.io/react-native/docs/getting-started.html")
-        direction("before using ignite. You won't be able to run Android successfully until you have.")
+        direction(
+          "instructions at https://facebook.github.io/react-native/docs/getting-started.html",
+        )
+        direction(
+          "before using ignite. You won't be able to run Android successfully until you have.",
+        )
       }
     }
     p()
