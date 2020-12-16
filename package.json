@@ -35,7 +35,7 @@
     "test": "yarn build && yarn lint && jest --runInBand && yarn clean",
     "watch": "jest --runInBand --watch",
     "coverage": "jest --runInBand --coverage",
-    "ci:lint": "eslint src test --ext .ts",
+    "ci:lint": "eslint src test --ext .ts && yarn format",
     "ci:test": "yarn build && yarn ci:lint && jest --runInBand && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
