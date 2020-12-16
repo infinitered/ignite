@@ -116,5 +116,5 @@ async function testSpunUpApp() {
   )
 
   // run the tests; if they fail, run will raise and this test will fail
-  await run(`yarn test`)
+  await run(`yarn test --updateSnapshot`)
 }
