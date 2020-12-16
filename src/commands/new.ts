@@ -45,7 +45,7 @@ export default {
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
-      : `npx react-native init ${projectName} --template ${ignitePath}${debug ? " --verbose" : ""}`
+      : `npx react-native init ${projectName} --template file://${ignitePath}${debug ? " --verbose" : ""}`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
