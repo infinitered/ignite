@@ -42,9 +42,10 @@ export default {
     const cli = expo ? "expo-cli" : "react-native-cli"
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
+    const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath}`
-      : `npx react-native init ${projectName} --template ${ignitePath}`
+      : `npx react-native init ${projectName} --template ${ignitePath}${debug ? " --verbose" : ""}`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
@@ -59,6 +60,7 @@ export default {
 
     // generate the project
     await spawnProgress(log(cliString), {
+      env: cliEnv,
       onProgress: (out: string) => {
         out = log(out.toString())
 
@@ -160,12 +162,6 @@ export default {
 
     // we're done! round performance stats to .xx digits
     const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
-    const androidInfo = isAndroidInstalled(toolbox)
-      ? ""
-      : `\n\nTo run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run Android successfully until you have.`
-
-    const runIos = process.platform === "darwin" ? "npx react-native run-ios\n     " : ""
-    const runInfo = expo ? "yarn start" : `${runIos}npx react-native run-android${androidInfo}`
 
     p()
     p()
@@ -173,7 +169,20 @@ export default {
     p()
     direction(`To get started:`)
     command(`  cd ${projectName}`)
-    command(`  ${runInfo}`)
+    if (expo) {
+      command(`  yarn start`)
+    } else {
+      if (process.platform === "darwin") {
+        command(`  npx react-native run-ios`)
+      }
+      command(`  npx react-native run-android`)
+      if (isAndroidInstalled(toolbox)) {
+        p()
+        direction("To run in Android, make sure you've followed the latest react-native setup")
+        direction("instructions at https://facebook.github.io/react-native/docs/getting-started.html")
+        direction("before using ignite. You won't be able to run Android successfully until you have.")
+      }
+    }
     p()
     p("Need additional help?")
     p()
