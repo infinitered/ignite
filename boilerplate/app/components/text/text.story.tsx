@@ -8,7 +8,7 @@ import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { color } from "../../theme"
 import { Text } from "./text"
 
-declare var module
+declare let module
 
 const VIEWSTYLE = {
   flex: 1,

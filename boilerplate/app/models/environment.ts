@@ -1,6 +1,6 @@
 import { Api } from "../services/api"
 
-let ReactotronDev = undefined
+let ReactotronDev
 if (__DEV__) {
   const { Reactotron } = require("../services/reactotron")
   ReactotronDev = Reactotron

@@ -101,7 +101,6 @@ export class Reactotron {
         })
       }
 
-      // @ts-ignore
       console.tron.trackMstNode(rootStore)
     }
   }

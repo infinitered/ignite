@@ -8,7 +8,7 @@ import { Text, FormRow } from "../"
 import { color } from "../../theme/color"
 import { ViewStyle } from "react-native"
 
-declare var module
+declare let module
 
 const TEXT_STYLE_OVERRIDE = {
   color: color.storybookTextColor,

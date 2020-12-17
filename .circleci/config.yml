@@ -42,6 +42,7 @@ jobs:
       - run:
           name: Run tests
           command: yarn ci:test
+          no_output_timeout: 15m
 
   # detox:
   #   <<: *mac

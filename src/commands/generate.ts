@@ -57,14 +57,18 @@ function generate(toolbox: GluegunToolbox) {
 
   // we need a name for this component
   const name = parameters.second
-  if (!name) return warning(`⚠️  Please specify a name for your ${generator}: ignite g ${generator} MyName`)
+  if (!name) {
+    return warning(`⚠️  Please specify a name for your ${generator}: ignite g ${generator} MyName`)
+  }
 
   // avoid the my-component-component phenomenon
   const pascalGenerator = strings.pascalCase(generator)
   let pascalName = strings.pascalCase(name)
   if (pascalName.endsWith(pascalGenerator)) {
     p(`Stripping ${pascalGenerator} from end of name`)
-    p(`Note that you don't need to add ${pascalGenerator} to the end of the name -- we'll do it for you!`)
+    p(
+      `Note that you don't need to add ${pascalGenerator} to the end of the name -- we'll do it for you!`,
+    )
     pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
     command(`ignite generate ${generator} ${pascalName}`)
   }

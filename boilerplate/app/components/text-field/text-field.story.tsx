@@ -8,7 +8,7 @@ import { Text, TextField } from "../"
 import { State } from "react-powerplug"
 import { ViewStyle, TextStyle, Alert } from "react-native"
 
-declare var module
+declare let module
 
 const styleArray: ViewStyle[] = [{ paddingHorizontal: 30 }, { borderWidth: 30 }]
 
@@ -24,7 +24,7 @@ const inputStyleArray: TextStyle[] = [
     borderColor: "#7fff00",
   },
 ]
-var alertWhenFocused = true
+let alertWhenFocused = true
 
 storiesOf("TextField", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)

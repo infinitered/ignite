@@ -8,7 +8,13 @@ export const heading = (m = "") => p(white(bold(m)))
 export const link = (m = "") => underline(white(m))
 // export const igniteHeading = (m = "") => p(red(bold(m)))
 export const igniteHeading = () =>
-  p(red(bold("· · · · · · · · · · · · · · · · · · 🔥 Ignite 🔥 · · · · · · · · · · · · · · · · · ·\n")))
+  p(
+    red(
+      bold(
+        "· · · · · · · · · · · · · · · · · · 🔥 Ignite 🔥 · · · · · · · · · · · · · · · · · ·\n",
+      ),
+    ),
+  )
 export const command = (m = "", second = "", examples: string[] = []) => {
   p(white(m) + "  " + gray(second))
   const indent = m.length + 2

@@ -8,7 +8,7 @@ import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { Checkbox } from "./checkbox"
 import { Toggle } from "react-powerplug"
 
-declare var module
+declare let module
 
 const arrayStyle: ViewStyle[] = [{ paddingVertical: 40 }, { alignSelf: "flex-end" }]
 const arrayOutlineStyle: ViewStyle[] = [{ borderColor: "#b443c9" }, { borderWidth: 25 }]

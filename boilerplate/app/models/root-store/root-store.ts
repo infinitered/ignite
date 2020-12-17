@@ -3,7 +3,7 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 /**
  * A RootStore model.
  */
-//prettier-ignore
+// prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
 
 })

@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { Wallpaper } from "./wallpaper"
 
-declare var module
+declare let module
 
 storiesOf("Wallpaper", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
