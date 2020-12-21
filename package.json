@@ -11,12 +11,10 @@
   "repository": "infinitered/ignite",
   "homepage": "https://github.com/infinitered/ignite",
   "files": [
-    "boilerplate.js",
     "boilerplate",
     "build",
-    "plugin.js",
     "bin",
-    "readme.md"
+    "README.md"
   ],
   "author": {
     "name": "Infinite Red",
