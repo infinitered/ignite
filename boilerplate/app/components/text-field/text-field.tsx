@@ -1,9 +1,8 @@
 import React from "react"
-import { View, TextInput, TextStyle, ViewStyle } from "react-native"
+import { TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate } from "../../i18n"
 import { Text } from "../text/text"
-import { TextFieldProps } from "./text-field.props"
 import { mergeAll, flatten } from "ramda"
 
 // the base styling for the container
@@ -23,6 +22,45 @@ const INPUT: TextStyle = {
 // currently we have no presets, but that changes quickly when you build your app.
 const PRESETS: { [name: string]: ViewStyle } = {
   default: {},
+}
+
+export interface TextFieldProps extends TextInputProps {
+  /**
+   * The placeholder i18n key.
+   */
+  placeholderTx?: string
+
+  /**
+   * The Placeholder text if no placeholderTx is provided.
+   */
+  placeholder?: string
+
+  /**
+   * The label i18n key.
+   */
+  labelTx?: string
+
+  /**
+   * The label text if no labelTx is provided.
+   */
+  label?: string
+
+  /**
+   * Optional container style overrides useful for margins & padding.
+   */
+  style?: ViewStyle | ViewStyle[]
+
+  /**
+   * Optional style overrides for the input.
+   */
+  inputStyle?: TextStyle | TextStyle[]
+
+  /**
+   * Various look & feels.
+   */
+  preset?: keyof typeof PRESETS
+
+  forwardedRef?: any
 }
 
 const enhance = (style, styleOverride) => {
