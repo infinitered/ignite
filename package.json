@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "4.0.0-alpha.5",
+  "version": "4.0.0-alpha.6",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
@@ -14,7 +14,8 @@
     "boilerplate",
     "build",
     "bin",
-    "README.md"
+    "README.md",
+    "template.config.js"
   ],
   "author": {
     "name": "Infinite Red",
