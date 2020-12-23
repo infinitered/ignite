@@ -1,65 +1,81 @@
-import { IgniteToolbox } from '../types'
-import { map, pipe, values } from 'ramda'
-import { GluegunCommand } from 'gluegun'
+import { GluegunToolbox } from "gluegun"
+import { p, command, heading, warning, direction } from "../tools/pretty"
+import {
+  showGeneratorHelp,
+  updateGenerators,
+  installedGenerators,
+  availableGenerators,
+  generateFromTemplate,
+} from "../tools/generators"
 
-/**
- * Displays information about what generators are available.
- */
 module.exports = {
-  description: 'Generates some files.',
-  alias: ['g'],
-  run: async function(toolbox: IgniteToolbox) {
-    // grab some features
-    const { print, runtime } = toolbox
-    const {
-      newline,
-      warning,
-      info,
-      table,
-      colors: { bold, yellow, muted, white },
-    } = print
+  alias: ["g", "generator", "generators"],
+  description: "Generates components and other features from templates",
+  run: async (toolbox: GluegunToolbox) => {
+    const { parameters } = toolbox
 
-    // find all commands that start with `generate` (except `generate` itself)
-    // and then sort alphabetically
-    const generatorCommands = runtime.commands
-      .filter(cmd => cmd.commandPath.length > 1 && cmd.commandPath[0] === 'generate')
-      .sort((a, b) => (a.commandPath.join(' ') < b.commandPath.join(' ') ? -1 : 1))
-
-    newline()
-
-    /**
-     * Prints a footer used when we're unable to run a generator.
-     */
-    const footer = () => {
-      newline()
-      info(muted('  --------------------------------------------------------------------------'))
-      info(muted(`  Check out ${white('https://github.com/infinitered/ignite')} for more information`)) // prettier-ignore
-      info(muted('  or join our Slack community at http://community.infinite.red.'))
+    p()
+    if (parameters.options.help || parameters.options.list) {
+      // show help or list generators
+      showGeneratorHelp(toolbox)
+    } else if (parameters.options.update) {
+      // update with fresh generators
+      updateGenerators(toolbox)
+    } else if (parameters.first) {
+      // actually generate something
+      generate(toolbox)
+    } else {
+      // catch-all, just show help
+      showGeneratorHelp(toolbox)
     }
-
-    // Avast! Thar be no generators ripe for tha plunder.
-    if (generatorCommands.length === 0) {
-      warning('⚠️  No generators detected.\n')
-      info(`  ${bold('Generators')} allow you to quickly make frequently created files such as:\n`)
-      info(`    * components`)
-      info(`    * screens`)
-      info(`    * models`)
-      info(`    * and more`)
-      footer()
-      return
-    }
-
-    // print out all the generators
-    info(`✨ Type ${bold('ignite generate')} ${yellow('________')} to run one of these generators:\n`)
-
-    // turn into data we can print
-    const data = pipe(
-      values,
-      map((item: GluegunCommand) => [yellow(item.name), item.description, muted(item.plugin.name)]),
-    )(generatorCommands)
-
-    // and print it
-    table(data)
-    footer()
   },
+}
+
+function generate(toolbox: GluegunToolbox) {
+  const { parameters, strings } = toolbox
+
+  const generators = installedGenerators()
+
+  // what generator are we running?
+  const generator = parameters.first.toLowerCase()
+  if (!generators.includes(generator)) {
+    warning(`⚠️  Generator "${generator}" isn't installed.`)
+    p()
+
+    if (availableGenerators().includes(generator)) {
+      direction("Install the generator with:")
+      p()
+      command(`ignite generate ${generator} --update`)
+      p()
+      direction("... and then try again!")
+    } else {
+      direction("Check your spelling and try again")
+    }
+
+    return
+  }
+
+  // we need a name for this component
+  const name = parameters.second
+  if (!name) {
+    return warning(`⚠️  Please specify a name for your ${generator}: ignite g ${generator} MyName`)
+  }
+
+  // avoid the my-component-component phenomenon
+  const pascalGenerator = strings.pascalCase(generator)
+  let pascalName = strings.pascalCase(name)
+  if (pascalName.endsWith(pascalGenerator)) {
+    p(`Stripping ${pascalGenerator} from end of name`)
+    p(
+      `Note that you don't need to add ${pascalGenerator} to the end of the name -- we'll do it for you!`,
+    )
+    pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
+    command(`ignite generate ${generator} ${pascalName}`)
+  }
+
+  // okay, let's do it!
+  p()
+  const updatedFiles = generateFromTemplate(generator, { name: pascalName })
+  heading(`Generated new files:`)
+  updatedFiles.forEach((f) => p(f))
 }

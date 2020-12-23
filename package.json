@@ -1,124 +1,124 @@
 {
   "name": "ignite-cli",
   "version": "3.5.3",
-  "description": "An unfair headstart for your React Native apps. Save 2+ weeks of development!",
+  "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
-    "ignite": "bin/ignite"
+    "ignite": "bin/ignite",
+    "ignite-cli": "bin/ignite"
   },
   "preferGlobal": true,
-  "scripts": {
-    "clean-build": "rm -rf ./build",
-    "format": "prettier --write \"{**/*.ts,**/*.js,.circleci/**/*.js}\" --loglevel error && tslint -p . --fix",
-    "compile": "tsc -p .",
-    "copy-files": "mkdir -p ./build/cli && cp ./src/cli/*.js ./build/cli/ && cp -a ./src/templates ./build/",
-    "build": "yarn clean-build && yarn format && yarn compile && yarn copy-files",
-    "test": "jest tests/fast",
-    "watch": "jest tests/fast --watch",
-    "lint": "tslint -p .",
-    "integration": "jest --runInBand tests/integration",
-    "ci:test": "yarn test && yarn integration",
-    "ci:publish": "yarn build && yarn semantic-release",
-    "semantic-release": "semantic-release"
-  },
+  "license": "MIT",
   "repository": "infinitered/ignite",
+  "homepage": "https://github.com/infinitered/ignite",
+  "files": [
+    "boilerplate",
+    "build",
+    "bin",
+    "README.md",
+    "template.config.js"
+  ],
   "author": {
     "name": "Infinite Red",
     "email": "npm@infinite.red",
     "url": "https://github.com/infinitered/ignite"
   },
-  "contributors": [
-    "https://github.com/infinitered/ignite/graphs/contributors"
-  ],
-  "files": [
-    "readme.md",
-    "build",
-    "bin"
-  ],
-  "license": "MIT",
+  "scripts": {
+    "compile": "tsc -p .",
+    "build": "yarn compile",
+    "format": "npm-run-all format:*",
+    "format:js": "prettier --write '**/*.js'",
+    "format:json": "prettier --write '**/*.json'",
+    "format:md": "prettier --write '**/*.md'",
+    "format:ts": "prettier --write '**/*.ts{,x}'",
+    "lint": "eslint src test --ext .ts --fix && yarn format",
+    "test": "yarn build && yarn lint && jest --runInBand && yarn clean",
+    "watch": "jest --runInBand --watch",
+    "coverage": "jest --runInBand --coverage",
+    "ci:lint": "eslint src test --ext .ts && yarn format",
+    "ci:test": "yarn build && yarn ci:lint && jest --runInBand && yarn clean",
+    "ci:publish": "yarn build && yarn semantic-release && yarn clean",
+    "semantic-release": "semantic-release",
+    "clean": "rm -rf ./build"
+  },
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x"
   },
   "dependencies": {
-    "@hapi/cryptiles": ">=4.1.2",
-    "@types/ramda": "^0.26.18",
-    "execa": "2.0.3",
-    "fs-jetpack": "2.2.2",
-    "gluegun": "^4.1.0",
-    "lodash": ">=4.17.15",
-    "minimist": "1.2.0",
-    "mixin-deep": ">=2.0.1",
-    "pretty-error": "2.1.1",
-    "ramda": "0.26.1",
-    "ramdasauce": "2.1.3",
-    "semver": "6.3.0",
-    "shelljs": "0.8.4",
-    "which": "1.3.1"
+    "deepmerge-json": "^1.1.0",
+    "gluegun": "^4.5.0"
   },
   "devDependencies": {
-    "@semantic-release/git": "^7.0.16",
-    "@types/jest": "^24.0.16",
-    "@types/node": "^12.6.9",
-    "@types/ora": "^3.0.0",
-    "babel-eslint": "10.0.2",
-    "husky": "2.2.0",
-    "jest": "^24.8.0",
-    "lint-staged": "^9.2.1",
-    "mock-fs": "4.10.1",
-    "mockery": "2.1.0",
-    "prettier": "^1.18.2",
-    "semantic-release": "^15.13.19",
-    "tempy": "^0.3.0",
-    "ts-jest": "^24.0.2",
-    "ts-node": "7.0.1",
-    "tslint": "^5.18.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.5.3"
+    "@semantic-release/git": "^9.0.0",
+    "@types/jest": "^26.0.14",
+    "@types/node": "12.12.30",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^4.3.0",
+    "jest": "^26.5.3",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.1.2",
+    "semantic-release": "^17.2.1",
+    "strip-ansi": "^6.0.0",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.3"
   },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "__DEV__"
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "prettier",
+      "plugin:@typescript-eslint/recommended",
+      "standard"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "globals": {
+      "__DEV__": false,
+      "jasmine": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
     },
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "json",
-      "node"
-    ]
-  },
-  "prettier": {
-    "printWidth": 120,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
+    "rules": {
+      "@typescript-eslint/ban-ts-ignore": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/member-delimiter-style": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "comma-dangle": 0,
+      "multiline-ternary": 0,
+      "no-undef": 0,
+      "no-unused-vars": 0,
+      "no-use-before-define": "off",
+      "quotes": 0,
+      "space-before-function-paren": 0
     }
   },
-  "lint-staged": {
-    "*.ts": [
-      "prettier --write",
-      "tslint --fix",
-      "git add"
-    ],
-    "*.md": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ]
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "all"
   },
   "release": {
     "plugins": [
@@ -133,6 +133,22 @@
           "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }
       ]
+    ]
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules",
+      "/boilerplate"
+    ],
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
     ]
   }
 }

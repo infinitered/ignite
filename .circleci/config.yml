@@ -6,18 +6,20 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: circleci/node:13.8.0
+    - image: circleci/node:14.15.1
+  working_directory: ~/repo
+
+mac: &mac
+  macos:
+    xcode: "10.1.0"
   working_directory: ~/repo
 
 version: 2
 jobs:
-  setup:
+  tests:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Set up git
-          command: git config --global user.email "reactotron@example.com" && git config --global user.name "Reactotron Tester"
       - restore_cache:
           name: Restore node modules
           keys:
@@ -32,23 +34,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-  tests:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore node modules
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run:
-          name: Change Permissions
-          command: sudo chown -R $(whoami) /usr/local
-      - run:
-          name: Link Ignite CLI
-          command: npm link
       - run:
           # We don't want to install Cocoapods on ubuntu where we run the tests.
           name: Set up dummy `pod` command
@@ -56,7 +41,66 @@ jobs:
             sudo ln /bin/true /usr/local/bin/pod
       - run:
           name: Run tests
-          command: yarn ci:test # this command will be added to/found in your package.json scripts
+          command: yarn ci:test
+          no_output_timeout: 15m
+
+  # detox:
+  #   <<: *mac
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         name: Restore node modules
+  #         keys:
+  #           - v1-dependencies-mac-{{ checksum "package.json" }}
+  #           # fallback to using the latest cache if no exact match is found
+  #           - v1-dependencies-mac-
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           yarn install
+  #     - save_cache:
+  #         name: Save node modules
+  #         paths:
+  #           - node_modules
+  #         key: v1-dependencies-mac-{{ checksum "package.json" }}
+  #     - run:
+  #         name: Install Detox CLI
+  #         command: |
+  #           sudo yarn global add detox-cli
+  #     - run:
+  #         name: Install Ruby and Cocoapods
+  #         command: |
+  #           sudo apt-get update &&
+  #           sudo apt-get install ruby-full &&
+  #           sudo gem install cocoapods --no-ri --no-rdoc
+  #     - run:
+  #         name: Install CocoaPods Specs
+  #         command: |
+  #           curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+  #     - run:
+  #         name: Change Permissions
+  #         command: sudo chown -R $(whoami) /Users/distiller/.config/
+  #     - run:
+  #         name: Install applesimutils
+  #         command: brew tap wix/brew && brew install applesimutils
+  #     - run:
+  #         name: Install fbsimctl
+  #         command: brew tap facebook/fb
+  #     - run:
+  #         name: Create temp directory
+  #         command: mkdir tempApp
+  #     - run:
+  #         name: Ignite app
+  #         command: cd tempApp && ignite new DetoxTests --detox --skip-git -b ../
+  #     - run:
+  #         name: Build Detox in ignited app
+  #         command: cd tempApp/DetoxTests && yarn ci:build:e2e
+  #     - run:
+  #         name: Run detox tests in ignited app
+  #         command: cd tempApp/DetoxTests && yarn ci:test:e2e
+  #     - run:
+  #         name: Remove temp directory
+  #         command: rm -rf tempApp
 
   publish:
     <<: *defaults
@@ -78,10 +122,8 @@ workflows:
   version: 2
   test_and_release:
     jobs:
-      - setup
-      - tests:
-          requires:
-            - setup
+      - tests
+      # - detox # disabled until we can figure out detox CircleCI problems
       - publish:
           requires:
             - tests
