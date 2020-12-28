@@ -14,7 +14,7 @@ ignite generate --list
 
 ### Component generator
 
-This is the generator you will be using most often. They come pre-wrapped with mobx-react-lite's `observer` function, which you'll need to trigger re-renders if any MobX-State-Tree properties that are being used in this componenet change.
+This is the generator you will be using most often. They come pre-wrapped with mobx-react-lite's `observer` function, which you'll need to trigger re-renders if any MobX-State-Tree properties that are being used in this component change.
 
 ```
 ignite generate component MyAwesomeButton
