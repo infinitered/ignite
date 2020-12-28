@@ -83,9 +83,16 @@ export default {
     process.chdir(projectName)
 
     // copy the .gitignore if it wasn't copied over [expo...]
-    const gitPath = log(path(process.cwd(), ".gitignore"))
-    if (!filesystem.exists(gitPath)) {
-      filesystem.copy(path(boilerplatePath, ".gitignore"), gitPath)
+    // Release Ignite installs have the boilerplate's .gitignore in .npmignore
+    // (see https://github.com/npm/npm/issues/3763); development Ignite still
+    // has it in .gitignore. Copy it from one or the other.
+    const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
+    if (!filesystem.exists(targetIgnorePath)) {
+      let sourceIgnorePath = log(path(boilerplatePath, ".npmignore"))
+      if (!filesystem.exists(sourceIgnorePath)) {
+        sourceIgnorePath = path(boilerplatePath, ".gitignore")
+      }
+      filesystem.copy(sourceIgnorePath, targetIgnorePath)
     }
 
     // Update package.json:
