@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+const childProcess = require("child_process")
+const os = require("os")
+
+/**
+ * Do all things that need to be done after installing packages
+ *
+ * Yes, it slows down package installation a little, but it's nice to not
+ * have to remember these extra steps.
+ */
+;[
+  // Make sure we're set up correctly
+  { command: "solidarity" },
+
+  // Kill the metro bundler if it's running.
+  { command: 'pkill -f "cli.js start" || set exit 0', onlyPlatforms: ["darwin", "linux"] },
+  // Help wanted: Add the windows version here. { command: "????", onlyPlatforms: ["win32"] },
+
+  // Make sure our native modules are androidX-happy
+  { command: "jetify" },
+
+  // on iOS, make sure our native modules are installed
+  { command: "pod install", cwd: "ios", onlyPlatforms: ["darwin"] },
+]
+  .filter(({ onlyPlatforms }) => !onlyPlatforms || onlyPlatforms.includes(os.platform()))
+  .forEach(commandAndOptions => {
+    const { command, onlyPlatform: _, ...options } = commandAndOptions
+    try {
+      childProcess.execSync(command, {
+        stdio: "inherit",
+        ...options,
+      })
+    } catch (error) {
+      process.exit(error.status)
+    }
+  })
