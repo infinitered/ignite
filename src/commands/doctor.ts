@@ -5,6 +5,7 @@
  */
 import { GluegunToolbox } from "gluegun"
 import * as os from "os"
+import { packager } from "../tools/packager"
 
 const isWindows = process.platform === "win32"
 const isMac = process.platform === "darwin"
@@ -48,17 +49,27 @@ module.exports = {
     const nodeVersion = (await run("node --version", { trim: true })).replace("v", "")
     const npmPath = which("npm")
     const npmVersion = npmPath && (await run("npm --version", { trim: true }))
-    let yarnPath = which("yarn")
+    const yarnPath = which("yarn")
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
-    yarnPath = yarnPath || "not installed"
+
+    const nodeInfo = [column1("node"), column2(nodeVersion), column3(nodePath)]
+    const npmInfo = [column1("npm"), column2(npmVersion), column3(npmPath || "not installed")]
+    const yarnInfo = [column1("yarn"), column2(yarnVersion), column3(yarnPath || "not installed")]
+
+    async function packageInfo(npmOrYarn: "npm" | "yarn") {
+      return (await packager.list({ packager: npmOrYarn, global: true })).map((nameAndVersion) => [
+        column1("  " + nameAndVersion[0]),
+        column2(nameAndVersion[1]),
+        column3(""),
+      ])
+    }
+    const npmPackages = npmPath ? await packageInfo("npm") : []
+    const yarnPackages = yarnPath ? await packageInfo("yarn") : []
+    const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
 
     info("")
-    info(colors.cyan("JavaScript"))
-    table([
-      [column1("node"), column2(nodeVersion), column3(nodePath)],
-      [column1("npm"), column2(npmVersion), column3(npmPath)],
-      [column1("yarn"), column2(yarnVersion), column3(yarnPath)],
-    ])
+    info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
+    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages])
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which("ignite")
