@@ -64,23 +64,6 @@ module.exports = {
     const ignitePath = which("ignite")
     const igniteSrcPath = `${meta.src}`
     const igniteVersion = meta.version()
-    // const igniteJson = ignite.loadIgniteConfig()
-    // const installedGenerators = runtime.commands
-    //   .filter(cmd => cmd.name === "generate")
-    //   .sort((a, b) => (a.commandPath.join(" ") < b.commandPath.join(" ") ? -1 : 1))
-    //   .reduce((acc, k) => {
-    //     k.plugin.commands.map(c => {
-    //       if (c.plugin.name === k.plugin.name && k.plugin.name !== "ignite" && c.name !== "generate") {
-    //         if (!acc[c.name]) {
-    //           acc[c.name] = [k.plugin.name]
-    //         } else {
-    //           acc[c.name].push(k.plugin.name)
-    //         }
-    //       }
-    //     })
-    //     return acc
-    //   }, {})
-    // igniteJson.generators = Object.assign({}, installedGenerators, igniteJson.generators)
 
     info("")
     info(colors.cyan("Ignite"))
@@ -91,21 +74,6 @@ module.exports = {
       column2(igniteSrcPath.split(separator).pop()),
       column3(igniteSrcPath),
     ])
-    // if (igniteJson) {
-    //   Object.keys(igniteJson).forEach(k => {
-    //     const v = typeof igniteJson[k] === "object" ? JSON.stringify(igniteJson[k]) : igniteJson[k]
-    //     if (k === "generators") {
-    //       igniteTable.push([column1(k), column2(" "), column3("")])
-    //       Object.keys(igniteJson[k]).forEach(t => {
-    //         const l = Array.isArray(igniteJson[k][t]) ? igniteJson[k][t].join(", ") : igniteJson[k][t]
-    //         igniteTable.push([column1(""), column2(t), column3(l)])
-    //       })
-    //     } else {
-    //       igniteTable.push([column1(k), column2(v), column3("")])
-    //     }
-    //   })
-    // }
-
     table(igniteTable)
 
     // -=-=-=- android -=-=-=-
