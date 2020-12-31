@@ -13,7 +13,7 @@ export function spawnProgress(commandLine: string, options: SpawnOptions): Promi
       return options.onProgress ? options.onProgress(data) : output.push(data)
     })
     spawned.stderr.on("data", (data) => output.push(data))
-    spawned.on("close", (code) => (code === 0 ? resolve("") : reject(output.join())))
+    spawned.on("close", (code) => (code === 0 ? resolve(output.join("")) : reject(output.join(""))))
     spawned.on("error", (err) => reject(err))
   })
 }
