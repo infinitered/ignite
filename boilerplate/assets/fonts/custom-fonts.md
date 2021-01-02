@@ -1,4 +1,4 @@
-# Instructions for adding custom fonts to your ignite-boswer app:
+# Instructions for adding custom fonts to your ignite app:
 
 ## For Expo Projects
 
