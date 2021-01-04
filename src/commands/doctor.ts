@@ -5,6 +5,7 @@
  */
 import { GluegunToolbox } from "gluegun"
 import * as os from "os"
+import { packager } from "../tools/packager"
 
 const isWindows = process.platform === "win32"
 const isMac = process.platform === "darwin"
@@ -48,39 +49,32 @@ module.exports = {
     const nodeVersion = (await run("node --version", { trim: true })).replace("v", "")
     const npmPath = which("npm")
     const npmVersion = npmPath && (await run("npm --version", { trim: true }))
-    let yarnPath = which("yarn")
+    const yarnPath = which("yarn")
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
-    yarnPath = yarnPath || "not installed"
+
+    const nodeInfo = [column1("node"), column2(nodeVersion), column3(nodePath)]
+    const npmInfo = [column1("npm"), column2(npmVersion), column3(npmPath || "not installed")]
+    const yarnInfo = [column1("yarn"), column2(yarnVersion), column3(yarnPath || "not installed")]
+
+    async function packageInfo(npmOrYarn: "npm" | "yarn") {
+      return (await packager.list({ packager: npmOrYarn, global: true })).map((nameAndVersion) => [
+        column1("  " + nameAndVersion[0]),
+        column2(nameAndVersion[1]),
+        column3(""),
+      ])
+    }
+    const npmPackages = npmPath ? await packageInfo("npm") : []
+    const yarnPackages = yarnPath ? await packageInfo("yarn") : []
+    const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
 
     info("")
-    info(colors.cyan("JavaScript"))
-    table([
-      [column1("node"), column2(nodeVersion), column3(nodePath)],
-      [column1("npm"), column2(npmVersion), column3(npmPath)],
-      [column1("yarn"), column2(yarnVersion), column3(yarnPath)],
-    ])
+    info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
+    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages])
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which("ignite")
     const igniteSrcPath = `${meta.src}`
     const igniteVersion = meta.version()
-    // const igniteJson = ignite.loadIgniteConfig()
-    // const installedGenerators = runtime.commands
-    //   .filter(cmd => cmd.name === "generate")
-    //   .sort((a, b) => (a.commandPath.join(" ") < b.commandPath.join(" ") ? -1 : 1))
-    //   .reduce((acc, k) => {
-    //     k.plugin.commands.map(c => {
-    //       if (c.plugin.name === k.plugin.name && k.plugin.name !== "ignite" && c.name !== "generate") {
-    //         if (!acc[c.name]) {
-    //           acc[c.name] = [k.plugin.name]
-    //         } else {
-    //           acc[c.name].push(k.plugin.name)
-    //         }
-    //       }
-    //     })
-    //     return acc
-    //   }, {})
-    // igniteJson.generators = Object.assign({}, installedGenerators, igniteJson.generators)
 
     info("")
     info(colors.cyan("Ignite"))
@@ -91,21 +85,6 @@ module.exports = {
       column2(igniteSrcPath.split(separator).pop()),
       column3(igniteSrcPath),
     ])
-    // if (igniteJson) {
-    //   Object.keys(igniteJson).forEach(k => {
-    //     const v = typeof igniteJson[k] === "object" ? JSON.stringify(igniteJson[k]) : igniteJson[k]
-    //     if (k === "generators") {
-    //       igniteTable.push([column1(k), column2(" "), column3("")])
-    //       Object.keys(igniteJson[k]).forEach(t => {
-    //         const l = Array.isArray(igniteJson[k][t]) ? igniteJson[k][t].join(", ") : igniteJson[k][t]
-    //         igniteTable.push([column1(""), column2(t), column3(l)])
-    //       })
-    //     } else {
-    //       igniteTable.push([column1(k), column2(v), column3("")])
-    //     }
-    //   })
-    // }
-
     table(igniteTable)
 
     // -=-=-=- android -=-=-=-
