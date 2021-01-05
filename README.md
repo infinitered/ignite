@@ -18,7 +18,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 
 - React Native
 - React Navigation 5
-- MobX-State-Tree [(Why not Redux?)](#About-The-Stack)
+- MobX-State-Tree [(Why not Redux?)](https://github.com/infinitered/ignite/blob/master/docs/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
 - AsyncStorage (integrated with MST for restoring state)
