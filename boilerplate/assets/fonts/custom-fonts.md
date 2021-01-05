@@ -1,10 +1,10 @@
-# Instructions for adding custom fonts to your ignite-boswer app:
+# Instructions for adding custom fonts to your ignite app:
 
 ## For Expo Projects
 
 You're lucky. Most of the work is done for you. Just download the `TTF` or `OTF` files you want to use, place them in `./app/theme/fonts/` and load them in the `index.ts` file in that same directory.
 
-ignote integrated `expo-fonts` according to [this guide](https://docs.expo.io/versions/latest/sdk/font/).
+ignite integrated `expo-fonts` according to [this guide](https://docs.expo.io/versions/latest/sdk/font/).
 
 ## For Non-Expo Projects
 
