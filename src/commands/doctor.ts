@@ -90,8 +90,8 @@ module.exports = {
     // -=-=-=- android -=-=-=-
     const androidPath = process.env.ANDROID_HOME
     const javaPath = which("java")
-    const javaVersionCmd = isWindows ? "java -version" : "java -version 2>&1"
-    const javaVersion = javaPath && (await run(javaVersionCmd)).match(/"(.*)"/).slice(-1)[0]
+    const javaVersionCmd = "java -version 2>&1"
+    const javaVersion = javaPath && (await run(javaVersionCmd))?.match(/"(.*)"/)?.slice(-1)[0]
 
     info("")
     info(colors.cyan("Android"))
