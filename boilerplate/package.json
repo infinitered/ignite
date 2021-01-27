@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "start": "react-native start",
     "test:e2e": "detox test -c ios.sim.debug",
     "build:e2e": "detox build -c ios.sim.debug",
     "ci:test:e2e": "detox test -c ios.sim.release -l verbose --cleanup",
@@ -20,7 +21,10 @@
     "patch": "patch-package",
     "storybook": "start-storybook -p 9001 -c ./storybook",
     "test": "jest",
-    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
+    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
+    "postinstall": "node ./bin/postInstall",
+    "build-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "build-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -36,7 +40,7 @@
     "mobx-state-tree": "4.0.2",
     "ramda": "0.27.1",
     "react": "16.14.0",
-    "react-native": "^0.63.3",
+    "react-native": "^0.63.4",
     "react-native-gesture-handler": "1.8.0",
     "react-native-keychain": "6.2.0",
     "react-native-safe-area-context": "3.1.8",
