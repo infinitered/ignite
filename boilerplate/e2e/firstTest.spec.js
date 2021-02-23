@@ -16,4 +16,9 @@ describe("Example", () => {
     await element(by.id("next-screen-button")).tap()
     await expect(element(by.id("DemoScreen"))).toBeVisible()
   })
+
+  it("should go to list screen after tap", async () => {
+    await element(by.id("list-screen-button")).tap()
+    await expect(element(by.id("ListScreen"))).toBeVisible()
+  })
 })

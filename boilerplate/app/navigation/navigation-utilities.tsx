@@ -3,7 +3,7 @@ import { BackHandler } from "react-native"
 import { PartialState, NavigationState, NavigationContainerRef } from "@react-navigation/native"
 
 export const RootNavigation = {
-  navigate(name: string) {
+  navigate(name: string, params?: any) {
     name // eslint-disable-line no-unused-expressions
   },
   goBack() {}, // eslint-disable-line @typescript-eslint/no-empty-function

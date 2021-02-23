@@ -62,6 +62,7 @@ const CONTINUE: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
   backgroundColor: "#5D2555",
+  marginTop: spacing[1],
 }
 const CONTINUE_TEXT: TextStyle = {
   ...TEXT,
@@ -78,6 +79,7 @@ const FOOTER_CONTENT: ViewStyle = {
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation()
   const nextScreen = () => navigation.navigate("demo")
+  const listDemoScreen = () => navigation.navigate("list")
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
@@ -108,6 +110,13 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
             textStyle={CONTINUE_TEXT}
             tx="welcomeScreen.continue"
             onPress={nextScreen}
+          />
+          <Button
+            testID="list-screen-button"
+            style={CONTINUE}
+            textStyle={CONTINUE_TEXT}
+            tx="welcomeScreen.demoList"
+            onPress={listDemoScreen}
           />
         </View>
       </SafeAreaView>

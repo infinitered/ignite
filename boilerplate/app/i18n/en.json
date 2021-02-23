@@ -10,7 +10,8 @@
   "welcomeScreen": {
     "poweredBy": "POWERED BY IGNITE",
     "readyForLaunch": "Ready for launch.",
-    "continue": "CONTINUE"
+    "continue": "CONTINUE",
+    "demoList": "DEMO LIST"
   },
   "demoScreen": {
     "howTo": "HOW TO",
@@ -19,6 +20,10 @@
     "reactotron": "Demo Reactotron",
     "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
     "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+  "listScreen": {
+    "title": "List Demo Screen: %{count}",
+    "delete": "Delete"
   },
   "storybook": {
     "placeholder": "Placeholder",
