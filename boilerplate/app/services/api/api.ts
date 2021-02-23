@@ -99,4 +99,27 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
+  async getListUser(page: number): Promise<Types.GetListResult> {
+    // make the api call
+    const response: ApiResponse<any> = await this.apisauce.get(
+      `https://rickandmortyapi.com/api/character?page=${page}`,
+    )
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const resultUser: Types.ListProps = {
+        results: response.data?.results ?? [],
+      }
+      return { kind: "ok", data: resultUser }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
 }

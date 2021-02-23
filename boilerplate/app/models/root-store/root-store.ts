@@ -1,11 +1,12 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { createListDemoDefaultModel } from "../list-demo/list-demo"
 
 /**
  * A RootStore model.
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
-
+    listDemo: createListDemoDefaultModel()
 })
 
 /**
