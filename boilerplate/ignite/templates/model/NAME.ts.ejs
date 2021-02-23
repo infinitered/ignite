@@ -21,3 +21,4 @@ type <%= props.pascalCaseName %>Type = Instance<typeof <%= props.pascalCaseName 
 export interface <%= props.pascalCaseName %> extends <%= props.pascalCaseName %>Type {}
 type <%= props.pascalCaseName %>SnapshotType = SnapshotOut<typeof <%= props.pascalCaseName %>Model>
 export interface <%= props.pascalCaseName %>Snapshot extends <%= props.pascalCaseName %>SnapshotType {}
+export const create<%= props.pascalCaseName %>DefaultModel = () => types.optional(<%= props.pascalCaseName %>Model, {})

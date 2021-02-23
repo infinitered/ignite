@@ -22,7 +22,7 @@ export const ListDemoModel = types
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    getListUser: flow(function* () {
+    getListUser: flow(function * () {
       const result: Types.GetListResult = yield self.environment.api.getListUser(self.page)
       if (result.kind === "ok") {
         const arrays = [...self.data, ...result.data?.results]
