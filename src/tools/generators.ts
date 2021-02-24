@@ -1,4 +1,4 @@
-import { filesystem, GluegunToolbox, strings } from "gluegun"
+import { filesystem, GluegunToolbox, patching, strings } from "gluegun"
 import * as ejs from "ejs"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
@@ -112,7 +112,18 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
   // where are we copying to?
-  const destinationDir = path(appDir(), pluralize(generator), kebabCaseName)
+  const generatorDir = path(appDir(), pluralize(generator))
+  const destinationDir = path(generatorDir, kebabCaseName)
+
+  // find index file if it exists
+  let indexFile: string
+  let hasIndex: boolean
+  try {
+    indexFile = find(generatorDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
+    hasIndex = !!indexFile
+  } catch (e) {
+    // just ignore if index doesn't exist
+  }
 
   // find the files
   const files = find(templateDir, { matching: "*" })
@@ -151,6 +162,17 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       destinationFile = path(destinationDir, filename)
       copy(templateFilename, destinationFile)
     }
+
+    // append to barrel export if applicable
+    if (hasIndex && !filename.includes('.test') && !filename.includes('.story')) {
+      const basename = filename.split('.')[0]
+      const exportLine = `export * from "./${kebabCaseName}/${basename}"\n`
+
+      if (!patching.exists(indexFile, exportLine)) {
+        filesystem.append(indexFile, exportLine)
+      }
+    }
+
     return destinationFile
   })
 
