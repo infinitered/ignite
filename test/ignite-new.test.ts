@@ -109,14 +109,20 @@ async function testSpunUpApp() {
   expect(filesystem.read(`${process.cwd()}/app/models/mod-test/mod-test.ts`)).toContain(
     "export const ModTestModel",
   )
+  expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
+    `export * from "./mod-test/mod-test"`,
+  )
 
   // screens
-  const screenGen = await runIgnite(`generate screen bowser-screen`)
+  const screenGen = await runIgnite(`generate screen bowser-screen --skip-index-file`)
   expect(screenGen).toContain(`Stripping Screen from end of name`)
   expect(screenGen).toContain(`app/screens/bowser/bowser-screen.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/screens/bowser`)).toContain("bowser-screen.tsx")
   expect(filesystem.read(`${process.cwd()}/app/screens/bowser/bowser-screen.tsx`)).toContain(
     "export const BowserScreen",
+  )
+  expect(filesystem.read(`${process.cwd()}/app/screens/index.ts`)).not.toContain(
+    `export * from "./bowser/bowser-screen"`,
   )
 
   // run the tests; if they fail, run will raise and this test will fail

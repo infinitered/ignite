@@ -1,4 +1,4 @@
-import { filesystem, GluegunToolbox, patching, strings } from "gluegun"
+import { filesystem, GluegunToolbox, strings } from "gluegun"
 import * as ejs from "ejs"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
@@ -92,6 +92,7 @@ export function installedGenerators(): string[] {
 
 type GeneratorOptions = {
   name: string
+  skipIndexFile?: boolean
 }
 
 /**
@@ -164,11 +165,18 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     }
 
     // append to barrel export if applicable
-    if (hasIndex && !filename.includes('.test') && !filename.includes('.story')) {
-      const basename = filename.split('.')[0]
+    if (
+      !options.skipIndexFile &&
+      hasIndex &&
+      !filename.includes(".test") &&
+      !filename.includes(".story")
+    ) {
+      const basename = filename.split(".")[0]
       const exportLine = `export * from "./${kebabCaseName}/${basename}"\n`
+      const indexContents = filesystem.read(indexFile)
+      const exportExists = indexContents.includes(exportLine)
 
-      if (!patching.exists(indexFile, exportLine)) {
+      if (!exportExists) {
         filesystem.append(indexFile, exportLine)
       }
     }
