@@ -125,6 +125,9 @@ async function testSpunUpApp() {
     `export * from "./bowser/bowser-screen"`,
   )
 
+  // commit the change
+  await run(`git add ./app/models ./app/components && git commit -m "generated test components"`)
+
   // run the tests; if they fail, run will raise and this test will fail
   await run(`yarn test --updateSnapshot`)
   await run(`yarn lint`)
