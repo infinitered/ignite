@@ -21,7 +21,7 @@ export const CharacterStoreModel = types
   .actions(self => ({
     getCharacters: flow(function * () {
       const characterApi = new CharacterApi(self.environment.api)
-      const result: GetCharactersResult = yield characterApi.getQuestions()
+      const result: GetCharactersResult = yield characterApi.getCharacters()
 
       if (result.kind === "ok") {
         self.saveCharacters(result.characters)

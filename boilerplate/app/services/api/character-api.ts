@@ -22,7 +22,7 @@ export class CharacterApi {
       this.api = api
     }
 
-    async getQuestions(): Promise<any> {
+    async getCharacters(): Promise<any> {
       // make the api call
       const response: ApiResponse<any> = await this.api.apisauce.get("https://rickandmortyapi.com/api/character", { amount: API_PAGE_SIZE })
 
@@ -37,7 +37,7 @@ export class CharacterApi {
         const rawCharacters = response.data.results
         const convertedCharacters: CharacterSnapshot[] = rawCharacters.map(convertCharacter)
 
-        const responseCharacters = { kind: "ok", questions: convertedCharacters }
+        const responseCharacters = { kind: "ok", characters: convertedCharacters }
         return responseCharacters
       } catch (e) {
         __DEV__ && console.tron.log(e.message)
