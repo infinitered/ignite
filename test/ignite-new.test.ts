@@ -8,6 +8,11 @@ const EXPO_APP_NAME = "Bar"
 const originalDir = process.cwd()
 let tempDir: string
 
+beforeAll(async () => {
+  await run('git config --global user.email "ci@infinite.red"')
+  await run('git config --global user.name "Infinite Red"')
+})
+
 beforeEach(() => {
   tempDir = tempy.directory()
   process.chdir(tempDir)
@@ -109,15 +114,24 @@ async function testSpunUpApp() {
   expect(filesystem.read(`${process.cwd()}/app/models/mod-test/mod-test.ts`)).toContain(
     "export const ModTestModel",
   )
+  expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
+    `export * from "./mod-test/mod-test"`,
+  )
 
   // screens
-  const screenGen = await runIgnite(`generate screen bowser-screen`)
+  const screenGen = await runIgnite(`generate screen bowser-screen --skip-index-file`)
   expect(screenGen).toContain(`Stripping Screen from end of name`)
   expect(screenGen).toContain(`app/screens/bowser/bowser-screen.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/screens/bowser`)).toContain("bowser-screen.tsx")
   expect(filesystem.read(`${process.cwd()}/app/screens/bowser/bowser-screen.tsx`)).toContain(
     "export const BowserScreen",
   )
+  expect(filesystem.read(`${process.cwd()}/app/screens/index.ts`)).not.toContain(
+    `export * from "./bowser/bowser-screen"`,
+  )
+
+  // commit the change
+  await run(`git add ./app/models ./app/components && git commit -m "generated test components"`)
 
   // run the tests; if they fail, run will raise and this test will fail
   await run(`yarn test --updateSnapshot`)

@@ -42,7 +42,7 @@ ignite generate model No
 
 - Creates the model
 - Creates a unit test file
-- Will make the required additions to configuration files.
+- Appends export to `models/index.ts` unless you pass `--skip-index-file`
 
 ## Making your own generators
 
