@@ -93,7 +93,7 @@
     "react-powerplug": "1.0.0",
     "react-test-renderer": "17.0.1",
     "rimraf": "3.0.2",
-    "solidarity": "3.0.0",
+    "solidarity": "2.3.1",
     "typescript": "4.1.3",
     "utf-8-validate": "5.0.3"
   },
