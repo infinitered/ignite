@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing } from "../../theme"
+import { useStores } from "../../models"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -45,14 +46,14 @@ export const DemoListScreen = observer(function DemoListScreen() {
 
   const [data, setData] = useState<CharacterData[]>()
 
+  const { characterStore } = useStores();
+  const { characters } = characterStore;
+
   useEffect(() => {
     // Todo fetch the data
     // setData(jsonArrayFromTheFetch)
     async function fetchData() {
-      const resp = await fetch('https://rickandmortyapi.com/api/character')
-      const json: { results: CharacterData[] } = await resp.json()
-
-      setData(json.results)
+      await characterStore.getCharacters();
     }
 
     fetchData()
@@ -70,7 +71,7 @@ export const DemoListScreen = observer(function DemoListScreen() {
           titleStyle={HEADER_TITLE}
         />
         <FlatList
-          data={data}
+          data={characters}
           renderItem={({ item }) =>
           <View style={LISTCONTAINER}>
             <Image source={{ uri: item.image }} style={IMAGE} />
