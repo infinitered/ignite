@@ -1,30 +1,24 @@
 import { ApiResponse } from "apisauce"
-import { CharacterSnapshot } from '../../models/character/character'
-import { makeid } from "../../utils/string"
 import { Api } from "./api"
+import { GetCharactersResult } from './api.types'
 import { getGeneralApiProblem } from "./api-problem"
 
 const API_PAGE_SIZE = 50
 
-const convertCharacter = (raw: any): CharacterSnapshot => {
-  return {
-    id: makeid(25),
-    image: raw.image,
-    name: raw.name,
-    status: raw.status,
-  }
-}
-
 export class CharacterApi {
-    private api: Api;
+  private api: Api
 
-    constructor(api: Api) {
-      this.api = api
-    }
+  constructor(api: Api) {
+    this.api = api
+  }
 
-    async getCharacters(): Promise<any> {
+  async getCharacters(): Promise<GetCharactersResult> {
+    try {
       // make the api call
-      const response: ApiResponse<any> = await this.api.apisauce.get("https://rickandmortyapi.com/api/character", { amount: API_PAGE_SIZE })
+      const response: ApiResponse<any> = await this.api.apisauce.get(
+        "https://raw.githubusercontent.com/infinitered/ignite/master/data/rick-and-morty.json",
+        { amount: API_PAGE_SIZE },
+      )
 
       // the typical ways to die when calling an api
       if (!response.ok) {
@@ -32,16 +26,12 @@ export class CharacterApi {
         if (problem) return problem
       }
 
-      // transform the data into the format we are expecting
-      try {
-        const rawCharacters = response.data.results
-        const convertedCharacters: CharacterSnapshot[] = rawCharacters.map(convertCharacter)
+      const characters = response.data.results
 
-        const responseCharacters = { kind: "ok", characters: convertedCharacters }
-        return responseCharacters
-      } catch (e) {
-        __DEV__ && console.tron.log(e.message)
-        return { kind: "bad-data" }
-      }
+      return { kind: "ok", characters }
+    } catch (e) {
+      __DEV__ && console.tron.log(e.message)
+      return { kind: "bad-data" }
     }
+  }
 }
