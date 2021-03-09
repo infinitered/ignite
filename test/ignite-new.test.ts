@@ -8,11 +8,6 @@ const EXPO_APP_NAME = "Bar"
 const originalDir = process.cwd()
 let tempDir: string
 
-beforeAll(async () => {
-  await run('git config --global user.email "ci@infinite.red"')
-  await run('git config --global user.name "Infinite Red"')
-})
-
 beforeEach(() => {
   tempDir = tempy.directory()
   process.chdir(tempDir)
