@@ -1,4 +1,5 @@
 import { filesystem, GluegunToolbox, strings } from "gluegun"
+import * as matter from 'gray-matter'
 import * as ejs from "ejs"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
@@ -112,55 +113,60 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
 
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
-  // where are we copying to?
-  const generatorDir = path(appDir(), pluralize(generator))
-  const destinationDir = path(generatorDir, kebabCaseName)
-
-  // find index file if it exists
-  let indexFile: string
-  let hasIndex: boolean
-  try {
-    indexFile = find(generatorDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
-    hasIndex = !!indexFile
-  } catch (e) {
-    // just ignore if index doesn't exist
-  }
 
   // find the files
   const files = find(templateDir, { matching: "*" })
 
-  // create destination folder
-  dir(destinationDir)
-
   // loop through the files
   const newFiles = files.map((templateFilename: string) => {
+    // read file and parse with gray matter console log result
+    const templateContents = filesystem.read(templateFilename)
+    const parsedTempContents = matter(templateContents)
+
+    console.log(parsedTempContents)
+
+    // where are we copying to?
+    const destAppDir = parsedTempContents.data.destinationDir
+    const generatorDir = path(appDir(), pluralize(generator))
+    const defaultDestinationDir = path(generatorDir, kebabCaseName)
+    const tempDestDir = destAppDir ? path(appDir(), destAppDir) : defaultDestinationDir
+
+    // find index file if it exists
+    let indexFile: string
+    let hasIndex: boolean
+    try {
+      indexFile = find(tempDestDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
+      hasIndex = !!indexFile
+    } catch (e) {
+      // just ignore if index doesn't exist
+    }
+
+    // create destination folder
+    dir(tempDestDir)
+
     // get the filename and replace `NAME` with the actual name
     let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
 
-    let destinationFile: string
+    const destinationFile = path(tempDestDir, filename)
+
 
     // if .ejs, run through the ejs template system
     if (templateFilename.endsWith(".ejs")) {
-      // where we're going
-      destinationFile = path(destinationDir, filename)
-
       // file-specific props
       const data = { props: { ...props, filename } }
 
       // read the template
-      const templateContent = filesystem.read(templateFilename)
+      // const templateContent = filesystem.read(templateFilename)
 
       // render the template
-      const content = ejs.render(templateContent, data)
+      const content = ejs.render(parsedTempContents.content, data)
 
       // write to the destination file
       filesystem.write(destinationFile, content)
     } else {
-      // no .ejs, so just direct copy
-      destinationFile = path(destinationDir, filename)
       copy(templateFilename, destinationFile)
     }
 
@@ -172,7 +178,8 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       !filename.includes(".story")
     ) {
       const basename = filename.split(".")[0]
-      const exportLine = `export * from "./${kebabCaseName}/${basename}"\n`
+      const exportPath = destAppDir ? `./${basename}` : `./${kebabCaseName}/${basename}`
+      const exportLine = `export * from "${exportPath}"\n`
       const indexContents = filesystem.read(indexFile)
       const exportExists = indexContents.includes(exportLine)
 
