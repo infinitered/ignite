@@ -123,19 +123,20 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     const templateContents = filesystem.read(templateFilename)
     const parsedTempContents = matter(templateContents)
 
-    console.log(parsedTempContents)
+    // console.log(parsedTempContents)
 
     // where are we copying to?
     const destAppDir = parsedTempContents.data.destinationDir
     const generatorDir = path(appDir(), pluralize(generator))
     const defaultDestinationDir = path(generatorDir, kebabCaseName)
     const tempDestDir = destAppDir ? path(appDir(), destAppDir) : defaultDestinationDir
+    const indexDir = destAppDir ? tempDestDir : generatorDir
 
     // find index file if it exists
     let indexFile: string
     let hasIndex: boolean
     try {
-      indexFile = find(tempDestDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
+      indexFile = find(indexDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
       hasIndex = !!indexFile
     } catch (e) {
       // just ignore if index doesn't exist
@@ -169,6 +170,9 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       copy(templateFilename, destinationFile)
     }
 
+    console.log('hasIndex: ', hasIndex)
+    console.log('indexFile: ', indexFile)
+
     // append to barrel export if applicable
     if (
       !options.skipIndexFile &&
@@ -181,6 +185,8 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       const exportLine = `export * from "${exportPath}"\n`
       const indexContents = filesystem.read(indexFile)
       const exportExists = indexContents.includes(exportLine)
+
+      console.log('exportExists: ', exportExists)
 
       if (!exportExists) {
         filesystem.append(indexFile, exportLine)
