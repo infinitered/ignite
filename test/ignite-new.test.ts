@@ -125,8 +125,21 @@ async function testSpunUpApp() {
     `export * from "./bowser/bowser-screen"`,
   )
 
+  // navigators
+  const navGen = await runIgnite(`generate navigator nav-test`)
+  expect(navGen).toContain(`app/navigation/nav-test-navigator.tsx`)
+  expect(filesystem.list(`${process.cwd()}/app/navigation`)).toContain("nav-test-navigator.tsx")
+  expect(filesystem.read(`${process.cwd()}/app/navigation/nav-test-navigator.tsx`)).toContain(
+    "export const NavTest = StackNavigator({",
+  )
+  expect(filesystem.read(`${process.cwd()}/app/navigation/index.tsx`)).toContain(
+    `export * from "./nav-test-navigator"`,
+  )
+
   // commit the change
-  await run(`git add ./app/models ./app/components && git commit -m "generated test components"`)
+  await run(
+    `git add ./app/models ./app/components ./app/navigation && git commit -m "generated test components"`,
+  )
 
   // run the tests; if they fail, run will raise and this test will fail
   await run(`yarn test --updateSnapshot`)

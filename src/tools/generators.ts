@@ -1,5 +1,5 @@
 import { filesystem, GluegunToolbox, strings } from "gluegun"
-import * as matter from 'gray-matter'
+import * as matter from "gray-matter"
 import * as ejs from "ejs"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
@@ -151,7 +151,6 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
 
     const destinationFile = path(tempDestDir, filename)
-
 
     // if .ejs, run through the ejs template system
     if (templateFilename.endsWith(".ejs")) {

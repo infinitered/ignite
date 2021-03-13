@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { CharacterStoreModel } from '../character-store/character-store';
+import { CharacterStoreModel } from "../character-store/character-store"
 
 /**
  * A RootStore model.
