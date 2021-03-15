@@ -130,7 +130,7 @@ async function testSpunUpApp() {
   expect(navGen).toContain(`app/navigation/nav-test-navigator.tsx`)
   expect(filesystem.list(`${process.cwd()}/app/navigation`)).toContain("nav-test-navigator.tsx")
   expect(filesystem.read(`${process.cwd()}/app/navigation/nav-test-navigator.tsx`)).toContain(
-    "export const NavTest = StackNavigator({",
+    `import { createStackNavigator } from "@react-navigation/stack"`,
   )
   expect(filesystem.read(`${process.cwd()}/app/navigation/index.ts`)).toContain(
     `export * from "./nav-test-navigator"`,
