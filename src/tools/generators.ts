@@ -66,14 +66,16 @@ export function isIgniteProject(): boolean {
   return filesystem.exists("./ignite") === "dir"
 }
 
+function cwd() {
+  return process.cwd()
+}
+
 function igniteDir() {
-  const cwd = process.cwd()
-  return filesystem.path(cwd, "ignite")
+  return filesystem.path(cwd(), "ignite")
 }
 
 function appDir() {
-  const cwd = process.cwd()
-  return filesystem.path(cwd, "app")
+  return filesystem.path(cwd(), "app")
 }
 
 function templatesDir() {
@@ -100,7 +102,7 @@ type GeneratorOptions = {
  * Generates something using a template
  */
 export function generateFromTemplate(generator: string, options: GeneratorOptions): string[] {
-  const { find, path, dir, copy, separator } = filesystem
+  const { find, path, dir, separator } = filesystem
   const { pascalCase, kebabCase, pluralize, camelCase } = strings
 
   // permutations of the name
@@ -119,18 +121,36 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
 
   // loop through the files
   const newFiles = files.map((templateFilename: string) => {
-    // read file and parse with gray matter console log result
-    const templateContents = filesystem.read(templateFilename)
-    const parsedTempContents = matter(templateContents)
+    // get the filename and replace `NAME` with the actual name
+    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
 
-    // console.log(parsedTempContents)
+    // strip the .ejs
+    if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
+
+    // read template file
+    const templateContents = filesystem.read(templateFilename)
+
+    // parse ejs
+    const data = { props: { ...props, filename } }
+    const content = templateFilename.endsWith(".ejs") ? ejs.render(templateContents, data) : templateContents
+
+    // parse with gray matter
+    const parsedTemplateContents = matter(content)
 
     // where are we copying to?
-    const destAppDir = parsedTempContents.data.destinationDir
     const generatorDir = path(appDir(), pluralize(generator))
     const defaultDestinationDir = path(generatorDir, kebabCaseName)
-    const tempDestDir = destAppDir ? path(appDir(), destAppDir) : defaultDestinationDir
-    const indexDir = destAppDir ? tempDestDir : generatorDir
+    const destinationDir = parsedTemplateContents.data.destinationDir
+    const templateDestinationDir = destinationDir ? path(cwd(), destinationDir) : defaultDestinationDir
+    const indexDir = destinationDir ? templateDestinationDir : generatorDir
+
+    // ensure destination folder exists
+    dir(templateDestinationDir)
+
+    const destinationFile = path(templateDestinationDir, filename)
+
+    // write to the destination file
+    filesystem.write(destinationFile, parsedTemplateContents.content)
 
     // find index file if it exists
     let indexFile: string
@@ -142,37 +162,6 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       // just ignore if index doesn't exist
     }
 
-    // create destination folder
-    dir(tempDestDir)
-
-    // get the filename and replace `NAME` with the actual name
-    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
-
-    // strip the .ejs
-    if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
-
-    const destinationFile = path(tempDestDir, filename)
-
-    // if .ejs, run through the ejs template system
-    if (templateFilename.endsWith(".ejs")) {
-      // file-specific props
-      const data = { props: { ...props, filename } }
-
-      // read the template
-      // const templateContent = filesystem.read(templateFilename)
-
-      // render the template
-      const content = ejs.render(parsedTempContents.content, data)
-
-      // write to the destination file
-      filesystem.write(destinationFile, content)
-    } else {
-      copy(templateFilename, destinationFile)
-    }
-
-    console.log('hasIndex: ', hasIndex)
-    console.log('indexFile: ', indexFile)
-
     // append to barrel export if applicable
     if (
       !options.skipIndexFile &&
@@ -181,12 +170,10 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       !filename.includes(".story")
     ) {
       const basename = filename.split(".")[0]
-      const exportPath = destAppDir ? `./${basename}` : `./${kebabCaseName}/${basename}`
+      const exportPath = destinationDir ? `./${basename}` : `./${kebabCaseName}/${basename}`
       const exportLine = `export * from "${exportPath}"\n`
       const indexContents = filesystem.read(indexFile)
       const exportExists = indexContents.includes(exportLine)
-
-      console.log('exportExists: ', exportExists)
 
       if (!exportExists) {
         filesystem.append(indexFile, exportLine)
