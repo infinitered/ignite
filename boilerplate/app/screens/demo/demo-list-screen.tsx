@@ -38,7 +38,7 @@ const LIST_TEXT: TextStyle = {
   marginLeft: 10,
 }
 const FLAT_LIST: ViewStyle = {
-  paddingHorizontal: spacing[4]
+  paddingHorizontal: spacing[4],
 }
 
 export const DemoListScreen = observer(function DemoListScreen() {
@@ -70,7 +70,7 @@ export const DemoListScreen = observer(function DemoListScreen() {
         <FlatList
           contentContainerStyle={FLAT_LIST}
           data={characters}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <View style={LIST_CONTAINER}>
               <Image source={{ uri: item.image }} style={IMAGE} />
