@@ -128,29 +128,29 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
 
     // read template file
-    const templateContents = filesystem.read(templateFilename)
+    let templateContents = filesystem.read(templateFilename)
 
-    // parse ejs
-    const data = { props: { ...props, filename } }
-    const content = templateFilename.endsWith(".ejs") ? ejs.render(templateContents, data) : templateContents
+    // render ejs
+    if (templateFilename.endsWith(".ejs")) {
+      templateContents = ejs.render(templateContents, { props: { ...props, filename } })
+    }
 
-    // parse with gray matter
-    const parsedTemplateContents = matter(content)
+    // parse out front matter data and content
+    const { data, content } = matter(templateContents)
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
     const defaultDestinationDir = path(generatorDir, kebabCaseName)
-    const destinationDir = parsedTemplateContents.data.destinationDir
-    const templateDestinationDir = destinationDir ? path(cwd(), destinationDir) : defaultDestinationDir
-    const indexDir = destinationDir ? templateDestinationDir : generatorDir
+    const templateDestinationDir = data.destinationDir
+    const destinationDir = templateDestinationDir ? path(cwd(), templateDestinationDir) : defaultDestinationDir
+    const indexDir = templateDestinationDir ? destinationDir : generatorDir
+    const destinationPath = path(destinationDir, filename)
 
     // ensure destination folder exists
-    dir(templateDestinationDir)
-
-    const destinationFile = path(templateDestinationDir, filename)
+    dir(destinationDir)
 
     // write to the destination file
-    filesystem.write(destinationFile, parsedTemplateContents.content)
+    filesystem.write(destinationPath, content)
 
     // find index file if it exists
     let indexFile: string
@@ -170,7 +170,7 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       !filename.includes(".story")
     ) {
       const basename = filename.split(".")[0]
-      const exportPath = destinationDir ? `./${basename}` : `./${kebabCaseName}/${basename}`
+      const exportPath = templateDestinationDir ? `./${basename}` : `./${kebabCaseName}/${basename}`
       const exportLine = `export * from "${exportPath}"\n`
       const indexContents = filesystem.read(indexFile)
       const exportExists = indexContents.includes(exportLine)
@@ -180,7 +180,7 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       }
     }
 
-    return destinationFile
+    return destinationPath
   })
 
   return newFiles
