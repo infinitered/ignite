@@ -112,8 +112,8 @@ async function testSpunUpApp() {
   expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
     `export * from "./mod-test/mod-test"`,
   )
-  const rootStore = filesystem.read(`${process.cwd()}/app/models/root-store/root-store.ts`)
-  expect(rootStore).not.toContain('import { ModTestModel } from ".."')
+  let rootStore = filesystem.read(`${process.cwd()}/app/models/root-store/root-store.ts`)
+  expect(rootStore).not.toContain('import { ModTestModel } from "../mod-test/mod-test"')
   expect(rootStore).not.toContain('modTest: types.optional(ModTestModel, {} as any),')
 
   // store
@@ -127,7 +127,8 @@ async function testSpunUpApp() {
   expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
     `export * from "./test-store/test-store"`,
   )
-  expect(rootStore).toContain('import { TestStoreModel } from ".."')
+  rootStore = filesystem.read(`${process.cwd()}/app/models/root-store/root-store.ts`)
+  expect(rootStore).toContain('import { TestStoreModel } from "../test-store/test-store"')
   expect(rootStore).toContain('testStore: types.optional(TestStoreModel, {} as any),')
 
   // screens

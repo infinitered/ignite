@@ -2,12 +2,12 @@
 patches:
   - path: "app/models/root-store/root-store.ts"
     after: "from \"mobx-state-tree\"\n"
-    insert: "import { <%= props.pascalCaseName %>Model } from \"..\"\n"
-    skip: <%= !props.camelCaseName.endsWith('Store') %>
+    insert: "import { <%= props.pascalCaseName %>Model } from \"../<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n"
+    skip: <%= !props.kebabCaseName.endsWith('store') %>
   - path: "app/models/root-store/root-store.ts"
     after: "types.model(\"RootStore\").props({\n"
     insert: "  <%= props.camelCaseName %>: types.optional(<%= props.pascalCaseName %>Model, {} as any),\n"
-    skip: <%= !props.camelCaseName.endsWith('Store') %>
+    skip: <%= !props.kebabCaseName.endsWith('store') %>
 ---
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 
