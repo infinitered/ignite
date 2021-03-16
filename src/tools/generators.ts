@@ -1,4 +1,4 @@
-import { filesystem, GluegunToolbox, strings } from "gluegun"
+import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
 import * as matter from "gray-matter"
 import * as ejs from "ejs"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
@@ -101,7 +101,7 @@ type GeneratorOptions = {
 /**
  * Generates something using a template
  */
-export function generateFromTemplate(generator: string, options: GeneratorOptions): string[] {
+export function generateFromTemplate(generator: string, options: GeneratorOptions): Promise<string>[] {
   const { find, path, dir, separator } = filesystem
   const { pascalCase, kebabCase, pluralize, camelCase } = strings
 
@@ -120,7 +120,7 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
   const files = find(templateDir, { matching: "*" })
 
   // loop through the files
-  const newFiles = files.map((templateFilename: string) => {
+  const newFiles = files.map(async (templateFilename: string) => {
     // get the filename and replace `NAME` with the actual name
     let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
 
@@ -137,6 +137,17 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
 
     // parse out front matter data and content
     const { data, content } = matter(templateContents)
+
+    // apply any provided patches
+    type Patch = GluegunPatchingPatchOptions & { path: string; skip?: boolean }
+    const patches: Patch[] = data.patches ?? []
+    if (data.patch) patches.push(data.patch)
+    for (const patch of patches) {
+      const { path: patchPath, skip, ...patchOpts } = patch
+      if (patchPath && !skip) {
+        await patching.patch(patchPath, patchOpts)
+      }
+    }
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
