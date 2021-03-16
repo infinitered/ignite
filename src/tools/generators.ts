@@ -1,6 +1,6 @@
 import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
-import * as matter from "gray-matter"
 import * as ejs from "ejs"
+import * as YAML from 'yaml'
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -82,6 +82,18 @@ function templatesDir() {
   return filesystem.path(igniteDir(), "templates")
 }
 
+function frontMatter(contents: string) {
+  const parts = contents.split("---\n")
+  if (parts.length === 1 || parts.length === 3) {
+    return {
+      data: parts[1] ? YAML.parse(parts[1]) : {},
+      content: parts[2] ?? parts[0]
+    }
+  } else {
+    return {}
+  }
+}
+
 /**
  * Finds generator templates installed in the current project
  */
@@ -136,7 +148,10 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     }
 
     // parse out front matter data and content
-    const { data, content } = matter(templateContents)
+    const { data, content } = frontMatter(templateContents)
+    if (!content) {
+      return warning('⚠️  Unable to parse front matter. Please check your delimiters.')
+    }
 
     // apply any provided patches
     type Patch = GluegunPatchingPatchOptions & { path: string; skip?: boolean }

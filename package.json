@@ -47,7 +47,7 @@
   "dependencies": {
     "deepmerge-json": "^1.1.0",
     "gluegun": "^4.5.0",
-    "gray-matter": "^4.0.2"
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@semantic-release/git": "^9.0.0",
