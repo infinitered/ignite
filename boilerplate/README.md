@@ -25,7 +25,7 @@ ignite-project
 │   ├── i18n
 │   ├── utils
 │   ├── models
-│   ├── navigation
+│   ├── navigators
 │   ├── screens
 │   ├── services
 │   ├── theme
@@ -79,7 +79,7 @@ app
 │── components
 │── i18n
 ├── models
-├── navigation
+├── navigators
 ├── screens
 ├── services
 ├── theme
@@ -96,7 +96,7 @@ This is where your translations will live if you are using `react-native-i18n`.
 **models**
 This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc.
 
-**navigation**
+**navigators**
 This is where your `react-navigation` navigators will live.
 
 **screens**
