@@ -112,6 +112,23 @@ async function testSpunUpApp() {
   expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
     `export * from "./mod-test/mod-test"`,
   )
+  const rootStore = filesystem.read(`${process.cwd()}/app/models/root-store/root-store.ts`)
+  expect(rootStore).not.toContain('import { ModTestModel } from ".."')
+  expect(rootStore).not.toContain('modTest: types.optional(ModTestModel, {} as any),')
+
+  // store
+  const storeGen = await runIgnite(`generate model test-store`)
+  expect(storeGen).toContain(`app/models/test-store/test-store.ts`)
+  expect(storeGen).toContain(`app/models/test-store/test-store.test.ts`)
+  expect(filesystem.list(`${process.cwd()}/app/models`)).toContain("test-store")
+  expect(filesystem.read(`${process.cwd()}/app/models/test-store/test-store.ts`)).toContain(
+    "export const TestStoreModel",
+  )
+  expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
+    `export * from "./test-store/test-store"`,
+  )
+  expect(rootStore).toContain('import { TestStoreModel } from ".."')
+  expect(rootStore).toContain('testStore: types.optional(TestStoreModel, {} as any),')
 
   // screens
   const screenGen = await runIgnite(`generate screen bowser-screen --skip-index-file`)
