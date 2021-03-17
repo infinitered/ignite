@@ -31,7 +31,7 @@ MST is...
 We also recognize no state management solution is perfect. MST has some known downfalls:
 
 - Integration with TypeScript is clunky at times. MST's own typing system is sometimes at odds with what TypeScript wants
-- `mobx` and `mobx-state-tree` both seem to have "magic" or "sorcery" that makes issues less straightforward to debug because you don't always have a clear picture of what's happening (but using [Reactotron](https://github.com/infinitered/reactotron), which has `mobx-state-tree` support built-in, helps a lot). The [MobX docs](https://mobx.js.org/) can also help illumitate some of the magic.
+- `mobx` and `mobx-state-tree` both seem to have "magic" or "sorcery" that makes issues less straightforward to debug because you don't always have a clear picture of what's happening (but using [Reactotron](https://github.com/infinitered/reactotron), which has `mobx-state-tree` support built-in, helps a lot). The [MobX docs](https://mobx.js.org/) can also help illuminate some of the magic.
 - The user base is small, so finding help on GitHub or Stack overflow is less convenient (however, the [Infinite Red Slack Community](http://community.infinite.red), as well as the [MobX State Tree Spectrum channel](https://spectrum.chat/mobx-state-tree) are both very helpful)
 - Fatal errors are sometimes too-easily triggered and error messages can be verbose and hard to grok
 - The API has a large surface area and the docs tend to be technical and unfriendly
