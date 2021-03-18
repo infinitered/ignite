@@ -6,7 +6,7 @@
  * it very often. But take some time to look through and understand
  * what is going on here.
  *
- * The app navigation resides in ./app/navigation, so head over there
+ * The app navigation resides in ./app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
 import "./i18n"
@@ -22,7 +22,7 @@ import {
   canExit,
   setRootNavigation,
   useNavigationPersistence,
-} from "./navigation"
+} from "./navigators"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 
