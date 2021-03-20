@@ -115,7 +115,7 @@ export default {
       const expoJson = filesystem.read("package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
     }
-    
+
     filesystem.write("package.json", packageJson)
 
     // More Expo-specific changes
