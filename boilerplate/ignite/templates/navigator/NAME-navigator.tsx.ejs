@@ -1,5 +1,9 @@
 ---
 destinationDir: app/navigation
+patch:
+  path: "app/navigation/index.ts"
+  append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n" 
+  skip: <%= props.skipIndexFile %>
 ---
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"

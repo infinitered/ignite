@@ -1,6 +1,6 @@
 import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
 import * as ejs from "ejs"
-import * as YAML from 'yaml'
+import * as YAML from "yaml"
 import { command, heading, igniteHeading, p, warning } from "./pretty"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -123,7 +123,7 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
   const camelCaseName = camelCase(options.name)
 
   // passed into the template generator
-  const props = { camelCaseName, kebabCaseName, pascalCaseName }
+  const props = { camelCaseName, kebabCaseName, pascalCaseName, ...options }
 
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
@@ -154,12 +154,21 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     }
 
     // apply any provided patches
-    type Patch = GluegunPatchingPatchOptions & { path: string; skip?: boolean }
+    type Patch = GluegunPatchingPatchOptions & { path: string; append?: string; prepend?: string; replace?: string; skip?: boolean }
     const patches: Patch[] = data.patches ?? []
     if (data.patch) patches.push(data.patch)
     for (const patch of patches) {
       const { path: patchPath, skip, ...patchOpts } = patch
       if (patchPath && !skip) {
+        if (patchOpts.append) {
+          await patching.append(patchPath, patchOpts.append)
+        }
+        if (patchOpts.prepend) {
+          await patching.prepend(patchPath, patchOpts.prepend)
+        }
+        if (patchOpts.replace) {
+          await patching.replace(patchPath, patchOpts.replace, patchOpts.insert)
+        }
         await patching.patch(patchPath, patchOpts)
       }
     }
@@ -169,7 +178,6 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     const defaultDestinationDir = path(generatorDir, kebabCaseName)
     const templateDestinationDir = data.destinationDir
     const destinationDir = templateDestinationDir ? path(cwd(), templateDestinationDir) : defaultDestinationDir
-    const indexDir = templateDestinationDir ? destinationDir : generatorDir
     const destinationPath = path(destinationDir, filename)
 
     // ensure destination folder exists
@@ -177,34 +185,6 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
 
     // write to the destination file
     filesystem.write(destinationPath, content)
-
-    // find index file if it exists
-    let indexFile: string
-    let hasIndex: boolean
-    try {
-      indexFile = find(indexDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
-      hasIndex = !!indexFile
-    } catch (e) {
-      // just ignore if index doesn't exist
-    }
-
-    // append to barrel export if applicable
-    if (
-      !options.skipIndexFile &&
-      hasIndex &&
-      !filename.includes(".test") &&
-      !filename.includes(".story")
-    ) {
-      const basename = filename.split(".")[0]
-      const exportPath = templateDestinationDir ? `./${basename}` : `./${kebabCaseName}/${basename}`
-      const exportLine = `export * from "${exportPath}"\n`
-      const indexContents = filesystem.read(indexFile)
-      const exportExists = indexContents.includes(exportLine)
-
-      if (!exportExists) {
-        filesystem.append(indexFile, exportLine)
-      }
-    }
 
     return destinationPath
   })
