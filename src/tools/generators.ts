@@ -95,6 +95,40 @@ function frontMatter(contents: string) {
 }
 
 /**
+ * Patch front matter configuration
+ */
+type Patch = GluegunPatchingPatchOptions & {
+  path: string;
+  append?: string;
+  prepend?: string;
+  replace?: string;
+  skip?: boolean
+}
+
+/**
+ * Handles patching files via front matter config
+ */
+async function handlePatches(data: { patches?: Patch[]; patch?: Patch }) {
+  const patches = data.patches ?? []
+  if (data.patch) patches.push(data.patch)
+  for (const patch of patches) {
+    const { path: patchPath, skip, ...patchOpts } = patch
+    if (patchPath && !skip) {
+      if (patchOpts.append) {
+        await patching.append(patchPath, patchOpts.append)
+      }
+      if (patchOpts.prepend) {
+        await patching.prepend(patchPath, patchOpts.prepend)
+      }
+      if (patchOpts.replace) {
+        await patching.replace(patchPath, patchOpts.replace, patchOpts.insert)
+      }
+      await patching.patch(patchPath, patchOpts)
+    }
+  }
+}
+
+/**
  * Finds generator templates installed in the current project
  */
 export function installedGenerators(): string[] {
@@ -154,24 +188,7 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     }
 
     // apply any provided patches
-    type Patch = GluegunPatchingPatchOptions & { path: string; append?: string; prepend?: string; replace?: string; skip?: boolean }
-    const patches: Patch[] = data.patches ?? []
-    if (data.patch) patches.push(data.patch)
-    for (const patch of patches) {
-      const { path: patchPath, skip, ...patchOpts } = patch
-      if (patchPath && !skip) {
-        if (patchOpts.append) {
-          await patching.append(patchPath, patchOpts.append)
-        }
-        if (patchOpts.prepend) {
-          await patching.prepend(patchPath, patchOpts.prepend)
-        }
-        if (patchOpts.replace) {
-          await patching.replace(patchPath, patchOpts.replace, patchOpts.insert)
-        }
-        await patching.patch(patchPath, patchOpts)
-      }
-    }
+    await handlePatches(data)
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
