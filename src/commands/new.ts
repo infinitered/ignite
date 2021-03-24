@@ -110,12 +110,12 @@ export default {
       .replace(/hello-world/g, projectNameKebab)
     let packageJson = JSON.parse(packageJsonRaw)
 
-    packageJson.scripts.prepare = "npm-run-all patch hack:*"
     if (expo) {
       const merge = require("deepmerge-json")
       const expoJson = filesystem.read("package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
     }
+
     filesystem.write("package.json", packageJson)
 
     // More Expo-specific changes
