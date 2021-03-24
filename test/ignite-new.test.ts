@@ -145,18 +145,18 @@ async function testSpunUpApp() {
 
   // navigators
   const navGen = await runIgnite(`generate navigator nav-test`)
-  expect(navGen).toContain(`app/navigation/nav-test-navigator.tsx`)
-  expect(filesystem.list(`${process.cwd()}/app/navigation`)).toContain("nav-test-navigator.tsx")
-  expect(filesystem.read(`${process.cwd()}/app/navigation/nav-test-navigator.tsx`)).toContain(
+  expect(navGen).toContain(`app/navigators/nav-test-navigator.tsx`)
+  expect(filesystem.list(`${process.cwd()}/app/navigators`)).toContain("nav-test-navigator.tsx")
+  expect(filesystem.read(`${process.cwd()}/app/navigators/nav-test-navigator.tsx`)).toContain(
     `import { createStackNavigator } from "@react-navigation/stack"`,
   )
-  expect(filesystem.read(`${process.cwd()}/app/navigation/index.ts`)).toContain(
+  expect(filesystem.read(`${process.cwd()}/app/navigators/index.ts`)).toContain(
     `export * from "./nav-test-navigator"`,
   )
 
   // commit the change
   await run(
-    `git add ./app/models ./app/components ./app/navigation && git commit -m "generated test components"`,
+    `git add ./app/models ./app/components ./app/navigators && git commit -m "generated test components"`,
   )
 
   // run the tests; if they fail, run will raise and this test will fail
