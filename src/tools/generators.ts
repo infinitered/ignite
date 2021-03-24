@@ -169,7 +169,8 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
       !options.skipIndexFile &&
       hasIndex &&
       !filename.includes(".test") &&
-      !filename.includes(".story")
+      !filename.includes(".story") &&
+      !filename.includes(".styles")
     ) {
       const basename = filename.split(".")[0]
       const exportLine = `export * from "./${kebabCaseName}/${basename}"\n`
