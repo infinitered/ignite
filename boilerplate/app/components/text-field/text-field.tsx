@@ -1,7 +1,7 @@
 import React from "react"
 import { TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
-import { translate } from "../../i18n"
+import { translate, TxKeyPath } from "../../i18n"
 import { Text } from "../text/text"
 import { mergeAll, flatten } from "ramda"
 
@@ -28,7 +28,7 @@ export interface TextFieldProps extends TextInputProps {
   /**
    * The placeholder i18n key.
    */
-  placeholderTx?: string
+  placeholderTx?: TxKeyPath
 
   /**
    * The Placeholder text if no placeholderTx is provided.
@@ -38,7 +38,7 @@ export interface TextFieldProps extends TextInputProps {
   /**
    * The label i18n key.
    */
-  labelTx?: string
+  labelTx?: TxKeyPath
 
   /**
    * The label text if no labelTx is provided.

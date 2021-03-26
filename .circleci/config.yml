@@ -40,6 +40,11 @@ jobs:
           command: |
             sudo ln /bin/true /usr/local/bin/pod
       - run:
+          name: Ensure git user is configured
+          command: |
+            git config --global user.email "ci@infinite.red"
+            git config --global user.name "Infinite Red"
+      - run:
           name: Run tests
           command: yarn ci:test
           no_output_timeout: 15m

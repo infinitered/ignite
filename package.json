@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "6.1.0",
+  "version": "6.6.0",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
@@ -64,7 +64,7 @@
     "husky": "^4.3.0",
     "jest": "^26.5.3",
     "npm-run-all": "4.1.5",
-    "prettier": "2.1.2",
+    "prettier": "2.2.1",
     "semantic-release": "^17.2.1",
     "strip-ansi": "^6.0.0",
     "ts-jest": "^26.4.1",

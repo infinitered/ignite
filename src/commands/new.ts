@@ -110,12 +110,12 @@ export default {
       .replace(/hello-world/g, projectNameKebab)
     let packageJson = JSON.parse(packageJsonRaw)
 
-    packageJson.scripts.prepare = "npm-run-all patch hack:*"
     if (expo) {
       const merge = require("deepmerge-json")
       const expoJson = filesystem.read("package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
     }
+
     filesystem.write("package.json", packageJson)
 
     // More Expo-specific changes
@@ -161,7 +161,8 @@ export default {
     filesystem.remove("package.expo.json")
 
     // Make sure all our modifications are formatted nicely
-    await spawnProgress("yarn format", {})
+    const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"
+    await spawnProgress(`${npmOrYarnRun} format`, {})
 
     // commit any changes
     if (parameters.options.git !== false) {
@@ -189,7 +190,7 @@ export default {
     direction(`To get started:`)
     command(`  cd ${projectName}`)
     if (expo) {
-      command(`  yarn start`)
+      command(`  ${npmOrYarnRun} start`)
     } else {
       if (process.platform === "darwin") {
         command(`  npx react-native run-ios`)

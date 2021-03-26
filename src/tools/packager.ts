@@ -60,9 +60,8 @@ function install() {
   }
 }
 
-function list(
-  options: PackageListOptions = packageListOptions,
-): [string, (string) => [string, string][]] {
+type PackageListOutput = [string, (string) => [string, string][]]
+function list(options: PackageListOptions = packageListOptions): PackageListOutput {
   if (options.packager === "yarn" || (options.packager === undefined && yarn())) {
     return [
       `yarn${options.global ? " global" : ""} list`,
@@ -116,4 +115,5 @@ export const packager = {
     const [cmd, parseFn] = list(options)
     return parseFn(await spawnProgress(cmd, {}))
   },
+  is: (packageManager: "yarn" | "npm"): boolean => (packageManager === "yarn" ? yarn() : !yarn()),
 }
