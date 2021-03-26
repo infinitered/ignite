@@ -151,7 +151,7 @@ export const DemoScreen = observer(function DemoScreen() {
             tx="demoScreen.reactotron"
             onPress={demoReactotron}
           />
-          <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint`} />
+          <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
         </View>
         <Button
           style={DEMO}
