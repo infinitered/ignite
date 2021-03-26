@@ -1,11 +1,12 @@
 import { ViewStyle, TextStyle } from "react-native"
 import { IconTypes } from "../icon/icons"
+import { TxKeyPath } from "../../i18n"
 
 export interface HeaderProps {
   /**
    * Main header, e.g. POWERED BY IGNITE
    */
-  headerTx?: string
+  headerTx?: TxKeyPath
 
   /**
    * header non-i18n

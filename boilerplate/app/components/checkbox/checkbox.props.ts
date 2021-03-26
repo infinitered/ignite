@@ -1,4 +1,5 @@
 import { ViewStyle } from "react-native"
+import { TxKeyPath } from "../../i18n"
 
 export interface CheckboxProps {
   /**
@@ -29,7 +30,7 @@ export interface CheckboxProps {
   /**
    * The i18n lookup key.
    */
-  tx?: string
+  tx?: TxKeyPath
 
   /**
    * Multiline or clipped single line?

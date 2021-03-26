@@ -1,7 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - CocoaAsyncSocket (7.6.4)
-  - CocoaLibEvent (1.0.0)
+  - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - EXConstants (9.2.0):
     - UMConstantsInterface
@@ -30,16 +29,16 @@ PODS:
     - Flipper-Folly (~> 2.2)
     - Flipper-RSocket (~> 1.1)
   - Flipper-DoubleConversion (1.1.7)
-  - Flipper-Folly (2.2.0):
+  - Flipper-Folly (2.5.1):
     - boost-for-react-native
-    - CocoaLibEvent (~> 1.0)
     - Flipper-DoubleConversion
     - Flipper-Glog
-    - OpenSSL-Universal (= 1.0.2.19)
+    - libevent (~> 2.1.12)
+    - OpenSSL-Universal (= 1.1.180)
   - Flipper-Glog (0.3.6)
   - Flipper-PeerTalk (0.0.4)
-  - Flipper-RSocket (1.1.0):
-    - Flipper-Folly (~> 2.2)
+  - Flipper-RSocket (1.3.1):
+    - Flipper-Folly (~> 2.5)
   - FlipperKit (0.54.0):
     - FlipperKit/Core (= 0.54.0)
   - FlipperKit/Core (0.54.0):
@@ -82,9 +81,8 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - OpenSSL-Universal (1.0.2.19):
-    - OpenSSL-Universal/Static (= 1.0.2.19)
-  - OpenSSL-Universal/Static (1.0.2.19)
+  - libevent (2.1.12)
+  - OpenSSL-Universal (1.1.180)
   - RCTRequired (0.63.4)
   - RCTTypeSafety (0.63.4):
     - FBLazyVector (= 0.63.4)
@@ -315,7 +313,7 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - RNCAsyncStorage (1.12.1):
+  - RNCAsyncStorage (1.14.1):
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
@@ -400,7 +398,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -424,7 +422,6 @@ SPEC REPOS:
   trunk:
     - boost-for-react-native
     - CocoaAsyncSocket
-    - CocoaLibEvent
     - Flipper
     - Flipper-DoubleConversion
     - Flipper-Folly
@@ -432,6 +429,7 @@ SPEC REPOS:
     - Flipper-PeerTalk
     - Flipper-RSocket
     - FlipperKit
+    - libevent
     - OpenSSL-Universal
     - YogaKit
 
@@ -501,7 +499,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
-    :path: "../node_modules/@react-native-community/async-storage"
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNGestureHandler:
@@ -541,8 +539,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
-  CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   EXConstants: f486f6b4a36b86e47ab258d4d2b7b2699786fdce
   EXFileSystem: afe9b1fd937d30270bf5108ba44e2f4a1d1ad694
@@ -553,14 +550,15 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Flipper: be611d4b742d8c87fbae2ca5f44603a02539e365
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
-  Flipper-Folly: c12092ea368353b58e992843a990a3225d4533c3
+  Flipper-Folly: f7a3caafbd74bda4827954fd7a6e000e36355489
   Flipper-Glog: 1dfd6abf1e922806c52ceb8701a3599a79a200a6
   Flipper-PeerTalk: 116d8f857dc6ef55c7a5a75ea3ceaafe878aadc9
-  Flipper-RSocket: 64e7431a55835eb953b0bf984ef3b90ae9fdddd7
+  Flipper-RSocket: 127954abe8b162fcaf68d2134d34dc2bd7076154
   FlipperKit: ab353d41aea8aae2ea6daaf813e67496642f3d7d
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
-  OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
+  libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
   React: b0a957a2c44da4113b0c4c9853d8387f8e64e615
@@ -583,7 +581,7 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCAsyncStorage: fe58eec522885718d6b297b7b658bf87d7ca557b
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
