@@ -10,7 +10,9 @@ const ROOT: ViewStyle = { flex: 1 }
 export function Story(props: StoryProps) {
   return (
     <View style={ROOT}>
-      <ScrollView>{props.children}</ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        {props.children}
+      </ScrollView>
     </View>
   )
 }
