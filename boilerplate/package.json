@@ -69,6 +69,7 @@
     "bufferutil": "4.0.2",
     "canvas": "2.6.1",
     "detox": "17.14.5",
+    "fbjs-scripts": "3.0.0",
     "eslint": "7.15.0",
     "eslint-config-prettier": "7.0.0",
     "eslint-config-standard": "16.0.2",
