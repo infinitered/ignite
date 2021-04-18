@@ -1,4 +1,4 @@
-import { TextStyle, TextProps as TextProperties } from "react-native"
+import { StyleProp, TextProps as TextProperties, TextStyle } from "react-native"
 import { TextPresets } from "./text.presets"
 import { TxKeyPath } from "../../i18n"
 
@@ -27,7 +27,7 @@ export interface TextProps extends TextProperties {
   /**
    * An optional style override useful for padding & margin.
    */
-  style?: TextStyle | TextStyle[]
+  style?: StyleProp<TextStyle>
 
   /**
    * One of the different types of text presets.

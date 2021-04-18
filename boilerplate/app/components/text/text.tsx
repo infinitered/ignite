@@ -3,7 +3,7 @@ import { Text as ReactNativeText } from "react-native"
 import { presets } from "./text.presets"
 import { TextProps } from "./text.props"
 import { translate } from "../../i18n"
-import { mergeAll, flatten } from "ramda"
+import { flatten } from "ramda"
 
 /**
  * For your text displaying needs.
@@ -18,10 +18,11 @@ export function Text(props: TextProps) {
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
 
-  const style = mergeAll(flatten([presets[preset] || presets.default, styleOverride]))
+  const style = presets[preset] || presets.default
+  const styles = flatten([style, styleOverride])
 
   return (
-    <ReactNativeText {...rest} style={style}>
+    <ReactNativeText {...rest} style={styles}>
       {content}
     </ReactNativeText>
   )

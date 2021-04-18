@@ -2,7 +2,7 @@ import React from "react"
 import { ViewStyle, Animated, Easing, TouchableWithoutFeedback } from "react-native"
 import { color } from "../../theme"
 import { SwitchProps } from "./switch.props"
-import { mergeAll, flatten } from "ramda"
+import { flatten } from "ramda"
 
 // dimensions
 const THUMB_SIZE = 30
@@ -47,7 +47,7 @@ const THUMB: ViewStyle = {
 }
 
 const enhance = (style, newStyles): any => {
-  return mergeAll(flatten([style, newStyles]))
+  return flatten([style, newStyles])
 }
 
 const makeAnimatedValue = (switchOn) => new Animated.Value(switchOn ? 1 : 0)
