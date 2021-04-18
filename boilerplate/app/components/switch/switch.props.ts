@@ -1,4 +1,4 @@
-import { ViewStyle } from "react-native"
+import { StyleProp, ViewStyle } from "react-native"
 
 export interface SwitchProps {
   /**
@@ -15,25 +15,25 @@ export interface SwitchProps {
   /**
    * A style override to apply to the container.  Useful for margins and paddings.
    */
-  style?: ViewStyle | ViewStyle[]
+  style?: StyleProp<ViewStyle>
 
   /**
    * Additional track styling when on.
    */
-  trackOnStyle?: ViewStyle | ViewStyle[]
+  trackOnStyle?: StyleProp<ViewStyle>
 
   /**
    * Additional track styling when off.
    */
-  trackOffStyle?: ViewStyle | ViewStyle[]
+  trackOffStyle?: StyleProp<ViewStyle>
 
   /**
    * Additional thumb styling when on.
    */
-  thumbOnStyle?: ViewStyle | ViewStyle[]
+  thumbOnStyle?: StyleProp<ViewStyle>
 
   /**
    * Additional thumb styling when off.
    */
-  thumbOffStyle?: ViewStyle | ViewStyle[]
+  thumbOffStyle?: StyleProp<ViewStyle>
 }

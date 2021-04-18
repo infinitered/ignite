@@ -1,4 +1,4 @@
-import { ViewStyle, TextStyle } from "react-native"
+import { StyleProp, TextStyle, ViewStyle } from "react-native"
 import { IconTypes } from "../icon/icons"
 import { TxKeyPath } from "../../i18n"
 
@@ -36,10 +36,10 @@ export interface HeaderProps {
   /**
    * Container style overrides.
    */
-  style?: ViewStyle
+  style?: StyleProp<ViewStyle>
 
   /**
    * Title style overrides.
    */
-  titleStyle?: TextStyle
+  titleStyle?: StyleProp<TextStyle>
 }

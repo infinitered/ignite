@@ -38,7 +38,7 @@ export function Header(props: HeaderProps) {
   const header = headerText || (headerTx && translate(headerTx)) || ""
 
   return (
-    <View style={{ ...ROOT, ...style }}>
+    <View style={[ROOT, style]}>
       {leftIcon ? (
         <Button preset="link" onPress={onLeftPress}>
           <Icon icon={leftIcon} />
@@ -47,7 +47,7 @@ export function Header(props: HeaderProps) {
         <View style={LEFT} />
       )}
       <View style={TITLE_MIDDLE}>
-        <Text style={{ ...TITLE, ...titleStyle }} text={header} />
+        <Text style={[TITLE, titleStyle]} text={header} />
       </View>
       {rightIcon ? (
         <Button preset="link" onPress={onRightPress}>

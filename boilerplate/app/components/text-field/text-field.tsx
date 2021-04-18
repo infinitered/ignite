@@ -1,9 +1,9 @@
 import React from "react"
-import { TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
+import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate, TxKeyPath } from "../../i18n"
 import { Text } from "../text/text"
-import { mergeAll, flatten } from "ramda"
+import { flatten } from "ramda"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
@@ -48,12 +48,12 @@ export interface TextFieldProps extends TextInputProps {
   /**
    * Optional container style overrides useful for margins & padding.
    */
-  style?: ViewStyle | ViewStyle[]
+  style?: StyleProp<ViewStyle>
 
   /**
    * Optional style overrides for the input.
    */
-  inputStyle?: TextStyle | TextStyle[]
+  inputStyle?: StyleProp<TextStyle>
 
   /**
    * Various look & feels.
@@ -61,10 +61,6 @@ export interface TextFieldProps extends TextInputProps {
   preset?: keyof typeof PRESETS
 
   forwardedRef?: any
-}
-
-const enhance = (style, styleOverride) => {
-  return mergeAll(flatten([style, styleOverride]))
 }
 
 /**
@@ -82,22 +78,20 @@ export function TextField(props: TextFieldProps) {
     forwardedRef,
     ...rest
   } = props
-  let containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset] }
-  containerStyle = enhance(containerStyle, styleOverride)
 
-  let inputStyle: TextStyle = INPUT
-  inputStyle = enhance(inputStyle, inputStyleOverride)
+  const containerStyles = flatten([CONTAINER, PRESETS[preset], styleOverride])
+  const inputStyles = flatten([INPUT, inputStyleOverride])
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyles}>
       <Text preset="fieldLabel" tx={labelTx} text={label} />
       <TextInput
         placeholder={actualPlaceholder}
         placeholderTextColor={color.palette.lighterGrey}
         underlineColorAndroid={color.transparent}
         {...rest}
-        style={inputStyle}
+        style={inputStyles}
         ref={forwardedRef}
       />
     </View>

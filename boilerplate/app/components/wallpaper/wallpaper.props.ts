@@ -1,11 +1,11 @@
-import { ImageStyle } from "react-native"
+import { ImageStyle, StyleProp } from "react-native"
 import { WallpaperPresets } from "./wallpaper.presets"
 
 export interface WallpaperProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  style?: ImageStyle
+  style?: StyleProp<ImageStyle>
 
   /**
    * An optional background image to override the default image.
