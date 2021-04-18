@@ -26,29 +26,31 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "5.8.10",
+    "@react-navigation/native": "5.9.3",
     "@react-navigation/stack": "5.12.8",
     "@unimodules/core": "6.0.0",
     "apisauce": "2.0.0",
     "expo-localization": "9.1.0",
     "i18n-js": "3.8.0",
-    "mobx": "6.0.4",
-    "mobx-react-lite": "3.1.6",
-    "mobx-state-tree": "4.0.2",
+    "mobx": "6.1.8",
+    "mobx-react-lite": "3.2.0",
+    "mobx-state-tree": "5.0.1",
     "ramda": "0.27.1",
-    "react": "16.14.0",
-    "react-native": "^0.63.4",
-    "react-native-gesture-handler": "1.8.0",
+    "react": "17.0.1",
+    "react-native": "0.64.0",
+    "react-native-gesture-handler": "1.10.3",
     "react-native-keychain": "6.2.0",
     "react-native-safe-area-context": "3.1.8",
-    "react-native-screens": "2.13.0",
+    "react-native-screens": "2.18.1",
     "react-native-splash-screen": "3.2.0",
-    "react-native-unimodules": "0.11.0",
+    "react-native-unimodules": "0.12.0",
     "reactotron-mst": "3.1.3",
     "reactotron-react-native": "5.0.0",
     "validate.js": "0.13.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
     "@babel/plugin-proposal-decorators": "7.12.1",
     "@babel/plugin-proposal-optional-catch-binding": "7.12.1",
     "@storybook/addon-storyshots": "6.1.10",
@@ -67,6 +69,7 @@
     "bufferutil": "4.0.2",
     "canvas": "2.6.1",
     "detox": "17.14.5",
+    "fbjs-scripts": "3.0.0",
     "eslint": "7.15.0",
     "eslint-config-prettier": "7.0.0",
     "eslint-config-standard": "16.0.2",
@@ -75,7 +78,7 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-native": "3.10.0",
-    "jest": "25.5.4",
+    "jest": "^26.6.3",
     "jest-circus": "25.5.4",
     "jest-expo": "40.0.1",
     "jetifier": "1.6.6",
@@ -86,12 +89,12 @@
     "prettier": "2.2.1",
     "react-devtools-core": "4.10.1",
     "react-dom": "16.14.0",
-    "react-native-web": "0.13.18",
+    "react-native-web": "0.15.1",
     "react-powerplug": "1.0.0",
     "react-test-renderer": "17.0.1",
     "rimraf": "3.0.2",
     "solidarity": "2.3.1",
-    "typescript": "4.1.3",
+    "typescript": "4.2.3",
     "utf-8-validate": "5.0.3"
   },
   "jest": {
@@ -105,7 +108,7 @@
       "/e2e"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules)"
+      "node_modules/(?!(jest-)?react-native|@react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules)"
     ]
   },
   "prettier": {
