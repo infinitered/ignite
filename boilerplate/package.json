@@ -138,11 +138,12 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "extends": [
-      "prettier",
       "plugin:@typescript-eslint/recommended",
       "plugin:react/recommended",
       "plugin:react-native/all",
-      "standard"
+      "standard",
+      "prettier",
+      "prettier/@typescript-eslint"
     ],
     "plugins": [
       "@typescript-eslint",
