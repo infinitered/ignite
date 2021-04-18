@@ -21,7 +21,7 @@ const BASE_TEXT: TextStyle = {
  *
  * You want to customize these to whatever you need in your app.
  */
-export const viewPresets = {
+export const viewPresets: Record<string, ViewStyle> = {
   /**
    * A smaller piece of secondard information.
    */
@@ -38,7 +38,7 @@ export const viewPresets = {
   } as ViewStyle,
 }
 
-export const textPresets = {
+export const textPresets: Record<ButtonPresetNames, TextStyle> = {
   primary: { ...BASE_TEXT, fontSize: 9, color: color.palette.white } as TextStyle,
   link: {
     ...BASE_TEXT,
