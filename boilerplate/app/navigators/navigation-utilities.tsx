@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import { BackHandler } from "react-native"
-import { PartialState, NavigationState, NavigationContainerRef } from "@react-navigation/native"
+import { PartialState, NavigationState, NavigationContainerRef, NavigationAction } from "@react-navigation/native"
 
 export const RootNavigation = {
-  navigate(name: string) {
+  navigate(name: string, params?: any) {
     name // eslint-disable-line no-unused-expressions
   },
   goBack() {}, // eslint-disable-line @typescript-eslint/no-empty-function
@@ -11,6 +11,7 @@ export const RootNavigation = {
   getRootState(): NavigationState {
     return {} as any
   },
+  dispatch(action: NavigationAction) {},
 }
 
 export const setRootNavigation = (ref: React.RefObject<NavigationContainerRef>) => {
