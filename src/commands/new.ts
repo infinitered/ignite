@@ -2,7 +2,15 @@ import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled } from "../tools/react-native"
 import { packager } from "../tools/packager"
-import { p, heading, command, direction, igniteHeading } from "../tools/pretty"
+import {
+  command,
+  direction,
+  heading,
+  igniteHeading,
+  p,
+  startSpinner,
+  stopSpinner,
+} from "../tools/pretty"
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
@@ -58,7 +66,8 @@ export default {
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(cli)}`)
     p(` ────────────────────────────────────────────────\n`)
-    p(`🔥 Igniting app`)
+
+    startSpinner("Igniting app")
 
     // generate the project
     await spawnProgress(log(cliString), {
@@ -66,15 +75,35 @@ export default {
       onProgress: (out: string) => {
         out = log(out.toString())
 
+        stopSpinner("Igniting app", "🔥")
+
         if (expo) {
-          if (out.includes("Using Yarn")) p(`🪔 Summoning Expo CLI`)
-          if (out.includes("project is ready")) p(`🎫 Cleaning up Expo install`)
+          if (out.includes("Using Yarn")) {
+            startSpinner("Summoning Expo CLI")
+          }
+          if (out.includes("project is ready")) {
+            stopSpinner("Summoning Expo CLI", "🪔")
+            startSpinner("Cleaning up Expo install")
+          }
         } else {
-          if (out.includes("Welcome to React Native!")) p(`🖨  3D-printing a new React Native app`)
-          if (out.includes("Run instructions for")) p(`🧊 Cooling print nozzles`)
+          if (out.includes("Welcome to React Native!")) {
+            startSpinner(" 3D-printing a new React Native app")
+          }
+          if (out.includes("Run instructions for")) {
+            stopSpinner(" 3D-printing a new React Native app", "🖨")
+            startSpinner("Cooling print nozzles")
+          }
         }
       },
     })
+
+    if (expo) {
+      stopSpinner("Summoning Expo CLI", "🪔")
+      stopSpinner("Cleaning up Expo install", "🎫")
+    } else {
+      stopSpinner(" 3D-printing a new React Native app", "🖨")
+      stopSpinner("Cooling print nozzles", "🧊")
+    }
 
     // note the original directory
     const cwd = log(process.cwd())
@@ -140,8 +169,9 @@ export default {
       filesystem.remove("./app/utils/storage/async-storage.ts")
       filesystem.rename("./app/utils/storage/async-storage.expo.ts", "async-storage.ts")
 
-      p(`🧶 Unboxing NPM dependencies`)
+      startSpinner("Unboxing NPM dependencies")
       await packager.install({ onProgress: log })
+      stopSpinner("Unboxing NPM dependencies", "🧶")
 
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
@@ -153,8 +183,9 @@ export default {
       filesystem.remove("./app/utils/storage/async-storage.expo.ts")
 
       // install pods
-      p(`☕️ Baking CocoaPods`)
+      startSpinner("Baking CocoaPods")
       await spawnProgress("npx pod-install", {})
+      stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // remove the expo-only package.json
@@ -166,7 +197,7 @@ export default {
 
     // commit any changes
     if (parameters.options.git !== false) {
-      p(`🗄  Backing everything up in source control`)
+      startSpinner(" Backing everything up in source control")
       await system.run(
         log(`
           \\rm -rf ./.git
@@ -175,6 +206,7 @@ export default {
           git commit -m "New Ignite ${meta.version()} app";
         `),
       )
+      stopSpinner(" Backing everything up in source control", "🗄")
     }
 
     // back to the original directory
