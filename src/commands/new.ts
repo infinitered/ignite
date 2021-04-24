@@ -12,6 +12,8 @@ import {
   stopSpinner,
 } from "../tools/pretty"
 
+const isWindows = process.platform === "win32"
+
 export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
@@ -53,9 +55,9 @@ export default {
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
-      : `npx react-native init ${projectName} --template file://${ignitePath}${
-          debug ? " --verbose" : ""
-        }`
+      : `npx react-native init ${projectName} --template ${!isWindows ? "file://" : ""}${ignitePath}${
+        debug ? " --verbose" : ""
+      }`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
