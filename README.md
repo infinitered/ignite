@@ -51,7 +51,7 @@ Ignite will walk you through the rest. If you'd like to follow a tutorial, check
 _The true gem of Ignite._ Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
 
 ```
-ignite generate --help
+npx ignite-cli generate --help
 ```
 
 ...will give you information on what generators are present. To learn more, check out our [Generators](https://github.com/infinitered/ignite/blob/master/docs/Generators.md) documentation.
