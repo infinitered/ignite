@@ -69,7 +69,7 @@ export const DemoListScreen = observer(function DemoListScreen() {
         />
         <FlatList
           contentContainerStyle={FLAT_LIST}
-          data={characters}
+          data={[...characters]}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <View style={LIST_CONTAINER}>
