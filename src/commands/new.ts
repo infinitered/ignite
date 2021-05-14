@@ -18,7 +18,7 @@ export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
-    const { path } = filesystem
+    const { exists, path, remove } = filesystem
     const { info, colors } = print
     const { gray, red, magenta, cyan, yellow } = colors
 
@@ -29,6 +29,19 @@ export default {
     const { validateProjectName } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
+
+    // if they pass in --overwrite, remove existing directory otherwise throw if exists
+    if (parameters.options.overwrite) {
+      remove(projectName)
+    } else if (exists(projectName)) {
+      p()
+      p(
+        yellow(
+          `Error: There's already a folder with the name "Foo". To force overwriting that folder, run with --overwrite.`,
+        ),
+      )
+      process.exit(1)
+    }
 
     // if they pass in --boilerplate, warn them to use old Ignite
     const bname = parameters.options.b || parameters.options.boilerplate
@@ -55,9 +68,9 @@ export default {
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     const cliString = expo
       ? `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
-      : `npx react-native init ${projectName} --template ${!isWindows ? "file://" : ""}${ignitePath}${
-        debug ? " --verbose" : ""
-      }`
+      : `npx react-native init ${projectName} --template ${
+          !isWindows ? "file://" : ""
+        }${ignitePath}${debug ? " --verbose" : ""}`
 
     log({ expo, cli, ignitePath, boilerplatePath, cliString })
 
