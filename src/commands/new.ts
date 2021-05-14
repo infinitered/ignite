@@ -18,7 +18,7 @@ export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
-    const { exists, path } = filesystem
+    const { exists, path, remove } = filesystem
     const { info, colors } = print
     const { gray, red, magenta, cyan, yellow } = colors
 
@@ -30,7 +30,10 @@ export default {
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
 
-    if (exists(projectName)) {
+    // if they pass in --overwrite, remove existing directory otherwise throw if exists
+    if (parameters.options.overwrite) {
+      remove(projectName)
+    } else if (exists(projectName)) {
       p()
       p(
         yellow(
