@@ -1,8 +1,9 @@
 import * as React from "react"
-import { View } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { PRESETS } from "./form-row.presets"
 import { FormRowProps } from "./form-row.props"
-import { flatten } from "ramda"
+
+const { flatten } = StyleSheet
 
 /**
  * A horizontal container component used to hold a row of a form.
