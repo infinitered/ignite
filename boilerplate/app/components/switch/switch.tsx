@@ -1,8 +1,9 @@
 import React from "react"
-import { ViewStyle, Animated, Easing, TouchableWithoutFeedback } from "react-native"
+import { ViewStyle, Animated, Easing, TouchableWithoutFeedback, StyleSheet } from "react-native"
 import { color } from "../../theme"
 import { SwitchProps } from "./switch.props"
-import { flatten } from "ramda"
+
+const { flatten } = StyleSheet
 
 // dimensions
 const THUMB_SIZE = 30

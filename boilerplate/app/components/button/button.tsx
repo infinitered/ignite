@@ -1,9 +1,10 @@
 import * as React from "react"
-import { TouchableOpacity } from "react-native"
+import { TouchableOpacity, StyleSheet } from "react-native"
 import { Text } from "../text/text"
 import { viewPresets, textPresets } from "./button.presets"
 import { ButtonProps } from "./button.props"
-import { flatten } from "ramda"
+
+const { flatten } = StyleSheet
 
 /**
  * For your text displaying needs.
