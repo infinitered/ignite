@@ -1,4 +1,3 @@
-import { contains } from "ramda"
 const ValidateJS = require("validate.js")
 
 // HACK(steve): wierd typescript situation because of strange typings
@@ -9,7 +8,7 @@ const Validate: any = ValidateJS.default ? ValidateJS.default : ValidateJS
  */
 Validate.validators.excludes = function custom(value, options, key, attributes) {
   const list = attributes[options.attribute] || []
-  if (value && contains(value, list)) {
+  if (value && list.includes(value)) {
     return options.message || `${value} is in the list`
   }
 }

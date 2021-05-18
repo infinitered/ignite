@@ -23,7 +23,7 @@
     "build-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "build-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "clean": "react-native-clean-project",
-    "clean-all" : "npx react-native clean-project-auto"
+    "clean-all": "npx react-native clean-project-auto"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
@@ -37,7 +37,6 @@
     "mobx": "6.1.8",
     "mobx-react-lite": "3.2.0",
     "mobx-state-tree": "5.0.1",
-    "ramda": "0.27.1",
     "react": "17.0.1",
     "react-native": "0.64.1",
     "react-native-gesture-handler": "1.10.3",
