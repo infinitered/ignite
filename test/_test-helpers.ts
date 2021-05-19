@@ -4,7 +4,7 @@ const stripANSI = require("strip-ansi") // why...
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }
 
-jest.setTimeout(8 * 60 * 1000)
+jest.setTimeout(10 * 60 * 1000)
 
 export async function runIgnite(cmd: string): Promise<string> {
   return run(`${IGNITE} ${cmd}`)
