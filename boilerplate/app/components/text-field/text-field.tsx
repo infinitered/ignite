@@ -1,18 +1,8 @@
 import React from "react"
-import {
-  StyleProp,
-  TextInput,
-  TextInputProps,
-  TextStyle,
-  View,
-  ViewStyle,
-  StyleSheet,
-} from "react-native"
+import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate, TxKeyPath } from "../../i18n"
 import { Text } from "../text/text"
-
-const { flatten } = StyleSheet
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
@@ -88,8 +78,8 @@ export function TextField(props: TextFieldProps) {
     ...rest
   } = props
 
-  const containerStyles = flatten([CONTAINER, PRESETS[preset], styleOverride])
-  const inputStyles = flatten([INPUT, inputStyleOverride])
+  const containerStyles = [CONTAINER, PRESETS[preset], styleOverride]
+  const inputStyles = [INPUT, inputStyleOverride]
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
   return (

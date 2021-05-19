@@ -1,10 +1,8 @@
 import * as React from "react"
-import { TextStyle, TouchableOpacity, View, ViewStyle, StyleSheet } from "react-native"
+import { TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Text } from "../text/text"
 import { color, spacing } from "../../theme"
 import { CheckboxProps } from "./checkbox.props"
-
-const { flatten } = StyleSheet
 
 const ROOT: ViewStyle = {
   flexDirection: "row",
@@ -35,9 +33,9 @@ const LABEL: TextStyle = { paddingLeft: spacing[2] }
 export function Checkbox(props: CheckboxProps) {
   const numberOfLines = props.multiline ? 0 : 1
 
-  const rootStyle = flatten([ROOT, props.style])
-  const outlineStyle = flatten([OUTLINE, props.outlineStyle])
-  const fillStyle = flatten([FILL, props.fillStyle])
+  const rootStyle = [ROOT, props.style]
+  const outlineStyle = [OUTLINE, props.outlineStyle]
+  const fillStyle = [FILL, props.fillStyle]
 
   const onPress = props.onToggle ? () => props.onToggle && props.onToggle(!props.value) : null
 
