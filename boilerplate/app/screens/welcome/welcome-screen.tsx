@@ -61,7 +61,7 @@ const CONTENT: TextStyle = {
 const CONTINUE: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
-  backgroundColor: "#5D2555",
+  backgroundColor: color.palette.deepPurple,
 }
 const CONTINUE_TEXT: TextStyle = {
   ...TEXT,
