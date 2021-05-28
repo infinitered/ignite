@@ -12,7 +12,7 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "target": "esnext",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "resolveJsonModule": true
   },

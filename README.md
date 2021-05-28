@@ -25,7 +25,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 - apisauce (to talk to REST servers)
 - Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
-- Supports Expo out of the box
+- Supports Expo (and Expo web) out of the box
 - And more!
 
 ## Quick Start

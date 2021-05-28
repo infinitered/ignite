@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "target": "es5",
-    "lib": ["es2015", "es2016", "es2016.array.include", "scripthost"],
+    "lib": ["es2015", "es2016", "es2016.array.include", "scripthost", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,

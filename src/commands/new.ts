@@ -56,7 +56,7 @@ export default {
     // debug?
     const debug = Boolean(parameters.options.debug)
     const log = (m) => {
-      if (debug) info(m)
+      debug && info(` ${m}`)
       return m
     }
 
@@ -84,6 +84,7 @@ export default {
 
     startSpinner("Igniting app")
 
+    const summoningExpo = "Summoning Expo CLI"
     // generate the project
     await spawnProgress(log(cliString), {
       env: cliEnv,
@@ -94,10 +95,10 @@ export default {
 
         if (expo) {
           if (out.includes("Using Yarn")) {
-            startSpinner("Summoning Expo CLI")
+            startSpinner(summoningExpo)
           }
           if (out.includes("project is ready")) {
-            stopSpinner("Summoning Expo CLI", "🪔")
+            stopSpinner(summoningExpo, "🪔")
             startSpinner("Cleaning up Expo install")
           }
         } else {
@@ -113,7 +114,7 @@ export default {
     })
 
     if (expo) {
-      stopSpinner("Summoning Expo CLI", "🪔")
+      stopSpinner(summoningExpo, "🪔")
       stopSpinner("Cleaning up Expo install", "🎫")
     } else {
       stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -154,13 +155,14 @@ export default {
       .replace(/hello-world/g, projectNameKebab)
     let packageJson = JSON.parse(packageJsonRaw)
 
+    const merge = require("deepmerge-json")
+
     if (expo) {
-      const merge = require("deepmerge-json")
-      const expoJson = filesystem.read("package.expo.json", "json")
+      const expoJson = filesystem.read("./package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
     }
 
-    filesystem.write("package.json", packageJson)
+    filesystem.write("./package.json", packageJson)
 
     // More Expo-specific changes
     if (expo) {
@@ -169,9 +171,13 @@ export default {
       filesystem.remove("./android")
 
       // rename the index.js to App.js, which expo expects;
-      // update the reference to it in tsconfig, too
-      filesystem.rename("./index.js", "App.js")
-      await toolbox.patching.update("tsconfig.json", (config) => {
+      filesystem.rename("./index.expo.js", "App.js")
+      filesystem.remove("./index.js")
+
+      // rename the babel.config.expo.js
+      filesystem.rename("./babel.config.expo.js", "babel.config.js")
+
+      await toolbox.patching.update("./tsconfig.json", (config) => {
         config.include[0] = "App.js"
         return config
       })
@@ -179,10 +185,6 @@ export default {
       // use Detox Expo reload file
       filesystem.remove("./e2e/reload.js")
       filesystem.rename("./e2e/reload.expo.js", "reload.js")
-
-      // use Expo AsyncStorage file
-      filesystem.remove("./app/utils/storage/async-storage.ts")
-      filesystem.rename("./app/utils/storage/async-storage.expo.ts", "async-storage.ts")
 
       startSpinner("Unboxing NPM dependencies")
       await packager.install({ onProgress: log })
@@ -195,7 +197,9 @@ export default {
       // remove the Expo-specific files -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
       filesystem.remove("./e2e/reload.expo.js")
-      filesystem.remove("./app/utils/storage/async-storage.expo.ts")
+      filesystem.remove("./webpack.config.js")
+      filesystem.remove("./index.expo.js")
+      filesystem.remove("./babel.config.expo.js")
 
       // install pods
       startSpinner("Baking CocoaPods")

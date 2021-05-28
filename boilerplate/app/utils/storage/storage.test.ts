@@ -1,18 +1,5 @@
-import { AsyncStorage } from "./async-storage"
-
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { load, loadString, save, saveString, clear, remove } from "./storage"
-
-// expo
-jest.mock("react-native", () => ({
-  AsyncStorage: {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-    multiSet: jest.fn(),
-    multiRemove: jest.fn(),
-    clear: jest.fn(),
-  },
-}))
 
 // fixtures
 const VALUE_OBJECT = { x: 1 }

@@ -137,8 +137,8 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "/node_modules",
-      "/boilerplate"
+      "/node_modules/",
+      "/boilerplate/"
     ],
     "testEnvironment": "node",
     "transform": {

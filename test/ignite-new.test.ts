@@ -18,50 +18,58 @@ afterEach(() => {
   filesystem.remove(tempDir) // clean up our mess
 })
 
-test(`ignite new (no name)`, async (done) => {
-  const result = await runError(`new`)
-  expect((result as any).stdout).toContain(`Project name is required`)
-  done()
+describe("Checking for ignite. 🪔", () => {
+  test(`ignite new (no name)`, async (done) => {
+    const result = await runError(`new`)
+    expect((result as any).stdout).toContain(`Project name is required`)
+    done()
+  })
 })
 
-test(`ignite new ${APP_NAME}`, async (done) => {
-  const result = await runIgnite(`new ${APP_NAME}`)
+describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
+  test(`ignite new ${APP_NAME}`, async (done) => {
+    const result = await runIgnite(`new ${APP_NAME}`)
 
-  expect(result).toContain(`Using react-native-cli`)
-  expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
+    expect(result).toContain(`Using react-native-cli`)
+    expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
 
-  // now let's examine the spun-up app
-  process.chdir(APP_NAME)
+    // now let's examine the spun-up app
+    process.chdir(APP_NAME)
 
-  const dirs = filesystem.list(`.`)
-  expect(dirs).toContain("ios")
-  expect(dirs).toContain("android")
-  expect(dirs).toContain("app")
+    const dirs = filesystem.list(`.`)
+    expect(dirs).toContain("ios")
+    expect(dirs).toContain("android")
+    expect(dirs).toContain("app")
 
-  await testSpunUpApp()
+    await testSpunUpApp()
 
-  // we're done!
-  process.chdir("..")
-  done()
+    // we're done!
+    process.chdir("..")
+    done()
+  })
 })
 
-test(`ignite new ${EXPO_APP_NAME} --expo`, async (done) => {
-  const result = await runIgnite(`new ${EXPO_APP_NAME} --expo`)
+describe("Igniting new expo app! 🔥\nRemember how long that last one took? We're gonna do it again.", () => {
+  test(`ignite new ${EXPO_APP_NAME} --expo`, async (done) => {
+    const result = await runIgnite(`new ${EXPO_APP_NAME} --expo`)
 
-  expect(result).toContain(`Using expo-cli`)
-  expect(result).toContain(`Ignite CLI ignited ${EXPO_APP_NAME}`)
+    expect(result).toContain(`Using expo-cli`)
+    expect(result).toContain(`Ignite CLI ignited ${EXPO_APP_NAME}`)
 
-  // now let's examine the spun-up app
-  process.chdir(EXPO_APP_NAME)
+    // now let's examine the spun-up app
+    process.chdir(EXPO_APP_NAME)
 
-  const dirs = filesystem.list(`.`)
-  expect(dirs).toContain("app")
+    const dirs = filesystem.list(`.`)
+    expect(dirs).not.toContain("ios")
+    expect(dirs).not.toContain("android")
+    expect(dirs).toContain("app")
 
-  await testSpunUpApp()
+    await testSpunUpApp()
 
-  // we're done!
-  process.chdir("..")
-  done()
+    // we're done!
+    process.chdir("..")
+    done()
+  })
 })
 
 async function testSpunUpApp() {
@@ -71,7 +79,7 @@ async function testSpunUpApp() {
     resultTS = await run(`yarn compile`)
   } catch (e) {
     resultTS = e.stdout
-    console.error(resultTS)
+    console.error(resultTS) // This will only show if you run in --verbose mode.
   }
   expect(resultTS).not.toContain("error")
 
