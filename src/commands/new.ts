@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
-import { isAndroidInstalled } from "../tools/react-native"
+import { buildCLIString, isAndroidInstalled } from "../tools/react-native"
 import { packager } from "../tools/packager"
 import {
   command,
@@ -11,8 +11,6 @@ import {
   startSpinner,
   stopSpinner,
 } from "../tools/pretty"
-
-const isWindows = process.platform === "win32"
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
@@ -60,19 +58,14 @@ export default {
       return m
     }
 
-    // expo or no?
     const expo = Boolean(parameters.options.expo)
-    const cli = expo ? "expo-cli" : "react-native-cli"
-    const ignitePath = path(`${meta.src}`, "..")
-    const boilerplatePath = path(ignitePath, "boilerplate")
-    const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
-    const cliString = expo
-      ? `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
-      : `npx react-native init ${projectName} --template ${
-          !isWindows ? "file://" : ""
-        }${ignitePath}${debug ? " --verbose" : ""}`
 
-    log({ expo, cli, ignitePath, boilerplatePath, cliString })
+    const { cliString, cliEnv, cli, boilerplatePath } = buildCLIString(
+      projectName,
+      meta.src,
+      parameters.options,
+    )
+    log({ cliString, cliEnv, expo, cli, boilerplatePath })
 
     // welcome everybody!
     p("\n")
@@ -244,9 +237,9 @@ export default {
       command(`  ${npmOrYarnRun} start`)
     } else {
       if (process.platform === "darwin") {
-        command(`  npx react-native run-ios`)
+        command(`  ${cli} run-ios`)
       }
-      command(`  npx react-native run-android`)
+      command(`  ${cli} run-android`)
       if (isAndroidInstalled(toolbox)) {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
