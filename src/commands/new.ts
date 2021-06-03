@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
-import { isAndroidInstalled } from "../tools/react-native"
+import { isAndroidInstalled, copyBoilerplate } from "../tools/react-native"
 import { packager } from "../tools/packager"
 import {
   command,
@@ -10,9 +10,8 @@ import {
   p,
   startSpinner,
   stopSpinner,
+  clearSpinners,
 } from "../tools/pretty"
-
-const isWindows = process.platform === "win32"
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
@@ -62,63 +61,68 @@ export default {
 
     // expo or no?
     const expo = Boolean(parameters.options.expo)
-    const cli = expo ? "expo-cli" : "react-native-cli"
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
-    const cliString = expo
-      ? `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
-      : `npx react-native init ${projectName} --template ${
-          !isWindows ? "file://" : ""
-        }${ignitePath}${debug ? " --verbose" : ""}`
-
-    log({ expo, cli, ignitePath, boilerplatePath, cliString })
+    log({ expo, ignitePath, boilerplatePath })
 
     // welcome everybody!
     p("\n")
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan(cli)}`)
+    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")}`)
     p(` ────────────────────────────────────────────────\n`)
 
-    startSpinner("Igniting app")
-
-    const summoningExpo = "Summoning Expo CLI"
-    // generate the project
-    await spawnProgress(log(cliString), {
-      env: cliEnv,
-      onProgress: (out: string) => {
-        out = log(out.toString())
-
-        stopSpinner("Igniting app", "🔥")
-
-        if (expo) {
-          if (out.includes("Using Yarn")) {
-            startSpinner(summoningExpo)
-          }
-          if (out.includes("project is ready")) {
-            stopSpinner(summoningExpo, "🪔")
-            startSpinner("Cleaning up Expo install")
-          }
-        } else {
-          if (out.includes("Welcome to React Native!")) {
-            startSpinner(" 3D-printing a new React Native app")
-          }
-          if (out.includes("Run instructions for")) {
-            stopSpinner(" 3D-printing a new React Native app", "🖨")
-            startSpinner("Cooling print nozzles")
-          }
-        }
-      },
-    })
-
     if (expo) {
-      stopSpinner(summoningExpo, "🪔")
+      const expoCLIString = `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
+      log({ expoCLIString })
+
+      // generate the project
+      startSpinner("Igniting app")
+      await spawnProgress(log(expoCLIString), {
+        env: cliEnv,
+        onProgress: (out: string) => {
+          stopSpinner("Igniting app", "🔥")
+
+          out = log(out.toString())
+
+          if (expo) {
+            if (out.includes("Using Yarn")) {
+              startSpinner("Summoning Expo CLI")
+            }
+            if (out.includes("project is ready")) {
+              stopSpinner("Summoning Expo CLI", "🪔")
+              startSpinner("Cleaning up Expo install")
+            }
+          } else {
+            if (out.includes("Welcome to React Native!")) {
+              startSpinner(" 3D-printing a new React Native app")
+            }
+            if (out.includes("Run instructions for")) {
+              stopSpinner(" 3D-printing a new React Native app", "🖨")
+              startSpinner("Cooling print nozzles")
+            }
+          }
+        },
+      })
+
+      stopSpinner("Summoning Expo CLI", "🪔")
       stopSpinner("Cleaning up Expo install", "🎫")
     } else {
+      // remove pods and node_modules, if they exist, because those will be rebuilt anyway
+      startSpinner("Igniting app")
+      remove(path(boilerplatePath, "ios", "Pods"))
+      remove(path(boilerplatePath, "node_modules"))
+      stopSpinner("Igniting app", "🔥")
+
+      startSpinner(" 3D-printing a new React Native app")
+      await copyBoilerplate(toolbox, {
+        boilerplatePath,
+        projectName,
+        excluded: ["node_modules", "yarn.lock", /.?\.expo\..?/],
+      })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
-      stopSpinner("Cooling print nozzles", "🧊")
     }
 
     // note the original directory
@@ -201,14 +205,24 @@ export default {
       filesystem.remove("./index.expo.js")
       filesystem.remove("./babel.config.expo.js")
 
+      // yarn it
+      startSpinner("Unboxing NPM dependencies")
+      await packager.install({ onProgress: log })
+      stopSpinner("Unboxing NPM dependencies", "🧶")
+
       // install pods
       startSpinner("Baking CocoaPods")
-      await spawnProgress("npx pod-install", {})
+      await spawnProgress("npx pod-install", { onProgress: log })
       stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // remove the expo-only package.json
     filesystem.remove("package.expo.json")
+
+    // rename the app using `react-native-rename`
+    startSpinner(" Writing your app name in the sand")
+    await spawnProgress(`npx react-native-rename ${projectName}`, { onProgress: log })
+    stopSpinner(" Writing your app name in the sand", "🏝")
 
     // Make sure all our modifications are formatted nicely
     const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"
@@ -230,6 +244,9 @@ export default {
 
     // back to the original directory
     process.chdir(log(cwd))
+
+    // clean up any spinners we forgot to clear
+    clearSpinners()
 
     // we're done! round performance stats to .xx digits
     const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100

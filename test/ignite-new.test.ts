@@ -30,7 +30,7 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
   test(`ignite new ${APP_NAME}`, async (done) => {
     const result = await runIgnite(`new ${APP_NAME}`)
 
-    expect(result).toContain(`Using react-native-cli`)
+    expect(result).toContain(`Using ignite-cli`)
     expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
 
     // now let's examine the spun-up app
