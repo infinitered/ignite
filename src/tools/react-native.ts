@@ -1,4 +1,4 @@
-import { GluegunParameters, GluegunToolbox, filesystem } from "gluegun"
+import { GluegunToolbox, filesystem } from "gluegun"
 
 // export const isWindows = process.platform === "win32"
 
