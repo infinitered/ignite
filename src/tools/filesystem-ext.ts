@@ -8,11 +8,7 @@ import * as pathlib from "path"
  *
  * Right about right here: https://github.com/infinitered/gluegun/blob/master/src/toolbox/filesystem-tools.ts#L52
  */
-export function children(
-  path: string,
-  isRelative: boolean = false,
-  matching: string = "*",
-): string[] {
+export function children(path: string, isRelative = false, matching = "*"): string[] {
   const dirs = filesystem.cwd(path).find({
     matching,
     directories: true,
