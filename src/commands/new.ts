@@ -51,6 +51,11 @@ export default {
       process.exit(1)
     }
 
+    // are we on Windows?
+    if (parameters.options.windows === undefined) {
+      parameters.options.windows = process.platform === "win32"
+    }
+
     // debug?
     const debug = Boolean(parameters.options.debug)
     const log = (m) => {
@@ -62,7 +67,7 @@ export default {
 
     const { cliString, cliEnv, cli, boilerplatePath } = buildCLIString(
       projectName,
-      meta.src,
+      path(`${meta.src}`, ".."),
       parameters.options,
     )
     log({ cliString, cliEnv, expo, cli, boilerplatePath })

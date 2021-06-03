@@ -1,7 +1,5 @@
 import { GluegunToolbox, filesystem } from "gluegun"
 
-// export const isWindows = process.platform === "win32"
-
 export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
   const androidHome = process.env.ANDROID_HOME
   const hasAndroidEnv = !toolbox.strings.isBlank(androidHome)
@@ -13,16 +11,16 @@ export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
 type Params = {
   debug?: boolean
   expo?: boolean
+  windows?: boolean
 }
 type CLIEnv = NodeJS.ProcessEnv & { EXPO_DEBUG?: number }
 type CLIStrings = {
   cliString: string
   cliEnv: CLIEnv
   debug: boolean
-  cli: "@react-native-community/cli" | "expo-cli"
+  cli: "react-native" | "expo-cli"
   boilerplatePath: string
 }
-type CLISrc = string | void
 
 /**
  *
@@ -31,13 +29,12 @@ type CLISrc = string | void
  * @param parameters The parameters passed in
  * @returns
  */
-export const buildCLIString = (name: string, src: CLISrc, options: Params): CLIStrings => {
+export const buildCLIString = (name: string, ignitePath: string, options: Params): CLIStrings => {
   const { path } = filesystem
 
   const debug = Boolean(options.debug)
   const expo = Boolean(options.expo)
-  const cli = expo ? "expo-cli" : "@react-native-community/cli"
-  const ignitePath = path(`${src}`, "..")
+  const cli = expo ? "expo-cli" : "react-native"
   const boilerplatePath = path(ignitePath, "boilerplate")
   const cliTemplatePath = expo ? boilerplatePath : ignitePath
   const boilerplateExtraFlags = []
