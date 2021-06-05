@@ -33,12 +33,9 @@ export default {
     if (parameters.options.overwrite) {
       remove(projectName)
     } else if (exists(projectName)) {
+      const alreadyExists = `Error: There's already a folder with the name "${projectName}". To force overwriting that folder, run with --overwrite.`
       p()
-      p(
-        yellow(
-          `Error: There's already a folder with the name "Foo". To force overwriting that folder, run with --overwrite.`,
-        ),
-      )
+      p(yellow(alreadyExists))
       process.exit(1)
     }
 
