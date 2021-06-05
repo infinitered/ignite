@@ -38,7 +38,7 @@
     "mobx-react-lite": "3.2.0",
     "mobx-state-tree": "5.0.1",
     "react": "17.0.1",
-    "react-native": "0.64.1",
+    "react-native": "0.64.2",
     "react-native-gesture-handler": "1.10.3",
     "react-native-keychain": "6.2.0",
     "react-native-safe-area-context": "3.1.8",
