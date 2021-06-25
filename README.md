@@ -2,7 +2,7 @@
 
 # Ignite - the hottest React Native boilerplate
 
-<a href="https://badge.fury.io/js/ignite" target="_blank"><img src="https://badge.fury.io/js/ignite.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 
 ## Battle-tested React Native boilerplate
 
