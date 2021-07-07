@@ -1,8 +1,8 @@
 /**
- * The root navigator is used to switch between major navigation flows of your app.
+ * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
+ * navigation flows of your app.
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
- * and a "main" flow (which is contained in your MainNavigator) which the user
- * will use once logged in.
+ * and a "main" flow which the user will use once logged in.
  */
 import React from "react"
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
@@ -17,21 +17,20 @@ import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
  * recommend using your MobX-State-Tree store(s) to keep application state
  * rather than passing state through navigation params.
  *
-
  * For more information, see this documentation:
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
-export type RootParamList = {
+export type NavigatorParamList = {
   welcome: undefined
   demo: undefined
   demoList: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createStackNavigator<RootParamList>()
+const Stack = createStackNavigator<NavigatorParamList>()
 
-const RootStack = () => {
+const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -46,18 +45,18 @@ const RootStack = () => {
   )
 }
 
-export const RootNavigator = React.forwardRef<
+export const AppNavigator = React.forwardRef<
   NavigationContainerRef,
   Partial<React.ComponentProps<typeof NavigationContainer>>
 >((props, ref) => {
   return (
     <NavigationContainer {...props} ref={ref}>
-      <RootStack />
+      <AppStack />
     </NavigationContainer>
   )
 })
 
-RootNavigator.displayName = "RootNavigator"
+AppNavigator.displayName = "AppNavigator"
 
 /**
  * A list of routes from which we're allowed to leave the app when
