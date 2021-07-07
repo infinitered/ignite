@@ -8,7 +8,7 @@ export interface StoryScreenProps {
 }
 
 const behavior = Platform.OS === "ios" ? "padding" : undefined
-export const StoryScreen = (props) => (
+export const StoryScreen = (props: StoryScreenProps) => (
   <KeyboardAvoidingView style={ROOT} behavior={behavior} keyboardVerticalOffset={50}>
     {props.children}
   </KeyboardAvoidingView>
