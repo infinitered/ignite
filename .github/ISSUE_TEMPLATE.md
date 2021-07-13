@@ -8,4 +8,4 @@ Steps to reproduce
 
 ---
 
-`ignite doctor` results:
+`npx ignite-cli doctor` results:
