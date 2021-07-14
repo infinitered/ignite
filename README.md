@@ -2,7 +2,7 @@
 
 # Ignite - the hottest React Native boilerplate
 
-<a href="https://badge.fury.io/js/ignite" target="_blank"><img src="https://badge.fury.io/js/ignite.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
 
 ## Battle-tested React Native boilerplate
 
@@ -25,7 +25,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 - apisauce (to talk to REST servers)
 - Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
-- Supports Expo out of the box
+- Supports Expo (and Expo web) out of the box
 - And more!
 
 ## Quick Start

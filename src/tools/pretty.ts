@@ -25,6 +25,13 @@ export const stopSpinner = (m: string, symbol: string) => {
   }
 }
 
+export const clearSpinners = () => {
+  Object.keys(spinners).forEach((m) => {
+    spinners[m].stop()
+    delete spinners[m]
+  })
+}
+
 export const heading = (m = "") => p(white(bold(m)))
 
 export const link = (m = "") => underline(white(m))

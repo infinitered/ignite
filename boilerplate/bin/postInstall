@@ -10,6 +10,9 @@ const os = require("os")
  * have to remember these extra steps.
  */
 ;[
+  // Patch all the necessary modules.
+  { command: "npx patch-package" },
+
   // Make sure we're set up correctly
   { command: "solidarity" },
 
@@ -24,7 +27,7 @@ const os = require("os")
   { command: "pod install", cwd: "ios", onlyPlatforms: ["darwin"] },
 ]
   .filter(({ onlyPlatforms }) => !onlyPlatforms || onlyPlatforms.includes(os.platform()))
-  .forEach(commandAndOptions => {
+  .forEach((commandAndOptions) => {
     const { command, onlyPlatform: _, ...options } = commandAndOptions
     try {
       childProcess.execSync(command, {

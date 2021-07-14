@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
-import { Image, FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
+import { FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Header, Screen, Text, Wallpaper } from "../../components"
+import { Header, Screen, Text, Wallpaper, AutoImage as Image } from "../../components"
 import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
 
@@ -69,7 +69,7 @@ export const DemoListScreen = observer(function DemoListScreen() {
         />
         <FlatList
           contentContainerStyle={FLAT_LIST}
-          data={characters}
+          data={[...characters]}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <View style={LIST_CONTAINER}>

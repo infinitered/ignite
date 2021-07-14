@@ -1,8 +1,16 @@
 import React from "react"
-import { Image, ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
+import { ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { BulletItem, Button, Header, Text, Screen, Wallpaper } from "../../components"
+import {
+  BulletItem,
+  Button,
+  Header,
+  Text,
+  Screen,
+  Wallpaper,
+  AutoImage as Image,
+} from "../../components"
 import { color, spacing } from "../../theme"
 import { Api } from "../../services/api"
 import { save } from "../../utils/storage"
@@ -17,7 +25,7 @@ const CONTAINER: ViewStyle = {
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
-  backgroundColor: "#5D2555",
+  backgroundColor: color.palette.deepPurple,
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const DEMO_TEXT: TextStyle = {
@@ -53,6 +61,8 @@ const TAGLINE: TextStyle = {
 const IGNITE: ImageStyle = {
   marginVertical: spacing[6],
   alignSelf: "center",
+  width: 180,
+  height: 100,
 }
 const LOVE_WRAPPER: ViewStyle = {
   flexDirection: "row",

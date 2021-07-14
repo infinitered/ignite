@@ -33,6 +33,7 @@ export function MainNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
+        cardStyle: { backgroundColor: "transparent" },
         headerShown: false,
       }}
     >

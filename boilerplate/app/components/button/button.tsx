@@ -3,7 +3,6 @@ import { TouchableOpacity } from "react-native"
 import { Text } from "../text/text"
 import { viewPresets, textPresets } from "./button.presets"
 import { ButtonProps } from "./button.props"
-import { flatten } from "ramda"
 
 /**
  * For your text displaying needs.
@@ -23,9 +22,9 @@ export function Button(props: ButtonProps) {
   } = props
 
   const viewStyle = viewPresets[preset] || viewPresets.primary
-  const viewStyles = flatten([viewStyle, styleOverride])
+  const viewStyles = [viewStyle, styleOverride]
   const textStyle = textPresets[preset] || textPresets.primary
-  const textStyles = flatten([textStyle, textStyleOverride])
+  const textStyles = [textStyle, textStyleOverride]
 
   const content = children || <Text tx={tx} text={text} style={textStyles} />
 

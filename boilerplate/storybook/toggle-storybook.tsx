@@ -17,7 +17,7 @@ export function ToggleStorybook(props) {
   const [StorybookUIRoot, setStorybookUIRoot] = useState(null)
 
   useEffect(() => {
-    if (__DEV__) {
+    if (__DEV__ && DevSettings) {
       // Load the setting from storage if it's there
       loadString("devStorybook").then((storedSetting) => {
         // Set the initial value
