@@ -1,7 +1,19 @@
-import { StackNavigator } from "react-navigation"
-import {
-  SomeScreen
-} from "../screens"
+---
+destinationDir: app/navigators
+patch:
+  path: "app/navigators/index.ts"
+  append: "export * from \"./<%= props.kebabCaseName %>-navigator\"\n"
+  skip: <%= props.skipIndexFile %>
+---
+import { createStackNavigator } from "@react-navigation/stack"
+import React from "react"
+// import { MyScreen } from "../screens"
 
-export const <%= props.pascalCaseName %> = StackNavigator({
-})
+const Stack = createStackNavigator()
+
+export const <%= props.pascalCaseName %> = () => (
+  <Stack.Navigator>
+    {/* Add your screens here */}
+    {/* <Stack.Screen name="MyScreen" component={MyScreen} /> */}
+  </Stack.Navigator>
+)
