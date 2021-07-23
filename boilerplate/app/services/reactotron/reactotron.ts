@@ -5,7 +5,7 @@ import { onSnapshot } from "mobx-state-tree"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"
 import { clear } from "../../utils/storage"
-import { RootNavigation } from "../../navigators"
+import { RootNavigation } from "../../navigators/navigation-utilities"
 import { Platform } from "react-native"
 
 // Teach TypeScript about the bad things we want to do.
