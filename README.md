@@ -33,7 +33,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 Prerequisites:
 
 - For [Expo-powered React Native apps](https://expo.io/), no prerequisites are necessary ([why choose Expo?](https://medium.com/@adhithiravi/building-react-native-apps-expo-or-not-d49770d1f5b8))
-- For vanilla React Native, make sure you're set up for React Native [by following our free Infinite Red Academy course](https://academy.infinite.red/p/installing-react-native-tutorial-on-macos) first
+- For vanilla React Native, make sure you're set up for React Native by following our free Infinite Red Academy course [for macOS]](https://academy.infinite.red/p/installing-react-native-tutorial-on-macos) or [for Windows 10](https://academy.infinite.red/p/installing-react-native-tutorial-on-windows-10) first
 
 Run the CLI:
 
@@ -44,11 +44,13 @@ npx ignite-cli new PizzaApp
 npx ignite-cli new PizzaApp --expo
 ```
 
-Ignite will walk you through the rest. If you'd like to follow a tutorial, check out [this one from Robin Heinze](https://shift.infinite.red/creating-a-trivia-app-with-ignite-bowser-part-1-1987cc6e93a1).
+Ignite will walk you through the rest.
+
+If you'd like to follow a tutorial, check out [this one from Robin Heinze](https://shift.infinite.red/creating-a-trivia-app-with-ignite-bowser-part-1-1987cc6e93a1).
 
 ## Generators
 
-_The true gem of Ignite._ Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
+_The hidden gem of Ignite._ Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
 
 ```
 npx ignite-cli generate --help
