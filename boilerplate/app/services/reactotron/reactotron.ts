@@ -5,7 +5,7 @@ import { onSnapshot } from "mobx-state-tree"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"
 import { clear } from "../../utils/storage"
-import { RootNavigation } from "../../navigators"
+import { AppNavigation } from "../../navigators/navigation-utilities"
 import { Platform } from "react-native"
 
 // Teach TypeScript about the bad things we want to do.
@@ -158,7 +158,7 @@ export class Reactotron {
         command: "resetNavigation",
         handler: () => {
           console.tron.log("resetting navigation state")
-          RootNavigation.resetRoot({ routes: [] })
+          AppNavigation.resetRoot({ routes: [] })
         },
       })
 
@@ -168,7 +168,7 @@ export class Reactotron {
         command: "goBack",
         handler: () => {
           console.tron.log("Going back")
-          RootNavigation.goBack()
+          AppNavigation.goBack()
         },
       })
 

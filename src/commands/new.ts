@@ -13,6 +13,13 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 
+// CLI tool versions we support
+const cliDependencyVersions: { [k: string]: string } = {
+  expo: "4",
+  podInstall: "0.1",
+  rnRename: "2",
+}
+
 export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
@@ -72,7 +79,7 @@ export default {
     p(` ────────────────────────────────────────────────\n`)
 
     if (expo) {
-      const expoCLIString = `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
+      const expoCLIString = `npx expo-cli@${cliDependencyVersions.expo} init ${projectName} --template ${boilerplatePath} --non-interactive`
       log({ expoCLIString })
 
       // generate the project
@@ -209,17 +216,23 @@ export default {
 
       // install pods
       startSpinner("Baking CocoaPods")
-      await spawnProgress("npx pod-install", { onProgress: log })
+      await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
+        onProgress: log,
+      })
       stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // remove the expo-only package.json
     filesystem.remove("package.expo.json")
 
-    // rename the app using `react-native-rename`
-    startSpinner(" Writing your app name in the sand")
-    await spawnProgress(`npx react-native-rename ${projectName}`, { onProgress: log })
-    stopSpinner(" Writing your app name in the sand", "🏝")
+    if (!expo) {
+      // rename the app using `react-native-rename`
+      startSpinner(" Writing your app name in the sand")
+      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName}`
+      log(renameCmd)
+      await spawnProgress(renameCmd, { onProgress: log })
+      stopSpinner(" Writing your app name in the sand", "🏝")
+    }
 
     // Make sure all our modifications are formatted nicely
     const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"

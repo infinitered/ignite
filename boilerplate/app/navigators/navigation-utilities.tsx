@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { BackHandler } from "react-native"
 import { PartialState, NavigationState, NavigationContainerRef } from "@react-navigation/native"
 
-export const RootNavigation = {
+export const AppNavigation = {
   navigate(name: string) {
     name // eslint-disable-line no-unused-expressions
   },
@@ -13,9 +13,9 @@ export const RootNavigation = {
   },
 }
 
-export const setRootNavigation = (ref: React.RefObject<NavigationContainerRef>) => {
-  for (const method in RootNavigation) {
-    RootNavigation[method] = (...args: any) => {
+export const setAppNavigation = (ref: React.RefObject<NavigationContainerRef>) => {
+  for (const method in AppNavigation) {
+    AppNavigation[method] = (...args: any) => {
       if (ref.current) {
         return ref.current[method](...args)
       }
