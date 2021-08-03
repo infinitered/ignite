@@ -70,7 +70,7 @@ We rely heavily on integration tests, which is why Ignite CLI's test suite is ki
 
 We also run the default tests in a generated Ignite app, which further ensures that the CLI is generating a valid Ignite app.
 
-###data
+### data
 
 This contains a JSON file that helps demonstrate an API request in the boilerplate's `DemoListScreen`. It's Rick & Morty themed, naturally.
 
