@@ -213,13 +213,6 @@ export default {
       startSpinner("Unboxing NPM dependencies")
       await packager.install({ onProgress: log })
       stopSpinner("Unboxing NPM dependencies", "🧶")
-
-      // install pods
-      startSpinner("Baking CocoaPods")
-      await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
-        onProgress: log,
-      })
-      stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // remove the expo-only package.json
@@ -232,6 +225,12 @@ export default {
       log(renameCmd)
       await spawnProgress(renameCmd, { onProgress: log })
       stopSpinner(" Writing your app name in the sand", "🏝")
+      // install pods
+      startSpinner("Baking CocoaPods")
+      await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
+        onProgress: log,
+      })
+      stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // Make sure all our modifications are formatted nicely
