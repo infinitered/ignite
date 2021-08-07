@@ -8,8 +8,8 @@ import {
   Header,
   Text,
   Screen,
-  Wallpaper,
   AutoImage as Image,
+  GradientBackground,
 } from "../../components"
 import { color, spacing } from "../../theme"
 import { Api } from "../../services/api"
@@ -138,7 +138,7 @@ export const DemoScreen = observer(function DemoScreen() {
 
   return (
     <View testID="DemoScreen" style={FULL}>
-      <Wallpaper />
+      <GradientBackground colors={["#422443", "#281b34"]} />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Header
           headerTx="demoScreen.howTo"

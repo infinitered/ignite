@@ -2,7 +2,14 @@ import React from "react"
 import { View, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Button, Header, Screen, Text, Wallpaper, AutoImage as Image } from "../../components"
+import {
+  Button,
+  Header,
+  Screen,
+  Text,
+  GradientBackground,
+  AutoImage as Image,
+} from "../../components"
 import { color, spacing, typography } from "../../theme"
 const bowserLogo = require("./bowser.png")
 
@@ -83,7 +90,7 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
-      <Wallpaper />
+      <GradientBackground colors={["#422443", "#281b34"]} />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Header headerTx="welcomeScreen.poweredBy" style={HEADER} titleStyle={HEADER_TITLE} />
         <Text style={TITLE_WRAPPER}>
