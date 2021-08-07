@@ -5,9 +5,11 @@
  * and a "main" flow which the user will use once logged in.
  */
 import React from "react"
-import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
-import { createStackNavigator } from "@react-navigation/stack"
+import { useColorScheme } from "react-native"
+import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
+import { navigationRef } from "./navigation-utilities"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -28,7 +30,7 @@ export type NavigatorParamList = {
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createStackNavigator<NavigatorParamList>()
+const Stack = createNativeStackNavigator<NavigatorParamList>()
 
 const AppStack = () => {
   return (
@@ -45,16 +47,20 @@ const AppStack = () => {
   )
 }
 
-export const AppNavigator = React.forwardRef<
-  NavigationContainerRef,
-  Partial<React.ComponentProps<typeof NavigationContainer>>
->((props, ref) => {
+interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+
+export const AppNavigator = (props: NavigationProps) => {
+  const colorScheme = useColorScheme()
   return (
-    <NavigationContainer {...props} ref={ref}>
+    <NavigationContainer
+      ref={navigationRef}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      {...props}
+    >
       <AppStack />
     </NavigationContainer>
   )
-})
+}
 
 AppNavigator.displayName = "AppNavigator"
 

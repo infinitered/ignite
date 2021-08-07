@@ -1,11 +1,12 @@
 import { Tron } from "./tron"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { ArgType } from "reactotron-core-client"
 import { RootStore } from "../../models/root-store/root-store"
 import { onSnapshot } from "mobx-state-tree"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"
 import { clear } from "../../utils/storage"
-import { AppNavigation } from "../../navigators/navigation-utilities"
+import { goBack, resetRoot, navigate } from "../../navigators/navigation-utilities"
 import { Platform } from "react-native"
 
 // Teach TypeScript about the bad things we want to do.
@@ -158,8 +159,29 @@ export class Reactotron {
         command: "resetNavigation",
         handler: () => {
           console.tron.log("resetting navigation state")
-          AppNavigation.resetRoot({ routes: [] })
+          resetRoot({ index: 0, routes: [] })
         },
+      })
+
+      Tron.onCustomCommand({
+        command: "navigateTo",
+        handler: (args) => {
+          const { route } = args
+          if (route) {
+            console.log(`Navigating to: ${route}`)
+            navigate(route)
+          } else {
+            console.log("Could not navigate. No route provided.")
+          }
+        },
+        title: "Navigate To Screen",
+        description: "Navigates to a screen by name.",
+        args: [
+          {
+            name: "route",
+            type: ArgType.String,
+          },
+        ],
       })
 
       Tron.onCustomCommand({
@@ -168,7 +190,7 @@ export class Reactotron {
         command: "goBack",
         handler: () => {
           console.tron.log("Going back")
-          AppNavigation.goBack()
+          goBack()
         },
       })
 
