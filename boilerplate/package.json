@@ -103,7 +103,7 @@
       "/e2e"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules)"
+      "node_modules/(?!(jest-)?react-native|expo-linear-gradient|@react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules)"
     ]
   },
   "prettier": {
