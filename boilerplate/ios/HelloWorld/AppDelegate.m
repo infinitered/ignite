@@ -50,6 +50,9 @@ static void InitializeFlipper(UIApplication *application) {
                                             initialProperties:nil];
 
     if (@available(iOS 13.0, *)) {
+        // Change this to whatever color you want -- it'll show as
+        // your app loads for the first time in the background.
+        // You can use the system's background color if you wish
         rootView.backgroundColor = [UIColor systemBackgroundColor];
     } else {
         rootView.backgroundColor = [UIColor whiteColor];

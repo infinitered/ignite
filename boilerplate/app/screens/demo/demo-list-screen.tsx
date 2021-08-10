@@ -1,10 +1,11 @@
-import React, { useEffect } from "react"
+import React, { useEffect, FC } from "react"
 import { FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
-import { useNavigation } from "@react-navigation/native"
+import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, AutoImage as Image, GradientBackground } from "../../components"
 import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
+import { NavigatorParamList } from "../../navigators"
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -41,46 +42,48 @@ const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-export const DemoListScreen = observer(function DemoListScreen() {
-  const navigation = useNavigation()
-  const goBack = () => navigation.goBack()
+export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">> = observer(
+  ({ navigation }) => {
+    const goBack = () => navigation.goBack()
 
-  const { characterStore } = useStores()
-  const { characters } = characterStore
+    const { characterStore } = useStores()
+    const { characters } = characterStore
 
-  useEffect(() => {
-    async function fetchData() {
-      await characterStore.getCharacters()
-    }
+    useEffect(() => {
+      async function fetchData() {
+        await characterStore.getCharacters()
+      }
 
-    fetchData()
-  }, [])
+      fetchData()
+    }, [])
 
-  return (
-    <View testID="DemoListScreen" style={FULL}>
-      <GradientBackground colors={["#422443", "#281b34"]} />
-      <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
-        <Header
-          headerTx="demoListScreen.title"
-          leftIcon="back"
-          onLeftPress={goBack}
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
-        <FlatList
-          contentContainerStyle={FLAT_LIST}
-          data={[...characters]}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <View style={LIST_CONTAINER}>
-              <Image source={{ uri: item.image }} style={IMAGE} />
-              <Text style={LIST_TEXT}>
-                {item.name} ({item.status})
-              </Text>
-            </View>
-          )}
-        />
-      </Screen>
-    </View>
-  )
-})
+    return (
+      <View testID="DemoListScreen" style={FULL}>
+        <GradientBackground colors={["#422443", "#281b34"]} />
+        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <Header
+            headerTx="demoListScreen.title"
+            leftIcon="back"
+            onLeftPress={goBack}
+            style={HEADER}
+            titleStyle={HEADER_TITLE}
+          />
+          <FlatList
+            contentContainerStyle={FLAT_LIST}
+            data={[...characters]}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <View style={LIST_CONTAINER}>
+                <Image source={{ uri: item.image }} style={IMAGE} />
+                <Text style={LIST_TEXT}>
+                  {item.name} ({item.status})
+                </Text>
+              </View>
+            )}
+          />
+        </Screen>
+      </View>
+    )
+  },
+)
+

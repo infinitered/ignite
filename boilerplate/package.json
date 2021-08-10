@@ -28,8 +28,9 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "5.9.3",
-    "@react-navigation/stack": "5.12.8",
+    "@react-navigation/native": "~6.0.1",
+    "@react-navigation/stack": "~6.0.1",
+    "@react-navigation/native-stack": "^6.0.2",
     "@unimodules/core": "6.0.0",
     "apisauce": "2.0.0",
     "expo-linear-gradient": "^9.2.0",
