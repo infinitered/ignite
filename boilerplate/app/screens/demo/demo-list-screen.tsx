@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Header, Screen, Text, Wallpaper, AutoImage as Image } from "../../components"
+import { Header, Screen, Text, AutoImage as Image, GradientBackground } from "../../components"
 import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
 
@@ -58,7 +58,7 @@ export const DemoListScreen = observer(function DemoListScreen() {
 
   return (
     <View testID="DemoListScreen" style={FULL}>
-      <Wallpaper />
+      <GradientBackground colors={["#422443", "#281b34"]} />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
           headerTx="demoListScreen.title"
