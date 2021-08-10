@@ -8,8 +8,8 @@ import {
   Header,
   Text,
   Screen,
-  Wallpaper,
   AutoImage as Image,
+  GradientBackground,
 } from "../../components"
 import { NavigatorParamList } from "../../navigators"
 import { color, spacing } from "../../theme"
@@ -139,7 +139,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
 
     return (
       <View testID="DemoScreen" style={FULL}>
-        <Wallpaper />
+        <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header
             headerTx="demoScreen.howTo"
