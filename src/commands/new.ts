@@ -221,7 +221,7 @@ export default {
     if (!expo) {
       // rename the app using `react-native-rename`
       startSpinner(" Writing your app name in the sand")
-      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName}`
+      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b com.${projectName}`
       log(renameCmd)
       await spawnProgress(renameCmd, { onProgress: log })
       stopSpinner(" Writing your app name in the sand", "🏝")
