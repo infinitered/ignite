@@ -41,6 +41,17 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
     expect(dirs).toContain("android")
     expect(dirs).toContain("app")
 
+    // check the android bundle id has changed
+    const androidPackageName = APP_NAME.toLowerCase()
+    const mainAppJava = filesystem.read(
+      `./android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
+    )
+    expect(mainAppJava).toContain(`package com.${androidPackageName};`)
+    const mainActivityJava = filesystem.read(
+      `./android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
+    )
+    expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
+
     await testSpunUpApp()
 
     // we're done!
