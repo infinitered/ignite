@@ -1,6 +1,6 @@
 import { runIgnite } from "./_test-helpers"
 
-test(`ignite help`, async (done) => {
+test(`ignite help`, async () => {
   const result = await runIgnite(`help`)
 
   expect(result).toContain("Ignite")
@@ -8,6 +8,4 @@ test(`ignite help`, async (done) => {
   expect(result).toContain("generate")
   expect(result).toContain("doctor")
   expect(result).toContain(`community.infinite.red`)
-
-  done()
 })
