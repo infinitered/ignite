@@ -19,10 +19,9 @@ afterEach(() => {
 })
 
 describe("Checking for ignite. 🪔", () => {
-  test(`ignite new (no name)`, async (done) => {
+  test(`ignite new (no name)`, async () => {
     const result = await runError(`new`)
     expect((result as any).stdout).toContain(`Project name is required`)
-    done()
   })
 
   test(`ignite new (invalid bundle ID)`, async (done) => {
@@ -33,7 +32,7 @@ describe("Checking for ignite. 🪔", () => {
 })
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
-  test(`ignite new ${APP_NAME}`, async (done) => {
+  test(`ignite new ${APP_NAME}`, async () => {
     const result = await runIgnite(`new ${APP_NAME}`)
 
     expect(result).toContain(`Using ignite-cli`)
@@ -62,12 +61,11 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
 
     // we're done!
     process.chdir("..")
-    done()
   })
 })
 
 describe("Igniting new expo app! 🔥\nRemember how long that last one took? We're gonna do it again.", () => {
-  test(`ignite new ${EXPO_APP_NAME} --expo`, async (done) => {
+  test(`ignite new ${EXPO_APP_NAME} --expo`, async () => {
     const result = await runIgnite(`new ${EXPO_APP_NAME} --expo`)
 
     expect(result).toContain(`Using expo-cli`)
@@ -85,7 +83,6 @@ describe("Igniting new expo app! 🔥\nRemember how long that last one took? We'
 
     // we're done!
     process.chdir("..")
-    done()
   })
 })
 

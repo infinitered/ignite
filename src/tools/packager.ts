@@ -67,13 +67,12 @@ function list(options: PackageListOptions = packageListOptions): PackageListOutp
       `yarn${options.global ? " global" : ""} list`,
       (output: string): [string, string][] => {
         // Parse yarn's human-readable output
-        return output.split("\n").reduce((acc: [string, string][], line: string): [
-          string,
-          string,
-        ][] => {
-          const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
-          return match ? [...acc, [match[1], match[2]]] : acc
-        }, [])
+        return output
+          .split("\n")
+          .reduce((acc: [string, string][], line: string): [string, string][] => {
+            const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
+            return match ? [...acc, [match[1], match[2]]] : acc
+          }, [])
       },
     ]
   } else {
