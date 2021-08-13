@@ -42,6 +42,8 @@ Run the CLI:
 npx ignite-cli new PizzaApp
 # or for Expo-powered:
 npx ignite-cli new PizzaApp --expo
+# to provide a custom bundle identifier (Android only):
+npx ignite-cli new PizzaApp --bundle=com.infinitered.pizzaapp
 ```
 
 Ignite will walk you through the rest.

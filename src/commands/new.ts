@@ -32,7 +32,7 @@ export default {
     const perfStart = new Date().getTime()
 
     // retrieve project name from toolbox
-    const { validateProjectName } = require("../tools/validations")
+    const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
 
@@ -63,6 +63,11 @@ export default {
       return m
     }
 
+    // custom bundle identifier (android only)
+    // TODO: refactor alert, need to rethink this
+    const bundleIdentifier =
+      validateBundleIdentifier(toolbox, parameters.options.bundle) || `com.${projectName}`
+
     // expo or no?
     const expo = Boolean(parameters.options.expo)
     const ignitePath = path(`${meta.src}`, "..")
@@ -76,6 +81,7 @@ export default {
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")}`)
+    p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` ────────────────────────────────────────────────\n`)
 
     if (expo) {
@@ -221,7 +227,7 @@ export default {
     if (!expo) {
       // rename the app using `react-native-rename`
       startSpinner(" Writing your app name in the sand")
-      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName}`
+      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b ${bundleIdentifier}`
       log(renameCmd)
       await spawnProgress(renameCmd, { onProgress: log })
       stopSpinner(" Writing your app name in the sand", "🏝")
