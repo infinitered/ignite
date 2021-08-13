@@ -52,3 +52,30 @@ export function validateProjectName(toolbox: GluegunToolbox): string {
 
   return projectName
 }
+
+export function validateBundleIdentifier(
+  toolbox: GluegunToolbox,
+  bundleID: string | undefined,
+): string | undefined {
+  const { print } = toolbox
+
+  // no bundle ID provided
+  if (bundleID === undefined) return undefined
+
+  const id = bundleID.split(".")
+  const validBundleID = /^([a-zA-Z]([a-zA-Z0-9_])*\.)+[a-zA-Z]([a-zA-Z0-9_])*$/u
+  if (id.length < 2) {
+    print.error(
+      'Invalid Bundle Identifier. Add something like "com.travelapp" or "com.junedomingo.travelapp"',
+    )
+    process.exit(1)
+  }
+  if (!validBundleID.test(bundleID)) {
+    print.error(
+      "Invalid Bundle Identifier. It must have at least two segments (one or more dots). Each segment must start with a letter. All characters must be alphanumeric or an underscore [a-zA-Z0-9_]",
+    )
+    process.exit(1)
+  }
+
+  return bundleID
+}

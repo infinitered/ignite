@@ -24,6 +24,12 @@ describe("Checking for ignite. 🪔", () => {
     expect((result as any).stdout).toContain(`Project name is required`)
     done()
   })
+
+  test(`ignite new (invalid bundle ID)`, async (done) => {
+    const result = await runError(`new BadBundleID --bundle thisisbad`)
+    expect((result as any).stdout).toContain(`Invalid Bundle Identifier.`)
+    done()
+  })
 })
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
