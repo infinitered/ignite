@@ -12,7 +12,6 @@ import {
   stopSpinner,
   clearSpinners,
 } from "../tools/pretty"
-import { validateBundleIdentifier } from "../tools/validations"
 
 // CLI tool versions we support
 const cliDependencyVersions: { [k: string]: string } = {
@@ -33,7 +32,7 @@ export default {
     const perfStart = new Date().getTime()
 
     // retrieve project name from toolbox
-    const { validateProjectName } = require("../tools/validations")
+    const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
 
