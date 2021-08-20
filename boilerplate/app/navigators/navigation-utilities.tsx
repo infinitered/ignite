@@ -7,17 +7,17 @@ import {
   createNavigationContainerRef,
 } from "@react-navigation/native"
 
+/* eslint-disable */
 export const RootNavigation = {
-  navigate(name: string, params?: any) {
-    name // eslint-disable-line no-unused-expressions
-  },
-  goBack() {}, // eslint-disable-line @typescript-eslint/no-empty-function
-  resetRoot(state?: PartialState<NavigationState> | NavigationState) {}, // eslint-disable-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  navigate(_name: string, _params?: any) {},
+  goBack() {},
+  resetRoot(_state?: PartialState<NavigationState> | NavigationState) {},
   getRootState(): NavigationState {
     return {} as any
   },
-  dispatch(action: NavigationAction) {},
+  dispatch(_action: NavigationAction) {},
 }
+/* eslint-enable */
 
 export const navigationRef = createNavigationContainerRef()
 

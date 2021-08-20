@@ -71,10 +71,10 @@ export function Switch(props: SwitchProps) {
     }
   }, [props.value])
 
-  const handlePress = React.useMemo(
-    () => () => props.onToggle && props.onToggle(!props.value),
-    [props.onToggle, props.value],
-  )
+  const handlePress = React.useMemo(() => () => props.onToggle && props.onToggle(!props.value), [
+    props.onToggle,
+    props.value,
+  ])
 
   if (!timer) {
     return null
