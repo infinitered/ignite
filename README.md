@@ -58,7 +58,6 @@ The above commands may fail with various errors, depending on your operating sys
 - If the installation fails because of an XCode error (missing XCode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
 - If XCode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the XCode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
 
-
 ## Generators
 
 _The hidden gem of Ignite._ Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
