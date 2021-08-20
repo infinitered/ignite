@@ -1,37 +1,35 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { BackHandler } from "react-native"
 import {
-  PartialState,
-  NavigationState,
-  NavigationAction,
   createNavigationContainerRef,
+  NavigationContainerRef,
+  Route,
 } from "@react-navigation/native"
-
-/* eslint-disable */
-export const RootNavigation = {
-  navigate(_name: string, _params?: any) {},
-  goBack() {},
-  resetRoot(_state?: PartialState<NavigationState> | NavigationState) {},
-  getRootState(): NavigationState {
-    return {} as any
-  },
-  dispatch(_action: NavigationAction) {},
-}
-/* eslint-enable */
 
 export const navigationRef = createNavigationContainerRef()
 
 /**
- * Gets the current screen from any navigation state.
+ *
+ * Gets the current route from any navigation state.
+ * returns an array with [route.key || route.name, route]
+ * route.name is a string, route is the entire route object.
+ * #### Example
+ * ```js
+ * const [currentRouteName, route] = getRoute(navigationRef)
+ * setCurrentScreen(currentRouteName)
+ * ```
  */
-export function getActiveRouteName(state: NavigationState | PartialState<NavigationState>) {
-  const route = state.routes[state.index]
-
-  // Found the active route -- return the name
-  if (!route.state) return route.name
-
-  // Recursive call to deal with nested routers
-  return getActiveRouteName(route.state)
+export const getRoute = (
+  navigationRef: React.MutableRefObject<NavigationContainerRef<any> | null>,
+): [routeName: string | null, route: Route<string, any> | null] => {
+  if (navigationRef.current == null) {
+    return [null, null]
+  }
+  const route = navigationRef.current.getCurrentRoute()
+  if (route == null) {
+    return [null, null]
+  }
+  return [route.name ?? route.key ?? null, route]
 }
 
 /**
@@ -53,10 +51,10 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
       }
 
       // grab the current route
-      const routeName = getActiveRouteName(navigationRef.getRootState())
+      const [currentRouteName] = getRoute(navigationRef)
 
       // are we allowed to exit?
-      if (canExitRef.current(routeName)) {
+      if (canExitRef.current(currentRouteName)) {
         // let the system know we've not handled this event
         return false
       }
@@ -94,11 +92,11 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
 
   const onNavigationStateChange = (state) => {
     const previousRouteName = routeNameRef.current
-    const currentRouteName = getActiveRouteName(state)
+    const [currentRouteName] = getRoute(navigationRef)
 
     if (previousRouteName !== currentRouteName) {
       // track screens.
-      __DEV__ && console.tron.log(currentRouteName)
+      __DEV__ && console.tron.log(`currentRouteName: ${currentRouteName}`)
     }
 
     // Save the current route name for later comparision
