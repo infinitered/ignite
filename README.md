@@ -33,7 +33,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 Prerequisites:
 
 - For [Expo-powered React Native apps](https://expo.io/), no prerequisites are necessary ([why choose Expo?](https://medium.com/@adhithiravi/building-react-native-apps-expo-or-not-d49770d1f5b8))
-- For vanilla React Native, make sure you're set up for React Native by following our free Infinite Red Academy course [for macOS]](https://academy.infinite.red/p/installing-react-native-tutorial-on-macos) or [for Windows 10](https://academy.infinite.red/p/installing-react-native-tutorial-on-windows-10) first
+- For vanilla React Native, make sure you're set up for React Native by following our free Infinite Red Academy course [for macOS](https://academy.infinite.red/p/installing-react-native-tutorial-on-macos) or [for Windows 10](https://academy.infinite.red/p/installing-react-native-tutorial-on-windows-10) first
 
 Run the CLI:
 
