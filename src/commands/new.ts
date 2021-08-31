@@ -229,6 +229,9 @@ export default {
     // remove the expo-only package.json
     filesystem.remove("package.expo.json")
 
+    // remove the gitignore template
+    filesystem.remove(".gitignore.template")
+
     if (!expo) {
       // rename the app using `react-native-rename`
       startSpinner(" Writing your app name in the sand")
