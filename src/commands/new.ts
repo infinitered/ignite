@@ -141,16 +141,21 @@ export default {
     // jump into the project to do additional tasks
     process.chdir(projectName)
 
-    // copy the .gitignore if it wasn't copied over [expo...]
-    // Release Ignite installs have the boilerplate's .gitignore in .npmignore
+    // copy the .gitignore if it wasn't copied over
+    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
     const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
     if (!filesystem.exists(targetIgnorePath)) {
-      let sourceIgnorePath = log(path(boilerplatePath, ".npmignore"))
+      // gitignore in dev mode?
+      let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
+
+      // gitignore in release mode?
       if (!filesystem.exists(sourceIgnorePath)) {
-        sourceIgnorePath = path(boilerplatePath, ".gitignore")
+        sourceIgnorePath = log(path(boilerplatePath, ".gitignore.template"))
       }
+
+      // copy the file over
       filesystem.copy(sourceIgnorePath, targetIgnorePath)
     }
 

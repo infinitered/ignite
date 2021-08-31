@@ -24,7 +24,7 @@
   },
   "scripts": {
     "compile": "tsc -p .",
-    "build": "yarn compile",
+    "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template",
     "format": "npm-run-all format:*",
     "format:js": "prettier --write '**/*.js'",
     "format:json": "prettier --write '**/*.json'",
@@ -38,7 +38,7 @@
     "ci:test": "yarn build && yarn ci:lint && jest --runInBand && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
-    "clean": "rm -rf ./build"
+    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template"
   },
   "devEngines": {
     "node": ">=7.x",
