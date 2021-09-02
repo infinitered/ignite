@@ -27,6 +27,11 @@
   "demoListScreen": {
     "title": "Demo List"
   },
+  "errorScreen": {
+    "title": "Something went wrong!",
+    "traceTitle": "Error from %{name} stack",
+    "reset": "RESET APP"
+  },
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
