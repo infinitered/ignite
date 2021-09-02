@@ -63,7 +63,7 @@ This is where your basic components will live. Each component will have a direct
 
 **i18n**
 
-This is where your translations will live if you are using `react-native-i18n`.
+This is where your translations will live if you are using the included `react-native-i18n`.
 
 **models**
 

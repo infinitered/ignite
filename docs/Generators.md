@@ -5,7 +5,7 @@ _NOTE: This documentation is for Ignite CLI version 4.0+. For apps spun up by Ig
 _The true gem of Ignite._ When you spin up a new app with Ignite CLI, we copy in several generator templates into `./ignite/templates/*`. Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
 
 ```
-ignite-cli generate --list
+npx ignite-cli generate --list
 ```
 
 ...will give you information on what generators are present.
@@ -17,7 +17,7 @@ ignite-cli generate --list
 This is the generator you will be using most often. They come pre-wrapped with mobx-react-lite's `observer` function, which you'll need to trigger re-renders if any MobX-State-Tree properties that are being used in this component change.
 
 ```
-ignite-cli generate component MyAwesomeButton
+npx ignite-cli generate component MyAwesomeButton
 ```
 
 - Creates the component/function
@@ -29,7 +29,7 @@ ignite-cli generate component MyAwesomeButton
 Generates a "hooks enabled" screen that is also pre-wrapped with mobx-react-lite's `observer` function, making it automatically re-render anytime a relevant MST property changes.
 
 ```
-ignite-cli generate screen Settings
+npx ignite-cli generate screen Settings
 ```
 
 ### Model generator
@@ -37,7 +37,7 @@ ignite-cli generate screen Settings
 Creates a Mobx-State-Tree model.
 
 ```
-ignite-cli generate model No
+npx ignite-cli generate model No
 ```
 
 - Creates the model
@@ -49,7 +49,7 @@ ignite-cli generate model No
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
 
 ```
-ignite-cli g screen Settings
+npx ignite-cli g screen Settings
 ```
 
 This will copy over any files in `./ignite/templates/screen/*` to `./app/screens/settings/*` and process any `.ejs` templates at the same time.
@@ -73,4 +73,4 @@ You should feel free to make them your own! Just update the files in the `./igni
 
 ## Updating generators
 
-Just run `ignite-cli update <type>` or `ignite-cli update --all` from the root folder of your project to copy over the latest generators to your project. Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back.
+Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from the root folder of your project to copy over the latest generators to your project. Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back.

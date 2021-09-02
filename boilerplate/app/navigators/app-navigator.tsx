@@ -1,12 +1,15 @@
 /**
- * This is the navigator you will modify to display the logged-in screens of your app.
- * You can use RootNavigator to also display an auth flow or other user flows.
- *
- * You'll likely spend most of your time in this file.
+ * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
+ * navigation flows of your app.
+ * Generally speaking, it will contain an auth flow (registration, login, forgot password)
+ * and a "main" flow which the user will use once logged in.
  */
 import React from "react"
-import { createStackNavigator } from "@react-navigation/stack"
+import { useColorScheme } from "react-native"
+import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
+import { navigationRef } from "./navigation-utilities"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -20,22 +23,22 @@ import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
-export type PrimaryParamList = {
+export type NavigatorParamList = {
   welcome: undefined
   demo: undefined
   demoList: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createStackNavigator<PrimaryParamList>()
+const Stack = createNativeStackNavigator<NavigatorParamList>()
 
-export function MainNavigator() {
+const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        cardStyle: { backgroundColor: "transparent" },
         headerShown: false,
       }}
+      initialRouteName="welcome"
     >
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
@@ -43,6 +46,23 @@ export function MainNavigator() {
     </Stack.Navigator>
   )
 }
+
+interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+
+export const AppNavigator = (props: NavigationProps) => {
+  const colorScheme = useColorScheme()
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      {...props}
+    >
+      <AppStack />
+    </NavigationContainer>
+  )
+}
+
+AppNavigator.displayName = "AppNavigator"
 
 /**
  * A list of routes from which we're allowed to leave the app when

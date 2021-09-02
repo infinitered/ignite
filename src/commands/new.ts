@@ -13,6 +13,13 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 
+// CLI tool versions we support
+const cliDependencyVersions: { [k: string]: string } = {
+  expo: "4",
+  podInstall: "0.1",
+  rnRename: "2",
+}
+
 export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
@@ -25,7 +32,7 @@ export default {
     const perfStart = new Date().getTime()
 
     // retrieve project name from toolbox
-    const { validateProjectName } = require("../tools/validations")
+    const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
 
@@ -56,6 +63,11 @@ export default {
       return m
     }
 
+    // custom bundle identifier (android only)
+    // TODO: refactor alert, need to rethink this
+    const bundleIdentifier =
+      validateBundleIdentifier(toolbox, parameters.options.bundle) || `com.${projectName}`
+
     // expo or no?
     const expo = Boolean(parameters.options.expo)
     const ignitePath = path(`${meta.src}`, "..")
@@ -69,10 +81,11 @@ export default {
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")}`)
+    p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` ────────────────────────────────────────────────\n`)
 
     if (expo) {
-      const expoCLIString = `npx expo-cli init ${projectName} --template ${boilerplatePath} --non-interactive`
+      const expoCLIString = `npx expo-cli@${cliDependencyVersions.expo} init ${projectName} --template ${boilerplatePath} --non-interactive`
       log({ expoCLIString })
 
       // generate the project
@@ -128,16 +141,21 @@ export default {
     // jump into the project to do additional tasks
     process.chdir(projectName)
 
-    // copy the .gitignore if it wasn't copied over [expo...]
-    // Release Ignite installs have the boilerplate's .gitignore in .npmignore
+    // copy the .gitignore if it wasn't copied over
+    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
     const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
     if (!filesystem.exists(targetIgnorePath)) {
-      let sourceIgnorePath = log(path(boilerplatePath, ".npmignore"))
+      // gitignore in dev mode?
+      let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
+
+      // gitignore in release mode?
       if (!filesystem.exists(sourceIgnorePath)) {
-        sourceIgnorePath = path(boilerplatePath, ".gitignore")
+        sourceIgnorePath = log(path(boilerplatePath, ".gitignore.template"))
       }
+
+      // copy the file over
       filesystem.copy(sourceIgnorePath, targetIgnorePath)
     }
 
@@ -206,20 +224,28 @@ export default {
       startSpinner("Unboxing NPM dependencies")
       await packager.install({ onProgress: log })
       stopSpinner("Unboxing NPM dependencies", "🧶")
-
-      // install pods
-      startSpinner("Baking CocoaPods")
-      await spawnProgress("npx pod-install", { onProgress: log })
-      stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // remove the expo-only package.json
     filesystem.remove("package.expo.json")
 
-    // rename the app using `react-native-rename`
-    startSpinner(" Writing your app name in the sand")
-    await spawnProgress(`npx react-native-rename ${projectName}`, { onProgress: log })
-    stopSpinner(" Writing your app name in the sand", "🏝")
+    // remove the gitignore template
+    filesystem.remove(".gitignore.template")
+
+    if (!expo) {
+      // rename the app using `react-native-rename`
+      startSpinner(" Writing your app name in the sand")
+      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b ${bundleIdentifier}`
+      log(renameCmd)
+      await spawnProgress(renameCmd, { onProgress: log })
+      stopSpinner(" Writing your app name in the sand", "🏝")
+      // install pods
+      startSpinner("Baking CocoaPods")
+      await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
+        onProgress: log,
+      })
+      stopSpinner("Baking CocoaPods", "☕️")
+    }
 
     // Make sure all our modifications are formatted nicely
     const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"
