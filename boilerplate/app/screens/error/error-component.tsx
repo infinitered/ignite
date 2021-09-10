@@ -45,9 +45,11 @@ const CONTENT_ERROR: TextStyle = {
   paddingVertical: 15,
 }
 
-const CONTENT_BACKTRACE: TextStyle = {
-  color: color.dim,
-}
+// Uncomment this and the Text component in the ErrorComponent if
+// you want to see a backtrace in your error reporting screen.
+// const CONTENT_BACKTRACE: TextStyle = {
+//   color: color.dim,
+// }
 
 const ICON: ImageStyle = {
   marginTop: 30,
