@@ -2,42 +2,51 @@ import React, { ErrorInfo } from "react"
 import { TextStyle, View, ViewStyle, ScrollView, ImageStyle } from "react-native"
 import { color } from "../../theme"
 import { Button, Icon, Text } from "../../components"
-import { getActiveRouteName, RootNavigation } from "../../navigators"
-import { translate } from "../../i18n"
 
 const CONTAINER: ViewStyle = {
   alignItems: "center",
   flex: 1,
   padding: 16,
+  paddingVertical: 50,
   backgroundColor: color.background,
 }
 
-const VIEW_CONTAIN: ViewStyle = {
+const ERROR_DETAILS_CONTAINER: ViewStyle = {
   width: "100%",
-  maxHeight: "50%",
+  maxHeight: "60%",
   backgroundColor: color.line,
   marginVertical: 15,
-  padding: 10,
+  paddingHorizontal: 10,
+  paddingBottom: 15,
   borderRadius: 6,
 }
 
 const BTN_RESET: ViewStyle = {
   paddingHorizontal: 40,
+
   backgroundColor: color.primary,
 }
 
 const TITLE_ERROR: TextStyle = {
   color: color.error,
   fontWeight: "bold",
+  paddingVertical: 15,
+}
+
+const FRIENDLY_SUBTITLE: TextStyle = {
+  color: color.palette.black,
+  fontWeight: "normal",
+  paddingVertical: 15,
 }
 
 const CONTENT_ERROR: TextStyle = {
-  color: color.primary,
+  color: color.error,
   fontWeight: "bold",
+  paddingVertical: 15,
 }
 
 const CONTENT_BACKTRACE: TextStyle = {
-  color: color.primary,
+  color: color.dim,
 }
 
 const ICON: ImageStyle = {
@@ -56,19 +65,15 @@ export interface ErrorComponentProps {
  * Describe your component here
  */
 export const ErrorComponent = (props: ErrorComponentProps) => {
-  const getError = () => {
-    const name = getActiveRouteName(RootNavigation.getRootState())
-    return translate("errorScreen.traceTitle", { name })
-  }
   return (
     <View style={CONTAINER}>
       <Icon style={ICON} icon="bug" />
       <Text style={TITLE_ERROR} tx={"errorScreen.title"} />
-      <View style={VIEW_CONTAIN}>
+      <Text style={FRIENDLY_SUBTITLE} tx={"errorScreen.friendlySubtitle"} />
+      <View style={ERROR_DETAILS_CONTAINER}>
         <ScrollView>
-          <Text style={CONTENT_ERROR} text={getError()} />
-          <Text selectable text={`${props.error}`} />
-          <Text style={CONTENT_BACKTRACE} text={`${props.errorInfo.componentStack}`} />
+          <Text selectable style={CONTENT_ERROR} text={`${props.error}`} />
+          {/* <Text selectable style={CONTENT_BACKTRACE} text={`${props.errorInfo.componentStack}`} /> */}
         </ScrollView>
       </View>
       <Button style={BTN_RESET} onPress={props.onReset} tx="errorScreen.reset" />

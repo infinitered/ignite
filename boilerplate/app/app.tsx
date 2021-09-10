@@ -18,7 +18,7 @@ import * as storage from "./utils/storage"
 import { useBackButtonHandler, AppNavigator, canExit, useNavigationPersistence } from "./navigators"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
-import { ErrorScreen } from "./screens/error/error-screen"
+import { ErrorBoundary } from "./screens/error/error-boundary"
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
@@ -60,12 +60,12 @@ function App() {
     <ToggleStorybook>
       <RootStoreProvider value={rootStore}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <ErrorScreen>
+          <ErrorBoundary catchErrors={"always"}>
             <AppNavigator
               initialState={initialNavigationState}
               onStateChange={onNavigationStateChange}
             />
-          </ErrorScreen>
+          </ErrorBoundary>
         </SafeAreaProvider>
       </RootStoreProvider>
     </ToggleStorybook>

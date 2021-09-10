@@ -29,6 +29,7 @@
   },
   "errorScreen": {
     "title": "Something went wrong!",
+    "friendlySubtitle": "Don't worry, our developers have been notified and will take a look. In the meantime, you can try swiping away the app and restarting it to see if that helps.",
     "traceTitle": "Error from %{name} stack",
     "reset": "RESET APP"
   },
