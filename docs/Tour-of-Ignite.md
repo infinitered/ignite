@@ -22,7 +22,7 @@ We include a `README.md`, `LICENSE`, and `CODE_OF_CONDUCT.md` in the root of the
 
 There's also a `docs` folder which contains more documentation, including this file. They're all written in Markdown for a better/simpler developer authoring experience.
 
-## CircleCI and Github
+## CircleCI and GitHub
 
 There are a couple folders at the root, `.circleci` and `.github`. These contain configuration for both services. Feel free to take a look.
 
@@ -32,7 +32,7 @@ We use `semantic-release`, an excellent package that allows for automatically re
 
 ## Gluegun
 
-Ignite's CLI (`ignite-cli` on NPM) is powered by [Gluegun](https://github.com/infinitered/gluegun). Gluegun is another Infinite Red library that makes building a full-featured command line interface (CLI) much easier.
+Ignite's CLI (`ignite-cli` on npm) is powered by [Gluegun](https://github.com/infinitered/gluegun). Gluegun is another Infinite Red library that makes building a full-featured command line interface (CLI) much easier.
 
 ## bin
 
@@ -74,7 +74,7 @@ We also run the default tests in a generated Ignite app, which further ensures t
 
 This contains a JSON file that helps demonstrate an API request in the boilerplate's `DemoListScreen`. It's Rick & Morty themed, naturally.
 
-This file isn't even included in the NPM package at all. Instead, we just call over to Github when we need it.
+This file isn't even included in the npm package at all. Instead, we just call over to GitHub when we need it.
 
 ## boilerplate
 

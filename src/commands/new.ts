@@ -205,9 +205,9 @@ export default {
       filesystem.remove("./e2e/reload.js")
       filesystem.rename("./e2e/reload.expo.js", "reload.js")
 
-      startSpinner("Unboxing NPM dependencies")
+      startSpinner("Unboxing npm dependencies")
       await packager.install({ onProgress: log })
-      stopSpinner("Unboxing NPM dependencies", "🧶")
+      stopSpinner("Unboxing npm dependencies", "🧶")
 
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
@@ -221,9 +221,9 @@ export default {
       filesystem.remove("./babel.config.expo.js")
 
       // yarn it
-      startSpinner("Unboxing NPM dependencies")
+      startSpinner("Unboxing npm dependencies")
       await packager.install({ onProgress: log })
-      stopSpinner("Unboxing NPM dependencies", "🧶")
+      stopSpinner("Unboxing npm dependencies", "🧶")
     }
 
     // remove the expo-only package.json
