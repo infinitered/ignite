@@ -1,4 +1,4 @@
-# Javascript Node CircleCI 2.0 configuration file
+# JavaScript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
@@ -35,7 +35,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          # We don't want to install Cocoapods on ubuntu where we run the tests.
+          # We don't want to install CocoaPods on ubuntu where we run the tests.
           name: Set up dummy `pod` command
           command: |
             sudo ln /bin/true /usr/local/bin/pod
@@ -73,7 +73,7 @@ jobs:
   #         command: |
   #           sudo yarn global add detox-cli
   #     - run:
-  #         name: Install Ruby and Cocoapods
+  #         name: Install Ruby and CocoaPods
   #         command: |
   #           sudo apt-get update &&
   #           sudo apt-get install ruby-full &&
@@ -120,7 +120,7 @@ jobs:
             - v1-dependencies-
       # Run semantic-release after all the above is set.
       - run:
-          name: Publish to NPM
+          name: Publish to npm
           command: yarn ci:publish # this will be added to your package.json scripts
 
 workflows:
