@@ -47,7 +47,7 @@ Example:
 
 "device": { "name": "iPhone 11", "os": "iOS 13.2" }
 
-NOTE: as of 10/14/2021, do not set the iOS value to `15.0` or higher, or a Detox crash may occur. This is a Detox issue that is well documented and should be fixed soon.
+NOTE: as of October 2021, do not set the iOS value to `15.0` or higher, or a Detox crash may occur. This is a Detox issue that is well documented and should be fixed soon.
 
 ## Adding tests
 
