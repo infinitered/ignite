@@ -122,13 +122,19 @@
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/HelloWorld.app",
         "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
         "type": "ios.simulator",
-        "name": "iPhone 11"
+        "device": {
+          "name": "iPhone 11",
+          "os": "iOS 13.2"
+        }
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/HelloWorld.app",
         "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
         "type": "ios.simulator",
-        "name": "iPhone 11"
+        "device": {
+          "name": "iPhone 11",
+          "os": "iOS 13.2"
+        }
       }
     }
   },
