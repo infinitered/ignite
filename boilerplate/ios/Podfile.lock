@@ -2,29 +2,26 @@ PODS:
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
-  - EXConstants (11.0.2):
+  - EXApplication (4.0.0):
     - ExpoModulesCore
-    - UMCore
-  - EXFileSystem (11.1.3):
+  - EXConstants (12.1.3):
     - ExpoModulesCore
-    - UMCore
-  - EXImageLoader (2.2.0):
+  - EXErrorRecovery (3.0.3):
     - ExpoModulesCore
+  - EXFileSystem (13.0.3):
+    - ExpoModulesCore
+  - EXFont (10.0.3):
+    - ExpoModulesCore
+  - EXKeepAwake (10.0.0):
+    - ExpoModulesCore
+  - EXLinearGradient (10.0.3):
+    - ExpoModulesCore
+  - EXLocalization (11.0.0):
+    - ExpoModulesCore
+  - Expo (43.0.3):
+    - ExpoModulesCore
+  - ExpoModulesCore (0.4.8):
     - React-Core
-    - UMCore
-  - EXLinearGradient (9.2.0):
-    - UMCore
-  - EXLocalization (9.1.0):
-    - UMCore
-  - ExpoModulesCore (0.2.0):
-    - ExpoModulesCore/Core (= 0.2.0)
-    - ExpoModulesCore/Interfaces (= 0.2.0)
-    - UMCore
-  - ExpoModulesCore/Core (0.2.0):
-    - UMCore
-  - ExpoModulesCore/Interfaces (0.2.0):
-    - ExpoModulesCore/Core
-    - UMCore
   - FBLazyVector (0.66.1)
   - FBReactNativeSpec (0.66.1):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -362,7 +359,7 @@ PODS:
     - React-jsi (= 0.66.1)
     - React-logger (= 0.66.1)
     - React-perflogger (= 0.66.1)
-  - RNCAsyncStorage (1.15.9):
+  - RNCAsyncStorage (1.15.11):
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
@@ -373,14 +370,6 @@ PODS:
   - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
-  - UMAppLoader (2.2.0)
-  - UMCore (7.1.2)
-  - UMReactNativeAdapter (6.3.9):
-    - ExpoModulesCore
-    - React-Core
-    - UMCore
-  - UMTaskManagerInterface (6.2.0):
-    - UMCore
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -388,11 +377,15 @@ PODS:
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
-  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
+  - EXFont (from `../node_modules/expo-font/ios`)
+  - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXLocalization (from `../node_modules/expo-localization/ios`)
+  - Expo (from `../node_modules/expo/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -450,10 +443,6 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
-  - "UMCore (from `../node_modules/@unimodules/core/ios`)"
-  - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
-  - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -478,16 +467,24 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EXApplication:
+    :path: "../node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXErrorRecovery:
+    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
-  EXImageLoader:
-    :path: "../node_modules/expo-image-loader/ios"
+  EXFont:
+    :path: "../node_modules/expo-font/ios"
+  EXKeepAwake:
+    :path: "../node_modules/expo-keep-awake/ios"
   EXLinearGradient:
     :path: "../node_modules/expo-linear-gradient/ios"
   EXLocalization:
     :path: "../node_modules/expo-localization/ios"
+  Expo:
+    :path: "../node_modules/expo/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
   FBLazyVector:
@@ -556,14 +553,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  UMAppLoader:
-    :path: "../node_modules/unimodules-app-loader/ios"
-  UMCore:
-    :path: "../node_modules/@unimodules/core/ios"
-  UMReactNativeAdapter:
-    :path: "../node_modules/@unimodules/react-native-adapter/ios"
-  UMTaskManagerInterface:
-    :path: "../node_modules/unimodules-task-manager-interface/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -571,12 +560,16 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  EXConstants: 4cb52b6d8f636c767104a44bf7db3873e9c01a6f
-  EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
-  EXImageLoader: d3531a3fe530b22925c19977cb53bb43e3821fe6
-  EXLinearGradient: f9ea3259f096b27008860ca50764184225dc71c9
-  EXLocalization: 8b9463c81843da214476b541a27811dd885c9a76
-  ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
+  EXApplication: 0e15240e4d125b62f1cae48759ffbbd32b9286a6
+  EXConstants: 6d585d93723b18d7a8c283591a335609e3bc153e
+  EXErrorRecovery: ac2622400a32be84604591f70d0efff416e4b9a2
+  EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
+  EXFont: 2e1c6fe726d008a039db80df95f48b4921b7fe59
+  EXKeepAwake: 8aa32396a5972d26e75e538603aad0f032396503
+  EXLinearGradient: 4d727eacb53d19ef25b02dd810e0199b453489ce
+  EXLocalization: bb38414618b30a177482c9a6f5594ec6eb0898c1
+  Expo: 5316c3ecdc34eb0cad340d01dc8beec97c7e879e
+  ExpoModulesCore: a9a9bf32b2da35cd9b7299c80790c03a91ac7d15
   FBLazyVector: 500821d196c3d1bd10e7e828bc93ce075234080f
   FBReactNativeSpec: 74c869e2cffa2ffec685cd1bac6788c021da6005
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -617,18 +610,14 @@ SPEC CHECKSUMS:
   React-RCTVibration: 6600b5eed7c0fda4a433fa1198d1cb2690151791
   React-runtimeexecutor: 33a949a51bec5f8a3c9e8d8092deb259600d761e
   ReactCommon: 620442811dc6f707b4bf5e3b27d4f19c12d5a821
-  RNCAsyncStorage: 26f25150da507524a7815f2ada06ca0967f65633
+  RNCAsyncStorage: eb05c0284dd6b50b32f92fad55e2a41e03358c43
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
-  UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
-  UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
-  UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785
-  UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 2b4a01651f42a32f82e6cef3830a3ba48088237f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 69c8b4e65c0db98e622e77ae2dce9cc1517fd875
+PODFILE CHECKSUM: fbd0354e0809d861092b9610070793c0450d38a1
 
 COCOAPODS: 1.11.2
