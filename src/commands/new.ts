@@ -232,17 +232,6 @@ export default {
       startSpinner("Unboxing npm dependencies")
       await packager.install({ onProgress: log })
       stopSpinner("Unboxing npm dependencies", "🧶")
-
-      if (coloLoco) {
-        startSpinner("Installing React Native Colo Loco")
-        // install react-native-colo-loco
-        await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
-          dev: true,
-        })
-        // run colo-loco installer
-        await packager.run("install-colo-loco --defaults", {})
-        stopSpinner("Installing React Native Colo Loco", "🤪")
-      }
     }
 
     // remove the expo-only package.json
@@ -258,6 +247,18 @@ export default {
       log(renameCmd)
       await spawnProgress(renameCmd, { onProgress: log })
       stopSpinner(" Writing your app name in the sand", "🏝")
+
+      if (coloLoco) {
+        startSpinner("Installing React Native Colo Loco")
+        // install react-native-colo-loco
+        await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
+          dev: true,
+        })
+        // run colo-loco installer
+        await packager.run("install-colo-loco --defaults", {})
+        stopSpinner("Installing React Native Colo Loco", "🤪")
+      }
+
       // install pods
       startSpinner("Baking CocoaPods")
       await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
