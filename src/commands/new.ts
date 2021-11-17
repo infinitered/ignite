@@ -18,6 +18,7 @@ const cliDependencyVersions: { [k: string]: string } = {
   expo: "4",
   podInstall: "0.1",
   rnRename: "2",
+  coloLoco: "latest",
 }
 
 export default {
@@ -74,6 +75,13 @@ export default {
     const boilerplatePath = path(ignitePath, "boilerplate")
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     log({ expo, ignitePath, boilerplatePath })
+
+    // React Native Colo Loco allows us to colocate our native files with our
+    // javascript/typescript files.
+    // Learn more here: https://github.com/jamonholmgren/react-native-colo-loco
+    // colo-loco is enabled by default, but you can do --no-colo-loco
+    // note: we don't support Colo Loco in Expo (yet) or Windows (yet)
+    const coloLoco = parameters.options.coloLoco !== false && !expo && process.platform !== "win32"
 
     // welcome everybody!
     p("\n")
@@ -224,6 +232,17 @@ export default {
       startSpinner("Unboxing npm dependencies")
       await packager.install({ onProgress: log })
       stopSpinner("Unboxing npm dependencies", "🧶")
+
+      if (coloLoco) {
+        startSpinner("Installing React Native Colo Loco")
+        // install react-native-colo-loco
+        await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
+          dev: true,
+        })
+        // run colo-loco installer
+        await packager.run("install-colo-loco --defaults", {})
+        stopSpinner("Installing React Native Colo Loco", "🤪")
+      }
     }
 
     // remove the expo-only package.json
@@ -284,9 +303,9 @@ export default {
       command(`  ${npmOrYarnRun} start`)
     } else {
       if (process.platform === "darwin") {
-        command(`  npx react-native run-ios`)
+        command(`  ${npmOrYarnRun} ios`)
       }
-      command(`  npx react-native run-android`)
+      command(`  ${npmOrYarnRun} android`)
       if (isAndroidInstalled(toolbox)) {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
