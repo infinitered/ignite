@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { DevSettings } from "react-native"
 import { loadString, saveString } from "../app/utils/storage"
-import { DEFAULT_REACTOTRON_WS_URI } from '../app/services/reactotron/reactotron-config'
+import { DEFAULT_REACTOTRON_WS_URI } from "../app/services/reactotron/reactotron-config"
 
 /**
  * Toggle Storybook mode, in __DEV__ mode only.
@@ -56,7 +56,7 @@ export function ToggleStorybook(props) {
           setShowStorybook(data.payload)
         }
       }
-      ws.current.onerror = (e) =>{
+      ws.current.onerror = (e) => {
         console.tron.error(e, null)
         setShowStorybook(storedSetting === "on")
       }
