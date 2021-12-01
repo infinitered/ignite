@@ -254,8 +254,10 @@ export default {
         await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
           dev: true,
         })
-        // run colo-loco installer
-        await packager.run("install-colo-loco --defaults", {})
+        await spawnProgress(
+          `npx install-colo-loco@${cliDependencyVersions.coloLoco} --defaults`,
+          {},
+        )
         stopSpinner("Installing React Native Colo Loco", "🤪")
       }
 
