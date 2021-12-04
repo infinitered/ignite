@@ -1,0 +1,16 @@
+import { Instance, SnapshotOut, types } from "mobx-state-tree"
+
+/**
+ * Model description here for TypeScript hints.
+ */
+export const <%= props.pascalCaseName %>Model = types
+  .model("<%= props.pascalCaseName %>")
+  .props({})
+  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+
+type <%= props.pascalCaseName %>Type = Instance<typeof <%= props.pascalCaseName %>Model>
+export interface <%= props.pascalCaseName %> extends <%= props.pascalCaseName %>Type {}
+type <%= props.pascalCaseName %>SnapshotType = SnapshotOut<typeof <%= props.pascalCaseName %>Model>
+export interface <%= props.pascalCaseName %>Snapshot extends <%= props.pascalCaseName %>SnapshotType {}
+export const create<%= props.pascalCaseName %>DefaultModel = () => types.optional(<%= props.pascalCaseName %>Model, {})

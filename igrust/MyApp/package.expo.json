@@ -1,0 +1,44 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "lint": "eslint App.js app storybook test --fix --ext .js,.ts,.tsx && yarn format",
+    "build:e2e": "detox build -c ios.sim.expo",
+    "test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
+  },
+  "dependencies": {
+    "@expo/webpack-config": "^0.12.71",
+    "expo": "43.0.0",
+    "expo-status-bar": "~1.1.0",
+    "query-string": "7.0.0",
+    "react": "17.0.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-43.0.0.tar.gz"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.21",
+    "@types/react-dom": "16.9.8",
+    "@types/react-native": "0.64.12",
+    "expo-detox-hook": "1.0.10",
+    "detox-expo-helpers": "0.6.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|@react-native|@react-native-async-storage|expo-linear-gradient|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|native-base|@storybook)"
+    ]
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.expo": {
+        "binaryPath": "bin/Exponent.app",
+        "type": "ios.simulator",
+        "name": "iPhone 11"
+      },
+      "ios.sim.debug": null,
+      "ios.sim.release": null
+    }
+  }
+}
