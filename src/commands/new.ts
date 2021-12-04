@@ -23,6 +23,8 @@ const cliDependencyVersions: { [k: string]: string } = {
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
+    performance.mark("start")
+
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
     const { exists, path, remove } = filesystem
@@ -38,6 +40,7 @@ export default {
     const projectNameKebab = kebabCase(projectName)
 
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
+    performance.mark("before-remove")
     if (parameters.options.overwrite) {
       remove(projectName)
     } else if (exists(projectName)) {
@@ -46,6 +49,7 @@ export default {
       p(yellow(alreadyExists))
       process.exit(1)
     }
+    performance.mark("after-remove")
 
     // if they pass in --boilerplate, warn them to use old Ignite
     const bname = parameters.options.b || parameters.options.boilerplate
@@ -130,17 +134,22 @@ export default {
     } else {
       // remove pods and node_modules, if they exist, because those will be rebuilt anyway
       startSpinner("Igniting app")
+      performance.mark("before-remove-pods")
       remove(path(boilerplatePath, "ios", "Pods"))
       remove(path(boilerplatePath, "node_modules"))
+      performance.mark("after-remove-pods")
       stopSpinner("Igniting app", "🔥")
 
       startSpinner(" 3D-printing a new React Native app")
+      performance.mark("start-copy-boilerplate")
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         projectName,
         excluded: ["node_modules", "yarn.lock", /.?\.expo\..?/],
       })
+      performance.mark("end-copy-boilerplate")
       stopSpinner(" 3D-printing a new React Native app", "🖨")
+      process.exit(0)
     }
 
     // note the original directory
@@ -182,9 +191,8 @@ export default {
       .replace(/hello-world/g, projectNameKebab)
     let packageJson = JSON.parse(packageJsonRaw)
 
-    const merge = require("deepmerge-json")
-
     if (expo) {
+      const merge = require("deepmerge-json")
       const expoJson = filesystem.read("./package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
     }
@@ -230,7 +238,9 @@ export default {
 
       // yarn it
       startSpinner("Unboxing npm dependencies")
+      performance.mark("start-install-dependencies")
       await packager.install({ onProgress: log })
+      performance.mark("end-install-dependencies")
       stopSpinner("Unboxing npm dependencies", "🧶")
     }
 
@@ -245,12 +255,15 @@ export default {
       startSpinner(" Writing your app name in the sand")
       const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b ${bundleIdentifier}`
       log(renameCmd)
+      performance.mark("start-rename-app")
       await spawnProgress(renameCmd, { onProgress: log })
+      performance.mark("end-rename-app")
       stopSpinner(" Writing your app name in the sand", "🏝")
 
       if (coloLoco) {
         startSpinner("Installing React Native Colo Loco")
         // install react-native-colo-loco
+        performance.mark("start-install-colo-loco")
         await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
           dev: true,
         })
@@ -258,24 +271,30 @@ export default {
           `npx install-colo-loco@${cliDependencyVersions.coloLoco} --defaults`,
           {},
         )
+        performance.mark("end-install-colo-loco")
         stopSpinner("Installing React Native Colo Loco", "🤪")
       }
 
       // install pods
       startSpinner("Baking CocoaPods")
+      performance.mark("start-bake-pods")
       await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
         onProgress: log,
       })
+      performance.mark("end-bake-pods")
       stopSpinner("Baking CocoaPods", "☕️")
     }
 
     // Make sure all our modifications are formatted nicely
     const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"
+    performance.mark("start-format-files")
     await spawnProgress(`${npmOrYarnRun} format`, {})
+    performance.mark("end-format-files")
 
     // commit any changes
     if (parameters.options.git !== false) {
       startSpinner(" Backing everything up in source control")
+      performance.mark("start-commit-changes")
       await system.run(
         log(`
           \\rm -rf ./.git
@@ -284,6 +303,7 @@ export default {
           git commit -m "New Ignite ${meta.version()} app";
         `),
       )
+      performance.mark("end-commit-changes")
       stopSpinner(" Backing everything up in source control", "🗄")
     }
 
@@ -327,5 +347,13 @@ export default {
     p()
     heading("Now get cooking! 🍽")
     igniteHeading()
+
+    const allEntries = performance.getEntries()
+    print.table(
+      allEntries.map((entry, i) => [
+        entry.name,
+        `${Math.round(entry.startTime - (allEntries[i - 1]?.startTime || 0))}ms`,
+      ]),
+    )
   },
 }
