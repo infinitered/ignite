@@ -49,6 +49,8 @@
     "gluegun": "^4.5.0"
   },
   "devDependencies": {
+    "@rnx-kit/metro-config": "^1.2.26",
+    "@rnx-kit/metro-resolver-symlinks": "^0.1.15",
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",

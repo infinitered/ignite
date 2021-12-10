@@ -16,7 +16,7 @@ const packageInstallOptions: PackageInstallOptions = {
 }
 
 type PackageListOptions = {
-  packager?: "npm" | "yarn"
+  packager?: "npm" | "yarn" | "pnpm"
   global?: boolean
 }
 const packageListOptions: PackageListOptions = {
@@ -30,9 +30,19 @@ function yarn() {
   return isYarn
 }
 
+let isPnpm
+function pnpm() {
+  if (isPnpm !== undefined) return isPnpm
+  isPnpm = Boolean(system.which("pnpm"))
+  return isPnpm
+}
+
 function add(pkg: string, options: PackageInstallOptions = packageInstallOptions) {
   if (options.expo) {
     return `npx expo-cli install ${pkg}`
+  } else if (pnpm()) {
+    const dev = options.dev ? " --dev" : ""
+    return `pnpm install ${pkg}${dev}`
   } else if (yarn()) {
     const dev = options.dev ? " --dev" : ""
     return `yarn add ${pkg}${dev}`
@@ -45,6 +55,8 @@ function add(pkg: string, options: PackageInstallOptions = packageInstallOptions
 function remove(pkg: string, options: PackageInstallOptions = packageInstallOptions) {
   if (options.expo) {
     return `npx expo-cli uninstall ${pkg}`
+  } else if (pnpm()) {
+    return `pnpm uninstall ${pkg}`
   } else if (yarn()) {
     return `yarn remove ${pkg}`
   } else {
@@ -53,7 +65,9 @@ function remove(pkg: string, options: PackageInstallOptions = packageInstallOpti
 }
 
 function install() {
-  if (yarn()) {
+  if (pnpm()) {
+    return "pnpm install"
+  } else if (yarn()) {
     return `yarn install -s`
   } else {
     return `npm install`
@@ -62,7 +76,10 @@ function install() {
 
 type PackageListOutput = [string, (string) => [string, string][]]
 function list(options: PackageListOptions = packageListOptions): PackageListOutput {
-  if (options.packager === "yarn" || (options.packager === undefined && yarn())) {
+  if (options.packager === "pnpm") {
+    // TODO: pnpm list?
+    throw new Error("pnpm list is not supported yet")
+  } else if (options.packager === "yarn" || (options.packager === undefined && yarn())) {
     return [
       `yarn${options.global ? " global" : ""} list`,
       (output: string): [string, string][] => {
@@ -92,7 +109,9 @@ function list(options: PackageListOptions = packageListOptions): PackageListOutp
 
 export const packager = {
   run: async (command: string, options: PackageInstallOptions = packageInstallOptions) => {
-    if (yarn()) {
+    if (pnpm()) {
+      return spawnProgress(`pnpm run ${command}`, { onProgress: options.onProgress })
+    } else if (yarn()) {
       return spawnProgress(`yarn ${command}`, { onProgress: options.onProgress })
     } else {
       return spawnProgress(`npm run ${command}`, { onProgress: options.onProgress })
@@ -114,5 +133,9 @@ export const packager = {
     const [cmd, parseFn] = list(options)
     return parseFn(await spawnProgress(cmd, {}))
   },
-  is: (packageManager: "yarn" | "npm"): boolean => (packageManager === "yarn" ? yarn() : !yarn()),
+  is: (packageManager: "yarn" | "npm" | "pnpm"): boolean => {
+    if (packageManager === "yarn") return yarn()
+    if (packageManager === "pnpm") return pnpm()
+    return true
+  },
 }
