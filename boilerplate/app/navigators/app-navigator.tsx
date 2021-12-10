@@ -9,7 +9,7 @@ import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
-import { navigationRef } from "./navigation-utilities"
+import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -51,6 +51,7 @@ interface NavigationProps extends Partial<React.ComponentProps<typeof Navigation
 
 export const AppNavigator = (props: NavigationProps) => {
   const colorScheme = useColorScheme()
+  useBackButtonHandler(canExit)
   return (
     <NavigationContainer
       ref={navigationRef}

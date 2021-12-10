@@ -15,7 +15,7 @@ import React, { useState, useEffect } from "react"
 import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-context"
 import { initFonts } from "./theme/fonts" // expo
 import * as storage from "./utils/storage"
-import { useBackButtonHandler, AppNavigator, canExit, useNavigationPersistence } from "./navigators"
+import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { ErrorBoundary } from "./screens/error/error-boundary"
@@ -31,8 +31,6 @@ export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
  */
 function App() {
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
-
-  useBackButtonHandler(canExit)
   const {
     initialNavigationState,
     onNavigationStateChange,
