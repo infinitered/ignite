@@ -16,7 +16,7 @@
     "format:json": "prettier --write \"app/**/*.json\"",
     "format:md": "prettier --write \"**/*.md\"",
     "format:ts": "prettier --write \"app/**/*.ts{,x}\"",
-    "lint": "eslint index.js app storybook test --fix --ext .js,.ts,.tsx && yarn format",
+    "lint": "eslint index.js app storybook test --fix --ext .js,.ts,.tsx && npm run format",
     "patch": "patch-package",
     "storybook": "start-storybook -p 9001 -c ./storybook",
     "test": "jest",

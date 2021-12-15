@@ -270,7 +270,7 @@ export default {
     }
 
     // Make sure all our modifications are formatted nicely
-    await packager.run("format")
+    await packager.run("format", { silent: !debug })
 
     // commit any changes
     if (parameters.options.git !== false) {

@@ -7,6 +7,7 @@ import { spawnProgress } from "./spawn"
 type PackageInstallOptions = {
   dev?: boolean
   expo?: boolean
+  silent?: boolean
   onProgress?: (out: string) => void
 }
 const packageInstallOptions: PackageInstallOptions = {
@@ -110,7 +111,7 @@ function list(options: PackageListOptions = packageListOptions): PackageListOutp
 export const packager = {
   runCmd: (command: string) => {
     if (pnpm()) {
-      return `pnpm run ${command} --loglevel=error`
+      return `pnpm run ${command}`
     } else if (yarn()) {
       return `yarn ${command}`
     } else {
@@ -118,7 +119,9 @@ export const packager = {
     }
   },
   run: async (command: string, options: PackageInstallOptions = packageInstallOptions) => {
-    return spawnProgress(packager.runCmd(command), { onProgress: options.onProgress })
+    return spawnProgress(`${packager.runCmd(command)} ${options.silent ? "--silent" : ""}`, {
+      onProgress: options.onProgress,
+    })
   },
   add: async (pkg: string, options: PackageInstallOptions = packageInstallOptions) => {
     const cmd = add(pkg, options)
