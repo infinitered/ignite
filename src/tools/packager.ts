@@ -41,7 +41,7 @@ function add(pkg: string, options: PackageInstallOptions = packageInstallOptions
   if (options.expo) {
     return `npx expo-cli install ${pkg}`
   } else if (pnpm()) {
-    const dev = options.dev ? " --dev" : ""
+    const dev = options.dev ? " --save-dev" : ""
     return `pnpm install ${pkg}${dev}`
   } else if (yarn()) {
     const dev = options.dev ? " --dev" : ""
@@ -108,14 +108,17 @@ function list(options: PackageListOptions = packageListOptions): PackageListOutp
 }
 
 export const packager = {
-  run: async (command: string, options: PackageInstallOptions = packageInstallOptions) => {
+  runCmd: (command: string) => {
     if (pnpm()) {
-      return spawnProgress(`pnpm run ${command}`, { onProgress: options.onProgress })
+      return `pnpm run ${command}`)
     } else if (yarn()) {
-      return spawnProgress(`yarn ${command}`, { onProgress: options.onProgress })
+      return `yarn ${command}`
     } else {
-      return spawnProgress(`npm run ${command}`, { onProgress: options.onProgress })
+      return `npm run ${command}`
     }
+  },
+  run: async (command: string, options: PackageInstallOptions = packageInstallOptions) => {
+    return spawnProgress(packager.runCmd(command), { onProgress: options.onProgress })
   },
   add: async (pkg: string, options: PackageInstallOptions = packageInstallOptions) => {
     const cmd = add(pkg, options)
@@ -137,5 +140,10 @@ export const packager = {
     if (packageManager === "yarn") return yarn()
     if (packageManager === "pnpm") return pnpm()
     return true
+  },
+  name: (): string => {
+    if (pnpm()) return "pnpm"
+    if (yarn()) return "yarn"
+    return "npm"
   },
 }

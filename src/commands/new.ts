@@ -27,7 +27,7 @@ export default {
     const { kebabCase } = strings
     const { exists, path, remove } = filesystem
     const { info, colors } = print
-    const { gray, red, magenta, cyan, yellow } = colors
+    const { gray, red, magenta, cyan, yellow, green } = colors
 
     // start tracking performance
     const perfStart = new Date().getTime()
@@ -88,7 +88,7 @@ export default {
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")}`)
+    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")} with ${green(packager.name())}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` ────────────────────────────────────────────────\n`)
 
@@ -228,7 +228,7 @@ export default {
       filesystem.remove("./index.expo.js")
       filesystem.remove("./babel.config.expo.js")
 
-      // yarn it
+      // pnpm/yarn/npm install it
       startSpinner("Unboxing npm dependencies")
       await packager.install({ onProgress: log })
       stopSpinner("Unboxing npm dependencies", "🧶")
@@ -270,8 +270,7 @@ export default {
     }
 
     // Make sure all our modifications are formatted nicely
-    const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"
-    await spawnProgress(`${npmOrYarnRun} format`, {})
+    await packager.run("format")
 
     // commit any changes
     if (parameters.options.git !== false) {
@@ -303,13 +302,13 @@ export default {
     direction(`To get started:`)
     command(`  cd ${projectName}`)
     if (expo) {
-      command(`  ${npmOrYarnRun} start`)
+      command(`  ${packager.runCmd("start")}`)
     } else {
       if (process.platform === "darwin") {
-        command(`  ${npmOrYarnRun} ios`)
+        command(`  ${packager.runCmd("ios")}`)
       }
-      command(`  ${npmOrYarnRun} android`)
-      if (isAndroidInstalled(toolbox)) {
+      command(`  ${packager.runCmd("android")}`)
+      if (!isAndroidInstalled(toolbox)) {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
         direction(

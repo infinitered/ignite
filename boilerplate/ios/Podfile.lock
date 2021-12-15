@@ -18,7 +18,7 @@ PODS:
     - ExpoModulesCore
   - Expo (43.0.3):
     - ExpoModulesCore
-  - ExpoModulesCore (0.4.8):
+  - ExpoModulesCore (0.4.9):
     - React-Core
   - FBLazyVector (0.66.3)
   - FBReactNativeSpec (0.66.3):
@@ -558,7 +558,7 @@ SPEC CHECKSUMS:
   EXLinearGradient: 4d727eacb53d19ef25b02dd810e0199b453489ce
   EXLocalization: bb38414618b30a177482c9a6f5594ec6eb0898c1
   Expo: 5316c3ecdc34eb0cad340d01dc8beec97c7e879e
-  ExpoModulesCore: a9a9bf32b2da35cd9b7299c80790c03a91ac7d15
+  ExpoModulesCore: e41ed0b72daeac74731816ad7997d639f0115a9d
   FBLazyVector: de148e8310b8b878db304ceea2fec13f2c02e3a0
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -606,6 +606,6 @@ SPEC CHECKSUMS:
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: b581f42e1476e39e797ae1f456cf61f1a778a55a
+PODFILE CHECKSUM: aa4a400acea468b90c5efc40bd980706dadbcb02
 
 COCOAPODS: 1.11.2
