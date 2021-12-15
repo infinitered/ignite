@@ -110,7 +110,7 @@ function list(options: PackageListOptions = packageListOptions): PackageListOutp
 export const packager = {
   runCmd: (command: string) => {
     if (pnpm()) {
-      return `pnpm run ${command} --log-level=error`
+      return `pnpm run ${command} --loglevel=error`
     } else if (yarn()) {
       return `yarn ${command}`
     } else {
