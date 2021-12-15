@@ -67,8 +67,6 @@
     "jest": "^27.0.6",
     "npm-run-all": "4.1.5",
     "prettier": "2.3.2",
-    "query-string": "^7.0.1",
-    "reactotron-core-client": "^2.8.10",
     "semantic-release": "^17.4.2",
     "strip-ansi": "^6.0.0",
     "ts-jest": "^27.0.4",
