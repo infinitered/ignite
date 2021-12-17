@@ -11,7 +11,6 @@ let tempDir: string
 beforeEach(() => {
   tempDir = tempy.directory()
   process.chdir(tempDir)
-  console.error(`Spinning up app in ${tempDir}`)
 })
 
 afterEach(() => {
@@ -33,6 +32,8 @@ describe("Checking for ignite. 🪔", () => {
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
   test(`ignite new ${APP_NAME}`, async () => {
+    console.error(`Spinning up app in ${tempDir}`)
+
     const result = await runIgnite(`new ${APP_NAME}`)
 
     expect(result).toContain(`Using ignite-cli`)

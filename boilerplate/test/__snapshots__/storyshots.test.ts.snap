@@ -794,7 +794,9 @@ exports[`Storyshots Button Style Presets 1`] = `
           >
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -917,8 +919,15 @@ exports[`Storyshots Button Style Presets 1`] = `
             }
           >
             <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1042,7 +1051,9 @@ exports[`Storyshots Button Style Presets 1`] = `
           >
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1204,8 +1215,15 @@ exports[`Storyshots Checkbox Behaviour 1`] = `
             }
           >
             <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1338,8 +1356,15 @@ exports[`Storyshots Checkbox Behaviour 1`] = `
             }
           >
             <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1485,8 +1510,15 @@ exports[`Storyshots Checkbox Behaviour 1`] = `
             }
           >
             <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1652,8 +1684,15 @@ exports[`Storyshots Checkbox Styling 1`] = `
           >
             <View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1788,8 +1827,15 @@ exports[`Storyshots Checkbox Styling 1`] = `
           >
             <View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1927,8 +1973,15 @@ exports[`Storyshots Checkbox Styling 1`] = `
           >
             <View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -2069,8 +2122,15 @@ exports[`Storyshots Checkbox Styling 1`] = `
           >
             <View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -2205,8 +2265,15 @@ exports[`Storyshots Checkbox Styling 1`] = `
           >
             <View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -3963,7 +4030,9 @@ exports[`Storyshots Header Behavior 1`] = `
               >
                 <View
                   accessible={true}
+                  collapsable={false}
                   focusable={true}
+                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -4183,7 +4252,9 @@ exports[`Storyshots Header Behavior 1`] = `
                 </View>
                 <View
                   accessible={true}
+                  collapsable={false}
                   focusable={true}
+                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -4580,7 +4651,9 @@ exports[`Storyshots Switch Behaviour 1`] = `
           >
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -4600,6 +4673,8 @@ exports[`Storyshots Switch Behaviour 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#ffffff",
@@ -4708,7 +4783,9 @@ exports[`Storyshots Switch Behaviour 1`] = `
           >
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -4728,6 +4805,8 @@ exports[`Storyshots Switch Behaviour 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#ffffff",
@@ -4836,7 +4915,9 @@ exports[`Storyshots Switch Behaviour 1`] = `
           >
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -4856,6 +4937,8 @@ exports[`Storyshots Switch Behaviour 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#ffffff",
@@ -4997,7 +5080,9 @@ exports[`Storyshots Switch Styling 1`] = `
             <View>
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -5017,6 +5102,8 @@ exports[`Storyshots Switch Styling 1`] = `
                 }
               >
                 <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
                   style={
                     Object {
                       "backgroundColor": "pink",
@@ -5127,7 +5214,9 @@ exports[`Storyshots Switch Styling 1`] = `
             <View>
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -5147,6 +5236,8 @@ exports[`Storyshots Switch Styling 1`] = `
                 }
               >
                 <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
                   style={
                     Object {
                       "backgroundColor": "#b1008e",
@@ -6339,11 +6430,9 @@ exports[`Storyshots TextField Labelling 1`] = `
                 Name
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 placeholder="omg your name"
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
@@ -6466,11 +6555,9 @@ exports[`Storyshots TextField Labelling 1`] = `
                 storybook.field.test
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 placeholder="storybook.placeholder.test"
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
@@ -6614,11 +6701,9 @@ exports[`Storyshots TextField Ref Forwarding 1`] = `
                 Name
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 onFocus={[Function]}
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
@@ -6797,10 +6882,8 @@ exports[`Storyshots TextField Style Overrides 1`] = `
                 First Name
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
@@ -6845,10 +6928,8 @@ exports[`Storyshots TextField Style Overrides 1`] = `
                 Last Name
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
@@ -6971,10 +7052,8 @@ exports[`Storyshots TextField Style Overrides 1`] = `
                 Name
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
@@ -7125,10 +7204,8 @@ exports[`Storyshots TextField Style Overrides 1`] = `
                 Name
               </Text>
               <TextInput
-                allowFontScaling={true}
                 onChangeText={[Function]}
                 placeholderTextColor="#CDD4DA"
-                rejectResponderTermination={true}
                 style={
                   Array [
                     Object {
