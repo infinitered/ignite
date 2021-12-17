@@ -11,11 +11,12 @@ let tempDir: string
 beforeEach(() => {
   tempDir = tempy.directory()
   process.chdir(tempDir)
+  console.error(`Spinning up app in ${tempDir}`)
 })
 
 afterEach(() => {
   process.chdir(originalDir)
-  filesystem.remove(tempDir) // clean up our mess
+  // filesystem.remove(tempDir) // clean up our mess
 })
 
 describe("Checking for ignite. 🪔", () => {
@@ -89,7 +90,7 @@ async function testSpunUpApp() {
   // run typescript
   let resultTS
   try {
-    resultTS = await run(`yarn compile`)
+    resultTS = await run(`npm run compile`)
   } catch (e) {
     resultTS = e.stdout
     console.error(resultTS) // This will only show if you run in --verbose mode.
@@ -150,8 +151,8 @@ async function testSpunUpApp() {
   await run(`git add ./app/models ./app/components && git commit -m "generated test components"`)
 
   // run the tests; if they fail, run will raise and this test will fail
-  await run(`yarn test --updateSnapshot`)
-  await run(`yarn lint`)
-  await run(`yarn compile`)
+  await run(`npm run test --updateSnapshot`)
+  await run(`npm run lint`)
+  await run(`npm run compile`)
   expect(await run("git diff HEAD")).toEqual("")
 }

@@ -83,7 +83,7 @@
     "eslint-plugin-react-native": "3.10.0",
     "expo-modules-autolinking": "^0.3.4",
     "fbjs-scripts": "3.0.0",
-    "jest": "^25.5.4",
+    "jest": "26",
     "jest-circus": "26",
     "jest-expo": "^43.0.1",
     "jetifier": "1.6.6",
@@ -98,20 +98,8 @@
     "react-native-web": "^0.16.3",
     "reactotron-core-client": "^2.8.10",
     "solidarity": "2.3.1",
+    "ts-jest": "26",
     "typescript": "4.2.3"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "setupFiles": [
-      "<rootDir>/test/setup.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/e2e"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|expo|expo-linear-gradient|@react-native|@react-native-async-storage|@react-navigation|@storybook|@react-native-community|expo-localization)"
-    ]
   },
   "prettier": {
     "printWidth": 100,

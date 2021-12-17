@@ -219,7 +219,7 @@ export default {
 
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
-      await packager.add("react-native-safe-area-context", { expo: true })
+      await packager.add("react-native-safe-area-context@3.3.2")
     } else {
       // remove the Expo-specific files -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
