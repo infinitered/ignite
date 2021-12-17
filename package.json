@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
-    "gluegun": "^4.5.0"
+    "gluegun": "^4.7.1"
   },
   "devDependencies": {
     "@rnx-kit/metro-config": "^1.2.26",
