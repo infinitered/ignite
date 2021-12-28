@@ -276,14 +276,18 @@ export default {
     // commit any changes
     if (parameters.options.git !== false) {
       startSpinner(" Backing everything up in source control")
-      await system.run(
-        log(`
-          \\rm -rf ./.git
-          git init;
-          git add -A;
-          git commit -m "New Ignite ${meta.version()} app";
-        `),
-      )
+      try {
+        await system.run(
+          log(`
+            \\rm -rf ./.git
+            git init;
+            git add -A;
+            git commit -m "New Ignite ${meta.version()} app";
+          `),
+        )
+      } catch (e) {
+        p(yellow("Unable to commit the initial changes. Please check your git username and email."))
+      }
       stopSpinner(" Backing everything up in source control", "🗄")
     }
 
