@@ -18,7 +18,6 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-43.0.0.tar.gz"
   },
   "devDependencies": {
-    "@types/react": "17.0.21",
     "@types/react-dom": "16.9.8",
     "@types/react-native": "0.64.12",
     "expo-detox-hook": "1.0.10",
