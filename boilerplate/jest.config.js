@@ -8,10 +8,6 @@ module.exports = {
       babelConfig: true,
     },
   },
-  // moduleNameMapper: {
-  //   "^@/(.*)$": "<rootDir>/$1",
-  //   "^~/(.*)$": "<rootDir>/$1",
-  // },
   transformIgnorePatterns: [
     "<rootDir>/node_modules/(react-clone-referenced-element|@react-native-community|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|react-native-code-push)",
   ],

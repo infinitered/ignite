@@ -71,6 +71,12 @@ export default {
 
     // expo or no?
     const expo = Boolean(parameters.options.expo)
+
+    // check if a packager is provided, or detect one
+    // we pass in expo because we can't use pnpm if we're using expo
+    const packagerName = parameters.options.packager || packager.detectPackager({ expo })
+    const packagerOptions = { expo, packagerName }
+
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
@@ -88,7 +94,7 @@ export default {
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")} with ${green(packager.name())}`)
+    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")} with ${green(packagerName)}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` ────────────────────────────────────────────────\n`)
 
@@ -214,12 +220,12 @@ export default {
       filesystem.rename("./e2e/reload.expo.js", "reload.js")
 
       startSpinner("Unboxing npm dependencies")
-      await packager.install({ onProgress: log })
+      await packager.install({ ...packagerOptions, onProgress: log })
       stopSpinner("Unboxing npm dependencies", "🧶")
 
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
-      await packager.add("react-native-safe-area-context@3.3.2")
+      await packager.add(`react-native-safe-area-context`, packagerOptions)
     } else {
       // remove the Expo-specific files -- not needed
       filesystem.remove(`./bin/downloadExpoApp.sh`)
@@ -230,7 +236,7 @@ export default {
 
       // pnpm/yarn/npm install it
       startSpinner("Unboxing npm dependencies")
-      await packager.install({ onProgress: log })
+      await packager.install({ ...packagerOptions, onProgress: log })
       stopSpinner("Unboxing npm dependencies", "🧶")
     }
 
@@ -252,6 +258,7 @@ export default {
         startSpinner("Installing React Native Colo Loco")
         // install react-native-colo-loco
         await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
+          ...packagerOptions,
           dev: true,
         })
         await spawnProgress(
@@ -270,7 +277,7 @@ export default {
     }
 
     // Make sure all our modifications are formatted nicely
-    await packager.run("format", { silent: !debug })
+    await packager.run("format", { ...packagerOptions, silent: !debug })
 
     // commit any changes
     if (parameters.options.git !== false) {
@@ -306,12 +313,12 @@ export default {
     direction(`To get started:`)
     command(`  cd ${projectName}`)
     if (expo) {
-      command(`  ${packager.runCmd("start")}`)
+      command(`  ${packager.runCmd("start", packagerOptions)}`)
     } else {
       if (process.platform === "darwin") {
-        command(`  ${packager.runCmd("ios")}`)
+        command(`  ${packager.runCmd("ios", packagerOptions)}`)
       }
-      command(`  ${packager.runCmd("android")}`)
+      command(`  ${packager.runCmd("android", packagerOptions)}`)
       if (!isAndroidInstalled(toolbox)) {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
