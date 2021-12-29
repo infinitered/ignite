@@ -60,7 +60,6 @@
     "@react-native-community/cli-platform-ios": "^6.2.0",
     "@rnx-kit/metro-config": "^1.2.26",
     "@rnx-kit/metro-resolver-symlinks": "^0.1.15",
-    "@storybook/addon-storyshots": "6.1.10",
     "@storybook/react-native": "5.3.23",
     "@storybook/react-native-server": "5.3.23",
     "@types/i18n-js": "3.0.3",

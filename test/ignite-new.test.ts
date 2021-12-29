@@ -15,7 +15,7 @@ beforeEach(() => {
 
 afterEach(() => {
   process.chdir(originalDir)
-  // filesystem.remove(tempDir) // clean up our mess
+  filesystem.remove(tempDir) // clean up our mess
 })
 
 describe("Checking for ignite. 🪔", () => {
@@ -32,8 +32,6 @@ describe("Checking for ignite. 🪔", () => {
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
   test(`ignite new ${APP_NAME}`, async () => {
-    console.error(`Spinning up app in ${tempDir}`)
-
     const result = await runIgnite(`new ${APP_NAME}`)
 
     expect(result).toContain(`Using ignite-cli`)
@@ -152,7 +150,7 @@ async function testSpunUpApp() {
   await run(`git add ./app/models ./app/components && git commit -m "generated test components"`)
 
   // run the tests; if they fail, run will raise and this test will fail
-  await run(`npm run test --updateSnapshot`)
+  await run(`npm run test`)
   await run(`npm run lint`)
   await run(`npm run compile`)
   expect(await run("git diff HEAD")).toEqual("")
