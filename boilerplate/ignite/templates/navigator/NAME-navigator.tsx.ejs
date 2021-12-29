@@ -9,7 +9,7 @@ export type <%= props.pascalCaseName %>ParamList = {
 }
 
 const Stack = createStackNavigator<<%= props.pascalCaseName %>ParamList>()
-export const <%= props.pascalCaseName %> = () => {
+export const <%= props.pascalCaseName %>Navigator = () => {
   return (
     <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false, }}>
       <Stack.Screen name="demo" component={DemoScreen} />
