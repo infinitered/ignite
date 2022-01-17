@@ -51,13 +51,16 @@ module.exports = {
     const npmVersion = npmPath && (await run("npm --version", { trim: true }))
     const yarnPath = which("yarn")
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
+    const pnpmPath = which("pnpm")
+    const pnpmVersion = pnpmPath && (await run("pnpm --version", { trim: true }))
 
     const nodeInfo = [column1("node"), column2(nodeVersion), column3(nodePath)]
     const npmInfo = [column1("npm"), column2(npmVersion), column3(npmPath || "not installed")]
     const yarnInfo = [column1("yarn"), column2(yarnVersion), column3(yarnPath || "not installed")]
+    const pnpmInfo = [column1("pnpm"), column2(pnpmVersion), column3(pnpmPath || "not installed")]
 
-    async function packageInfo(npmOrYarn: "npm" | "yarn") {
-      return (await packager.list({ packager: npmOrYarn, global: true })).map((nameAndVersion) => [
+    async function packageInfo(packagerName: "npm" | "yarn" | "pnpm") {
+      return (await packager.list({ packagerName, global: true })).map((nameAndVersion) => [
         column1("  " + nameAndVersion[0]),
         column2(nameAndVersion[1]),
         column3(""),
@@ -65,11 +68,15 @@ module.exports = {
     }
     const npmPackages = npmPath ? await packageInfo("npm") : []
     const yarnPackages = yarnPath ? await packageInfo("yarn") : []
+    // TODO: list pnpm global packages in doctor output
+    const pnpmPackages = pnpmPath
+      ? [[column1("  "), column2("<no pnpm global package info available>"), column3("")]]
+      : []
     const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
 
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
-    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages])
+    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages, pnpmInfo, ...pnpmPackages])
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which("ignite")

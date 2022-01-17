@@ -4,65 +4,149 @@ import { spawnProgress } from "./spawn"
 // we really need a packager core extension on Gluegun
 // in the meantime, we'll use this hacked together version
 
-type PackageInstallOptions = {
-  dev?: boolean
-  expo?: boolean
+// Expo doesn't support pnpm, so we'll use yarn or npm
+type PackageOptions =
+  | {
+      packagerName?: "npm" | "yarn" | "pnpm"
+      dev?: boolean
+      expo?: false
+      global?: boolean
+      silent?: boolean
+    }
+  | {
+      packagerName?: "npm" | "yarn"
+      dev?: boolean
+      expo?: true
+      global?: boolean
+      silent?: boolean
+    }
+
+type PackageRunOptions = PackageOptions & {
   onProgress?: (out: string) => void
 }
-const packageInstallOptions: PackageInstallOptions = {
+const packageInstallOptions: PackageRunOptions = {
   dev: false,
   expo: false,
   onProgress: (out: string) => console.log(out),
 }
 
-type PackageListOptions = {
-  packager?: "npm" | "yarn"
-  global?: boolean
-}
-const packageListOptions: PackageListOptions = {
+const packageListOptions: PackageOptions = {
   global: false,
 }
 
 let isYarn
-function yarn() {
+function yarnAvailable() {
   if (isYarn !== undefined) return isYarn
   isYarn = Boolean(system.which("yarn"))
   return isYarn
 }
 
-function add(pkg: string, options: PackageInstallOptions = packageInstallOptions) {
-  if (options.expo) {
-    return `npx expo-cli install ${pkg}`
-  } else if (yarn()) {
-    const dev = options.dev ? " --dev" : ""
-    return `yarn add ${pkg}${dev}`
+let isPnpm
+function pnpmAvailable() {
+  if (isPnpm !== undefined) return isPnpm
+  isPnpm = Boolean(system.which("pnpm"))
+  return isPnpm
+}
+
+function detectPackager(options: PackageOptions): "npm" | "yarn" | "pnpm" {
+  // Expo doesn't support pnpm, so we'll use yarn or npm
+  if (!options?.expo && pnpmAvailable()) {
+    return "pnpm"
+  } else if (yarnAvailable()) {
+    return "yarn"
   } else {
-    const dev = options.dev ? " --save-dev" : ""
-    return `npm install ${pkg}${dev}`
+    return "npm"
   }
 }
 
-function remove(pkg: string, options: PackageInstallOptions = packageInstallOptions) {
+/**
+ *
+ * Returns a string command to run a generic install with a packager of your choice (or auto-detects).
+ *
+ * For example, `yarn add ramda` or `npm install ramda`.
+ *
+ */
+function addCmd(pkg: string, options: PackageRunOptions = packageInstallOptions) {
+  const silent = options.silent ? " --silent" : ""
+
+  let cmd
+
   if (options.expo) {
-    return `npx expo-cli uninstall ${pkg}`
-  } else if (yarn()) {
-    return `yarn remove ${pkg}`
+    cmd = `npx expo-cli install`
+  } else if (options.packagerName === "pnpm") {
+    cmd = `pnpm install`
+  } else if (options.packagerName === "yarn") {
+    cmd = `yarn add`
+  } else if (options.packagerName === "npm") {
+    cmd = `npm install`
   } else {
-    return `npm uninstall ${pkg}`
+    // neither expo nor a packagerName was provided, so let's detect one
+    return addCmd(pkg, { ...options, expo: false, packagerName: detectPackager(options) })
   }
+
+  return `${cmd} ${pkg}${options.dev ? " --save-dev" : ""}${silent}`
 }
 
-function install() {
-  if (yarn()) {
-    return `yarn install -s`
+/**
+ *
+ * Returns a string command to remove a package with a packager of your choice (or auto-detects).
+ *
+ * For example, `yarn remove ramda` or `npm uninstall ramda`.
+ *
+ */
+function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions) {
+  const silent = options.silent ? " --silent" : ""
+
+  let cmd
+
+  if (options.expo) {
+    cmd = "npx expo-cli uninstall"
+  } else if (options.packagerName === "pnpm") {
+    cmd = "pnpm uninstall"
+  } else if (options.packagerName === "yarn") {
+    cmd = `yarn remove`
+  } else if (options.packagerName === "npm") {
+    cmd = `npm uninstall`
   } else {
-    return `npm install`
+    // neither expo nor a packagerName was provided, so let's detect one
+    return removeCmd(pkg, { ...options, expo: false, packagerName: detectPackager(options) })
+  }
+
+  return `${cmd} ${pkg}${options.dev ? " --save-dev" : ""}${silent}`
+}
+
+/**
+ *
+ * Returns a string command to run a generic install with a packager of your choice (or auto-detects).
+ *
+ * For example, `yarn install` or `npm install`.
+ *
+ */
+function installCmd(options: PackageRunOptions) {
+  const silent = options.silent ? " --silent" : ""
+
+  if (options.expo) {
+    return `npx expo-cli install${silent}`
+  } else if (options.packagerName === "pnpm") {
+    return `pnpm install${silent}`
+  } else if (options.packagerName === "yarn") {
+    return `yarn install${silent}`
+  } else if (options.packagerName === "npm") {
+    return `npm install${silent}`
+  } else {
+    return installCmd({ ...options, expo: false, packagerName: detectPackager(options) })
   }
 }
 
 type PackageListOutput = [string, (string) => [string, string][]]
-function list(options: PackageListOptions = packageListOptions): PackageListOutput {
-  if (options.packager === "yarn" || (options.packager === undefined && yarn())) {
+function list(options: PackageOptions = packageListOptions): PackageListOutput {
+  if (options.packagerName === "pnpm") {
+    // TODO: pnpm list?
+    throw new Error("pnpm list is not supported yet")
+  } else if (
+    options.packagerName === "yarn" ||
+    (options.packagerName === undefined && yarnAvailable())
+  ) {
     return [
       `yarn${options.global ? " global" : ""} list`,
       (output: string): [string, string][] => {
@@ -90,29 +174,48 @@ function list(options: PackageListOptions = packageListOptions): PackageListOutp
   }
 }
 
+/**
+ * Returns a string command to run a script via a packager of your choice.
+ */
+function runCmd(command: string, options: PackageOptions) {
+  const silent = options.silent ? "--silent" : ""
+  if (options.packagerName === "pnpm") {
+    return `pnpm run ${command} ${silent}`
+  } else if (options.packagerName === "yarn") {
+    return `yarn ${command} ${silent}`
+  } else {
+    // defaults to npm run
+    return `npm run ${command} ${silent}`
+  }
+}
+
 export const packager = {
-  run: async (command: string, options: PackageInstallOptions = packageInstallOptions) => {
-    if (yarn()) {
-      return spawnProgress(`yarn ${command}`, { onProgress: options.onProgress })
-    } else {
-      return spawnProgress(`npm run ${command}`, { onProgress: options.onProgress })
-    }
+  run: async (command: string, options: PackageRunOptions = packageInstallOptions) => {
+    return spawnProgress(`${runCmd(command, options)}`, {
+      onProgress: options.onProgress,
+    })
   },
-  add: async (pkg: string, options: PackageInstallOptions = packageInstallOptions) => {
-    const cmd = add(pkg, options)
+  add: async (pkg: string, options: PackageRunOptions = packageInstallOptions) => {
+    const cmd = addCmd(pkg, options)
     return spawnProgress(cmd, { onProgress: options.onProgress })
   },
-  remove: async (pkg: string, options: PackageInstallOptions = packageInstallOptions) => {
-    const cmd = remove(pkg, options)
+  remove: async (pkg: string, options: PackageRunOptions = packageInstallOptions) => {
+    const cmd = removeCmd(pkg, options)
     return spawnProgress(cmd, { onProgress: options.onProgress })
   },
-  install: async (options: PackageInstallOptions = packageInstallOptions) => {
-    const cmd = install()
+  install: async (options: PackageRunOptions = packageInstallOptions) => {
+    const cmd = installCmd(options)
     return spawnProgress(cmd, { onProgress: options.onProgress })
   },
-  list: async (options: PackageListOptions = packageListOptions) => {
+  list: async (options: PackageOptions = packageListOptions) => {
     const [cmd, parseFn] = list(options)
     return parseFn(await spawnProgress(cmd, {}))
   },
-  is: (packageManager: "yarn" | "npm"): boolean => (packageManager === "yarn" ? yarn() : !yarn()),
+  has: (packageManager: "yarn" | "npm" | "pnpm"): boolean => {
+    if (packageManager === "yarn") return yarnAvailable()
+    if (packageManager === "pnpm") return pnpmAvailable()
+    return true
+  },
+  detectPackager,
+  runCmd,
 }
