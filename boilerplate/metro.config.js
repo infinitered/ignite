@@ -13,17 +13,11 @@ const { getDefaultConfig } = require("metro-config")
 
 module.exports = (async () => {
   const defaultConfig = await getDefaultConfig()
-  const symlinkSupport = makeMetroConfig({
+  return makeMetroConfig({
     projectRoot: __dirname,
     resolver: {
       resolveRequest: MetroSymlinksResolver(),
-    },
-  })
-
-  return {
-    resolver: {
       assetExts: [...defaultConfig.resolver.assetExts, "bin"],
     },
-    ...symlinkSupport,
-  }
+  })
 })()
