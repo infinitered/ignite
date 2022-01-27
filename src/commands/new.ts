@@ -323,7 +323,7 @@ export default {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
         direction(
-          "instructions at https://facebook.github.io/react-native/docs/getting-started.html",
+          "instructions at https://facebook.github.io/react-native/docs/getting-started",
         )
         direction(
           "before using ignite. You won't be able to run Android successfully until you have.",
