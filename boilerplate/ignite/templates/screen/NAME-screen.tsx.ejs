@@ -20,6 +20,8 @@ const ROOT: ViewStyle = {
 //     `<Stack.Screen name="<%= props.camelCaseName %>" component={<%= props.pascalCaseName%>Screen} />`
 // Hint: Look for the 🔥!
 
+// REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
+// @ts-ignore
 export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<NavigatorParamList, "<%= props.camelCaseName %>">> = observer(function <%= props.pascalCaseName %>Screen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
