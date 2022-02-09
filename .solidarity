@@ -5,7 +5,7 @@
       {
         "rule": "cli",
         "binary": "node",
-        "semver": ">=16.14.0"
+        "semver": ">=14.15.1"
       }
     ]
   }
