@@ -17,7 +17,7 @@ _NOTE: Ignite CLI version 6.0 now includes the boilerplate -- read [the blog pos
 Ignite apps include the following rock-solid technical decisions out of the box:
 
 - React Native
-- React Navigation 5
+- React Navigation 6
 - MobX-State-Tree [(Why not Redux?)](https://github.com/infinitered/ignite/blob/master/docs/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
