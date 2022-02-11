@@ -14,7 +14,13 @@
     "target": "esnext",
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["app/*"],
+      "~/storybook/*": ["storybook/*"],
+      "~/test/*": ["test/*"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["index.js", "app", "test", "storybook"]

@@ -11,5 +11,24 @@ module.exports = {
       },
     ],
     ["@babel/plugin-proposal-optional-catch-binding"],
+    [
+      "babel-plugin-root-import",
+      {
+        paths: [
+          {
+            rootPathSuffix: "./app/",
+            rootPathPrefix: "~/",
+          },
+          {
+            rootPathSuffix: "./storybook/",
+            rootPathPrefix: "~/storybook/",
+          },
+          {
+            rootPathSuffix: "./test/",
+            rootPathPrefix: "~/test/",
+          },
+        ],
+      },
+    ],
   ],
 }
