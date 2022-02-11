@@ -10,8 +10,8 @@ import {
   GradientBackground,
   AutoImage as Image,
 } from "../../components"
-import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
+import { spacing, typography, color } from "~/theme"
 
 const bowserLogo = require("./bowser.png")
 

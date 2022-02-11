@@ -1,8 +1,8 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { View } from "react-native"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
-import { color } from "../../theme"
+import { color } from "~/theme"
+import { Story, StoryScreen, UseCase } from "~/storybook/views"
 import { BulletItem } from "./bullet-item"
 
 declare let module

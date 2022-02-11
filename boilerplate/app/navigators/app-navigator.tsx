@@ -8,8 +8,8 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
-import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
+import { WelcomeScreen, DemoScreen, DemoListScreen } from "~/screens"
+import { navigationRef, useBackButtonHandler } from "~/navigators"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
