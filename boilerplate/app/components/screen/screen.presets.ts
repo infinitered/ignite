@@ -48,6 +48,16 @@ export const presets = {
     } as ViewStyle,
     inner: { justifyContent: "flex-start", alignItems: "stretch" } as ViewStyle,
   },
+
+  /**
+   * No scrolling if content fits the screen, otherwise it scrolls.
+   *
+   * Pick this one if you are unsure your content will fit the screen or if you want to automatically adapt to screen size.
+   */
+  auto: {
+    // When using 'auto' the 'scroll' ViewStyles will apply.
+    offset: 0.92, // This will providing some offset by manipulating the height comparesion so content may not overfit the screen.
+  }
 }
 
 /**

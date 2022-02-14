@@ -1,5 +1,5 @@
 import * as React from "react"
-import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from "react-native"
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, Dimensions } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
@@ -32,6 +32,16 @@ function ScreenWithScrolling(props: ScreenProps) {
   const backgroundStyle = props.backgroundColor ? { backgroundColor: props.backgroundColor } : {}
   const insetStyle = { paddingTop: props.unsafe ? 0 : insets.top }
 
+  // The followings for <Screen preset='auto'/>
+  // This will automatically disables scrolling if content fits the screen.
+  const { height } = Dimensions.get('window');
+  const [screenHeight, setScreenHeight] = React.useState(0);
+  const scrollEnabled = props.preset === 'scroll' || props.preset === 'auto' && screenHeight > height * presets.auto.offset;
+
+  const onContentSizeChange = (width, height) => {
+    setScreenHeight(height);
+  };
+
   return (
     <KeyboardAvoidingView
       style={[preset.outer, backgroundStyle]}
@@ -43,6 +53,8 @@ function ScreenWithScrolling(props: ScreenProps) {
         <ScrollView
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}
+          scrollEnabled={scrollEnabled}
+          onContentSizeChange={onContentSizeChange}
           keyboardShouldPersistTaps={props.keyboardShouldPersistTaps || "handled"}
         >
           {props.children}
