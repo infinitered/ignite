@@ -314,7 +314,9 @@ export default {
 
     if (coloLoco) {
       p()
+      direction(`React Native Colo Loco`)
       p("React Native Colo Loco is no longer installed by default.")
+      p("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
       p("However, you can install it with the following commands in your app folder:")
       p()
       command(`  ${packager.addCmd("-g react-native-colo-loco")}`)
