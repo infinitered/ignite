@@ -18,7 +18,6 @@ const cliDependencyVersions: { [k: string]: string } = {
   expo: "4",
   podInstall: "0.1",
   rnRename: "2",
-  coloLoco: "latest",
 }
 
 export default {
@@ -81,13 +80,6 @@ export default {
     const boilerplatePath = path(ignitePath, "boilerplate")
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     log({ expo, ignitePath, boilerplatePath })
-
-    // React Native Colo Loco allows us to colocate our native files with our
-    // javascript/typescript files.
-    // Learn more here: https://github.com/jamonholmgren/react-native-colo-loco
-    // colo-loco is enabled by default, but you can do --no-colo-loco
-    // note: we don't support Colo Loco in Expo (yet) or Windows (yet)
-    const coloLoco = parameters.options.coloLoco !== false && !expo && process.platform !== "win32"
 
     // welcome everybody!
     p("\n")
@@ -254,20 +246,6 @@ export default {
       await spawnProgress(renameCmd, { onProgress: log })
       stopSpinner(" Writing your app name in the sand", "🏝")
 
-      if (coloLoco) {
-        startSpinner("Installing React Native Colo Loco")
-        // install react-native-colo-loco
-        await packager.add(`react-native-colo-loco@${cliDependencyVersions.coloLoco}`, {
-          ...packagerOptions,
-          dev: true,
-        })
-        await spawnProgress(
-          `npx install-colo-loco@${cliDependencyVersions.coloLoco} --defaults`,
-          {},
-        )
-        stopSpinner("Installing React Native Colo Loco", "🤪")
-      }
-
       // install pods
       startSpinner("Baking CocoaPods")
       await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
@@ -328,6 +306,23 @@ export default {
         )
       }
     }
+
+    // React Native Colo Loco is no longer installed with Ignite, but
+    // we will give instructions on how to install it if they
+    // pass in `--colo-loco`
+    const coloLoco = Boolean(parameters.options.coloLoco)
+
+    if (coloLoco) {
+      p()
+      direction(`React Native Colo Loco`)
+      p("React Native Colo Loco is no longer installed by default.")
+      p("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
+      p("However, you can install it with the following commands in your app folder:")
+      p()
+      command(`  ${packager.addCmd("-g react-native-colo-loco")}`)
+      command(`  ${packager.runCmd("install-colo-loco", packagerOptions)}`)
+    }
+
     p()
     p("Need additional help?")
     p()

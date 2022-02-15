@@ -218,4 +218,6 @@ export const packager = {
   },
   detectPackager,
   runCmd,
+  addCmd,
+  installCmd,
 }
