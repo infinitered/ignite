@@ -2,7 +2,7 @@ import { filesystem } from "gluegun"
 import * as tempy from "tempy"
 import { runIgnite, runError, testSpunUpApp } from "./_test-helpers"
 
-const APP_NAME = "Foo"
+const EXPO_APP_NAME = "Bar"
 
 const originalDir = process.cwd()
 let tempDir: string
@@ -29,31 +29,20 @@ describe("Checking for ignite. 🪔", () => {
   })
 })
 
-describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
-  test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME}`)
+describe("Igniting new expo app! 🔥", () => {
+  test(`ignite new ${EXPO_APP_NAME} --expo`, async () => {
+    const result = await runIgnite(`new ${EXPO_APP_NAME} --expo`)
 
-    expect(result).toContain(`Using ignite-cli`)
-    expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
+    expect(result).toContain(`Using expo-cli`)
+    expect(result).toContain(`Ignite CLI ignited ${EXPO_APP_NAME}`)
 
     // now let's examine the spun-up app
-    process.chdir(APP_NAME)
+    process.chdir(EXPO_APP_NAME)
 
     const dirs = filesystem.list(`.`)
-    expect(dirs).toContain("ios")
-    expect(dirs).toContain("android")
+    expect(dirs).not.toContain("ios")
+    expect(dirs).not.toContain("android")
     expect(dirs).toContain("app")
-
-    // check the android bundle id has changed
-    const androidPackageName = APP_NAME.toLowerCase()
-    const mainAppJava = filesystem.read(
-      `./android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
-    )
-    expect(mainAppJava).toContain(`package com.${androidPackageName};`)
-    const mainActivityJava = filesystem.read(
-      `./android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
-    )
-    expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
 
     await testSpunUpApp()
 
