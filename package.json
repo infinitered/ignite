@@ -35,7 +35,7 @@
     "watch": "jest --watch",
     "coverage": "jest --coverage",
     "ci:lint": "eslint src test --ext .ts && yarn format",
-    "ci:test": "yarn build && yarn ci:lint && jest && yarn clean",
+    "ci:test": "yarn build && yarn ci:lint && jest --runInBand && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
     "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template"
