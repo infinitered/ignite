@@ -31,7 +31,7 @@ describe("Checking for ignite. 🪔", () => {
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
   test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME}`)
+    const result = await runIgnite(`new ${APP_NAME} --debug`)
 
     expect(result).toContain(`Using ignite-cli`)
     expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)

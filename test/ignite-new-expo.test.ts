@@ -31,7 +31,7 @@ describe("Checking for ignite. 🪔", () => {
 
 describe("Igniting new expo app! 🔥", () => {
   test(`ignite new ${EXPO_APP_NAME} --expo`, async () => {
-    const result = await runIgnite(`new ${EXPO_APP_NAME} --expo`)
+    const result = await runIgnite(`new ${EXPO_APP_NAME} --expo --debug`)
 
     expect(result).toContain(`Using expo-cli`)
     expect(result).toContain(`Ignite CLI ignited ${EXPO_APP_NAME}`)
