@@ -36,7 +36,7 @@ function ScreenWithScrolling(props: ScreenProps) {
   // This will automatically disables scrolling if content fits the screen.
   const { height } = Dimensions.get('window');
   const [screenHeight, setScreenHeight] = React.useState(0);
-  const scrollEnabled = props.preset === 'scroll' || props.preset === 'auto' && screenHeight > height * presets.auto.offset;
+  const scrollEnabled = props.preset === 'scroll' || props.preset === 'auto' && screenHeight > height * presets.auto.offset.percent - presets.auto.offset.point;
 
   const onContentSizeChange = (width, height) => {
     setScreenHeight(height);

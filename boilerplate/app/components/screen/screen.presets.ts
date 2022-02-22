@@ -53,10 +53,17 @@ export const presets = {
    * No scrolling if content fits the screen, otherwise it scrolls.
    *
    * Pick this one if you are unsure your content will fit the screen or if you want to automatically adapt to screen size.
+   * 
+   * Offset options can be applied to tweak the scroll toggling so content may not overfit the screen.
    */
   auto: {
     // When using 'auto' the 'scroll' ViewStyles will apply.
-    offset: 0.92, // This will providing some offset by manipulating the height comparesion so content may not overfit the screen.
+    // outer: {} as ViewStyle,
+    // inner: {} as ViewStyle,
+    offset: {
+      percent: 0.92, // Manipulates the height comparison by percentage values. For example, 0.92 enables scroll when the contents height reaches 92% of the screen.
+      point: 0, // Same as above but offsets the scroll break point value by the density-independent pixels.
+    } as const,
   }
 }
 
