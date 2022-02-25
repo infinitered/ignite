@@ -8,13 +8,14 @@ const originalDir = process.cwd()
 let tempDir: string
 
 beforeEach(() => {
-  tempDir = tempy.directory()
+  tempDir = tempy.directory({ prefix: "ignite-expo-" })
   process.chdir(tempDir)
 })
 
 afterEach(() => {
   process.chdir(originalDir)
-  filesystem.remove(tempDir) // clean up our mess
+  console.error({ tempDir })
+  // filesystem.remove(tempDir) // clean up our mess
 })
 
 describe("Checking for ignite. 🪔", () => {

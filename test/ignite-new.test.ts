@@ -8,7 +8,7 @@ const originalDir = process.cwd()
 let tempDir: string
 
 beforeEach(() => {
-  tempDir = tempy.directory()
+  tempDir = tempy.directory({ prefix: "ignite-" })
   process.chdir(tempDir)
 })
 
