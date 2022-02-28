@@ -202,6 +202,10 @@ export default {
       // rename the babel.config.expo.js
       filesystem.rename("./babel.config.expo.js", "babel.config.js")
 
+      // remove the metro config js, which causes problems with publishing
+      // see: https://github.com/infinitered/ignite/issues/1904
+      filesystem.remove("./metro.config.js")
+
       await toolbox.patching.update("./tsconfig.json", (config) => {
         config.include[0] = "App.js"
         return config
