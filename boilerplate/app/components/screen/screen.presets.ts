@@ -54,7 +54,7 @@ export const presets = {
    *
    * Pick this one if you are unsure your content will fit the screen or if you want to automatically adapt to screen size.
    * 
-   * Offset options can be applied to tweak the scroll toggling so content may not overfit the screen.
+   * Offset options can be applied to tweak scroll toggling so content may not overfit the screen.
    */
   auto: {
     // When using 'auto' the 'scroll' ViewStyles will apply.
