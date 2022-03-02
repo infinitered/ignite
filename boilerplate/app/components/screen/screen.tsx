@@ -34,13 +34,19 @@ function ScreenWithScrolling(props: ScreenProps) {
 
   // The followings for <Screen preset='auto'/>
   // This will automatically disables scrolling if content fits the screen.
-  const { height } = Dimensions.get('window');
-  const [screenHeight, setScreenHeight] = React.useState(0);
-  const scrollEnabled = props.preset === 'scroll' || props.preset === 'auto' && screenHeight > height * presets.auto.offset.percent - presets.auto.offset.point;
+  const { height } = Dimensions.get('window')
+  const [scrollEnabled, setScrollEnabled] = React.useState(true)
 
-  const onContentSizeChange = (width, height) => {
-    setScreenHeight(height);
-  };
+  const onContentSizeChange = (contentWidth, contentHeight) => {
+    if (props.preset === 'auto'){
+      // check whether if content fits the screen
+      const contentFitsScreen = contentHeight > height * presets.auto.offset.percent - presets.auto.offset.point
+      
+      // then toggle scroll state according to it, make sure it's not rendering twice
+      if (scrollEnabled && !contentFitsScreen) setScrollEnabled(false)
+      else if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -53,9 +59,9 @@ function ScreenWithScrolling(props: ScreenProps) {
         <ScrollView
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}
-          scrollEnabled={scrollEnabled}
-          onContentSizeChange={onContentSizeChange}
           keyboardShouldPersistTaps={props.keyboardShouldPersistTaps || "handled"}
+          onContentSizeChange={onContentSizeChange}
+          scrollEnabled={scrollEnabled}
         >
           {props.children}
         </ScrollView>
