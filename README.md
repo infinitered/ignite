@@ -74,7 +74,6 @@ If you run into problems, first search the issues in this repository. If you don
 
 ## No time to learn React Native? Hire Infinite Red for your next project
 
-No time to learn React Native? Hire Infinite Red for your next project
 We get it – sometimes there just isn’t enough time on a project to learn the ins and outs of a new framework. Infinite Red’s here to help! Our experienced team of React Native engineers have worked with companies like Microsoft, Zoom, and Mercari to bring even some of the most complex projects to life.
 
 Whether it’s running a full project or training a team on React Native, we can help you solve your company’s toughest engineering challenges – and make it a great experience at the same time.
