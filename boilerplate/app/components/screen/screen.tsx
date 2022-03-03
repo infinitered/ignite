@@ -35,18 +35,33 @@ function ScreenWithScrolling(props: ScreenProps) {
   // The followings for <Screen preset='auto'/>
   // This will automatically disables scrolling if content fits the screen.
   const { height } = Dimensions.get('window')
+  const screenHeight = React.useRef(null)
   const [scrollEnabled, setScrollEnabled] = React.useState(true)
 
-  const onContentSizeChange = (contentWidth, contentHeight) => {
+  const updateScrollState = () => {
     if (props.preset === 'auto'){
       // check whether if content fits the screen
-      const contentFitsScreen = contentHeight > height * presets.auto.offset.percent - presets.auto.offset.point
-      
+      const contentFitsScreen = screenHeight.current > height * presets.auto.offset.percent - presets.auto.offset.point
+        
       // then toggle scroll state according to it, make sure it's not rendering twice
       if (scrollEnabled && !contentFitsScreen) setScrollEnabled(false)
       else if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
     }
+    else if (!scrollEnabled) setScrollEnabled(true) // set back initial state in case it's locked 
   }
+
+  const onContentSizeChange = (contentWidth, contentHeight) => {
+    // update screen height ref
+    screenHeight.current = contentHeight
+
+    // then update scroll state
+    updateScrollState()
+  }
+
+  // update scroll state on every render 
+  // when screenHeight isn't null
+  if (screenHeight.current !== null) 
+    updateScrollState()
 
   return (
     <KeyboardAvoidingView
