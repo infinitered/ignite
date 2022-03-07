@@ -185,6 +185,8 @@ export default {
     if (expo) {
       const expoJson = filesystem.read("./package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
+      delete packageJson.scripts["build-ios"]
+      delete packageJson.scripts["build-android"]
     }
 
     filesystem.write("./package.json", packageJson)
@@ -201,6 +203,12 @@ export default {
 
       // rename the babel.config.expo.js
       filesystem.rename("./babel.config.expo.js", "babel.config.js")
+
+      // replaces the custom metro config js, which causes problems with
+      // publishing to Expo, with the default Expo metro config
+      // see: https://github.com/infinitered/ignite/issues/1904
+      filesystem.remove("./metro.config.js")
+      filesystem.rename("./metro.config.expo.js", "metro.config.js")
 
       await toolbox.patching.update("./tsconfig.json", (config) => {
         config.include[0] = "App.js"
@@ -225,6 +233,7 @@ export default {
       filesystem.remove("./webpack.config.js")
       filesystem.remove("./index.expo.js")
       filesystem.remove("./babel.config.expo.js")
+      filesystem.remove("./metro.config.expo.js")
 
       // pnpm/yarn/npm install it
       startSpinner("Unboxing npm dependencies")
