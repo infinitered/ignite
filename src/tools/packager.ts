@@ -178,14 +178,14 @@ function list(options: PackageOptions = packageListOptions): PackageListOutput {
  * Returns a string command to run a script via a packager of your choice.
  */
 function runCmd(command: string, options: PackageOptions) {
-  const silent = options.silent ? "--silent" : ""
+  const silent = options.silent ? " --silent" : ""
   if (options.packagerName === "pnpm") {
-    return `pnpm run ${command} ${silent}`
+    return `pnpm run ${command}${silent}`
   } else if (options.packagerName === "yarn") {
-    return `yarn ${command} ${silent}`
+    return `yarn ${command}${silent}`
   } else {
     // defaults to npm run
-    return `npm run ${command} ${silent}`
+    return `npm run ${command}${silent}`
   }
 }
 

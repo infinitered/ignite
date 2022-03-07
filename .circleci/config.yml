@@ -7,16 +7,50 @@ defaults: &defaults
   docker:
     # Choose the version of Node you want here
     - image: circleci/node:14.15.1
-  working_directory: ~/repo
+  working_directory: /mnt/ramdisk/repo
 
-mac: &mac
-  macos:
-    xcode: "13.2.1"
-  working_directory: ~/repo
+# mac: &mac
+#   macos:
+#     xcode: "13.2.1"
+#   working_directory: ~/repo
 
 version: 2
 jobs:
   tests:
+    <<: *defaults
+    parallelism: 4
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          name: Save node modules
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          # We don't want to install CocoaPods on ubuntu where we run the tests.
+          name: Set up dummy `pod` command
+          command: |
+            sudo ln /bin/true /usr/local/bin/pod
+      - run:
+          name: Ensure git user is configured
+          command: |
+            git config --global user.email "ci@infinite.red"
+            git config --global user.name "Infinite Red"
+      - run:
+          name: Run tests
+          command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
+          no_output_timeout: 5m
+
+  tests_expo:
     <<: *defaults
     steps:
       - checkout
@@ -46,8 +80,8 @@ jobs:
             git config --global user.name "Infinite Red"
       - run:
           name: Run tests
-          command: yarn ci:test
-          no_output_timeout: 15m
+          command: yarn ci:prep && yarn ci:test:expo && yarn clean
+          no_output_timeout: 5m
 
   # detox:
   #   <<: *mac
@@ -128,10 +162,12 @@ workflows:
   test_and_release:
     jobs:
       - tests
+      - tests_expo
       # - detox # disabled until we can figure out detox CircleCI problems
       - publish:
           requires:
             - tests
+            - tests_expo
           filters:
             branches:
               only: master

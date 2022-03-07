@@ -24,12 +24,22 @@ export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
-    const { exists, path, remove } = filesystem
+    const { exists, path, remove, rename, copy, read, write } = filesystem
     const { info, colors } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
 
     // start tracking performance
     const perfStart = new Date().getTime()
+
+    // debug?
+    const debug = Boolean(parameters.options.debug)
+    const log = <T = unknown>(m: T): T => {
+      debug && info(` ${m}`)
+      return m
+    }
+
+    // log raw parameters for debugging
+    log(`ignite command: ${parameters.argv.join(" ")}`)
 
     // retrieve project name from toolbox
     const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
@@ -38,6 +48,7 @@ export default {
 
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     if (parameters.options.overwrite) {
+      log(`Removing existing project ${projectName}`)
       remove(projectName)
     } else if (exists(projectName)) {
       const alreadyExists = `Error: There's already a folder with the name "${projectName}". To force overwriting that folder, run with --overwrite.`
@@ -54,13 +65,6 @@ export default {
       p(gray(`To use the old CLI to support different boilerplates, try:`))
       p(cyan(`npx ignite-cli@3 new ${projectName} --boilerplate ${bname}`))
       process.exit(1)
-    }
-
-    // debug?
-    const debug = Boolean(parameters.options.debug)
-    const log = (m) => {
-      debug && info(` ${m}`)
-      return m
     }
 
     // custom bundle identifier (android only)
@@ -152,17 +156,17 @@ export default {
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
     const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
-    if (!filesystem.exists(targetIgnorePath)) {
+    if (!exists(targetIgnorePath)) {
       // gitignore in dev mode?
       let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
 
       // gitignore in release mode?
-      if (!filesystem.exists(sourceIgnorePath)) {
+      if (!exists(sourceIgnorePath)) {
         sourceIgnorePath = log(path(boilerplatePath, ".gitignore.template"))
       }
 
       // copy the file over
-      filesystem.copy(sourceIgnorePath, targetIgnorePath)
+      copy(sourceIgnorePath, targetIgnorePath)
     }
 
     // Update package.json:
@@ -174,7 +178,7 @@ export default {
     //   add it.
     // - If Expo, we also merge in our extra expo stuff.
     // - Then write it back out.
-    let packageJsonRaw = filesystem.read("package.json")
+    let packageJsonRaw = read("package.json")
     packageJsonRaw = packageJsonRaw
       .replace(/HelloWorld/g, projectName)
       .replace(/hello-world/g, projectNameKebab)
@@ -183,32 +187,32 @@ export default {
     const merge = require("deepmerge-json")
 
     if (expo) {
-      const expoJson = filesystem.read("./package.expo.json", "json")
+      const expoJson = read("./package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
       delete packageJson.scripts["build-ios"]
       delete packageJson.scripts["build-android"]
     }
 
-    filesystem.write("./package.json", packageJson)
+    write("./package.json", packageJson)
 
     // More Expo-specific changes
     if (expo) {
       // remove the ios and android folders
-      filesystem.remove("./ios")
-      filesystem.remove("./android")
+      remove("./ios")
+      remove("./android")
 
       // rename the index.js to App.js, which expo expects;
-      filesystem.rename("./index.expo.js", "App.js")
-      filesystem.remove("./index.js")
+      rename("./index.expo.js", "App.js")
+      remove("./index.js")
 
       // rename the babel.config.expo.js
-      filesystem.rename("./babel.config.expo.js", "babel.config.js")
+      rename("./babel.config.expo.js", "babel.config.js")
 
       // replaces the custom metro config js, which causes problems with
       // publishing to Expo, with the default Expo metro config
       // see: https://github.com/infinitered/ignite/issues/1904
-      filesystem.remove("./metro.config.js")
-      filesystem.rename("./metro.config.expo.js", "metro.config.js")
+      remove("./metro.config.js")
+      rename("./metro.config.expo.js", "metro.config.js")
 
       await toolbox.patching.update("./tsconfig.json", (config) => {
         config.include[0] = "App.js"
@@ -216,8 +220,8 @@ export default {
       })
 
       // use Detox Expo reload file
-      filesystem.remove("./e2e/reload.js")
-      filesystem.rename("./e2e/reload.expo.js", "reload.js")
+      remove("./e2e/reload.js")
+      rename("./e2e/reload.expo.js", "reload.js")
 
       startSpinner("Unboxing npm dependencies")
       await packager.install({ ...packagerOptions, onProgress: log })
@@ -228,12 +232,12 @@ export default {
       await packager.add(`react-native-safe-area-context`, packagerOptions)
     } else {
       // remove the Expo-specific files -- not needed
-      filesystem.remove(`./bin/downloadExpoApp.sh`)
-      filesystem.remove("./e2e/reload.expo.js")
-      filesystem.remove("./webpack.config.js")
-      filesystem.remove("./index.expo.js")
-      filesystem.remove("./babel.config.expo.js")
-      filesystem.remove("./metro.config.expo.js")
+      remove(`./bin/downloadExpoApp.sh`)
+      remove("./e2e/reload.expo.js")
+      remove("./webpack.config.js")
+      remove("./index.expo.js")
+      remove("./babel.config.expo.js")
+      remove("./metro.config.expo.js")
 
       // pnpm/yarn/npm install it
       startSpinner("Unboxing npm dependencies")
@@ -242,10 +246,10 @@ export default {
     }
 
     // remove the expo-only package.json
-    filesystem.remove("package.expo.json")
+    remove("package.expo.json")
 
     // remove the gitignore template
-    filesystem.remove(".gitignore.template")
+    remove(".gitignore.template")
 
     if (!expo) {
       // rename the app using `react-native-rename`
