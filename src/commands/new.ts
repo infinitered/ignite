@@ -185,6 +185,8 @@ export default {
     if (expo) {
       const expoJson = filesystem.read("./package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
+      delete packageJson.scripts["build-ios"]
+      delete packageJson.scripts["build-android"]
     }
 
     filesystem.write("./package.json", packageJson)
