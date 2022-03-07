@@ -32,10 +32,10 @@ export async function runError(cmd: string): Promise<string | any> {
   return `No error thrown? Output: ${resultANSI}`
 }
 
-export async function testSpunUpApp(appPath: string) {
+export async function testSpunUpApp(appPath: string, originalDir: string) {
   const runOpts = {
     pre: `cd ${appPath}`,
-    post: `cd -`,
+    post: `cd ${originalDir}`,
   }
 
   // run typescript

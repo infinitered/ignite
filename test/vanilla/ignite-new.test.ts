@@ -4,7 +4,7 @@ import { runIgnite, runError, testSpunUpApp } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 
-// const originalDir = process.cwd()
+const originalDir = process.cwd()
 let tempDir: string
 
 beforeEach(() => {
@@ -31,7 +31,7 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
   test(`ignite new ${APP_NAME}`, async () => {
     const result = await runIgnite(`new ${APP_NAME} --debug`, {
       pre: `cd ${tempDir}`,
-      post: `cd -`,
+      post: `cd ${originalDir}`,
     })
 
     expect(result).toContain(`Using ignite-cli`)
@@ -56,7 +56,7 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
     )
     expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
 
-    await testSpunUpApp(appPath)
+    await testSpunUpApp(appPath, originalDir)
 
     // we're done!
   })

@@ -4,7 +4,7 @@ import { runIgnite, testSpunUpApp } from "../_test-helpers"
 
 const EXPO_APP_NAME = "Bar"
 
-// const originalDir = process.cwd()
+const originalDir = process.cwd()
 let tempDir: string
 
 beforeEach(() => {
@@ -19,7 +19,7 @@ describe("Igniting new expo app! 🔥", () => {
   test(`ignite new ${EXPO_APP_NAME} --expo`, async () => {
     const result = await runIgnite(`new ${EXPO_APP_NAME} --expo --debug`, {
       pre: `cd ${tempDir}`,
-      post: `cd -`,
+      post: `cd ${originalDir}`,
     })
 
     expect(result).toContain(`Using expo-cli`)
@@ -35,7 +35,7 @@ describe("Igniting new expo app! 🔥", () => {
     expect(dirs).not.toContain("android")
     expect(dirs).toContain("app")
 
-    await testSpunUpApp(appPath)
+    await testSpunUpApp(appPath, originalDir)
 
     // we're done!
   })
