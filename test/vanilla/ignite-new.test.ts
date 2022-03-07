@@ -1,19 +1,17 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { runIgnite, runError, testSpunUpApp } from "./_test-helpers"
+import { runIgnite, runError, testSpunUpApp } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 
-const originalDir = process.cwd()
+// const originalDir = process.cwd()
 let tempDir: string
 
 beforeEach(() => {
   tempDir = tempy.directory({ prefix: "ignite-" })
-  process.chdir(tempDir)
 })
 
 afterEach(() => {
-  process.chdir(originalDir)
   filesystem.remove(tempDir) // clean up our mess
 })
 
@@ -31,15 +29,18 @@ describe("Checking for ignite. 🪔", () => {
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
   test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME} --debug`)
+    const result = await runIgnite(`new ${APP_NAME} --debug`, {
+      pre: `cd ${tempDir}`,
+      post: `cd -`,
+    })
 
     expect(result).toContain(`Using ignite-cli`)
     expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
 
     // now let's examine the spun-up app
-    process.chdir(APP_NAME)
+    const appPath = filesystem.path(tempDir, APP_NAME)
 
-    const dirs = filesystem.list(`.`)
+    const dirs = filesystem.list(appPath)
     expect(dirs).toContain("ios")
     expect(dirs).toContain("android")
     expect(dirs).toContain("app")
@@ -47,17 +48,16 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
     // check the android bundle id has changed
     const androidPackageName = APP_NAME.toLowerCase()
     const mainAppJava = filesystem.read(
-      `./android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
+      `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
     )
     expect(mainAppJava).toContain(`package com.${androidPackageName};`)
     const mainActivityJava = filesystem.read(
-      `./android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
+      `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
     )
     expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
 
-    await testSpunUpApp()
+    await testSpunUpApp(appPath)
 
     // we're done!
-    process.chdir("..")
   })
 })
