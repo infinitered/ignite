@@ -46,8 +46,10 @@ function ScreenWithScrolling(props: ScreenProps) {
       // then toggle scroll state according to it, make sure it's not rendering twice
       if (scrollEnabled && !contentFitsScreen) setScrollEnabled(false)
       else if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
+    } else if (!scrollEnabled) {
+      // set back initial state in case it's locked
+      setScrollEnabled(true)
     }
-    else if (!scrollEnabled) setScrollEnabled(true) // set back initial state in case it's locked 
   }
 
   const onContentSizeChange = (contentWidth, contentHeight) => {
