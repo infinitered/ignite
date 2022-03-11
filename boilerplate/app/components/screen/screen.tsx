@@ -62,8 +62,7 @@ function ScreenWithScrolling(props: ScreenProps) {
 
   // update scroll state on every render 
   // when screenHeight isn't null
-  if (screenHeight.current !== null) 
-    updateScrollState()
+  if (screenHeight.current !== null) updateScrollState()
 
   return (
     <KeyboardAvoidingView
