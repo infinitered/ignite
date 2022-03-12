@@ -44,8 +44,11 @@ function ScreenWithScrolling(props: ScreenProps) {
       const contentFitsScreen = screenHeight.current > height * presets.auto.offset.percent - presets.auto.offset.point
         
       // then toggle scroll state according to it, make sure it's not rendering twice
+      // content is less than the size of the screen, so we can disable scrolling
       if (scrollEnabled && !contentFitsScreen) setScrollEnabled(false)
-      else if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
+      
+      // content is greater than the size of the screen, so let's enable scrolling
+      if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
     } else if (!scrollEnabled) {
       // set back initial state in case it's locked
       setScrollEnabled(true)
