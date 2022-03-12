@@ -35,13 +35,13 @@ function ScreenWithScrolling(props: ScreenProps) {
   // The followings for <Screen preset='auto'/>
   // This will automatically disables scrolling if content fits the screen.
   const { height } = Dimensions.get('window')
-  const screenHeight = React.useRef(null)
+  const contentHeight = React.useRef(null)
   const [scrollEnabled, setScrollEnabled] = React.useState(true)
 
   const updateScrollState = () => {
     if (props.preset === 'auto'){
       // check whether if content fits the screen
-      const contentFitsScreen = screenHeight.current > height * presets.auto.offset.percent - presets.auto.offset.point
+      const contentFitsScreen = contentHeight.current > height * presets.auto.offset.percent - presets.auto.offset.point
         
       // then toggle scroll state according to it, make sure it's not rendering twice
       // content is less than the size of the screen, so we can disable scrolling
@@ -50,22 +50,23 @@ function ScreenWithScrolling(props: ScreenProps) {
       // content is greater than the size of the screen, so let's enable scrolling
       if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
     } else if (!scrollEnabled) {
-      // set back initial value in case it's stucked in a disabled state, i.e. if we've just changed preset from 'auto' to 'scroll'
+      // set back initial value in case it's stucked in a disabled state
+      // i.e. if we've just changed preset from 'auto' to 'scroll'
       setScrollEnabled(true)
     }
   }
 
   const onContentSizeChange = (contentWidth, contentHeight) => {
-    // update screen height ref
-    screenHeight.current = contentHeight
+    // update content height ref
+    contentHeight.current = contentHeight
 
     // then update scroll state
     updateScrollState()
   }
 
   // update scroll state on every render 
-  // when screenHeight isn't null
-  if (screenHeight.current !== null) updateScrollState()
+  // when contentHeight isn't null
+  if (contentHeight.current !== null) updateScrollState()
 
   return (
     <KeyboardAvoidingView
