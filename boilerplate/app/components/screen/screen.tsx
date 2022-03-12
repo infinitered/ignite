@@ -50,7 +50,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       // content is greater than the size of the screen, so let's enable scrolling
       if (!scrollEnabled && contentFitsScreen) setScrollEnabled(true)
     } else if (!scrollEnabled) {
-      // set back initial state in case it's locked
+      // set back initial value in case it's stucked in a disabled state, i.e. if we've just changed preset from 'auto' to 'scroll'
       setScrollEnabled(true)
     }
   }
