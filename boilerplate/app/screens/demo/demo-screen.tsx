@@ -98,7 +98,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const goBack = () => navigation.goBack()
 
     const demoReactotron = React.useMemo(
-      () => async () => {
+      () => () => {
         console.tron.log("Your Friendly tron log message")
         console.tron.logImportant("I am important")
         console.tron.display({
@@ -131,7 +131,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
         demo.setup()
         demo.getUser("1")
         // Let's do some async storage stuff
-        await save("Cool Name", "Boaty McBoatface")
+        save("Cool Name", "Boaty McBoatface")
       },
       [],
     )

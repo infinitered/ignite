@@ -24,43 +24,42 @@ export function ToggleStorybook(props) {
     }
 
     // Load the setting from storage if it's there
-    loadString("devStorybook").then((storedSetting) => {
-      // Set the initial value
-      setShowStorybook(storedSetting === "on")
+    const storedSetting = loadString("devStorybook")
+    // Set the initial value
+    setShowStorybook(storedSetting === "on")
 
-      if (DevSettings) {
-        // Add our toggle command to the menu
-        DevSettings.addMenuItem("Toggle Storybook", () => {
-          setShowStorybook((show) => {
-            // On toggle, flip the current value
-            show = !show
+    if (DevSettings) {
+      // Add our toggle command to the menu
+      DevSettings.addMenuItem("Toggle Storybook", () => {
+        setShowStorybook((show) => {
+          // On toggle, flip the current value
+          show = !show
 
-            // Write it back to storage
-            saveString("devStorybook", show ? "on" : "off")
+          // Write it back to storage
+          saveString("devStorybook", show ? "on" : "off")
 
-            // Return it to change the local state
-            return show
-          })
+          // Return it to change the local state
+          return show
         })
-      }
+      })
+    }
 
-      // Load the storybook UI once
-      setStorybookUIRoot(() => require("./storybook").StorybookUIRoot)
+    // Load the storybook UI once
+    setStorybookUIRoot(() => require("./storybook").StorybookUIRoot)
 
-      // Behave as Reactotron.storybookSwitcher(), not a HOC way.
-      ws.current.onmessage = (e) => {
-        const data = JSON.parse(e.data)
+    // Behave as Reactotron.storybookSwitcher(), not a HOC way.
+    ws.current.onmessage = (e) => {
+      const data = JSON.parse(e.data)
 
-        if (data.type === "storybook") {
-          saveString("devStorybook", data.payload ? "on" : "off")
-          setShowStorybook(data.payload)
-        }
+      if (data.type === "storybook") {
+        saveString("devStorybook", data.payload ? "on" : "off")
+        setShowStorybook(data.payload)
       }
-      ws.current.onerror = (e) => {
-        console.tron.error(e, null)
-        setShowStorybook(storedSetting === "on")
-      }
-    })
+    }
+    ws.current.onerror = (e) => {
+      console.tron.error(e, null)
+      setShowStorybook(storedSetting === "on")
+    }
   }, [])
 
   if (showStorybook) {
