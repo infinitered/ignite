@@ -57,8 +57,9 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
 
       // are we allowed to exit?
       if (canExitRef.current(routeName)) {
-        // let the system know we've not handled this event
-        return false
+        // exit and let the system know we've handled the event
+        BackHandler.exitApp()
+        return true
       }
 
       // we can't exit, so let's turn this into a back action

@@ -31,6 +31,24 @@ brew tap wix/brew && brew install applesimutils
   yarn global add detox-cli
 ```
 
+## Configuring tests
+
+You'll need to set the Detox configuration settings in `package.json` to run Detox tests on a simulator name + OS version that is installed in your environment.
+
+In Xcode, open `Window -> Devices and Simulators `
+Tap the `Simulators` tab at the top of the modal.
+On the left hand side of the modal screen, select iPhone 11 (or some other Simulator)
+
+Note the iOS version value displayed on the left hand side below the name of the device being simulated. For example "iOS 13.2.2 (17B102)" This is the value displayed if `iPhone 11` is selected in the left hand list under `iOS`.
+
+Set the iOS value that matches the simulator to be tested in the Detox configuration settings found in the `package.json` generated for your new project.
+
+Example:
+
+"device": { "name": "iPhone 11", "os": "iOS 13.2" }
+
+NOTE: as of October 2021, do not set the iOS value to `15.0` or higher, or a Detox crash may occur. This is a Detox issue that is well documented and should be fixed soon.
+
 ## Adding tests
 
 We've gotten you started with `./e2e/firstTest.spec.js`, which tests that the two main example screens render properly.

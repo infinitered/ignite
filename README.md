@@ -17,7 +17,7 @@ _NOTE: Ignite CLI version 6.0 now includes the boilerplate -- read [the blog pos
 Ignite apps include the following rock-solid technical decisions out of the box:
 
 - React Native
-- React Navigation 5
+- React Navigation 6
 - MobX-State-Tree [(Why not Redux?)](https://github.com/infinitered/ignite/blob/master/docs/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
@@ -55,8 +55,8 @@ If you'd like to follow a tutorial, check out [this one from Robin Heinze](https
 The above commands may fail with various errors, depending on your operating system and dependency versions. Some troubleshooting steps to follow:
 
 - Make sure you are using the LTS version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v14.x.x.
-- If the installation fails because of an XCode error (missing XCode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
-- If XCode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the XCode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
+- If the installation fails because of an Xcode error (missing Xcode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
+- If Xcode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the Xcode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
 
 ## Generators
 
@@ -71,6 +71,13 @@ npx ignite-cli generate --help
 ## Troubleshooting
 
 If you run into problems, first search the issues in this repository. If you don't find anything, you can come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
+
+## No time to learn React Native? Hire Infinite Red for your next project
+
+We get it – sometimes there just isn’t enough time on a project to learn the ins and outs of a new framework. Infinite Red’s here to help! Our experienced team of React Native engineers have worked with companies like Microsoft, Zoom, and Mercari to bring even some of the most complex projects to life.
+
+Whether it’s running a full project or training a team on React Native, we can help you solve your company’s toughest engineering challenges – and make it a great experience at the same time.
+Ready to see how we can work together? [Send us a message](mailto:hello@infinite.red)
 
 ## Further Reading
 

@@ -1,0 +1,13 @@
+diff --git a/node_modules/@storybook/addons/dist/index.js b/node_modules/@storybook/addons/dist/index.js
+index 589d611..81bc9e7 100644
+--- a/node_modules/@storybook/addons/dist/index.js
++++ b/node_modules/@storybook/addons/dist/index.js
+@@ -8,8 +8,6 @@ require("core-js/modules/es.object.to-string");
+ 
+ require("core-js/modules/es.object.values");
+ 
+-require("core-js/modules/es.promise");
+-
+ require("core-js/modules/web.dom-collections.for-each");
+ 
+ Object.defineProperty(exports, "__esModule", {

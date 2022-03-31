@@ -1,13 +1,19 @@
 {
   "$schema": "http://json.schemastore.org/solidaritySchema",
   "requirements": {
-    "Node": [{ "rule": "cli", "binary": "node", "semver": ">=8.6.0" }],
+    "Node": [
+      {
+        "rule": "cli",
+        "binary": "node",
+        "semver": ">=14.15.1"
+      }
+    ],
     "Xcode": [
       {
         "rule": "cli",
         "binary": "xcodebuild",
         "version": "-version",
-        "semver": ">=9.2.0",
+        "semver": ">=12.0.0",
         "platform": "darwin"
       }
     ],
@@ -16,7 +22,7 @@
         "rule": "cli",
         "binary": "pod",
         "version": "--version",
-        "semver": ">=1.7.0",
+        "semver": ">=1.11.2",
         "platform": "darwin"
       }
     ]
