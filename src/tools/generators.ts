@@ -1,6 +1,7 @@
-import { filesystem, GluegunToolbox, strings } from "gluegun"
 import * as ejs from "ejs"
-import { command, heading, igniteHeading, p, warning } from "./pretty"
+import { filesystem, GluegunToolbox, strings } from "gluegun"
+import * as sharp from "sharp"
+import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function showGeneratorHelp(toolbox: GluegunToolbox) {
@@ -244,4 +245,109 @@ export function installGenerators(generators: string[]): string[] {
   })
 
   return changedGenerators
+}
+
+/**
+ * Validates that all necessary app-icon input files exist in the template dir.
+ * Additionally validates that they are of the correct size.
+ */
+export async function validateAppIconGenerator() {
+  const { path, exists } = filesystem
+  const appIcons = ["ios-universal.png"]
+
+  const missingAppIconInputFiles = appIcons
+    .map((icon) => (exists(path(templatesDir(), "app-icon", icon)) ? null : icon))
+    .filter(Boolean)
+
+  if (!!missingAppIconInputFiles.length) {
+    return {
+      isValid: false,
+      message: `Missing app-icon input files: "${missingAppIconInputFiles.join(", ")}"`,
+    }
+  }
+
+  const incorrectlySizedAppIconInputFiles = (
+    await Promise.all(
+      appIcons.map(async (icon) => {
+        const metadata = await sharp(path(templatesDir(), "app-icon", icon)).metadata()
+        return metadata.width !== 1024 || metadata.height !== 1024 ? icon : null
+      }),
+    )
+  ).filter(Boolean)
+
+  if (!!incorrectlySizedAppIconInputFiles.length) {
+    return {
+      isValid: false,
+      // prettier-ignore
+      message: `Incorrectly sized app-icon input files: "${incorrectlySizedAppIconInputFiles.join(", ")}". Expected 1024x1024.`,
+    }
+  }
+
+  return { isValid: true }
+}
+
+/**
+ * Generates app-icons for iOS. Skips if ios directory does not exist in project (most likely expo).
+ */
+export async function generateIosAppIcons() {
+  const { path, exists, find } = filesystem
+  const cwd = process.cwd()
+  const iosPath = path(cwd, "ios")
+
+  if (exists(iosPath) !== "dir") {
+    warning(`⚠️  No iOS project found at "${iosPath}". Skipping...`)
+    return
+  }
+
+  const appIconSetPathMatches = find(iosPath, {
+    directories: true,
+    files: false,
+    matching: "AppIcon.appiconset",
+  })
+
+  if (!appIconSetPathMatches.length) {
+    warning(
+      `⚠️  The directory "AppIcon.appiconset" was not found anywhere in "${iosPath}". Skipping...`,
+    )
+    return
+  }
+
+  heading("Generating iOS app icons...")
+
+  const iconGenerationPromises = [
+    { idiom: "ios-marketing", size: 1024, scale: 1 },
+    { idiom: "iphone", size: 20, scale: 2 },
+    { idiom: "iphone", size: 20, scale: 3 },
+    { idiom: "iphone", size: 29, scale: 2 },
+    { idiom: "iphone", size: 29, scale: 3 },
+    { idiom: "iphone", size: 40, scale: 2 },
+    { idiom: "iphone", size: 40, scale: 3 },
+    { idiom: "iphone", size: 60, scale: 2 },
+    { idiom: "iphone", size: 60, scale: 3 },
+    { idiom: "ipad", size: 20, scale: 1 },
+    { idiom: "ipad", size: 20, scale: 2 },
+    { idiom: "ipad", size: 29, scale: 1 },
+    { idiom: "ipad", size: 29, scale: 2 },
+    { idiom: "ipad", size: 40, scale: 1 },
+    { idiom: "ipad", size: 40, scale: 2 },
+    { idiom: "ipad", size: 76, scale: 1 },
+    { idiom: "ipad", size: 76, scale: 2 },
+    { idiom: "ipad", size: 83.5, scale: 2 },
+  ].map(async (icon) => {
+    const fileName = `${icon.idiom}-${icon.size}x${icon.size}@${icon.scale}x.png`
+    const filePath = path(cwd, appIconSetPathMatches[0], fileName)
+    const iconSize = icon.size * icon.scale
+
+    try {
+      await sharp(path(templatesDir(), "app-icon", "ios-universal.png"))
+        .resize(iconSize, iconSize, { fit: "fill" })
+        .toFile(filePath)
+
+      direction(`✅  ${fileName}`)
+    } catch (error) {
+      warning(`⚠️  ${fileName}`)
+    }
+  })
+
+  await Promise.all(iconGenerationPromises)
 }

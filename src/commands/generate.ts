@@ -6,6 +6,8 @@ import {
   installedGenerators,
   availableGenerators,
   generateFromTemplate,
+  validateAppIconGenerator,
+  generateIosAppIcons,
 } from "../tools/generators"
 
 module.exports = {
@@ -31,7 +33,7 @@ module.exports = {
   },
 }
 
-function generate(toolbox: GluegunToolbox) {
+async function generate(toolbox: GluegunToolbox) {
   const { parameters, strings } = toolbox
 
   const generators = installedGenerators()
@@ -51,6 +53,19 @@ function generate(toolbox: GluegunToolbox) {
     } else {
       direction("Check your spelling and try again")
     }
+
+    return
+  }
+
+  if (generator === "app-icon") {
+    const { isValid, message } = await validateAppIconGenerator()
+
+    if (!isValid) {
+      warning(`⚠️  ${message}`)
+      return
+    }
+
+    await generateIosAppIcons()
 
     return
   }
