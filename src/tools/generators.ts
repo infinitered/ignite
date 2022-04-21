@@ -29,7 +29,13 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   if (inIgnite) {
     const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
     generators.forEach((g) => {
-      command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
+      const isAppIconGenerator = g === "app-icon"
+
+      if (isAppIconGenerator) {
+        command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
+      } else {
+        command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
+      }
     })
   } else {
     warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
