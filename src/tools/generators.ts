@@ -352,9 +352,14 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
 
   // accumulate error messages for any failed validations
   const validationMessages = validationResults.reduce((acc, r) => {
-    if (r.isMissing) acc.push(`⚠️  Missing input file: "${r.fileName}"`)
-    if (r.isInvalidSize)
-      acc.push(`⚠️  Incorrectly sized input file (expected 1024x1024): "${r.fileName}"`)
+    const messages = [
+      r.isMissing && "   • missing",
+      r.isInvalidSize && "   • wrong size (expected 1024x1024px)",
+    ].filter(Boolean)
+
+    if (messages.length) {
+      acc.push(`⚠️  ${r.fileName}:`, ...messages)
+    }
 
     return acc
   }, [])
@@ -400,7 +405,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
       warning(
         `⚠️  No output directory found for "${optionProjectName}" at "${outputDirPath}". Skipping...`,
       )
-      return
+      continue
     }
 
     heading(`Generating ${optionProjectName} app icons...`)
@@ -448,7 +453,10 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
             .replace("{scale}", r.scale > 1 ? `@${r.scale}x` : ""),
         }[o]
 
-        if (!inputFile) return warning(`⚠️  ${outputFileName}`)
+        if (!inputFile) {
+          warning(`⚠️  ${outputFileName}: transform failed, please file an issue on GitHub`)
+          continue
+        }
 
         const outputFilePath = path(outputDirPath, outputFileName)
         const outputSize = r.size[i.type] * (r.scale || 1)
@@ -473,7 +481,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
         const sourceContentsJsonFilePath = path(
           boilerplateDirPath,
           "ios",
-          require(path(boilerplateDirPath, "app.json"))["name"],
+          require(path(boilerplateDirPath, "app.json")).name,
           "Images.xcassets/AppIcon.appiconset/Contents.json",
         )
         copy(sourceContentsJsonFilePath, path(outputDirPath, "Contents.json"), { overwrite: true })
