@@ -379,6 +379,8 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
   const options = option === "all" ? Object.values(Platforms) : ([option] as `${Platforms}`[])
 
+  let optionGenerationSuccesses = []
+
   // start the generation process for each platform
   // looping instead of mapping allows us to await for each platform sequentially
   for (const o of options) {
@@ -526,5 +528,10 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
     }[o]
 
     postGenerationFn()
+
+    // if we reached this point, generation for this platform was successful
+    optionGenerationSuccesses.push(true)
   }
+
+  return !!optionGenerationSuccesses.length
 }

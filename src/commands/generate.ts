@@ -82,12 +82,14 @@ async function generate(toolbox: GluegunToolbox) {
       return
     }
 
-    await generateAppIcons(name as any)
+    const isSuccessful = await generateAppIcons(name as any)
 
-    heading(`App icons generated!`)
-    p(
-      "Uninstall the application from your simulator/emulator and re-build your app to see the changes!",
-    )
+    if (isSuccessful) {
+      heading(`App icons generated!`)
+      p(
+        "Uninstall the application from your simulator/emulator and re-build your app to see the changes!",
+      )
+    }
 
     return
   }
