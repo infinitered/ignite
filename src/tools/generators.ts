@@ -190,10 +190,17 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
 }
 
 /**
+ * Ignite cli root directory
+ */
+function igniteCliRootDir(): string {
+  return filesystem.path(__filename, "..", "..", "..")
+}
+
+/**
  * Directory where we can find Ignite CLI generator templates
  */
 function sourceDirectory(): string {
-  return filesystem.path(__filename, "..", "..", "..", "boilerplate", "ignite", "templates")
+  return filesystem.path(igniteCliRootDir(), "boilerplate", "ignite", "templates")
 }
 
 /**
@@ -247,107 +254,263 @@ export function installGenerators(generators: string[]): string[] {
   return changedGenerators
 }
 
+enum Platforms {
+  Ios = "ios",
+  Android = "android",
+  Expo = "expo",
+}
+
+// prettier-ignore
+const APP_ICON_RULES = {
+  icons: [
+    { platform: Platforms.Ios, type: "universal", name: "Icon-{size}-{idiom}{scale}.png", inputFile: "ios-universal.png" },
+    { platform: Platforms.Android, type: "adaptive", name: "mipmap-{dpi}/ic_launcher_background.png", inputFile: "android-adaptive-background.png" },
+    { platform: Platforms.Android, type: "adaptive", name: "mipmap-{dpi}/ic_launcher_foreground.png", inputFile: "android-adaptive-foreground.png" },
+    { platform: Platforms.Android, type: "legacy", name: "mipmap-{dpi}/ic_launcher.png", inputFile: "android-legacy.png", transform: { size: 812, radius: 64, padding: 106 } },
+    { platform: Platforms.Android, type: "legacy", name: "mipmap-{dpi}/ic_launcher_round.png", inputFile: "android-legacy.png", transform: { size: 944, radius: 472, padding: 40 } },
+    { platform: Platforms.Expo, type: "mobile", name: "app-icon-ios.png", inputFile: "ios-universal.png" },
+    { platform: Platforms.Expo, type: "mobile", name: "app-icon-android-legacy.png", inputFile: "android-legacy.png" },
+    { platform: Platforms.Expo, type: "mobile", name: "app-icon-android-adaptive-background.png", inputFile: "android-adaptive-background.png" },
+    { platform: Platforms.Expo, type: "mobile", name: "app-icon-android-adaptive-foreground.png", inputFile: "android-adaptive-foreground.png" },
+    { platform: Platforms.Expo, type: "mobile", name: "app-icon-all.png", inputFile: "ios-universal.png" },
+    { platform: Platforms.Expo, type: "web", name: "app-icon-web-favicon.png", inputFile: "ios-universal.png" },
+  ],
+  rules: [
+    { platform: Platforms.Ios, size: { universal: 1024 }, scale: 1, idiom: "ios-marketing" },
+    { platform: Platforms.Ios, size: { universal: 83.5 }, scale: 2, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 20 }, scale: 1, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 20 }, scale: 2, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 29 }, scale: 1, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 29 }, scale: 2, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 40 }, scale: 1, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 40 }, scale: 2, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 76 }, scale: 1, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 76 }, scale: 2, idiom: "ipad" },
+    { platform: Platforms.Ios, size: { universal: 20 }, scale: 2, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 20 }, scale: 3, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 29 }, scale: 2, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 29 }, scale: 3, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 40 }, scale: 2, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 40 }, scale: 3, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 60 }, scale: 2, idiom: "iphone" },
+    { platform: Platforms.Ios, size: { universal: 60 }, scale: 3, idiom: "iphone" },
+    { platform: Platforms.Android, size: { legacy: 192, adaptive: 432 }, dpi: "xxxhdpi" },
+    { platform: Platforms.Android, size: { legacy: 144, adaptive: 324 }, dpi: "xxhdpi" },
+    { platform: Platforms.Android, size: { legacy: 96, adaptive: 216 }, dpi: "xhdpi" },
+    { platform: Platforms.Android, size: { legacy: 72, adaptive: 162 }, dpi: "hdpi" },
+    { platform: Platforms.Android, size: { legacy: 48, adaptive: 108 }, dpi: "mdpi" },
+    { platform: Platforms.Expo, size: { mobile: 1024, web: 48 } },
+  ]
+}
+
 /**
  * Validates that all necessary app-icon input files exist in the template dir.
  * Additionally validates that they are of the correct size.
  */
-export async function validateAppIconGenerator() {
+export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
   const { path, exists } = filesystem
-  const appIcons = ["ios-universal.png"]
 
-  const missingAppIconInputFiles = appIcons
-    .map((icon) => (exists(path(templatesDir(), "app-icon", icon)) ? null : icon))
-    .filter(Boolean)
+  const allowedOptions = Object.values(Platforms) as `${Platforms}`[]
 
-  if (!!missingAppIconInputFiles.length) {
+  // check that the option is allowed
+  if (option !== "all" && !allowedOptions.includes(option)) {
     return {
       isValid: false,
-      message: `Missing app-icon input files: "${missingAppIconInputFiles.join(", ")}"`,
+      messages: [`The option "${option}" is not valid for generator "app-icon"`],
     }
   }
 
-  const incorrectlySizedAppIconInputFiles = (
-    await Promise.all(
-      appIcons.map(async (icon) => {
-        const metadata = await sharp(path(templatesDir(), "app-icon", icon)).metadata()
-        return metadata.width !== 1024 || metadata.height !== 1024 ? icon : null
-      }),
-    )
-  ).filter(Boolean)
+  const optionsToValidate = option === "all" ? allowedOptions : [option]
 
-  if (!!incorrectlySizedAppIconInputFiles.length) {
-    return {
-      isValid: false,
-      // prettier-ignore
-      message: `Incorrectly sized app-icon input files: "${incorrectlySizedAppIconInputFiles.join(", ")}". Expected 1024x1024.`,
-    }
+  // get all the file-names that are required for the supplied option(s) and dedup
+  const inputFileNames = APP_ICON_RULES.icons
+    .filter((i) => optionsToValidate.includes(i.platform))
+    .reduce((acc, i) => Array.from(new Set([...acc, i.inputFile])), [])
+
+  // validate both presence and size of all input files
+  const validationPromises = inputFileNames.map(async (fileName) => {
+    const filePath = path(templatesDir(), "app-icon", fileName)
+
+    const isMissing = !exists(filePath)
+    const isInvalidSize = await (async function () {
+      if (isMissing) return false
+
+      const metadata = await sharp(filePath).metadata()
+      return metadata.width !== 1024 || metadata.height !== 1024
+    })()
+
+    return { fileName, isMissing, isInvalidSize }
+  })
+
+  const validationResults = await Promise.all(validationPromises)
+
+  // accumulate error messages for any failed validations
+  const validationMessages = validationResults.reduce((acc, r) => {
+    if (r.isMissing) acc.push(`⚠️  Missing input file: "${r.fileName}"`)
+    if (r.isInvalidSize)
+      acc.push(`⚠️  Incorrectly sized input file (expected 1024x1024): "${r.fileName}"`)
+
+    return acc
+  }, [])
+
+  return {
+    isValid: !validationMessages.length,
+    messages: validationMessages,
   }
-
-  return { isValid: true }
 }
 
 /**
- * Generates app-icons for iOS. Skips if ios directory does not exist in project (most likely expo).
+ * Generates app-icons for specified option.
  */
-export async function generateIosAppIcons() {
-  const { path, exists, find } = filesystem
+export async function generateAppIcons(option: `${Platforms}` | "all") {
+  const { path, exists, find, copy, write } = filesystem
   const cwd = process.cwd()
-  const iosPath = path(cwd, "ios")
 
-  if (exists(iosPath) !== "dir") {
-    warning(`⚠️  No iOS project found at "${iosPath}". Skipping...`)
-    return
-  }
+  const options = option === "all" ? Object.values(Platforms) : ([option] as `${Platforms}`[])
 
-  const appIconSetPathMatches = find(iosPath, {
-    directories: true,
-    files: false,
-    matching: "AppIcon.appiconset",
-  })
+  // start the generation process for each platform
+  // looping instead of mapping allows us to await for each platform sequentially
+  for (const o of options) {
+    const optionProjectName = { ios: "iOS", android: "Android", expo: "Expo" }[o]
 
-  if (!appIconSetPathMatches.length) {
-    warning(
-      `⚠️  The directory "AppIcon.appiconset" was not found anywhere in "${iosPath}". Skipping...`,
-    )
-    return
-  }
+    // find the output path for platform and check if it exists
+    // iOS is a bit weird since it's named differently for each project
+    const relativeOutputDirPath = {
+      expo: "assets/images",
+      android: "android/app/src/main/res",
+      ios:
+        (exists("ios") &&
+          find("ios", {
+            directories: true,
+            files: false,
+            matching: "AppIcon.appiconset",
+          })?.[0]) ||
+        "ios/**/Images.xcassets/AppIcon.appiconset",
+    }[o]
+    const outputDirPath = path(cwd, relativeOutputDirPath)
 
-  heading("Generating iOS app icons...")
-
-  const iconGenerationPromises = [
-    { idiom: "ios-marketing", size: 1024, scale: 1 },
-    { idiom: "iphone", size: 20, scale: 2 },
-    { idiom: "iphone", size: 20, scale: 3 },
-    { idiom: "iphone", size: 29, scale: 2 },
-    { idiom: "iphone", size: 29, scale: 3 },
-    { idiom: "iphone", size: 40, scale: 2 },
-    { idiom: "iphone", size: 40, scale: 3 },
-    { idiom: "iphone", size: 60, scale: 2 },
-    { idiom: "iphone", size: 60, scale: 3 },
-    { idiom: "ipad", size: 20, scale: 1 },
-    { idiom: "ipad", size: 20, scale: 2 },
-    { idiom: "ipad", size: 29, scale: 1 },
-    { idiom: "ipad", size: 29, scale: 2 },
-    { idiom: "ipad", size: 40, scale: 1 },
-    { idiom: "ipad", size: 40, scale: 2 },
-    { idiom: "ipad", size: 76, scale: 1 },
-    { idiom: "ipad", size: 76, scale: 2 },
-    { idiom: "ipad", size: 83.5, scale: 2 },
-  ].map(async (icon) => {
-    const fileName = `${icon.idiom}-${icon.size}x${icon.size}@${icon.scale}x.png`
-    const filePath = path(cwd, appIconSetPathMatches[0], fileName)
-    const iconSize = icon.size * icon.scale
-
-    try {
-      await sharp(path(templatesDir(), "app-icon", "ios-universal.png"))
-        .resize(iconSize, iconSize, { fit: "fill" })
-        .toFile(filePath)
-
-      direction(`✅  ${fileName}`)
-    } catch (error) {
-      warning(`⚠️  ${fileName}`)
+    // if not, skip...
+    if (exists(outputDirPath) !== "dir") {
+      warning(
+        `⚠️  No output directory found for "${optionProjectName}" at "${outputDirPath}". Skipping...`,
+      )
+      return
     }
-  })
 
-  await Promise.all(iconGenerationPromises)
+    heading(`Generating ${optionProjectName} app icons...`)
+
+    const icons = APP_ICON_RULES.icons.filter((i) => i.platform === o)
+
+    // prepare each icon for generation sequentially
+    for (const i of icons) {
+      const inputFilePath = path(templatesDir(), "app-icon", i.inputFile)
+
+      // get the input file for sharp and do some initial transforms when necessary (e.g. radius and padding)
+      const inputFile = await (async function () {
+        if (!i.transform) return inputFilePath
+
+        try {
+          const { size, radius, padding } = i.transform
+          const cutoutMask = Buffer.from(
+            `<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${radius}" ry="${radius}"/></svg>`,
+          )
+          return await sharp(inputFilePath)
+            .resize(size, size, { fit: "fill" })
+            .composite([{ input: cutoutMask, blend: "dest-in" }])
+            .extend({
+              top: padding,
+              bottom: padding,
+              left: padding,
+              right: padding,
+              background: { r: 0, g: 0, b: 0, alpha: 0 },
+            })
+            .toBuffer()
+        } catch (error) {}
+      })()
+
+      const rules = APP_ICON_RULES.rules.filter((i) => i.platform === o)
+
+      // actually resize the input files and save to output dir sequentially
+      for (const r of rules) {
+        // construct the output file name
+        const outputFileName = {
+          expo: i.name,
+          android: i.name.replace("{dpi}", r.dpi),
+          ios: i.name
+            .replace("{size}", r.size[i.type])
+            .replace("{idiom}", r.idiom)
+            .replace("{scale}", r.scale > 1 ? `@${r.scale}x` : ""),
+        }[o]
+
+        if (!inputFile) return warning(`⚠️  ${outputFileName}`)
+
+        const outputFilePath = path(outputDirPath, outputFileName)
+        const outputSize = r.size[i.type] * (r.scale || 1)
+
+        // finally, resize and save
+        try {
+          await sharp(inputFile)
+            .resize(outputSize, outputSize, { fit: "fill" })
+            .toFile(outputFilePath)
+
+          direction(`✅ ${outputFileName}`)
+        } catch (error) {
+          warning(`⚠️  ${outputFileName}: saving failed, check if the directory exists`)
+        }
+      }
+    }
+
+    const boilerplateDirPath = path(igniteCliRootDir(), "boilerplate")
+
+    const postGenerationFn = {
+      ios: () => {
+        const sourceContentsJsonFilePath = path(
+          boilerplateDirPath,
+          "ios",
+          require(path(boilerplateDirPath, "app.json"))["name"],
+          "Images.xcassets/AppIcon.appiconset/Contents.json",
+        )
+        copy(sourceContentsJsonFilePath, path(outputDirPath, "Contents.json"), { overwrite: true })
+        direction(`✅ Contents.json`)
+      },
+
+      android: () => {
+        const sourceIcLauncherXmlFilePath = path(
+          boilerplateDirPath,
+          relativeOutputDirPath,
+          "mipmap-anydpi-v26/ic_launcher.xml",
+        )
+
+        copy(
+          sourceIcLauncherXmlFilePath,
+          path(outputDirPath, "mipmap-anydpi-v26/ic_launcher.xml"),
+          { overwrite: true },
+        )
+        direction(`✅ mipmap-anydpi-v26/ic_launcher.xml`)
+      },
+
+      expo: () => {
+        const merge = require("deepmerge-json")
+        const sourceExpoConfig = require(path(boilerplateDirPath, "app.json"))?.expo
+        const outputAppConfig = require(path(cwd, "app.json"))
+
+        const updatedConfig = merge(outputAppConfig, {
+          expo: {
+            icon: sourceExpoConfig?.icon,
+            android: {
+              icon: sourceExpoConfig?.android?.icon,
+              adaptiveIcon: sourceExpoConfig?.android?.adaptiveIcon,
+            },
+            ios: { icon: sourceExpoConfig?.ios?.icon },
+            web: { favicon: sourceExpoConfig?.web?.favicon },
+          },
+        })
+
+        write(path(cwd, "app.json"), updatedConfig)
+        direction(`✅ app.json`)
+      },
+    }[o]
+
+    postGenerationFn()
+  }
 }

@@ -1,14 +1,14 @@
 import { GluegunToolbox } from "gluegun"
-import { p, command, heading, warning, direction } from "../tools/pretty"
 import {
+  availableGenerators,
+  generateAppIcons,
+  generateFromTemplate,
+  installedGenerators,
   showGeneratorHelp,
   updateGenerators,
-  installedGenerators,
-  availableGenerators,
-  generateFromTemplate,
   validateAppIconGenerator,
-  generateIosAppIcons,
 } from "../tools/generators"
+import { command, direction, heading, p, warning } from "../tools/pretty"
 
 module.exports = {
   alias: ["g", "generator", "generators"],
@@ -57,23 +57,39 @@ async function generate(toolbox: GluegunToolbox) {
     return
   }
 
-  if (generator === "app-icon") {
-    const { isValid, message } = await validateAppIconGenerator()
-
-    if (!isValid) {
-      warning(`⚠️  ${message}`)
-      return
-    }
-
-    await generateIosAppIcons()
-
-    return
-  }
+  const isAppIconGenerator = generator === "app-icon"
 
   // we need a name for this component
   const name = parameters.second
   if (!name) {
-    return warning(`⚠️  Please specify a name for your ${generator}: ignite g ${generator} MyName`)
+    const exampleName = isAppIconGenerator ? "all|ios|android|expo" : "MyName"
+
+    warning(
+      isAppIconGenerator
+        ? `⚠️  Please specify which icons you would like to generate:`
+        : `⚠️  Please specify a name for your ${generator}:`,
+    )
+    p()
+    command(`ignite g ${generator} ${exampleName}`)
+    return
+  }
+
+  if (generator === "app-icon") {
+    const { isValid, messages } = await validateAppIconGenerator(name as any)
+
+    if (!isValid) {
+      messages.forEach((message) => warning(message))
+      return
+    }
+
+    await generateAppIcons(name as any)
+
+    heading(`App icons generated!`)
+    p(
+      "Uninstall the application from your simulator/emulator and re-build your app to see the changes!",
+    )
+
+    return
   }
 
   // avoid the my-component-component phenomenon
