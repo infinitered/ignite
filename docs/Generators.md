@@ -44,6 +44,22 @@ npx ignite-cli generate model No
 - Creates a unit test file
 - Appends export to `models/index.ts` unless you pass `--skip-index-file`
 
+### App Icon generator
+
+This is a special kind of generator - "special" in that it modifies the native project folders with resized and transformed input image files found in the generator's template folder. Also, it only accepts predefined options for the second parameter: one of `ios`, `android`, `expo` or `all`.
+
+When updating the template files, please note that names must stay the same as well as the size (1024x1024px). A Sketch template file can be [found here](https://github.com/infinitered/ignite/files/8534697/ignite-app-icon-template.zip) - just make your changes, then click File -> Export.
+
+```
+npx ignite-cli generate app-icon ios
+```
+
+- Generates all required sizes for the supplied platform
+- Applies any needed padding and radii to the android legacy icons
+- iOS: Updates `./ios/**/Images.xcassets/AppIcon.appiconset/` including `Content.json`
+- Android: Updates `./android/app/src/main/res/` including the `mipmap-anydpi-v26/ic_launcher.xml`
+- Expo: Updates `./assets/images/` including the root file `./app.json`
+
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
