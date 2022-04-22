@@ -161,13 +161,16 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   inputFiles.forEach((i) => {
     expect(filesystem.exists(i) === "file").toBe(true)
   })
-  await run(`npm run format`, runOpts)
 
   // commit the change
-  await run(
-    `git add ./app/models ./app/components ./app.json && git commit -m "generated test components"`,
-    runOpts,
-  )
+  await run(`git add ./app/models ./app/components ./app.json ./assets/images`, runOpts)
+  if (filesystem.exists(filesystem.path(appPath, "ios"))) {
+    await run(`git add ./ios/Foo/Images.xcassets/AppIcon.appiconset`, runOpts)
+  }
+  if (filesystem.exists(filesystem.path(appPath, "android"))) {
+    await run(`git add ./android/app/src/main/res`, runOpts)
+  }
+  await run(`git commit -m "generated test components & assets"`, runOpts)
 
   // run the tests; if they fail, run will raise and this test will fail
   await run(`npm run test`, runOpts)
