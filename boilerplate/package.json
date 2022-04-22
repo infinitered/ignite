@@ -11,7 +11,7 @@
     "ci:test:e2e": "detox test -c ios.sim.release -l verbose --cleanup",
     "ci:build:e2e": "detox build -c ios.sim.release",
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "npm-run-all format:*",
+    "format": "npm run format:js && npm run format:json && npm run format:md && npm run format:ts",
     "format:js": "prettier --write \"app/**/*.js\"",
     "format:json": "prettier --write \"app/**/*.json\"",
     "format:md": "prettier --write \"**/*.md\"",
@@ -28,7 +28,7 @@
     "clean-all": "npx react-native clean-project-auto"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.14.1",
+    "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-navigation/native": "~6.0.1",
     "@react-navigation/native-stack": "^6.0.2",
     "@react-navigation/stack": "~6.0.1",
@@ -56,11 +56,12 @@
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-decorators": "7.12.1",
     "@babel/plugin-proposal-optional-catch-binding": "7.12.1",
+    "@babel/preset-env": "^7.16.11",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/cli-platform-ios": "^6.2.0",
-    "@rnx-kit/metro-config": "^1.2.26",
+    "@rnx-kit/metro-config": "^1.2.31",
     "@rnx-kit/metro-resolver-symlinks": "^0.1.15",
-    "@storybook/react-native": "5.3.23",
+    "@storybook/react-native": "5.3.25",
     "@storybook/react-native-server": "5.3.23",
     "@types/i18n-js": "3.0.3",
     "@types/jest": "26.0.19",
@@ -86,7 +87,6 @@
     "jest-circus": "26",
     "jest-expo": "^44.0.1",
     "jetifier": "1.6.6",
-    "npm-run-all": "4.1.5",
     "patch-package": "6.2.2",
     "postinstall-prepare": "1.0.1",
     "prettier": "2.2.1",
@@ -99,6 +99,9 @@
     "solidarity": "2.3.1",
     "ts-jest": "26",
     "typescript": "4.2.3"
+  },
+  "resolutions": {
+    "@types/react": "^17"
   },
   "prettier": {
     "printWidth": 100,

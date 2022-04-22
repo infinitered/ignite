@@ -173,9 +173,6 @@ export default {
     // - We need to replace the app name in the detox paths. We do it on the
     //   unparsed file content since that's easier than updating individual values
     //   in the parsed structure, then we parse that as JSON.
-    // - Having a "prepare" script in package.json messes up expo-cli init above
-    //   (it fails because npm-run-all hasn't been installed yet), so we
-    //   add it.
     // - If Expo, we also merge in our extra expo stuff.
     // - Then write it back out.
     let packageJsonRaw = read("package.json")
