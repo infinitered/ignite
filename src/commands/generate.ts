@@ -31,7 +31,7 @@ module.exports = {
   },
 }
 
-function generate(toolbox: GluegunToolbox) {
+async function generate(toolbox: GluegunToolbox) {
   const { parameters, strings } = toolbox
 
   const generators = installedGenerators()
@@ -75,10 +75,10 @@ function generate(toolbox: GluegunToolbox) {
 
   // okay, let's do it!
   p()
-  const updatedFiles = generateFromTemplate(generator, {
+  const updatedFiles = await Promise.all(generateFromTemplate(generator, {
     name: pascalName,
     skipIndexFile: parameters.options.skipIndexFile,
-  })
+  }))
   heading(`Generated new files:`)
   updatedFiles.forEach((f) => p(f))
 }

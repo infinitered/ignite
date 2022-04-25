@@ -120,6 +120,24 @@ async function testSpunUpApp() {
   expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
     `export * from "./mod-test/mod-test"`,
   )
+  let rootStore = filesystem.read(`${process.cwd()}/app/models/root-store/root-store.ts`)
+  expect(rootStore).not.toContain('import { ModTestModel } from "../mod-test/mod-test"')
+  expect(rootStore).not.toContain('modTest: types.optional(ModTestModel, {} as any),')
+
+  // store
+  const storeGen = await runIgnite(`generate model test-store`)
+  expect(storeGen).toContain(`app/models/test-store/test-store.ts`)
+  expect(storeGen).toContain(`app/models/test-store/test-store.test.ts`)
+  expect(filesystem.list(`${process.cwd()}/app/models`)).toContain("test-store")
+  expect(filesystem.read(`${process.cwd()}/app/models/test-store/test-store.ts`)).toContain(
+    "export const TestStoreModel",
+  )
+  expect(filesystem.read(`${process.cwd()}/app/models/index.ts`)).toContain(
+    `export * from "./test-store/test-store"`,
+  )
+  rootStore = filesystem.read(`${process.cwd()}/app/models/root-store/root-store.ts`)
+  expect(rootStore).toContain('import { TestStoreModel } from "../test-store/test-store"')
+  expect(rootStore).toContain('testStore: types.optional(TestStoreModel, {} as any),')
 
   // screens
   const screenGen = await runIgnite(`generate screen bowser-screen --skip-index-file`)
@@ -133,8 +151,21 @@ async function testSpunUpApp() {
     `export * from "./bowser/bowser-screen"`,
   )
 
+  // navigators
+  const navGen = await runIgnite(`generate navigator nav-test`)
+  expect(navGen).toContain(`app/navigators/nav-test-navigator.tsx`)
+  expect(filesystem.list(`${process.cwd()}/app/navigators`)).toContain("nav-test-navigator.tsx")
+  expect(filesystem.read(`${process.cwd()}/app/navigators/nav-test-navigator.tsx`)).toContain(
+    `import { createStackNavigator } from "@react-navigation/stack"`,
+  )
+  expect(filesystem.read(`${process.cwd()}/app/navigators/index.ts`)).toContain(
+    `export * from "./nav-test-navigator"`,
+  )
+
   // commit the change
-  await run(`git add ./app/models ./app/components && git commit -m "generated test components"`)
+  await run(
+    `git add ./app/models ./app/components ./app/navigators && git commit -m "generated test components"`,
+  )
 
   // run the tests; if they fail, run will raise and this test will fail
   await run(`yarn test --updateSnapshot`)
