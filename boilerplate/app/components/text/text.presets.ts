@@ -37,7 +37,7 @@ export const presets = {
   fieldLabel: { ...BASE, fontSize: 13, color: color.dim } as TextStyle,
 
   /**
-   * A smaller piece of secondard information.
+   * A smaller piece of secondary information.
    */
   secondary: { ...BASE, fontSize: 9, color: color.dim } as TextStyle,
 }

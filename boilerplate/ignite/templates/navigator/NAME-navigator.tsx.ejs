@@ -5,15 +5,21 @@ patch:
   append: "export * from \"./<%= props.kebabCaseName %>-navigator\"\n"
   skip: <%= props.skipIndexFile %>
 ---
-import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-// import { MyScreen } from "../screens"
+import { createStackNavigator } from "@react-navigation/stack"
+import {
+  DemoScreen
+} from "../screens"
 
-const Stack = createStackNavigator()
+export type <%= props.pascalCaseName %>NavigatorParamList = {
+  demo: undefined
+}
 
-export const <%= props.pascalCaseName %> = () => (
-  <Stack.Navigator>
-    {/* Add your screens here */}
-    {/* <Stack.Screen name="MyScreen" component={MyScreen} /> */}
-  </Stack.Navigator>
-)
+const Stack = createStackNavigator<<%= props.pascalCaseName %>NavigatorParamList>()
+export const <%= props.pascalCaseName %>Navigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false, }}>
+      <Stack.Screen name="demo" component={DemoScreen} />
+    </Stack.Navigator>
+  )
+}

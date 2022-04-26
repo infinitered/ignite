@@ -24,20 +24,31 @@ export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
-    const { exists, path, remove } = filesystem
+    const { exists, path, remove, rename, copy, read, write } = filesystem
     const { info, colors } = print
-    const { gray, red, magenta, cyan, yellow } = colors
+    const { gray, red, magenta, cyan, yellow, green } = colors
 
     // start tracking performance
     const perfStart = new Date().getTime()
 
+    // debug?
+    const debug = Boolean(parameters.options.debug)
+    const log = <T = unknown>(m: T): T => {
+      debug && info(` ${m}`)
+      return m
+    }
+
+    // log raw parameters for debugging
+    log(`ignite command: ${parameters.argv.join(" ")}`)
+
     // retrieve project name from toolbox
-    const { validateProjectName } = require("../tools/validations")
+    const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
 
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     if (parameters.options.overwrite) {
+      log(`Removing existing project ${projectName}`)
       remove(projectName)
     } else if (exists(projectName)) {
       const alreadyExists = `Error: There's already a folder with the name "${projectName}". To force overwriting that folder, run with --overwrite.`
@@ -56,15 +67,19 @@ export default {
       process.exit(1)
     }
 
-    // debug?
-    const debug = Boolean(parameters.options.debug)
-    const log = (m) => {
-      debug && info(` ${m}`)
-      return m
-    }
+    // custom bundle identifier (android only)
+    // TODO: refactor alert, need to rethink this
+    const bundleIdentifier =
+      validateBundleIdentifier(toolbox, parameters.options.bundle) || `com.${projectName}`
 
     // expo or no?
     const expo = Boolean(parameters.options.expo)
+
+    // check if a packager is provided, or detect one
+    // we pass in expo because we can't use pnpm if we're using expo
+    const packagerName = parameters.options.packager || packager.detectPackager({ expo })
+    const packagerOptions = { expo, packagerName }
+
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
@@ -75,7 +90,8 @@ export default {
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")}`)
+    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")} with ${green(packagerName)}`)
+    p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` ────────────────────────────────────────────────\n`)
 
     if (expo) {
@@ -135,29 +151,31 @@ export default {
     // jump into the project to do additional tasks
     process.chdir(projectName)
 
-    // copy the .gitignore if it wasn't copied over [expo...]
-    // Release Ignite installs have the boilerplate's .gitignore in .npmignore
+    // copy the .gitignore if it wasn't copied over
+    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
     const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
-    if (!filesystem.exists(targetIgnorePath)) {
-      let sourceIgnorePath = log(path(boilerplatePath, ".npmignore"))
-      if (!filesystem.exists(sourceIgnorePath)) {
-        sourceIgnorePath = path(boilerplatePath, ".gitignore")
+    if (!exists(targetIgnorePath)) {
+      // gitignore in dev mode?
+      let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
+
+      // gitignore in release mode?
+      if (!exists(sourceIgnorePath)) {
+        sourceIgnorePath = log(path(boilerplatePath, ".gitignore.template"))
       }
-      filesystem.copy(sourceIgnorePath, targetIgnorePath)
+
+      // copy the file over
+      copy(sourceIgnorePath, targetIgnorePath)
     }
 
     // Update package.json:
     // - We need to replace the app name in the detox paths. We do it on the
     //   unparsed file content since that's easier than updating individual values
     //   in the parsed structure, then we parse that as JSON.
-    // - Having a "prepare" script in package.json messes up expo-cli init above
-    //   (it fails because npm-run-all hasn't been installed yet), so we
-    //   add it.
     // - If Expo, we also merge in our extra expo stuff.
     // - Then write it back out.
-    let packageJsonRaw = filesystem.read("package.json")
+    let packageJsonRaw = read("package.json")
     packageJsonRaw = packageJsonRaw
       .replace(/HelloWorld/g, projectName)
       .replace(/hello-world/g, projectNameKebab)
@@ -166,24 +184,32 @@ export default {
     const merge = require("deepmerge-json")
 
     if (expo) {
-      const expoJson = filesystem.read("./package.expo.json", "json")
+      const expoJson = read("./package.expo.json", "json")
       packageJson = merge(packageJson, expoJson)
+      delete packageJson.scripts["build-ios"]
+      delete packageJson.scripts["build-android"]
     }
 
-    filesystem.write("./package.json", packageJson)
+    write("./package.json", packageJson)
 
     // More Expo-specific changes
     if (expo) {
       // remove the ios and android folders
-      filesystem.remove("./ios")
-      filesystem.remove("./android")
+      remove("./ios")
+      remove("./android")
 
       // rename the index.js to App.js, which expo expects;
-      filesystem.rename("./index.expo.js", "App.js")
-      filesystem.remove("./index.js")
+      rename("./index.expo.js", "App.js")
+      remove("./index.js")
 
       // rename the babel.config.expo.js
-      filesystem.rename("./babel.config.expo.js", "babel.config.js")
+      rename("./babel.config.expo.js", "babel.config.js")
+
+      // replaces the custom metro config js, which causes problems with
+      // publishing to Expo, with the default Expo metro config
+      // see: https://github.com/infinitered/ignite/issues/1904
+      remove("./metro.config.js")
+      rename("./metro.config.expo.js", "metro.config.js")
 
       await toolbox.patching.update("./tsconfig.json", (config) => {
         config.include[0] = "App.js"
@@ -191,28 +217,44 @@ export default {
       })
 
       // use Detox Expo reload file
-      filesystem.remove("./e2e/reload.js")
-      filesystem.rename("./e2e/reload.expo.js", "reload.js")
+      remove("./e2e/reload.js")
+      rename("./e2e/reload.expo.js", "reload.js")
 
-      startSpinner("Unboxing NPM dependencies")
-      await packager.install({ onProgress: log })
-      stopSpinner("Unboxing NPM dependencies", "🧶")
+      startSpinner("Unboxing npm dependencies")
+      await packager.install({ ...packagerOptions, onProgress: log })
+      stopSpinner("Unboxing npm dependencies", "🧶")
 
       // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
       // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
-      await packager.add("react-native-safe-area-context", { expo: true })
+      await packager.add(`react-native-safe-area-context`, packagerOptions)
     } else {
       // remove the Expo-specific files -- not needed
-      filesystem.remove(`./bin/downloadExpoApp.sh`)
-      filesystem.remove("./e2e/reload.expo.js")
-      filesystem.remove("./webpack.config.js")
-      filesystem.remove("./index.expo.js")
-      filesystem.remove("./babel.config.expo.js")
+      remove(`./bin/downloadExpoApp.sh`)
+      remove("./e2e/reload.expo.js")
+      remove("./webpack.config.js")
+      remove("./index.expo.js")
+      remove("./babel.config.expo.js")
+      remove("./metro.config.expo.js")
 
-      // yarn it
-      startSpinner("Unboxing NPM dependencies")
-      await packager.install({ onProgress: log })
-      stopSpinner("Unboxing NPM dependencies", "🧶")
+      // pnpm/yarn/npm install it
+      startSpinner("Unboxing npm dependencies")
+      await packager.install({ ...packagerOptions, onProgress: log })
+      stopSpinner("Unboxing npm dependencies", "🧶")
+    }
+
+    // remove the expo-only package.json
+    remove("package.expo.json")
+
+    // remove the gitignore template
+    remove(".gitignore.template")
+
+    if (!expo) {
+      // rename the app using `react-native-rename`
+      startSpinner(" Writing your app name in the sand")
+      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b ${bundleIdentifier}`
+      log(renameCmd)
+      await spawnProgress(renameCmd, { onProgress: log })
+      stopSpinner(" Writing your app name in the sand", "🏝")
 
       // install pods
       startSpinner("Baking CocoaPods")
@@ -222,33 +264,24 @@ export default {
       stopSpinner("Baking CocoaPods", "☕️")
     }
 
-    // remove the expo-only package.json
-    filesystem.remove("package.expo.json")
-
-    if (!expo) {
-      // rename the app using `react-native-rename`
-      startSpinner(" Writing your app name in the sand")
-      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName}`
-      log(renameCmd)
-      await spawnProgress(renameCmd, { onProgress: log })
-      stopSpinner(" Writing your app name in the sand", "🏝")
-    }
-
     // Make sure all our modifications are formatted nicely
-    const npmOrYarnRun = packager.is("yarn") ? "yarn" : "npm run"
-    await spawnProgress(`${npmOrYarnRun} format`, {})
+    await packager.run("format", { ...packagerOptions, silent: !debug })
 
     // commit any changes
     if (parameters.options.git !== false) {
       startSpinner(" Backing everything up in source control")
-      await system.run(
-        log(`
-          \\rm -rf ./.git
-          git init;
-          git add -A;
-          git commit -m "New Ignite ${meta.version()} app";
-        `),
-      )
+      try {
+        await system.run(
+          log(`
+            \\rm -rf ./.git
+            git init;
+            git add -A;
+            git commit -m "New Ignite ${meta.version()} app";
+          `),
+        )
+      } catch (e) {
+        p(yellow("Unable to commit the initial changes. Please check your git username and email."))
+      }
       stopSpinner(" Backing everything up in source control", "🗄")
     }
 
@@ -268,23 +301,38 @@ export default {
     direction(`To get started:`)
     command(`  cd ${projectName}`)
     if (expo) {
-      command(`  ${npmOrYarnRun} start`)
+      command(`  ${packager.runCmd("start", packagerOptions)}`)
     } else {
       if (process.platform === "darwin") {
-        command(`  npx react-native run-ios`)
+        command(`  ${packager.runCmd("ios", packagerOptions)}`)
       }
-      command(`  npx react-native run-android`)
-      if (isAndroidInstalled(toolbox)) {
+      command(`  ${packager.runCmd("android", packagerOptions)}`)
+      if (!isAndroidInstalled(toolbox)) {
         p()
         direction("To run in Android, make sure you've followed the latest react-native setup")
-        direction(
-          "instructions at https://facebook.github.io/react-native/docs/getting-started.html",
-        )
+        direction("instructions at https://facebook.github.io/react-native/docs/getting-started")
         direction(
           "before using ignite. You won't be able to run Android successfully until you have.",
         )
       }
     }
+
+    // React Native Colo Loco is no longer installed with Ignite, but
+    // we will give instructions on how to install it if they
+    // pass in `--colo-loco`
+    const coloLoco = Boolean(parameters.options.coloLoco)
+
+    if (coloLoco) {
+      p()
+      direction(`React Native Colo Loco`)
+      p("React Native Colo Loco is no longer installed by default.")
+      p("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
+      p("However, you can install it with the following commands in your app folder:")
+      p()
+      command(`  ${packager.addCmd("-g react-native-colo-loco")}`)
+      command(`  ${packager.runCmd("install-colo-loco", packagerOptions)}`)
+    }
+
     p()
     p("Need additional help?")
     p()

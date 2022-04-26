@@ -1,4 +1,6 @@
 {
+  "name": "HelloWorld",
+  "displayName": "HelloWorld",
   "expo": {
     "name": "HelloWorld",
     "slug": "HelloWorld",

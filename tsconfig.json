@@ -11,6 +11,7 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "outDir": "./build",
+    "skipLibCheck": true,
     "types": ["node", "jest"]
   },
   "include": ["./src"],

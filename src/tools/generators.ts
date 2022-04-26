@@ -87,7 +87,7 @@ function frontMatter(contents: string) {
   if (parts.length === 1 || parts.length === 3) {
     return {
       data: parts[1] ? YAML.parse(parts[1]) : {},
-      content: parts[2] ?? parts[0]
+      content: parts[2] ?? parts[0],
     }
   } else {
     return {}
@@ -98,10 +98,10 @@ function frontMatter(contents: string) {
  * Patch front matter configuration
  */
 type Patch = GluegunPatchingPatchOptions & {
-  path: string;
-  append?: string;
-  prepend?: string;
-  replace?: string;
+  path: string
+  append?: string
+  prepend?: string
+  replace?: string
   skip?: boolean
 }
 
@@ -147,7 +147,10 @@ type GeneratorOptions = {
 /**
  * Generates something using a template
  */
-export function generateFromTemplate(generator: string, options: GeneratorOptions): Promise<string>[] {
+export function generateFromTemplate(
+  generator: string,
+  options: GeneratorOptions,
+): Promise<string>[] {
   const { find, path, dir, separator } = filesystem
   const { pascalCase, kebabCase, pluralize, camelCase } = strings
 
@@ -184,7 +187,8 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     // parse out front matter data and content
     const { data, content } = frontMatter(templateContents)
     if (!content) {
-      return warning('⚠️  Unable to parse front matter. Please check your delimiters.')
+      warning("⚠️  Unable to parse front matter. Please check your delimiters.")
+      return ""
     }
 
     // apply any provided patches
@@ -194,7 +198,9 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     const generatorDir = path(appDir(), pluralize(generator))
     const defaultDestinationDir = path(generatorDir, kebabCaseName)
     const templateDestinationDir = data.destinationDir
-    const destinationDir = templateDestinationDir ? path(cwd(), templateDestinationDir) : defaultDestinationDir
+    const destinationDir = templateDestinationDir
+      ? path(cwd(), templateDestinationDir)
+      : defaultDestinationDir
     const destinationPath = path(destinationDir, filename)
 
     // ensure destination folder exists

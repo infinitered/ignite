@@ -9,8 +9,13 @@ lerna-debug.log
 node_modules
 .vscode/*
 package-lock.json
-boilerplate/yarn.lock
 
 # TS build
 /build
 coverage
+
+# This is at root because we don't want to ignore it in
+# newly spun-up apps, but we do want to ignore it in
+# Ignite's source repo.
+boilerplate/yarn.lock
+boilerplate/.gitignore.template
