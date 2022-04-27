@@ -26,7 +26,7 @@ async function generate(toolbox: GluegunToolbox) {
     return
   }
 
-  const { isValid, messages } = await validateAppIconGenerator(option as any)
+  const { isValid, messages } = await validateAppIconGenerator(option as any, parameters.options)
 
   if (!isValid) {
     messages.forEach((message) => warning(message))

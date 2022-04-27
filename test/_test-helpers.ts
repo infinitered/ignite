@@ -124,7 +124,10 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     expect(filesystem.exists(i) === "file").toBe(false)
   })
 
-  const appIconGen = await runIgnite(`generate app-icon all`, runOpts)
+  const appIconGen = await runIgnite(
+    `generate app-icon all --skip-source-equality-validation`,
+    runOpts,
+  )
 
   expect(appIconGen).toContain(`Generating Expo app icons...`)
 

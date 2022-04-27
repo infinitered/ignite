@@ -1,5 +1,6 @@
 import * as ejs from "ejs"
 import { filesystem, GluegunToolbox, strings } from "gluegun"
+import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
 
@@ -364,7 +365,9 @@ const APP_ICON_RULES = {
  * Validates that all necessary app-icon input files exist in the template dir.
  * Additionally validates that they are of the correct size.
  */
-export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
+export async function validateAppIconGenerator(option: `${Platforms}` | "all", flags: Options) {
+  const { skipSourceEqualityValidation } = flags || {}
+
   const { path, exists, inspect } = filesystem
 
   const allowedOptions = Object.values(Platforms) as `${Platforms}`[]
@@ -397,6 +400,7 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
       return metadata.width !== 1024 || metadata.height !== 1024
     })()
     const isSameAsSource = await (async function () {
+      if (skipSourceEqualityValidation) return false
       if (isMissing) return false
 
       const inputFileMd5 = inspect(inputFilePath, { checksum: "md5" }).md5
