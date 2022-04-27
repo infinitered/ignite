@@ -25,7 +25,7 @@
   "scripts": {
     "compile": "tsc -p .",
     "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template",
-    "format": "npm run format:js && npm run format:json && npm run format:md && npm run format:ts;",
+    "format": "yarn format:js && yarn format:json && yarn format:md && yarn format:ts;",
     "format:js": "prettier --write '**/*.js'",
     "format:json": "prettier --write '**/*.json'",
     "format:md": "prettier --write '**/*.md'",

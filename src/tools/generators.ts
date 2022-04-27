@@ -18,7 +18,7 @@ export function runGenerator(
     // update with fresh generators
     updateGenerators(toolbox)
   } else {
-    if (!!generator) {
+    if (generator) {
       const isValid = validateGenerator(generator)
       if (!isValid) return
     } else {
