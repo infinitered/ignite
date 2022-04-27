@@ -81,6 +81,8 @@ When updating the template files, please note that names must stay the same as w
 npx ignite-cli generate app-icon ios
 ```
 
+By default, the generator will exit if the input-files in your templates folder match signatures with those of the default Ignite app-icons - this is done to encourage you to make actual changes to the icons before generating. However, if you want to override your application's app-icons with those of Ignite's, you can first reset your app-icon templates folder with `npx ignite-cli g app-icon --update` and then regenerate the app-icons with the `--skip-source-equality-validation` flag.
+
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
