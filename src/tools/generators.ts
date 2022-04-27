@@ -3,6 +3,57 @@ import { filesystem, GluegunToolbox, strings } from "gluegun"
 import * as sharp from "sharp"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
 
+export function runGenerator(
+  toolbox: GluegunToolbox,
+  generateFunc: (toolbox: GluegunToolbox) => Promise<void>,
+  generator?: string,
+) {
+  const { parameters } = toolbox
+
+  p()
+  if (parameters.options.help || parameters.options.list) {
+    // show help or list generators
+    showGeneratorHelp(toolbox)
+  } else if (parameters.options.update) {
+    // update with fresh generators
+    updateGenerators(toolbox)
+  } else {
+    if (!!generator) {
+      const isValid = validateGenerator(generator)
+      if (!isValid) return
+    } else {
+      // catch-all, just show help
+      showGeneratorHelp(toolbox)
+      return
+    }
+
+    generateFunc(toolbox)
+  }
+}
+
+function validateGenerator(generator?: string) {
+  const generators = installedGenerators()
+
+  if (!generators.includes(generator)) {
+    warning(`⚠️  Generator "${generator}" isn't installed.`)
+    p()
+
+    if (availableGenerators().includes(generator)) {
+      direction("Install the generator with:")
+      p()
+      command(`ignite generate ${generator} --update`)
+      p()
+      direction("... and then try again!")
+    } else {
+      direction("Check your spelling and try again")
+    }
+
+    return false
+  }
+
+  return true
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function showGeneratorHelp(toolbox: GluegunToolbox) {
   const inIgnite = isIgniteProject()
@@ -68,7 +119,7 @@ export function updateGenerators(toolbox: GluegunToolbox) {
   })
 }
 
-export function isIgniteProject(): boolean {
+function isIgniteProject(): boolean {
   return filesystem.exists("./ignite") === "dir"
 }
 
@@ -89,7 +140,7 @@ function templatesDir() {
 /**
  * Finds generator templates installed in the current project
  */
-export function installedGenerators(): string[] {
+function installedGenerators(): string[] {
   const { subdirectories, separator } = filesystem
 
   const generators = subdirectories(templatesDir()).map((g) => g.split(separator).slice(-1)[0])
@@ -212,7 +263,7 @@ function sourceDirectory(): string {
 /**
  * Finds generator templates in Ignite CLI
  */
-export function availableGenerators(): string[] {
+function availableGenerators(): string[] {
   const { subdirectories, separator } = filesystem
   return subdirectories(sourceDirectory()).map((g) => g.split(separator).slice(-1)[0])
 }
@@ -221,7 +272,7 @@ export function availableGenerators(): string[] {
  * Copies over generators (specific generators, or all) from Ignite CLI to the project
  * ignite/templates folder.
  */
-export function installGenerators(generators: string[]): string[] {
+function installGenerators(generators: string[]): string[] {
   const { path, find, copy, dir, cwd, separator, exists, read } = filesystem
   const sourceDir = sourceDirectory()
   const targetDir = path(cwd(), "ignite", "templates")
@@ -314,7 +365,7 @@ const APP_ICON_RULES = {
  * Additionally validates that they are of the correct size.
  */
 export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
-  const { path, exists } = filesystem
+  const { path, exists, inspect } = filesystem
 
   const allowedOptions = Object.values(Platforms) as `${Platforms}`[]
 
@@ -335,17 +386,26 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
 
   // validate both presence and size of all input files
   const validationPromises = inputFileNames.map(async (fileName) => {
-    const filePath = path(templatesDir(), "app-icon", fileName)
+    const boilerplateInputFilePath = path(sourceDirectory(), "app-icon", fileName)
+    const inputFilePath = path(templatesDir(), "app-icon", fileName)
 
-    const isMissing = !exists(filePath)
+    const isMissing = !exists(inputFilePath)
     const isInvalidSize = await (async function () {
       if (isMissing) return false
 
-      const metadata = await sharp(filePath).metadata()
+      const metadata = await sharp(inputFilePath).metadata()
       return metadata.width !== 1024 || metadata.height !== 1024
     })()
+    const isSameAsSource = await (async function () {
+      if (isMissing) return false
 
-    return { fileName, isMissing, isInvalidSize }
+      const inputFileMd5 = inspect(inputFilePath, { checksum: "md5" }).md5
+      const sourceFileMd5 = inspect(boilerplateInputFilePath, { checksum: "md5" }).md5
+
+      return inputFileMd5 === sourceFileMd5
+    })()
+
+    return { fileName, isMissing, isInvalidSize, isSameAsSource }
   })
 
   const validationResults = await Promise.all(validationPromises)
@@ -353,12 +413,14 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all") {
   // accumulate error messages for any failed validations
   const validationMessages = validationResults.reduce((acc, r) => {
     const messages = [
-      r.isMissing && "   • missing",
-      r.isInvalidSize && "   • wrong size (expected 1024x1024px)",
+      r.isMissing && "   • the file is missing",
+      r.isInvalidSize && "   • the file is the wrong size (expected 1024x1024px)",
+      r.isSameAsSource &&
+        "   • looks like you're using our default template; customize the file with your own icon first",
     ].filter(Boolean)
 
     if (messages.length) {
-      acc.push(`⚠️  ${r.fileName}:`, ...messages)
+      acc.push(`⚠️  ignite/templates/app-icon/${r.fileName}:`, ...messages)
     }
 
     return acc
