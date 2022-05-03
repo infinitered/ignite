@@ -80,7 +80,7 @@ function ScreenWithScrolling(props: ScreenProps) {
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}
           keyboardShouldPersistTaps={props.keyboardShouldPersistTaps || "handled"}
-          onContentSizeChange={onContentSizeChange}
+          onContentSizeChange={props.preset === 'auto' ? onContentSizeChange : undefined}
           scrollEnabled={scrollEnabled}
         >
           {props.children}
