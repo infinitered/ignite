@@ -41,15 +41,24 @@
     "mobx": "6.1.8",
     "mobx-react-lite": "3.2.0",
     "mobx-state-tree": "5.0.1",
+    "moment": "^2.29.3",
     "react": "17.0.2",
+    "react-hook-form": "^7.30.0",
     "react-native": "0.67.2",
     "react-native-gesture-handler": "1.10.3",
+    "react-native-image-crop-picker": "^0.37.3",
     "react-native-keychain": "6.2.0",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-modal": "^13.0.1",
     "react-native-safe-area-context": "3.1.8",
     "react-native-screens": "3.8.0",
+    "react-native-splash-screen": "^3.3.0",
+    "react-native-vector-icons": "^9.1.0",
+    "react-query": "^3.38.1",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
     "reactotron-react-native": "5.0.1",
+    "rn-fetch-blob": "^0.12.0",
     "validate.js": "0.13.1"
   },
   "devDependencies": {
@@ -67,6 +76,7 @@
     "@types/jest": "26.0.19",
     "@types/react": "17.0.37",
     "@types/react-native": "0.66.9",
+    "@types/react-native-vector-icons": "^6.4.5",
     "@types/react-test-renderer": "17.0.1",
     "@typescript-eslint/eslint-plugin": "4.10.0",
     "@typescript-eslint/parser": "4.10.0",
@@ -175,11 +185,14 @@
     },
     "rules": {
       "@typescript-eslint/ban-ts-ignore": 0,
-      "@typescript-eslint/ban-ts-comment": 0,
       "@typescript-eslint/explicit-function-return-type": 0,
       "@typescript-eslint/explicit-member-accessibility": 0,
       "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/indent": [
+        1,
+        2
+      ],
+      "prefer-promise-reject-errors": 0,
       "@typescript-eslint/member-delimiter-style": 0,
       "@typescript-eslint/no-empty-interface": 0,
       "@typescript-eslint/no-explicit-any": 0,
@@ -189,12 +202,79 @@
       "multiline-ternary": 0,
       "no-undef": 0,
       "no-unused-vars": 0,
+      "quotes": 1,
       "no-use-before-define": "off",
-      "quotes": 0,
       "react-native/no-raw-text": 0,
       "react/no-unescaped-entities": 0,
       "react/prop-types": "off",
-      "space-before-function-paren": 0
+      "space-before-function-paren": 0,
+      "react/self-closing-comp": 1,
+      "no-trailing-spaces": 1,
+      "react/jsx-first-prop-new-line": [
+        1,
+        "multiline-multiprop"
+      ],
+      "react/jsx-curly-newline": [
+        1,
+        {
+          "multiline": "consistent",
+          "singleline": "consistent"
+        }
+      ],
+      "react/jsx-indent-props": [
+        1,
+        2
+      ],
+      "react/jsx-indent": [
+        1,
+        2,
+        {
+          "indentLogicalExpressions": true
+        }
+      ],
+      "react/jsx-max-props-per-line": [
+        1,
+        {
+          "maximum": 1
+        }
+      ],
+      "react/jsx-curly-brace-presence": [
+        1,
+        {
+          "props": "never",
+          "children": "always"
+        }
+      ],
+      "react/jsx-equals-spacing": [
+        1,
+        "never"
+      ],
+      "prefer-template": 1,
+      "template-curly-spacing": 1,
+      "no-multiple-empty-lines": 1,
+      "padded-blocks": 1,
+      "no-irregular-whitespace": 1,
+      "@typescript-eslint/no-empty-function": 1,
+      "prefer-destructuring": 1,
+      "react/jsx-closing-bracket-location": [
+        1,
+        "tag-aligned"
+      ],
+      "react/jsx-props-no-multi-spaces": 1,
+      "react/jsx-sort-props": [
+        1,
+        {
+          "noSortAlphabetically": false
+        }
+      ],
+      "object-property-newline": [
+        1,
+        {
+          "allowAllPropertiesOnSameLine": false
+        }
+      ],
+      "object-curly-newline": 1,
+      "object-curly-spacing": 1
     }
   }
 }

@@ -1,22 +1,11 @@
-import { StyleProp, TextStyle, ViewStyle } from "react-native"
-import { IconTypes } from "../icon/icons"
-import { TxKeyPath } from "../../i18n"
+import { StyleProp, ViewStyle } from 'react-native'
 
 export interface HeaderProps {
-  /**
-   * Main header, e.g. POWERED BY IGNITE
-   */
-  headerTx?: TxKeyPath
+  leftType?: 'back' | 'text' | 'none'
 
-  /**
-   * header non-i18n
-   */
-  headerText?: string
+  backText?: string
 
-  /**
-   * Icon that should appear on the left
-   */
-  leftIcon?: IconTypes
+  leftText?: string
 
   /**
    * What happens when you press the left icon
@@ -26,7 +15,7 @@ export interface HeaderProps {
   /**
    * Icon that should appear on the right
    */
-  rightIcon?: IconTypes
+  rightType?: 'notification' | 'none'
 
   /**
    * What happens when you press the right icon
@@ -38,8 +27,9 @@ export interface HeaderProps {
    */
   style?: StyleProp<ViewStyle>
 
-  /**
-   * Title style overrides.
-   */
-  titleStyle?: StyleProp<TextStyle>
+  bordered?: boolean
+
+  topSafe?: boolean
+
+  rightContent?: React.ReactNode
 }

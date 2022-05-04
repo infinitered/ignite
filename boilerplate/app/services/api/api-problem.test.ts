@@ -1,72 +1,105 @@
-import { getGeneralApiProblem } from "./api-problem"
-import { ApiErrorResponse } from "apisauce"
+import { ApiResponse } from 'apisauce'
+import { errorMessages } from '../../utils/features'
 
-test("handles connection errors", () => {
-  expect(getGeneralApiProblem({ problem: "CONNECTION_ERROR" } as ApiErrorResponse<null>)).toEqual({
-    kind: "cannot-connect",
-    temporary: true,
-  })
-})
+export type ApiError = {
+  error: string
+}
 
-test("handles network errors", () => {
-  expect(getGeneralApiProblem({ problem: "NETWORK_ERROR" } as ApiErrorResponse<null>)).toEqual({
-    kind: "cannot-connect",
-    temporary: true,
-  })
-})
+export type GeneralApiProblem =
+  /**
+   * Times up.
+   */
+  | { kind: 'timeout'; temporary: true, error?: string }
+  /**
+   * Cannot connect to the server for some reason.
+   */
+  | { kind: 'cannot-connect'; temporary: true, error?: string }
+  /**
+   * The server experienced a problem. Any 5xx error.
+   */
+  | { kind: 'server', error?: string }
+  /**
+   * We're not allowed because we haven't identified ourself. This is 401.
+   */
+  | { kind: 'unauthorized', error?: undefined }
+  /**
+   * We don't have access to perform that request. This is 403.
+   */
+  | { kind: 'forbidden', error?: undefined }
+  /**
+   * Unable to find that resource.  This is a 404.
+   */
+  | { kind: 'not-found', error?: string }
+  /**
+   * All other 4xx series errors.
+   */
+  | { kind: 'rejected', error?: string }
+  /**
+   * Something truly unexpected happened. Most likely can try again. This is a catch all.
+   */
+  | { kind: 'unknown'; temporary: true, error?: string }
+  /**
+   * The data we received is not in the expected format.
+   */
+  | { kind: 'bad-data', error?: string }
 
-test("handles timeouts", () => {
-  expect(getGeneralApiProblem({ problem: "TIMEOUT_ERROR" } as ApiErrorResponse<null>)).toEqual({
-    kind: "timeout",
-    temporary: true,
-  })
-})
+/**
+ * Attempts to get a common cause of problems from an api response.
+ *
+ * @param response The api response.
+ */
+export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProblem | null {
+  switch (response.problem) {
+    case 'CONNECTION_ERROR':
+      return {
+        kind: 'cannot-connect',
+        temporary: true,
+        error: errorMessages.internetError
+      }
+    case 'NETWORK_ERROR':
+      return {
+        kind: 'cannot-connect',
+        temporary: true,
+        error: errorMessages.internetError
+      }
+    case 'TIMEOUT_ERROR':
+      return {
+        kind: 'timeout',
+        temporary: true,
+        error: errorMessages.timeoutError
+      }
+    case 'SERVER_ERROR':
+      return {
+        kind: 'server',
+        error: errorMessages.timeoutError
+      }
+    case 'UNKNOWN_ERROR':
+      return {
+        kind: 'unknown',
+        temporary: true,
+        error: errorMessages.timeoutError
+      }
+    case 'CLIENT_ERROR':
 
-test("handles server errors", () => {
-  expect(getGeneralApiProblem({ problem: "SERVER_ERROR" } as ApiErrorResponse<null>)).toEqual({
-    kind: "server",
-  })
-})
+      switch (response.status) {
+        case 401:
+          return { kind: 'unauthorized' }
+        case 403:
+          return { kind: 'forbidden' }
+        case 404:
+          return {
+            kind: 'not-found',
+            error: response?.data?.error || errorMessages.timeoutError
+          }
+        default:
+          return {
+            kind: 'rejected',
+            error: response?.data?.error || errorMessages.timeoutError
+          }
+      }
+    case 'CANCEL_ERROR':
+      return null
+  }
 
-test("handles unknown errors", () => {
-  expect(getGeneralApiProblem({ problem: "UNKNOWN_ERROR" } as ApiErrorResponse<null>)).toEqual({
-    kind: "unknown",
-    temporary: true,
-  })
-})
-
-test("handles unauthorized errors", () => {
-  expect(
-    getGeneralApiProblem({ problem: "CLIENT_ERROR", status: 401 } as ApiErrorResponse<null>),
-  ).toEqual({
-    kind: "unauthorized",
-  })
-})
-
-test("handles forbidden errors", () => {
-  expect(
-    getGeneralApiProblem({ problem: "CLIENT_ERROR", status: 403 } as ApiErrorResponse<null>),
-  ).toEqual({
-    kind: "forbidden",
-  })
-})
-
-test("handles not-found errors", () => {
-  expect(
-    getGeneralApiProblem({ problem: "CLIENT_ERROR", status: 404 } as ApiErrorResponse<null>),
-  ).toEqual({
-    kind: "not-found",
-  })
-})
-
-test("handles other client errors", () => {
-  expect(
-    getGeneralApiProblem({ problem: "CLIENT_ERROR", status: 418 } as ApiErrorResponse<null>),
-  ).toEqual({
-    kind: "rejected",
-  })
-})
-
-test("handles cancellation errors", () => {
-  expect(getGeneralApiProblem({ problem: "CANCEL_ERROR" } as ApiErrorResponse<null>)).toBeNull()
-})
+  return null
+}

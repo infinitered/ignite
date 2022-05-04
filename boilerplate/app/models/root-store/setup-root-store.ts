@@ -1,12 +1,12 @@
-import { onSnapshot } from "mobx-state-tree"
-import { RootStoreModel, RootStore } from "./root-store"
-import { Environment } from "../environment"
-import * as storage from "../../utils/storage"
+import { addMiddleware } from 'mobx-state-tree'
+import { RootStoreModel, RootStore } from './root-store'
+import { Environment } from '../environment'
+import * as storage from '../../utils/storage'
 
 /**
  * The key we'll be saving our state as within async storage.
  */
-const ROOT_STATE_STORAGE_KEY = "root"
+const ROOT_STATE_STORAGE_KEY = 'root'
 
 /**
  * Setup the environment that all the models will be sharing.
@@ -49,7 +49,23 @@ export async function setupRootStore() {
   }
 
   // track changes & save to storage
-  onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
+  // onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
+
+  addMiddleware(rootStore, (call, next) => {
+    try {
+      return next(call)
+    } catch (err) {
+      // console.error(err)
+      // Sentry.captureException(err, {
+      //   extra: {
+      //     stack: err.stack,
+      //     message: err.message,
+      //     name: err.name
+      //   }
+      // });
+      return next(call)
+    }
+  })
 
   return rootStore
 }

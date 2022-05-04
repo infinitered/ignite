@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from "react"
-import { BackHandler } from "react-native"
+import { useState, useEffect, useRef } from 'react'
+import { BackHandler } from 'react-native'
 import {
   PartialState,
   NavigationState,
   NavigationAction,
   createNavigationContainerRef,
-} from "@react-navigation/native"
+  StackActions,
+} from '@react-navigation/native'
 
 /* eslint-disable */
 export const RootNavigation = {
@@ -57,9 +58,8 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
 
       // are we allowed to exit?
       if (canExitRef.current(routeName)) {
-        // exit and let the system know we've handled the event
-        BackHandler.exitApp()
-        return true
+        // let the system know we've not handled this event
+        return false
       }
 
       // we can't exit, so let's turn this into a back action
@@ -72,10 +72,10 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
     }
 
     // Subscribe when we come to life
-    BackHandler.addEventListener("hardwareBackPress", onBackPress)
+    BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
     // Unsubscribe when we're done
-    return () => BackHandler.removeEventListener("hardwareBackPress", onBackPress)
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
   }, [])
 }
 
@@ -91,42 +91,48 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
   // in production, remove the __DEV__ and set the state to true
   const [isRestored, setIsRestored] = useState(!__DEV__)
 
-  const routeNameRef = useRef<string | undefined>()
+  // const routeNameRef = useRef<string | undefined>()
 
   const onNavigationStateChange = (state) => {
-    const previousRouteName = routeNameRef.current
-    const currentRouteName = getActiveRouteName(state)
+    // const previousRouteName = routeNameRef.current
+    // const currentRouteName = getActiveRouteName(state)
 
-    if (previousRouteName !== currentRouteName) {
-      // track screens.
-      __DEV__ && console.tron.log(currentRouteName)
-    }
+    // if (previousRouteName !== currentRouteName) {
+    //   // track screens.
+    //   __DEV__ && console.tron.log(currentRouteName)
+    // }
 
-    // Save the current route name for later comparision
-    routeNameRef.current = currentRouteName
+    // // Save the current route name for later comparision
+    // routeNameRef.current = currentRouteName
 
-    // Persist state to storage
-    storage.save(persistenceKey, state)
+    // // Persist state to storage
+    // storage.save(persistenceKey, state)
   }
 
   const restoreState = async () => {
-    try {
-      const state = await storage.load(persistenceKey)
-      if (state) setInitialNavigationState(state)
-    } finally {
-      setIsRestored(true)
-    }
+    // try {
+    //   const state = await storage.load(persistenceKey)
+    //   if (state) setInitialNavigationState(state)
+    // } finally {
+    //   setIsRestored(true)
+    // }
+    setIsRestored(true)
   }
 
   useEffect(() => {
     if (!isRestored) restoreState()
   }, [isRestored])
 
-  return { onNavigationStateChange, restoreState, isRestored, initialNavigationState }
+  return {
+    onNavigationStateChange,
+    restoreState,
+    isRestored,
+    initialNavigationState
+  }
 }
 
 /**
- * use this to navigate without the navigation
+ * use this to navigate to navigate without the navigation
  * prop. If you have access to the navigation prop, do not use this.
  * More info: https://reactnavigation.org/docs/navigating-without-navigation-prop/
  */
@@ -136,13 +142,28 @@ export function navigate(name: any, params?: any) {
   }
 }
 
+export function replace(name: any, params?: any) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.replace(name as never, params as never))
+  }
+}
+
 export function goBack() {
   if (navigationRef.isReady() && navigationRef.canGoBack()) {
     navigationRef.goBack()
   }
 }
 
-export function resetRoot(params = { index: 0, routes: [] }) {
+export function push(name: any, params?: any) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.push(name as never, params as never))
+  }
+}
+
+export function resetRoot(params = {
+  index: 0,
+  routes: []
+}) {
   if (navigationRef.isReady()) {
     navigationRef.resetRoot(params)
   }

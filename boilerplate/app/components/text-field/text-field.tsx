@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
-import { translate, TxKeyPath } from "../../i18n"
+import { translate } from "../../i18n"
 import { Text } from "../text/text"
 
 // the base styling for the container
@@ -27,7 +27,7 @@ export interface TextFieldProps extends TextInputProps {
   /**
    * The placeholder i18n key.
    */
-  placeholderTx?: TxKeyPath
+  placeholderTx?: string
 
   /**
    * The Placeholder text if no placeholderTx is provided.
@@ -37,7 +37,7 @@ export interface TextFieldProps extends TextInputProps {
   /**
    * The label i18n key.
    */
-  labelTx?: TxKeyPath
+  labelTx?: string
 
   /**
    * The label text if no labelTx is provided.

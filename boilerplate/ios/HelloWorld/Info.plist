@@ -37,6 +37,22 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+  <key>UIAppFonts</key>
+  <array>
+    <string>Ionicons.ttf</string>
+    <string>FontAwesome5.ttf</string>
+    <string>FontAwesome.ttf</string>
+    <string>AntDesign.ttf</string>
+    <string>Octicons.ttf</string>
+    <string>Entypo.ttf</string>
+    <string>Feather.ttf</string>
+    <string>Fontisto.ttf</string>
+    <string>SimpleLineIcons.ttf</string>
+    <string>MaterialCommunityIcons.ttf</string>
+    <string>MaterialIcons.ttf</string>
+    <string>EvilIcons.ttf</string>
+    <string>Foundation.ttf</string>
+  </array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

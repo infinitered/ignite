@@ -1,4 +1,4 @@
-import { palette } from "./palette"
+import { palette } from './palette'
 
 /**
  * Roles for colors.  Prefer using these over the palette.  It makes it easier
@@ -19,11 +19,11 @@ export const color = {
    * can cause older Android devices to slow down due to the excessive compositing required
    * by their under-powered GPUs.
    */
-  transparent: "rgba(0, 0, 0, 0)",
+  transparent: 'rgba(0, 0, 0, 0)',
   /**
    * The screen background.
    */
-  background: palette.white,
+  background: palette.offBlack,
   /**
    * The main tinting color.
    */
@@ -31,7 +31,9 @@ export const color = {
   /**
    * The main tinting color, but darker.
    */
-  primaryDarker: palette.orangeDarker,
+  primaryLighter: palette.orangeLighter,
+  secondary: palette.blue,
+  secondaryLighter: palette.blueLighter,
   /**
    * A subtle color used for borders and lines.
    */
@@ -40,6 +42,7 @@ export const color = {
    * The default color of text in many components.
    */
   text: palette.white,
+  secondaryText: palette.lightGrey,
   /**
    * Secondary information.
    */
@@ -61,4 +64,19 @@ export const color = {
    * white background
    */
   storybookTextColor: palette.black,
+  primaryDarkGradient: [ '#121212', '#1C1C1C', '#252525' ],
+  secondaryDarkGradient: [ '#121212', '#222223', '#323233' ],
+  reverseDarkGradient: [
+    'rgba(18, 18, 18, 0)',
+    'rgba(18, 18, 18, 0.1)',
+    'rgba(18, 18, 18, 0.2)',
+    'rgba(18, 18, 18, 0.4)',
+    'rgba(18, 18, 18, 0.5)',
+    'rgba(18, 18, 18, 0.5)',
+    'rgba(18, 18, 18, 0.7)',
+    'rgba(18, 18, 18, 1)',
+    'rgba(18, 18, 18, 1)',
+    'rgba(18, 18, 18, 1)',
+    'rgba(18, 18, 18, 1)',
+  ]
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import { createStackNavigator } from "@react-navigation/stack"
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   DemoScreen
 } from "../../screens"
@@ -8,10 +8,11 @@ export type <%= props.pascalCaseName %>NavigatorParamList = {
   demo: undefined
 }
 
-const Stack = createStackNavigator<<%= props.pascalCaseName %>NavigatorParamList>()
+const Stack = createNativeStackNavigator<<%= props.pascalCaseName %>NavigatorParamList>()
+
 export const <%= props.pascalCaseName %>Navigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false, }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, }}>
       <Stack.Screen name="demo" component={DemoScreen} />
     </Stack.Navigator>
   )
