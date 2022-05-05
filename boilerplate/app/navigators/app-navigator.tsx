@@ -4,12 +4,13 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import React from "react"
+import React, { useEffect } from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
+import { WelcomeScreen, DemoScreen } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
+import SplashScreen from 'react-native-splash-screen'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -43,7 +44,6 @@ const AppStack = () => {
     >
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
@@ -54,6 +54,11 @@ interface NavigationProps extends Partial<React.ComponentProps<typeof Navigation
 export const AppNavigator = (props: NavigationProps) => {
   const colorScheme = useColorScheme()
   useBackButtonHandler(canExit)
+
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
+
   return (
     <NavigationContainer
       ref={navigationRef}

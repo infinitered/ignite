@@ -163,12 +163,6 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             />
             <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
           </View>
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            tx="demoScreen.demoList"
-            onPress={() => navigation.navigate("demoList")}
-          />
           <Image source={logoIgnite} style={IGNITE} />
           <View style={LOVE_WRAPPER}>
             <Text style={LOVE} text="Made with" />
