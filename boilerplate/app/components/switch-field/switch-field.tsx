@@ -45,7 +45,7 @@ export const SwitchField = (props: SwitchFieldProps) => {
   }, [value])
 
   return (
-    <View
+    <View 
       ref={ref}
       style={styles}
     >
