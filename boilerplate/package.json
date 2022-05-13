@@ -49,7 +49,7 @@
     "react-native-screens": "3.8.0",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.1",
+    "reactotron-react-native": "5.0.2",
     "validate.js": "0.13.1"
   },
   "devDependencies": {
