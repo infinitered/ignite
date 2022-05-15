@@ -79,8 +79,8 @@ module.exports = {
     let expoWorkflow
 
     function expoWorkflowInfo() {
-      const iosFound = isFile(`${directory}\ios\.xcodeproj`)
-      const androidFound = isFile(`${directory}\android\.gradle`)
+      const iosFound = isFile(`${directory}\\ios\\.xcodeproj`)
+      const androidFound = isFile(`${directory}\\android\\.gradle`)
 
       return iosFound || androidFound
     }
