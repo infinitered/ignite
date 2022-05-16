@@ -1,4 +1,4 @@
-import { runIgnite } from "./_test-helpers"
+import { runIgnite } from "../_test-helpers"
 
 test(`ignite help`, async () => {
   const result = await runIgnite(`help`)

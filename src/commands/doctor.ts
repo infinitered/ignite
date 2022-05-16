@@ -96,9 +96,16 @@ module.exports = {
 
     // -=-=-=- android -=-=-=-
     const androidPath = process.env.ANDROID_HOME
-    const javaPath = which("java")
+    let javaPath = which("java")
     const javaVersionCmd = "java -version 2>&1"
-    const javaVersion = javaPath && (await run(javaVersionCmd))?.match(/"(.*)"/)?.slice(-1)[0]
+    let javaVersion
+
+    try {
+      javaVersion = javaPath && (await run(javaVersionCmd))?.match(/"(.*)"/)?.slice(-1)[0]
+    } catch (_) {
+      javaVersion = "-"
+      javaPath = "not installed"
+    }
 
     info("")
     info(colors.cyan("Android"))
