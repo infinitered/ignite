@@ -3,8 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        
-        <!-- Why this is here: https://github.com/facebook/react-native/pull/29452 -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 
