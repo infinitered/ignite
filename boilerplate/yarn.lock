@@ -2195,9 +2195,9 @@
     enhanced-resolve "^5.8.3"
 
 "@rnx-kit/tools-language@^1.2.6":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-1.3.1.tgz#7ab040becedd1426fbc58b0d6f8161df6d949add"
-  integrity sha512-PI5ouRAAT1UavccKw0c/Ufe/jubenU/6TWSphpGK4XdJ4/gV8gz9KOrALbSPrVCr0exrAaqf5p9QyBiPIFpriw==
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-1.2.6.tgz#ced63a53ce9821d14acb57a927237e5c39801387"
+  integrity sha512-8pq4JlFIkOqjwkN6amYebQ2CTAa1EeYjSBurGh8upYZtqUZBXDOK7FUAx+OVHs/7qQfmF2lU7QpqA7DZGv4xJA==
 
 "@rnx-kit/tools-node@^1.2.7":
   version "1.2.7"
