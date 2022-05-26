@@ -61,6 +61,7 @@
     "@react-native-community/cli-platform-ios": "^6.2.0",
     "@rnx-kit/metro-config": "^1.2.31",
     "@rnx-kit/metro-resolver-symlinks": "^0.1.15",
+    "@storybook/addons": "5.3.21",
     "@storybook/react-native": "5.3.25",
     "@storybook/react-native-server": "5.3.23",
     "@types/i18n-js": "3.0.3",
@@ -85,8 +86,12 @@
     "fbjs-scripts": "3.0.0",
     "jest": "26",
     "jest-circus": "26",
+    "jest-environment-node": "26",
     "jest-expo": "^44.0.1",
     "jetifier": "1.6.6",
+    "metro-config": "0.66.2",
+    "metro-react-native-babel-preset": "0.66.2",
+    "mocha": "6",
     "patch-package": "6.2.2",
     "postinstall-prepare": "1.0.1",
     "prettier": "2.2.1",
@@ -96,9 +101,11 @@
     "react-native-clean-project": "^3.6.3",
     "react-native-web": "^0.16.3",
     "reactotron-core-client": "^2.8.10",
+    "regenerator-runtime": "^0.13.4",
     "solidarity": "2.3.1",
     "ts-jest": "26",
-    "typescript": "4.2.3"
+    "typescript": "4.2.3",
+    "webpack": "4"
   },
   "resolutions": {
     "@types/react": "^17"
