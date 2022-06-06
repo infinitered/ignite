@@ -15,7 +15,7 @@ module.exports = {
   run: async function (toolbox: GluegunToolbox) {
     // fistful of features
     const {
-      filesystem: { separator },
+      filesystem: { separator, isFile },
       system: { run, which },
       print: { colors, info, table },
       strings: { padEnd },
@@ -74,9 +74,30 @@ module.exports = {
       : []
     const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
 
+    const expoVersionCmd = "npm list --depth 0 expo 2>&1"
+    let expoVersion
+    let expoWorkflow
+
+    function expoWorkflowInfo() {
+      const iosFound = isFile(`${directory}\\ios\\.xcodeproj`)
+      const androidFound = isFile(`${directory}\\android\\.gradle`)
+
+      return iosFound || androidFound
+    }
+
+    try {
+      expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
+      expoWorkflow = expoWorkflowInfo() ? 'bare' : 'managed'
+    } catch (_) {
+      expoVersion = "-"
+      expoWorkflow = "not installed"
+    }
+
+    const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
+
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
-    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages, pnpmInfo, ...pnpmPackages])
+    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages, pnpmInfo, ...pnpmPackages, expoInfo])
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which("ignite")
