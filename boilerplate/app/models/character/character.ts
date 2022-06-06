@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
 /**
  * Rick and Morty character model.
@@ -10,8 +10,7 @@ export const CharacterModel = types.model("Character").props({
   image: types.maybe(types.string),
 })
 
-type CharacterType = Instance<typeof CharacterModel>
-export interface Character extends CharacterType {}
-type CharacterSnapshotType = SnapshotOut<typeof CharacterModel>
-export interface CharacterSnapshot extends CharacterSnapshotType {}
+export interface Character extends Instance<typeof CharacterModel> {}
+export interface CharacterSnapshotOut extends SnapshotOut<typeof CharacterModel> {}
+export interface CharacterSnapshotIn extends SnapshotIn<typeof CharacterModel> {}
 export const createCharacterDefaultModel = () => types.optional(CharacterModel, {})
