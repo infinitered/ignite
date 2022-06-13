@@ -8,7 +8,7 @@
  * However, it doesn't hurt to have it either.
  */
 const { makeMetroConfig } = require("@rnx-kit/metro-config")
-// const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
+const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
 const { getDefaultConfig } = require("metro-config")
 
 module.exports = (async () => {
@@ -19,17 +19,10 @@ module.exports = (async () => {
     resolver: {
       /**
        * This custom resolver is for if you're using symlinks.
-       * It's disabled because it results in an error for now, specifically:
        *
-       * error: Error: Unable to resolve module PROJECTDIR/node_modules/metro-runtime/src/modules/empty-module.js
-       * from PROJECTDIR/_: PROJECTDIR/node_modules/metro-runtime/src/modules/empty-module.js could not be found
-       *
-       * This could be a bug in @rnx-kit/metro-resolver-symlinks.
-       *
-       * Issue over there: https://github.com/microsoft/rnx-kit/issues/1605
-       *
+       * You can disable it if you're not using pnpm or a monorepo or symlinks.
        */
-      // resolveRequest: MetroSymlinksResolver(),
+      resolveRequest: MetroSymlinksResolver(),
       assetExts: [...defaultConfig.resolver.assetExts, "bin"],
     },
   })
