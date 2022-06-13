@@ -66,7 +66,7 @@
     "@storybook/react-native-server": "5.3.23",
     "@types/i18n-js": "3.8.2",
     "@types/jest": "26.0.19",
-    "@types/react": "^18.0.12",
+    "@types/react": "^17",
     "@types/react-native": "0.67.8",
     "@types/react-test-renderer": "18.0.0",
     "@typescript-eslint/eslint-plugin": "5.28.0",
@@ -110,7 +110,8 @@
     "webpack": "4"
   },
   "resolutions": {
-    "@types/react": "^17"
+    "@types/react": "^17",
+    "@types/react-dom": "^17"
   },
   "prettier": {
     "printWidth": 100,

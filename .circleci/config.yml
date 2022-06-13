@@ -46,6 +46,12 @@ jobs:
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
       - run:
+          name: Install PNPM for tests
+          command: |
+            sudo chmod 777 /usr/local/bin
+            curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@7
+            pnpm config set store-dir ../.pnpm-store
+      - run:
           name: Run tests
           command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
           no_output_timeout: 5m
