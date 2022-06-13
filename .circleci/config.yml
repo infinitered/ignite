@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: cimg/node:14.15
+    - image: cimg/node:14.19
   working_directory: /mnt/ramdisk/repo
 
 # mac: &mac
