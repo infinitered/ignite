@@ -12,7 +12,7 @@ export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
 type CopyBoilerplateOptions = {
   boilerplatePath: string
   projectName: string
-  excluded: Array<string | RegExp>
+  excluded: Array<string>
 }
 
 /**
@@ -31,10 +31,7 @@ export async function copyBoilerplate(toolbox: GluegunToolbox, options: CopyBoil
   // just to make it faster, y'know? Don't want to copy unnecessary stuff
   const filesAndFolders = children(options.boilerplatePath, true)
   const copyTargets = filesAndFolders.filter(
-    (file) =>
-      !options.excluded.find((exclusion) =>
-        exclusion instanceof RegExp ? exclusion.test(file) : exclusion === file,
-      ),
+    (file) => !options.excluded.find((exclusion) => file.includes(exclusion)),
   )
 
   // kick off a bunch of copies
