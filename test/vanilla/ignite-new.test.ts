@@ -70,6 +70,8 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
 function checkForLeftoverHelloWorld(filePath: string) {
   // ignore some folders
   if (filePath.includes(".git")) return
+  if (filePath.includes("node_modules")) return
+  if (filePath.includes("Pods")) return
 
   if (!filesystem.isDirectory(filePath)) {
     const contents = filesystem.read(filePath)
