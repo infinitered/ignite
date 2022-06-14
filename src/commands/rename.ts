@@ -24,7 +24,7 @@ module.exports = {
     )
 
     // match <manifest package="name" to get the bundle id
-    let oldBundleIdentifier = manifest.match(/package="([^"]+)"/)[1]
+    const oldBundleIdentifier = manifest.match(/package="([^"]+)"/)[1]
 
     // do some validations here
 
