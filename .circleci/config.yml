@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: circleci/node:14.15.1
+    - image: cimg/node:14.19
   working_directory: /mnt/ramdisk/repo
 
 # mac: &mac
@@ -14,7 +14,7 @@ defaults: &defaults
 #     xcode: "13.2.1"
 #   working_directory: ~/repo
 
-version: 2
+version: 2.1
 jobs:
   tests:
     <<: *defaults
@@ -24,7 +24,7 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run:
@@ -34,7 +34,7 @@ jobs:
           name: Save node modules
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
       - run:
           # We don't want to install CocoaPods on ubuntu where we run the tests.
           name: Set up dummy `pod` command
@@ -45,6 +45,12 @@ jobs:
           command: |
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
+      - run:
+          name: Install PNPM for tests
+          command: |
+            sudo chmod 777 /usr/local/bin
+            curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@7
+            pnpm config set store-dir ../.pnpm-store
       - run:
           name: Run tests
           command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
@@ -57,7 +63,7 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run:
@@ -67,7 +73,7 @@ jobs:
           name: Save node modules
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
       - run:
           # We don't want to install CocoaPods on ubuntu where we run the tests.
           name: Set up dummy `pod` command
@@ -149,7 +155,7 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       # Run semantic-release after all the above is set.

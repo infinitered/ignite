@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
-import { isAndroidInstalled, copyBoilerplate } from "../tools/react-native"
+import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
 import { packager } from "../tools/packager"
 import {
   command,
@@ -70,7 +70,8 @@ export default {
     // custom bundle identifier (android only)
     // TODO: refactor alert, need to rethink this
     const bundleIdentifier =
-      validateBundleIdentifier(toolbox, parameters.options.bundle) || `com.${projectName}`
+      validateBundleIdentifier(toolbox, parameters.options.bundle) ||
+      `com.${projectName.toLowerCase()}`
 
     // expo or no?
     const expo = Boolean(parameters.options.expo)
@@ -92,6 +93,7 @@ export default {
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")} with ${green(packagerName)}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
+    p(` █ Path: ${gray(path(process.cwd(), projectName))}`)
     p(` ────────────────────────────────────────────────\n`)
 
     if (expo) {
@@ -130,17 +132,34 @@ export default {
       stopSpinner("Summoning Expo CLI", "🪔")
       stopSpinner("Cleaning up Expo install", "🎫")
     } else {
-      // remove pods and node_modules, if they exist, because those will be rebuilt anyway
       startSpinner("Igniting app")
+      // Remove some folders that we don't want to copy over
+      // This mostly only applies to when you're developing locally
       remove(path(boilerplatePath, "ios", "Pods"))
       remove(path(boilerplatePath, "node_modules"))
+      remove(path(boilerplatePath, "android", ".idea"))
+      remove(path(boilerplatePath, "android", ".gradle"))
       stopSpinner("Igniting app", "🔥")
 
       startSpinner(" 3D-printing a new React Native app")
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         projectName,
-        excluded: ["node_modules", "yarn.lock", /.?\.expo\..?/],
+        excluded: [
+          ".vscode",
+          "node_modules",
+          "yarn.lock",
+          ".expo.",
+
+          // Unfortunately, we can't exclude nested files and folders yet
+          // "ios/Pods",
+          // "ios/build",
+          // "ios/Podfile.lock",
+          // "android/.idea",
+          // "android/.gradle",
+          // "android/local.properties",
+          // "android/app/build",
+        ],
       })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
     }
@@ -249,11 +268,17 @@ export default {
     remove(".gitignore.template")
 
     if (!expo) {
-      // rename the app using `react-native-rename`
+      // rename the app using Ignite
       startSpinner(" Writing your app name in the sand")
-      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b ${bundleIdentifier}`
-      log(renameCmd)
-      await spawnProgress(renameCmd, { onProgress: log })
+
+      await renameReactNativeApp(
+        toolbox,
+        "HelloWorld",
+        projectName,
+        "com.helloworld",
+        bundleIdentifier,
+      )
+
       stopSpinner(" Writing your app name in the sand", "🏝")
 
       // install pods

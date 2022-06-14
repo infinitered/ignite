@@ -87,7 +87,7 @@ module.exports = {
 
     try {
       expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
-      expoWorkflow = expoWorkflowInfo() ? 'bare' : 'managed'
+      expoWorkflow = expoWorkflowInfo() ? "bare" : "managed"
     } catch (_) {
       expoVersion = "-"
       expoWorkflow = "not installed"
@@ -97,7 +97,16 @@ module.exports = {
 
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
-    table([nodeInfo, npmInfo, ...npmPackages, yarnInfo, ...yarnPackages, pnpmInfo, ...pnpmPackages, expoInfo])
+    table([
+      nodeInfo,
+      npmInfo,
+      ...npmPackages,
+      yarnInfo,
+      ...yarnPackages,
+      pnpmInfo,
+      ...pnpmPackages,
+      expoInfo,
+    ])
 
     // -=-=-=- ignite -=-=-=-
     const ignitePath = which("ignite")
