@@ -67,27 +67,28 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
   })
 })
 
-function checkForLeftoverHelloWorld(appPath: string) {
+function checkForLeftoverHelloWorld(filePath: string) {
   // ignore some folders
-  if (appPath.includes(".git")) return
+  if (filePath.includes(".git")) return
+
+  if (!filesystem.isDirectory(filePath)) {
+    const contents = filesystem.read(filePath)
+    expect(contents).not.toContain("helloworld")
+    expect(contents).not.toContain("HelloWorld")
+    expect(contents).not.toContain("hello-world")
+
+    // it's a file, so eject
+    return
+  }
 
   // check to make sure there are no instances of helloworld or HelloWorld or hello-world
   // anywhere in the app -- including folder and filenames.
-  const appFiles = filesystem.list(appPath)
+  const appFiles = filesystem.list(filePath)
 
   for (const file of appFiles) {
     expect(file).not.toContain("helloworld")
     expect(file).not.toContain("HelloWorld")
     expect(file).not.toContain("hello-world")
-    // if it's a file, read it and check for the string
-    if (filesystem.isFile(file)) {
-      const contents = filesystem.read(`${appPath}/${file}`)
-      expect(contents).not.toContain("helloworld")
-      expect(contents).not.toContain("HelloWorld")
-      expect(contents).not.toContain("hello-world")
-    } else {
-      // if it's a folder, recursively check the contents of the folder
-      checkForLeftoverHelloWorld(`${appPath}/${file}`)
-    }
+    checkForLeftoverHelloWorld(`${filePath}/${file}`)
   }
 }
