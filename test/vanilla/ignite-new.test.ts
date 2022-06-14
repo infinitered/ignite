@@ -68,6 +68,9 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
 })
 
 function checkForLeftoverHelloWorld(appPath: string) {
+  // ignore some folders
+  if (appPath.includes(".git")) return
+
   // check to make sure there are no instances of helloworld or HelloWorld or hello-world
   // anywhere in the app -- including folder and filenames.
   const appFiles = filesystem.list(appPath)
