@@ -9,7 +9,7 @@ module.exports = {
     const { parameters, prompt, filesystem } = toolbox
 
     let newName = parameters.first
-    let newBundleIdentifier = parameters.options.package
+    let newBundleIdentifier = parameters.options.bundle
 
     // first, get the current name
     const oldName = require(`${process.cwd()}/app.json`).name
@@ -41,7 +41,7 @@ module.exports = {
       const result = await prompt.ask({
         type: "input",
         name: "newName",
-        message: "What would you like to rename your app to?",
+        message: `What would you like to rename your app to? Currently: ${oldName}`,
       })
       newName = result.newName
     }
@@ -58,7 +58,7 @@ module.exports = {
       const result = await prompt.ask({
         type: "input",
         name: "newBundleIdentifier",
-        message: "What would you like to rename your package to?",
+        message: `What would you like to rename your package to? Currently: ${oldBundleIdentifier}`,
       })
       newBundleIdentifier = result.newBundleIdentifier
     }
