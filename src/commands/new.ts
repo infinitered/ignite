@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
-import { isAndroidInstalled, copyBoilerplate } from "../tools/react-native"
+import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
 import { packager } from "../tools/packager"
 import {
   command,
@@ -249,11 +249,17 @@ export default {
     remove(".gitignore.template")
 
     if (!expo) {
-      // rename the app using `react-native-rename`
+      // rename the app using Ignite
       startSpinner(" Writing your app name in the sand")
-      const renameCmd = `npx react-native-rename@${cliDependencyVersions.rnRename} ${projectName} -b ${bundleIdentifier}`
-      log(renameCmd)
-      await spawnProgress(renameCmd, { onProgress: log })
+
+      await renameReactNativeApp(
+        toolbox,
+        "HelloWorld",
+        projectName,
+        "com.helloworld",
+        bundleIdentifier,
+      )
+
       stopSpinner(" Writing your app name in the sand", "🏝")
 
       // install pods

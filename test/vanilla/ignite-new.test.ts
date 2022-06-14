@@ -56,8 +56,35 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
     )
     expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
 
+    // react-native-rename doesn't always catch everything, so we need to check for
+    // any instances and fail if it doesn't work
+    checkForLeftoverHelloWorld(appPath)
+
+    // other common test operations
     await testSpunUpApp(appPath, originalDir)
 
     // we're done!
   })
 })
+
+function checkForLeftoverHelloWorld(appPath: string) {
+  // check to make sure there are no instances of helloworld or HelloWorld or hello-world
+  // anywhere in the app -- including folder and filenames.
+  const appFiles = filesystem.list(appPath)
+
+  for (const file of appFiles) {
+    expect(file).not.toContain("helloworld")
+    expect(file).not.toContain("HelloWorld")
+    expect(file).not.toContain("hello-world")
+    // if it's a file, read it and check for the string
+    if (filesystem.isFile(file)) {
+      const contents = filesystem.read(`${appPath}/${file}`)
+      expect(contents).not.toContain("helloworld")
+      expect(contents).not.toContain("HelloWorld")
+      expect(contents).not.toContain("hello-world")
+    } else {
+      // if it's a folder, recursively check the contents of the folder
+      checkForLeftoverHelloWorld(`${appPath}/${file}`)
+    }
+  }
+}
