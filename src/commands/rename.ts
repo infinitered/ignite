@@ -22,10 +22,9 @@ module.exports = {
     const manifest = await filesystem.readAsync(
       `${process.cwd()}/android/app/src/main/AndroidManifest.xml`,
     )
-    const oldBundleIdentifier = manifest.match(/(?s)<manifest\s*.*package="(.*?)".*$/)[1]
 
-    console.log(oldBundleIdentifier)
-    if (oldBundleIdentifier) return
+    // match <manifest package="name" to get the bundle id
+    let oldBundleIdentifier = manifest.match(/package="([^"]+)"/)[1]
 
     // do some validations here
 
