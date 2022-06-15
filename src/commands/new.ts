@@ -14,8 +14,10 @@ import {
 } from "../tools/pretty"
 
 // CLI tool versions we support
-const cliDependencyVersions: { [k: string]: string } = {
-  expo: "5",
+const deps: { [k: string]: string } = {
+  // expo-cli v5 would be nice, but we're having a problem with it:
+  // https://github.com/expo/expo-cli/issues/4423
+  expo: "4",
   podInstall: "0.1",
 }
 
@@ -90,13 +92,13 @@ export default {
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan(expo ? "expo-cli" : "ignite-cli")} with ${green(packagerName)}`)
+    p(` █ Using ${cyan(expo ? `expo-cli@${deps.expo}` : "ignite-cli")} with ${green(packagerName)}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` █ Path: ${gray(path(process.cwd(), projectName))}`)
     p(` ────────────────────────────────────────────────\n`)
 
     if (expo) {
-      const expoCLIString = `npx expo-cli@${cliDependencyVersions.expo} init ${projectName} --template ${boilerplatePath} --non-interactive`
+      const expoCLIString = `npx expo-cli@${deps.expo} init ${projectName} --template ${boilerplatePath} --non-interactive`
       log({ expoCLIString })
 
       // generate the project
@@ -282,7 +284,7 @@ export default {
 
       // install pods
       startSpinner("Baking CocoaPods")
-      await spawnProgress(`npx pod-install@${cliDependencyVersions.podInstall}`, {
+      await spawnProgress(`npx pod-install@${deps.podInstall}`, {
         onProgress: log,
       })
       stopSpinner("Baking CocoaPods", "☕️")
