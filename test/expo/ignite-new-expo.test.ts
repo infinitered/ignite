@@ -9,7 +9,6 @@ let tempDir: string
 
 beforeEach(() => {
   tempDir = tempy.directory({ prefix: "ignite-expo-" })
-  console.error(tempDir)
 })
 
 afterEach(() => {
