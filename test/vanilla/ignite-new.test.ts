@@ -58,7 +58,7 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
 
     // react-native-rename doesn't always catch everything, so we need to check for
     // any instances and fail if it doesn't work
-    checkForLeftoverHelloWorld(appPath)
+    await checkForLeftoverHelloWorld(appPath)
 
     // other common test operations
     await testSpunUpApp(appPath, originalDir)
@@ -67,14 +67,16 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
   })
 })
 
-function checkForLeftoverHelloWorld(filePath: string) {
+const ignoreFolders = ["/xcuserdata", ".git", "node_modules", "Pods", "/build"]
+
+async function checkForLeftoverHelloWorld(filePath: string) {
   // ignore some folders
-  if (filePath.includes(".git")) return
-  if (filePath.includes("node_modules")) return
-  if (filePath.includes("Pods")) return
+  if (!ignoreFolders.every((f) => !filePath.includes(f))) return
 
   if (!filesystem.isDirectory(filePath)) {
-    const contents = filesystem.read(filePath)
+    // we append the filePath to the end of the message to make it easier to
+    // find the file in the console output
+    const contents = filesystem.read(filePath) + ` (Filename: ${filePath})`
     expect(contents).not.toContain("helloworld")
     expect(contents).not.toContain("HelloWorld")
     expect(contents).not.toContain("hello-world")
@@ -91,6 +93,6 @@ function checkForLeftoverHelloWorld(filePath: string) {
     expect(file).not.toContain("helloworld")
     expect(file).not.toContain("HelloWorld")
     expect(file).not.toContain("hello-world")
-    checkForLeftoverHelloWorld(`${filePath}/${file}`)
+    await checkForLeftoverHelloWorld(`${filePath}/${file}`)
   }
 }

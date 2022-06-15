@@ -87,7 +87,7 @@ jobs:
       - run:
           name: Run tests
           command: yarn ci:prep && yarn ci:test:expo && yarn clean
-          no_output_timeout: 5m
+          no_output_timeout: 8m
 
   # detox:
   #   <<: *mac

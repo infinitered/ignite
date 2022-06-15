@@ -15,9 +15,8 @@ import {
 
 // CLI tool versions we support
 const cliDependencyVersions: { [k: string]: string } = {
-  expo: "4",
+  expo: "5",
   podInstall: "0.1",
-  rnRename: "2",
 }
 
 export default {
