@@ -150,8 +150,7 @@
       "plugin:react/recommended",
       "plugin:react-native/all",
       "standard",
-      "prettier",
-      "prettier/@typescript-eslint"
+      "prettier"
     ],
     "plugins": [
       "@typescript-eslint",
