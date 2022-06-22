@@ -23,28 +23,26 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.command.toLowerCase()
 
-  // we need a size and color options
-  let { androidSize = null, iosSize = null, backgroundColor, ...options } = parameters.options || {}
+  // color to use for the splash screen
+  let backgroundColor = parameters.first
 
-  if ((!androidSize && !iosSize) || !backgroundColor) {
+  // get optional android/ios logo sizes
+  let { androidSize = 180, iosSize = 212, ...options } = parameters.options || {}
+
+  if (!backgroundColor) {
     warning(
-      `⚠️  Please specify the ${[
-        !androidSize && !iosSize && "size of the icon",
-        !backgroundColor && "background color of the screen",
-      ]
-        .filter(Boolean)
-        .join(" and ")} that will be used to generate the splash screen.`,
+      `⚠️  Please specify the background color of the screen that will be used to generate the splash screen.`,
     )
 
     p()
-    command(`ignite g ${generator} --android-size=180 --ios-size=212 --background-color=191015`)
+    command(`ignite g ${generator} "#191015" [--android-size=180 --ios-size=212]`)
     return
   }
 
   // force coercion of size to number if a user quotes it
   // force coercion of background to string if the hex color is numerical; add "#" if it's not there
-  androidSize = androidSize !== null ? Number(androidSize) : null
-  iosSize = iosSize !== null ? Number(iosSize) : null
+  androidSize = Number(androidSize)
+  iosSize = Number(iosSize)
   backgroundColor = String(backgroundColor).startsWith("#")
     ? backgroundColor
     : `#${backgroundColor}`

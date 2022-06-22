@@ -3,7 +3,6 @@ import { filesystem, GluegunToolbox, strings } from "gluegun"
 import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
-import { spawnProgress } from "./spawn"
 
 export function runGenerator(
   toolbox: GluegunToolbox,
@@ -86,7 +85,7 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
         command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
       } else if (g === "splash-screen") {
         command(g.padEnd(longestGen), `generates splash-screen`, [
-          `ignite g ${g} --android-size=180 --ios-size=212 --background-color=191015`,
+          `ignite g ${g} "#191015" [--android-size=180 --ios-size=212]`,
         ])
       } else {
         command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
@@ -621,35 +620,31 @@ export async function validateSplashScreenGenerator(
   let validationMessages = []
 
   // check if the android size option is numerical and non-zero
-  if (androidSize !== null) {
-    const messages = [
-      Number.isNaN(androidSize) && "   • a numerical value",
-      androidSize <= 0 && "   • a value greater than 0",
-      androidSize >= 288 && "   • a value less than 288",
-    ].filter(Boolean)
+  const androidMessages = [
+    Number.isNaN(androidSize) && "   • a numerical value",
+    androidSize <= 0 && "   • a value greater than 0",
+    androidSize >= 288 && "   • a value less than 288",
+  ].filter(Boolean)
 
-    if (messages.length) {
-      validationMessages.push(`⚠️  "--android-size" option must be:`, ...messages)
-    }
+  if (androidMessages.length) {
+    validationMessages.push(`⚠️  "--android-size" option must be:`, ...androidMessages)
   }
 
   // check if the ios size option is numerical and non-zero
-  if (iosSize !== null) {
-    const messages = [
-      Number.isNaN(iosSize) && "   • a numerical value",
-      iosSize <= 0 && "   • a value greater than 0",
-    ].filter(Boolean)
+  const iosMessages = [
+    Number.isNaN(iosSize) && "   • a numerical value",
+    iosSize <= 0 && "   • a value greater than 0",
+  ].filter(Boolean)
 
-    if (messages.length) {
-      validationMessages.push(`⚠️  "--ios-size" option must be:`, ...messages)
-    }
+  if (iosMessages.length) {
+    validationMessages.push(`⚠️  "--ios-size" option must be:`, ...iosMessages)
   }
 
   // check if the background option is a valid hex color
   const backgroundRegex = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
 
   if (!backgroundRegex.test(backgroundColor)) {
-    validationMessages.push(`⚠️  "--background-color" option must be:`)
+    validationMessages.push(`⚠️  background color parameter must be:`)
     validationMessages.push(`   • a valid hex color`)
   }
 
@@ -700,36 +695,64 @@ export async function generateSplashScreen(options: {
   backgroundColor: string
 }) {
   const { androidSize, iosSize, backgroundColor } = options || {}
-  const { path, exists, write } = filesystem
+  const { path, exists, write, find } = filesystem
   const cwd = process.cwd()
 
   const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
   const expoOutputDirPath = path(cwd, "assets/images")
+  const bootsplashCliPath = path(
+    cwd,
+    "node_modules/react-native-bootsplash/dist/commonjs/generate.js",
+  )
   const isExpoOutputDirExists = exists(expoOutputDirPath) === "dir"
-  const isBootsplashLibInstalled = !!require(path(cwd, "package.json")).dependencies?.[
-    "react-native-bootsplash"
-  ]
+  const isBootsplashCliInstalled = exists(bootsplashCliPath) === "file"
 
   const optionGenerationSuccesses = []
 
   async function generateForVanilla(type: "ios" | "android", size: number) {
     const typeName = { ios: "iOS", android: "Android" }[type]
 
-    // prettier-ignore
-    const bootsplashCmd = ["npx", "react-native", "generate-bootsplash", inputFilePath, `--background-color`, backgroundColor, `--logo-width`, size, `--platform`, type ].join(" ")
+    const { generate } = require(bootsplashCliPath) || {}
+    const logFn = console.log
+    const outputFileNames: string[] = []
 
-    const output = await spawnProgress(bootsplashCmd, {})
+    console.log = function (log: string) {
+      if (typeof log !== "string") return
 
-    if (output.includes("Done!")) {
-      // prettier-ignore
-      const message = {
-          ios: `✅ ios/${require(path(cwd, "app.json"))?.name || "**"}/Images.xcassets/BootSplashLogo.imageset/*`,
-          android: `✅ android/app/src/main/res/mipmap-*/bootsplash_logo.png`
-        }[type]
+      const filePathRegex = new RegExp(`(?:android|ios)\/.*\.(?:png|storyboard|xml)`)
+      const filePathMatch = log.match(filePathRegex)
 
-      direction(message)
+      if (!filePathMatch) return
+
+      outputFileNames.push(`✅ ${filePathMatch[0]}`)
+    }
+
+    try {
+      await generate({
+        android: type === "android" && { sourceDir: path(cwd, "android/app") },
+        ios: type === "ios" && {
+          projectPath: find(path(cwd, "ios"), {
+            directories: true,
+            files: false,
+            matching: "*.xcodeproj",
+            recursive: false,
+          })?.[0],
+        },
+        workingPath: cwd,
+        logoPath: inputFilePath,
+        assetsPath: null,
+        backgroundColor,
+        flavor: "main",
+        logoWidth: size,
+      })
+
+      console.log = logFn
+
+      outputFileNames.forEach(direction)
       optionGenerationSuccesses.push(true)
-    } else {
+    } catch (error) {
+      console.log = logFn
+
       warning(
         `⚠️  Something went wrong generating splash screen for ${typeName}, please file an issue on GitHub. Skipping...`,
       )
@@ -740,7 +763,6 @@ export async function generateSplashScreen(options: {
     type: "ios" | "android" | "web" | "all",
     size: number,
     expoRules: { name?: string; width: number; height: number; scale: number }[],
-    silent?: boolean,
   ) {
     for (const expoRule of expoRules) {
       const { name, width, height, scale } = expoRule
@@ -763,41 +785,34 @@ export async function generateSplashScreen(options: {
           })
           .toFile(outputFilePath)
 
-        !silent && direction(`✅ ${outputFileName}`)
+        direction(`✅ assets/images/${outputFileName}`)
         optionGenerationSuccesses.push(true)
       } catch (error) {}
     }
   }
 
-  if (!!iosSize) {
-    heading(`Generating iOS splash screen...`)
+  heading(`Generating iOS splash screen...`)
+  if (isBootsplashCliInstalled) await generateForVanilla("ios", iosSize)
+  if (isExpoOutputDirExists)
+    await generateForExpo("ios", iosSize, [
+      { name: "mobile", width: 1284, height: 2778, scale: 3 },
+      { name: "tablet", width: 2048, height: 2732, scale: 2 },
+    ])
 
-    if (isBootsplashLibInstalled) await generateForVanilla("ios", iosSize)
-    if (isExpoOutputDirExists)
-      await generateForExpo("ios", iosSize, [
-        { name: "mobile", width: 1284, height: 2778, scale: 3 },
-        { name: "tablet", width: 2048, height: 2732, scale: 2 },
-      ])
-  }
-
-  if (!!androidSize) {
-    heading(`Generating Android splash screen...`)
-
-    if (isBootsplashLibInstalled) await generateForVanilla("android", androidSize)
-    if (isExpoOutputDirExists)
-      await generateForExpo("android", androidSize, [
-        { name: "universal", width: 1440, height: 2560, scale: 4 },
-      ])
-  }
+  heading(`Generating Android splash screen...`)
+  if (isBootsplashCliInstalled) await generateForVanilla("android", androidSize)
+  if (isExpoOutputDirExists)
+    await generateForExpo("android", androidSize, [
+      { name: "universal", width: 1440, height: 2560, scale: 4 },
+    ])
 
   if (isExpoOutputDirExists) {
-    heading(`Updating app.json...`)
+    heading(`Generating additional assets and updating app.json...`)
+    await generateForExpo("web", 300, [{ width: 1920, height: 1080, scale: 1 }])
+    await generateForExpo("all", 180, [{ width: 1242, height: 2436, scale: 3 }])
 
-    await generateForExpo("web", 300, [{ width: 1920, height: 1080, scale: 1 }], true)
-    await generateForExpo("all", 180, [{ width: 1242, height: 2436, scale: 3 }], true)
-
+    // update app.json
     const boilerplateDirPath = path(igniteCliRootDir(), "boilerplate")
-
     const merge = require("deepmerge-json")
     const sourceExpoConfig = require(path(boilerplateDirPath, "app.json"))?.expo
     const outputAppConfig = require(path(cwd, "app.json"))
