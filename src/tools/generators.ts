@@ -622,7 +622,7 @@ export async function validateSplashScreenGenerator(
 
   const { path, exists, inspect } = filesystem
 
-  let validationMessages = []
+  const validationMessages = []
 
   // check if the android size option is numerical and non-zero
   const androidMessages = [
@@ -646,9 +646,7 @@ export async function validateSplashScreenGenerator(
   }
 
   // check if the background option is a valid hex color
-  const backgroundRegex = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
-
-  if (!backgroundRegex.test(backgroundColor)) {
+  if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(backgroundColor)) {
     validationMessages.push(`⚠️  background color parameter must be:`)
     validationMessages.push(`   • a valid hex color`)
   }
@@ -759,8 +757,7 @@ export async function generateSplashScreen(options: {
     console.log = function (log: string) {
       if (typeof log !== "string") return
 
-      const filePathRegex = new RegExp(`(?:android|ios)\/.*\.(?:png|storyboard|xml)`)
-      const filePathMatch = log.match(filePathRegex)
+      const filePathMatch = log.match(/(?:android|ios)\/.*\.(?:png|storyboard|xml)/)
 
       if (!filePathMatch) return
 

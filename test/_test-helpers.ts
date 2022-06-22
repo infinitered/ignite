@@ -38,6 +38,9 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     post: `cd ${originalDir}`,
   }
 
+  const iosProjectExists = filesystem.exists(filesystem.path(appPath, "ios"))
+  const androidProjectExists = filesystem.exists(filesystem.path(appPath, "android"))
+
   // run typescript
   let resultTS: string
   try {
@@ -99,17 +102,25 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     `export * from "./bowser/bowser-screen"`,
   )
 
-  // app-icon
-  const allAppIcons = [
-    "android/app/src/main/res",
-    "ios/Foo/Images.xcassets/AppIcon.appiconset",
-    "assets/images",
-  ].reduce((acc, path, i) => {
+  // app-icons
+  const allAppIcons = ["android", "ios", "expo"].reduce((acc: string[], type) => {
+    const searchPath = {
+      android: "android/app/src/main/res",
+      ios: "ios",
+      expo: "assets/images",
+    }[type] as string
+
+    const matchString = {
+      android: "ic_launch*.png",
+      ios: `Icon-*.png`,
+      expo: "app-icon*.png",
+    }[type]
+
     try {
-      const iconsMatches = filesystem.find(filesystem.path(appPath, path), {
+      const iconsMatches = filesystem.find(filesystem.path(appPath, searchPath), {
         directories: false,
         files: true,
-        matching: `${i === 2 ? "app-icon" : ""}*.png`,
+        matching: matchString,
       })
 
       return [...acc, ...iconsMatches]
@@ -131,13 +142,13 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
 
   expect(appIconGen).toContain(`Generating Expo app icons...`)
 
-  if (filesystem.exists(filesystem.path(appPath, "android"))) {
+  if (androidProjectExists) {
     expect(appIconGen).toContain(`Generating Android app icons...`)
   } else {
     expect(appIconGen).toContain(`No output directory found for "Android"`)
   }
 
-  if (filesystem.exists(filesystem.path(appPath, "ios"))) {
+  if (iosProjectExists) {
     expect(appIconGen).toContain(`Generating iOS app icons...`)
   } else {
     expect(appIconGen).toContain(`No output directory found for "iOS"`)
@@ -165,12 +176,107 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     expect(filesystem.exists(i) === "file").toBe(true)
   })
 
+  // splash-screen
+  const splashScreenAssets = ["android", "ios", "expo"].reduce((acc: string[], type) => {
+    const searchPath = {
+      android: "android/app/src/main/res",
+      ios: "ios",
+      expo: "assets/images",
+    }[type] as string
+
+    const matchString = {
+      android: "bootsplash*.png",
+      ios: `bootsplash*.png`,
+      expo: "splash-logo*.png",
+    }[type]
+
+    try {
+      const splashMatches = filesystem.find(filesystem.path(appPath, searchPath), {
+        directories: false,
+        files: true,
+        matching: matchString,
+      })
+
+      return [...acc, ...splashMatches]
+    } catch (error) {
+      return acc
+    }
+  }, [])
+
+  splashScreenAssets.forEach((i) => {
+    expect(filesystem.exists(i) === "file").toBe(true)
+    filesystem.remove(i)
+    expect(filesystem.exists(i) === "file").toBe(false)
+  })
+
+  function verifySplashScreenColor(type: "android" | "ios" | "expo", matchString: string) {
+    const splashScreenColorStrings = {
+      android: filesystem.read(
+        filesystem.path(appPath, "android/app/src/main/res/values/colors.xml"),
+      ),
+      ios: filesystem.read(filesystem.path(appPath, "ios/Foo/BootSplash.storyboard")),
+      expo: filesystem.read(filesystem.path(appPath, "app.json")),
+    }
+
+    const colorContent = splashScreenColorStrings[type]
+
+    if (!colorContent) return
+
+    expect(colorContent).toContain(matchString)
+  }
+
+  verifySplashScreenColor("android", `#191015`)
+  verifySplashScreenColor("expo", `#191015`)
+  verifySplashScreenColor(
+    "ios",
+    `red="0.0980392156862745" green="0.0627450980392157" blue="0.0823529411764706"`,
+  )
+
+  const splashScreenGen = await runIgnite(
+    `generate splash-screen 000000  --skip-source-equality-validation`,
+    runOpts,
+  )
+
+  expect(splashScreenGen).toContain(`Generating Expo splash screens`)
+
+  if (androidProjectExists) {
+    expect(splashScreenGen).toContain(`Generating Android splash screen...`)
+  } else {
+    expect(splashScreenGen).toContain(`No output directory found for "Android"`)
+  }
+
+  if (iosProjectExists) {
+    expect(splashScreenGen).toContain(`Generating iOS splash screen...`)
+  } else {
+    expect(splashScreenGen).toContain(`No output directory found for "iOS"`)
+  }
+
+  splashScreenAssets.forEach((i) => {
+    expect(filesystem.exists(i) === "file").toBe(true)
+  })
+
+  verifySplashScreenColor("android", `#000000`)
+  verifySplashScreenColor("expo", `#000000`)
+  verifySplashScreenColor(
+    "ios",
+    `red="0.00000000000000" green="0.00000000000000" blue="0.00000000000000"`,
+  )
+
+  const inputFile = filesystem.path(appPath, "ignite/templates/splash-screen/logo.png")
+  expect(filesystem.exists(inputFile) === "file").toBe(true)
+  filesystem.remove(inputFile)
+  expect(filesystem.exists(inputFile) === "file").toBe(false)
+  await runIgnite(`generate --update`, runOpts)
+  expect(filesystem.exists(inputFile) === "file").toBe(true)
+
   // commit the change
   await run(`git add ./app/models ./app/components ./app.json ./assets/images`, runOpts)
-  if (filesystem.exists(filesystem.path(appPath, "ios"))) {
+  if (iosProjectExists) {
     await run(`git add ./ios/Foo/Images.xcassets/AppIcon.appiconset`, runOpts)
+    await run(`git add ./ios/Foo/Images.xcassets/BootSplashLogo.imageset`, runOpts)
+    await run(`git add ./ios/Foo/BootSplash.storyboard`, runOpts)
   }
-  if (filesystem.exists(filesystem.path(appPath, "android"))) {
+  if (androidProjectExists) {
     await run(`git add ./android/app/src/main/res`, runOpts)
   }
   await run(`git commit -m "generated test components & assets"`, runOpts)
