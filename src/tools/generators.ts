@@ -459,14 +459,19 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
     const relativeOutputDirPath = {
       expo: "assets/images",
       android: "android/app/src/main/res",
-      ios:
-        (exists("ios") &&
-          find("ios", {
+      ios: (function () {
+        const searchPath = path(cwd, "ios")
+
+        if (!exists(searchPath)) return searchPath
+
+        return (
+          find(searchPath, {
             directories: true,
             files: false,
             matching: "AppIcon.appiconset",
-          })?.[0]) ||
-        "ios/**/Images.xcassets/AppIcon.appiconset",
+          })?.[0] || "ios/**/Images.xcassets/AppIcon.appiconset"
+        )
+      })(),
     }[o]
     const outputDirPath = path(cwd, relativeOutputDirPath)
 
@@ -700,17 +705,52 @@ export async function generateSplashScreen(options: {
 
   const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
   const expoOutputDirPath = path(cwd, "assets/images")
+  const isExpoOutputDirExists = exists(expoOutputDirPath) === "dir"
   const bootsplashCliPath = path(
     cwd,
     "node_modules/react-native-bootsplash/dist/commonjs/generate.js",
   )
-  const isExpoOutputDirExists = exists(expoOutputDirPath) === "dir"
   const isBootsplashCliInstalled = exists(bootsplashCliPath) === "file"
-
   const optionGenerationSuccesses = []
 
   async function generateForVanilla(type: "ios" | "android", size: number) {
     const typeName = { ios: "iOS", android: "Android" }[type]
+
+    const bootsplashOutputPath = {
+      android: path(cwd, "android/app"),
+      ios: (function () {
+        const searchPath = path(cwd, "ios")
+
+        if (!exists(searchPath)) return searchPath
+
+        return (
+          find(searchPath, {
+            directories: true,
+            files: false,
+            matching: "*.xcodeproj",
+            recursive: false,
+          })?.[0] || searchPath
+        )
+      })(),
+    }[type]
+
+    const isBootsplashOutputPathExists = exists(bootsplashOutputPath) === "dir"
+
+    heading(`Generating ${typeName} splash screen...`)
+
+    if (!isBootsplashOutputPathExists) {
+      warning(
+        `⚠️  No output directory found for "${typeName}" at "${bootsplashOutputPath}". Skipping...`,
+      )
+      return
+    }
+
+    if (!isBootsplashCliInstalled) {
+      warning(
+        `⚠️  If you are attempting to generate a splash screen for bare/vanilla ${typeName} react-native project, please install and configure the "react-native-bootsplash" package. Skipping...`,
+      )
+      return
+    }
 
     const { generate } = require(bootsplashCliPath) || {}
     const logFn = console.log
@@ -729,15 +769,8 @@ export async function generateSplashScreen(options: {
 
     try {
       await generate({
-        android: type === "android" && { sourceDir: path(cwd, "android/app") },
-        ios: type === "ios" && {
-          projectPath: find(path(cwd, "ios"), {
-            directories: true,
-            files: false,
-            matching: "*.xcodeproj",
-            recursive: false,
-          })?.[0],
-        },
+        android: type === "android" && { sourceDir: bootsplashOutputPath },
+        ios: type === "ios" && { projectPath: bootsplashOutputPath },
         workingPath: cwd,
         logoPath: inputFilePath,
         assetsPath: null,
@@ -791,23 +824,18 @@ export async function generateSplashScreen(options: {
     }
   }
 
-  heading(`Generating iOS splash screen...`)
-  if (isBootsplashCliInstalled) await generateForVanilla("ios", iosSize)
-  if (isExpoOutputDirExists)
+  await generateForVanilla("ios", iosSize)
+  await generateForVanilla("android", androidSize)
+
+  heading(`Generating Expo splash screens (Android, iOS, and Web)...`)
+  if (isExpoOutputDirExists) {
     await generateForExpo("ios", iosSize, [
       { name: "mobile", width: 1284, height: 2778, scale: 3 },
       { name: "tablet", width: 2048, height: 2732, scale: 2 },
     ])
-
-  heading(`Generating Android splash screen...`)
-  if (isBootsplashCliInstalled) await generateForVanilla("android", androidSize)
-  if (isExpoOutputDirExists)
     await generateForExpo("android", androidSize, [
       { name: "universal", width: 1440, height: 2560, scale: 4 },
     ])
-
-  if (isExpoOutputDirExists) {
-    heading(`Generating additional assets and updating app.json...`)
     await generateForExpo("web", 300, [{ width: 1920, height: 1080, scale: 1 }])
     await generateForExpo("all", 180, [{ width: 1242, height: 2436, scale: 3 }])
 
@@ -819,15 +847,39 @@ export async function generateSplashScreen(options: {
 
     const updatedConfig = merge(outputAppConfig, {
       expo: {
-        splash: { backgroundColor, image: sourceExpoConfig?.splash?.image },
-        android: { splash: { backgroundColor, image: sourceExpoConfig?.android?.splash?.image } },
-        ios: { splash: { backgroundColor, image: sourceExpoConfig?.ios?.splash?.image } },
-        web: { splash: { backgroundColor, image: sourceExpoConfig?.web?.splash?.image } },
+        splash: {
+          backgroundColor,
+          image: sourceExpoConfig?.splash?.image,
+          resizeMode: sourceExpoConfig?.splash?.resizeMode,
+        },
+        android: {
+          splash: {
+            backgroundColor,
+            image: sourceExpoConfig?.android?.splash?.image,
+            resizeMode: sourceExpoConfig?.android?.splash?.resizeMode,
+          },
+        },
+        ios: {
+          splash: {
+            backgroundColor,
+            image: sourceExpoConfig?.ios?.splash?.image,
+            resizeMode: sourceExpoConfig?.ios?.splash?.resizeMode,
+          },
+        },
+        web: {
+          splash: {
+            backgroundColor,
+            image: sourceExpoConfig?.web?.splash?.image,
+            resizeMode: sourceExpoConfig?.web?.splash?.resizeMode,
+          },
+        },
       },
     })
 
     write(path(cwd, "app.json"), updatedConfig)
     direction(`✅ app.json`)
+  } else {
+    warning(`⚠️  No output directory found for "Expo" at "${expoOutputDirPath}". Skipping...`)
   }
 
   return !!optionGenerationSuccesses.length
