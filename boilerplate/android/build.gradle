@@ -1,21 +1,32 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
     ext {
-        buildToolsVersion = "30.0.2"
+        buildToolsVersion = "31.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 29
-        targetSdkVersion = 29
-        ndkVersion = "21.4.7075529"
+        compileSdkVersion = 31
+        targetSdkVersion = 31
         kotlin_version = "1.6.0" // Update this to your version
+
+        if (System.properties['os.arch'] == "aarch64") {
+            // For M1 Users we need to use the NDK 24 which added support for aarch64
+            ndkVersion = "24.0.8215888"
+        } else {
+            // Otherwise we default to the side-by-side NDK version from AGP.
+            ndkVersion = "21.4.7075529"
+        }
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2")
+        classpath("com.android.tools.build:gradle:7.0.4")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("de.undercouch:gradle-download-task:4.1.2")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -31,7 +42,6 @@ allprojects {
             // Android JSC is installed from npm
             url(new File(["node", "--print", "require.resolve('jsc-android/package.json')"].execute().text.trim(), "../dist"))
         }
-
         mavenCentral {
             // We don't want to fetch react-native from Maven Central as there are
             // older versions over there.
@@ -39,7 +49,6 @@ allprojects {
                 excludeGroup "com.facebook.react"
             }
         }
-
         google()
         maven { url 'https://www.jitpack.io' }
     }

@@ -834,9 +834,9 @@
   integrity sha512-8pq4JlFIkOqjwkN6amYebQ2CTAa1EeYjSBurGh8upYZtqUZBXDOK7FUAx+OVHs/7qQfmF2lU7QpqA7DZGv4xJA==
 
 "@rnx-kit/tools-node@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.2.6.tgz#34de31b1c2ec681a3009b27c137cc1f2c57b7e9c"
-  integrity sha512-oiVbP801aabLCBl42l448QPlui/SEQcuWURZOmVbg04ntyLGgUNgYN87Zen+2yr/LnnI2ec1SOtftHbK6Ro+5A==
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.2.7.tgz#ae702763d26fc9b5a0984c5fddd90e38e03b06a1"
+  integrity sha512-vgURBJttO8z1nSrJm3KWgzEO3/oat5Rn/Fx2b9XyEf7y2CzJh1fwf48XddDnzmSKFNd/SihP7hDcVcEqZ/evCQ==
   dependencies:
     "@rnx-kit/tools-language" "^1.2.6"
     find-up "^5.0.0"
