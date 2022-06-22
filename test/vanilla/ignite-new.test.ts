@@ -56,8 +56,43 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
     )
     expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
 
+    // react-native-rename doesn't always catch everything, so we need to check for
+    // any instances and fail if it doesn't work
+    await checkForLeftoverHelloWorld(appPath)
+
+    // other common test operations
     await testSpunUpApp(appPath, originalDir)
 
     // we're done!
   })
 })
+
+const ignoreFolders = ["/xcuserdata", ".git", "node_modules", "Pods", "/build"]
+
+async function checkForLeftoverHelloWorld(filePath: string) {
+  // ignore some folders
+  if (!ignoreFolders.every((f) => !filePath.includes(f))) return
+
+  if (!filesystem.isDirectory(filePath)) {
+    // we append the filePath to the end of the message to make it easier to
+    // find the file in the console output
+    const contents = filesystem.read(filePath) + ` (Filename: ${filePath})`
+    expect(contents).not.toContain("helloworld")
+    expect(contents).not.toContain("HelloWorld")
+    expect(contents).not.toContain("hello-world")
+
+    // it's a file, so eject
+    return
+  }
+
+  // check to make sure there are no instances of helloworld or HelloWorld or hello-world
+  // anywhere in the app -- including folder and filenames.
+  const appFiles = filesystem.list(filePath)
+
+  for (const file of appFiles) {
+    expect(file).not.toContain("helloworld")
+    expect(file).not.toContain("HelloWorld")
+    expect(file).not.toContain("hello-world")
+    await checkForLeftoverHelloWorld(`${filePath}/${file}`)
+  }
+}

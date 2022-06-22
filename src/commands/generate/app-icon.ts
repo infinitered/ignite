@@ -17,7 +17,7 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.command.toLowerCase()
 
-  // we need an option for this generator
+  // we need a platform to generate app-icons
   const option = parameters.first
   if (!option) {
     warning(`⚠️  Please specify which icons you would like to generate:`)
