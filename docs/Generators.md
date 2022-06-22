@@ -83,6 +83,51 @@ npx ignite-cli generate app-icon ios
 
 By default, the generator will exit if the input-files in your templates folder match signatures with those of the default Ignite app-icons - this is done to encourage you to make actual changes to the icons before generating. However, if you want to override your application's app-icons with those of Ignite's, you can first reset your app-icon templates folder with `npx ignite-cli g app-icon --update` and then regenerate the app-icons with the `--skip-source-equality-validation` flag.
 
+### Splash Screen generator
+
+Similar to app/launcher icons, the splash-screen is somewhat tricky to configure and manage due to platform (and OS version) differences. Therefore, splash-screens come preconfigured in the latest versions of Ignite boilerplate and a handy generator is provided to aid with customization.
+
+Note, on latest vanilla-flavored Ignite projects, the awesome library [`react-native-bootsplash`](https://github.com/zoontek/react-native-bootsplash) is used for both generation and integration within the app. Using this generator with older Ignite boilerplates will result in a warning to install and configure that library. On Expo, the splash-screen is configured via `app.json`.
+
+Unlike the app/launcher generator however, only a single input file is needed. This file, called `logo.png`, can be found and customized in the following templates folder: `ignite/templates/splash-screen`.
+
+The generator requires a single parameter for the splash-screen's background color (in hex format).
+
+```
+npx ignite-cli generate splash-screen FF0000
+// or
+npx ignite-cli generate splash-screen "#FF0000"
+// or
+npx ignite-cli generate splash-screen fff
+```
+
+The generator will modify the following folders/files:
+
+- iOS
+
+  - (vanilla) Updates `./ios/**/Images.xcassets/BootSplashLogo.imageset/`.
+  - (vanilla) Updates `./ios/**/BootSplash.storyboard`.
+  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+
+- Android
+
+  - (vanilla) Updates `./android/app/src/main/res/`.
+  - (vanilla) Updates `./android/app/src/main/res/values/colors.xml`.
+  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+
+- Web
+  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+
+Logo size transformations are predetermined based on platform. The defaults are meant to work in _most_ cases. However, you can adjust the logo transformation size according to your needs by using flags:
+
+```
+npx ignite-cli generate splash-screen FF0000 --ios-size=150 --android-size=180
+```
+
+A few notes about sizes. iOS size has no upper limit, so be careful with the value. Android has an upper limit of `288` as defined in [Android docs](https://developer.android.com/guide/topics/ui/splash-screen#splash_screen_dimensions). For Expo (both Android and iOS), custom sizes will be observed; however, due to Expo's config requirements, the splash-screen assets are generated with padding and attempt to fill the screen.
+
+Lastly, the splash-screen generator will exit if your input file has not been modified. The same source equality check, as the one on the app-icon generator, will encourage you to make customizations before using the generator (see the `--skip-source-equality-validation` section above).
+
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
