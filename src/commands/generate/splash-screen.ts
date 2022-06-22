@@ -18,8 +18,6 @@ module.exports = {
 async function generate(toolbox: GluegunToolbox) {
   const { parameters } = toolbox
 
-  // YULIANTODO: https://stackoverflow.com/questions/69812590/android-12-splash-screen-icon-not-displaying/69831106#69831106
-
   // what generator are we running?
   const generator = parameters.command.toLowerCase()
 
@@ -65,8 +63,10 @@ async function generate(toolbox: GluegunToolbox) {
       "Uninstall the application from your simulator/emulator and re-build your app to see the changes!",
     )
     p(
-      "Note: If you are using vanilla React Native on an Android 12, the splash screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon.",
+      "Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106",
     )
-    // YULIANTODO: link to relative github issue
+    p(
+      "Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.",
+    )
   }
 }
