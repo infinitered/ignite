@@ -12,10 +12,14 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.12.71",
-    "expo": "43.0.0",
+    "expo-linear-gradient": "~10.0.3",
+    "expo-localization": "~11.0.0",
+    "expo-modules-core": "~0.4.10",
     "expo-status-bar": "~1.1.0",
-    "react": "17.0.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-43.0.0.tar.gz"
+    "expo": "43.0.0",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-43.0.0.tar.gz",
+    "react": "17.0.1"
   },
   "devDependencies": {
     "@types/react-dom": "16.9.8",
