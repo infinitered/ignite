@@ -17,12 +17,12 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.command.toLowerCase()
 
-  // we need a name for this component
+  // we need an option for this generator
   const option = parameters.first
   if (!option) {
     warning(`⚠️  Please specify which icons you would like to generate:`)
     p()
-    command(`ignite g ${generator} "all|ios|android|expo"`)
+    command(`ignite g ${generator} all|ios|android|expo`)
     return
   }
 

@@ -3,6 +3,7 @@ import { filesystem, GluegunToolbox, strings } from "gluegun"
 import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
+import { spawnProgress } from "./spawn"
 
 export function runGenerator(
   toolbox: GluegunToolbox,
@@ -81,10 +82,12 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   if (inIgnite) {
     const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
     generators.forEach((g) => {
-      const isAppIconGenerator = g === "app-icon"
-
-      if (isAppIconGenerator) {
+      if (g === "app-icon") {
         command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
+      } else if (g === "splash-screen") {
+        command(g.padEnd(longestGen), `generates splash-screen`, [
+          `ignite g ${g} --android-size=180 --ios-size=212 --background-color=191015`,
+        ])
       } else {
         command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
       }
@@ -319,7 +322,7 @@ enum Platforms {
 }
 
 // prettier-ignore
-const APP_ICON_RULES = {
+const APP_ICON_RULESET = {
   icons: [
     { platform: Platforms.Ios, type: "universal", name: "Icon-{size}-{idiom}{scale}.png", inputFile: "ios-universal.png" },
     { platform: Platforms.Android, type: "adaptive", name: "mipmap-{dpi}/ic_launcher_background.png", inputFile: "android-adaptive-background.png" },
@@ -383,7 +386,7 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all", f
   const optionsToValidate = option === "all" ? allowedOptions : [option]
 
   // get all the file-names that are required for the supplied option(s) and dedup
-  const inputFileNames = APP_ICON_RULES.icons
+  const inputFileNames = APP_ICON_RULESET.icons
     .filter((i) => optionsToValidate.includes(i.platform))
     .reduce((acc, i) => Array.from(new Set([...acc, i.inputFile])), [])
 
@@ -478,7 +481,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
     heading(`Generating ${optionProjectName} app icons...`)
 
-    const icons = APP_ICON_RULES.icons.filter((i) => i.platform === o)
+    const icons = APP_ICON_RULESET.icons.filter((i) => i.platform === o)
 
     // prepare each icon for generation sequentially
     for (const i of icons) {
@@ -507,7 +510,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
         } catch (error) {}
       })()
 
-      const rules = APP_ICON_RULES.rules.filter((i) => i.platform === o)
+      const rules = APP_ICON_RULESET.rules.filter((i) => i.platform === o)
 
       // actually resize the input files and save to output dir sequentially
       for (const r of rules) {
@@ -597,6 +600,219 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
     // if we reached this point, generation for this platform was successful
     optionGenerationSuccesses.push(true)
+  }
+
+  return !!optionGenerationSuccesses.length
+}
+
+/**
+ * Validates that splash screen icon input file exists in the template dir.
+ * Additionally validates the size and background parameters.
+ */
+export async function validateSplashScreenGenerator(
+  options: { androidSize: number; iosSize: number; backgroundColor: string },
+  flags: Options,
+) {
+  const { androidSize, iosSize, backgroundColor } = options || {}
+  const { skipSourceEqualityValidation } = flags || {}
+
+  const { path, exists, inspect } = filesystem
+
+  let validationMessages = []
+
+  // check if the android size option is numerical and non-zero
+  if (androidSize !== null) {
+    const messages = [
+      Number.isNaN(androidSize) && "   • a numerical value",
+      androidSize <= 0 && "   • a value greater than 0",
+      androidSize >= 288 && "   • a value less than 288",
+    ].filter(Boolean)
+
+    if (messages.length) {
+      validationMessages.push(`⚠️  "--android-size" option must be:`, ...messages)
+    }
+  }
+
+  // check if the ios size option is numerical and non-zero
+  if (iosSize !== null) {
+    const messages = [
+      Number.isNaN(iosSize) && "   • a numerical value",
+      iosSize <= 0 && "   • a value greater than 0",
+    ].filter(Boolean)
+
+    if (messages.length) {
+      validationMessages.push(`⚠️  "--ios-size" option must be:`, ...messages)
+    }
+  }
+
+  // check if the background option is a valid hex color
+  const backgroundRegex = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
+
+  if (!backgroundRegex.test(backgroundColor)) {
+    validationMessages.push(`⚠️  "--background-color" option must be:`)
+    validationMessages.push(`   • a valid hex color`)
+  }
+
+  // validate template input file
+  const boilerplateInputFilePath = path(sourceDirectory(), "splash-screen", "logo.png")
+  const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
+
+  const isMissing = !exists(inputFilePath)
+  const isInvalidSize = await (async function () {
+    if (isMissing) return false
+
+    const metadata = await sharp(inputFilePath).metadata()
+    return metadata.width !== 1024 || metadata.height !== 1024
+  })()
+  const isSameAsSource = await (async function () {
+    if (skipSourceEqualityValidation) return false
+    if (isMissing) return false
+
+    const inputFileMd5 = inspect(inputFilePath, { checksum: "md5" }).md5
+    const sourceFileMd5 = inspect(boilerplateInputFilePath, { checksum: "md5" }).md5
+
+    return inputFileMd5 === sourceFileMd5
+  })()
+
+  const messages = [
+    isMissing && "   • the file is missing",
+    isInvalidSize && "   • the file is the wrong size (expected 1024x1024px)",
+    isSameAsSource &&
+      "   • looks like you're using our default template; customize the file with your own icon first",
+  ].filter(Boolean)
+
+  if (messages.length) {
+    validationMessages.push(`⚠️  ignite/templates/splash-screen/logo.png:`, ...messages)
+  }
+
+  return {
+    isValid: !validationMessages.length,
+    messages: validationMessages,
+  }
+}
+
+/**
+ * Generates splash screen for all platforms
+ */
+export async function generateSplashScreen(options: {
+  androidSize: number
+  iosSize: number
+  backgroundColor: string
+}) {
+  const { androidSize, iosSize, backgroundColor } = options || {}
+  const { path, exists, write } = filesystem
+  const cwd = process.cwd()
+
+  const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
+  const expoOutputDirPath = path(cwd, "assets/images")
+  const isExpoOutputDirExists = exists(expoOutputDirPath) === "dir"
+  const isBootsplashLibInstalled = !!require(path(cwd, "package.json")).dependencies?.[
+    "react-native-bootsplash"
+  ]
+
+  const optionGenerationSuccesses = []
+
+  async function generateForVanilla(type: "ios" | "android", size: number) {
+    const typeName = { ios: "iOS", android: "Android" }[type]
+
+    // prettier-ignore
+    const bootsplashCmd = ["npx", "react-native", "generate-bootsplash", inputFilePath, `--background-color`, backgroundColor, `--logo-width`, size, `--platform`, type ].join(" ")
+
+    const output = await spawnProgress(bootsplashCmd, {})
+
+    if (output.includes("Done!")) {
+      // prettier-ignore
+      const message = {
+          ios: `✅ ios/${require(path(cwd, "app.json"))?.name || "**"}/Images.xcassets/BootSplashLogo.imageset/*`,
+          android: `✅ android/app/src/main/res/mipmap-*/bootsplash_logo.png`
+        }[type]
+
+      direction(message)
+      optionGenerationSuccesses.push(true)
+    } else {
+      warning(
+        `⚠️  Something went wrong generating splash screen for ${typeName}, please file an issue on GitHub. Skipping...`,
+      )
+    }
+  }
+
+  async function generateForExpo(
+    type: "ios" | "android" | "web" | "all",
+    size: number,
+    expoRules: { name?: string; width: number; height: number; scale: number }[],
+    silent?: boolean,
+  ) {
+    for (const expoRule of expoRules) {
+      const { name, width, height, scale } = expoRule
+
+      const outputFileName = [`splash-logo`, type, name].filter(Boolean).join("-") + ".png"
+      const outputFilePath = path(expoOutputDirPath, outputFileName)
+      const logoSize = size * scale
+      const verticalPadding = Math.ceil((height - logoSize) / 2)
+      const horizontalPadding = Math.ceil((width - logoSize) / 2)
+
+      try {
+        await sharp(inputFilePath)
+          .resize(logoSize, logoSize, { fit: "fill" })
+          .extend({
+            top: verticalPadding,
+            bottom: verticalPadding,
+            left: horizontalPadding,
+            right: horizontalPadding,
+            background: { r: 0, g: 0, b: 0, alpha: 0 },
+          })
+          .toFile(outputFilePath)
+
+        !silent && direction(`✅ ${outputFileName}`)
+        optionGenerationSuccesses.push(true)
+      } catch (error) {}
+    }
+  }
+
+  if (!!iosSize) {
+    heading(`Generating iOS splash screen...`)
+
+    if (isBootsplashLibInstalled) await generateForVanilla("ios", iosSize)
+    if (isExpoOutputDirExists)
+      await generateForExpo("ios", iosSize, [
+        { name: "mobile", width: 1284, height: 2778, scale: 3 },
+        { name: "tablet", width: 2048, height: 2732, scale: 2 },
+      ])
+  }
+
+  if (!!androidSize) {
+    heading(`Generating Android splash screen...`)
+
+    if (isBootsplashLibInstalled) await generateForVanilla("android", androidSize)
+    if (isExpoOutputDirExists)
+      await generateForExpo("android", androidSize, [
+        { name: "universal", width: 1440, height: 2560, scale: 4 },
+      ])
+  }
+
+  if (isExpoOutputDirExists) {
+    heading(`Updating app.json...`)
+
+    await generateForExpo("web", 300, [{ width: 1920, height: 1080, scale: 1 }], true)
+    await generateForExpo("all", 180, [{ width: 1242, height: 2436, scale: 3 }], true)
+
+    const boilerplateDirPath = path(igniteCliRootDir(), "boilerplate")
+
+    const merge = require("deepmerge-json")
+    const sourceExpoConfig = require(path(boilerplateDirPath, "app.json"))?.expo
+    const outputAppConfig = require(path(cwd, "app.json"))
+
+    const updatedConfig = merge(outputAppConfig, {
+      expo: {
+        splash: { backgroundColor, image: sourceExpoConfig?.splash?.image },
+        android: { splash: { backgroundColor, image: sourceExpoConfig?.android?.splash?.image } },
+        ios: { splash: { backgroundColor, image: sourceExpoConfig?.ios?.splash?.image } },
+        web: { splash: { backgroundColor, image: sourceExpoConfig?.web?.splash?.image } },
+      },
+    })
+
+    write(path(cwd, "app.json"), updatedConfig)
+    direction(`✅ app.json`)
   }
 
   return !!optionGenerationSuccesses.length

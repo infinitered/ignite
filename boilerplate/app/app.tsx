@@ -26,10 +26,15 @@ import { ErrorBoundary } from "./screens/error/error-boundary"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
+interface AppProps {
+  hideSplashScreen: () => Promise<void>
+}
+
 /**
  * This is the root component of our app.
  */
-function App() {
+function App(props: AppProps) {
+  const { hideSplashScreen } = props
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
   const {
     initialNavigationState,
@@ -41,7 +46,13 @@ function App() {
   useEffect(() => {
     ;(async () => {
       await initFonts() // expo
-      setupRootStore().then(setRootStore)
+      setupRootStore().then((rootStore) => {
+        setRootStore(rootStore)
+
+        // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
+        // Slighly delaying splash screen hiding for better UX; can be customized or removed as needed,
+        setTimeout(hideSplashScreen, 500)
+      })
     })()
   }, [])
 
