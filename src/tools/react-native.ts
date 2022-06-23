@@ -82,8 +82,6 @@ export async function renameReactNativeApp(
 
   // prettier-ignore
   await Promise.allSettled([
-    rename(`android/app/src/main/java/com/${oldnamelower}`, newnamelower),
-    rename(`android/app/src/debug/java/com/${oldnamelower}`, newnamelower),
     rename(`ios/${oldName}.xcodeproj/xcshareddata/xcschemes/${oldName}.xcscheme`, `${newName}.xcscheme`),
     rename(`ios/${oldName}Tests/${oldName}Tests.m`, `${newName}Tests.m`),
     rename(`ios/${oldName}-Bridging-Header.h`, `${newName}-Bridging-Header.h`),
@@ -107,13 +105,11 @@ export async function renameReactNativeApp(
 
     // move everything at the old bundle identifier path to the new one
     await Promise.allSettled([
-      moveDeepFolder(
-        toolbox,
+      filesystem.moveAsync(
         `android/app/src/main/java/${oldPath}`,
         `android/app/src/main/java/${newPath}`,
       ),
-      moveDeepFolder(
-        toolbox,
+      filesystem.moveAsync(
         `android/app/src/debug/java/${oldPath}`,
         `android/app/src/debug/java/${newPath}`,
       ),
@@ -174,23 +170,4 @@ export async function renameReactNativeApp(
       await filesystem.writeAsync(file, newContent, { atomic: true })
     }),
   )
-}
-
-async function moveDeepFolder(toolbox: GluegunToolbox, oldPath: string, newPath: string) {
-  const { filesystem } = toolbox
-  const { path } = filesystem
-
-  // ensure newPath exists
-  await filesystem.dirAsync(newPath)
-
-  // move the files
-  const filesToMove = children(oldPath)
-  const movePromises = filesToMove.map((file) =>
-    filesystem.moveAsync(path(oldPath, file), path(newPath, file)),
-  )
-
-  await Promise.allSettled(movePromises)
-
-  // remove the old folder
-  await filesystem.removeAsync(oldPath)
 }

@@ -1,5 +1,12 @@
 import * as React from "react"
-import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, Dimensions } from "react-native"
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StatusBar,
+  View,
+  Dimensions,
+} from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
@@ -34,19 +41,20 @@ function ScreenWithScrolling(props: ScreenProps) {
 
   // The followings for <Screen preset='auto'/>
   // This will automatically disables scrolling if content fits the screen.
-  const { height } = Dimensions.get('window')
+  const { height } = Dimensions.get("window")
   const scrollViewHeight = React.useRef(null)
   const [scrollEnabled, setScrollEnabled] = React.useState(true)
 
   const updateScrollState = () => {
-    if (props.preset === 'auto'){
+    if (props.preset === "auto") {
       // check whether if content fits the screen
       // then toggle scroll state according to it
-      const contentFitsScreen = scrollViewHeight.current < height * presets.auto.offset.percent - presets.auto.offset.point
-      
+      const contentFitsScreen =
+        scrollViewHeight.current < height * presets.auto.offset.percent - presets.auto.offset.point
+
       // content is less than the size of the screen, so we can disable scrolling
       if (scrollEnabled && contentFitsScreen) setScrollEnabled(false)
-      
+
       // content is greater than the size of the screen, so let's enable scrolling
       if (!scrollEnabled && !contentFitsScreen) setScrollEnabled(true)
     } else if (!scrollEnabled) {
@@ -64,7 +72,7 @@ function ScreenWithScrolling(props: ScreenProps) {
     updateScrollState()
   }
 
-  // update scroll state on every render 
+  // update scroll state on every render
   // when scrollViewHeight isn't null
   if (scrollViewHeight.current !== null) updateScrollState()
 
@@ -80,7 +88,7 @@ function ScreenWithScrolling(props: ScreenProps) {
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}
           keyboardShouldPersistTaps={props.keyboardShouldPersistTaps || "handled"}
-          onContentSizeChange={props.preset === 'auto' ? onContentSizeChange : undefined}
+          onContentSizeChange={props.preset === "auto" ? onContentSizeChange : undefined}
           scrollEnabled={scrollEnabled}
         >
           {props.children}
