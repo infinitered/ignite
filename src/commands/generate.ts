@@ -1,64 +1,29 @@
 import { GluegunToolbox } from "gluegun"
-import { p, command, heading, warning, direction } from "../tools/pretty"
-import {
-  showGeneratorHelp,
-  updateGenerators,
-  installedGenerators,
-  availableGenerators,
-  generateFromTemplate,
-} from "../tools/generators"
+import { generateFromTemplate, runGenerator } from "../tools/generators"
+import { command, heading, p, warning } from "../tools/pretty"
 
 module.exports = {
   alias: ["g", "generator", "generators"],
   description: "Generates components and other features from templates",
   run: async (toolbox: GluegunToolbox) => {
-    const { parameters } = toolbox
-
-    p()
-    if (parameters.options.help || parameters.options.list) {
-      // show help or list generators
-      showGeneratorHelp(toolbox)
-    } else if (parameters.options.update) {
-      // update with fresh generators
-      updateGenerators(toolbox)
-    } else if (parameters.first) {
-      // actually generate something
-      generate(toolbox)
-    } else {
-      // catch-all, just show help
-      showGeneratorHelp(toolbox)
-    }
+    const generator = toolbox.parameters.first?.toLowerCase()
+    runGenerator(toolbox, generate, generator)
   },
 }
 
-function generate(toolbox: GluegunToolbox) {
+async function generate(toolbox: GluegunToolbox) {
   const { parameters, strings } = toolbox
-
-  const generators = installedGenerators()
 
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
-  if (!generators.includes(generator)) {
-    warning(`⚠️  Generator "${generator}" isn't installed.`)
-    p()
-
-    if (availableGenerators().includes(generator)) {
-      direction("Install the generator with:")
-      p()
-      command(`ignite generate ${generator} --update`)
-      p()
-      direction("... and then try again!")
-    } else {
-      direction("Check your spelling and try again")
-    }
-
-    return
-  }
 
   // we need a name for this component
   const name = parameters.second
   if (!name) {
-    return warning(`⚠️  Please specify a name for your ${generator}: ignite g ${generator} MyName`)
+    warning(`⚠️  Please specify a name for your ${generator}:`)
+    p()
+    command(`ignite g ${generator} MyName`)
+    return
   }
 
   // avoid the my-component-component phenomenon

@@ -53,6 +53,7 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   expect(templates).toContain("component")
   expect(templates).toContain("model")
   expect(templates).toContain("screen")
+  expect(templates).toContain("app-icon")
 
   // check the basic contents of package.json
   const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
@@ -98,11 +99,81 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     `export * from "./bowser/bowser-screen"`,
   )
 
-  // commit the change
-  await run(
-    `git add ./app/models ./app/components && git commit -m "generated test components"`,
+  // app-icon
+  const allAppIcons = [
+    "android/app/src/main/res",
+    "ios/Foo/Images.xcassets/AppIcon.appiconset",
+    "assets/images",
+  ].reduce((acc, path, i) => {
+    try {
+      const iconsMatches = filesystem.find(filesystem.path(appPath, path), {
+        directories: false,
+        files: true,
+        matching: `${i === 2 ? "app-icon" : ""}*.png`,
+      })
+
+      return [...acc, ...iconsMatches]
+    } catch (error) {
+      return acc
+    }
+  }, [])
+
+  allAppIcons.forEach((i) => {
+    expect(filesystem.exists(i) === "file").toBe(true)
+    filesystem.remove(i)
+    expect(filesystem.exists(i) === "file").toBe(false)
+  })
+
+  const appIconGen = await runIgnite(
+    `generate app-icon all --skip-source-equality-validation`,
     runOpts,
   )
+
+  expect(appIconGen).toContain(`Generating Expo app icons...`)
+
+  if (filesystem.exists(filesystem.path(appPath, "android"))) {
+    expect(appIconGen).toContain(`Generating Android app icons...`)
+  } else {
+    expect(appIconGen).toContain(`No output directory found for "Android"`)
+  }
+
+  if (filesystem.exists(filesystem.path(appPath, "ios"))) {
+    expect(appIconGen).toContain(`Generating iOS app icons...`)
+  } else {
+    expect(appIconGen).toContain(`No output directory found for "iOS"`)
+  }
+
+  allAppIcons.forEach((i) => {
+    expect(filesystem.exists(i) === "file").toBe(true)
+  })
+
+  const inputFiles = filesystem.find(`${appPath}/ignite/templates/app-icon`, {
+    directories: false,
+    files: true,
+    matching: "*.png",
+  })
+
+  inputFiles.forEach((i) => {
+    expect(filesystem.exists(i) === "file").toBe(true)
+    filesystem.remove(i)
+    expect(filesystem.exists(i) === "file").toBe(false)
+  })
+
+  await runIgnite(`generate --update`, runOpts)
+
+  inputFiles.forEach((i) => {
+    expect(filesystem.exists(i) === "file").toBe(true)
+  })
+
+  // commit the change
+  await run(`git add ./app/models ./app/components ./app.json ./assets/images`, runOpts)
+  if (filesystem.exists(filesystem.path(appPath, "ios"))) {
+    await run(`git add ./ios/Foo/Images.xcassets/AppIcon.appiconset`, runOpts)
+  }
+  if (filesystem.exists(filesystem.path(appPath, "android"))) {
+    await run(`git add ./android/app/src/main/res`, runOpts)
+  }
+  await run(`git commit -m "generated test components & assets"`, runOpts)
 
   // run the tests; if they fail, run will raise and this test will fail
   await run(`npm run test`, runOpts)
