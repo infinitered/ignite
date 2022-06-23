@@ -608,7 +608,6 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
   return !!optionGenerationSuccesses.length
 }
-
 /**
  * Validates that splash screen icon input file exists in the template dir.
  * Additionally validates the size and background parameters.
