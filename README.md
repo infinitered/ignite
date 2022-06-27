@@ -57,6 +57,9 @@ The above commands may fail with various errors, depending on your operating sys
 - Make sure you are using the LTS version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v14.x.x.
 - If the installation fails because of an Xcode error (missing Xcode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
 - If Xcode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the Xcode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
+- EAS build fails the solidarity check, to resolve comment out the below in file ./boilerplate/bin/postInstall
+{ command: "solidarity" },
+{ command: "pod install", cwd: "ios", onlyPlatforms: ["darwin"] },
 
 ## Generators
 
