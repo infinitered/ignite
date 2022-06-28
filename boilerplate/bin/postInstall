@@ -1,40 +1,35 @@
 #!/usr/bin/env node
-
-const childProcess = require("child_process")
-const os = require("os")
-
 /**
- * Do all things that need to be done after installing packages
+ * Do all things that need to be done after installing packages (with yarn, npm, pnpm).
  *
  * Yes, it slows down package installation a little, but it's nice to not
  * have to remember these extra steps.
  */
-;[
-  // Patch all the necessary modules.
-  { command: "npx patch-package" },
 
-  // Make sure we're set up correctly
-  { command: "solidarity" },
+// Patch any packages that need patching
+run("npx patch-package")
 
-  // Kill the metro bundler if it's running.
-  { command: 'pkill -f "cli.js start" || set exit 0', onlyPlatforms: ["darwin", "linux"] },
-  // Help wanted: Add the windows version here. { command: "????", onlyPlatforms: ["win32"] },
+// Kill the metro bundler if it's running.
+if (["darwin", "linux"].includes(process.platform)) {
+  run('pkill -f "cli.js start" || set exit 0')
+}
 
-  // Make sure our native modules are androidX-happy
-  { command: "jetify" },
+// Make sure our Android native modules are androidX-happy
+run("jetify")
 
-  // on iOS, make sure our native modules are installed
-  { command: "pod install", cwd: "ios", onlyPlatforms: ["darwin"] },
-]
-  .filter(({ onlyPlatforms }) => !onlyPlatforms || onlyPlatforms.includes(os.platform()))
-  .forEach((commandAndOptions) => {
-    const { command, onlyPlatform: _, ...options } = commandAndOptions
-    try {
-      childProcess.execSync(command, {
-        stdio: "inherit",
-        ...options,
-      })
-    } catch (error) {
-      process.exit(error.status)
-    }
-  })
+// On iOS, make sure CocoaPods are installed
+if (process.platform === "darwin") {
+  run("cd ios && pod install && cd -")
+}
+
+// Run baby run
+function run(command) {
+  console.log(`./bin/postInstall script running: ${command}`)
+
+  try {
+    require("child_process").execSync(command, { stdio: "inherit" })
+  } catch (error) {
+    console.error(`./bin/postInstall failed on command:\n  ${command}`)
+    process.exit(error.status)
+  }
+}
