@@ -149,11 +149,11 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           />
           <Text style={TITLE} preset="header" tx="demoScreen.title" />
           <Text style={TAGLINE} tx="demoScreen.tagLine" />
-          <BulletItem text="Integrated here, Navigation with State, TypeScript, Storybook, Solidarity, and i18n." />
+          <BulletItem text="Integrated here, Navigation with State, TypeScript, Storybook, and i18n." />
           <BulletItem
             text={`To run Storybook, press ${platformCommand} or shake the device to show the developer menu, then select "Toggle Storybook"`}
           />
-          <BulletItem text="Load up Reactotron!  You can inspect your app, view the events, interact, and so much more!" />
+          <BulletItem text="Load up Reactotron! You can inspect your app, view the events, interact, and so much more!" />
           <View>
             <Button
               style={DEMO}

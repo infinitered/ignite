@@ -104,7 +104,6 @@
     "react-native-web": "^0.18.0",
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
-    "solidarity": "3.0.4",
     "ts-jest": "26",
     "typescript": "4.7.3",
     "webpack": "4"
