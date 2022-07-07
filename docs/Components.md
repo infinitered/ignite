@@ -8,6 +8,8 @@ There are a number of other options out there that work great with Ignite -- [UI
 
 Here's a summary of each component. Click through to view detailed documentation and code examples!
 
+_NOTE: Work-in-progress -- stay tuned, as our new docs will be landing soon!_
+
 ### AutoImage
 
 ### BulletItem
