@@ -19,17 +19,22 @@ run("jetify")
 
 // On iOS, make sure CocoaPods are installed
 if (process.platform === "darwin") {
-  run("cd ios && pod install && cd -")
+  run("cd ios && pod install && cd -", true)
 }
 
 // Run baby run
-function run(command) {
+function run(command, continueOnError = false) {
   console.log(`./bin/postInstall script running: ${command}`)
 
   try {
     require("child_process").execSync(command, { stdio: "inherit" })
   } catch (error) {
     console.error(`./bin/postInstall failed on command:\n  ${command}`)
-    process.exit(error.status)
+    if (continueOnError) {
+      console.error(error)
+      console.log("Continuing on and skipping the below command... \n " + command)
+    } else {
+      process.exit(error.status)
+    }
   }
 }
