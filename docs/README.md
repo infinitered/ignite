@@ -2,6 +2,7 @@
 
 Check out this list of topics:
 
+- [Getting Started](./Getting-Started.md) - If you're new to Ignite, start here
 - [Components](./Components.md) - Ignite's built-in UI components
 - [Generators](./Generators.md) - Everything you need to know about Ignite generators
 - [Folder-Structure](./Folder-Structure.md) - An explanation of the Ignite folder structure
