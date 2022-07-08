@@ -19,7 +19,7 @@ run("jetify")
 
 // On iOS, make sure CocoaPods are installed
 if (process.platform === "darwin") {
-  run("cd ios && pod install && cd -")
+  run('if [ -d "ios" ]; then cd ios && pod install && cd -; fi')
 }
 
 // Run baby run
