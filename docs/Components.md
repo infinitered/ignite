@@ -45,6 +45,18 @@ This is a component that renders a bullet point with associated text.
 
 ### Icon
 
+This is a component that renders an icon.
+
+```tsx
+<Icon
+  icon='back'
+  containerStyle={{backgroundColor: '#fff'}}
+  style={{resizeMode: 'contain'}}
+/>
+```
+
+[Full Icon Component Documentation](./Components-Icon.md)
+
 ### Screen
 
 ### Switch
