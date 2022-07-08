@@ -17,7 +17,7 @@ Ignite's `AutoImage` component doesn't have any props of its own. As its only pu
 
 ### `source`
 
-As with React Native's built in Image component, the `source` prop is always required. This can be anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type.
+As with React Native's built in Image component, the `source` prop is always required. This can be *almost* anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type.
 
 
 ```tsx
@@ -41,3 +41,7 @@ Setting both will override the resizing of `AutoImage`, and can result in an inc
 ```tsx
 <AutoImage source={logoIgnite} style={{width: 200, height: 200}} />
 ```
+
+## Notes
+
+As noted above, the `source` prop can be almost anything, the one exception being an array of objects, which `AutoImage` doesn't support. See the React Native [Image#source](https://reactnative.dev/docs/image#source) documentation for more information.
