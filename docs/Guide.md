@@ -1,4 +1,4 @@
-# Getting Started
+# Getting Started Guide
 
 ## What is Ignite?
 
@@ -6,7 +6,7 @@ Ignite is best described as "[Infinite Red](https://infinite.red)'s favorite way
 
 In short -- if you use Ignite to start your next React Native project, you're using a battle-tested, familiar stack.
 
-## Ignite CLI
+### Ignite CLI
 
 In order to start a new Ignite project, you can use the CLI. No need to install it globally as it works great with `npx`:
 
@@ -16,7 +16,7 @@ npx ignite-cli new PizzaApp --expo
 
 Once it's up and running, you can use the Ignite CLI to [generate](./Generators.md) components, screens, MST models, and more.
 
-## Ignite Boilerplate
+### Ignite Boilerplate
 
 Your new Ignite project (whether you start with Expo or not) comes with a full stack of useful libraries, pre-set up for you so you can start coding.
 
@@ -44,4 +44,44 @@ We use React Navigation v6 in the current version of Ignite. You'll find any nav
 
 There's also a `navigation-utilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-Learn more in our Navigation
+Learn more in our [Navigation](./Navigation.md) documentation.
+
+### Components
+
+Ignite comes with some prebuilt, flexible, and customizable components. Unlike most component libraries, it's not built to drop in out of the box, but rather with custom design in mind (you do have a nice, custom design, don't you?)
+
+Ignite works fine with other component libraries, but the built-in component system works quite well for most apps.
+
+Check out the [Components][./components.md] documentation.
+
+### Testing
+
+Ignite is preconfigured to have [Detox](https://github.com/wix/Detox), Jest, and Storyshot tests.
+
+You can learn more about why we chose these tests and how to use them in the [Testing](./Testing.md) docs.
+
+### Styling
+
+Ignite's approach to styling is, like many other things in Ignite, straightforward and blunt.
+
+We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
+
+We instead use a strategy of constants, colocated with our components, prefixed with `$`, and typed with TypeScript:
+
+```tsx
+import { View, ViewStyle } from "react-native"
+import { palette } from "../theme"
+
+const $container: ViewStyle = {
+  flex: 1,
+  backgroundColor: palette.bgColor,
+}
+
+const MyComponent = () => {
+  return <View style={$container}>...</View>
+}
+```
+
+Very often, we use [components with presets](./Components.md) to share styles across our whole app.
+
+Read more about styling in the [Styling](./Styling.md) docs.
