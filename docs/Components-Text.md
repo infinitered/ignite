@@ -72,6 +72,8 @@ Presets allow you to have a consistent look and feel across your app without hav
 
 You'll want to customize these presets and add more. You can do this in the `text.presets.ts` file.
 
+If you find yourself overriding styles with the `style` prop a lot, you probably need a new preset for that use case.
+
 ### Available Presets
 
 `default`: The default text styles.
