@@ -12,6 +12,17 @@ _NOTE: Work-in-progress -- stay tuned, as our new docs will be landing soon!_
 
 ### AutoImage
 
+This is a wrapper around React Native's [Image](https://reactnative.dev/docs/image) component, which automatically resizes the image to fit the container.
+
+```tsx
+import { AutoImage as Image } from '../components/AutoImage';
+export const logoIgnite = require("./logo-ignite.png");
+
+<Image source={logoIgnite} />
+```
+
+[Full AutoImage Component Documentation](./Components-AutoImage.md)
+
 ### BulletItem
 
 ### Button
