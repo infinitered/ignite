@@ -2,7 +2,7 @@
 
 [Back to all components](./Components.md)
 
-Ignite's `Text` Component is an enhanced version of the built-in React Native Text component. It adds internationalization and property presets.
+Ignite's `Text` Component is an enhanced version of the built-in React Native Text component. It adds internationalization and several useful (and customizable) property presets. You shouldn't need the built-in React Native Text component if you use this. It does everything the built-in one does and more.
 
 By enhancing the Ignite Text component and using it across your app, you can make sure the right fonts, font weight, and other styles and behaviors are shared across your whole app.
 
@@ -33,9 +33,11 @@ Optional options to pass to i18n. Useful for [interpolation]() as well as explic
 profile: {
   details: "{{name}} who is {{age}} years old"
 }
+```
 
+```tsx
 // in your component
-;<Text
+<Text
   tx="profile.details"
   txOptions={{
     name: "Jamon",
@@ -81,3 +83,7 @@ You'll want to customize these presets and add more. You can do this in the `tex
 `fieldLabel`: Field labels that appear on forms above the inputs.
 
 `secondary`: A smaller piece of secondary information.
+
+### Custom Presets
+
+Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, we will have a dozen or more presets that we use across the project.
