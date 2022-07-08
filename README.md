@@ -48,6 +48,8 @@ npx ignite-cli new PizzaApp --bundle=com.infinitered.pizzaapp
 
 Ignite will walk you through the rest.
 
+Once you're up and running, check out our new [Getting Started Guide](https://github.com/infinitered/ignite/blob/master/docs/Guide.md) guide or the rest of our [docs](https://github.com/infinitered/ignite/blob/master/docs).
+
 If you'd like to follow a tutorial, check out [this one from Robin Heinze](https://shift.infinite.red/creating-a-trivia-app-with-ignite-bowser-part-1-1987cc6e93a1).
 
 ### Troubleshooting
