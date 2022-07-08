@@ -25,6 +25,14 @@ export const logoIgnite = require("./logo-ignite.png");
 
 ### BulletItem
 
+This is a component that renders a bullet point with associated text.
+
+```tsx
+<BulletItem text="This is a bullet item" />
+```
+
+[Full BulletItem Component Documentation](./Components-BulletItem.md)
+
 ### Button
 
 ### Checkbox
