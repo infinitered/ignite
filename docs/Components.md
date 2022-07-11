@@ -35,6 +35,27 @@ This is a component that renders a bullet point with associated text.
 
 ### Button
 
+This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with given text or children.
+
+```tsx
+<Button
+  text="Click It"
+  tx="button.clickIt"
+  preset="primary"
+  onPress={() => Alert.alert("pressed")}
+  style={[{ paddingVertical: 100 }, { borderRadius: 0 }]}
+  textStyle={[{ fontSize: 20 }, { color: "#a511dc" }]}
+/>
+```
+
+```tsx
+<Button onPress={() => Alert.alert("pressed")}>
+  <Text>Click It</Text>
+</Button>
+```
+
+[Full Button Component Documentation](./Components-Button.md)
+
 ### Checkbox
 
 ### FormRow
