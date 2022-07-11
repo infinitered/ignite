@@ -58,6 +58,38 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 
 ### Checkbox
 
+This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
+
+```tsx
+[on, setOn] = useState(false);
+// ...
+<Checkbox
+  text="Outline is the box frame"
+  value={on}
+  multiline
+  style={{
+    backgroundColor: "purple",
+    marginLeft: 40,
+    paddingVertical: 30,
+    paddingLeft: 60,
+  }}
+  fillStyle={{
+    backgroundColor: "red",
+    borderRadius: 8
+  }}
+  outlineStyle={{
+    borderColor: "green",
+    borderRadius: 10,
+    borderWidth: 4,
+    width: 60,
+    height: 20,
+  }}
+  onToggle={setOn}
+/>
+```
+
+[Full Checkbox Component Documentation](./Components-Checkbox.md)
+
 ### FormRow
 
 ### GradientBackground
