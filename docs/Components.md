@@ -92,6 +92,22 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 
 ### FormRow
 
+This is a component that renders a horizontal container for a form row.
+
+```tsx
+<FormRow preset="top">
+  <Text>This is a form row</Text>
+</FormRow>
+<FormRow preset="middle">
+  <Text>This is a form row</Text>
+</FormRow>
+<FormRow preset="bottom">
+  <Text>This is a form row</Text>
+</FormRow>
+```
+
+[Full FormRow Component Documentation](./Components-FormRow.md)
+
 ### GradientBackground
 
 ### Header
