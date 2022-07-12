@@ -150,3 +150,17 @@ This is an enhanced version of the built-in React Native Text component. It adds
 ### TextField
 
 ### Wallpaper
+
+This component renders an image background to a component or a screen. 
+
+```tsx
+ <Wallpaper
+ style={{ 
+    marginHorizontal: 10,
+    paddingVertical: 10,
+  }} 
+ backgroundImage={$newImage}
+ preset="stretch"
+ />
+```
+[Full Text Component Documentation](./Components-Wallpaper.md)
