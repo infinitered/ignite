@@ -155,12 +155,12 @@ This component renders an image background to a component or a screen.
 
 ```tsx
  <Wallpaper
- style={{ 
+  style={{ 
     marginHorizontal: 10,
     paddingVertical: 10,
   }} 
- backgroundImage={$newImage}
- preset="stretch"
+  backgroundImage={newImage}
+  preset="stretch"
  />
 ```
 [Full Text Component Documentation](./Components-Wallpaper.md)

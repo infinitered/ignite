@@ -3,7 +3,7 @@
 [Back to all components](./Components.md)
 
 
-Ignite's `Wallpaper` component renders an image background to ypur component or a screen. It is composed of an [Image](https://reactnative.dev/docs/image) component. You can also create your own presets for the background image.
+Ignite's `Wallpaper` component renders an image background to your component or a screen. It is composed of an [Image](https://reactnative.dev/docs/image) component. You can also create your own presets for the background image.
 
 
 ```tsx
@@ -21,7 +21,7 @@ The `style` prop is optional, it overrides the default style and is used for pad
 
 ```tsx
 <Wallpaper
-  style={{ margunHorizontal: 5, paddingVertical:10 }}
+  style={{ marginHorizontal: 5, paddingVertical:10 }}
 />
 ```
 
@@ -47,6 +47,10 @@ You'll want to customize these presets and add more. You can do this in the `wal
 
 If you find yourself overriding styles with the `style` prop a lot, you probably need a new preset for that use case.
 
+### Available Presets
+
+`stretch`: this scales the background image's width and height independently, 
+
 ### Custom Presets
 
-Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, we will have a dozen or more presets that we use across the project.
+Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, for Wallpaper we would have a couple or more presets that we use across the project.
