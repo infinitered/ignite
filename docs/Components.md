@@ -110,6 +110,12 @@ This is a component that renders a horizontal container for a form row.
 
 ### GradientBackground
 
+This is a convenience component that wraps [`LinearGradient`]((https://docs.expo.dev/versions/latest/sdk/linear-gradient/)) from `expo-linear-gradient` and handles the styling for you.
+
+```tsx
+<GradientBackground colors={["#422443", "#281b34"]} />
+```
+
 ### Header
 
 ### Icon
