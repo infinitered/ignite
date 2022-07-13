@@ -26,7 +26,7 @@ const [input, setInput] = useState("")
 
 ### `label`
 
-The `label` prop is optional. We encourage you to not use this but rather use the `labelTx` prop instead.
+The `label` is an optional prop that is used to set the label. If this is not set, the `labelTx` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component
 
 ```tsx
 <TextField
@@ -38,7 +38,7 @@ The `label` prop is optional. We encourage you to not use this but rather use th
 
 ### `labelTx`
 
-The `labelTx` prop is optional. The label text is looked up by [i18n](https://www.i18next.com/) (used for internationalization)
+The `labelTx` is an optional prop that is used to set the label. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component. The label text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization). 
 
 ```tsx
 <TextField
@@ -50,7 +50,7 @@ The `labelTx` prop is optional. The label text is looked up by [i18n](https://ww
 
 ### `placeholder`
 
-The `placeholder` prop is optional. We encourage you to not use this but rather use the `placeholderTx` prop instead.
+The `placeholder` is an optional prop that is used to set the placeholder. If this is not set, the `placeholderTx` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
 
 ```tsx
 <TextField
@@ -62,7 +62,7 @@ The `placeholder` prop is optional. We encourage you to not use this but rather 
 
 ### `placeholderTx`
 
-The `placeholderTx` prop is optional. The placeholder text is looked up by [i18n](https://www.i18next.com/) (used for internationalization)
+The `placeholderTx` is an optional prop that is used to set the placeholder. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used. The placeholder text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization). 
 
 ```tsx
 <TextField
@@ -74,7 +74,7 @@ The `placeholderTx` prop is optional. The placeholder text is looked up by [i18n
 
 ### `style`
 
-The `style` prop is optional. It overrides container style useful for margins & padding.
+The `style` prop is optional. It overrides container style and is useful for margins & padding.
 
 ```tsx
 <TextField
@@ -96,7 +96,6 @@ The `inputStyle` prop is optional. It overrides the input style.
   onChangeText={(value) => setInput(value)}
   labelTx="signup.name"
   placeholderTx="signup.name"
-  style={{ paddingHorizontal:10 }}
   inputStyle={{ color:color.palette.black }}
 />
 ```
@@ -111,8 +110,6 @@ The `preset` prop is optional. Use preset to setup various look and feels.
   onChangeText={(value) => setInput(value)}
   labelTx="signup.name"
   placeholderTx="signup.name"
-  style={{ paddingHorizontal:10 }}
-  inputStyle={{ color:color.palette.black }}
   preset="default"
 />
 ```
@@ -138,9 +135,6 @@ const inputRef = useRef();
   onChangeText={(value) => setInput(value)}
   labelTx="signup.name"
   placeholderTx="signup.name"
-  style={{ paddingHorizontal:10 }}
-  inputStyle={{ color:color.palette.black }}
-  preset="default"
   forwardedRef={inputRef}
 />
 ```
