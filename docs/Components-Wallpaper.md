@@ -35,7 +35,7 @@ export const bgImage = require("./background.png");
 <Wallpaper backgroundImage={bgImage} />
 ```
 
-## Presets
+### Presets
 
 Presets allow you to have a consistent look and feel across your app without having to redefine the styles all the time.
 
@@ -47,10 +47,10 @@ You'll want to customize these presets and add more. You can do this in the `wal
 
 If you find yourself overriding styles with the `style` prop a lot, you probably need a new preset for that use case.
 
-### Available Presets
+#### Available Presets
 
 `stretch`: this scales the background image's width and height independently, 
 
-### Custom Presets
+#### Custom Presets
 
 Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, for Wallpaper we would have a couple or more presets that we use across the project.

@@ -149,6 +149,25 @@ This is an enhanced version of the built-in React Native Text component. It adds
 
 ### TextField
 
+
+This component renders a View with a [`TextInput`](https://reactnative.dev/docs/textinput) and a text label. 
+
+```tsx
+[input, setInput] = useState("");
+const inputRef = useRef();
+<TextField
+  value={input}
+  onChangeText={setInput}
+  labelTx="signup.name"
+  placeholderTx="signup.nameplaceholder"
+  style={$header}
+  inputStyle={$inputStyle}
+  preset="default"
+  forwardedRef={inputRef}
+/>
+```
+[Full Text Component Documentation](./Components-TextField.md)
+
 ### Wallpaper
 
 This component renders an image background to a component or a screen. 
