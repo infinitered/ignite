@@ -118,6 +118,23 @@ This is a convenience component that wraps [`LinearGradient`]((https://docs.expo
 
 ### Header
 
+The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.
+
+```tsx
+<Header
+  headerTx="header.title"
+  headerText="Header Title"
+  leftIcon="back"
+  rightIcon="bullet"
+  onLeftPress={() => navigation.goBack()}
+  onRightPress={() => Alert.alert("pressed")}
+  style={{ backgroundColor: "purple" }}
+  titleStyle={{ color: "white" }}
+/>
+```
+
+[Full Header Component Documentation](./Components-Header.md)
+
 ### Icon
 
 This is a component that renders an icon.
