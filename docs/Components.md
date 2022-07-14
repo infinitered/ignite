@@ -164,6 +164,22 @@ This is a component that renders a screen. It is used to wrap your entire screen
 
 ### Switch
 
+This is a component that renders a few animated views that can be toggled on and off like a switch. This component handles all the logic of the animation, and all you need to do is style it as you see fit.
+
+```tsx
+<Switch
+  value={switch}
+  onToggle={() => setSwitch(!switch)}
+  style={{ backgroundColor: "purple" }}
+  trackOnStyle={{ backgroundColor: "red" }}
+  trackOffStyle={{ backgroundColor: "blue" }}
+  thumbOnStyle={{ backgroundColor: "red" }}
+  thumbOffStyle={{ backgroundColor: "blue" }}
+/>
+```
+
+[Full Switch Component Documentation](./Components-Switch.md)
+
 ### Text
 
 This is an enhanced version of the built-in React Native Text component. It adds internationalization and property presets.
