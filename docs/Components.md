@@ -151,6 +151,17 @@ This is a component that renders an icon.
 
 ### Screen
 
+This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
+
+```tsx
+<Screen preset="scroll" >
+  <Header headerTitle="screen"/>
+  // ... content here ...
+</Screen>
+```
+
+[Full Screen Component Documentation](./Components-Screen.md)
+
 ### Switch
 
 ### Text
@@ -173,7 +184,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
 ### TextField
 
 
-This component renders a View with a [`TextInput`](https://reactnative.dev/docs/textinput) and a text label. 
+This component renders a View with a [`TextInput`](https://reactnative.dev/docs/textinput) and a text label.
 
 ```tsx
 [input, setInput] = useState("");
@@ -193,14 +204,14 @@ const inputRef = useRef();
 
 ### Wallpaper
 
-This component renders an image background to a component or a screen. 
+This component renders an image background to a component or a screen.
 
 ```tsx
  <Wallpaper
-  style={{ 
+  style={{
     marginHorizontal: 10,
     paddingVertical: 10,
-  }} 
+  }}
   backgroundImage={newImage}
   preset="stretch"
  />
