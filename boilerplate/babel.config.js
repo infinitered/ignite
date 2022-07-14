@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ["module:metro-react-native-babel-preset"],
+  presets: [["@rnx-kit/babel-preset-metro-react-native", { unstable_transformProfile: "esbuild" }]],
   env: {
     production: {},
   },
