@@ -203,7 +203,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
 This component renders a View with a [`TextInput`](https://reactnative.dev/docs/textinput) and a text label.
 
 ```tsx
-[input, setInput] = useState("");
+const [input, setInput] = useState("");
 const inputRef = useRef();
 <TextField
   value={input}
