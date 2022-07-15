@@ -30,6 +30,7 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 - Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
+- About a dozen prebuilt [components](./Components.md) to build out your UI with
 - And more!
 
 ## Where do I start?
@@ -52,7 +53,7 @@ Ignite comes with some prebuilt, flexible, and customizable components. Unlike m
 
 Ignite works fine with other component libraries, but the built-in component system works quite well for most apps.
 
-Check out the [Components][./components.md] documentation.
+Check out the [Components](./components.md) documentation.
 
 ### Testing
 
@@ -66,19 +67,19 @@ Ignite's approach to styling is, like many other things in Ignite, straightforwa
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of constants, colocated with our components, prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of constants, colocated with our components, all upper-case, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
 import { palette } from "../theme"
 
-const $container: ViewStyle = {
+const CONTAINER: ViewStyle = {
   flex: 1,
   backgroundColor: palette.bgColor,
 }
 
 const MyComponent = () => {
-  return <View style={$container}>...</View>
+  return <View style={CONTAINER}>...</View>
 }
 ```
 

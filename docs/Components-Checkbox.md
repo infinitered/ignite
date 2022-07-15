@@ -5,7 +5,7 @@
 The `Checkbox` component is a simple checkbox that can be used to toggle a boolean value. It is composed of a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
 
 ```tsx
-[on, setOn] = useState(false);
+const [on, setOn] = useState(false);
 // ...
 <Checkbox
   text="Outline is the box frame"

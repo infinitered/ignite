@@ -67,7 +67,7 @@ This is where your translations will live if you are using the included `react-n
 
 **models**
 
-This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc. There's also an extensions directory with useful shared extensions that you can include in your models like `.extend(withRootStore)` or `.extend(withEnvironment)` to access the root store or environment respectively.
+This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc. There's also an extensions directory with useful shared extensions that you can include in your models like `.extend(withEnvironment)` to access the environment. In addition, a helpers directory contains utility functions such as `getRootStore` to access the root store.
 
 **navigators**
 

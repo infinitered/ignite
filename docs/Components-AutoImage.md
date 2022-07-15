@@ -2,7 +2,7 @@
 
 [Back to all components](./Components.md)
 
-Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit the size of the image and ensures you don't need to explicitly set the image size props on every image. You can use it in place of the built-in `Image` component. We recommend importing it `as Image`, as there are no downsides to doing so, and ensures images will always be resized if needed.
+Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit the size of the image and ensures you don't need to explicitly set the image size props on every image. You can use it in place of the built-in `Image` component. We at Infinite Red often import it `as Image`, as there are no significant downsides to doing so, and ensures images will always be resized if needed.
 
 ```tsx
 import { AutoImage as Image } from '../components/AutoImage';
@@ -17,7 +17,7 @@ Ignite's `AutoImage` component doesn't have any props of its own. As its only pu
 
 ### `source`
 
-As with React Native's built in Image component, the `source` prop is always required. This can be *almost* anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type.
+As with React Native's built in Image component, the `source` prop is always required. This can be *almost* anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type. (See [Notes](#Notes) below for caveats.)
 
 
 ```tsx
