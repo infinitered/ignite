@@ -61,7 +61,7 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
 
 ```tsx
-[on, setOn] = useState(false);
+const [on, setOn] = useState(false);
 // ...
 <Checkbox
   text="Outline is the box frame"
