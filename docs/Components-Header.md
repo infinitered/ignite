@@ -45,7 +45,7 @@ The `headerText` is an optional prop that is used to set the header title. If th
 
 ### `leftIcon`
 
-The `leftIcon` is an optional prop that is used to set the icon for the left navigation button. Options are 'back', 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons).
+The `leftIcon` is an optional prop that is used to set the icon for the left navigation button. Options are 'back', 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `leftIcon` prop.
 
 ```tsx
   <Header
@@ -56,7 +56,7 @@ The `leftIcon` is an optional prop that is used to set the icon for the left nav
 
 ### `rightIcon`
 
-The `rightIcon` is an optional prop that is used to set the icon for the right navigation button. Options are 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons).
+The `rightIcon` is an optional prop that is used to set the icon for the right navigation button. Options are 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `rightIcon` prop.
 
 ```tsx
   <Header

@@ -92,14 +92,32 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 
 ### FormRow
 
-This is a component that renders a horizontal container for a form row.
+This is a component that renders a horizontal container for a form row. It includes presets that control rounded borders.
 
 ```tsx
 <FormRow preset="top">
-  <Text>This is a form row</Text>
+  <TextField
+    value={input}
+    onChangeText={setName}
+    labelTx="signup.name"
+    placeholderTx="signup.nameplaceholder"
+    style={$header}
+    inputStyle={$inputStyle}
+    preset="default"
+    forwardedRef={inputRef}
+  />
 </FormRow>
 <FormRow preset="middle">
-  <Text>This is a form row</Text>
+  <TextField
+    value={input}
+    onChangeText={setEmail}
+    labelTx="signup.email"
+    placeholderTx="signup.emailplaceholder"
+    style={$header}
+    inputStyle={$inputStyle}
+    preset="default"
+    forwardedRef={inputRef}
+  />
 </FormRow>
 <FormRow preset="bottom">
   <Text>This is a form row</Text>
@@ -115,6 +133,8 @@ This is a convenience component that wraps [`LinearGradient`]((https://docs.expo
 ```tsx
 <GradientBackground colors={["#422443", "#281b34"]} />
 ```
+
+[Full GradientBackground Component Documentation](./Components-GradientBackground.md)
 
 ### Header
 
@@ -233,3 +253,19 @@ This component renders an image background to a component or a screen.
  />
 ```
 [Full Text Component Documentation](./Components-Wallpaper.md)
+
+## Custom Components
+
+Ignite includes a generator for creating custom components. If the built in components don't fit your needs, you can create your own.
+
+`npx ignite-cli generate component MyCustomButton`
+
+Running the generator will create a new component in the `components` directory.
+
+```
+-- app
+  -- components
+    -- my-custom-button
+      -- my-custom-button.tsx
+      -- my-custom-button.story.tsx
+```

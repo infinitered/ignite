@@ -1,4 +1,4 @@
-# Text Component
+# AutoImage Component
 
 [Back to all components](./Components.md)
 
