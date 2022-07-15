@@ -17,7 +17,7 @@ Ignite's `AutoImage` component doesn't have any props of its own. As its only pu
 
 ### `source`
 
-As with React Native's built in Image component, the `source` prop is always required. This can be *almost* anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type.
+As with React Native's built in Image component, the `source` prop is always required. This can be *almost* anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type. (See [Notes](#Notes) below for caveats.)
 
 
 ```tsx
