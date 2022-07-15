@@ -30,6 +30,7 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 - Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
+- About a dozen prebuilt [components](./Components.md) to build out your UI with
 - And more!
 
 ## Where do I start?
