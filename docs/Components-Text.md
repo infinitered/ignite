@@ -2,7 +2,7 @@
 
 [Back to all components](./Components.md)
 
-Ignite's `Text` Component is an enhanced version of the built-in React Native Text component. It adds internationalization and several useful (and customizable) property presets. You shouldn't need the built-in React Native Text component if you use this. It does everything the built-in one does and more.
+Ignite's `Text` Component is an enhanced version of the built-in React Native [`Text`](https://reactnative.dev/docs/text) component. It adds internationalization and several useful (and customizable) property presets. You shouldn't need the built-in React Native Text component if you use this. It does everything the built-in one does and more.
 
 By enhancing the Ignite Text component and using it across your app, you can make sure the right fonts, font weight, and other styles and behaviors are shared across your whole app.
 
@@ -10,7 +10,7 @@ By enhancing the Ignite Text component and using it across your app, you can mak
 
 ### `text`
 
-Text content. We encourage you to not use this but rather use the `tx` prop instead.
+The `text` optional prop is the text of the component. We encourage you to not use this but rather use the `tx` prop instead.
 
 ```tsx
 <Text text="My Text" />
@@ -18,7 +18,9 @@ Text content. We encourage you to not use this but rather use the `tx` prop inst
 
 ### `tx`
 
-Text which is looked up via i18n. _TODO: Add i18n docs and link here._
+The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization.
+
+```tsx
 
 ```tsx
 <Text tx="welcomeScreen.readyForLaunch" />
@@ -26,7 +28,7 @@ Text which is looked up via i18n. _TODO: Add i18n docs and link here._
 
 ### `txOptions`
 
-Optional options to pass to i18n. Useful for [interpolation]() as well as explicitly setting locale or translation fallbacks. You'll be defining these in the `app/i18n/*.json` files, and can use `{{variableName}}` for interpolation.
+The `txOptions` optional prop is an object of options to pass to i18n. Useful for [interpolation](http://i18njs.com/) as well as explicitly setting locale or translation fallbacks. You'll be defining these in the `app/i18n/*.json` files, and can use `{{variableName}}` for interpolation.
 
 ```tsx
 // in en.json
@@ -48,7 +50,7 @@ profile: {
 
 ### `style`
 
-Style overrides for this particular component. You can use style overrides with presets.
+The `style` optional prop is an object with overrides for this particular component. You can use `style` overrides with presets.
 
 ```tsx
 <Text tx="welcome.title" style={{ fontSize: 40 }} />
@@ -56,7 +58,7 @@ Style overrides for this particular component. You can use style overrides with 
 
 ### `preset`
 
-Specify what preset style you want to use. You can use style overrides with presets.
+The `preset` optional prop specifies the string of the preset style you want to use. You can use style overrides with presets.
 
 ```tsx
 <Text preset="bold" text="This is bold" />

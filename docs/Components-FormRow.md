@@ -19,7 +19,7 @@ The `FormRow` component is a horizontal container for a form row. You can use it
 
 ### `preset`
 
-The `FormRow` component is a simple wrapper component that includes a few preset styles:
+The `preset` is a required string that applies some preset styling to the form row. The available presets are:
 
 * top - rounded corners on the top, no bottom border
 * middle - no rounded corners, no bottom border
@@ -43,7 +43,7 @@ To create a custom reusable preset, add a new key to the `form-row.presets.ts` f
 
 ### `style`
 
-`style` is an optional style prop that you can use to override the default style of the component.
+The optional [`style`](https://reactnative.dev/docs/viewstyle) prop you can use to override the default style of the component.
 
 ```tsx
 <FormRow preset="top" style={{ backgroundColor: "red" }}>

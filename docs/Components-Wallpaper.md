@@ -17,7 +17,7 @@ export const bgImage = require("./background.png");
 
 ### `style`
 
-The `style` prop is optional, it overrides the default style and is used for padding and margin. It is of the type `StyleProp<ImageStyle>`. See React Native docs on [ImageStyle](https://reactnative.dev/docs/image#style) for more information.
+The `style` optional prop is an object that overrides the default style and is used for padding and margin. It is of the type `StyleProp<ImageStyle>`. See React Native docs on [ImageStyle](https://reactnative.dev/docs/image#style) for more information.
 
 ```tsx
 <Wallpaper
@@ -27,7 +27,7 @@ The `style` prop is optional, it overrides the default style and is used for pad
 
 ### `backgroundImage`
 
-The `backgroundImage` prop is optional, this is an object that overrides the default image used for background, and is of the type `string`. 
+The `backgroundImage` optional prop is an [`ImageSource`](https://reactnative.dev/docs/image#imagesource) that overrides the default image used for background.
 
 ```tsx
 export const bgImage = require("./background.png");
@@ -49,7 +49,7 @@ If you find yourself overriding styles with the `style` prop a lot, you probably
 
 #### Available Presets
 
-`stretch`: this scales the background image's width and height independently, 
+`stretch`: this scales the background image's width and height independently,
 
 #### Custom Presets
 

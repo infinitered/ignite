@@ -12,7 +12,11 @@ Ignite's `Icon` Component renders an icon using predefined icon images. It initi
 
 ### `icon`
 
-The `icon` prop is required. This is the name of the icon to be rendered. The options are
+The `icon` prop is required. This is the string name of the icon to be rendered. The options are:
+
+* `back`
+* `bullet`
+* `bug`
 
 ```tsx
 <Icon icon='bug' />

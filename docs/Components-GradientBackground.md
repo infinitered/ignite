@@ -7,3 +7,12 @@ The only prop you need to pass is a 2 item array of colors, the gradient will be
 ```tsx
 <GradientBackground colors={["#422443", "#281b34"]} />
 ```
+
+You will generally pass this as a top level component in your [`Screen`](./Components-Screen.md).
+
+```tsx
+<Screen>
+  <GradientBackground colors={["#422443", "#281b34"]} />
+  // ... other components
+</Screen>
+```

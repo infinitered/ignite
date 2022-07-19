@@ -20,7 +20,7 @@ The `Switch` component is a [`TouchableWithoutFeedback`](https://reactnative.dev
 
 ### `value`
 
-The `value` prop is a boolean that determines whether the switch is on or off.
+The `value` prop is an optional boolean that determines whether the switch is on or off. Note that while not strictly required, the switch will default to the off state if this prop is not provided.
 
 ```tsx
 <Switch value={true} />
@@ -28,7 +28,7 @@ The `value` prop is a boolean that determines whether the switch is on or off.
 
 ### `onToggle`
 
-The `onToggle` prop is a function that is called when the switch is toggled. This is useful for updating the state of the switch.
+The `onToggle` optional prop is a callback function that is called when the switch is toggled. This is useful for updating the state of the switch. Note that while not strictly required, it is necessary to make the component interactable.
 
 ```tsx
 <Switch value={switch} onToggle={() => setSwitch(!switch)} />
@@ -36,7 +36,7 @@ The `onToggle` prop is a function that is called when the switch is toggled. Thi
 
 ### `style`
 
-The `style` prop is an object that is applied to the outermost `TouchableWithoutFeedback` component of the switch.
+The `style` optional prop is an object that is applied to the outermost `TouchableWithoutFeedback` component of the switch.
 
 ```tsx
 <Switch
@@ -48,7 +48,7 @@ The `style` prop is an object that is applied to the outermost `TouchableWithout
 
 ### `trackOnStyle`
 
-The `trackOnStyle` prop is an object that is applied to the outer `Animated.View` that is when the switch is on.
+The `trackOnStyle` optional prop is an object that is applied to the outer `Animated.View` that is when the switch is on.
 
 ```tsx
 <Switch
@@ -61,7 +61,7 @@ The `trackOnStyle` prop is an object that is applied to the outer `Animated.View
 
 ### `trackOffStyle`
 
-The `trackOffStyle` prop is an object that is applied to the outer `Animated.View` that is when the switch is off.
+The `trackOffStyle` optional prop is an object that is applied to the outer `Animated.View` that is when the switch is off.
 
 ```tsx
 <Switch
@@ -74,7 +74,7 @@ The `trackOffStyle` prop is an object that is applied to the outer `Animated.Vie
 
 ### `thumbOnStyle`
 
-The `thumbOnStyle` prop is an object that is applied to the inner `Animated.View` that is when the switch is on.
+The `thumbOnStyle` optional prop is an object that is applied to the inner `Animated.View` that is when the switch is on.
 
 ```tsx
 <Switch
@@ -87,7 +87,7 @@ The `thumbOnStyle` prop is an object that is applied to the inner `Animated.View
 
 ### `thumbOffStyle`
 
-The `thumbOffStyle` prop is an object that is applied to the inner `Animated.View` that is when the switch is off.
+The `thumbOffStyle` optional prop is an object that is applied to the inner `Animated.View` that is when the switch is off.
 
 ```tsx
 <Switch

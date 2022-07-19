@@ -36,7 +36,7 @@ const [on, setOn] = useState(false);
 
 ### `text`
 
-The text label of the checkbox. This or `tx` is required.
+The optional text label of the checkbox. This or `tx` is required.
 
 ```tsx
 <Checkbox
@@ -48,7 +48,7 @@ The text label of the checkbox. This or `tx` is required.
 
 ### `tx`
 
-The translation key of the text label of the checkbox. This or `text` is required.
+The optional translation key of the text label of the checkbox. This or `text` is required.
 
 ```tsx
 <Checkbox
@@ -60,7 +60,7 @@ The translation key of the text label of the checkbox. This or `text` is require
 
 ### `value`
 
-The boolean value of the checkbox. This prop is required.
+The boolean value of the checkbox. This prop is not strictly required, but necessary to avoid defaulting to a unchecked checkbox.
 
 ```tsx
 <Checkbox
@@ -85,7 +85,7 @@ This optional boolean prop determines if the text label of the checkbox is multi
 
 ### `style`
 
-The [ViewStyle](https://reactnative.dev/docs/viewstyle) prop that is applied to the outer container of the checkbox. This prop is optional.
+The optional [`style`](https://reactnative.dev/docs/viewstyle) prop is applied to the outer container of the checkbox.
 
 ```tsx
 <Checkbox
@@ -104,7 +104,7 @@ The [ViewStyle](https://reactnative.dev/docs/viewstyle) prop that is applied to 
 
 ### `fillStyle`
 
-The style of the filled part of the checkbox. This prop is optional.
+The optional [`fillStyle`](https://reactnative.dev/docs/viewstyle) of the filled part of the checkbox.
 
 ```tsx
 <Checkbox
@@ -120,7 +120,7 @@ The style of the filled part of the checkbox. This prop is optional.
 
 ### `outlineStyle`
 
-The style of the outline of the checkbox. This prop is optional.
+The optional [`outlineStyle`](https://reactnative.dev/docs/viewstyle) of the outline of the checkbox.
 
 ```tsx
 <Checkbox
@@ -139,7 +139,7 @@ The style of the outline of the checkbox. This prop is optional.
 
 ### `onToggle`
 
-The function to call when the checkbox is toggled. This prop is required. Note that this function can be passed directly, as the `Checkbox` component will handle inverting the value.
+The function to call when the checkbox is toggled. This prop is optional, but the checkbox will not be interactable unless this is passed. Note that this function can be passed directly, as the `Checkbox` component will handle inverting the value.
 
 ```tsx
 <Checkbox

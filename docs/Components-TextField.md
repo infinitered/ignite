@@ -2,7 +2,7 @@
 
 [Back to all components](./Components.md)
 
-Ignite's `TextField` Component is an enhanced version of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component. It consists of TextInput and a Text(./Components-Text.md) label. 
+Ignite's `TextField` Component is an enhanced version of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component. It consists of TextInput and a Text(./Components-Text.md) label.
 
 With this component you will be able to standardise TextInput component across your app.
 
@@ -26,7 +26,7 @@ const [input, setInput] = useState("")
 
 ### `label`
 
-The `label` is an optional prop that is used to set the label. If this is not set, the `labelTx` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component
+The `label` optional prop is a string that is used to set the label. If this is not set, the `labelTx` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component
 
 ```tsx
 <TextField
@@ -38,7 +38,7 @@ The `label` is an optional prop that is used to set the label. If this is not se
 
 ### `labelTx`
 
-The `labelTx` is an optional prop that is used to set the label. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component. The label text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization). 
+The `labelTx` optional prop is a string that is used to set the label. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component. The label text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization).
 
 ```tsx
 <TextField
@@ -50,7 +50,7 @@ The `labelTx` is an optional prop that is used to set the label. If this is not 
 
 ### `placeholder`
 
-The `placeholder` is an optional prop that is used to set the placeholder. If this is not set, the `placeholderTx` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
+The `placeholder` optional prop is a string that is used to set the placeholder. If this is not set, the `placeholderTx` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
 
 ```tsx
 <TextField
@@ -62,7 +62,7 @@ The `placeholder` is an optional prop that is used to set the placeholder. If th
 
 ### `placeholderTx`
 
-The `placeholderTx` is an optional prop that is used to set the placeholder. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used. The placeholder text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization). 
+The `placeholderTx` is an optional prop that is used to set the placeholder. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used. The placeholder text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization).
 
 ```tsx
 <TextField
@@ -74,7 +74,7 @@ The `placeholderTx` is an optional prop that is used to set the placeholder. If 
 
 ### `style`
 
-The `style` prop is optional. It overrides container style and is useful for margins & padding.
+The `style` optional prop is an object used to override the container style and is useful for margins & padding.
 
 ```tsx
 <TextField
@@ -88,7 +88,7 @@ The `style` prop is optional. It overrides container style and is useful for mar
 
 ### `inputStyle`
 
-The `inputStyle` prop is optional. It overrides the input style.
+The `inputStyle` optional prop is an object used to override the input style.
 
 ```tsx
 <TextField
@@ -102,7 +102,7 @@ The `inputStyle` prop is optional. It overrides the input style.
 
 ### `preset`
 
-The `preset` prop is optional. Use preset to setup various look and feels.
+The `preset` optional prop is a string name of the style preset to use. Use preset to setup various default styles.
 
 ```tsx
 <TextField
@@ -118,7 +118,7 @@ If you find yourself overriding styles with the `style` prop a lot, you probably
 
 #### Available Presets
 
-`default`: this a default empty preset 
+`default`: this a default empty preset
 
 #### Custom Presets
 

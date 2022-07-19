@@ -15,4 +15,4 @@ import { BulletItem } from '../components/BulletItem';
 
 ### `text`
 
-Sets the text to be displayed next to the bullet icon.
+This prop is required. It sets the text to be displayed next to the bullet icon.
