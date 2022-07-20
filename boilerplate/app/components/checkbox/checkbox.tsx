@@ -1,6 +1,6 @@
 import * as React from "react"
 import { TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
-import { Text } from "../text/text"
+import { Text } from "../Text"
 import { colors, spacing } from "../../theme"
 import { CheckboxProps } from "./checkbox.props"
 

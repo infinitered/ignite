@@ -1,4 +1,4 @@
-require("../app/components/text/text.story")
+require("./components/Text.story")
 require("../app/components/auto-image/auto-image.story")
 require("../app/components/button/button.story")
 require("../app/components/bullet-item/bullet-item.story")
