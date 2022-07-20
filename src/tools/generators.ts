@@ -720,14 +720,16 @@ export async function generateSplashScreen(options: {
 
         if (!exists(searchPath)) return searchPath
 
-        return (
-          find(searchPath, {
-            directories: true,
-            files: false,
-            matching: "*.xcodeproj",
-            recursive: false,
-          })?.[0] || searchPath
-        )
+        const xcodeprojPath = find(searchPath, {
+          directories: true,
+          files: false,
+          matching: "*.xcodeproj",
+          recursive: false,
+        })?.[0]
+
+        if (!xcodeprojPath) return searchPath
+
+        return xcodeprojPath.replace(/.xcodeproj$/, "")
       })(),
     }[type]
 
