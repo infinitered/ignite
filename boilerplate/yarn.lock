@@ -12676,14 +12676,14 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-bootsplash@4.1.6:
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-4.1.6.tgz#7d2ca5e40d7822089511685fdf6ec3b3c8b55c91"
-  integrity sha512-9zewdvoxGJiCFgqk2M4gxAP2gD+0vcjEhethVrh7rGfNzJYrzrZbyrM0FnlyFU9GhYmBFa0vmtlATBGdVB9PcQ==
+react-native-bootsplash@4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-4.2.3.tgz#9914fbe2e749ee4cbfa7a2c731cc530bee488431"
+  integrity sha512-IqE12pdM7DYozZBgoE3WdcxSPj7p2QY41sUzjgKJGKkl0urCk/QauKst+5jdHAcOUqB3Gym6EtihFwq0QXh2uw==
   dependencies:
-    chalk "^4.1.2"
     fs-extra "^10.1.0"
     jimp "^0.16.1"
+    picocolors "^1.0.0"
 
 react-native-clean-project@^4.0.1:
   version "4.0.1"
