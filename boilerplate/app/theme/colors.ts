@@ -9,7 +9,7 @@ import { palette } from "./palette"
  * If you have a specific use-case, like a spinner color.  It makes more sense to
  * put that in the <Spinner /> component.
  */
-export const color = {
+export const colors = {
   /**
    * The palette is available to use, but prefer using the name.
    */
@@ -21,9 +21,18 @@ export const color = {
    */
   transparent: "rgba(0, 0, 0, 0)",
   /**
+   * The default color of text in many components.
+   */
+  text: palette.grey800,
+  /**
    * The screen background.
    */
-  background: palette.white,
+  background: palette.grey100,
+  /**
+   * The screen background.
+   */
+  backgroundDarker: palette.grey200,
+
   /**
    * The main tinting color.
    */
@@ -36,10 +45,7 @@ export const color = {
    * A subtle color used for borders and lines.
    */
   line: palette.offWhite,
-  /**
-   * The default color of text in many components.
-   */
-  text: palette.white,
+
   /**
    * Secondary information.
    */

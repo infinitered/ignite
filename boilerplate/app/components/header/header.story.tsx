@@ -3,13 +3,13 @@ import { View, Alert } from "react-native"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { Header } from "./header"
-import { color } from "../../theme"
+import { colors } from "../../theme"
 
 declare let module
 
 const VIEWSTYLE = {
   flex: 1,
-  backgroundColor: color.storybookDarkBg,
+  backgroundColor: colors.storybookDarkBg,
 }
 
 storiesOf("Header", module)

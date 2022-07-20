@@ -2,14 +2,14 @@ import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { View } from "react-native"
 import { Story, StoryScreen, UseCase } from "../../../storybook/views"
-import { color } from "../../theme"
+import { colors } from "../../theme"
 import { BulletItem } from "./bullet-item"
 
 declare let module
 
 const VIEWSTYLE = {
   flex: 1,
-  backgroundColor: color.storybookDarkBg,
+  backgroundColor: colors.storybookDarkBg,
   borderWidth: 5,
 }
 
@@ -23,7 +23,7 @@ storiesOf("Bullet Item", module)
       <UseCase
         noPad
         text="with view wrapper"
-        usage={`backgroundColor: ${color.storybookDarkBg} (color.storybookDarkBg)`}
+        usage={`backgroundColor: ${colors.storybookDarkBg} (color.storybookDarkBg)`}
       >
         <View style={VIEWSTYLE}>
           <BulletItem text="The default Bullet Item text" />

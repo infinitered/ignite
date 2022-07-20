@@ -12,7 +12,7 @@ import {
   GradientBackground,
 } from "../../components"
 import { NavigatorParamList } from "../../navigators"
-import { color, spacing } from "../../theme"
+import { colors, spacing } from "../../theme"
 import { Api } from "../../services/api"
 import { save } from "../../utils/storage"
 export const logoIgnite = require("./logo-ignite.png")
@@ -20,13 +20,13 @@ export const heart = require("./heart.png")
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
-  backgroundColor: color.transparent,
+  backgroundColor: colors.transparent,
   paddingHorizontal: spacing[4],
 }
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
-  backgroundColor: color.palette.deepPurple,
+  backgroundColor: colors.palette.deepPurple,
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const DEMO_TEXT: TextStyle = {
@@ -139,7 +139,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     return (
       <View testID="DemoScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+        <Screen style={CONTAINER} preset="scroll" backgroundColor={colors.transparent}>
           <Header
             headerTx="demoScreen.howTo"
             leftIcon="back"
