@@ -8,38 +8,6 @@ declare let module
 
 storiesOf("Text", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Passing Content", () => (
-    <Story>
-      <UseCase
-        text="Via `text` Prop"
-        usage="Used when you want to pass a value but don't want to open a child."
-      >
-        <Text text="Billum in aute fugiat proident nisi pariatur est. Cupidatat anim cillum eiusmod ad. Officia eu magna aliquip labore dolore consequat." />
-      </UseCase>
-
-      <UseCase text="Via `tx` Prop" usage="Used for looking up i18n keys.">
-        <Text tx="storybook.lorem" />
-      </UseCase>
-      <UseCase
-        text="Children"
-        usage="Used like you would normally use a React Native <Text> component."
-      >
-        <Text>Aliqua velit irure reprehenderit eu qui amet veniam consectetur.</Text>
-      </UseCase>
-
-      <UseCase text="Nested children" usage="You can embed them and change styles too.">
-        <Text>
-          <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
-          {` `}
-          <Text preset="default">
-            Ullamco cupidatat officia exercitation velit non ullamco nisi..
-          </Text>
-          {` `}
-          <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
-        </Text>
-      </UseCase>
-    </Story>
-  ))
   .add("Presets", () => (
     <Story>
       <UseCase text="Default" usage="Used for normal body text.">
@@ -123,6 +91,38 @@ storiesOf("Text", module)
       </UseCase>
     </Story>
   ))
+  .add("Passing Content", () => (
+    <Story>
+      <UseCase
+        text="Via `text` Prop"
+        usage="Used when you want to pass a value but don't want to open a child."
+      >
+        <Text text="Billum in aute fugiat proident nisi pariatur est. Cupidatat anim cillum eiusmod ad. Officia eu magna aliquip labore dolore consequat." />
+      </UseCase>
+
+      <UseCase text="Via `tx` Prop" usage="Used for looking up i18n keys.">
+        <Text tx="storybook.lorem2Sentences" />
+      </UseCase>
+      <UseCase
+        text="Children"
+        usage="Used like you would normally use a React Native <Text> component."
+      >
+        <Text>Aliqua velit irure reprehenderit eu qui amet veniam consectetur.</Text>
+      </UseCase>
+
+      <UseCase text="Nested children" usage="You can embed them and change styles too.">
+        <Text>
+          <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
+          {` `}
+          <Text preset="default">
+            Ullamco cupidatat officia exercitation velit non ullamco nisi..
+          </Text>
+          {` `}
+          <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
+        </Text>
+      </UseCase>
+    </Story>
+  ))
   .add("Styling", () => (
     <Story>
       <UseCase text="Override Preset Weight / Size">
@@ -140,7 +140,7 @@ storiesOf("Text", module)
             sint nostrud.
           </Text>
           {` `}
-          <Text style={{ color: colors.palette.white, backgroundColor: colors.error }}>
+          <Text style={{ color: colors.palette.neutral100, backgroundColor: colors.error }}>
             Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco
             adipisicing tempor adipisicing.
           </Text>
