@@ -21,7 +21,7 @@ const BULLET: ImageStyle = {
 }
 const BULLET_TEXT: TextStyle = {
   flex: 1,
-  fontFamily: typography.primary,
+  fontFamily: typography.primary.normal,
   color: "#BAB6C8",
   fontSize: 15,
   lineHeight: 22,
