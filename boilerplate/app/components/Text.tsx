@@ -1,5 +1,5 @@
 import i18n from "i18n-js"
-import * as React from "react"
+import React from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { translate, TxKeyPath } from "../i18n"
 import { colors, typography } from "../theme"
@@ -86,7 +86,7 @@ const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weigh
   return { ...acc, [weight]: { fontFamily } }
 }, {}) as Record<Weights, TextStyle>
 
-const $baseStyles: StyleProp<TextStyle> = [
+const $baseStyle: StyleProp<TextStyle> = [
   $sizeStyles.sm,
   $fontWeightStyles.normal,
   { color: colors.text },
@@ -96,19 +96,19 @@ const $presetStyles = {
   /**
    * The default text styles.
    */
-  default: $baseStyles,
+  default: $baseStyle,
   /**
    * A bold version of the default text.
    */
-  bold: [$baseStyles, $fontWeightStyles.bold] as StyleProp<TextStyle>,
+  bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
   /**
    * Large heading.
    */
-  heading: [$baseStyles, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
+  heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
   /**
    * Smaller heading.
    */
-  subheading: [$baseStyles, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+  subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
   /**
    * Field labels that appear on forms above the inputs.
    */

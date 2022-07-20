@@ -14,15 +14,15 @@ export const colors = {
   /**
    * The default color of text in many components.
    */
-  text: palette.grey800,
+  text: palette.neutral800,
   /**
    * The screen background.
    */
-  background: palette.grey100,
+  background: palette.neutral100,
   /**
    * The screen background.
    */
-  backgroundDarker: palette.grey200,
+  backgroundDarker: palette.neutral200,
 
   /**
    * The main tinting color.
