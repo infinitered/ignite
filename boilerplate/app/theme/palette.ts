@@ -1,6 +1,15 @@
 export const palette = {
-  black: "#1d1d1d",
   white: "#ffffff",
+  grey100: "#FFFFFF",
+  grey200: "#F4F2F1",
+  grey300: "#D7CEC9",
+  grey400: "#B6ACA6",
+  grey500: "#978F8A",
+  grey600: "#564E4A",
+  grey700: "#3C3836",
+  grey800: "#191015",
+
+  black: "#1d1d1d",
   offWhite: "#e6e6e6",
   orange: "#FBA928",
   orangeDarker: "#EB9918",

@@ -11,14 +11,15 @@
  */
 import "./i18n"
 import "./utils/ignore-warnings"
-import React, { useState, useEffect } from "react"
-import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-context"
-import { initFonts } from "./theme/fonts" // expo
-import * as storage from "./utils/storage"
-import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { RootStore, RootStoreProvider, setupRootStore } from "./models"
+import { useFonts } from "expo-font"
+import React, { useEffect, useState } from "react"
+import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
+import { RootStore, RootStoreProvider, setupRootStore } from "./models"
+import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/error/error-boundary"
+import { customFontsToLoad } from "./theme/fonts" // expo
+import * as storage from "./utils/storage"
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
@@ -37,12 +38,11 @@ function App() {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
+  const [areFontsLoaded] = useFonts(customFontsToLoad)
+
   // Kick off initial async loading actions, like loading fonts and RootStore
   useEffect(() => {
-    ;(async () => {
-      await initFonts() // expo
-      setupRootStore().then(setRootStore)
-    })()
+    setupRootStore().then(setRootStore)
   }, [])
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -51,7 +51,7 @@ function App() {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!rootStore || !isNavigationStateRestored) return null
+  if (!rootStore || !isNavigationStateRestored || !areFontsLoaded) return null
 
   // otherwise, we're ready to render the app
   return (
