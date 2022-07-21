@@ -10,13 +10,15 @@ import { Story, StoryScreen, UseCase } from "../views"
 declare let module
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
-const $customButtonStyle: ViewStyle = { backgroundColor: colors.palette.secondary300, height: 100 }
+const $customButtonStyle: ViewStyle = { backgroundColor: colors.palette.angry, height: 100 }
+const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.palette.angry }
 const $customButtonTextStyle: TextStyle = {
   color: colors.palette.angry,
   fontFamily: typography.primary.bold,
   textDecorationLine: "underline",
-  textDecorationColor: colors.palette.secondary500,
+  textDecorationColor: colors.palette.angry,
 }
+const $customButtonPressedTextStyle: TextStyle = { color: colors.palette.neutral100 }
 const $customButtonRightAccessoryStyle: ViewStyle = {
   width: "53%",
   height: "200%",
@@ -25,15 +27,7 @@ const $customButtonRightAccessoryStyle: ViewStyle = {
   top: 0,
   right: 0,
 }
-
-const $customButtonLeftAccessoryStyle: ViewStyle = {
-  width: "100%",
-  height: "150%",
-  backgroundColor: colors.palette.secondary300,
-  position: "absolute",
-  top: 0,
-  left: 0,
-}
+const $customButtonPressedRightAccessoryStyle: ImageStyle = { tintColor: colors.palette.neutral100 }
 
 storiesOf("Button", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
@@ -135,20 +129,41 @@ storiesOf("Button", module)
   ))
   .add("Styling", () => (
     <Story>
-      <UseCase text="Affect the Button's container">
+      <UseCase text="Style the Button's container">
         <Button style={$customButtonStyle}>Consectetur Reprehenderit Exercitation</Button>
       </UseCase>
 
-      <UseCase text="Affect the Button's text">
-        <Button textStyle={$customButtonTextStyle}>Magna Cupidatat Ea Anim</Button>
+      <UseCase text="Style the Button's text">
+        <Button preset="filled" textStyle={$customButtonTextStyle}>
+          Magna Cupidatat Ea Anim
+        </Button>
       </UseCase>
 
-      <UseCase text="Affect the accessories">
+      <UseCase text="Style the accessories">
         <Button
+          preset="reversed"
           RightAccessory={() => <View style={$customButtonRightAccessoryStyle} />}
-          LeftAccessory={() => <View style={$customButtonLeftAccessoryStyle} />}
         >
           Commodo pariatur et enim ea id fugiat anim ad.
+        </Button>
+      </UseCase>
+
+      <UseCase text="Change the pressed state styles">
+        <Button
+          pressedStyle={$customButtonPressedStyle}
+          pressedTextStyle={$customButtonPressedTextStyle}
+          RightAccessory={(props) => (
+            <Icon
+              containerStyle={props.style}
+              style={[
+                $iconStyle,
+                props.pressableState.pressed && $customButtonPressedRightAccessoryStyle,
+              ]}
+              icon="bug"
+            />
+          )}
+        >
+          Ea Id Fugiat Anim Ad
         </Button>
       </UseCase>
     </Story>
