@@ -6,7 +6,7 @@ import { colors, typography } from "../theme"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
-type Presets = keyof typeof $presetStyles
+type Presets = keyof typeof $presets
 
 export interface TextProps extends RNTextProps {
   /**
@@ -45,26 +45,15 @@ export interface TextProps extends RNTextProps {
  * This component is a HOC over the built-in React Native one.
  */
 export function Text(props: TextProps) {
-  const {
-    preset = "default",
-    weight,
-    size,
-    tx,
-    txOptions,
-    text,
-    children,
-    style: $styleOverride,
-    ...rest
-  } = props
+  const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
 
   // figure out which content to use
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
 
   // compose the styles
-  const $presetStyle = $presetStyles[preset] || $presetStyles.default
-  const $composedStyle = [$fontWeightStyles[weight], $sizeStyles[size]]
-  const $styles = [$presetStyle, $composedStyle, $styleOverride]
+  const preset: Presets = !!$presets[props.preset] ? props.preset : "default"
+  const $styles = [$presets[preset], $fontWeightStyles[weight], $sizeStyles[size], $styleOverride]
 
   return (
     <RNText {...rest} style={$styles}>
@@ -92,7 +81,7 @@ const $baseStyle: StyleProp<TextStyle> = [
   { color: colors.text },
 ]
 
-const $presetStyles = {
+const $presets = {
   /**
    * The default text styles.
    */
