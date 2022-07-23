@@ -141,7 +141,7 @@ export default {
     packageJsonRaw = packageJsonRaw
       .replace(/HelloWorld/g, projectName)
       .replace(/hello-world/g, projectNameKebab)
-    let packageJson = JSON.parse(packageJsonRaw)
+    const packageJson = JSON.parse(packageJsonRaw)
 
     write("./package.json", packageJson)
 
