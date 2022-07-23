@@ -36,9 +36,8 @@
     "coverage": "jest --coverage",
     "ci:prep": "yarn build && yarn ci:lint",
     "ci:lint": "eslint src test --ext .ts && yarn format",
-    "ci:test:expo": "jest ./test/expo",
     "ci:test:vanilla": "jest ./test/vanilla",
-    "ci:test": "yarn ci:prep && yarn ci:test:vanilla && yarn ci:test:expo && yarn clean",
+    "ci:test": "yarn ci:prep && yarn ci:test:vanilla && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
     "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template"
