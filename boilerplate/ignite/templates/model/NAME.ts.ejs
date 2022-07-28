@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
 /**
  * Model description here for TypeScript hints.

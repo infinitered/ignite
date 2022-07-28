@@ -48,13 +48,15 @@ npx ignite-cli new PizzaApp --bundle=com.infinitered.pizzaapp
 
 Ignite will walk you through the rest.
 
+Once you're up and running, check out our new [Getting Started Guide](https://github.com/infinitered/ignite/blob/master/docs/Guide.md) guide or the rest of our [docs](https://github.com/infinitered/ignite/blob/master/docs).
+
 If you'd like to follow a tutorial, check out [this one from Robin Heinze](https://shift.infinite.red/creating-a-trivia-app-with-ignite-bowser-part-1-1987cc6e93a1).
 
 ### Troubleshooting
 
 The above commands may fail with various errors, depending on your operating system and dependency versions. Some troubleshooting steps to follow:
 
-- Make sure you are using the LTS version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v14.x.x.
+- Make sure you are using the LTS version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v16.x.x.
 - If the installation fails because of an Xcode error (missing Xcode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
 - If Xcode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the Xcode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
 
