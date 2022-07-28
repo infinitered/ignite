@@ -17,10 +17,6 @@ import { colors } from "../theme"
 
 interface BaseScreenProps {
   /**
-   * Used to locate this view in end-to-end tests.
-   */
-  testID?: string
-  /**
    * Children components.
    */
   children?: React.ReactNode
@@ -36,10 +32,6 @@ interface BaseScreenProps {
    * Override the default edges for the safe area.
    */
   safeAreaEdges?: Edge[]
-  /**
-   * Disable the safe area.
-   */
-  unsafe?: boolean
   /**
    * Background color
    */
@@ -199,17 +191,14 @@ export function Screen(props: ScreenProps) {
     backgroundColor = colors.background,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
-    unsafe,
-    safeAreaEdges = unsafe ? [] : ["top", "bottom"],
+    safeAreaEdges = [],
     SafeAreaViewProps,
     StatusBarProps,
     statusBarStyle = "dark-content",
-    testID,
   } = props
 
   return (
     <SafeAreaView
-      testID={testID}
       edges={safeAreaEdges}
       {...SafeAreaViewProps}
       style={[$safeAreaStyle, SafeAreaViewProps?.style, { backgroundColor }]}

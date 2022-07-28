@@ -1,5 +1,8 @@
 import { palette } from "./palette"
 
+// YULIANTODO:// combine palette and colors
+//
+
 export const colors = {
   /**
    * The palette is available to use, but prefer using the name.

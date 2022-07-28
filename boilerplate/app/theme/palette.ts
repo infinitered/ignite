@@ -13,7 +13,6 @@ export const palette = {
   secondary500: "#41476E",
 
   angry: "#C03403",
-
   black: "#1d1d1d",
   offWhite: "#e6e6e6",
   orange: "#FBA928",
