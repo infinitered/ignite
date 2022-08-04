@@ -1,3 +1,5 @@
+const { getDefaultConfig } = require("metro-config")
+
 let metroConfig
 let isExpo = false
 try {
@@ -16,6 +18,7 @@ if (isExpo) {
    * For one idea on how to support symlinks in Expo, see:
    * https://github.com/infinitered/ignite/issues/1904#issuecomment-1054535068
    */
+  metroConfig = getDefaultConfig(__dirname)
 } else {
   /**
    * Vanilla metro config - we're using a custom metro config because we want to support symlinks
@@ -28,7 +31,6 @@ if (isExpo) {
    */
   const { makeMetroConfig } = require("@rnx-kit/metro-config")
   const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
-  const { getDefaultConfig } = require("metro-config")
 
   metroConfig = (async () => {
     const defaultConfig = await getDefaultConfig()
