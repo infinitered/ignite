@@ -18,8 +18,8 @@ import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/error/error-boundary"
-import { customFontsToLoad } from "./theme/fonts" // expo
 import * as storage from "./utils/storage"
+import { customFontsToLoad } from "./theme"
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:

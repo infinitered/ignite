@@ -1,7 +1,37 @@
-import { palette } from "./palette"
+const palette = {
+  neutral100: "#FFFFFF",
+  neutral200: "#F4F2F1",
+  neutral300: "#D7CEC9",
+  neutral400: "#B6ACA6",
+  neutral500: "#978F8A",
+  neutral600: "#564E4A",
+  neutral700: "#3C3836",
+  neutral800: "#191015",
 
-// YULIANTODO:// combine palette and colors
-//
+  primary100: "#FFDCC0",
+  primary200: "#F9B790",
+  primary300: "#F0A17A",
+  primary400: "#E78A64",
+  primary500: "#C76542",
+  primary600: "#A54F31",
+
+  secondary100: "#DCDDE9",
+  secondary200: "#BCC0D6",
+  secondary300: "#9196B9",
+  secondary400: "#626894",
+  secondary500: "#41476E",
+
+  accent100: "#FFEED4",
+  accent200: "#FFE1B2",
+  accent300: "#FDD495",
+  accent400: "#FBC878",
+  accent500: "#FFBB50",
+
+  angry500: "#C03403",
+
+  overlay20: "rgba(25, 16, 21, 0.2)",
+  overlay50: "rgba(25, 16, 21, 0.5)",
+}
 
 export const colors = {
   /**
@@ -9,56 +39,35 @@ export const colors = {
    */
   palette,
   /**
-   * A helper for making something see-thru. Use sparingly as many layers of transparency
-   * can cause older Android devices to slow down due to the excessive compositing required
-   * by their under-powered GPUs.
+   * A helper for making something see-thru.
    */
   transparent: "rgba(0, 0, 0, 0)",
   /**
-   * The default color of text in many components.
+   * The default text color in many components.
    */
   text: palette.neutral800,
   /**
-   * The screen background.
+   * Secondary text information.
    */
-  background: palette.neutral100,
+  textDim: palette.neutral600,
   /**
-   * The screen background.
+   * The default color of the screen background.
    */
-  backgroundDarker: palette.neutral200,
-
+  background: palette.neutral200,
+  /**
+   * The default border color.
+   */
+  border: palette.neutral400,
   /**
    * The main tinting color.
    */
-  primary: palette.orange,
+  tint: palette.primary500,
   /**
-   * The main tinting color, but darker.
+   * A subtle color used for lines.
    */
-  primaryDarker: palette.orangeDarker,
+  separator: palette.neutral300,
   /**
-   * A subtle color used for borders and lines.
+   * Error messages.
    */
-  line: palette.offWhite,
-
-  /**
-   * Secondary information.
-   */
-  dim: palette.lightGrey,
-  /**
-   * Error messages and icons.
-   */
-  error: palette.angry,
-
-  /**
-   * Storybook background for Text stories, or any stories where
-   * the text color is color.text, which is white by default, and does not show
-   * in Stories against the default white background
-   */
-  storybookDarkBg: palette.black,
-
-  /**
-   * Storybook text color for stories that display Text components against the
-   * white background
-   */
-  storybookTextColor: palette.black,
+  error: palette.angry500,
 }
