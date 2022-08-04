@@ -208,6 +208,7 @@ export default {
       packageJson = merge(packageJson, expoJson)
       delete packageJson.scripts["build-ios"]
       delete packageJson.scripts["build-android"]
+      delete packageJson.dependencies["react-native-bootsplash"]
     }
 
     write("./package.json", packageJson)

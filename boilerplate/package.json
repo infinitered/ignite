@@ -46,6 +46,7 @@
     "react-native-gesture-handler": "2.4.2",
     "react-native-keychain": "8.0.0",
     "react-native-safe-area-context": "4.3.1",
+    "react-native-bootsplash": "4.2.3",
     "react-native-screens": "3.13.1",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
