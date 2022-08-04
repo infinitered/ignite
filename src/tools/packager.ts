@@ -1,5 +1,6 @@
 import { system } from "gluegun"
-import { spawnProgress } from "./spawn"
+import { isValidJson } from "./guards"
+import { spawnChunked, spawnProgress } from "./spawn"
 
 // we really need a packager core extension on Gluegun
 // in the meantime, we'll use this hacked together version
@@ -138,8 +139,14 @@ function installCmd(options: PackageRunOptions) {
   }
 }
 
-type PackageListOutput = [string, (string) => [string, string][]]
-export function list(options: PackageOptions = packageListOptions): PackageListOutput {
+export const cmdChunkReducer = {
+  npm: (cmdChunks: string[]) => cmdChunks.find((line) => isValidJson(line)),
+  yarn: (cmdChunks: string[]) => cmdChunks[0],
+  pnpm: (cmdChunks: string[]) => cmdChunks[0],
+} as const
+
+type PackageListOutputParser = [cmd: string, parser: (output: string) => [string, string][]]
+export function list(options: PackageOptions = packageListOptions): PackageListOutputParser {
   if (options.packagerName === "pnpm") {
     // TODO: pnpm list?
     throw new Error("pnpm list is not supported yet")
@@ -209,7 +216,11 @@ export const packager = {
   },
   list: async (options: PackageOptions = packageListOptions) => {
     const [cmd, parseFn] = list(options)
-    return parseFn(await spawnProgress(cmd, {}))
+    const packageName = options?.packagerName ?? "npm"
+    const outputChunks = await spawnChunked(cmd)
+    const reducerFn = cmdChunkReducer[packageName]
+    const output = reducerFn(outputChunks)
+    return parseFn(output)
   },
   has: (packageManager: "yarn" | "npm" | "pnpm"): boolean => {
     if (packageManager === "yarn") return yarnAvailable()

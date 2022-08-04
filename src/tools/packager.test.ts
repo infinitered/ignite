@@ -1,6 +1,62 @@
-import { list } from "./packager"
+import { cmdChunkReducer, list } from "./packager"
 
 describe("packager", () => {
+  describe("outputReducer", () => {
+    describe("npm", () => {
+      it("should be defined", () => {
+        expect(cmdChunkReducer.npm).toBeDefined()
+      })
+
+      it("should reduce single command chunk", () => {
+        const cmdOutputChunks = [
+          `
+          {
+            "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
+            "dependencies": {
+              "corepack": {
+                "version": "0.10.0"
+              },
+              "expo-cli": {
+                "version": "6.0.1"
+              },
+              "npm": {
+                "version": "8.11.0"
+              }
+            }
+          }
+          `,
+        ]
+
+        expect(cmdChunkReducer.npm(cmdOutputChunks)).toEqual(cmdOutputChunks[0])
+      })
+
+      it("should reduce command chunks with warnings", () => {
+        const cmdOutputChunks = [
+          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+          `
+            {
+              "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
+              "dependencies": {
+                "corepack": {
+                    "version": "0.10.0"
+                },
+                "expo-cli": {
+                    "version": "6.0.1"
+                },
+                "npm": {
+                    "version": "8.11.0"
+                }
+              }
+            }
+          `,
+        ]
+
+        expect(cmdChunkReducer.npm(cmdOutputChunks)).toEqual(cmdOutputChunks[2])
+      })
+    })
+  })
+
   describe("list", () => {
     it("should be defined", () => {
       expect(list).toBeDefined()
