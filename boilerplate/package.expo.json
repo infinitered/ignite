@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint App.js app storybook test --fix --ext .js,.ts,.tsx && yarn format",
+    "lint": "eslint App.js app test --fix --ext .js,.ts,.tsx && yarn format",
     "build:e2e": "detox build -c ios.sim.expo",
     "test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
   },

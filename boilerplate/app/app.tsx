@@ -14,7 +14,6 @@ import "./utils/ignore-warnings"
 import { useFonts } from "expo-font"
 import React, { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
-import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/error/error-boundary"
@@ -55,18 +54,16 @@ function App() {
 
   // otherwise, we're ready to render the app
   return (
-    <ToggleStorybook>
-      <RootStoreProvider value={rootStore}>
-        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <ErrorBoundary catchErrors={"always"}>
-            <AppNavigator
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </ErrorBoundary>
-        </SafeAreaProvider>
-      </RootStoreProvider>
-    </ToggleStorybook>
+    <RootStoreProvider value={rootStore}>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <ErrorBoundary catchErrors={"always"}>
+          <AppNavigator
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </ErrorBoundary>
+      </SafeAreaProvider>
+    </RootStoreProvider>
   )
 }
 
