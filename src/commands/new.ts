@@ -84,7 +84,6 @@ export default {
 
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
-    const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
     log({ expo, ignitePath, boilerplatePath })
 
     // welcome everybody!
@@ -104,7 +103,6 @@ export default {
       // generate the project
       startSpinner("Igniting app")
       await spawnProgress(log(expoCLIString), {
-        env: cliEnv,
         onProgress: (out: string) => {
           stopSpinner("Igniting app", "🔥")
 
