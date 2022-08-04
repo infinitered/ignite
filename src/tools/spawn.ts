@@ -1,7 +1,9 @@
 export type SpawnOptions = {
+  /** Callback on every std out from spawned process */
   onProgress?: (data: string) => void
-  env?: Record<string, unknown>
 }
+
+/** Spawn process, run commandLine string as command, and return output as string */
 export function spawnProgress(commandLine: string, options: SpawnOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     const args = commandLine.split(" ")
@@ -16,4 +18,12 @@ export function spawnProgress(commandLine: string, options: SpawnOptions): Promi
     spawned.on("close", (code) => (code === 0 ? resolve(output.join("")) : reject(output.join(""))))
     spawned.on("error", (err) => reject(err))
   })
+}
+
+/** Spawn process, run commandLine string as command, and return each std out line as an array of strings */
+export async function spawnChunked(commandLine: string, options?: SpawnOptions): Promise<string[]> {
+  const output: string[] = []
+  const option = options ?? { onProgress: (data: string) => output.push(data) }
+  await spawnProgress(commandLine, option)
+  return output
 }
