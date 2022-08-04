@@ -2,15 +2,12 @@ import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { View } from "react-native"
 import { Story, StoryScreen, UseCase } from "../../../storybook/views"
-import { colors } from "../../theme"
 import { BulletItem } from "./bullet-item"
 
 declare let module
 
 const VIEWSTYLE = {
-  flex: 1,
-  backgroundColor: colors.storybookDarkBg,
-  borderWidth: 5,
+  //TODO: removed this since we're getting rid of storybook
 }
 
 storiesOf("Bullet Item", module)
@@ -20,11 +17,7 @@ storiesOf("Bullet Item", module)
       <UseCase noPad text="default" usage="The default usage">
         <BulletItem text="The default Bullet Item text" />
       </UseCase>
-      <UseCase
-        noPad
-        text="with view wrapper"
-        usage={`backgroundColor: ${colors.storybookDarkBg} (color.storybookDarkBg)`}
-      >
+      <UseCase noPad text="with view wrapper">
         <View style={VIEWSTYLE}>
           <BulletItem text="The default Bullet Item text" />
         </View>

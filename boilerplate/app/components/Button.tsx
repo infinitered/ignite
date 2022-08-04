@@ -60,8 +60,13 @@ export interface ButtonProps extends PressableProps {
   }>
 }
 
+/**
+ * A component that allows users to take actions and make choices.
+ * Wraps the Text component with a Pressable component.
+ *
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Button.md)
+ */
 export function Button(props: ButtonProps) {
-  // grab the props
   const {
     tx,
     text,
@@ -75,7 +80,6 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
-  // compose the styles
   const preset: Presets = !!$viewPresets[props.preset] ? props.preset : "default"
   function $viewStyle({ pressed }) {
     return [
@@ -132,24 +136,17 @@ const $rightAccessoryStyle: ViewStyle = { marginLeft: 8, zIndex: 1 }
 const $leftAccessoryStyle: ViewStyle = { marginRight: 8, zIndex: 1 }
 
 const $viewPresets = {
-  /**
-   * The default preset. Used as a primary button.
-   */
   default: [
     $baseViewStyle,
     {
       borderWidth: 1,
-      borderColor: colors.palette.neutral400,
+      borderColor: colors.border,
       backgroundColor: colors.palette.neutral100,
     },
   ] as StyleProp<ViewStyle>,
-  /**
-   * An alternative button style. Used as a secondary button.
-   */
+
   filled: [$baseViewStyle, { backgroundColor: colors.palette.neutral300 }] as StyleProp<ViewStyle>,
-  /**
-   *A contrast button. A more prominent button that stands out.
-   */
+
   reversed: [
     $baseViewStyle,
     { backgroundColor: colors.palette.neutral800 },

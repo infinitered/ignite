@@ -39,7 +39,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
 })
 
 const $container: ViewStyle = {
-  backgroundColor: colors.backgroundDarker,
+  backgroundColor: colors.background,
 }
 
 const $topContainer: ViewStyle = {
@@ -52,7 +52,7 @@ const $topContainer: ViewStyle = {
 const $bottomContainer: ViewStyle = {
   flexGrow: 0,
   flexBasis: "43%",
-  backgroundColor: colors.background,
+  backgroundColor: colors.palette.neutral100,
   borderRadius: 16,
 }
 

@@ -10,19 +10,19 @@ import { Story, StoryScreen, UseCase } from "../views"
 declare let module
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
-const $customButtonStyle: ViewStyle = { backgroundColor: colors.palette.angry, height: 100 }
-const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.palette.angry }
+const $customButtonStyle: ViewStyle = { backgroundColor: colors.error, height: 100 }
+const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error }
 const $customButtonTextStyle: TextStyle = {
-  color: colors.palette.angry,
+  color: colors.error,
   fontFamily: typography.primary.bold,
   textDecorationLine: "underline",
-  textDecorationColor: colors.palette.angry,
+  textDecorationColor: colors.error,
 }
 const $customButtonPressedTextStyle: TextStyle = { color: colors.palette.neutral100 }
 const $customButtonRightAccessoryStyle: ViewStyle = {
   width: "53%",
   height: "200%",
-  backgroundColor: colors.palette.angry,
+  backgroundColor: colors.error,
   position: "absolute",
   top: 0,
   right: 0,

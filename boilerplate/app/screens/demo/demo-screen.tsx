@@ -26,7 +26,7 @@ const CONTAINER: ViewStyle = {
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
-  backgroundColor: colors.palette.deepPurple,
+  // backgroundColor: colors.palette.deepPurple,
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const DEMO_TEXT: TextStyle = {

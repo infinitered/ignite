@@ -31,10 +31,6 @@ storiesOf("Text", module)
       <UseCase text="Sub Heading" usage="Used for section sub headers.">
         <Text preset="subheading">In Cupidatat Cillum.</Text>
       </UseCase>
-
-      <UseCase text="Field Label" usage="Used on forms nears inputs.">
-        <Text preset="fieldLabel">Voluptate Adipisicing.</Text>
-      </UseCase>
     </Story>
   ))
   .add("Sizes", () => (
@@ -147,7 +143,7 @@ storiesOf("Text", module)
           {` `}
           <Text
             style={{
-              color: colors.dim,
+              color: colors.error,
               textDecorationColor: colors.error,
               textDecorationLine: "underline line-through",
               textDecorationStyle: "dashed",

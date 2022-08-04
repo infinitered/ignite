@@ -5,13 +5,12 @@ import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { Text, FormRow } from "../"
-import { colors } from "../../theme/colors"
 import { ViewStyle } from "react-native"
 
 declare let module
 
 const TEXT_STYLE_OVERRIDE = {
-  color: colors.storybookTextColor,
+  //TODO: removed this since we're getting rid of storybook
 }
 const arrayStyle: ViewStyle[] = [{ borderWidth: 5 }, { borderColor: "#32cd32" }]
 

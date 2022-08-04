@@ -43,15 +43,15 @@ export interface TextProps extends RNTextProps {
 /**
  * For your text displaying needs.
  * This component is a HOC over the built-in React Native one.
+ *
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Text.md)
  */
 export function Text(props: TextProps) {
   const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
 
-  // figure out which content to use
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
 
-  // compose the styles
   const preset: Presets = !!$presets[props.preset] ? props.preset : "default"
   const $styles = [$presets[preset], $fontWeightStyles[weight], $sizeStyles[size], $styleOverride]
 
@@ -82,28 +82,11 @@ const $baseStyle: StyleProp<TextStyle> = [
 ]
 
 const $presets = {
-  /**
-   * The default text styles.
-   */
   default: $baseStyle,
-  /**
-   * A bold version of the default text.
-   */
+
   bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
-  /**
-   * Large heading.
-   */
+
   heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
-  /**
-   * Smaller heading.
-   */
+
   subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
-  /**
-   * Field labels that appear on forms above the inputs.
-   */
-  fieldLabel: [
-    $sizeStyles.xs,
-    $fontWeightStyles.light,
-    { color: colors.dim },
-  ] as StyleProp<TextStyle>,
 }
