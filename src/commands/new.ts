@@ -23,7 +23,7 @@ export default {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
-    const { info, colors } = print
+    const { info, colors, warning } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
 
     // start tracking performance
@@ -78,10 +78,19 @@ export default {
 
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
-    log({ ignitePath, boilerplatePath })
+    log(`ignitePath: ${ignitePath}`)
+    log(`boilerplatePath: ${boilerplatePath}`)
+
+    // show warning about --expo going away
+    const expo = Boolean(parameters.options.expo)
+    if (expo) {
+      warning(
+        " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
+      )
+      p()
+    }
 
     // welcome everybody!
-    p("\n")
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
