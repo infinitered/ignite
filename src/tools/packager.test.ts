@@ -97,7 +97,7 @@ describe("packager", () => {
 
     describe("yarn", () => {
       it("should parse valid command output", () => {
-        const output: string = `
+        const output = `
         yarn global v1.22.17
         info "detox-cli@19.0.0" has binaries:
            - detox
