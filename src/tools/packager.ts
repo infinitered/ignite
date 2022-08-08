@@ -1,5 +1,5 @@
 import { system } from "gluegun"
-import { isValidJson, isYarnListOutput } from "./guards"
+import { isNpmListOutput, isStringifiedJson, isYarnListOutput, NpmListOutput } from "./guards"
 import { spawnChunked, spawnProgress } from "./spawn"
 
 // we really need a packager core extension on Gluegun
@@ -159,13 +159,12 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
   npm: {
     factory: (options) => `npm list${options.global ? " --global" : ""} --depth=0 --json`,
     reducer: (cmdChunks) =>
-      cmdChunks.find((line) => isValidJson(line) && "dependencies" in JSON.parse(line)),
+      cmdChunks.find((line) => isStringifiedJson(line) && isNpmListOutput(JSON.parse(line))),
     parser: (output) => {
       // npm returns a single JSON blob with a "dependencies" key
-      const json = JSON.parse(output)
-      return Object.keys(json.dependencies || []).map(
-        (key: string): Dependency => [key, json.dependencies[key].version],
-      )
+      const json: NpmListOutput = JSON.parse(output)
+      const entries = Object.entries(json.dependencies)
+      return entries.map(([key, value]) => [key, value.version])
     },
   },
   yarn: {
