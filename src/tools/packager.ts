@@ -146,64 +146,66 @@ function installCmd(options: PackageRunOptions) {
 
 // #region listCmd
 type CmdChunkReducer = (cmdChunks: string[]) => string | undefined
-export const cmdChunkReducer: Record<PackageManager, CmdChunkReducer> = {
-  npm: (cmdChunks) =>
-    cmdChunks.find((line) => isValidJson(line) && "dependencies" in JSON.parse(line)),
-  yarn: (cmdChunks) => cmdChunks[0],
-  pnpm: (cmdChunks) => cmdChunks[0],
-}
-
 type Dependency = [key: string, semver: string]
 type DependencyParser = (output: string) => Dependency[]
-type PackageListOutputParser = [cmd: string, parser: DependencyParser]
-const packageListOptions: PackageOptions = { global: false }
-export function listCmdOutputParser(
-  options: PackageOptions = packageListOptions,
-): PackageListOutputParser {
-  if (options.packagerName === "pnpm") {
-    // TODO: pnpm list?
-    throw new Error("pnpm list is not supported yet")
-  } else if (
-    options.packagerName === "yarn" ||
-    (options.packagerName === undefined && yarnAvailable())
-  ) {
-    return [
-      `yarn${options.global ? " global" : ""} list`,
-      (output: string): Dependency[] => {
-        // Parse yarn's human-readable output
-        return output.split("\n").reduce((acc: Dependency[], line: string): Dependency[] => {
-          const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
-          return match ? [...acc, [match[1], match[2]]] : acc
-        }, [])
-      },
-    ]
-  } else {
-    return [
-      `npm list${options.global ? " --global" : ""} --depth=0 --json`,
-      (output: string): Dependency[] => {
-        // npm returns a single JSON blob with a "dependencies" key
-        const json = JSON.parse(output)
-        return Object.keys(json.dependencies || []).map(
-          (key: string): Dependency => [key, json.dependencies[key].version],
-        )
-      },
-    ]
-  }
+type CmdFactory = (options?: { global?: boolean }) => string
+type ListCommandServices = {
+  factory: CmdFactory
+  parser: DependencyParser
+  reducer: CmdChunkReducer
+}
+
+export const listCommandServices: Record<PackageManager, ListCommandServices> = {
+  npm: {
+    factory: (options) => `npm list${options.global ? " --global" : ""} --depth=0 --json`,
+    reducer: (cmdChunks) =>
+      cmdChunks.find((line) => isValidJson(line) && "dependencies" in JSON.parse(line)),
+    parser: (output) => {
+      // npm returns a single JSON blob with a "dependencies" key
+      const json = JSON.parse(output)
+      return Object.keys(json.dependencies || []).map(
+        (key: string): Dependency => [key, json.dependencies[key].version],
+      )
+    },
+  },
+  yarn: {
+    factory: (options) => `yarn${options.global ? " global" : ""} list`,
+    reducer: (cmdChunks) => cmdChunks[0],
+    parser: (output: string): Dependency[] => {
+      // Parse yarn's human-readable output
+      return output.split("\n").reduce((acc: Dependency[], line: string): Dependency[] => {
+        const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
+        return match ? [...acc, [match[1], match[2]]] : acc
+      }, [])
+    },
+  },
+  pnpm: {
+    factory: () => {
+      throw Error("pnpm list is not supported yet")
+    },
+    reducer: () => {
+      throw Error("pnpm list is not supported yet")
+    },
+    parser: () => {
+      throw Error("pnpm list is not supported yet")
+    },
+  },
 }
 
 type CmdExecuter = (cmd: string) => Promise<string[]>
-type ListCmdServices = {
+type ListCmdArguments = {
   cmd: string
   executer: CmdExecuter
   reducer: CmdChunkReducer
   parser: DependencyParser
 }
-export async function listCmd({ cmd, executer, reducer, parser }: ListCmdServices) {
+
+export async function listCmd({ cmd, executer, reducer, parser }: ListCmdArguments) {
   const outputChunks = await executer(cmd)
   const cmdOutput: string | undefined = reducer(outputChunks)
 
   if (cmdOutput === undefined) {
-    throw Error(`Could not find expected ${cmd} output`)
+    throw Error(`Could not find expected "${cmd}" output`)
   }
 
   return parser(cmdOutput)
@@ -243,10 +245,10 @@ export const packager = {
     const cmd = installCmd(options)
     return spawnProgress(cmd, { onProgress: options.onProgress })
   },
-  list: async (options: PackageOptions = packageListOptions) => {
-    const [cmd, parser] = listCmdOutputParser(options)
+  list: async (options: PackageOptions = { global: false }) => {
     const { packagerName = "npm" } = options
-    const reducer = cmdChunkReducer[packagerName]
+    const { factory, reducer, parser } = listCommandServices[packagerName]
+    const cmd = factory(options)
 
     return listCmd({ cmd, reducer, parser, executer: spawnChunked })
   },
