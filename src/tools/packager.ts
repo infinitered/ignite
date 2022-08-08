@@ -150,7 +150,8 @@ export const cmdChunkReducer: Record<PackageManager, ChunkReducer> = {
   pnpm: (cmdChunks) => cmdChunks[0],
 }
 
-type PackageListOutputParser = [cmd: string, parser: (output: string) => [string, string][]]
+type Dependency = [key: string, semver: string]
+type PackageListOutputParser = [cmd: string, parser: (output: string) => Dependency[]]
 export function list(options: PackageOptions = packageListOptions): PackageListOutputParser {
   if (options.packagerName === "pnpm") {
     // TODO: pnpm list?
@@ -161,26 +162,23 @@ export function list(options: PackageOptions = packageListOptions): PackageListO
   ) {
     return [
       `yarn${options.global ? " global" : ""} list`,
-      (output: string): [string, string][] => {
+      (output: string): Dependency[] => {
         // Parse yarn's human-readable output
-        return output
-          .split("\n")
-          .reduce((acc: [string, string][], line: string): [string, string][] => {
-            const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
-            return match ? [...acc, [match[1], match[2]]] : acc
-          }, [])
+        return output.split("\n").reduce((acc: Dependency[], line: string): Dependency[] => {
+          const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
+          return match ? [...acc, [match[1], match[2]]] : acc
+        }, [])
       },
     ]
   } else {
     return [
       `npm list${options.global ? " --global" : ""} --depth=0 --json`,
-      (output: string): [string, string][] => {
+      (output: string): Dependency[] => {
         // npm returns a single JSON blob with a "dependencies" key
         const json = JSON.parse(output)
-        return Object.keys(json.dependencies || []).map((key: string): [string, string] => [
-          key,
-          json.dependencies[key].version,
-        ])
+        return Object.keys(json.dependencies || []).map(
+          (key: string): Dependency => [key, json.dependencies[key].version],
+        )
       },
     ]
   }
