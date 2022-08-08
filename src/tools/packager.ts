@@ -171,7 +171,7 @@ export const listCmdServices: Record<PackageManager, ListCmdServices> = {
       // npm returns a single JSON blob with a "dependencies" key
       const json: NpmListOutput = JSON.parse(output)
       const entries = Object.entries(json.dependencies)
-      return entries.map(([name, value]) => [name, value.version])
+      return entries.map(([name, value]) => [name, value?.version ?? ""])
     },
   },
   yarn: {
@@ -182,7 +182,7 @@ export const listCmdServices: Record<PackageManager, ListCmdServices> = {
         /* Parse yarn's human-readable output */
         const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
         const name = match?.[1]
-        const semver = match?.[2]
+        const semver = match?.[2] ?? ""
 
         return name && semver ? [...acc, [name, semver]] : acc
       }, []),

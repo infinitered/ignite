@@ -22,7 +22,7 @@ export function isYarnListOutput(output: unknown): output is string {
   )
 }
 
-export type NpmListOutput = { dependencies: Record<string, { version: string }> }
+export type NpmListOutput = { dependencies: Record<string, { version?: string }> }
 export function isNpmListOutput(output: unknown): output is NpmListOutput {
   if (typeof output !== "object" || Array.isArray(output) === true || output === null) {
     return false
@@ -33,9 +33,7 @@ export function isNpmListOutput(output: unknown): output is NpmListOutput {
     Object.entries((output as { dependencies: unknown }).dependencies).every(
       ([key, value]) =>
         typeof key === "string" &&
-        typeof value === "object" &&
-        "version" in value &&
-        typeof value.version === "string",
+        (typeof value?.version === "string" || value?.version === undefined),
     )
   )
 }
