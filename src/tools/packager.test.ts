@@ -56,7 +56,7 @@ describe("packager", () => {
         it("should reduce command chunks with warnings", () => {
           const cmdOutputChunks = [npmWarnOutput, npmWarnOutput, npmCommandOutput]
 
-          expect(reducer([npmCommandOutput])).toEqual(cmdOutputChunks[2])
+          expect(reducer(cmdOutputChunks)).toEqual(cmdOutputChunks[2])
         })
 
         it("should return undefined if expected chunk with valid JSON is not found", () => {
