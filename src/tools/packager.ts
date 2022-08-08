@@ -171,13 +171,15 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
   yarn: {
     factory: (options) => `yarn${options.global ? " global" : ""} list`,
     reducer: (cmdChunks) => cmdChunks.find((line) => isYarnListOutput(line)),
-    parser: (output: string): Dependency[] => {
-      // Parse yarn's human-readable output
-      return output.split("\n").reduce((acc: Dependency[], line: string): Dependency[] => {
+    parser: (output) =>
+      output.split("\n").reduce<Dependency[]>((acc, line) => {
+        /* Parse yarn's human-readable output*/
         const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
-        return match ? [...acc, [match[1], match[2]]] : acc
-      }, [])
-    },
+        const key = match?.[1]
+        const semver = match?.[2]
+
+        return key && semver ? [...acc, [key, semver]] : acc
+      }, []),
   },
   pnpm: {
     factory: () => {
