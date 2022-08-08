@@ -6,16 +6,19 @@ import { spawnChunked, spawnProgress } from "./spawn"
 // in the meantime, we'll use this hacked together version
 
 // Expo doesn't support pnpm, so we'll use yarn or npm
+type PackageManager = "npm" | "yarn" | "pnpm"
+type SupportedPackager = "npm" | "yarn"
+
 type PackageOptions =
   | {
-      packagerName?: "npm" | "yarn" | "pnpm"
+      packagerName?: PackageManager
       dev?: boolean
       expo?: false
       global?: boolean
       silent?: boolean
     }
   | {
-      packagerName?: "npm" | "yarn"
+      packagerName?: SupportedPackager
       dev?: boolean
       expo?: true
       global?: boolean
@@ -49,7 +52,7 @@ function pnpmAvailable() {
   return isPnpm
 }
 
-function detectPackager(options: PackageOptions): "npm" | "yarn" | "pnpm" {
+function detectPackager(options: PackageOptions): PackageManager {
   // Expo doesn't support pnpm, so we'll use yarn or npm
   if (!options?.expo && pnpmAvailable()) {
     return "pnpm"
@@ -139,11 +142,13 @@ function installCmd(options: PackageRunOptions) {
   }
 }
 
-export const cmdChunkReducer = {
-  npm: (cmdChunks: string[]) => cmdChunks.find((line) => isValidJson(line)),
-  yarn: (cmdChunks: string[]) => cmdChunks[0],
-  pnpm: (cmdChunks: string[]) => cmdChunks[0],
-} as const
+type ChunkReducer = (cmdChunks: string[]) => string | undefined
+export const cmdChunkReducer: Record<PackageManager, ChunkReducer> = {
+  npm: (cmdChunks) =>
+    cmdChunks.find((line) => isValidJson(line) && "dependencies" in JSON.parse(line)),
+  yarn: (cmdChunks) => cmdChunks[0],
+  pnpm: (cmdChunks) => cmdChunks[0],
+}
 
 type PackageListOutputParser = [cmd: string, parser: (output: string) => [string, string][]]
 export function list(options: PackageOptions = packageListOptions): PackageListOutputParser {
@@ -216,10 +221,17 @@ export const packager = {
   },
   list: async (options: PackageOptions = packageListOptions) => {
     const [cmd, parseFn] = list(options)
-    const packageName = options?.packagerName ?? "npm"
+
+    const { packagerName = "npm" } = options
+    const reducerFn = cmdChunkReducer[packagerName]
+
     const outputChunks = await spawnChunked(cmd)
-    const reducerFn = cmdChunkReducer[packageName]
     const output = reducerFn(outputChunks)
+
+    if (output === undefined) {
+      throw new Error(`Could not find expected ${packagerName} ${cmd} output`)
+    }
+
     return parseFn(output)
   },
   has: (packageManager: "yarn" | "npm" | "pnpm"): boolean => {

@@ -1,7 +1,7 @@
 import { cmdChunkReducer, list } from "./packager"
 
 describe("packager", () => {
-  describe("outputReducer", () => {
+  describe("cmdChunkReducer", () => {
     describe("npm", () => {
       it("should be defined", () => {
         expect(cmdChunkReducer.npm).toBeDefined()
@@ -53,6 +53,29 @@ describe("packager", () => {
         ]
 
         expect(cmdChunkReducer.npm(cmdOutputChunks)).toEqual(cmdOutputChunks[2])
+      })
+
+      it("should return undefined if expected chunk with valid JSON is not found", () => {
+        const cmdOutputChunks = [
+          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+        ]
+
+        expect(cmdChunkReducer.npm(cmdOutputChunks)).toBeUndefined()
+      })
+
+      it("should return undefined if dependencies key is not in json chunk", () => {
+        const cmdOutputChunks = [
+          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+          `
+            {
+              "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
+            }
+          `,
+        ]
+
+        expect(cmdChunkReducer.npm(cmdOutputChunks)).toBeUndefined()
       })
     })
   })
