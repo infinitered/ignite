@@ -1,30 +1,30 @@
 import { listCmd, listCommandServices } from "./packager"
 
 describe("packager", () => {
-  const npmCommandOutput = `
-    {
-      "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
-      "dependencies": {
-        "corepack": {
-          "version": "0.10.0"
-        },
-        "expo-cli": {
-          "version": "6.0.1"
-        },
-        "npm": {
-          "version": "8.11.0"
-        }
-      }
-    }
-    `
-  const npmWarnOutput = `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`
-
   describe("listCmd", () => {
     it("should be defined", () => {
       expect(listCmd).toBeDefined()
     })
 
     describe("npm", () => {
+      const npmCommandOutput = `
+      {
+        "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
+        "dependencies": {
+          "corepack": {
+            "version": "0.10.0"
+          },
+          "expo-cli": {
+            "version": "6.0.1"
+          },
+          "npm": {
+            "version": "8.11.0"
+          }
+        }
+      }
+      `
+      const npmWarnOutput = `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`
+
       const { factory, parser, reducer } = listCommandServices.npm
       const cmd = factory({ global: false })
 
@@ -41,7 +41,7 @@ describe("packager", () => {
       it("should throw error if expected command output can not found", async () => {
         const executer = async () => [npmWarnOutput, npmWarnOutput]
 
-        expect(listCmd({ cmd, parser, executer, reducer })).rejects.toThrow()
+        await expect(listCmd({ cmd, parser, executer, reducer })).rejects.toThrow()
       })
 
       describe("reducer", () => {
@@ -92,18 +92,37 @@ describe("packager", () => {
     })
 
     describe("yarn", () => {
-      const { parser } = listCommandServices.yarn
+      const yarnCommandOutput = `
+        yarn global v1.22.17
+        info "create-expo-app@1.1.1" has binaries:
+          - create-expo-app
+        info "detox-cli@19.0.0" has binaries:
+          - detox
+        Done in 0.21s
+      `
 
-      describe("parser", () => {
-        it("should parse valid command output", () => {
-          const output = `
-            yarn global v1.22.17
-            info "detox-cli@19.0.0" has binaries:
-              - detox
-            Done in 0.16s.
-          `
-          expect(parser(output)).toEqual([["detox-cli", "19.0.0"]])
-        })
+      const { factory, parser, reducer } = listCommandServices.yarn
+      const cmd = factory({ global: false })
+
+      it("should return expected command output", async () => {
+        const executer = async () => [yarnCommandOutput]
+
+        expect(await listCmd({ cmd, parser, executer, reducer })).toEqual([
+          ["create-expo-app", "1.1.1"],
+          ["detox-cli", "19.0.0"],
+        ])
+      })
+
+      it("should throw error if expected command output can not found", async () => {
+        const yarnCommandError = `
+          yarn run v1.22.17
+          error Command "sdfsdfs" not found.
+          info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+        `
+
+        const executer = async () => [yarnCommandError]
+
+        await expect(listCmd({ cmd, parser, executer, reducer })).rejects.toThrow()
       })
     })
   })

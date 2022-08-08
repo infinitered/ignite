@@ -1,5 +1,5 @@
 import { system } from "gluegun"
-import { isValidJson } from "./guards"
+import { isValidJson, isYarnListOutput } from "./guards"
 import { spawnChunked, spawnProgress } from "./spawn"
 
 // we really need a packager core extension on Gluegun
@@ -170,7 +170,7 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
   },
   yarn: {
     factory: (options) => `yarn${options.global ? " global" : ""} list`,
-    reducer: (cmdChunks) => cmdChunks[0],
+    reducer: (cmdChunks) => cmdChunks.find((line) => isYarnListOutput(line)),
     parser: (output: string): Dependency[] => {
       // Parse yarn's human-readable output
       return output.split("\n").reduce((acc: Dependency[], line: string): Dependency[] => {
