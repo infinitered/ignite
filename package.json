@@ -41,7 +41,8 @@
     "ci:test": "yarn ci:prep && yarn ci:test:vanilla && yarn ci:test:expo && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
-    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template"
+    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
+    "ignite:local": "node ./bin/ignite" 
   },
   "devEngines": {
     "node": ">=7.x",
