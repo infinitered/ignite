@@ -6,6 +6,8 @@ import { spawnChunked, spawnProgress } from "./spawn"
 // in the meantime, we'll use this hacked together version
 
 // Expo doesn't support pnpm, so we'll use yarn or npm
+
+// #region Shared Types
 type PackageManager = "npm" | "yarn" | "pnpm"
 type SupportedPackager = "npm" | "yarn"
 
@@ -28,16 +30,9 @@ type PackageOptions =
 type PackageRunOptions = PackageOptions & {
   onProgress?: (out: string) => void
 }
-const packageInstallOptions: PackageRunOptions = {
-  dev: false,
-  expo: false,
-  onProgress: (out: string) => console.log(out),
-}
+// #endregion
 
-const packageListOptions: PackageOptions = {
-  global: false,
-}
-
+// #region Utilities
 let isYarn
 function yarnAvailable() {
   if (isYarn !== undefined) return isYarn
@@ -62,6 +57,13 @@ function detectPackager(options: PackageOptions): PackageManager {
     return "npm"
   }
 }
+
+const packageInstallOptions: PackageRunOptions = {
+  dev: false,
+  expo: false,
+  onProgress: (out: string) => console.log(out),
+}
+// #endregion
 
 /**
  *
@@ -142,6 +144,7 @@ function installCmd(options: PackageRunOptions) {
   }
 }
 
+// #region listCmd
 type CmdChunkReducer = (cmdChunks: string[]) => string | undefined
 export const cmdChunkReducer: Record<PackageManager, CmdChunkReducer> = {
   npm: (cmdChunks) =>
@@ -153,6 +156,7 @@ export const cmdChunkReducer: Record<PackageManager, CmdChunkReducer> = {
 type Dependency = [key: string, semver: string]
 type DependencyParser = (output: string) => Dependency[]
 type PackageListOutputParser = [cmd: string, parser: DependencyParser]
+const packageListOptions: PackageOptions = { global: false }
 export function listCmdOutputParser(
   options: PackageOptions = packageListOptions,
 ): PackageListOutputParser {
@@ -204,6 +208,7 @@ export async function listCmd({ cmd, executer, reducer, parser }: ListCmdService
 
   return parser(cmdOutput)
 }
+// #endregion
 
 /**
  * Returns a string command to run a script via a packager of your choice.
