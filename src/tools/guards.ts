@@ -7,3 +7,13 @@ export function isValidJson(input: string): boolean {
 
   return isValid
 }
+
+export function isYarnListOutput(output: unknown): boolean {
+  return (
+    typeof output === "string" &&
+    output.split("\n").some((line) => {
+      const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
+      return match?.length > 0
+    })
+  )
+}
