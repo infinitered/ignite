@@ -1,4 +1,4 @@
-export function isStringifiedJson(input: unknown): boolean {
+export function isStringifiedJson(input: unknown): input is string {
   if (typeof input !== "string") {
     return false
   }
@@ -12,7 +12,7 @@ export function isStringifiedJson(input: unknown): boolean {
   return isValid
 }
 
-export function isYarnListOutput(output: unknown): boolean {
+export function isYarnListOutput(output: unknown): output is string {
   return (
     typeof output === "string" &&
     output.split("\n").some((line) => {
