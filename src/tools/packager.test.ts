@@ -1,6 +1,24 @@
-import { cmdChunkReducer, list } from "./packager"
+import { cmdChunkReducer, listCmd, listCmdOutputParser } from "./packager"
 
 describe("packager", () => {
+  const npmCommandOutput = `
+    {
+      "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
+      "dependencies": {
+        "corepack": {
+          "version": "0.10.0"
+        },
+        "expo-cli": {
+          "version": "6.0.1"
+        },
+        "npm": {
+          "version": "8.11.0"
+        }
+      }
+    }
+    `
+  const npmWarnOutput = `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`
+
   describe("cmdChunkReducer", () => {
     describe("npm", () => {
       it("should be defined", () => {
@@ -8,66 +26,25 @@ describe("packager", () => {
       })
 
       it("should reduce single command chunk", () => {
-        const cmdOutputChunks = [
-          `
-          {
-            "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
-            "dependencies": {
-              "corepack": {
-                "version": "0.10.0"
-              },
-              "expo-cli": {
-                "version": "6.0.1"
-              },
-              "npm": {
-                "version": "8.11.0"
-              }
-            }
-          }
-          `,
-        ]
-
-        expect(cmdChunkReducer.npm(cmdOutputChunks)).toEqual(cmdOutputChunks[0])
+        expect(cmdChunkReducer.npm([npmCommandOutput])).toEqual(npmCommandOutput)
       })
 
       it("should reduce command chunks with warnings", () => {
-        const cmdOutputChunks = [
-          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
-          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
-          `
-            {
-              "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
-              "dependencies": {
-                "corepack": {
-                    "version": "0.10.0"
-                },
-                "expo-cli": {
-                    "version": "6.0.1"
-                },
-                "npm": {
-                    "version": "8.11.0"
-                }
-              }
-            }
-          `,
-        ]
+        const cmdOutputChunks = [npmWarnOutput, npmWarnOutput, npmCommandOutput]
 
-        expect(cmdChunkReducer.npm(cmdOutputChunks)).toEqual(cmdOutputChunks[2])
+        expect(cmdChunkReducer.npm([npmCommandOutput])).toEqual(cmdOutputChunks[2])
       })
 
       it("should return undefined if expected chunk with valid JSON is not found", () => {
-        const cmdOutputChunks = [
-          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
-          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
-        ]
+        const cmdOutputChunks = [npmWarnOutput, npmWarnOutput]
 
         expect(cmdChunkReducer.npm(cmdOutputChunks)).toBeUndefined()
       })
 
       it("should return undefined if dependencies key is not in json chunk", () => {
         const cmdOutputChunks = [
-          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
-          `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`,
+          npmWarnOutput,
+          npmWarnOutput,
           `
             {
               "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
@@ -80,37 +57,22 @@ describe("packager", () => {
     })
   })
 
-  describe("list", () => {
+  describe("listCmdOutputParser", () => {
     it("should be defined", () => {
-      expect(list).toBeDefined()
+      expect(listCmdOutputParser).toBeDefined()
     })
 
     it("should return a command and parser", () => {
-      const [cmd, parser] = list()
+      const [cmd, parser] = listCmdOutputParser()
       expect(cmd).toBeDefined()
       expect(parser).toBeDefined()
     })
 
     describe("npm", () => {
       it("should parse valid command output", () => {
-        const [, parser] = list({ packagerName: "npm" })
-        const cmdOutput = `
-          {
-            "resolved": "file:../../Roaming/fnm/node-versions/v16.16.0/installation",
-            "dependencies": {
-              "corepack": {
-                "version": "0.10.0"
-              },
-              "expo-cli": {
-                "version": "6.0.1"
-              },
-              "npm": {
-                "version": "8.11.0"
-              }
-            }
-          }
-        `
-        expect(parser(cmdOutput)).toEqual([
+        const [, parser] = listCmdOutputParser({ packagerName: "npm" })
+
+        expect(parser(npmCommandOutput)).toEqual([
           ["corepack", "0.10.0"],
           ["expo-cli", "6.0.1"],
           ["npm", "8.11.0"],
@@ -126,14 +88,41 @@ describe("packager", () => {
            - detox
         Done in 0.16s.
         `
-        const [, parser] = list({ packagerName: "yarn" })
+        const [, parser] = listCmdOutputParser({ packagerName: "yarn" })
         expect(parser(output)).toEqual([["detox-cli", "19.0.0"]])
       })
     })
 
     describe("pnpm", () => {
       it("should throw error", () => {
-        expect(() => list({ packagerName: "pnpm" })).toThrow()
+        expect(() => listCmdOutputParser({ packagerName: "pnpm" })).toThrow()
+      })
+    })
+  })
+
+  describe("listCmd", () => {
+    it("should be defined", () => {
+      expect(listCmd).toBeDefined()
+    })
+
+    describe("npm", () => {
+      const [cmd, parser] = listCmdOutputParser({ packagerName: "npm" })
+      const reducer = cmdChunkReducer.npm
+
+      it("should return expected command output", async () => {
+        const executer = async () => [npmCommandOutput]
+
+        expect(await listCmd({ cmd, parser, executer, reducer })).toEqual([
+          ["corepack", "0.10.0"],
+          ["expo-cli", "6.0.1"],
+          ["npm", "8.11.0"],
+        ])
+      })
+
+      it("should throw error if expected command output can not found", async () => {
+        const executer = async () => [npmWarnOutput, npmWarnOutput]
+
+        expect(listCmd({ cmd, parser, executer, reducer })).rejects.toThrow()
       })
     })
   })

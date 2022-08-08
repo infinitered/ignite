@@ -142,8 +142,8 @@ function installCmd(options: PackageRunOptions) {
   }
 }
 
-type ChunkReducer = (cmdChunks: string[]) => string | undefined
-export const cmdChunkReducer: Record<PackageManager, ChunkReducer> = {
+type CmdChunkReducer = (cmdChunks: string[]) => string | undefined
+export const cmdChunkReducer: Record<PackageManager, CmdChunkReducer> = {
   npm: (cmdChunks) =>
     cmdChunks.find((line) => isValidJson(line) && "dependencies" in JSON.parse(line)),
   yarn: (cmdChunks) => cmdChunks[0],
@@ -151,8 +151,11 @@ export const cmdChunkReducer: Record<PackageManager, ChunkReducer> = {
 }
 
 type Dependency = [key: string, semver: string]
-type PackageListOutputParser = [cmd: string, parser: (output: string) => Dependency[]]
-export function list(options: PackageOptions = packageListOptions): PackageListOutputParser {
+type DependencyParser = (output: string) => Dependency[]
+type PackageListOutputParser = [cmd: string, parser: DependencyParser]
+export function listCmdOutputParser(
+  options: PackageOptions = packageListOptions,
+): PackageListOutputParser {
   if (options.packagerName === "pnpm") {
     // TODO: pnpm list?
     throw new Error("pnpm list is not supported yet")
@@ -182,6 +185,24 @@ export function list(options: PackageOptions = packageListOptions): PackageListO
       },
     ]
   }
+}
+
+type CmdExecuter = (cmd: string) => Promise<string[]>
+type ListCmdServices = {
+  cmd: string
+  executer: CmdExecuter
+  reducer: CmdChunkReducer
+  parser: DependencyParser
+}
+export async function listCmd({ cmd, executer, reducer, parser }: ListCmdServices) {
+  const outputChunks = await executer(cmd)
+  const cmdOutput: string | undefined = reducer(outputChunks)
+
+  if (cmdOutput === undefined) {
+    throw Error(`Could not find expected ${cmd} output`)
+  }
+
+  return parser(cmdOutput)
 }
 
 /**
@@ -218,19 +239,11 @@ export const packager = {
     return spawnProgress(cmd, { onProgress: options.onProgress })
   },
   list: async (options: PackageOptions = packageListOptions) => {
-    const [cmd, parseFn] = list(options)
-
+    const [cmd, parser] = listCmdOutputParser(options)
     const { packagerName = "npm" } = options
-    const reducerFn = cmdChunkReducer[packagerName]
+    const reducer = cmdChunkReducer[packagerName]
 
-    const outputChunks = await spawnChunked(cmd)
-    const output = reducerFn(outputChunks)
-
-    if (output === undefined) {
-      throw new Error(`Could not find expected ${packagerName} ${cmd} output`)
-    }
-
-    return parseFn(output)
+    return listCmd({ cmd, reducer, parser, executer: spawnChunked })
   },
   has: (packageManager: "yarn" | "npm" | "pnpm"): boolean => {
     if (packageManager === "yarn") return yarnAvailable()
