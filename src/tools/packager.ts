@@ -145,17 +145,24 @@ function installCmd(options: PackageRunOptions) {
 }
 
 // #region listCmd
+/** Takes an array of command output chunk strings, and reduces them down to a single string with the expect output shape */
 type CmdChunkReducer = (cmdChunks: string[]) => string | undefined
-type Dependency = [key: string, semver: string]
-type DependencyParser = (output: string) => Dependency[]
+/** A factory that returns a command string to find package dependencies */
 type CmdFactory = (options?: { global?: boolean }) => string
-type ListCommandServices = {
+/**
+ * A tuple of an npm package name and it's semantic version
+ * @example ['create-expo-app', '1.1.1]
+ */
+type Dependency = [name: string, semver: string]
+/** A parser that reads a packager manager command output and transforms them into common dependency shape */
+type DependencyParser = (output: string) => Dependency[]
+
+type ListCmdServices = {
   factory: CmdFactory
   parser: DependencyParser
   reducer: CmdChunkReducer
 }
-
-export const listCommandServices: Record<PackageManager, ListCommandServices> = {
+export const listCmdServices: Record<PackageManager, ListCmdServices> = {
   npm: {
     factory: (options) => `npm list${options.global ? " --global" : ""} --depth=0 --json`,
     reducer: (cmdChunks) =>
@@ -164,7 +171,7 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
       // npm returns a single JSON blob with a "dependencies" key
       const json: NpmListOutput = JSON.parse(output)
       const entries = Object.entries(json.dependencies)
-      return entries.map(([key, value]) => [key, value.version])
+      return entries.map(([name, value]) => [name, value.version])
     },
   },
   yarn: {
@@ -174,10 +181,10 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
       output.split("\n").reduce<Dependency[]>((acc, line) => {
         /* Parse yarn's human-readable output */
         const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
-        const key = match?.[1]
+        const name = match?.[1]
         const semver = match?.[2]
 
-        return key && semver ? [...acc, [key, semver]] : acc
+        return name && semver ? [...acc, [name, semver]] : acc
       }, []),
   },
   pnpm: {
@@ -193,6 +200,7 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
   },
 }
 
+/** Executes command string in another process and returns all the output strings from that command  */
 type CmdExecuter = (cmd: string) => Promise<string[]>
 type ListCmdArguments = {
   cmd: string
@@ -200,7 +208,6 @@ type ListCmdArguments = {
   reducer: CmdChunkReducer
   parser: DependencyParser
 }
-
 export async function listCmd({ cmd, executer, reducer, parser }: ListCmdArguments) {
   const outputChunks = await executer(cmd)
   const cmdOutput: string | undefined = reducer(outputChunks)
@@ -248,7 +255,7 @@ export const packager = {
   },
   list: async (options: PackageOptions = { global: false }) => {
     const { packagerName = "npm" } = options
-    const { factory, reducer, parser } = listCommandServices[packagerName]
+    const { factory, reducer, parser } = listCmdServices[packagerName]
     const cmd = factory(options)
 
     return listCmd({ cmd, reducer, parser, executer: spawnChunked })

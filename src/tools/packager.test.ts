@@ -1,4 +1,4 @@
-import { listCmd, listCommandServices } from "./packager"
+import { listCmd, listCmdServices } from "./packager"
 
 describe("packager", () => {
   describe("listCmd", () => {
@@ -25,7 +25,7 @@ describe("packager", () => {
       `
       const npmWarnOutput = `npm WARN config global \`--global\`, \`--local\` are deprecated. Use \`--location=global\` instead.`
 
-      const { factory, parser, reducer } = listCommandServices.npm
+      const { factory, parser, reducer } = listCmdServices.npm
       const cmd = factory({ global: false })
 
       it("should return expected command output", async () => {
@@ -101,7 +101,7 @@ describe("packager", () => {
         Done in 0.21s
       `
 
-      const { factory, parser, reducer } = listCommandServices.yarn
+      const { factory, parser, reducer } = listCmdServices.yarn
       const cmd = factory({ global: false })
 
       it("should return expected command output", async () => {
