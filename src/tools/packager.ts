@@ -172,7 +172,7 @@ export const listCommandServices: Record<PackageManager, ListCommandServices> = 
     reducer: (cmdChunks) => cmdChunks.find((line) => isYarnListOutput(line)),
     parser: (output) =>
       output.split("\n").reduce<Dependency[]>((acc, line) => {
-        /* Parse yarn's human-readable output*/
+        /* Parse yarn's human-readable output */
         const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
         const key = match?.[1]
         const semver = match?.[2]
