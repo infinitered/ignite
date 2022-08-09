@@ -17,7 +17,6 @@ This is a wrapper around React Native's [Image](https://reactnative.dev/docs/ima
 ```tsx
 import { AutoImage as Image } from "../components/AutoImage"
 export const logoIgnite = require("./logo-ignite.png")
-
 ;<Image source={logoIgnite} />
 ```
 

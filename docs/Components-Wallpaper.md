@@ -7,7 +7,6 @@ Ignite's `Wallpaper` component renders an image background to your component or 
 ```tsx
 import { Wallpaper } from "../components/Wallpaper"
 export const bgImage = require("./background.png")
-
 ;<Wallpaper backgroundImage={bgImage} />
 ```
 
@@ -27,7 +26,6 @@ The `backgroundImage` optional prop is an [`ImageSource`](https://reactnative.de
 
 ```tsx
 export const bgImage = require("./background.png")
-
 ;<Wallpaper backgroundImage={bgImage} />
 ```
 

@@ -6,7 +6,6 @@ Ignite's `BulletItem` component renders some text next to a bullet point created
 
 ```tsx
 import { BulletItem } from "../components/BulletItem"
-
 ;<BulletItem text="This is a bullet item" />
 ```
 

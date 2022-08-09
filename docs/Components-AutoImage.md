@@ -7,7 +7,6 @@ Ignite's `AutoImage` Component is an enhanced version of the built-in React Nati
 ```tsx
 import { AutoImage as Image } from "../components/AutoImage"
 export const logoIgnite = require("./logo-ignite.png")
-
 ;<Image source={logoIgnite} />
 ```
 
