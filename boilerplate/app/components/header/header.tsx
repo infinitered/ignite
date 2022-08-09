@@ -1,8 +1,8 @@
 import React from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { HeaderProps } from "./header.props"
-import { Button } from "../button/button"
-import { Text } from "../text/text"
+import { Button } from "../Button"
+import { Text } from "../Text"
 import { Icon } from "../icon/icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
@@ -40,7 +40,7 @@ export function Header(props: HeaderProps) {
   return (
     <View style={[ROOT, style]}>
       {leftIcon ? (
-        <Button preset="link" onPress={onLeftPress}>
+        <Button onPress={onLeftPress}>
           <Icon icon={leftIcon} />
         </Button>
       ) : (
@@ -50,7 +50,7 @@ export function Header(props: HeaderProps) {
         <Text style={[TITLE, titleStyle]} text={header} />
       </View>
       {rightIcon ? (
-        <Button preset="link" onPress={onRightPress}>
+        <Button onPress={onRightPress}>
           <Icon icon={rightIcon} />
         </Button>
       ) : (

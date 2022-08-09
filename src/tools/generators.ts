@@ -226,6 +226,7 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
     }
 
     // append to barrel export if applicable
+    // MAVERICKTODO: update generator with new patterns
     if (
       !options.skipIndexFile &&
       hasIndex &&

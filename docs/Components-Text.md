@@ -84,10 +84,10 @@ If you find yourself overriding styles with the `style` prop a lot, you probably
 
 `header`: Large headers.
 
-`fieldLabel`: Field labels that appear on forms above the inputs.
-
 `secondary`: A smaller piece of secondary information.
 
 ### Custom Presets
 
 Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, we will have a dozen or more presets that we use across the project.
+
+<!-- MAVERICKTODO: update the documentation with new component props  -->
