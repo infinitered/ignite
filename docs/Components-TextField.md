@@ -29,11 +29,7 @@ const [input, setInput] = useState("")
 The `label` optional prop is a string that is used to set the label. If this is not set, the `labelTx` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component
 
 ```tsx
-<TextField
-  value={input}
-  onChangeText={(value) => setInput(value)}
-  label="Name"
-/>
+<TextField value={input} onChangeText={(value) => setInput(value)} label="Name" />
 ```
 
 ### `labelTx`
@@ -41,11 +37,7 @@ The `label` optional prop is a string that is used to set the label. If this is 
 The `labelTx` optional prop is a string that is used to set the label. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component. The label text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization).
 
 ```tsx
-<TextField
-  value={input}
-  onChangeText={(value) => setInput(value)}
-  labelTx="signup.name"
-/>
+<TextField value={input} onChangeText={(value) => setInput(value)} labelTx="signup.name" />
 ```
 
 ### `placeholder`
@@ -53,11 +45,7 @@ The `labelTx` optional prop is a string that is used to set the label. If this i
 The `placeholder` optional prop is a string that is used to set the placeholder. If this is not set, the `placeholderTx` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
 
 ```tsx
-<TextField
-  value={input}
-  onChangeText={(value) => setInput(value)}
-  placeholder="Name"
-/>
+<TextField value={input} onChangeText={(value) => setInput(value)} placeholder="Name" />
 ```
 
 ### `placeholderTx`
@@ -65,11 +53,7 @@ The `placeholder` optional prop is a string that is used to set the placeholder.
 The `placeholderTx` is an optional prop that is used to set the placeholder. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used. The placeholder text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization).
 
 ```tsx
-<TextField
-  value={input}
-  onChangeText={(value) => setInput(value)}
-  placeholderTx="signup.name"
-/>
+<TextField value={input} onChangeText={(value) => setInput(value)} placeholderTx="signup.name" />
 ```
 
 ### `style`
@@ -82,7 +66,7 @@ The `style` optional prop is an object used to override the container style and 
   onChangeText={(value) => setInput(value)}
   labelTx="signup.name"
   placeholderTx="signup.name"
-  style={{ paddingHorizontal:10 }}
+  style={{ paddingHorizontal: 10 }}
 />
 ```
 
@@ -128,8 +112,8 @@ Feel free to add your own presets by adding style you require. In a typical Infi
 The `forwardedRef` prop is optional. It is a reference prop.
 
 ```tsx
-const inputRef = useRef();
-<TextField
+const inputRef = useRef()
+;<TextField
   value={input}
   onChangeText={(value) => setInput(value)}
   labelTx="signup.name"

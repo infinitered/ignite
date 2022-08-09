@@ -2,15 +2,13 @@
 
 [Back to all components](./Components.md)
 
-
 Ignite's `Wallpaper` component renders an image background to your component or a screen. It is composed of an [Image](https://reactnative.dev/docs/image) component. You can also create your own presets for the background image.
 
-
 ```tsx
-import { Wallpaper } from '../components/Wallpaper';
-export const bgImage = require("./background.png");
+import { Wallpaper } from "../components/Wallpaper"
+export const bgImage = require("./background.png")
 
-<Wallpaper backgroundImage={bgImage} />
+;<Wallpaper backgroundImage={bgImage} />
 ```
 
 ## Props
@@ -20,9 +18,7 @@ export const bgImage = require("./background.png");
 The `style` optional prop is an object that overrides the default style and is used for padding and margin. It is of the type `StyleProp<ImageStyle>`. See React Native docs on [ImageStyle](https://reactnative.dev/docs/image#style) for more information.
 
 ```tsx
-<Wallpaper
-  style={{ marginHorizontal: 5, paddingVertical:10 }}
-/>
+<Wallpaper style={{ marginHorizontal: 5, paddingVertical: 10 }} />
 ```
 
 ### `backgroundImage`
@@ -30,9 +26,9 @@ The `style` optional prop is an object that overrides the default style and is u
 The `backgroundImage` optional prop is an [`ImageSource`](https://reactnative.dev/docs/image#imagesource) that overrides the default image used for background.
 
 ```tsx
-export const bgImage = require("./background.png");
+export const bgImage = require("./background.png")
 
-<Wallpaper backgroundImage={bgImage} />
+;<Wallpaper backgroundImage={bgImage} />
 ```
 
 ### Presets

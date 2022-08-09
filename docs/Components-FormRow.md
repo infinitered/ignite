@@ -21,12 +21,12 @@ The `FormRow` component is a horizontal container for a form row. You can use it
 
 The `preset` is a required string that applies some preset styling to the form row. The available presets are:
 
-* top - rounded corners on the top, no bottom border
-* middle - no rounded corners, no bottom border
-* bottom - rounded corners on the bottom
-* soloRound - all corners are rounded
-* soloStraight - all corners are straight
-* clear - transparent borders
+- top - rounded corners on the top, no bottom border
+- middle - no rounded corners, no bottom border
+- bottom - rounded corners on the bottom
+- soloRound - all corners are rounded
+- soloStraight - all corners are straight
+- clear - transparent borders
 
 ```tsx
 <FormRow preset="top">

@@ -15,10 +15,10 @@ _NOTE: Work-in-progress -- stay tuned, as our new docs will be landing soon!_
 This is a wrapper around React Native's [Image](https://reactnative.dev/docs/image) component, which automatically resizes the image to fit the container.
 
 ```tsx
-import { AutoImage as Image } from '../components/AutoImage';
-export const logoIgnite = require("./logo-ignite.png");
+import { AutoImage as Image } from "../components/AutoImage"
+export const logoIgnite = require("./logo-ignite.png")
 
-<Image source={logoIgnite} />
+;<Image source={logoIgnite} />
 ```
 
 [Full AutoImage Component Documentation](./Components-AutoImage.md)
@@ -61,9 +61,9 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
 
 ```tsx
-const [on, setOn] = useState(false);
+const [on, setOn] = useState(false)
 // ...
-<Checkbox
+;<Checkbox
   text="Outline is the box frame"
   value={on}
   multiline
@@ -75,7 +75,7 @@ const [on, setOn] = useState(false);
   }}
   fillStyle={{
     backgroundColor: "red",
-    borderRadius: 8
+    borderRadius: 8,
   }}
   outlineStyle={{
     borderColor: "green",
@@ -128,7 +128,7 @@ This is a component that renders a horizontal container for a form row. It inclu
 
 ### GradientBackground
 
-This is a convenience component that wraps [`LinearGradient`]((https://docs.expo.dev/versions/latest/sdk/linear-gradient/)) from `expo-linear-gradient` and handles the styling for you.
+This is a convenience component that wraps [`LinearGradient`](<(https://docs.expo.dev/versions/latest/sdk/linear-gradient/)>) from `expo-linear-gradient` and handles the styling for you.
 
 ```tsx
 <GradientBackground colors={["#422443", "#281b34"]} />
@@ -160,11 +160,7 @@ The `Header` component is a component that will appear at the top of your screen
 This is a component that renders an icon.
 
 ```tsx
-<Icon
-  icon='back'
-  containerStyle={{backgroundColor: '#fff'}}
-  style={{resizeMode: 'contain'}}
-/>
+<Icon icon="back" containerStyle={{ backgroundColor: "#fff" }} style={{ resizeMode: "contain" }} />
 ```
 
 [Full Icon Component Documentation](./Components-Icon.md)
@@ -174,8 +170,8 @@ This is a component that renders an icon.
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
 
 ```tsx
-<Screen preset="scroll" >
-  <Header headerTitle="screen"/>
+<Screen preset="scroll">
+  <Header headerTitle="screen" />
   // ... content here ...
 </Screen>
 ```
@@ -219,13 +215,12 @@ This is an enhanced version of the built-in React Native Text component. It adds
 
 ### TextField
 
-
 This component renders a View with a [`TextInput`](https://reactnative.dev/docs/textinput) and a text label.
 
 ```tsx
-const [input, setInput] = useState("");
-const inputRef = useRef();
-<TextField
+const [input, setInput] = useState("")
+const inputRef = useRef()
+;<TextField
   value={input}
   onChangeText={setInput}
   labelTx="signup.name"
@@ -236,6 +231,7 @@ const inputRef = useRef();
   forwardedRef={inputRef}
 />
 ```
+
 [Full Text Component Documentation](./Components-TextField.md)
 
 ### Wallpaper
@@ -243,18 +239,20 @@ const inputRef = useRef();
 This component renders an image background to a component or a screen.
 
 ```tsx
- <Wallpaper
+<Wallpaper
   style={{
     marginHorizontal: 10,
     paddingVertical: 10,
   }}
   backgroundImage={newImage}
   preset="stretch"
- />
+/>
 ```
+
 [Full Text Component Documentation](./Components-Wallpaper.md)
 
 ## Custom Components
+
 MAVERICKTODO: update the below documentation with new patterns
 
 Ignite includes a generator for creating custom components. If the built in components don't fit your needs, you can create your own.

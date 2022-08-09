@@ -5,9 +5,9 @@
 The `Checkbox` component is a simple checkbox that can be used to toggle a boolean value. It is composed of a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
 
 ```tsx
-const [on, setOn] = useState(false);
+const [on, setOn] = useState(false)
 // ...
-<Checkbox
+;<Checkbox
   text="Outline is the box frame"
   value={on}
   multiline
@@ -19,7 +19,7 @@ const [on, setOn] = useState(false);
   }}
   fillStyle={{
     backgroundColor: "red",
-    borderRadius: 8
+    borderRadius: 8,
   }}
   outlineStyle={{
     borderColor: "green",
@@ -39,11 +39,7 @@ const [on, setOn] = useState(false);
 The optional text label of the checkbox. This or `tx` is required.
 
 ```tsx
-<Checkbox
-  text="This is the checkbox label"
-  value={on}
-  onToggle={setOn}
-/>
+<Checkbox text="This is the checkbox label" value={on} onToggle={setOn} />
 ```
 
 ### `tx`
@@ -51,11 +47,7 @@ The optional text label of the checkbox. This or `tx` is required.
 The optional translation key of the text label of the checkbox. This or `text` is required.
 
 ```tsx
-<Checkbox
-  tx="checkbox.label"
-  value={on}
-  onToggle={setOn}
-/>
+<Checkbox tx="checkbox.label" value={on} onToggle={setOn} />
 ```
 
 ### `value`
@@ -63,11 +55,7 @@ The optional translation key of the text label of the checkbox. This or `text` i
 The boolean value of the checkbox. This prop is not strictly required, but necessary to avoid defaulting to a unchecked checkbox.
 
 ```tsx
-<Checkbox
-  text="This is the checkbox label"
-  value={true}
-  onToggle={setOn}
-/>
+<Checkbox text="This is the checkbox label" value={true} onToggle={setOn} />
 ```
 
 ### `multiline`
@@ -75,12 +63,7 @@ The boolean value of the checkbox. This prop is not strictly required, but neces
 This optional boolean prop determines if the text label of the checkbox is multiline.
 
 ```tsx
-<Checkbox
-  text="This is the checkbox label"
-  value={true}
-  multiline
-  onToggle={setOn}
-/>
+<Checkbox text="This is the checkbox label" value={true} multiline onToggle={setOn} />
 ```
 
 ### `style`
@@ -101,7 +84,6 @@ The optional [`style`](https://reactnative.dev/docs/viewstyle) prop is applied t
 />
 ```
 
-
 ### `fillStyle`
 
 The optional [`fillStyle`](https://reactnative.dev/docs/viewstyle) of the filled part of the checkbox.
@@ -112,7 +94,7 @@ The optional [`fillStyle`](https://reactnative.dev/docs/viewstyle) of the filled
   value={on}
   fillStyle={{
     backgroundColor: "red",
-    borderRadius: 8
+    borderRadius: 8,
   }}
   onToggle={setOn}
 />
@@ -142,9 +124,5 @@ The optional [`outlineStyle`](https://reactnative.dev/docs/viewstyle) of the out
 The function to call when the checkbox is toggled. This prop is optional, but the checkbox will not be interactable unless this is passed. Note that this function can be passed directly, as the `Checkbox` component will handle inverting the value.
 
 ```tsx
-<Checkbox
-  text="This is the checkbox label"
-  value={on}
-  onToggle={setOn}
-/>
+<Checkbox text="This is the checkbox label" value={on} onToggle={setOn} />
 ```
