@@ -54,9 +54,13 @@ export const reportCrash = (error: any, type: ErrorType = ErrorType.FATAL) => {
   console.error(error)
   console.log(message, type)
 
-  __DEV__ && console.tron.log(error)
+  // Log to Reactotron and exit early so development errors are not reported to service
+  if (__DEV__) {
+    console.tron.log(error)
+    return
+  }
 
-  // Utilize crash reporting service of choice below
+  // In production, utilize crash reporting service of choice below:
 
   // RN
   // Sentry.captureException(error)
