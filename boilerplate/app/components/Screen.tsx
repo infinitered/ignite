@@ -104,7 +104,7 @@ function useAutoPreset(props: AutoScreenProps) {
 
     // check whether content fits the screen then toggle scroll state according to it
     const contentFitsScreen = (function () {
-      if (!!point) {
+      if (point) {
         return scrollViewContentHeight.current < scrollViewHeight.current - point
       } else {
         return scrollViewContentHeight.current < scrollViewHeight.current * percent

@@ -88,11 +88,6 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 }
 
-const platformCommand = Platform.select({
-  ios: "Cmd + D",
-  android: "Cmd/Ctrl + M",
-})
-
 export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack()
