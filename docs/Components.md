@@ -255,6 +255,7 @@ This component renders an image background to a component or a screen.
 [Full Text Component Documentation](./Components-Wallpaper.md)
 
 ## Custom Components
+MAVERICKTODO: update the below documentation with new patterns
 
 Ignite includes a generator for creating custom components. If the built in components don't fit your needs, you can create your own.
 

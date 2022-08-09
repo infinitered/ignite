@@ -96,7 +96,6 @@ The `inputStyle` optional prop is an object used to override the input style.
   onChangeText={(value) => setInput(value)}
   labelTx="signup.name"
   placeholderTx="signup.name"
-  inputStyle={{ color:color.palette.black }}
 />
 ```
 
