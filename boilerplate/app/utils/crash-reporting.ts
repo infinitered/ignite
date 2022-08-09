@@ -50,24 +50,19 @@ export enum ErrorType {
  * Manually report a handled error.
  */
 export const reportCrash = (error: any, type: ErrorType = ErrorType.FATAL) => {
-  const message = error.message || "Unknown"
-  console.error(error)
-  console.log(message, type)
-
-  // Log to Reactotron and exit early so development errors are not reported to service
   if (__DEV__) {
+    // Log to console and Reactotron in development
+    const message = error.message || "Unknown"
+    console.error(error)
+    console.log(message, type)
     console.tron.log(error)
-    return
+  } else {
+    // In production, utilize crash reporting service of choice below:
+    // RN
+    // Sentry.captureException(error)
+    // Expo
+    // Sentry.Native.captureException(error)
+    // crashlytics().recordError(error)
+    // Bugsnag.notify(error)
   }
-
-  // In production, utilize crash reporting service of choice below:
-
-  // RN
-  // Sentry.captureException(error)
-  // Expo
-  // Sentry.Native.captureException(error)
-
-  // crashlytics().recordError(error)
-
-  // Bugsnag.notify(error)
 }
