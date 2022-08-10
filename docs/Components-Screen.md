@@ -5,8 +5,8 @@
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
 
 ```tsx
-<Screen preset="scroll" >
-  <Header headerTitle="screen"/>
+<Screen preset="scroll">
+  <Header headerTitle="screen" />
   // ... content here ...
 </Screen>
 ```
@@ -18,9 +18,7 @@ This is a component that renders a screen. It is used to wrap your entire screen
 The `style` prop is an optional `StyleProp<ViewStyle>` object that applies to the outer `KeyboardAvoidingView` component and can be used to override the `preset` style.
 
 ```tsx
-<Screen style={{ backgroundColor: "red"}}>
-  // ... content here ...
-</Screen>
+<Screen style={{ backgroundColor: "red" }}>// ... content here ...</Screen>
 ```
 
 ### `preset`
@@ -29,14 +27,12 @@ The `preset` prop is an optional predefined `StyleProp<ViewStyle>` object that a
 
 The predefined presets are:
 
-* `scroll` - A preset that applies a scroll behavior to the screen. This is useful for forms or other screens which require a keyboard.
-* `fixed` - A preset that applies a fixed behavior to the screen. i.e. The screen will not scroll. This is useful if you have a component such as a `FlatList` that has its own scrolling behavior.
-* `auto` - A preset that applies an automatic behavior to the screen. i.e. The screen will scroll if the content is larger than the screen, but not otherwise.
+- `scroll` - A preset that applies a scroll behavior to the screen. This is useful for forms or other screens which require a keyboard.
+- `fixed` - A preset that applies a fixed behavior to the screen. i.e. The screen will not scroll. This is useful if you have a component such as a `FlatList` that has its own scrolling behavior.
+- `auto` - A preset that applies an automatic behavior to the screen. i.e. The screen will scroll if the content is larger than the screen, but not otherwise.
 
 ```tsx
-<Screen preset="scroll">
-  // ... content here ...
-</Screen>
+<Screen preset="scroll">// ... content here ...</Screen>
 ```
 
 ### `backgroundColor`
@@ -44,31 +40,27 @@ The predefined presets are:
 The `backgroundColor` optional prop is a simple `string` that applies a background color to root level `KeyboardAvoidingView`.
 
 ```tsx
-<Screen backgroundColor="red">
-  // ... content here ...
-</Screen>
+<Screen backgroundColor="red">// ... content here ...</Screen>
 ```
 
 ### `statusBar`
 
 The `statusBar` optional prop is one of the following: 'light-content' or 'dark-content'. It defaults to 'light-content'. It is passed to the React Native [`StatusBar`](https://facebook.github.io/react-native/docs/statusbar.html) component under its `barStyle` prop.
 
-```tsx
+````tsx
 
 ```tsx
 <Screen statusBar="dark-content">
   // ... content here ...
 </Screen>
-```
+````
 
 ### `unsafe`
 
 The `unsafe` optional prop is a boolean that determines if the `KeyboardAvoidingView` is rendered as a `View` or a `SafeAreaView`. It defaults to `false`.
 
 ```tsx
-<Screen unsafe>
-  // ... content here ...
-</Screen>
+<Screen unsafe>// ... content here ...</Screen>
 ```
 
 ### `keyboardOffset`
@@ -83,15 +75,12 @@ export const offsets = {
 ```
 
 ```tsx
-<Screen keyboardOffset="basic">
-  // ... content here ...
-</Screen>
+<Screen keyboardOffset="basic">// ... content here ...</Screen>
 ```
 
 ### `keyboardShouldPersistTaps`
 
 The `keyboardShouldPersistTaps` optional prop is a enum that determines if the keyboard should persist taps. It defaults to `"handled"`. This only applies for the `scroll` preset, because it is passed into the React Native [`ScrollView`](https://facebook.github.io/react-native/docs/scrollview.html) component under its `keyboardShouldPersistTaps` prop.
-
 
 The valid values for this prop are: `"handled"`, `"always"`,and `"never"`.
 
@@ -100,4 +89,3 @@ The valid values for this prop are: `"handled"`, `"always"`,and `"never"`.
   // ... content here ...
 </Screen>
 ```
-
