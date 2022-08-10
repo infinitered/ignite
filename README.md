@@ -39,8 +39,6 @@ Run the CLI:
 ```bash
 # for vanilla React Native
 npx ignite-cli new PizzaApp
-# or for Expo-powered:
-npx ignite-cli new PizzaApp --expo
 # to provide a custom bundle identifier (Android only):
 npx ignite-cli new PizzaApp --bundle=com.infinitered.pizzaapp
 ```

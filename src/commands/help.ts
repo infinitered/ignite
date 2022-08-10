@@ -29,7 +29,6 @@ module.exports = {
     p()
     command("new         ", "Creates a new React Native app", [
       "ignite new MyApp",
-      "ignite new MyApp --expo",
       "ignite new MyApp --bundle com.mycompany.myapp",
     ])
     p()

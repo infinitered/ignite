@@ -15,9 +15,6 @@ import {
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
-  // expo-cli v5 would be nice, but we're having a problem with it:
-  // https://github.com/expo/expo-cli/issues/4423
-  expo: "4",
   podInstall: "0.1",
 }
 
@@ -25,8 +22,8 @@ export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
-    const { exists, path, remove, rename, copy, read, write } = filesystem
-    const { info, colors } = print
+    const { exists, path, remove, copy, read, write } = filesystem
+    const { info, colors, warning } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
 
     // start tracking performance
@@ -74,96 +71,50 @@ export default {
       validateBundleIdentifier(toolbox, parameters.options.bundle) ||
       `com.${projectName.toLowerCase()}`
 
-    // expo or no?
-    const expo = Boolean(parameters.options.expo)
-
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
-    const packagerName = parameters.options.packager || packager.detectPackager({ expo })
-    const packagerOptions = { expo, packagerName }
+    const packagerName = parameters.options.packager || packager.detectPackager()
+    const packagerOptions = { packagerName }
 
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
-    const cliEnv = expo && debug ? { ...process.env, EXPO_DEBUG: 1 } : process.env
-    log({ expo, ignitePath, boilerplatePath })
+    log(`ignitePath: ${ignitePath}`)
+    log(`boilerplatePath: ${boilerplatePath}`)
+
+    // show warning about --expo going away
+    const expo = Boolean(parameters.options.expo)
+    if (expo) {
+      warning(
+        " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
+      )
+      p()
+    }
 
     // welcome everybody!
-    p("\n")
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan(expo ? `expo-cli@${deps.expo}` : "ignite-cli")} with ${green(packagerName)}`)
+    p(` █ Using ${cyan("ignite-cli")} with ${green(packagerName)}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
     p(` █ Path: ${gray(path(process.cwd(), projectName))}`)
     p(` ────────────────────────────────────────────────\n`)
 
-    if (expo) {
-      const expoCLIString = `npx expo-cli@${deps.expo} init ${projectName} --template ${boilerplatePath} --non-interactive`
-      log({ expoCLIString })
+    startSpinner("Igniting app")
+    // Remove some folders that we don't want to copy over
+    // This mostly only applies to when you're developing locally
+    remove(path(boilerplatePath, "ios", "Pods"))
+    remove(path(boilerplatePath, "node_modules"))
+    remove(path(boilerplatePath, "android", ".idea"))
+    remove(path(boilerplatePath, "android", ".gradle"))
+    stopSpinner("Igniting app", "🔥")
 
-      // generate the project
-      startSpinner("Igniting app")
-      await spawnProgress(log(expoCLIString), {
-        env: cliEnv,
-        onProgress: (out: string) => {
-          stopSpinner("Igniting app", "🔥")
-
-          out = log(out.toString())
-
-          if (expo) {
-            if (out.includes("Using Yarn")) {
-              startSpinner("Summoning Expo CLI")
-            }
-            if (out.includes("project is ready")) {
-              stopSpinner("Summoning Expo CLI", "🪔")
-              startSpinner("Cleaning up Expo install")
-            }
-          } else {
-            if (out.includes("Welcome to React Native!")) {
-              startSpinner(" 3D-printing a new React Native app")
-            }
-            if (out.includes("Run instructions for")) {
-              stopSpinner(" 3D-printing a new React Native app", "🖨")
-              startSpinner("Cooling print nozzles")
-            }
-          }
-        },
-      })
-
-      stopSpinner("Summoning Expo CLI", "🪔")
-      stopSpinner("Cleaning up Expo install", "🎫")
-    } else {
-      startSpinner("Igniting app")
-      // Remove some folders that we don't want to copy over
-      // This mostly only applies to when you're developing locally
-      remove(path(boilerplatePath, "ios", "Pods"))
-      remove(path(boilerplatePath, "node_modules"))
-      remove(path(boilerplatePath, "android", ".idea"))
-      remove(path(boilerplatePath, "android", ".gradle"))
-      stopSpinner("Igniting app", "🔥")
-
-      startSpinner(" 3D-printing a new React Native app")
-      await copyBoilerplate(toolbox, {
-        boilerplatePath,
-        projectName,
-        excluded: [
-          ".vscode",
-          "node_modules",
-          "yarn.lock",
-          ".expo.",
-
-          // Unfortunately, we can't exclude nested files and folders yet
-          // "ios/Pods",
-          // "ios/build",
-          // "ios/Podfile.lock",
-          // "android/.idea",
-          // "android/.gradle",
-          // "android/local.properties",
-          // "android/app/build",
-        ],
-      })
-      stopSpinner(" 3D-printing a new React Native app", "🖨")
-    }
+    startSpinner(" 3D-printing a new React Native app")
+    await copyBoilerplate(toolbox, {
+      boilerplatePath,
+      projectName,
+      excluded: [".vscode", "node_modules", "yarn.lock"],
+    })
+    stopSpinner(" 3D-printing a new React Native app", "🖨")
 
     // note the original directory
     const cwd = log(process.cwd())
@@ -199,97 +150,42 @@ export default {
     packageJsonRaw = packageJsonRaw
       .replace(/HelloWorld/g, projectName)
       .replace(/hello-world/g, projectNameKebab)
-    let packageJson = JSON.parse(packageJsonRaw)
-
-    const merge = require("deepmerge-json")
-
-    if (expo) {
-      const expoJson = read("./package.expo.json", "json")
-      packageJson = merge(packageJson, expoJson)
-      delete packageJson.scripts["build-ios"]
-      delete packageJson.scripts["build-android"]
-      delete packageJson.dependencies["react-native-bootsplash"]
-    }
+    const packageJson = JSON.parse(packageJsonRaw)
 
     write("./package.json", packageJson)
 
-    // More Expo-specific changes
-    if (expo) {
-      // remove the ios and android folders
-      remove("./ios")
-      remove("./android")
+    // TODO: still need this in this order, was an if (expo) ?
+    // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
+    // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
+    // await packager.add(`react-native-safe-area-context`, packagerOptions)
 
-      // rename the index.js to App.js, which expo expects;
-      rename("./index.expo.js", "App.js")
-      remove("./index.js")
-
-      // rename the babel.config.expo.js
-      rename("./babel.config.expo.js", "babel.config.js")
-
-      // replaces the custom metro config js, which causes problems with
-      // publishing to Expo, with the default Expo metro config
-      // see: https://github.com/infinitered/ignite/issues/1904
-      remove("./metro.config.js")
-      rename("./metro.config.expo.js", "metro.config.js")
-
-      await toolbox.patching.update("./tsconfig.json", (config) => {
-        config.include[0] = "App.js"
-        return config
-      })
-
-      // use Detox Expo reload file
-      remove("./e2e/reload.js")
-      rename("./e2e/reload.expo.js", "reload.js")
-
-      startSpinner("Unboxing npm dependencies")
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner("Unboxing npm dependencies", "🧶")
-
-      // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
-      // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
-      await packager.add(`react-native-safe-area-context`, packagerOptions)
-    } else {
-      // remove the Expo-specific files -- not needed
-      remove(`./bin/downloadExpoApp.sh`)
-      remove("./e2e/reload.expo.js")
-      remove("./webpack.config.js")
-      remove("./index.expo.js")
-      remove("./babel.config.expo.js")
-      remove("./metro.config.expo.js")
-
-      // pnpm/yarn/npm install it
-      startSpinner("Unboxing npm dependencies")
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner("Unboxing npm dependencies", "🧶")
-    }
-
-    // remove the expo-only package.json
-    remove("package.expo.json")
+    // pnpm/yarn/npm install it
+    startSpinner("Unboxing npm dependencies")
+    await packager.install({ ...packagerOptions, onProgress: log })
+    stopSpinner("Unboxing npm dependencies", "🧶")
 
     // remove the gitignore template
     remove(".gitignore.template")
 
-    if (!expo) {
-      // rename the app using Ignite
-      startSpinner(" Writing your app name in the sand")
+    // rename the app using Ignite
+    startSpinner(" Writing your app name in the sand")
 
-      await renameReactNativeApp(
-        toolbox,
-        "HelloWorld",
-        projectName,
-        "com.helloworld",
-        bundleIdentifier,
-      )
+    await renameReactNativeApp(
+      toolbox,
+      "HelloWorld",
+      projectName,
+      "com.helloworld",
+      bundleIdentifier,
+    )
 
-      stopSpinner(" Writing your app name in the sand", "🏝")
+    stopSpinner(" Writing your app name in the sand", "🏝")
 
-      // install pods
-      startSpinner("Baking CocoaPods")
-      await spawnProgress(`npx pod-install@${deps.podInstall}`, {
-        onProgress: log,
-      })
-      stopSpinner("Baking CocoaPods", "☕️")
-    }
+    // install pods
+    startSpinner("Baking CocoaPods")
+    await spawnProgress(`npx pod-install@${deps.podInstall}`, {
+      onProgress: log,
+    })
+    stopSpinner("Baking CocoaPods", "☕️")
 
     // Make sure all our modifications are formatted nicely
     await packager.run("format", { ...packagerOptions, silent: !debug })
@@ -327,22 +223,22 @@ export default {
     p()
     direction(`To get started:`)
     command(`  cd ${projectName}`)
-    if (expo) {
-      command(`  ${packager.runCmd("start", packagerOptions)}`)
-    } else {
-      if (process.platform === "darwin") {
-        command(`  ${packager.runCmd("ios", packagerOptions)}`)
-      }
-      command(`  ${packager.runCmd("android", packagerOptions)}`)
-      if (!isAndroidInstalled(toolbox)) {
-        p()
-        direction("To run in Android, make sure you've followed the latest react-native setup")
-        direction("instructions at https://facebook.github.io/react-native/docs/getting-started")
-        direction(
-          "before using ignite. You won't be able to run Android successfully until you have.",
-        )
-      }
+
+    if (process.platform === "darwin") {
+      command(`  ${packager.runCmd("ios", packagerOptions)}`)
     }
+    command(`  ${packager.runCmd("android", packagerOptions)}`)
+    if (!isAndroidInstalled(toolbox)) {
+      p()
+      direction("To run in Android, make sure you've followed the latest react-native setup")
+      direction("instructions at https://facebook.github.io/react-native/docs/getting-started")
+      direction(
+        "before using ignite. You won't be able to run Android successfully until you have.",
+      )
+    }
+    p()
+    direction("Or with Expo:")
+    command(`  ${packager.runCmd("expo:start", packagerOptions)}`)
 
     // React Native Colo Loco is no longer installed with Ignite, but
     // we will give instructions on how to install it if they

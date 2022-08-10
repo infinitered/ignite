@@ -17,5 +17,5 @@
     "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
-  "include": ["index.js", "app", "test"]
+  "include": ["index.js", "App.js", "app", "test"]
 }
