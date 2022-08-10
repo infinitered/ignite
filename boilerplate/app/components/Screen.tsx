@@ -104,7 +104,7 @@ function useAutoPreset(props: AutoScreenProps) {
 
     // check whether content fits the screen then toggle scroll state according to it
     const contentFitsScreen = (function () {
-      if (!!point) {
+      if (point) {
         return scrollViewContentHeight.current < scrollViewHeight.current - point
       } else {
         return scrollViewContentHeight.current < scrollViewHeight.current * percent
@@ -170,9 +170,9 @@ function ScreenWithScrolling(props: ScreenProps) {
         onLayout(e)
         ScrollViewProps?.onLayout?.(e)
       }}
-      onContentSizeChange={(...args) => {
-        onContentSizeChange(...args)
-        ScrollViewProps?.onContentSizeChange?.(...args)
+      onContentSizeChange={(w: number, h: number) => {
+        onContentSizeChange(w, h)
+        ScrollViewProps?.onContentSizeChange?.(w, h)
       }}
       style={[$outerStyle, ScrollViewProps?.style, style]}
       contentContainerStyle={[

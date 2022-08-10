@@ -47,7 +47,7 @@ export interface ButtonProps extends PressableProps {
    * Example: `RightAccessory={(props) => <View {...props} />}`
    */
   RightAccessory?: ComponentType<{
-    style: StyleProp<{}>
+    style: StyleProp<any>
     pressableState: PressableStateCallbackType
   }>
   /**
@@ -55,9 +55,13 @@ export interface ButtonProps extends PressableProps {
    * Example: `LeftAccessory={(props) => <View {...props} />}`
    */
   LeftAccessory?: ComponentType<{
-    style: StyleProp<{}>
+    style: StyleProp<any>
     pressableState: PressableStateCallbackType
   }>
+  /**
+   * Children components.
+   */
+  children?: React.ReactNode
 }
 
 /**
@@ -80,7 +84,7 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
-  const preset: Presets = !!$viewPresets[props.preset] ? props.preset : "default"
+  const preset: Presets = $viewPresets[props.preset] ? props.preset : "default"
   function $viewStyle({ pressed }) {
     return [
       $viewPresets[preset],
@@ -101,7 +105,11 @@ export function Button(props: ButtonProps) {
       {(state) => (
         <>
           {!!LeftAccessory && <LeftAccessory style={$leftAccessoryStyle} pressableState={state} />}
-          <Text tx={tx} text={text} style={$textStyle(state)} children={children} />
+
+          <Text tx={tx} text={text} style={$textStyle(state)}>
+            {children}
+          </Text>
+
           {!!RightAccessory && (
             <RightAccessory style={$rightAccessoryStyle} pressableState={state} />
           )}

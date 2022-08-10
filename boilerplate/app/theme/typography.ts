@@ -3,29 +3,29 @@
 
 import { Platform } from "react-native"
 import {
-  SpaceGrotesk_300Light,
-  SpaceGrotesk_400Regular,
-  SpaceGrotesk_500Medium,
-  SpaceGrotesk_600SemiBold,
-  SpaceGrotesk_700Bold,
+  SpaceGrotesk_300Light as spaceGroteskLight,
+  SpaceGrotesk_400Regular as spaceGroteskRegular,
+  SpaceGrotesk_500Medium as spaceGroteskMedium,
+  SpaceGrotesk_600SemiBold as spaceGroteskSemiBold,
+  SpaceGrotesk_700Bold as spaceGroteskBold,
 } from "@expo-google-fonts/space-grotesk"
 
 export const customFontsToLoad = {
-  SpaceGrotesk_300Light,
-  SpaceGrotesk_400Regular,
-  SpaceGrotesk_500Medium,
-  SpaceGrotesk_600SemiBold,
-  SpaceGrotesk_700Bold,
+  spaceGroteskLight,
+  spaceGroteskRegular,
+  spaceGroteskMedium,
+  spaceGroteskSemiBold,
+  spaceGroteskBold,
 }
 
 const fonts = {
   spaceGrotesk: {
     // Cross-platform Google font.
-    light: "SpaceGrotesk_300Light",
-    normal: "SpaceGrotesk_400Regular",
-    medium: "SpaceGrotesk_500Medium",
-    semiBold: "SpaceGrotesk_600SemiBold",
-    bold: "SpaceGrotesk_700Bold",
+    light: "spaceGroteskLight",
+    normal: "spaceGroteskRegular",
+    medium: "spaceGroteskMedium",
+    semiBold: "spaceGroteskSemiBold",
+    bold: "spaceGroteskBold",
   },
   helveticaNeue: {
     // iOS only font.

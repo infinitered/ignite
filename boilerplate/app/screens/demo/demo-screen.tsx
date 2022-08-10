@@ -88,11 +88,6 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 }
 
-const platformCommand = Platform.select({
-  ios: "Cmd + D",
-  android: "Cmd/Ctrl + M",
-})
-
 export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack()
@@ -147,7 +142,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text style={TITLE} preset="header" tx="demoScreen.title" />
+          <Text style={TITLE} preset="heading" tx="demoScreen.title" />
           <Text style={TAGLINE} tx="demoScreen.tagLine" />
           <BulletItem text="Integrated here, Navigation with State, TypeScript,  and i18n." />
           <BulletItem text="Load up Reactotron! You can inspect your app, view the events, interact, and so much more!" />

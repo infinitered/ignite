@@ -11,7 +11,7 @@ const RADIUS = 8
  */
 const ROOT: ViewStyle = {
   borderWidth: 1,
-  borderColor: colors.line,
+  borderColor: colors.separator,
   padding: spacing[2],
 }
 

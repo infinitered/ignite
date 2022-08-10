@@ -20,11 +20,11 @@ The `text` optional prop is the text of the component. We encourage you to not u
 
 The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization.
 
-```tsx
+````tsx
 
 ```tsx
 <Text tx="welcomeScreen.readyForLaunch" />
-```
+````
 
 ### `txOptions`
 
