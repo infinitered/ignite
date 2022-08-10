@@ -139,7 +139,7 @@ function installCmd(options: PackageRunOptions) {
 }
 
 type PackageListOutput = [string, (string) => [string, string][]]
-function list(options: PackageOptions = packageListOptions): PackageListOutput {
+export function list(options: PackageOptions = packageListOptions): PackageListOutput {
   if (options.packagerName === "pnpm") {
     // TODO: pnpm list?
     throw new Error("pnpm list is not supported yet")
