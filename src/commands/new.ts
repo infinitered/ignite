@@ -18,6 +18,58 @@ const deps: { [k: string]: string } = {
   podInstall: "0.1",
 }
 
+export interface Options {
+  /**
+   * Log raw parameters for debugging, run formatting script not quietly
+   * @default false
+   */
+  debug?: boolean
+  /**
+   * Remove existing directory otherwise throw if exists
+   * @default false
+   */
+  overwrite?: boolean
+  /**
+   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @default undefined
+   */
+  boilerplate?: string
+  /**
+   * alias for `boilerplate`
+   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @default undefined
+   */
+  b?: string
+  /**
+   * custom bundle identifier (android only)
+   * @default `com.${name}`
+   * @example 'com.pizzaapp'
+   */
+  bundle?: string
+  /**
+   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
+   * @default undefined
+   */
+  expo?: boolean
+  /**
+   * Package manager to install dependencies with
+   *
+   * Preference order: `pnpm`, `yarn`, `npm`
+   */
+  packager?: "npm" | "yarn" | "pnpm"
+  /**
+   * Create new git repository and create an inital commit with boilerplate changes
+   * @default true
+   */
+  git?: boolean
+  /**
+   * React Native Colo Loco is no longer installed with Ignite,
+   * but we will give instructions on how to install it if they pass in `--colo-loco`   *
+   * @default false
+   */
+  coloLoco?: boolean
+}
+
 export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print, filesystem, system, meta, parameters, strings } = toolbox
@@ -26,11 +78,13 @@ export default {
     const { info, colors, warning } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
 
+    const options: Options = parameters.options
+
     // start tracking performance
     const perfStart = new Date().getTime()
 
     // debug?
-    const debug = Boolean(parameters.options.debug)
+    const debug = Boolean(options.debug)
     const log = <T = unknown>(m: T): T => {
       debug && info(` ${m}`)
       return m
@@ -45,7 +99,7 @@ export default {
     const projectNameKebab = kebabCase(projectName)
 
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
-    if (parameters.options.overwrite) {
+    if (options.overwrite) {
       log(`Removing existing project ${projectName}`)
       remove(projectName)
     } else if (exists(projectName)) {
@@ -56,7 +110,7 @@ export default {
     }
 
     // if they pass in --boilerplate, warn them to use old Ignite
-    const bname = parameters.options.b || parameters.options.boilerplate
+    const bname = options.b || options.boilerplate
     if (bname) {
       p()
       p(yellow(`Different boilerplates are no longer supported in Ignite v4+.`))
@@ -68,12 +122,11 @@ export default {
     // custom bundle identifier (android only)
     // TODO: refactor alert, need to rethink this
     const bundleIdentifier =
-      validateBundleIdentifier(toolbox, parameters.options.bundle) ||
-      `com.${projectName.toLowerCase()}`
+      validateBundleIdentifier(toolbox, options.bundle) || `com.${projectName.toLowerCase()}`
 
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
-    const packagerName = parameters.options.packager || packager.detectPackager()
+    const packagerName = options.packager || packager.detectPackager()
     const packagerOptions = { packagerName }
 
     const ignitePath = path(`${meta.src}`, "..")
@@ -82,7 +135,7 @@ export default {
     log(`boilerplatePath: ${boilerplatePath}`)
 
     // show warning about --expo going away
-    const expo = Boolean(parameters.options.expo)
+    const expo = Boolean(options.expo)
     if (expo) {
       warning(
         " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
@@ -191,7 +244,7 @@ export default {
     await packager.run("format", { ...packagerOptions, silent: !debug })
 
     // commit any changes
-    if (parameters.options.git !== false) {
+    if (options.git !== false) {
       startSpinner(" Backing everything up in source control")
       try {
         await system.run(
@@ -243,7 +296,7 @@ export default {
     // React Native Colo Loco is no longer installed with Ignite, but
     // we will give instructions on how to install it if they
     // pass in `--colo-loco`
-    const coloLoco = Boolean(parameters.options.coloLoco)
+    const coloLoco = Boolean(options.coloLoco)
 
     if (coloLoco) {
       p()
