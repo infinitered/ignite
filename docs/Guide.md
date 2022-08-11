@@ -57,7 +57,7 @@ Check out the [Components](./components.md) documentation.
 
 ### Testing
 
-Ignite is preconfigured to have [Detox](https://github.com/wix/Detox), Jest, and Storyshot tests.
+Ignite is preconfigured to have [Detox](https://github.com/wix/Detox) and Jest.
 
 You can learn more about why we chose these tests and how to use them in the [Testing](./Testing.md) docs.
 

@@ -1,3 +1,5 @@
+// MAVERICKTODO: move the below documentation into its own markdown file and add links
+
 /**
  * NOTE TO DEVS:
  *

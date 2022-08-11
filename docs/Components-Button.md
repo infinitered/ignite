@@ -54,7 +54,8 @@ The `preset` prop is optional. This is the preset style of the button. It can be
 Note that the preset applies to both the `TouchableOpacity` and `Text` components, using a view preset and text preset of the same name respectively, so you to use differently named presets on each you need to pass a child `Text` component directly.
 
 ```tsx
-<Button preset="primary"> // uses primary view preset
+<Button preset="primary">
+  // uses primary view preset
   <Text preset="link">Click me</Text> // uses link text preset
 </Button>
 ```
@@ -65,16 +66,16 @@ To make a custom preset, add a `View` and `Text` preset in `app/components/butto
 export const viewPresets: Record<string, ViewStyle> = {
   // ... other view presets
   custom: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 0,
-  }
+  },
 }
 
 export const textPresets: Record<string, TextStyle> = {
   // ... other text presets
   custom: {
-    color: '#fff',
-  }
+    color: "#fff",
+  },
 }
 ```
 
@@ -97,3 +98,5 @@ The `style` prop is optional. This can be used to style the `TouchableOpacity` c
 ```tsx
 <Button style={{ paddingVertical: 20, borderRadius: 10 }}>
 ```
+
+<!-- MAVERICKTODO: update the documentation with new component props  -->

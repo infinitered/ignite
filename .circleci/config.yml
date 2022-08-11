@@ -56,39 +56,6 @@ jobs:
           command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
           no_output_timeout: 5m
 
-  tests_expo:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore node modules
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          name: Save node modules
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
-      - run:
-          # We don't want to install CocoaPods on ubuntu where we run the tests.
-          name: Set up dummy `pod` command
-          command: |
-            sudo ln /bin/true /usr/local/bin/pod
-      - run:
-          name: Ensure git user is configured
-          command: |
-            git config --global user.email "ci@infinite.red"
-            git config --global user.name "Infinite Red"
-      - run:
-          name: Run tests
-          command: yarn ci:prep && yarn ci:test:expo && yarn clean
-          no_output_timeout: 8m
-
   # detox:
   #   <<: *mac
   #   steps:
@@ -168,12 +135,10 @@ workflows:
   test_and_release:
     jobs:
       - tests
-      - tests_expo
       # - detox # disabled until we can figure out detox CircleCI problems
       - publish:
           requires:
             - tests
-            - tests_expo
           filters:
             branches:
               only: master

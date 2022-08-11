@@ -1,7 +1,7 @@
 ---
 patch:
   path: "app/screens/index.ts"
-  append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n"
+  append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>-screen\"\n"
   skip: <%= props.skipIndexFile %>
 ---
 import React, { FC } from "react"
@@ -15,7 +15,6 @@ import { Screen, Text } from "../../components"
 import { color } from "../../theme"
 
 const ROOT: ViewStyle = {
-  backgroundColor: color.palette.black,
   flex: 1,
 }
 
@@ -40,3 +39,5 @@ export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<NavigatorPar
     </Screen>
   )
 })
+
+//MAVERICKTODO: update the generator template with new patterns
