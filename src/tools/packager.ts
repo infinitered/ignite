@@ -139,7 +139,7 @@ function installCmd(options: PackageRunOptions) {
 }
 
 type PackageListOutput = [string, (string) => [string, string][]]
-function list(options: PackageOptions = packageListOptions): PackageListOutput {
+export function list(options: PackageOptions = packageListOptions): PackageListOutput {
   if (options.packagerName === "pnpm") {
     // TODO: pnpm list?
     throw new Error("pnpm list is not supported yet")
@@ -164,7 +164,8 @@ function list(options: PackageOptions = packageListOptions): PackageListOutput {
       `npm list${options.global ? " --global" : ""} --depth=0 --json`,
       (output: string): [string, string][] => {
         // npm returns a single JSON blob with a "dependencies" key
-        const json = JSON.parse(output)
+        // however, sometimes npm can emit warning messages prepended to json output
+        const json = JSON.parse(output.replace(/npm WARN.+/g, ""))
         return Object.keys(json.dependencies || []).map((key: string): [string, string] => [
           key,
           json.dependencies[key].version,
