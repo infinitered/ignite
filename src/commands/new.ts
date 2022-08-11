@@ -21,32 +21,42 @@ const deps: { [k: string]: string } = {
 export interface Options {
   /**
    * Log raw parameters for debugging, run formatting script not quietly
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
    * @default false
    */
   debug?: boolean
   /**
    * Remove existing directory otherwise throw if exists
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
    * @default false
    */
   overwrite?: boolean
   /**
+   * Input Source: `parameter.option`
    * @deprecated flag left in for backwards compatability, warn them to use old Ignite
    * @default undefined
    */
   boilerplate?: string
   /**
    * alias for `boilerplate`
+   *
+   * Input Source: `parameter.option`
    * @deprecated flag left in for backwards compatability, warn them to use old Ignite
    * @default undefined
    */
   b?: string
   /**
    * custom bundle identifier (android only)
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
    * @default `com.${name}`
    * @example 'com.pizzaapp'
    */
   bundle?: string
   /**
+   * Input Source: `parameter.option`
    * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
    * @default undefined
    */
@@ -54,17 +64,29 @@ export interface Options {
   /**
    * Package manager to install dependencies with
    *
-   * Preference order: `pnpm`, `yarn`, `npm`
+   * Input Source: `prompt.ask`| `parameter.option`
+   *
+   * Default: packager that executed current command, i.e. `npx ignite new`, `yarn dlx ignite new`, `pnpm dlx ignite new`
    */
   packager?: "npm" | "yarn" | "pnpm"
   /**
    * Create new git repository and create an inital commit with boilerplate changes
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
    * @default true
    */
   git?: boolean
   /**
+   * Whether or not to run packager install script after project is created
+   *
+   * @default true
+   */
+  installDeps?: boolean
+  /**
    * React Native Colo Loco is no longer installed with Ignite,
    * but we will give instructions on how to install it if they pass in `--colo-loco`   *
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
    * @default false
    */
   coloLoco?: boolean
