@@ -58,6 +58,10 @@ export interface ButtonProps extends PressableProps {
     style: StyleProp<any>
     pressableState: PressableStateCallbackType
   }>
+  /**
+   * Children components.
+   */
+  children?: React.ReactNode
 }
 
 /**

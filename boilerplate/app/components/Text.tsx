@@ -38,6 +38,10 @@ export interface TextProps extends RNTextProps {
    * Text size modifier.
    */
   size?: Sizes
+  /**
+   * Children components.
+   */
+  children?: React.ReactNode
 }
 
 /**

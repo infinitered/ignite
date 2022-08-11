@@ -170,9 +170,9 @@ function ScreenWithScrolling(props: ScreenProps) {
         onLayout(e)
         ScrollViewProps?.onLayout?.(e)
       }}
-      onContentSizeChange={(...args) => {
-        onContentSizeChange(...args)
-        ScrollViewProps?.onContentSizeChange?.(...args)
+      onContentSizeChange={(w: number, h: number) => {
+        onContentSizeChange(w, h)
+        ScrollViewProps?.onContentSizeChange?.(w, h)
       }}
       style={[$outerStyle, ScrollViewProps?.style, style]}
       contentContainerStyle={[
