@@ -1,32 +1,14 @@
 import React, { useEffect, useRef } from "react"
 import { Animated, Pressable, PressableProps, ViewStyle } from "react-native"
+import { colors } from "../theme"
 
-const CONTAINER: ViewStyle = {
-  alignItems: "center",
-  height: 45,
-  justifyContent: "center",
-  width: 45,
-}
-
-const TOPBAR: ViewStyle = {
-  height: 3,
-  backgroundColor: "rgb(0,122,255)",
-}
-
-const MIDDLEBAR: ViewStyle = {
-  height: 3,
-  width: 25,
-  backgroundColor: "rgb(0,122,255)",
-  marginTop: 4,
-}
-
-const BOTTOMBAR: ViewStyle = {
-  height: 3,
-  backgroundColor: "rgb(0,122,255)",
-}
-
-export const DrawerIconButton = ({ open, ...props }: PressableProps & { open: boolean }) => {
+export function DrawerIconButton({ open, ...props }: PressableProps & { open: boolean }) {
   const animation = useRef(new Animated.Value(0)).current
+
+  const backgroundColor = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [colors.text, colors.tint],
+  })
 
   const translateX = animation.interpolate({
     inputRange: [0, 1],
@@ -35,22 +17,27 @@ export const DrawerIconButton = ({ open, ...props }: PressableProps & { open: bo
 
   const topBarRotation = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ["0deg", "-50deg"],
+    outputRange: ["0deg", "-45deg"],
   })
 
   const bottomBarRotation = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ["0deg", "50deg"],
+    outputRange: ["0deg", "45deg"],
   })
 
   const marginLeft = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, -13],
+    outputRange: [0, -11.5],
   })
 
   const width = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [25, 14],
+    outputRange: [18, 12],
+  })
+
+  const middleWidth = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [18, 16],
   })
 
   const marginBottom = animation.interpolate({
@@ -73,11 +60,12 @@ export const DrawerIconButton = ({ open, ...props }: PressableProps & { open: bo
 
   return (
     <Pressable {...props}>
-      <Animated.View style={[CONTAINER, { transform: [{ translateX }] }]}>
+      <Animated.View style={[$container, { transform: [{ translateX }] }]}>
         <Animated.View
           style={[
-            TOPBAR,
+            $topBar,
             {
+              backgroundColor,
               marginLeft,
               width,
               marginBottom,
@@ -85,11 +73,12 @@ export const DrawerIconButton = ({ open, ...props }: PressableProps & { open: bo
             },
           ]}
         />
-        <Animated.View style={MIDDLEBAR} />
+        <Animated.View style={[$middleBar, { backgroundColor, width: middleWidth }]} />
         <Animated.View
           style={[
-            BOTTOMBAR,
+            $bottomBar,
             {
+              backgroundColor,
               marginLeft,
               width,
               marginTop,
@@ -100,4 +89,26 @@ export const DrawerIconButton = ({ open, ...props }: PressableProps & { open: bo
       </Animated.View>
     </Pressable>
   )
+}
+
+const barHeight = 2
+
+const $container: ViewStyle = {
+  alignItems: "center",
+  height: 56,
+  justifyContent: "center",
+  width: 56,
+}
+
+const $topBar: ViewStyle = {
+  height: barHeight,
+}
+
+const $middleBar: ViewStyle = {
+  height: barHeight,
+  marginTop: 4,
+}
+
+const $bottomBar: ViewStyle = {
+  height: barHeight,
 }

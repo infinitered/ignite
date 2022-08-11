@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import { View } from "react-native"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
 
 interface DemoUseCaseProps {
@@ -10,10 +10,19 @@ interface DemoUseCaseProps {
 
 export function DemoUseCase(props: DemoUseCaseProps) {
   return (
-    <View>
+    <View style={$container}>
       <Text preset="subheading">{props.name}</Text>
-      <Text>{props.description}</Text>
+      <Text style={$description}>{props.description}</Text>
       {props.children}
     </View>
   )
+}
+
+const $container: ViewStyle = {
+  marginBottom: 24,
+}
+
+const $description: TextStyle = {
+  marginTop: 8,
+  marginBottom: 24,
 }

@@ -1,5 +1,5 @@
 import React, { ReactElement, useRef, useState } from "react"
-import { FlatList, Pressable, View, ViewStyle } from "react-native"
+import { FlatList, Image, Pressable, View, ViewStyle } from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
 import { DrawerIconButton, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/demo-navigator"
@@ -31,12 +31,16 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
   return (
     <DrawerLayout
       ref={drawerRef}
-      drawerWidth={200}
+      drawerWidth={326}
       drawerType={"slide"}
       drawerBackgroundColor={"white"}
+      onDrawerOpen={() => setOpen(true)}
       onDrawerClose={() => setOpen(false)}
       renderNavigationView={() => (
         <View style={$drawer}>
+          <View style={$logoContainer}>
+            <Image source={require("../../../assets/images/logo.png")} />
+          </View>
           <FlatList<{ name: string; useCases: string[] }>
             ref={menuRef}
             data={Object.values(Demos).map((d) => ({
@@ -47,16 +51,23 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
             renderItem={({ item }) => (
               <Pressable
                 onPress={() => {
-                  listRef.current.scrollToItem({ animated: true, item })
+                  listRef.current.scrollToItem({
+                    animated: true,
+                    item,
+                  })
                   toggleDrawer()
                 }}
+                style={$menu}
               >
-                <Text preset="heading">{item.name}</Text>
-                {item.useCases.map((u) => (
-                  <Text key={u} preset="subheading">
-                    {u}
-                  </Text>
-                ))}
+                <Text preset="menu">{item.name}</Text>
+                <View style={$subMenu}>
+                  {item.useCases.map((u) => (
+                    <View key={u} style={$subMenuItem}>
+                      <Text>{u}</Text>
+                      <Image source={require("../../../assets/images/caratRight.png")} />
+                    </View>
+                  ))}
+                </View>
               </Pressable>
             )}
           />
@@ -64,8 +75,10 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       )}
     >
       <Screen preset="fixed">
-        <DrawerIconButton open={open} onPress={toggleDrawer} style={$hamburger} />
-
+        <DrawerIconButton open={open} onPress={toggleDrawer} />
+        <View style={$heading}>
+          <Text preset="heading">Components to jump start your project!</Text>
+        </View>
         <FlatList<Demo>
           ref={listRef}
           data={Object.values(Demos)}
@@ -79,11 +92,35 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
 
 const $drawer: ViewStyle = {
   flex: 1,
-  marginVertical: 100,
   justifyContent: "center",
-  alignItems: "center",
+  marginLeft: 26,
+  marginVertical: 60,
 }
 
-const $hamburger: ViewStyle = {
-  margin: 10,
+const $heading: ViewStyle = {
+  marginBottom: 32,
+  marginHorizontal: 24,
+  marginTop: 16,
+}
+
+const $logoContainer: ViewStyle = {
+  alignSelf: "flex-start",
+  height: 56,
+}
+
+const $menu: ViewStyle = {
+  marginBottom: 8,
+  marginHorizontal: 24,
+  marginTop: 24,
+}
+
+const $subMenu: ViewStyle = {
+  marginTop: 8,
+}
+
+const $subMenuItem: ViewStyle = {
+  alignItems: "center",
+  flexDirection: "row",
+  height: 56,
+  justifyContent: "space-between",
 }

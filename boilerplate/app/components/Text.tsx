@@ -93,4 +93,6 @@ const $presets = {
   heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
 
   subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+
+  menu: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
 }
