@@ -1,17 +1,32 @@
+import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { CompositeScreenProps } from "@react-navigation/native"
 import React from "react"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { ComponentsScreen, DemoScreen } from "../screens"
+import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
+import { AppStackParamList, AppStackScreenProps } from "./app-navigator"
 
-const Tab = createBottomTabNavigator()
+export type DemoTabParamList = {
+  DemoComponents: undefined
+  DemoDebug: undefined
+  DemoContributing: undefined
+}
 
-export const DemoNavigator = () => (
-  <Tab.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Tab.Screen name="Components" component={ComponentsScreen} />
-    <Tab.Screen name="Debug" component={DemoScreen} />
-    <Tab.Screen name="Contributing" component={DemoScreen} />
-  </Tab.Navigator>
-)
+export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
+  BottomTabScreenProps<DemoTabParamList, T>,
+  AppStackScreenProps<keyof AppStackParamList>
+>
+
+const Tab = createBottomTabNavigator<DemoTabParamList>()
+
+export function DemoNavigator() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen name="DemoComponents" component={DemoComponentsScreen} />
+      <Tab.Screen name="DemoDebug" component={DemoDebugScreen} />
+      <Tab.Screen name="DemoContributing" component={DemoDebugScreen} />
+    </Tab.Navigator>
+  )
+}

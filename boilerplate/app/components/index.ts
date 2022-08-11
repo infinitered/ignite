@@ -1,6 +1,7 @@
 export * from "./Text"
 export * from "./Screen"
 export * from "./Button"
+export * from "./DrawerIconButton"
 export * from "./bullet-item/bullet-item"
 export * from "./checkbox/checkbox"
 export * from "./form-row/form-row"

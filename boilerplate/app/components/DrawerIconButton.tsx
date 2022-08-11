@@ -25,7 +25,7 @@ const BOTTOMBAR: ViewStyle = {
   backgroundColor: "rgb(0,122,255)",
 }
 
-export const HamburgerButton = ({ open, ...props }: PressableProps & { open: boolean }) => {
+export const DrawerIconButton = ({ open, ...props }: PressableProps & { open: boolean }) => {
   const animation = useRef(new Animated.Value(0)).current
 
   const translateX = animation.interpolate({

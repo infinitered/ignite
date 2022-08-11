@@ -13,7 +13,7 @@
     "readyForLaunch": "Your app, almost ready for lauch!",
     "exciting": "(ohh, this is exciting!)"
   },
-  "demoScreen": {
+  "demoDebugScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",
     "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
@@ -24,9 +24,6 @@
     "macosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
     "webReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
     "windowsReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
-  },
-  "demoListScreen": {
-    "title": "Demo List"
   },
   "errorScreen": {
     "title": "Something went wrong!",
