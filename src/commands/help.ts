@@ -46,6 +46,10 @@ module.exports = {
       ["ignite doctor"],
     )
     p()
+    command("rename      ", "Renames your React Native project (experimental)", [
+      "ignite rename NewName com.mycompany.newname",
+    ])
+    p()
     direction(
       `See the documentation: ${link("https://github.com/infinitered/ignite/tree/master/docs")}`,
     )

@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "7.10.9",
+  "version": "7.14.2",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
@@ -25,7 +25,7 @@
   "scripts": {
     "compile": "tsc -p .",
     "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template",
-    "format": "npm run format:js && npm run format:json && npm run format:md && npm run format:ts;",
+    "format": "yarn format:js && yarn format:json && yarn format:md && yarn format:ts;",
     "format:js": "prettier --write '**/*.js'",
     "format:json": "prettier --write '**/*.json'",
     "format:md": "prettier --write '**/*.md'",
@@ -50,7 +50,7 @@
   "dependencies": {
     "deepmerge-json": "^1.1.0",
     "gluegun": "^4.7.1",
-    "yaml": "^1.10.0"
+    "sharp": "^0.30.4"
   },
   "devDependencies": {
     "@rnx-kit/metro-config": "^1.2.26",
@@ -58,6 +58,7 @@
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",
+    "@types/sharp": "^0.30.2",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "babel-eslint": "^10.1.0",
@@ -71,7 +72,6 @@
     "jest": "^27.0.6",
     "prettier": "2.3.2",
     "semantic-release": "^17.4.2",
-    "solidarity": "^3.0.4",
     "strip-ansi": "^6.0.0",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",

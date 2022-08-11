@@ -44,6 +44,45 @@ npx ignite-cli generate model No
 - Creates a unit test file
 - Appends export to `models/index.ts` unless you pass `--skip-index-file`
 
+### App Icon generator
+
+App icons are tricky - there are many different shapes and sizes, and many different configuration files and locations to update. So we include this generator to make it much easier on you!
+
+This is a special kind of generator - "special" in that it modifies the native project folders with resized and transformed input image files found in the generator's template folder. Also, it only accepts predefined options for the second parameter: one of `ios`, `android`, `expo` or `all`.
+
+The following files will be found in your templates folder (`ignite/templates/app-icon`) which can be customized:
+
+- `ios-universal.png`:
+
+  - The generator will use this file to create all required app-icons for iOS.
+  - (vanilla) Updates `./ios/**/Images.xcassets/AppIcon.appiconset/` including `Content.json`.
+  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+
+- `ios-android-legacy.png`:
+
+  - The generator will use this file to create all required legacy launcher-icons for Android 7.1 and below.
+  - Automatically transforms the icon to add necessary padding and radius. Note, when creating your custom input file, do not include the padding or radius.
+  - (vanilla) Updates `./android/app/src/main/res/` including the `mipmap-anydpi-v26/ic_launcher.xml`.
+  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+
+- `ios-android-adaptive-background.png`:
+
+  - The generator will use this file to create all required adaptive launcher-icon background layers for Android 8.0 and above.
+  - Updates same directories as the legacy icon.
+
+- `ios-android-adaptive-foreground.png`:
+
+  - The generator will use this file to create all required adaptive launcher-icon foreground layers for Android 8.0 and above.
+  - Updates same directories as the legacy icon.
+
+When updating the template files, please note that names must stay the same as well as the size (1024x1024px). A Sketch template file can be [found here](https://github.com/infinitered/ignite/files/8576614/ignite-app-icon-template.zip) - just make your changes, hide the grids, then click File -> Export.
+
+```
+npx ignite-cli generate app-icon ios
+```
+
+By default, the generator will exit if the input-files in your templates folder match signatures with those of the default Ignite app-icons - this is done to encourage you to make actual changes to the icons before generating. However, if you want to override your application's app-icons with those of Ignite's, you can first reset your app-icon templates folder with `npx ignite-cli g app-icon --update` and then regenerate the app-icons with the `--skip-source-equality-validation` flag.
+
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).

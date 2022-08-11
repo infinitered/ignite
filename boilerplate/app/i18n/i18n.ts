@@ -15,8 +15,20 @@ i18n.locale = Localization.locale || "en"
 type DefaultLocale = typeof en
 export type TxKeyPath = RecursiveKeyOf<DefaultLocale>
 
-type RecursiveKeyOf<TObj extends Record<string, any>> = {
-  [TKey in keyof TObj & string]: TObj[TKey] extends Record<string, any>
-    ? `${TKey}` | `${TKey}.${RecursiveKeyOf<TObj[TKey]>}`
-    : `${TKey}`
-}[keyof TObj & string]
+// via: https://stackoverflow.com/a/65333050
+type RecursiveKeyOf<TObj extends object> = {
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`>
+}[keyof TObj & (string | number)]
+
+type RecursiveKeyOfInner<TObj extends object> = {
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<
+    TObj[TKey],
+    `['${TKey}']` | `.${TKey}`
+  >
+}[keyof TObj & (string | number)]
+
+type RecursiveKeyOfHandleValue<TValue, Text extends string> = TValue extends any[]
+  ? Text
+  : TValue extends object
+  ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
+  : Text
