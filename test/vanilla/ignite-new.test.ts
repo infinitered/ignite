@@ -1,19 +1,8 @@
 import { filesystem } from "gluegun"
-import * as tempy from "tempy"
+import * as path from "path"
 import { runIgnite, runError, testSpunUpApp } from "../_test-helpers"
 
 const APP_NAME = "Foo"
-
-const originalDir = process.cwd()
-let tempDir: string
-
-beforeEach(() => {
-  tempDir = tempy.directory({ prefix: "ignite-" })
-})
-
-afterEach(() => {
-  filesystem.remove(tempDir) // clean up our mess
-})
 
 describe("Checking for ignite. 🪔", () => {
   test(`ignite new (no name)`, async () => {
@@ -28,6 +17,14 @@ describe("Checking for ignite. 🪔", () => {
 })
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
+  const originalDir = process.cwd()
+  const tempDir = path.join(originalDir, "temp")
+
+  afterEach(() => {
+    const appDir = path.join(tempDir, APP_NAME)
+    filesystem.remove(appDir) // clean up our mess
+  })
+
   test(`ignite new ${APP_NAME}`, async () => {
     const result = await runIgnite(`new ${APP_NAME} --debug`, {
       pre: `cd ${tempDir}`,
@@ -87,7 +84,7 @@ async function checkForLeftoverHelloWorld(filePath: string) {
 
   // check to make sure there are no instances of helloworld or HelloWorld or hello-world
   // anywhere in the app -- including folder and filenames.
-  const appFiles = filesystem.list(filePath)
+  const appFiles = filesystem.list(filePath) ?? []
 
   for (const file of appFiles) {
     expect(file).not.toContain("helloworld")
