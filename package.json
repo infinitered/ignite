@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
-    "gluegun": "^4.7.1",
+    "gluegun": "5.1.2",
     "sharp": "^0.30.4"
   },
   "devDependencies": {
