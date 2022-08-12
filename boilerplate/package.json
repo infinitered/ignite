@@ -61,8 +61,7 @@
     "react-native-screens": "3.15.0",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.2",
-    "validate.js": "0.13.1"
+    "reactotron-react-native": "5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
@@ -112,7 +111,7 @@
     "react-devtools-core": "4.24.7",
     "react-dom": "^18.0.0",
     "react-native-clean-project": "^4.0.1",
-    "react-native-web": "^0.18.0",
+    "react-native-web": "^0.18.7",
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
     "ts-jest": "26",
