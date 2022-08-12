@@ -1,7 +1,7 @@
 import React, { ReactElement, useRef, useState } from "react"
-import { FlatList, Image, Pressable, View, ViewStyle } from "react-native"
+import { FlatList, Image, ImageStyle, Pressable, View, ViewStyle } from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
-import { DrawerIconButton, Screen, Text } from "../../components"
+import { DrawerIconButton, Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/demo-navigator"
 import { DemoItem } from "./DemoItem"
 import * as Demos from "./demos"
@@ -39,7 +39,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       renderNavigationView={() => (
         <View style={$drawer}>
           <View style={$logoContainer}>
-            <Image source={require("../../../assets/images/logo.png")} />
+            <Image source={require("../../../assets/images/logo.png")} style={$logo} />
           </View>
           <FlatList<{ name: string; useCases: string[] }>
             ref={menuRef}
@@ -59,12 +59,12 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
                 }}
                 style={$menu}
               >
-                <Text preset="menu">{item.name}</Text>
+                <Text preset="bold">{item.name}</Text>
                 <View style={$subMenu}>
                   {item.useCases.map((u) => (
                     <View key={u} style={$subMenuItem}>
                       <Text>{u}</Text>
-                      <Image source={require("../../../assets/images/caratRight.png")} />
+                      <Icon icon="caret" />
                     </View>
                   ))}
                 </View>
@@ -74,12 +74,14 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
         </View>
       )}
     >
-      <Screen preset="fixed">
+      <Screen preset="fixed" safeAreaEdges={["top", "bottom"]}>
         <DrawerIconButton open={open} onPress={toggleDrawer} />
-        <View style={$heading}>
-          <Text preset="heading">Components to jump start your project!</Text>
-        </View>
         <FlatList<Demo>
+          ListHeaderComponent={
+            <View style={$heading}>
+              <Text preset="heading">Components to jump start your project!</Text>
+            </View>
+          }
           ref={listRef}
           data={Object.values(Demos)}
           keyExtractor={(item) => item.name}
@@ -101,6 +103,10 @@ const $heading: ViewStyle = {
   marginBottom: 32,
   marginHorizontal: 24,
   marginTop: 16,
+}
+const $logo: ImageStyle = {
+  height: 42,
+  width: 77,
 }
 
 const $logoContainer: ViewStyle = {

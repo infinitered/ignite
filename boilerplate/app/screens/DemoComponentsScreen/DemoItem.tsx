@@ -21,12 +21,11 @@ export function DemoItem(props: ListRenderItemInfo<Demo>) {
 }
 
 const $demoItemContainer: ViewStyle = {
-  marginLeft: 24,
+  marginHorizontal: 24,
 }
 
 const $title: TextStyle = {
-  marginTop: 24,
-  marginBottom: 8,
+  marginVertical: 8,
 }
 
 const $description: TextStyle = {
