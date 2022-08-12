@@ -10,16 +10,12 @@ This isn't a hard and fast rule, but it does express our approach fairly well.
 
 ## Detox Testing
 
-TODO
-
-## Snapshot Testing
-
-TODO
+MAVERICKTODO: Add info about detox here, or even a separate Testing-Detox.md.
 
 ## Unit Testing
 
-TODO
+MAVERICKTODO: Add info about unit testing with Jest here.
 
 ## Mocking
 
-TODO
+MAVERICKTODO: Add info about mocking JS & native here.
