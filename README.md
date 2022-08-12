@@ -3,14 +3,13 @@
 # Ignite - the hottest React Native boilerplate
 
 <a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/infinitered/ignite/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/infinitered/ignite/tree/master)
 
 ## Battle-tested React Native boilerplate
 
 The culmination of five years of constant React Native development, Ignite is the most popular React Native app boilerplate for both Expo and bare React Native.
 
 This is the React Native boilerplate that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
-
-_NOTE: Ignite CLI version 6.0 now includes the boilerplate -- read [the blog post](https://shift.infinite.red/introducing-ignite-4-0-flame-1dfc891f9966) to find out why!_
 
 ## Tech Stack
 
@@ -40,8 +39,6 @@ Run the CLI:
 ```bash
 # for vanilla React Native
 npx ignite-cli new PizzaApp
-# or for Expo-powered:
-npx ignite-cli new PizzaApp --expo
 # to provide a custom bundle identifier (Android only):
 npx ignite-cli new PizzaApp --bundle=com.infinitered.pizzaapp
 ```
