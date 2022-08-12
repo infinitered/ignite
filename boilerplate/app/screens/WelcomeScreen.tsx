@@ -7,8 +7,8 @@ import { Button, Text } from "../components"
 import { NavigatorParamList } from "../navigators"
 import { colors, spacing } from "../theme"
 
-const welcomeLogo = require("../assets/images/welcome-logo.png")
-const welcomeFace = require("../assets/images/welcome-face.png")
+const welcomeLogo = require("../../assets/images/welcome-logo.png")
+const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends StackScreenProps<NavigatorParamList, "welcome"> {}
 
