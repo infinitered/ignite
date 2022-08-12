@@ -16,8 +16,8 @@ export async function runIgnite(cmd: string, options: RunOptions = {}): Promise<
 }
 
 export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
-  const pre = options.pre ? `${options.pre} ; ` : ""
-  const post = options.post ? ` ; ${options.post}` : ""
+  const pre = options.pre ? `${options.pre} && ` : ""
+  const post = options.post ? ` && ${options.post}` : ""
   const resultANSI = await system.run(`${pre}${cmd}${post}`, shellOpts)
   return stripANSI(resultANSI)
 }

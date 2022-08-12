@@ -19,3 +19,7 @@ coverage
 # Ignite's source repo.
 boilerplate/yarn.lock
 boilerplate/.gitignore.template
+
+# Temp files
+/temp/*
+!/temp/.gitkeep
