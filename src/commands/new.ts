@@ -94,14 +94,16 @@ export interface Options {
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
+    // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings } = toolbox
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
     const { info, colors, warning } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
-
     const options: Options = parameters.options
+    // #endregion
 
+    // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
 
@@ -114,12 +116,16 @@ export default {
 
     // log raw parameters for debugging
     log(`ignite command: ${parameters.argv.join(" ")}`)
+    // #endregion
 
+    // #region Project Name
     // retrieve project name from toolbox
     const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
     const projectName = validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
+    // #endregion
 
+    // #region Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     if (options.overwrite) {
       log(`Removing existing project ${projectName}`)
@@ -130,7 +136,9 @@ export default {
       p(yellow(alreadyExists))
       process.exit(1)
     }
+    // #endregion
 
+    // #region Boilerplate
     // if they pass in --boilerplate, warn them to use old Ignite
     const bname = options.b || options.boilerplate
     if (bname) {
@@ -140,12 +148,16 @@ export default {
       p(cyan(`npx ignite-cli@3 new ${projectName} --boilerplate ${bname}`))
       process.exit(1)
     }
+    // #endregion
 
-    // custom bundle identifier (android only)
+    // #region Bundle Identifier
+    // custom bundle identifier
     // TODO: refactor alert, need to rethink this
     const bundleIdentifier =
       validateBundleIdentifier(toolbox, options.bundle) || `com.${projectName.toLowerCase()}`
+    // #endregion
 
+    // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
     const packagerName = options.packager || packager.detectPackager()
@@ -155,7 +167,9 @@ export default {
     const boilerplatePath = path(ignitePath, "boilerplate")
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
+    // #endregion
 
+    // #region Expo
     // show warning about --expo going away
     const expo = Boolean(options.expo)
     if (expo) {
@@ -164,7 +178,9 @@ export default {
       )
       p()
     }
+    // #endregion
 
+    // #region Print Welcome
     // welcome everybody!
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
@@ -175,6 +191,9 @@ export default {
     p(` ────────────────────────────────────────────────\n`)
 
     startSpinner("Igniting app")
+    // #endregion
+
+    // #region Copy Boilerplate Files
     // Remove some folders that we don't want to copy over
     // This mostly only applies to when you're developing locally
     remove(path(boilerplatePath, "ios", "Pods"))
@@ -214,7 +233,9 @@ export default {
       // copy the file over
       copy(sourceIgnorePath, targetIgnorePath)
     }
+    // #endregion
 
+    // #region Handle package.json
     // Update package.json:
     // - We need to replace the app name in the detox paths. We do it on the
     //   unparsed file content since that's easier than updating individual values
@@ -233,7 +254,9 @@ export default {
     // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
     // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
     // await packager.add(`react-native-safe-area-context`, packagerOptions)
+    // #endregion
 
+    // #region Run Packager Install
     // pnpm/yarn/npm install it
     startSpinner("Unboxing npm dependencies")
     await packager.install({ ...packagerOptions, onProgress: log })
@@ -241,7 +264,9 @@ export default {
 
     // remove the gitignore template
     remove(".gitignore.template")
+    // #endregion
 
+    // #region Rename App
     // rename the app using Ignite
     startSpinner(" Writing your app name in the sand")
 
@@ -254,17 +279,23 @@ export default {
     )
 
     stopSpinner(" Writing your app name in the sand", "🏝")
+    // #endregion
 
+    // #region Install CocoaPods
     // install pods
     startSpinner("Baking CocoaPods")
     await spawnProgress(`npx pod-install@${deps.podInstall}`, {
       onProgress: log,
     })
     stopSpinner("Baking CocoaPods", "☕️")
+    // #endregion
 
+    // #region Run Format
     // Make sure all our modifications are formatted nicely
     await packager.run("format", { ...packagerOptions, silent: !debug })
+    // #endregion
 
+    // #region Git
     // commit any changes
     if (options.git !== false) {
       startSpinner(" Backing everything up in source control")
@@ -285,7 +316,9 @@ export default {
 
     // back to the original directory
     process.chdir(log(cwd))
+    // #endregion
 
+    // #region Print Finish
     // clean up any spinners we forgot to clear
     clearSpinners()
 
@@ -314,7 +347,9 @@ export default {
     p()
     direction("Or with Expo:")
     command(`  ${packager.runCmd("expo:start", packagerOptions)}`)
+    // #endregion
 
+    // #region React Native Colo Loco
     // React Native Colo Loco is no longer installed with Ignite, but
     // we will give instructions on how to install it if they
     // pass in `--colo-loco`
@@ -330,7 +365,9 @@ export default {
       command(`  ${packager.addCmd("-g react-native-colo-loco")}`)
       command(`  ${packager.runCmd("install-colo-loco", packagerOptions)}`)
     }
+    // #endregion
 
+    // #region Infinite Red Plug
     p()
     p("Need additional help?")
     p()
@@ -338,5 +375,6 @@ export default {
     p()
     heading("Now get cooking! 🍽")
     igniteHeading()
+    // #endregion
   },
 }
