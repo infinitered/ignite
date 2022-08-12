@@ -4,19 +4,19 @@ Ignite's approach to styling is, like many other things in Ignite, straightforwa
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of bare constants, colocated with our components, prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of bare JS objects, colocated with our components (usually below the component in the file), prefixed with `$`, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
 import { palette } from "../theme"
 
+const MyComponent = () => {
+  return <View style={$container}>...</View>
+}
+
 const $container: ViewStyle = {
   flex: 1,
   backgroundColor: palette.bgColor,
-}
-
-const MyComponent = () => {
-  return <View style={$container}>...</View>
 }
 ```
 
@@ -39,7 +39,50 @@ const $title: TextStyle = {
 
 ## Sharing Styles via Presets
 
-TODO
+Most of the components we include with Ignite include a `preset` property:
+
+```tsx
+<View preset="heading" text="My Header" />
+```
+
+Presets are defined in the component file itself, usually something like this:
+
+```tsx
+const $presets = {
+  default: $baseStyle,
+
+  bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
+
+  heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
+
+  subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+}
+```
+
+These presets are usually composed of other styles, using arrays (which React Native will properly merge).
+
+So, let's say we want a button that is a destructive action. We might add a "destructive" preset to the Button component.
+
+The preset might look like this:
+
+```tsx
+const $warning = { backgroundColor: "red", color: "white" }
+
+const $viewPresets = {
+  destructive: [$baseViewStyle, $warning],
+}
+```
+
+You can then use it with your Button like this:
+
+```tsx
+<Button
+  text="Delete"
+  // set the preset here
+  preset="destructive"
+  onPress={() => thisItem.destroy()}
+/>
+```
 
 ## Styling Workflow
 
