@@ -47,6 +47,7 @@
     "expo-linear-gradient": "~11.4.0",
     "expo-localization": "13.1.0",
     "expo-modules-core": "~0.11.3",
+    "expo-splash-screen": "~0.16.1",
     "expo-status-bar": "~1.4.0",
     "i18n-js": "3.9.2",
     "mobx": "6.6.0",
