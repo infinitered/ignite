@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import { Animated, Pressable, PressableProps, ViewStyle } from "react-native"
-import { colors } from "../theme"
+import { colors } from "../../theme"
 
 interface DrawerIconButtonProps extends PressableProps {
   open: boolean

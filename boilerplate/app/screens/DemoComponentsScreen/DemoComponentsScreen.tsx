@@ -1,10 +1,14 @@
 import React, { ReactElement, useRef, useState } from "react"
 import { FlatList, Image, ImageStyle, Pressable, View, ViewStyle } from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
-import { DrawerIconButton, Icon, Screen, Text } from "../../components"
+import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/demo-navigator"
+import { colors } from "../../theme"
 import { DemoItem } from "./DemoItem"
 import * as Demos from "./demos"
+import { DrawerIconButton } from "./DrawerIconButton"
+
+const logo = require("../../../assets/images/logo.png")
 
 export interface Demo {
   name: string
@@ -33,13 +37,13 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       ref={drawerRef}
       drawerWidth={326}
       drawerType={"slide"}
-      drawerBackgroundColor={"white"}
+      drawerBackgroundColor={colors.palette.neutral100}
       onDrawerOpen={() => setOpen(true)}
       onDrawerClose={() => setOpen(false)}
       renderNavigationView={() => (
         <View style={$drawer}>
           <View style={$logoContainer}>
-            <Image source={require("../../../assets/images/logo.png")} style={$logo} />
+            <Image source={logo} style={$logo} />
           </View>
 
           <FlatList<{ name: string; useCases: string[] }>
