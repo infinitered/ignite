@@ -2,7 +2,13 @@ import React, { useEffect, useRef } from "react"
 import { Animated, Pressable, PressableProps, ViewStyle } from "react-native"
 import { colors } from "../theme"
 
-export function DrawerIconButton({ open, ...props }: PressableProps & { open: boolean }) {
+interface DrawerIconButtonProps extends PressableProps {
+  open: boolean
+}
+
+export function DrawerIconButton(props: DrawerIconButtonProps) {
+  const { open, ...PressableProps } = props
+
   const animation = useRef(new Animated.Value(0)).current
 
   const backgroundColor = animation.interpolate({
@@ -59,7 +65,7 @@ export function DrawerIconButton({ open, ...props }: PressableProps & { open: bo
   }, [open])
 
   return (
-    <Pressable {...props}>
+    <Pressable {...PressableProps}>
       <Animated.View style={[$container, { transform: [{ translateX }] }]}>
         <Animated.View
           style={[
@@ -73,7 +79,9 @@ export function DrawerIconButton({ open, ...props }: PressableProps & { open: bo
             },
           ]}
         />
+
         <Animated.View style={[$middleBar, { backgroundColor, width: middleWidth }]} />
+
         <Animated.View
           style={[
             $bottomBar,

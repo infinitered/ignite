@@ -21,7 +21,7 @@ export function DemoItem(props: ListRenderItemInfo<Demo>) {
 }
 
 const $demoItemContainer: ViewStyle = {
-  marginHorizontal: 24,
+  paddingHorizontal: 24,
 }
 
 const $title: TextStyle = {

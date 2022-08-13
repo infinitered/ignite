@@ -34,7 +34,7 @@ export interface BulletItemProps {
 export function BulletItem(props: BulletItemProps) {
   return (
     <View style={BULLET_ITEM}>
-      <Icon icon="bullet" containerStyle={BULLET_CONTAINER} style={BULLET} />
+      {/* <Icon icon="bullet" containerStyle={BULLET_CONTAINER} style={BULLET} /> */}
       <Text style={BULLET_TEXT} text={props.text} />
     </View>
   )

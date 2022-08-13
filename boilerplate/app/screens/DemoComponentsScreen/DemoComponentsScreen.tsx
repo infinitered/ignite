@@ -41,6 +41,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
           <View style={$logoContainer}>
             <Image source={require("../../../assets/images/logo.png")} style={$logo} />
           </View>
+
           <FlatList<{ name: string; useCases: string[] }>
             ref={menuRef}
             data={Object.values(Demos).map((d) => ({
@@ -64,7 +65,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
                   {item.useCases.map((u) => (
                     <View key={u} style={$subMenuItem}>
                       <Text>{u}</Text>
-                      <Icon icon="caret" />
+                      <Icon icon="caretRight" />
                     </View>
                   ))}
                 </View>
@@ -76,10 +77,11 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
     >
       <Screen preset="fixed" safeAreaEdges={["top", "bottom"]}>
         <DrawerIconButton open={open} onPress={toggleDrawer} />
+
         <FlatList<Demo>
           ListHeaderComponent={
             <View style={$heading}>
-              <Text preset="heading">Components to jump start your project!</Text>
+              <Text preset="heading" tx="demoComponentsScreen.jumpStart" />
             </View>
           }
           ref={listRef}

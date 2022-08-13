@@ -13,6 +13,14 @@
     "readyForLaunch": "Your app, almost ready for lauch!",
     "exciting": "(ohh, this is exciting!)"
   },
+  "demoNavigator": {
+    "componentsTab": "Components",
+    "debugTab": "Debug",
+    "communityTab": "Community"
+  },
+  "demoComponentsScreen": {
+    "jumpStart": "Components to jump start your project!"
+  },
   "demoDebugScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",

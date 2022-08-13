@@ -2,6 +2,7 @@ import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigatio
 import { CompositeScreenProps } from "@react-navigation/native"
 import React from "react"
 import { Icon } from "../components"
+import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
 import { colors } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./app-navigator"
@@ -37,28 +38,29 @@ export function DemoNavigator() {
         name="DemoComponents"
         component={DemoComponentsScreen}
         options={{
-          tabBarLabel: "Components",
+          tabBarLabel: translate("demoNavigator.componentsTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="components" style={{ tintColor: focused && colors.tint }} />
           ),
         }}
       />
+
       <Tab.Screen
         name="DemoDebug"
         component={DemoDebugScreen}
         options={{
-          tabBarLabel: "Debug",
-
+          tabBarLabel: translate("demoNavigator.debugTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="debug" style={{ tintColor: focused && colors.tint }} />
           ),
         }}
       />
+
       <Tab.Screen
         name="DemoContributing"
         component={DemoDebugScreen}
         options={{
-          tabBarLabel: "Community",
+          tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="community" style={{ tintColor: focused && colors.tint }} />
           ),
