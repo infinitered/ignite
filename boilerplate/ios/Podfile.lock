@@ -10,11 +10,11 @@ PODS:
     - ExpoModulesCore
   - EXFont (10.1.0):
     - ExpoModulesCore
-  - Expo (45.0.5):
+  - Expo (45.0.8):
     - ExpoModulesCore
   - ExpoKeepAwake (10.1.1):
     - ExpoModulesCore
-  - ExpoLinearGradient (11.3.0):
+  - ExpoLinearGradient (11.4.0):
     - ExpoModulesCore
   - ExpoLocalization (13.0.0):
     - ExpoModulesCore
@@ -301,7 +301,7 @@ PODS:
   - React-jsinspector (0.68.2)
   - React-logger (0.68.2):
     - glog
-  - react-native-safe-area-context (4.2.4):
+  - react-native-safe-area-context (4.3.1):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -374,13 +374,13 @@ PODS:
     - React-perflogger (= 0.68.2)
   - RNBootSplash (4.2.3):
     - React-Core
-  - RNCAsyncStorage (1.17.6):
+  - RNCAsyncStorage (1.17.8):
     - React-Core
   - RNGestureHandler (2.2.1):
     - React-Core
   - RNKeychain (8.0.0):
     - React-Core
-  - RNScreens (3.11.1):
+  - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
   - SocketRocket (0.6.0)
@@ -580,9 +580,9 @@ SPEC CHECKSUMS:
   EXConstants: fdbe52259365b6a6faaa5e99a3b82cfa6bc2eb61
   EXFileSystem: 2aa2d9289f84bca9532b9ccbd81504fa31eb1ded
   EXFont: 04235cc22e6fef86028feb67db452978dc6f240f
-  Expo: b9fff0a1eac0f424fc68ea49b4347fb308e52e17
+  Expo: 1133eaf0e12dc265ac82a256f3815401b7570f96
   ExpoKeepAwake: c0c494b442ecd8122974c13b93ccfb57bd408e88
-  ExpoLinearGradient: 0debcf7d6cd7fea3050c218544f0db2de9a64f42
+  ExpoLinearGradient: 1a3af07c6dab3c612967a294836df9ae717431df
   ExpoLocalization: 8f619bb6eec64575cd5220bfabbd7b4e2d6f33f8
   ExpoModulesCore: e4278a668e8c13c0269ed8b8a4200989deea2973
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
@@ -613,7 +613,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
-  react-native-safe-area-context: f98b0b16d1546d208fc293b4661e3f81a895afd9
+  react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034
@@ -627,10 +627,10 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: b960b687d2dfef0d3761fbb187e01812ebab8b23
   ReactCommon: 095366164a276d91ea704ce53cb03825c487a3f2
   RNBootSplash: e8a36a88f8c868769ec998c5afe3082032e82fc2
-  RNCAsyncStorage: 466b9df1a14bccda91da86e0b7d9a345d78e1673
+  RNCAsyncStorage: 7cbd0d823dbb0e415d40a7e77fea2292483c8bdb
   RNGestureHandler: 1dc1ea9d4b64f999042afafbaccf5b143f0b2fa2
   RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
-  RNScreens: 4d83613b50b74ed277026375dc0810893b0c347f
+  RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

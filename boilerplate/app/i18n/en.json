@@ -13,7 +13,17 @@
     "readyForLaunch": "Your app, almost ready for lauch!",
     "exciting": "(ohh, this is exciting!)"
   },
-  "demoScreen": {
+  "demoNavigator": {
+    "componentsTab": "Components",
+    "debugTab": "Debug",
+    "communityTab": "Community"
+  },
+  "demoComponentsScreen": {
+    "jumpStart": "Components to jump start your project!",
+    "lorem2Sentences": "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
+    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id"
+  },
+  "demoDebugScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",
     "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
@@ -24,9 +34,6 @@
     "macosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
     "webReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
     "windowsReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
-  },
-  "demoListScreen": {
-    "title": "Demo List"
   },
   "errorScreen": {
     "title": "Something went wrong!",

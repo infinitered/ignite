@@ -1,8 +1,8 @@
 import * as React from "react"
-import { View, ViewStyle, ImageStyle, TextStyle } from "react-native"
-import { Text } from "../Text"
-import { Icon } from "../icon/icon"
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { spacing, typography } from "../../theme"
+import { Icon } from "../icon/icon"
+import { Text } from "../Text"
 
 const BULLET_ITEM: ViewStyle = {
   flexDirection: "row",
@@ -34,7 +34,7 @@ export interface BulletItemProps {
 export function BulletItem(props: BulletItemProps) {
   return (
     <View style={BULLET_ITEM}>
-      <Icon icon="bullet" containerStyle={BULLET_CONTAINER} style={BULLET} />
+      <Icon icon="ladybug" containerStyle={BULLET_CONTAINER} style={BULLET} />
       <Text style={BULLET_TEXT} text={props.text} />
     </View>
   )
