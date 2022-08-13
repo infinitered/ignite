@@ -125,16 +125,6 @@ This is a component that renders a horizontal container for a form row. It inclu
 
 [Full FormRow Component Documentation](./Components-FormRow.md)
 
-### GradientBackground
-
-This is a convenience component that wraps [`LinearGradient`](<(https://docs.expo.dev/versions/latest/sdk/linear-gradient/)>) from `expo-linear-gradient` and handles the styling for you.
-
-```tsx
-<GradientBackground colors={["#422443", "#281b34"]} />
-```
-
-[Full GradientBackground Component Documentation](./Components-GradientBackground.md)
-
 ### Header
 
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.

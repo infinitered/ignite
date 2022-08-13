@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { ImageStyle, Platform, TextStyle, View, ViewStyle, Image } from "react-native"
-import { BulletItem, Button, GradientBackground, Header, Icon, Screen, Text } from "../components"
+import { BulletItem, Button, Header, Icon, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/demo-navigator"
 import { Api } from "../services/api"
 import { colors, spacing } from "../theme"
@@ -129,7 +129,6 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
 
   return (
     <View testID="DemoScreen" style={FULL}>
-      <GradientBackground colors={["#422443", "#281b34"]} />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={colors.transparent}>
         <Header
           headerTx="demoDebugScreen.howTo"
