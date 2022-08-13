@@ -1,15 +1,14 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
-import { BulletItem, Button, GradientBackground, Header, Screen, Text } from "../components"
+import { ImageStyle, Platform, TextStyle, View, ViewStyle, Image } from "react-native"
+import { BulletItem, Button, GradientBackground, Header, Icon, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/demo-navigator"
 import { Api } from "../services/api"
 import { colors, spacing } from "../theme"
 import { save } from "../utils/storage"
 
 // MAVERICKTODO: reexport these icons (including the 3x version and move to assets folder)
-// export const logoIgnite = require("./logo-ignite.png")
-// export const heart = require("./heart.png")
+const logoIgnite = require("../../../assets/images/logo.png")
 
 // MAVERICKTODO: update this screen with new styling patterns
 
@@ -158,10 +157,10 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
           tx="demoDebugScreen.demoList"
           onPress={() => navigation.navigate("DemoComponents")}
         />
-        {/* <Image source={logoIgnite} style={IGNITE} /> */}
+        <Image source={logoIgnite} style={IGNITE} />
         <View style={LOVE_WRAPPER}>
           <Text style={LOVE} text="Made with" />
-          {/* <Image source={heart} style={HEART} /> */}
+          <Icon icon="heart" style={HEART} />
           <Text style={LOVE} text="by Infinite Red" />
         </View>
       </Screen>
