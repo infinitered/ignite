@@ -1,1 +1,2 @@
-export * from "./TextDemo"
+export * from "./DemoButton"
+export * from "./DemoText"

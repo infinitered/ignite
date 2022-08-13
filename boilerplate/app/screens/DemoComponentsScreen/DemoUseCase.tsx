@@ -4,16 +4,20 @@ import { Text } from "../../components"
 
 interface DemoUseCaseProps {
   name: string
-  description: string
+  description?: string
   children: ReactNode
 }
 
 export function DemoUseCase(props: DemoUseCaseProps) {
+  const { name, description, children } = props
+
   return (
     <View style={$container}>
-      <Text preset="subheading">{props.name}</Text>
-      <Text style={$description}>{props.description}</Text>
-      {props.children}
+      <Text preset="subheading">{name}</Text>
+
+      {description && <Text style={$description}>{description}</Text>}
+
+      {children}
     </View>
   )
 }

@@ -19,7 +19,9 @@
     "communityTab": "Community"
   },
   "demoComponentsScreen": {
-    "jumpStart": "Components to jump start your project!"
+    "jumpStart": "Components to jump start your project!",
+    "lorem2Sentences": "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
+    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id"
   },
   "demoDebugScreen": {
     "howTo": "HOW TO",
