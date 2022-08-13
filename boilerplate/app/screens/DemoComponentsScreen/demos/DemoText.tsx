@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from "react"
 import { TextStyle } from "react-native"
 import { Text } from "../../../components"
@@ -160,11 +161,12 @@ export const DemoText: Demo = {
         </Text>
         {` `}
         <Text
+          /* eslint-disable react-native/no-inline-styles */
           style={{
-            color: colors.error,
-            textDecorationColor: colors.error,
             textDecorationLine: "underline line-through",
             textDecorationStyle: "dashed",
+            color: colors.error,
+            textDecorationColor: colors.error,
           }}
         >
           Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco

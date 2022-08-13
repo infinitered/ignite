@@ -197,7 +197,7 @@ export function Screen(props: ScreenProps) {
     statusBarStyle = "dark-content",
   } = props
 
-  const Wrapper = !!safeAreaEdges?.length ? SafeAreaView : View
+  const Wrapper = safeAreaEdges?.length ? SafeAreaView : View
 
   return (
     <Wrapper
