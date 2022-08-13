@@ -233,23 +233,6 @@ const inputRef = useRef()
 
 [Full Text Component Documentation](./Components-TextField.md)
 
-### Wallpaper
-
-This component renders an image background to a component or a screen.
-
-```tsx
-<Wallpaper
-  style={{
-    marginHorizontal: 10,
-    paddingVertical: 10,
-  }}
-  backgroundImage={newImage}
-  preset="stretch"
-/>
-```
-
-[Full Text Component Documentation](./Components-Wallpaper.md)
-
 ## Custom Components
 
 MAVERICKTODO: update the below documentation with new patterns
