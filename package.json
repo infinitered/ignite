@@ -33,6 +33,7 @@
     "lint": "eslint src test --ext .ts --fix && yarn format",
     "test": "yarn build && yarn lint && jest && yarn clean",
     "watch": "jest --watch",
+    "watch:debug": "yarn watch --runInBand",
     "coverage": "jest --coverage",
     "ci:prep": "yarn build && yarn ci:lint",
     "ci:lint": "eslint src test --ext .ts && yarn format",
