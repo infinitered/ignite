@@ -1,8 +1,7 @@
 import * as React from "react"
 import { ComponentType } from "react"
 import {
-  Image as RNImage,
-  ImageProps,
+  Image,
   ImageStyle,
   StyleProp,
   TouchableOpacity,
@@ -10,7 +9,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { AutoImage } from "./auto-image/auto-image"
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -59,7 +57,6 @@ export function Icon(props: IconProps) {
   } = props
 
   const Wrapper: ComponentType<TouchableOpacityProps> = onPress ? TouchableOpacity : View
-  const Image: ComponentType<ImageProps> = size ? AutoImage : RNImage
 
   return (
     <Wrapper {...WrapperProps} style={$containerStyleOverride}>
