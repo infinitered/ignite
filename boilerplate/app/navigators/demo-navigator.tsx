@@ -1,10 +1,11 @@
 import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CompositeScreenProps } from "@react-navigation/native"
 import React from "react"
+import { TextStyle, ViewStyle } from "react-native"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
-import { colors } from "../theme"
+import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./app-navigator"
 
 export type DemoTabParamList = {
@@ -25,13 +26,10 @@ export function DemoNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          marginTop: 11,
-          backgroundColor: colors.background,
-          borderTopColor: "transparent",
-        },
+        tabBarStyle: $tabBar,
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.text,
+        tabBarLabelStyle: $tabBarLabel,
       }}
     >
       <Tab.Screen
@@ -68,4 +66,16 @@ export function DemoNavigator() {
       />
     </Tab.Navigator>
   )
+}
+
+const $tabBar: ViewStyle = {
+  marginTop: 11,
+  backgroundColor: colors.background,
+  borderTopColor: colors.transparent,
+}
+
+const $tabBarLabel: TextStyle = {
+  fontSize: 12,
+  fontFamily: typography.primary.medium,
+  lineHeight: 16,
 }
