@@ -12,6 +12,7 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StackScreenProps } from "@react-navigation/stack"
+import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
 import { WelcomeScreen } from "../screens"
@@ -45,7 +46,7 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreen
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-function AppStack() {
+const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -58,11 +59,11 @@ function AppStack() {
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
-}
+})
 
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
-export function AppNavigator(props: NavigationProps) {
+export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
   useBackButtonHandler(canExit)
   return (
@@ -74,7 +75,7 @@ export function AppNavigator(props: NavigationProps) {
       <AppStack />
     </NavigationContainer>
   )
-}
+})
 
 AppNavigator.displayName = "AppNavigator"
 
