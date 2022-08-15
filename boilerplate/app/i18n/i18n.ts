@@ -1,7 +1,6 @@
 import * as Localization from "expo-localization"
 import i18n from "i18n-js"
 import en from "./en.json"
-import ja from "./ja.json"
 
 i18n.fallbacks = true
 /**
@@ -9,7 +8,7 @@ i18n.fallbacks = true
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
  * if you change to another language and then return to English language code is now "en-US".
  */
-i18n.translations = { en, "en-US": en, ja }
+i18n.translations = { en, "en-US": en }
 
 i18n.locale = Localization.locale
 
