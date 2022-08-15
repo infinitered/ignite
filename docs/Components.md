@@ -225,8 +225,6 @@ const inputRef = useRef()
 
 ## Custom Components
 
-MAVERICKTODO: update the below documentation with new patterns
-
 Ignite includes a generator for creating custom components. If the built in components don't fit your needs, you can create your own.
 
 `npx ignite-cli generate component MyCustomButton`
@@ -236,7 +234,5 @@ Running the generator will create a new component in the `components` directory.
 ```
 -- app
   -- components
-    -- my-custom-button
-      -- my-custom-button.tsx
-      -- my-custom-button.story.tsx
+    -- MyCustomButton.tsx
 ```
