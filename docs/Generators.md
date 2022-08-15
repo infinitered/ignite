@@ -135,49 +135,20 @@ A few notes about sizes. iOS size has no upper limit, so be careful with the val
 
 Lastly, the splash-screen generator will exit if your input file has not been modified. The same source equality check, as the one on the app-icon generator, will encourage you to make customizations before using the generator (see the `--skip-source-equality-validation` section above).
 
+## Customizing generators
+
+You should feel free to make the provided templates your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files. Read more in the [Generator Templates](./Generator-Templates.md) documentation.
+
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
 
-```
-npx ignite-cli g screen Settings
-```
-
-This will copy over any files in `./ignite/templates/screen/*` to `./app/screens/settings/*` and process any `.ejs` templates at the same time.
-
-Props are passed into the **ejs templates** when you run the generator.
-
-```ts
-{
-  camelCaseName: string
-  kebabCaseName: string
-  pascalCaseName: string
-  filename: string
-}
-```
-
-You can use them in a template with `<%= props.camelCaseName %>`.
-
-## Front matter
-
-If you'd like to customize the destination of a given template but not the location of the template file itself we support overriding the destination directory via front matter. For example in `./ignite/templates/navigator/*` we have:
-
-```
----
-destinationDir: app/navigation
----
-import { StackNavigator } from "react-navigation"
-...
-```
-
-This will copy files to `./app/navigation/*` instead of the default `./app/navigators/*`.
-
-We plan to support more powerful customization via front matter in the future.
-
-## Customizing generators
-
-You should feel free to make them your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files.
+Read more about making your own generators in the [Generator Templates](./Generator-Templates.md) documentation.
 
 ## Updating generators
 
-Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from the root folder of your project to copy over the latest generators to your project. Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back.
+You may want to update your generators to the latest version of Ignite.
+
+Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from the root folder of your project to copy over the latest generators from Ignite to your project.
+
+⚠️ Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back!
