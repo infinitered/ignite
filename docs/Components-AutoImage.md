@@ -1,5 +1,7 @@
 # AutoImage Component
 
+MAVERICKTODO: update documentation with notes that this component is really only useful when the image source is a remote URI or a data uri scheme. for local images (those loaded with require()), this isn't needed. as per RN docs: https://reactnative.dev/docs/image
+
 [Back to all components](./Components.md)
 
 Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit the size of the image and ensures you don't need to explicitly set the image size props on every image. You can use it in place of the built-in `Image` component. We at Infinite Red often import it `as Image`, as there are no significant downsides to doing so, and ensures images will always be resized if needed.

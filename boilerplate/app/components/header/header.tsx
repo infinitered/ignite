@@ -3,7 +3,7 @@ import { View, ViewStyle, TextStyle } from "react-native"
 import { HeaderProps } from "./header.props"
 import { Button } from "../Button"
 import { Text } from "../Text"
-import { Icon } from "../icon/icon"
+import { Icon } from "../Icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
 

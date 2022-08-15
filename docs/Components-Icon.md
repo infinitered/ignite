@@ -1,5 +1,7 @@
 # Icon Component
 
+MAVERICKTODO: update docs with new props. reference the DemoIcon.tsx for information
+
 [Back to all components](./Components.md)
 
 Ignite's `Icon` Component renders an icon using predefined icon images. It initially supports a 'back' icon, 'bullet' icon, and a 'bug' icon. This is used in ignite's `DemoScreen`, but can be used as a reference for how to create your own icons.
