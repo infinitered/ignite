@@ -19,14 +19,14 @@ describe("Checking for ignite. 🪔", () => {
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
   const originalDir = process.cwd()
   const tempDir = path.join(originalDir, "temp")
+  const appDir = path.join(tempDir, APP_NAME)
 
-  afterEach(() => {
-    const appDir = path.join(tempDir, APP_NAME)
-    filesystem.remove(appDir) // clean up our mess
+  beforeEach(() => {
+    filesystem.remove(appDir)
   })
 
   test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME} --debug`, {
+    const result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn`, {
       pre: `cd ${tempDir}`,
       post: `cd ${originalDir}`,
     })
