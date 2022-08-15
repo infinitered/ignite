@@ -16,7 +16,7 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
 import { WelcomeScreen } from "../screens"
-import { DemoNavigator, DemoTabParamList } from "./demo-navigator"
+import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 
 /**

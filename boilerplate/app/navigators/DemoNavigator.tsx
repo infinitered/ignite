@@ -6,7 +6,7 @@ import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
 import { colors, typography } from "../theme"
-import { AppStackParamList, AppStackScreenProps } from "./app-navigator"
+import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
   DemoComponents: undefined
