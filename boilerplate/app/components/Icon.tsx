@@ -37,6 +37,11 @@ interface IconProps extends TouchableOpacityProps {
    * Style overrides for the icon container
    */
   containerStyle?: StyleProp<ViewStyle>
+
+  /**
+   * An optional function to be called when the icon is pressed
+  */
+  onPress?: () => void
 }
 
 /**
@@ -63,7 +68,7 @@ export function Icon(props: IconProps) {
       <Image
         style={[
           $imageStyle,
-          { tintColor: color },
+          color && { tintColor: color },
           size && { width: size, height: size },
           $imageStyleOverride,
         ]}

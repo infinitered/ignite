@@ -15,9 +15,7 @@ _NOTE: Work-in-progress -- stay tuned, as our new docs will be landing soon!_
 This is a wrapper around React Native's [Image](https://reactnative.dev/docs/image) component, which automatically resizes the image to fit the container.
 
 ```tsx
-import { AutoImage as Image } from "../components/AutoImage"
-export const logoIgnite = require("./logo-ignite.png")
-;<Image source={logoIgnite} />
+<AutoImage source={{uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg"}} />
 ```
 
 [Full AutoImage Component Documentation](./Components-AutoImage.md)
@@ -149,7 +147,14 @@ The `Header` component is a component that will appear at the top of your screen
 This is a component that renders an icon.
 
 ```tsx
-<Icon icon="back" containerStyle={{ backgroundColor: "#fff" }} style={{ resizeMode: "contain" }} />
+<Icon
+  icon="back"
+  color="#a511dc"
+  size={30}
+  containerStyle={{ backgroundColor: "#fff" }}
+  style={{ resizeMode: "contain" }}
+  onPress={() => Alert.alert("pressed") }
+/>
 ```
 
 [Full Icon Component Documentation](./Components-Icon.md)
