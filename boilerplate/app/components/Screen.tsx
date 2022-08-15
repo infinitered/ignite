@@ -191,14 +191,16 @@ export function Screen(props: ScreenProps) {
     backgroundColor = colors.background,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
-    safeAreaEdges = [],
+    safeAreaEdges,
     SafeAreaViewProps,
     StatusBarProps,
     statusBarStyle = "dark-content",
   } = props
 
+  const Wrapper = safeAreaEdges?.length ? SafeAreaView : View
+
   return (
-    <SafeAreaView
+    <Wrapper
       edges={safeAreaEdges}
       {...SafeAreaViewProps}
       style={[$safeAreaStyle, SafeAreaViewProps?.style, { backgroundColor }]}
@@ -217,7 +219,7 @@ export function Screen(props: ScreenProps) {
           <ScreenWithScrolling {...props} />
         )}
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Wrapper>
   )
 }
 

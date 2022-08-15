@@ -37,6 +37,7 @@
     "@expo/webpack-config": "^0.12.71",
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@react-native-async-storage/async-storage": "^1.17.3",
+    "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "~6.0.1",
     "@react-navigation/native-stack": "^6.0.2",
     "@react-navigation/stack": "~6.2.1",
