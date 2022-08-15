@@ -12,7 +12,10 @@ export function AutoImage(props: ImageProps) {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
 
   useLayoutEffect(() => {
-    const uri = Platform.select({ web: source as string, default: source.uri as string })
+    const uri = Platform.select({
+      web: (source?.uri as string) || (source as string),
+      default: source?.uri as string,
+    })
 
     if (!uri) return
 
