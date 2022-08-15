@@ -12,6 +12,7 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StackScreenProps } from "@react-navigation/stack"
+import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
 import { WelcomeScreen } from "../screens"
@@ -37,6 +38,12 @@ export type AppStackParamList = {
   // 🔥 Your screens go here
 }
 
+/**
+ * This is a list of all the route names that will exit the app if the back button
+ * is pressed while in that screen. Only affects Android.
+ */
+const exitRoutes = ["Welcome"]
+
 export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreenProps<
   AppStackParamList,
   T
@@ -45,7 +52,7 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreen
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-function AppStack() {
+const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -58,15 +65,13 @@ function AppStack() {
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
-}
+})
 
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
-export function AppNavigator(props: NavigationProps) {
+export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
 
-  // What route names do we allow the back button to exit the app from?
-  const exitRoutes = ["welcome"]
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
@@ -78,18 +83,4 @@ export function AppNavigator(props: NavigationProps) {
       <AppStack />
     </NavigationContainer>
   )
-}
-
-AppNavigator.displayName = "AppNavigator"
-
-/**
- * A list of routes from which we're allowed to leave the app when
- * the user presses the back button on Android.
- *
- * Anything not on this list will be a standard `back` action in
- * react-navigation.
- *
- * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
- */
-const exitRoutes = ["Welcome"]
-export const canExit = (routeName: string) => exitRoutes.includes(routeName)
+})
