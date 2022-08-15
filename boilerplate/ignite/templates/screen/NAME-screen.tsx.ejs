@@ -13,10 +13,6 @@ import { Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 
-const ROOT: ViewStyle = {
-  flex: 1,
-}
-
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
 // - Add `<%= props.camelCaseName %>: undefined` to AppStackParamList
@@ -33,10 +29,14 @@ export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<AppStackPara
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={$root} preset="scroll">
       <Text text="<%= props.camelCaseName %>" />
     </Screen>
   )
 })
+
+const $root: ViewStyle = {
+  flex: 1,
+}
 
 //MAVERICKTODO: update the generator template with new patterns
