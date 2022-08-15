@@ -44,7 +44,7 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   // run typescript
   let resultTS: string
   try {
-    resultTS = await run(`npm run compile`, runOpts)
+    resultTS = await run(`yarn compile`, runOpts)
   } catch (e) {
     resultTS = e.stdout
     console.error(resultTS) // This will only show if you run in --verbose mode.
@@ -282,8 +282,8 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   await run(`git commit -m "generated test components & assets"`, runOpts)
 
   // run the tests; if they fail, run will raise and this test will fail
-  await run(`npm run test`, runOpts)
-  await run(`npm run lint`, runOpts)
-  await run(`npm run compile`, runOpts)
+  await run(`yarn test`, runOpts)
+  await run(`yarn lint`, runOpts)
+  await run(`yarn compile`, runOpts)
   expect(await run("git diff HEAD", runOpts)).toEqual("")
 }
