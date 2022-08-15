@@ -39,10 +39,15 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   }
 
   // #region Assert Important Directories Exist
-  const iosProjectExists = filesystem.exists(filesystem.path(appPath, "ios"))
-  const androidProjectExists = filesystem.exists(filesystem.path(appPath, "android"))
+  // check the contents of ignite/templates
+  const templates = filesystem.list(`${appPath}/ignite/templates`)
+  expect(templates).toContain("component")
+  expect(templates).toContain("model")
+  expect(templates).toContain("screen")
+  expect(templates).toContain("app-icon")
+  // #endregion
 
-  // run typescript
+  // #region Assert Typescript Compiles With No Errors
   let resultTS: string
   try {
     resultTS = await run(`npm run compile`, runOpts)
@@ -51,13 +56,6 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     console.error(resultTS) // This will only show if you run in --verbose mode.
   }
   expect(resultTS).not.toContain("error")
-
-  // check the contents of ignite/templates
-  const templates = filesystem.list(`${appPath}/ignite/templates`)
-  expect(templates).toContain("component")
-  expect(templates).toContain("model")
-  expect(templates).toContain("screen")
-  expect(templates).toContain("app-icon")
   // #endregion
 
   // #region Assert Important Files Exist
@@ -146,6 +144,9 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   )
 
   expect(appIconGen).toContain(`Generating Expo app icons...`)
+
+  const iosProjectExists = filesystem.exists(filesystem.path(appPath, "ios"))
+  const androidProjectExists = filesystem.exists(filesystem.path(appPath, "android"))
 
   if (androidProjectExists) {
     expect(appIconGen).toContain(`Generating Android app icons...`)
