@@ -13,7 +13,7 @@ export function AutoImage(props: ImageProps) {
 
   useLayoutEffect(() => {
     const uri = Platform.select({
-      web: (source?.uri as string) || (source as string),
+      web: (source?.uri as string) ?? (source as string),
       default: source?.uri as string,
     })
 
