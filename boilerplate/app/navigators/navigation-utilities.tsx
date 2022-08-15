@@ -42,6 +42,8 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
   // ignore if iOS ... no back button!
   if (Platform.OS === "ios") return
 
+  // The reason we're using a ref here is because we need to be able
+  // to update the canExit function without re-setting up all the listeners
   const canExitRef = useRef(canExit)
 
   useEffect(() => {

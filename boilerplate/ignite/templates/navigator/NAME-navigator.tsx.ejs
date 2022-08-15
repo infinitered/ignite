@@ -1,8 +1,15 @@
+---
+destinationDir: app/navigators
+patch:
+  path: "app/navigators/index.ts"
+  append: "export * from \"./<%= props.kebabCaseName %>-navigator\"\n"
+  skip: <%= props.skipIndexFile %>
+---
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import {
   DemoScreen
-} from "../../screens"
+} from "../screens"
 
 export type <%= props.pascalCaseName %>NavigatorParamList = {
   demo: undefined
