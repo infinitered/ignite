@@ -39,6 +39,8 @@ export function getActiveRouteName(state: NavigationState | PartialState<Navigat
  * the navigation or allows exiting the app.
  */
 export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
+  // The reason we're using a ref here is because we need to be able
+  // to update the canExit function without re-setting up all the listeners
   const canExitRef = useRef(canExit)
 
   useEffect(() => {

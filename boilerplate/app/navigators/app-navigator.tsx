@@ -64,7 +64,11 @@ interface NavigationProps extends Partial<React.ComponentProps<typeof Navigation
 
 export function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
-  useBackButtonHandler(canExit)
+
+  // What route names do we allow the back button to exit the app from?
+  const exitRoutes = ["welcome"]
+  useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+
   return (
     <NavigationContainer
       ref={navigationRef}

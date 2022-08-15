@@ -1,7 +1,5 @@
 # Generators
 
-_NOTE: This documentation is for Ignite CLI version 4.0+. For apps spun up by Ignite CLI 3.x or below (Andross or Bowser), please refer to [the previous documentation](https://github.com/infinitered/ignite/tree/2dd42a5957ff18211c9edd7524b6af5f4231baf6/docs)._
-
 _The true gem of Ignite._ When you spin up a new app with Ignite CLI, we copy in several generator templates into `./ignite/templates/*`. Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
 
 ```
@@ -36,12 +34,22 @@ npx ignite-cli generate screen Settings
 Creates a Mobx-State-Tree model.
 
 ```
-npx ignite-cli generate model No
+npx ignite-cli generate model Pizza
 ```
 
 - Creates the model
 - Creates a unit test file
 - Appends export to `models/index.ts` unless you pass `--skip-index-file`
+
+### Navigator generator
+
+Creates a React Navigation navigator in the `app/navigators` folder.
+
+```
+npx ignite-cli generate navigator OrderPizza
+```
+
+You can learn more about navigators [in the Navigation docs](./Navigation.md).
 
 ### App Icon generator
 
