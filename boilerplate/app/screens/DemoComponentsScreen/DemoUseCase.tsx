@@ -5,11 +5,12 @@ import { Text } from "../../components"
 interface DemoUseCaseProps {
   name: string
   description?: string
+  layout?: "column" | "row"
   children: ReactNode
 }
 
 export function DemoUseCase(props: DemoUseCaseProps) {
-  const { name, description, children } = props
+  const { name, description, children, layout = "column" } = props
 
   return (
     <View style={$container}>
@@ -17,13 +18,18 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
       {description && <Text style={$description}>{description}</Text>}
 
-      {children}
+      <View style={layout === "row" && $rowLayout}>{children}</View>
     </View>
   )
 }
 
 const $container: ViewStyle = {
   marginBottom: 24,
+}
+
+const $rowLayout: ViewStyle = {
+  flexDirection: "row",
+  flexWrap: "wrap",
 }
 
 const $description: TextStyle = {

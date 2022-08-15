@@ -1,7 +1,7 @@
 import * as React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { spacing, typography } from "../../theme"
-import { Icon } from "../icon/icon"
+import { Icon } from "../Icon"
 import { Text } from "../Text"
 
 const BULLET_ITEM: ViewStyle = {
