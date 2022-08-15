@@ -1,22 +1,21 @@
-import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Button, Text } from "../components"
-import { NavigatorParamList } from "../navigators"
+import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 
-const welcomeLogo = require("../assets/images/welcome-logo.png")
+const welcomeLogo = require("../assets/images/logo.png")
 const welcomeFace = require("../assets/images/welcome-face.png")
 
-interface WelcomeScreenProps extends StackScreenProps<NavigatorParamList, "welcome"> {}
+interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
 export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScreenProps) {
   const { navigation } = props
 
   function goNext() {
-    navigation.navigate("demo")
+    navigation.navigate("Demo", { screen: "DemoComponents" })
   }
 
   return (
