@@ -379,7 +379,7 @@ PODS:
     - React-jsi (= 0.69.4)
     - React-logger (= 0.69.4)
     - React-perflogger (= 0.69.4)
-  - RNBootSplash (4.2.3):
+  - RNBootSplash (4.3.2):
     - React-Core
   - RNCAsyncStorage (1.17.9):
     - React-Core
@@ -642,7 +642,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9adb4a3cbb598d1bbd46a05256f445e4b8c70603
   React-runtimeexecutor: 61ee22a8cdf8b6bb2a7fb7b4ba2cc763e5285196
   ReactCommon: 8f67bd7e0a6afade0f20718f859dc8c2275f2e83
-  RNBootSplash: e8a36a88f8c868769ec998c5afe3082032e82fc2
+  RNBootSplash: 5f346163977573d6b2aeba1b25df9d2245c0d73c
   RNCAsyncStorage: b2489b49e38c85e10ed45a888d13a2a4c7b32ea1
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
@@ -651,6 +651,6 @@ SPEC CHECKSUMS:
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: cf47b4aa35a9fa6277317ef9c351fe7e17bb595f
+PODFILE CHECKSUM: 7c967f701a86262c6eda4640386afbb79325de75
 
 COCOAPODS: 1.11.3
