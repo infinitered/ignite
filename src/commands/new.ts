@@ -12,6 +12,7 @@ import {
   stopSpinner,
   clearSpinners,
 } from "../tools/pretty"
+import { normalize } from "../tools/normalize"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -258,9 +259,12 @@ export default {
 
     // #region Run Packager Install
     // pnpm/yarn/npm install it
-    startSpinner("Unboxing npm dependencies")
-    await packager.install({ ...packagerOptions, onProgress: log })
-    stopSpinner("Unboxing npm dependencies", "🧶")
+
+    if (normalize.boolean(options.installDeps) !== false) {
+      startSpinner("Unboxing npm dependencies")
+      await packager.install({ ...packagerOptions, onProgress: log })
+      stopSpinner("Unboxing npm dependencies", "🧶")
+    }
 
     // remove the gitignore template
     remove(".gitignore.template")
