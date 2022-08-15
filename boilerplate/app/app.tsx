@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { ErrorBoundary } from "./screens/error/error-boundary"
+import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 
@@ -71,7 +71,7 @@ function App(props: AppProps) {
   return (
     <RootStoreProvider value={rootStore}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <ErrorBoundary catchErrors={"always"}>
+        <ErrorBoundary catchErrors="always">
           <AppNavigator
             initialState={initialNavigationState}
             onStateChange={onNavigationStateChange}
