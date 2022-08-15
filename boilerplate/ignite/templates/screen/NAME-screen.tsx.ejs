@@ -1,3 +1,9 @@
+---
+patch:
+  path: "app/screens/index.ts"
+  append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>-screen\"\n"
+  skip: <%= props.skipIndexFile %>
+---
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"

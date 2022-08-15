@@ -1,7 +1,8 @@
 import * as ejs from "ejs"
-import { filesystem, GluegunToolbox, strings } from "gluegun"
+import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
 import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
+import * as YAML from "yaml"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
 
 export function runGenerator(
@@ -126,18 +127,66 @@ function isIgniteProject(): boolean {
   return filesystem.exists("./ignite") === "dir"
 }
 
+function cwd() {
+  return process.cwd()
+}
+
 function igniteDir() {
-  const cwd = process.cwd()
-  return filesystem.path(cwd, "ignite")
+  return filesystem.path(cwd(), "ignite")
 }
 
 function appDir() {
-  const cwd = process.cwd()
-  return filesystem.path(cwd, "app")
+  return filesystem.path(cwd(), "app")
 }
 
 function templatesDir() {
   return filesystem.path(igniteDir(), "templates")
+}
+
+function frontMatter(contents: string) {
+  const parts = contents.split("---\n")
+  if (parts.length === 1 || parts.length === 3) {
+    return {
+      data: parts[1] ? YAML.parse(parts[1]) : {},
+      content: parts[2] ?? parts[0],
+    }
+  } else {
+    return {}
+  }
+}
+
+/**
+ * Patch front matter configuration
+ */
+type Patch = GluegunPatchingPatchOptions & {
+  path: string
+  append?: string
+  prepend?: string
+  replace?: string
+  skip?: boolean
+}
+
+/**
+ * Handles patching files via front matter config
+ */
+async function handlePatches(data: { patches?: Patch[]; patch?: Patch }) {
+  const patches = data.patches ?? []
+  if (data.patch) patches.push(data.patch)
+  for (const patch of patches) {
+    const { path: patchPath, skip, ...patchOpts } = patch
+    if (patchPath && !skip) {
+      if (patchOpts.append) {
+        await patching.append(patchPath, patchOpts.append)
+      }
+      if (patchOpts.prepend) {
+        await patching.prepend(patchPath, patchOpts.prepend)
+      }
+      if (patchOpts.replace) {
+        await patching.replace(patchPath, patchOpts.replace, patchOpts.insert)
+      }
+      await patching.patch(patchPath, patchOpts)
+    }
+  }
 }
 
 /**
@@ -159,8 +208,11 @@ type GeneratorOptions = {
 /**
  * Generates something using a template
  */
-export function generateFromTemplate(generator: string, options: GeneratorOptions): string[] {
-  const { find, path, dir, copy, separator } = filesystem
+export function generateFromTemplate(
+  generator: string,
+  options: GeneratorOptions,
+): Promise<string>[] {
+  const { find, path, dir, separator } = filesystem
   const { pascalCase, kebabCase, pluralize, camelCase } = strings
 
   // permutations of the name
@@ -169,82 +221,56 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
   const camelCaseName = camelCase(options.name)
 
   // passed into the template generator
-  const props = { camelCaseName, kebabCaseName, pascalCaseName }
+  const props = { camelCaseName, kebabCaseName, pascalCaseName, ...options }
 
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
-  // where are we copying to?
-  const generatorDir = path(appDir(), pluralize(generator))
-  const destinationDir = path(generatorDir, kebabCaseName)
-
-  // find index file if it exists
-  let indexFile: string
-  let hasIndex: boolean
-  try {
-    indexFile = find(generatorDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
-    hasIndex = !!indexFile
-  } catch (e) {
-    // just ignore if index doesn't exist
-  }
 
   // find the files
   const files = find(templateDir, { matching: "*" })
 
-  // create destination folder
-  dir(destinationDir)
-
   // loop through the files
-  const newFiles = files.map((templateFilename: string) => {
+  const newFiles = files.map(async (templateFilename: string) => {
     // get the filename and replace `NAME` with the actual name
     let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
 
-    let destinationFile: string
+    // read template file
+    let templateContents = filesystem.read(templateFilename)
 
-    // if .ejs, run through the ejs template system
+    // render ejs
     if (templateFilename.endsWith(".ejs")) {
-      // where we're going
-      destinationFile = path(destinationDir, filename)
-
-      // file-specific props
-      const data = { props: { ...props, filename } }
-
-      // read the template
-      const templateContent = filesystem.read(templateFilename)
-
-      // render the template
-      const content = ejs.render(templateContent, data)
-
-      // write to the destination file
-      filesystem.write(destinationFile, content)
-    } else {
-      // no .ejs, so just direct copy
-      destinationFile = path(destinationDir, filename)
-      copy(templateFilename, destinationFile)
+      templateContents = ejs.render(templateContents, { props: { ...props, filename } })
     }
 
-    // append to barrel export if applicable
-    // MAVERICKTODO: update generator with new patterns
-    if (
-      !options.skipIndexFile &&
-      hasIndex &&
-      !filename.includes(".test") &&
-      !filename.includes(".story") &&
-      !filename.includes(".styles")
-    ) {
-      const basename = filename.split(".")[0]
-      const exportLine = `export * from "./${kebabCaseName}/${basename}"\n`
-      const indexContents = filesystem.read(indexFile)
-      const exportExists = indexContents.includes(exportLine)
-
-      if (!exportExists) {
-        filesystem.append(indexFile, exportLine)
-      }
+    // parse out front matter data and content
+    const { data, content } = frontMatter(templateContents)
+    if (!content) {
+      warning("⚠️  Unable to parse front matter. Please check your delimiters.")
+      return ""
     }
 
-    return destinationFile
+    // apply any provided patches
+    await handlePatches(data)
+
+    // where are we copying to?
+    const generatorDir = path(appDir(), pluralize(generator))
+    const defaultDestinationDir = path(generatorDir, kebabCaseName)
+    const templateDestinationDir = data.destinationDir
+    const destinationDir = templateDestinationDir
+      ? path(cwd(), templateDestinationDir)
+      : defaultDestinationDir
+    const destinationPath = path(destinationDir, filename)
+
+    // ensure destination folder exists
+    dir(destinationDir)
+
+    // write to the destination file
+    filesystem.write(destinationPath, content)
+
+    return destinationPath
   })
 
   return newFiles

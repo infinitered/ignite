@@ -150,6 +150,22 @@ Props are passed into the **ejs templates** when you run the generator.
 
 You can use them in a template with `<%= props.camelCaseName %>`.
 
+## Front matter
+
+If you'd like to customize the destination of a given template but not the location of the template file itself we support overriding the destination directory via front matter. For example in `./ignite/templates/navigator/*` we have:
+
+```
+---
+destinationDir: app/navigation
+---
+import { StackNavigator } from "react-navigation"
+...
+```
+
+This will copy files to `./app/navigation/*` instead of the default `./app/navigators/*`.
+
+We plan to support more powerful customization via front matter in the future.
+
 ## Customizing generators
 
 You should feel free to make them your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files.
