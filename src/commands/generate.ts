@@ -40,10 +40,12 @@ async function generate(toolbox: GluegunToolbox) {
 
   // okay, let's do it!
   p()
-  const updatedFiles = await Promise.all(generateFromTemplate(generator, {
-    name: pascalName,
-    skipIndexFile: parameters.options.skipIndexFile,
-  }))
+  const updatedFiles = await Promise.all(
+    generateFromTemplate(generator, {
+      name: pascalName,
+      skipIndexFile: parameters.options.skipIndexFile,
+    }),
+  )
   heading(`Generated new files:`)
   updatedFiles.forEach((f) => p(f))
 }
