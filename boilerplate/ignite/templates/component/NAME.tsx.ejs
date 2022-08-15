@@ -9,7 +9,7 @@ patch:
 import * as React from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { color, typography } from "../../theme"
+import { colors, typography } from "../../theme"
 import { Text } from "../Text"
 
 const CONTAINER: ViewStyle = {
@@ -19,7 +19,7 @@ const CONTAINER: ViewStyle = {
 const TEXT: TextStyle = {
   fontFamily: typography.primary.normal,
   fontSize: 14,
-  color: color.primary,
+  color: colors.palette.primary100,
 }
 
 export interface <%= props.pascalCaseName %>Props {
