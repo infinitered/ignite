@@ -38,6 +38,7 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     post: `cd ${originalDir}`,
   }
 
+  // #region Assert Important Directories Exist
   const iosProjectExists = filesystem.exists(filesystem.path(appPath, "ios"))
   const androidProjectExists = filesystem.exists(filesystem.path(appPath, "android"))
 
@@ -57,7 +58,9 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   expect(templates).toContain("model")
   expect(templates).toContain("screen")
   expect(templates).toContain("app-icon")
+  // #endregion
 
+  // #region Assert Important Files Exist
   // check the basic contents of package.json
   const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
   expect(igniteJSON).toHaveProperty("scripts")
@@ -68,7 +71,9 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   const appJS = filesystem.read(`${appPath}/app/app.tsx`)
   expect(appJS).toContain("export default App")
   expect(appJS).toContain("RootStore")
+  // #endregion
 
+  // #region Assert Generators Work
   // now lets test generators too, since we have a properly spun-up app!
   // components
   const componentGen = await runIgnite(`generate component WompBomp`, runOpts)
@@ -268,7 +273,9 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   expect(filesystem.exists(inputFile) === "file").toBe(false)
   await runIgnite(`generate --update`, runOpts)
   expect(filesystem.exists(inputFile) === "file").toBe(true)
+  // #endregion
 
+  // #region Assert Changes Can Be Commit To Git
   // commit the change
   await run(`git add ./app/models ./app/components ./app.json ./assets/images`, runOpts)
   if (iosProjectExists) {
@@ -280,10 +287,13 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
     await run(`git add ./android/app/src/main/res`, runOpts)
   }
   await run(`git commit -m "generated test components & assets"`, runOpts)
+  // #endregion
 
+  // #region Assert package.json Scripts Can Be Run
   // run the tests; if they fail, run will raise and this test will fail
   await run(`npm run test`, runOpts)
   await run(`npm run lint`, runOpts)
   await run(`npm run compile`, runOpts)
   expect(await run("git diff HEAD", runOpts)).toEqual("")
+  // #endregion
 }
