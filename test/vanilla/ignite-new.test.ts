@@ -26,7 +26,7 @@ describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna ta
   })
 
   test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn`, {
+    const result = await runIgnite(`new ${APP_NAME} --debug --packager=npm`, {
       pre: `cd ${tempDir}`,
       post: `cd ${originalDir}`,
     })
