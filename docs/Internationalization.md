@@ -6,6 +6,17 @@ Ignite currently setup to have Internationalization setup in English, Arabic, an
 
 Since Ignite already comes with an RTL language, Arabic, adding any new ones would work by default.
 
+### Removing RTL Support
+
+To remove RTL support, follow the following steps:
+
+1. `/app/i18n/i18n.ts`
+
+- remove your RTL `.json` file from the `i18n.translations` object
+- remove lines 19-21 where we allow and force RTL on the native layer
+
+2. remove all other associated logic that uses export `isRTL` variable
+
 ## Adding more languages
 
 1. add you language `.json` file to `app/i18n/`, i.e. `app/i18n/fr.json`
