@@ -2,13 +2,13 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import { ImageStyle, Platform, TextStyle, View, ViewStyle, Image } from "react-native"
 import { BulletItem, Button, Header, Icon, Screen, Text } from "../components"
-import { DemoTabScreenProps } from "../navigators/demo-navigator"
+import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { Api } from "../services/api"
 import { colors, spacing } from "../theme"
 import { save } from "../utils/storage"
 
 // MAVERICKTODO: reexport these icons (including the 3x version and move to assets folder)
-const logoIgnite = require("../../../assets/images/logo.png")
+const logoIgnite = require("../../assets/images/logo.png")
 
 // MAVERICKTODO: update this screen with new styling patterns
 

@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from "react"
-import { ErrorComponent } from "./error-component"
+import { ErrorDetails } from "./ErrorDetails"
 
 interface Props {
   children: ReactNode
@@ -17,9 +17,8 @@ interface State {
  * class component because according to the documentation, only class
  * components can be error boundaries.
  *
- * Read more here:
- *
- * @link: https://reactjs.org/docs/error-boundaries.html
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/) MAVERICKTODO
+ * - [React Error Boundaries](https://reactjs.org/docs/error-boundaries.html)
  */
 export class ErrorBoundary extends Component<Props, State> {
   state = { error: null, errorInfo: null }
@@ -59,7 +58,7 @@ export class ErrorBoundary extends Component<Props, State> {
   // Render an error UI if there's an error; otherwise, render children
   render() {
     return this.isEnabled() && this.state.error ? (
-      <ErrorComponent
+      <ErrorDetails
         onReset={this.resetError}
         error={this.state.error}
         errorInfo={this.state.errorInfo}

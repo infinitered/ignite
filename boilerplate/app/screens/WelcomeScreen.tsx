@@ -6,8 +6,8 @@ import { Button, Text } from "../components"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 
-const welcomeLogo = require("../assets/images/logo.png")
-const welcomeFace = require("../assets/images/welcome-face.png")
+const welcomeLogo = require("../../assets/images/logo.png")
+const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
