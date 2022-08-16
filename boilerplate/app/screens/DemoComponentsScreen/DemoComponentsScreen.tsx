@@ -1,10 +1,19 @@
 import React, { ReactElement, useRef, useState } from "react"
-import { FlatList, Image, ImageStyle, Pressable, View, ViewStyle } from "react-native"
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  Pressable,
+  SectionList,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors } from "../../theme"
-import { DemoItem } from "./DemoItem"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 
@@ -13,13 +22,13 @@ const logo = require("../../../assets/images/logo.png")
 export interface Demo {
   name: string
   description: string
-  useCases: ReactElement[]
+  data: ReactElement[]
 }
 
 export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">) {
   const [open, setOpen] = useState(false)
   const drawerRef = useRef<DrawerLayout>()
-  const listRef = useRef<FlatList>()
+  const listRef = useRef<SectionList>()
   const menuRef = useRef<FlatList>()
 
   const toggleDrawer = () => {
@@ -32,6 +41,15 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
     }
   }
 
+  const handleScroll = (sectionIndex: number, itemIndex = 0) => {
+    listRef.current.scrollToLocation({
+      animated: true,
+      itemIndex,
+      sectionIndex,
+    })
+    toggleDrawer()
+  }
+
   return (
     <DrawerLayout
       ref={drawerRef}
@@ -41,57 +59,69 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       onDrawerOpen={() => setOpen(true)}
       onDrawerClose={() => setOpen(false)}
       renderNavigationView={() => (
-        <View style={$drawer}>
+        <SafeAreaView style={$drawer} edges={["top"]}>
           <View style={$logoContainer}>
-            <Image source={logo} style={$logo} />
+            <Image source={logo} style={$logoImage} />
           </View>
 
           <FlatList<{ name: string; useCases: string[] }>
             ref={menuRef}
+            contentContainerStyle={$flatListContentContainer}
             data={Object.values(Demos).map((d) => ({
               name: d.name,
-              useCases: d.useCases.map((u) => u.props.name),
+              useCases: d.data.map((u) => u.props.name),
             }))}
             keyExtractor={(item) => item.name}
-            renderItem={({ item }) => (
-              <Pressable
-                onPress={() => {
-                  listRef.current.scrollToItem({
-                    animated: true,
-                    item,
-                  })
-                  toggleDrawer()
-                }}
-                style={$menu}
-              >
-                <Text preset="bold">{item.name}</Text>
-                <View style={$subMenu}>
-                  {item.useCases.map((u) => (
-                    <View key={u} style={$subMenuItem}>
-                      <Text>{u}</Text>
-                      <Icon icon="caretRight" />
-                    </View>
-                  ))}
-                </View>
-              </Pressable>
+            renderItem={({ item, index: sectionIndex }) => (
+              <View>
+                <Text
+                  onPress={() => handleScroll(sectionIndex)}
+                  preset="bold"
+                  style={$menuContainer}
+                >
+                  {item.name}
+                </Text>
+                {item.useCases.map((u, index) => (
+                  <Pressable
+                    onPress={() => handleScroll(sectionIndex, index + 1)}
+                    key={`section${sectionIndex}-${u}`}
+                    style={$menuitem}
+                  >
+                    <Text>{u}</Text>
+                    <Icon icon="caretRight" />
+                  </Pressable>
+                ))}
+              </View>
             )}
           />
-        </View>
+        </SafeAreaView>
       )}
     >
       <Screen preset="fixed" safeAreaEdges={["top", "bottom"]}>
         <DrawerIconButton open={open} onPress={toggleDrawer} />
 
-        <FlatList<Demo>
+        <SectionList
+          ref={listRef}
+          contentContainerStyle={$sectionListContentContainer}
+          stickySectionHeadersEnabled={false}
+          sections={Object.values(Demos)}
+          renderItem={({ item }) => item}
+          renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
           ListHeaderComponent={
             <View style={$heading}>
               <Text preset="heading" tx="demoComponentsScreen.jumpStart" />
             </View>
           }
-          ref={listRef}
-          data={Object.values(Demos)}
-          keyExtractor={(item) => item.name}
-          renderItem={(ItemProps) => <DemoItem {...ItemProps} />}
+          renderSectionHeader={({ section }) => {
+            return (
+              <View>
+                <Text preset="heading" style={$demoItemName}>
+                  {section.name}
+                </Text>
+                <Text style={$demoItemDescription}>{section.description}</Text>
+              </View>
+            )
+          }}
         />
       </Screen>
     </DrawerLayout>
@@ -100,17 +130,21 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
 
 const $drawer: ViewStyle = {
   flex: 1,
-  justifyContent: "center",
-  marginLeft: 26,
-  marginVertical: 60,
+}
+
+const $flatListContentContainer: ViewStyle = {
+  paddingHorizontal: 24,
+}
+
+const $sectionListContentContainer: ViewStyle = {
+  paddingHorizontal: 24,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: 32,
-  marginHorizontal: 24,
-  marginTop: 16,
+  marginBottom: 56,
 }
-const $logo: ImageStyle = {
+
+const $logoImage: ImageStyle = {
   height: 42,
   width: 77,
 }
@@ -118,21 +152,30 @@ const $logo: ImageStyle = {
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   height: 56,
+  paddingHorizontal: 24,
 }
 
-const $menu: ViewStyle = {
-  marginBottom: 8,
-  marginHorizontal: 24,
-  marginTop: 24,
+const $menuContainer: ViewStyle = {
+  paddingBottom: 8,
+  paddingTop: 24,
 }
 
-const $subMenu: ViewStyle = {
-  marginTop: 8,
-}
-
-const $subMenuItem: ViewStyle = {
+const $menuitem: ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
-  height: 56,
   justifyContent: "space-between",
+  height: 56,
+}
+
+const $demoItemName: TextStyle = {
+  fontSize: 24,
+  marginBottom: 18,
+}
+
+const $demoItemDescription: TextStyle = {
+  marginBottom: 43,
+}
+
+const $demoUseCasesSpacer: ViewStyle = {
+  paddingBottom: 58,
 }
