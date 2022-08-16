@@ -40,8 +40,8 @@ interface IconProps extends TouchableOpacityProps {
 
   /**
    * An optional function to be called when the icon is pressed
-  */
-  onPress?: () => void
+   */
+  onPress?: TouchableOpacityProps["onPress"]
 }
 
 /**
