@@ -8,7 +8,7 @@ import { colors, spacing } from "../theme"
 import { save } from "../utils/storage"
 
 // MAVERICKTODO: reexport these icons (including the 3x version and move to assets folder)
-const logoIgnite = require("../../../assets/images/logo.png")
+const logoIgnite = require("../../assets/images/logo.png")
 
 // MAVERICKTODO: update this screen with new styling patterns
 
