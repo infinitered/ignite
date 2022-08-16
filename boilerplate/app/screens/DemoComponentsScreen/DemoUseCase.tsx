@@ -14,7 +14,7 @@ export function DemoUseCase(props: DemoUseCaseProps) {
   const { name, description, children, layout = "column" } = props
 
   return (
-    <View style={$container}>
+    <View>
       <Text style={$name}>{name}</Text>
 
       {description && <Text style={$description}>{description}</Text>}
@@ -24,26 +24,19 @@ export function DemoUseCase(props: DemoUseCaseProps) {
   )
 }
 
-const $container: ViewStyle = {
-  paddingHorizontal: 24,
-}
-
 const $description: TextStyle = {
-  marginTop: 8,
-  marginBottom: 16,
+  marginTop: 16,
 }
 
 const $item: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
   padding: 24,
-  marginVertical: 16,
+  marginVertical: 18,
 }
 
 const $name: TextStyle = {
   fontFamily: typography.primary.bold,
-  paddingTop: 24,
-  paddingBottom: 8,
 }
 
 const $rowLayout: ViewStyle = {

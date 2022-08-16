@@ -34,7 +34,7 @@ export const DemoIcon: Demo = {
   name: "Icon",
   description:
     "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.",
-  useCases: [
+  data: [
     <DemoUseCase
       name="Icons"
       description="List of icons registered inside the component."

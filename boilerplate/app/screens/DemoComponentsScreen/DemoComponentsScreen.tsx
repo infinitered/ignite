@@ -1,10 +1,18 @@
-import React, { Fragment, ReactElement, useRef, useState } from "react"
-import { FlatList, Image, ImageStyle, Pressable, SectionList, View, ViewStyle } from "react-native"
+import React, { ReactElement, useRef, useState } from "react"
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  Pressable,
+  SectionList,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
 import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import { colors, spacing } from "../../theme"
-import { DemoItem } from "./DemoItem"
+import { colors } from "../../theme"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 
@@ -13,7 +21,7 @@ const logo = require("../../../assets/images/logo.png")
 export interface Demo {
   name: string
   description: string
-  useCases: ReactElement[]
+  data: ReactElement[]
 }
 
 export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">) {
@@ -37,7 +45,6 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       animated: true,
       itemIndex,
       sectionIndex,
-      ...(itemIndex === 0 && { viewOffset: -spacing[7] }),
     })
     toggleDrawer()
   }
@@ -53,26 +60,30 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       renderNavigationView={() => (
         <View style={$drawer}>
           <View style={$logoContainer}>
-            <Image source={logo} style={$logo} />
+            <Image source={logo} style={$logoImage} />
           </View>
 
           <FlatList<{ name: string; useCases: string[] }>
             ref={menuRef}
             data={Object.values(Demos).map((d) => ({
               name: d.name,
-              useCases: d.useCases.map((u) => u.props.name),
+              useCases: d.data.map((u) => u.props.name),
             }))}
             keyExtractor={(item) => item.name}
             renderItem={({ item, index: sectionIndex }) => (
               <View>
-                <Text onPress={() => handleScroll(sectionIndex)} preset="bold" style={$menu}>
+                <Text
+                  onPress={() => handleScroll(sectionIndex)}
+                  preset="bold"
+                  style={$menuContainer}
+                >
                   {item.name}
                 </Text>
                 {item.useCases.map((u, index) => (
                   <Pressable
                     onPress={() => handleScroll(sectionIndex, index + 1)}
                     key={`section${sectionIndex}-${u}`}
-                    style={$item}
+                    style={$menuitem}
                   >
                     <Text>{u}</Text>
                     <Icon icon="caretRight" />
@@ -88,21 +99,27 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
         <DrawerIconButton open={open} onPress={toggleDrawer} />
 
         <SectionList
+          ref={listRef}
+          contentContainerStyle={$sectionListContentContainer}
+          stickySectionHeadersEnabled={false}
+          sections={Object.values(Demos)}
+          renderItem={({ item }) => item}
           ListHeaderComponent={
             <View style={$heading}>
               <Text preset="heading" tx="demoComponentsScreen.jumpStart" />
             </View>
           }
-          stickySectionHeadersEnabled={false}
-          ref={listRef}
-          sections={Object.values(Demos).map((d) => ({ title: d.name, data: d.useCases }))}
-          renderSectionHeader={({ section: { title } }) => {
-            const demo = Object.values(Demos).find((d) => d.name === title)
-            return <DemoItem {...demo} />
+          renderSectionHeader={({ section }) => {
+            return (
+              <View>
+                <Text preset="heading" style={$demoItemName}>
+                  {section.name}
+                </Text>
+                <Text style={$demoItemDescription}>{section.description}</Text>
+              </View>
+            )
           }}
-          renderItem={({ item, section }) => (
-            <Fragment key={`${section.key}-${item.name}`}>{item}</Fragment>
-          )}
+          renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
         />
       </Screen>
     </DrawerLayout>
@@ -116,11 +133,15 @@ const $drawer: ViewStyle = {
   marginVertical: 60,
 }
 
-const $heading: ViewStyle = {
+const $sectionListContentContainer: ViewStyle = {
   paddingHorizontal: 24,
-  paddingTop: 16,
 }
-const $logo: ImageStyle = {
+
+const $heading: ViewStyle = {
+  marginBottom: 56,
+}
+
+const $logoImage: ImageStyle = {
   height: 42,
   width: 77,
 }
@@ -128,17 +149,29 @@ const $logo: ImageStyle = {
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   height: 56,
-  marginBottom: 13,
 }
 
-const $menu: ViewStyle = {
+const $menuContainer: ViewStyle = {
   paddingBottom: 8,
   paddingTop: 24,
 }
 
-const $item: ViewStyle = {
+const $menuitem: ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
-  height: 56,
   justifyContent: "space-between",
+  height: 56,
+}
+
+const $demoItemName: TextStyle = {
+  fontSize: 24,
+  marginBottom: 18,
+}
+
+const $demoItemDescription: TextStyle = {
+  marginBottom: 43,
+}
+
+const $demoUseCasesSpacer: ViewStyle = {
+  paddingBottom: 58,
 }
