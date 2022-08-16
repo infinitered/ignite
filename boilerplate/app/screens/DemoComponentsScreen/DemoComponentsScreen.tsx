@@ -10,6 +10,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors } from "../../theme"
@@ -58,13 +59,14 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       onDrawerOpen={() => setOpen(true)}
       onDrawerClose={() => setOpen(false)}
       renderNavigationView={() => (
-        <View style={$drawer}>
+        <SafeAreaView style={$drawer} edges={["top"]}>
           <View style={$logoContainer}>
             <Image source={logo} style={$logoImage} />
           </View>
 
           <FlatList<{ name: string; useCases: string[] }>
             ref={menuRef}
+            contentContainerStyle={$flatListContentContainer}
             data={Object.values(Demos).map((d) => ({
               name: d.name,
               useCases: d.data.map((u) => u.props.name),
@@ -92,7 +94,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
               </View>
             )}
           />
-        </View>
+        </SafeAreaView>
       )}
     >
       <Screen preset="fixed" safeAreaEdges={["top", "bottom"]}>
@@ -104,6 +106,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
           stickySectionHeadersEnabled={false}
           sections={Object.values(Demos)}
           renderItem={({ item }) => item}
+          renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
           ListHeaderComponent={
             <View style={$heading}>
               <Text preset="heading" tx="demoComponentsScreen.jumpStart" />
@@ -119,7 +122,6 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
               </View>
             )
           }}
-          renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
         />
       </Screen>
     </DrawerLayout>
@@ -128,9 +130,10 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
 
 const $drawer: ViewStyle = {
   flex: 1,
-  justifyContent: "center",
+}
+
+const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: 24,
-  marginVertical: 60,
 }
 
 const $sectionListContentContainer: ViewStyle = {
@@ -149,6 +152,7 @@ const $logoImage: ImageStyle = {
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   height: 56,
+  paddingHorizontal: 24,
 }
 
 const $menuContainer: ViewStyle = {
