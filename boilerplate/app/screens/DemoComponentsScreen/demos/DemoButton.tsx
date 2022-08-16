@@ -31,7 +31,7 @@ export const DemoButton: Demo = {
   name: "Button",
   description:
     "A component that allows users to take actions and make choices. Wraps the Text component with a Pressable component.",
-  useCases: [
+  data: [
     <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
       <Button>Default - Laboris In Labore</Button>
       <DemoDivider />
