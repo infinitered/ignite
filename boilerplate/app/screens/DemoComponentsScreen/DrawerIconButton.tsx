@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useMemo, useRef } from "react"
 import { Animated, Pressable, PressableProps, ViewStyle } from "react-native"
+import { isRTL } from "../../i18n"
 import { colors } from "../../theme"
 
 interface DrawerIconButtonProps extends PressableProps {
@@ -18,12 +19,22 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
 
   const translateX = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, -60],
+    outputRange: [0, isRTL ? 60 : -60],
   })
 
   const topBarRotation = animation.interpolate({
     inputRange: [0, 1],
     outputRange: ["0deg", "-45deg"],
+  })
+
+  const topBarTranslateX = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -10],
+  })
+
+  const bottomBarTranslateX = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -10],
   })
 
   const bottomBarRotation = animation.interpolate({
@@ -64,6 +75,22 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     }
   }, [open])
 
+  // RTL support logic
+  const topBarTransform = useMemo(
+    () =>
+      isRTL
+        ? [{ translateX: topBarTranslateX }, { rotate: topBarRotation }]
+        : [{ rotate: topBarRotation }],
+    [topBarTranslateX, topBarRotation],
+  )
+  const bottomBarTransform = useMemo(
+    () =>
+      isRTL
+        ? [{ translateX: bottomBarTranslateX }, { rotate: bottomBarRotation }]
+        : [{ rotate: bottomBarRotation }],
+    [bottomBarTranslateX, bottomBarRotation],
+  )
+
   return (
     <Pressable {...PressableProps}>
       <Animated.View style={[$container, { transform: [{ translateX }] }]}>
@@ -75,7 +102,7 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
               marginLeft,
               width,
               marginBottom,
-              transform: [{ rotate: topBarRotation }],
+              transform: topBarTransform,
             },
           ]}
         />
@@ -90,7 +117,7 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
               marginLeft,
               width,
               marginTop,
-              transform: [{ rotate: bottomBarRotation }],
+              transform: bottomBarTransform,
             },
           ]}
         />

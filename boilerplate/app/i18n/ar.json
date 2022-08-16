@@ -1,0 +1,44 @@
+{
+  "common": {
+    "ok": "نعم",
+    "cancel": "حذف",
+    "back": "خلف"
+  },
+  "errors": {
+    "invalidEmail": "عنوان البريد الالكتروني غير صالح"
+  },
+  "welcomeScreen": {
+    "postscript": "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
+    "letsGo": "لنذهب",
+    "readyForLaunch": "تطبيقك تقريبا جاهز للتشغيل",
+    "exciting": "اوه هذا مثير"
+  },
+  "demoNavigator": {
+    "componentsTab": "عناصر",
+    "debugTab": "تصحيح",
+    "communityTab": "واصل اجتماعي"
+  },
+  "demoComponentsScreen": {
+    "jumpStart": "مكونات او عناصر لبدء مشروعك",
+    "lorem2Sentences": "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
+    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id"
+  },
+  "demoDebugScreen": {
+    "howTo": "كيف",
+    "title": "ماذا يوجد في المجموعة؟",
+    "tagLine": "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
+    "reactotron": "رد فعلي تجريبي",
+    "demoList": "قائمة تجريبية",
+    "androidReactotronHint": "اذا لم ينجح ذللك، فتأكد من تشغيل تطبيق الحاسوب الخاص Reactotron، وقم بتشغيل عكس adb tcp:9090 \ntcp:9090 من جهازك الطرفي ، واعد تحميل التطبيق",
+    "iosReactotronHint": "اذا لم ينجح ذلك، فتأكد من تشغيل تطبيق الحاسوب الخاص ب Reactotron وأعد تحميل التطبيق",
+    "macosReactotronHint": "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+    "webReactotronHint": "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+    "windowsReactotronHint": "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق"
+  },
+  "errorScreen": {
+    "title": "هناك خطأ ما",
+    "friendlySubtitle": "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تشخيص هذه الرسالة (الموجودة في التطبيق 'app/i18n/en.json') وربما التخطيط ايضاً ('app/screens/error'). اذا كنت تريد إزالة هذا تماماً انظر الى 'app/app.tsp' للتحقق من مكونات  <ErrorBoundary>",
+    "traceTitle": "خطأ من مجموعة %{name}",
+    "reset": "اعادة تعيين التطبيق"
+  }
+}

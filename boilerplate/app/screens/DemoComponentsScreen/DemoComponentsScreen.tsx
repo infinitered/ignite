@@ -2,6 +2,7 @@ import React, { ReactElement, useRef, useState } from "react"
 import { FlatList, Image, ImageStyle, Pressable, View, ViewStyle } from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
 import { Icon, Screen, Text } from "../../components"
+import { isRTL } from "../../i18n"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors } from "../../theme"
 import { DemoItem } from "./DemoItem"
@@ -37,6 +38,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       ref={drawerRef}
       drawerWidth={326}
       drawerType={"slide"}
+      drawerPosition={isRTL ? "right" : "left"}
       drawerBackgroundColor={colors.palette.neutral100}
       onDrawerOpen={() => setOpen(true)}
       onDrawerClose={() => setOpen(false)}

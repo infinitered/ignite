@@ -19,6 +19,7 @@ const $iconTile: ViewStyle = {
 const $iconTileLabel: TextStyle = {
   marginTop: 4,
   color: colors.textDim,
+  alignSelf: "center",
 }
 
 const $customIconContainer: ViewStyle = {

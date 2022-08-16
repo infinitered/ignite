@@ -12,10 +12,9 @@ const logoIgnite = require("../../assets/images/logo.png")
 
 // MAVERICKTODO: update this screen with new styling patterns
 
-const FULL: ViewStyle = { flex: 1 }
+const FULL: ViewStyle = { flex: 1, marginHorizontal: spacing[4] }
 const CONTAINER: ViewStyle = {
   backgroundColor: colors.transparent,
-  paddingHorizontal: spacing[4],
 }
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -39,6 +38,7 @@ const HEADER_TITLE: TextStyle = {
   lineHeight: 15,
   textAlign: "center",
   letterSpacing: 1.5,
+  alignSelf: "center",
 }
 const TITLE: TextStyle = {
   ...BOLD,
@@ -129,7 +129,12 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
 
   return (
     <View testID="DemoScreen" style={FULL}>
-      <Screen style={CONTAINER} preset="scroll" backgroundColor={colors.transparent}>
+      <Screen
+        style={CONTAINER}
+        preset="scroll"
+        backgroundColor={colors.transparent}
+        safeAreaEdges={["top"]}
+      >
         <Header
           headerTx="demoDebugScreen.howTo"
           leftIcon="back"

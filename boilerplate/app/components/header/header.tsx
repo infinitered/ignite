@@ -5,7 +5,7 @@ import { Button } from "../Button"
 import { Text } from "../Text"
 import { Icon } from "../Icon"
 import { spacing } from "../../theme"
-import { translate } from "../../i18n/"
+import { isRTL, translate } from "../../i18n/"
 
 // static styles
 const ROOT: ViewStyle = {
@@ -41,7 +41,7 @@ export function Header(props: HeaderProps) {
     <View style={[ROOT, style]}>
       {leftIcon ? (
         <Button onPress={onLeftPress}>
-          <Icon icon={leftIcon} />
+          <Icon icon={leftIcon} style={isRTL ? { transform: [{ rotate: "180deg" }] } : {}} />
         </Button>
       ) : (
         <View style={LEFT} />
@@ -51,7 +51,7 @@ export function Header(props: HeaderProps) {
       </View>
       {rightIcon ? (
         <Button onPress={onRightPress}>
-          <Icon icon={rightIcon} />
+          <Icon icon={rightIcon} style={isRTL ? { transform: [{ rotate: "180deg" }] } : {}} />
         </Button>
       ) : (
         <View style={RIGHT} />
