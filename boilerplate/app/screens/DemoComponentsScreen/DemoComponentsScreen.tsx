@@ -1,5 +1,5 @@
-import React, { ReactElement, useRef, useState } from "react"
-import { FlatList, Image, ImageStyle, Pressable, View, ViewStyle } from "react-native"
+import React, { Fragment, ReactElement, useRef, useState } from "react"
+import { FlatList, Image, ImageStyle, Pressable, SectionList, View, ViewStyle } from "react-native"
 import { DrawerLayout } from "react-native-gesture-handler"
 import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
@@ -19,7 +19,7 @@ export interface Demo {
 export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">) {
   const [open, setOpen] = useState(false)
   const drawerRef = useRef<DrawerLayout>()
-  const listRef = useRef<FlatList>()
+  const listRef = useRef<SectionList>()
   const menuRef = useRef<FlatList>()
 
   const toggleDrawer = () => {
@@ -30,6 +30,15 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       setOpen(false)
       drawerRef.current?.closeDrawer({ speed: 2 })
     }
+  }
+
+  const handleScroll = (sectionIndex: number, itemIndex = 0) => {
+    listRef.current.scrollToLocation({
+      animated: true,
+      itemIndex,
+      sectionIndex,
+    })
+    toggleDrawer()
   }
 
   return (
@@ -53,27 +62,22 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
               useCases: d.useCases.map((u) => u.props.name),
             }))}
             keyExtractor={(item) => item.name}
-            renderItem={({ item }) => (
-              <Pressable
-                onPress={() => {
-                  listRef.current.scrollToItem({
-                    animated: true,
-                    item,
-                  })
-                  toggleDrawer()
-                }}
-                style={$menu}
-              >
-                <Text preset="bold">{item.name}</Text>
-                <View style={$subMenu}>
-                  {item.useCases.map((u) => (
-                    <View key={u} style={$subMenuItem}>
-                      <Text>{u}</Text>
-                      <Icon icon="caretRight" />
-                    </View>
-                  ))}
-                </View>
-              </Pressable>
+            renderItem={({ item, index: sectionIndex }) => (
+              <View>
+                <Text onPress={() => handleScroll(sectionIndex)} preset="bold" style={$menu}>
+                  {item.name}
+                </Text>
+                {item.useCases.map((u, index) => (
+                  <Pressable
+                    onPress={() => handleScroll(sectionIndex, index + 1)}
+                    key={`section${sectionIndex}-${u}`}
+                    style={$item}
+                  >
+                    <Text>{u}</Text>
+                    <Icon icon="caretRight" />
+                  </Pressable>
+                ))}
+              </View>
             )}
           />
         </View>
@@ -82,16 +86,22 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       <Screen preset="fixed" safeAreaEdges={["top", "bottom"]}>
         <DrawerIconButton open={open} onPress={toggleDrawer} />
 
-        <FlatList<Demo>
+        <SectionList
           ListHeaderComponent={
             <View style={$heading}>
               <Text preset="heading" tx="demoComponentsScreen.jumpStart" />
             </View>
           }
+          stickySectionHeadersEnabled={false}
           ref={listRef}
-          data={Object.values(Demos)}
-          keyExtractor={(item) => item.name}
-          renderItem={(ItemProps) => <DemoItem {...ItemProps} />}
+          sections={Object.values(Demos).map((d) => ({ title: d.name, data: d.useCases }))}
+          renderSectionHeader={({ section: { title } }) => {
+            const demo = Object.values(Demos).find((d) => d.name === title)
+            return <DemoItem {...demo} />
+          }}
+          renderItem={({ item, section }) => (
+            <Fragment key={`${section.key}-${item.name}`}>{item}</Fragment>
+          )}
         />
       </Screen>
     </DrawerLayout>
@@ -101,14 +111,13 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
 const $drawer: ViewStyle = {
   flex: 1,
   justifyContent: "center",
-  marginLeft: 26,
+  paddingHorizontal: 24,
   marginVertical: 60,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: 32,
-  marginHorizontal: 24,
-  marginTop: 16,
+  paddingHorizontal: 24,
+  paddingTop: 16,
 }
 const $logo: ImageStyle = {
   height: 42,
@@ -118,19 +127,15 @@ const $logo: ImageStyle = {
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   height: 56,
+  marginBottom: 13,
 }
 
 const $menu: ViewStyle = {
-  marginBottom: 8,
-  marginHorizontal: 24,
-  marginTop: 24,
+  paddingBottom: 8,
+  paddingTop: 24,
 }
 
-const $subMenu: ViewStyle = {
-  marginTop: 8,
-}
-
-const $subMenuItem: ViewStyle = {
+const $item: ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
   height: 56,

@@ -1,21 +1,15 @@
-import React, { Fragment } from "react"
-import { ListRenderItemInfo, TextStyle, View, ViewStyle } from "react-native"
+import React from "react"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
 import { Demo } from "./DemoComponentsScreen"
 
-export function DemoItem(props: ListRenderItemInfo<Demo>) {
-  const { item } = props
-
+export function DemoItem({ name, description }: Demo) {
   return (
     <View style={$demoItemContainer}>
       <Text preset="heading" style={$title}>
-        {item.name}
+        {name}
       </Text>
-      <Text style={$description}>{item.description}</Text>
-
-      {item.useCases.map((i) => (
-        <Fragment key={i.props.name}>{i}</Fragment>
-      ))}
+      <Text style={$description}>{description}</Text>
     </View>
   )
 }
@@ -25,9 +19,13 @@ const $demoItemContainer: ViewStyle = {
 }
 
 const $title: TextStyle = {
-  marginVertical: 8,
+  marginTop: 32,
+  paddingTop: 24,
+  paddingBottom: 8,
+  fontSize: 24,
 }
 
 const $description: TextStyle = {
-  marginBottom: 24,
+  paddingTop: 8,
+  paddingBottom: 16,
 }
