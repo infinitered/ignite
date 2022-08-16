@@ -1,6 +1,10 @@
 # Styling Ignite apps
 
-Ignite's approach to styling is, like many other things in Ignite, straightforward and direct.
+[Back to README](./README.md)
+
+Ignite's approach to styling individual components is, like many other things in Ignite, straightforward and direct.
+
+If you're looking to set app-wide styles such ass, check out the [Theming](./Theming.md) documentation.
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
@@ -8,7 +12,7 @@ We instead use a strategy of bare JS objects, colocated with our components (usu
 
 ```tsx
 import { View, ViewStyle } from "react-native"
-import { palette } from "../theme"
+import { colors } from "../theme"
 
 const MyComponent = () => {
   return <View style={$container}>...</View>
@@ -16,7 +20,7 @@ const MyComponent = () => {
 
 const $container: ViewStyle = {
   flex: 1,
-  backgroundColor: palette.bgColor,
+  backgroundColor: colors.background,
 }
 ```
 
