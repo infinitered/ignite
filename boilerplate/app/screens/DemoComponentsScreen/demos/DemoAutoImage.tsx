@@ -12,7 +12,7 @@ const $imageContainer: ViewStyle = {
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
   description: "An Image component that automatically sizes a remote or data-uri image.",
-  useCases: [
+  data: [
     <DemoUseCase name="Remote URI">
       <View style={$imageContainer}>
         <AutoImage
