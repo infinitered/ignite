@@ -3,7 +3,7 @@ import { FlatList, Image, ImageStyle, Pressable, SectionList, View, ViewStyle } 
 import { DrawerLayout } from "react-native-gesture-handler"
 import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import { colors } from "../../theme"
+import { colors, spacing } from "../../theme"
 import { DemoItem } from "./DemoItem"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
@@ -37,6 +37,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       animated: true,
       itemIndex,
       sectionIndex,
+      ...(itemIndex === 0 && { viewOffset: -spacing[7] }),
     })
     toggleDrawer()
   }
