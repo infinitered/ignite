@@ -44,7 +44,7 @@ export const LoginScreen = observer(function LoginScreen(props: LoginScreenProps
 
   const PasswordRightAccessory = useMemo(
     () =>
-      function (props: TextFieldAccessoryProps) {
+      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
         return (
           <Icon
             icon="view"

@@ -220,9 +220,9 @@ function HeaderAction(props: HeaderActionProps) {
 
   const content = tx ? translate(tx, txOptions) : text
 
-  if (!!ActionComponent) return ActionComponent
+  if (ActionComponent) return ActionComponent
 
-  if (!!content) {
+  if (content) {
     return (
       <TouchableOpacity
         style={[$actionTextContainer, { backgroundColor }]}
@@ -235,7 +235,7 @@ function HeaderAction(props: HeaderActionProps) {
     )
   }
 
-  if (!!icon) {
+  if (icon) {
     return (
       <Icon
         size={24}

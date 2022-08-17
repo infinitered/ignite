@@ -15,7 +15,9 @@ _NOTE: Work-in-progress -- stay tuned, as our new docs will be landing soon!_
 This is a wrapper around React Native's [Image](https://reactnative.dev/docs/image) component, which automatically resizes the image to fit the container.
 
 ```tsx
-<AutoImage source={{uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg"}} />
+<AutoImage
+  source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
+/>
 ```
 
 [Full AutoImage Component Documentation](./Components-AutoImage.md)
@@ -153,7 +155,7 @@ This is a component that renders an icon.
   size={30}
   containerStyle={{ backgroundColor: "#fff" }}
   style={{ resizeMode: "contain" }}
-  onPress={() => Alert.alert("pressed") }
+  onPress={() => Alert.alert("pressed")}
 />
 ```
 
