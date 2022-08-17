@@ -130,13 +130,14 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
   return (
     <View testID="DemoScreen" style={FULL}>
       <Screen style={CONTAINER} preset="scroll" backgroundColor={colors.transparent}>
+        {/* 
+        MAVERICKTODO: move this to navigation.setOptions({}) similar to WelcomeScreen
         <Header
-          headerTx="demoDebugScreen.howTo"
+          titleTx=""="demoDebugScreen.howTo"
           leftIcon="back"
           onLeftPress={goBack}
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
+        /> */}
+
         <Text style={TITLE} preset="heading" tx="demoDebugScreen.title" />
         <Text style={TAGLINE} tx="demoDebugScreen.tagLine" />
         <BulletItem text="Integrated here, Navigation with State, TypeScript,  and i18n." />
