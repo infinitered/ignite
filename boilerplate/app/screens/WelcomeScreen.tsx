@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite"
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -11,11 +10,11 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScreenProps) {
+export function WelcomeScreen(props: WelcomeScreenProps) {
   const { navigation } = props
 
   function goNext() {
-    navigation.navigate("Demo", { screen: "DemoComponents" })
+    navigation.navigate("Login")
   }
 
   return (
@@ -35,7 +34,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
       </SafeAreaView>
     </View>
   )
-})
+}
 
 const $container: ViewStyle = {
   backgroundColor: colors.background,

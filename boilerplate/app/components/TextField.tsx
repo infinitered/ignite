@@ -1,11 +1,18 @@
 import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
-import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import {
+  StyleProp,
+  TextInput,
+  TextInputProps,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
 import { translate } from "../i18n"
 import { colors, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
-interface TextFieldAccessoryProps {
+export interface TextFieldAccessoryProps {
   style: StyleProp<any>
   status: TextFieldProps["status"]
   multiline: boolean
@@ -122,7 +129,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     ? translate(placeholderTx, placeholderTxOptions)
     : placeholder
 
-  const $containerStyles = [$containerStyle, $containerStyleOverride]
+  const $containerStyles = [$containerStyleOverride]
 
   const $labelStyles = [$labelStyle, LabelTextProps?.style]
 
@@ -152,7 +159,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   useImperativeHandle(ref, () => input.current)
 
   return (
-    <TouchableWithoutFeedback style={$containerStyles} onPress={focusInput}>
+    <TouchableOpacity activeOpacity={1} style={$containerStyles} onPress={focusInput}>
       {!!(label || labelTx) && (
         <Text
           preset="formLabel"
@@ -205,13 +212,9 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           style={$helperStyles}
         />
       )}
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   )
 })
-
-const $containerStyle: ViewStyle = {
-  flex: 1,
-}
 
 const $labelStyle: TextStyle = {
   marginBottom: 6,
