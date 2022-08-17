@@ -160,9 +160,10 @@ export default {
     // await packager.add(`react-native-safe-area-context`, packagerOptions)
 
     // pnpm/yarn/npm install it
-    startSpinner("Unboxing npm dependencies")
+    const unboxingMessage = `Unboxing ${packagerName} dependencies`
+    startSpinner(unboxingMessage)
     await packager.install({ ...packagerOptions, onProgress: log })
-    stopSpinner("Unboxing npm dependencies", "🧶")
+    stopSpinner(unboxingMessage, "🧶")
 
     // remove the gitignore template
     remove(".gitignore.template")
