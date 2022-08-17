@@ -101,4 +101,4 @@ const $presets = {
   subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
 }
 
-const $rtlStyle: TextStyle = isRTL ? { alignSelf: "flex-start", textAlign: "left" } : {}
+const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

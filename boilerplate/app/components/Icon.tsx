@@ -9,7 +9,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { isRTL } from "../i18n"
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -64,8 +63,6 @@ export function Icon(props: IconProps) {
 
   const Wrapper: ComponentType<TouchableOpacityProps> = onPress ? TouchableOpacity : View
 
-  const cleanedIconName = isRTL ? icon.replace(/Right$/, "Left") : icon // RTL icons are named with "Right" instead of "Left"
-
   return (
     <Wrapper {...WrapperProps} style={$containerStyleOverride}>
       <Image
@@ -75,7 +72,7 @@ export function Icon(props: IconProps) {
           size && { width: size, height: size },
           $imageStyleOverride,
         ]}
-        source={iconRegistry[cleanedIconName]}
+        source={iconRegistry[icon]}
       />
     </Wrapper>
   )

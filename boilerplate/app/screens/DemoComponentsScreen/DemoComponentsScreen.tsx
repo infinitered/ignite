@@ -90,7 +90,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
                     style={$menuitem}
                   >
                     <Text>{u}</Text>
-                    <Icon icon="caretRight" />
+                    <Icon icon={isRTL ? "caretLeft" : "caretRight"} />
                   </Pressable>
                 ))}
               </View>

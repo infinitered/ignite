@@ -38,7 +38,6 @@ const HEADER_TITLE: TextStyle = {
   lineHeight: 15,
   textAlign: "center",
   letterSpacing: 1.5,
-  alignSelf: "center",
 }
 const TITLE: TextStyle = {
   ...BOLD,
