@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { TextInput, TextStyle, ViewStyle } from "react-native"
-import uuid from "uuid"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
@@ -33,13 +32,14 @@ export const LoginScreen = observer(function LoginScreen(props: LoginScreenProps
 
     if (Object.values(validationErrors).some((v) => !!v)) return
 
+    // Make a request to your server to get an authentication token.
+    // If successful, reset the fields and set the token.
     setIsSubmitted(false)
     setAuthPassword("")
     setAuthEmail("")
 
-    // Make a request to your server to get an authentication token.
     // We'll mock this with a fake token.
-    setAuthToken(uuid.v4())
+    setAuthToken(String(Date.now()))
   }
 
   const PasswordRightAccessory = useMemo(
