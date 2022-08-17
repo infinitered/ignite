@@ -15,7 +15,7 @@ To remove RTL support, follow the following steps:
 - remove your RTL `.json` file from the `i18n.translations` object
 - remove lines 19-21 where we allow and force RTL on the native layer
 
-2. remove all other associated logic that uses export `isRTL` variable
+2. remove all other associated logic that uses the exported `isRTL` variable
 
 ## Adding more languages
 
