@@ -1,5 +1,12 @@
 import React, { ReactElement } from "react"
-import { TextStyle, TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from "react-native"
+import {
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+  ViewStyle,
+} from "react-native"
 import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
 import { translate } from "../i18n/"
 import { colors } from "../theme"
@@ -8,13 +15,19 @@ import { Text, TextProps } from "./Text"
 
 export interface HeaderProps {
   /**
+   * The layout of the title relative to the action components.
+   * - `center` will force the title to always be centered relative to the header. If the title or the action buttons are too long, the title will be cut off.
+   * - `flex` will attempt to center the title relative to the action buttons. If the action buttons are different widths, the title will be off-center relative to the header.
+   */
+  titleMode?: "center" | "flex"
+  /**
    * Optional title style override.
    */
-  titleStyle?: TextStyle
+  titleStyle?: StyleProp<TextStyle>
   /**
    * Optional header style override.
    */
-  containerStyle?: TextStyle
+  containerStyle?: StyleProp<ViewStyle>
   /**
    * Background color
    */
@@ -37,6 +50,10 @@ export interface HeaderProps {
    * Can be used with `onLeftPress`.
    */
   leftIcon?: IconTypes
+  /**
+   * An optional tint color for the left icon
+   */
+  leftIconColor?: string
   /**
    * Left action text to display if not using `leftTx`.
    * Can be used with `onLeftPress`. Overrides `leftIcon`.
@@ -66,6 +83,10 @@ export interface HeaderProps {
    * Can be used with `onRightPress`.
    */
   rightIcon?: IconTypes
+  /**
+   * An optional tint color for the right icon
+   */
+  rightIconColor?: string
   /**
    * Right action text to display if not using `rightTx`.
    * Can be used with `onRightPress`. Overrides `rightIcon`.
@@ -103,6 +124,7 @@ export interface HeaderProps {
 export interface HeaderActionProps {
   backgroundColor?: string
   icon?: IconTypes
+  iconColor?: string
   text?: TextProps["text"]
   tx?: TextProps["tx"]
   txOptions?: TextProps["txOptions"]
@@ -112,7 +134,7 @@ export interface HeaderActionProps {
 
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
- * The Header is meant to be used with the `header` option on navigators, routes, or screen components via `navigation.setOptions`.
+ * The Header is meant to be used with the `screenOptions.header` option on navigators,routes, or screen components via `navigation.setOptions({ header })`.
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Header.md)
  */
@@ -121,6 +143,7 @@ export function Header(props: HeaderProps) {
     backgroundColor = colors.background,
     LeftActionComponent,
     leftIcon,
+    leftIconColor = colors.palette.neutral800,
     leftText,
     leftTx,
     leftTxOptions,
@@ -128,12 +151,14 @@ export function Header(props: HeaderProps) {
     onRightPress,
     RightActionComponent,
     rightIcon,
+    rightIconColor = colors.palette.neutral800,
     rightText,
     rightTx,
     rightTxOptions,
     safeAreaEdges = ["top"],
     SafeAreaViewProps,
     title,
+    titleMode = "center",
     titleTx,
     titleTxOptions,
     titleStyle: $titleStyleOverride,
@@ -152,11 +177,12 @@ export function Header(props: HeaderProps) {
     >
       <View style={[$container, $containerStyleOverride]}>
         <HeaderAction
-          tx={rightTx}
-          text={rightText}
-          icon={rightIcon}
-          onPress={onRightPress}
-          txOptions={rightTxOptions}
+          tx={leftTx}
+          text={leftText}
+          icon={leftIcon}
+          iconColor={leftIconColor}
+          onPress={onLeftPress}
+          txOptions={leftTxOptions}
           backgroundColor={backgroundColor}
           ActionComponent={LeftActionComponent}
         />
@@ -166,16 +192,21 @@ export function Header(props: HeaderProps) {
             weight="medium"
             size="md"
             text={titleContent}
-            style={[$title, $titleStyleOverride]}
+            style={[
+              titleMode === "center" && $centerTitle,
+              titleMode === "flex" && $flexTitle,
+              $titleStyleOverride,
+            ]}
           />
         )}
 
         <HeaderAction
-          tx={leftTx}
-          text={leftText}
-          icon={leftIcon}
-          onPress={onLeftPress}
-          txOptions={leftTxOptions}
+          tx={rightTx}
+          text={rightText}
+          icon={rightIcon}
+          iconColor={rightIconColor}
+          onPress={onRightPress}
+          txOptions={rightTxOptions}
           backgroundColor={backgroundColor}
           ActionComponent={RightActionComponent}
         />
@@ -185,7 +216,7 @@ export function Header(props: HeaderProps) {
 }
 
 function HeaderAction(props: HeaderActionProps) {
-  const { backgroundColor, icon, text, tx, txOptions, onPress, ActionComponent } = props
+  const { backgroundColor, icon, text, tx, txOptions, onPress, ActionComponent, iconColor } = props
 
   const content = tx ? translate(tx, txOptions) : text
 
@@ -209,14 +240,14 @@ function HeaderAction(props: HeaderActionProps) {
       <Icon
         size={24}
         icon={icon}
-        color={colors.palette.neutral800}
+        color={iconColor}
         onPress={onPress}
         containerStyle={[$actionIconContainer, { backgroundColor }]}
       />
     )
   }
 
-  return <View />
+  return <View style={[$actionFillerContainer, { backgroundColor }]} />
 }
 
 const $safeArea: ViewStyle = {
@@ -230,7 +261,7 @@ const $container: ViewStyle = {
   justifyContent: "space-between",
 }
 
-const $title: TextStyle = {
+const $centerTitle: TextStyle = {
   position: "absolute",
   width: "100%",
   textAlign: "center",
@@ -238,7 +269,13 @@ const $title: TextStyle = {
   zIndex: 1,
 }
 
+const $flexTitle: TextStyle = {
+  flex: 1,
+  textAlign: "center",
+}
+
 const $actionTextContainer: ViewStyle = {
+  flexGrow: 0,
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
@@ -251,9 +288,14 @@ const $actionText: TextStyle = {
 }
 
 const $actionIconContainer: ViewStyle = {
+  flexGrow: 0,
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
   paddingHorizontal: 16,
   zIndex: 2,
+}
+
+const $actionFillerContainer: ViewStyle = {
+  width: 16,
 }

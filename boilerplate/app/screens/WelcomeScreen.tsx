@@ -29,7 +29,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header leftTx="welcomeScreen.headerRight" onLeftPress={logout} />,
+      header: () => <Header rightTx="welcomeScreen.headerRight" onRightPress={logout} />,
     })
   }, [])
 

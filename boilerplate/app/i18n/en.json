@@ -33,7 +33,8 @@
     "jumpStart": "Components to jump start your project!",
     "lorem2Sentences": "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
     "demoButtonTxExample": "Via `tx` Prop - Fugiat Id",
-    "demoTextFieldTxExample": "Via `{{prop}}Tx` Prop"
+    "demoTextFieldTxExample": "Via `{{prop}}Tx` Prop",
+    "demoHeaderTxExample": "Yay"
   },
   "demoDebugScreen": {
     "howTo": "HOW TO",
