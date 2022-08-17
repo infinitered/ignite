@@ -25,7 +25,7 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    */
   status?: "error" | "disabled"
   /**
-   * The label text to display if not using `labelTx` or nested components.
+   * The label text to display if not using `labelTx`.
    */
   label?: TextProps["text"]
   /**
@@ -42,7 +42,7 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    */
   LabelTextProps?: TextProps
   /**
-   * The helper text to display if not using `helperTx` or nested components.
+   * The helper text to display if not using `helperTx`.
    */
   helper?: TextProps["text"]
   /**
@@ -59,7 +59,7 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    */
   HelperTextProps?: TextProps
   /**
-   * The placeholder text to display if not using `placeholderTx` or nested components.
+   * The placeholder text to display if not using `placeholderTx`.
    */
   placeholder?: TextProps["text"]
   /**

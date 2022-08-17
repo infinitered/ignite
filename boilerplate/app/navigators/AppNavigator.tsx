@@ -60,14 +60,17 @@ const AppStack = observer(function AppStack() {
   } = useStores()
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={isAuthenticated ? "Welcome" : "Login"}
+    >
       {isAuthenticated ? (
-        <Stack.Screen name="Demo" component={DemoNavigator} />
-      ) : (
         <>
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreen} />
       )}
 
       {/** 🔥 Your screens go here */}

@@ -1,7 +1,9 @@
-import React from "react"
+import { observer } from "mobx-react-lite"
+import React, { useLayoutEffect } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Button, Text } from "../components"
+import { Button, Header, Text } from "../components"
+import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 
@@ -10,12 +12,26 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export function WelcomeScreen(props: WelcomeScreenProps) {
+export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScreenProps) {
   const { navigation } = props
+  const {
+    authenticationStore: { setAuthToken },
+  } = useStores()
 
   function goNext() {
-    navigation.navigate("Login")
+    navigation.navigate("Demo", { screen: "DemoComponents" })
   }
+
+  function logout() {
+    setAuthToken(undefined)
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => <Header leftTx="welcomeScreen.headerRight" onLeftPress={logout} />,
+    })
+  }, [])
 
   return (
     <View style={$container}>
@@ -34,13 +50,15 @@ export function WelcomeScreen(props: WelcomeScreenProps) {
       </SafeAreaView>
     </View>
   )
-}
+})
 
 const $container: ViewStyle = {
+  flex: 1,
   backgroundColor: colors.background,
 }
 
 const $topContainer: ViewStyle = {
+  flexShrink: 1,
   flexGrow: 0,
   flexBasis: "57%",
   justifyContent: "center",
@@ -48,6 +66,7 @@ const $topContainer: ViewStyle = {
 }
 
 const $bottomContainer: ViewStyle = {
+  flexShrink: 1,
   flexGrow: 0,
   flexBasis: "43%",
   backgroundColor: colors.palette.neutral100,

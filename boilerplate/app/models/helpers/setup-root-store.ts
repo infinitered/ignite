@@ -6,7 +6,7 @@ import * as storage from "../../utils/storage"
 /**
  * The key we'll be saving our state as within async storage.
  */
-const ROOT_STATE_STORAGE_KEY = "root"
+const ROOT_STATE_STORAGE_KEY = "root-v1"
 
 /**
  * Setup the environment that all the models will be sharing.

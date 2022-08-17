@@ -29,7 +29,7 @@ export const AuthenticationStoreModel = types
     },
   }))
   .actions((self) => ({
-    setAuthToken(value: string) {
+    setAuthToken(value?: string) {
       self.authToken = value
     },
     setAuthEmail(value: string) {
