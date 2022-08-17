@@ -1,99 +1,80 @@
-import React, { useEffect, useRef } from "react"
-import { Animated, Pressable, PressableProps, ViewStyle } from "react-native"
+import React, { useEffect } from "react"
+import { Pressable, PressableProps, ViewStyle } from "react-native"
+import Animated, {
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated"
+import type { SharedValue } from "react-native-reanimated"
 import { colors } from "../../theme"
 
 interface DrawerIconButtonProps extends PressableProps {
   open: boolean
+  progress: SharedValue<number>
 }
 
 export function DrawerIconButton(props: DrawerIconButtonProps) {
-  const { open, ...PressableProps } = props
+  const { open, progress, ...PressableProps } = props
 
-  const animation = useRef(new Animated.Value(0)).current
-
-  const backgroundColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [colors.text, colors.tint],
+  const animatedContainerStyles = useAnimatedStyle(() => {
+    const translateX = interpolate(progress.value, [0, 1], [0, -60])
+    return {
+      transform: [{ translateX }],
+    }
   })
 
-  const translateX = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -60],
+  const animatedTopBarStyles = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(progress.value, [0, 1], [colors.text, colors.tint])
+    const marginLeft = interpolate(progress.value, [0, 1], [0, -11.5])
+    const topBarRotation = interpolate(progress.value, [0, 1], [0, -45])
+    const marginBottom = interpolate(progress.value, [0, 1], [0, -2])
+    const width = interpolate(progress.value, [0, 1], [18, 12])
+    return {
+      backgroundColor,
+      marginLeft,
+      marginBottom,
+      width,
+      transform: [{ rotate: `${topBarRotation}deg` }],
+    }
   })
 
-  const topBarRotation = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "-45deg"],
+  const animatedMiddleBarStyles = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(progress.value, [0, 1], [colors.text, colors.tint])
+    const width = interpolate(progress.value, [0, 1], [18, 16])
+    return {
+      backgroundColor,
+      width,
+    }
   })
 
-  const bottomBarRotation = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "45deg"],
-  })
-
-  const marginLeft = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -11.5],
-  })
-
-  const width = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [18, 12],
-  })
-
-  const middleWidth = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [18, 16],
-  })
-
-  const marginBottom = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -2],
-  })
-
-  const marginTop = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [4, 2],
+  const animatedBottomBarStyles = useAnimatedStyle(() => {
+    const marginTop = interpolate(progress.value, [0, 1], [4, 2])
+    const backgroundColor = interpolateColor(progress.value, [0, 1], [colors.text, colors.tint])
+    const marginLeft = interpolate(progress.value, [0, 1], [0, -11.5])
+    const bottomBarRotation = interpolate(progress.value, [0, 1], [0, 45])
+    const width = interpolate(progress.value, [0, 1], [18, 12])
+    return {
+      backgroundColor,
+      marginLeft,
+      width,
+      marginTop,
+      transform: [{ rotate: `${bottomBarRotation}deg` }],
+    }
   })
 
   useEffect(() => {
-    if (open) {
-      Animated.spring(animation, { toValue: 1, useNativeDriver: false }).start()
-    } else {
-      Animated.spring(animation, { toValue: 0, useNativeDriver: false }).start()
-    }
-  }, [open])
+    progress.value = withSpring(open ? 1 : 0)
+  }, [open, progress])
 
   return (
     <Pressable {...PressableProps}>
-      <Animated.View style={[$container, { transform: [{ translateX }] }]}>
-        <Animated.View
-          style={[
-            $topBar,
-            {
-              backgroundColor,
-              marginLeft,
-              width,
-              marginBottom,
-              transform: [{ rotate: topBarRotation }],
-            },
-          ]}
-        />
+      <Animated.View style={[$container, animatedContainerStyles]}>
+        <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
-        <Animated.View style={[$middleBar, { backgroundColor, width: middleWidth }]} />
+        <Animated.View style={[$middleBar, animatedMiddleBarStyles]} />
 
-        <Animated.View
-          style={[
-            $bottomBar,
-            {
-              backgroundColor,
-              marginLeft,
-              width,
-              marginTop,
-              transform: [{ rotate: bottomBarRotation }],
-            },
-          ]}
-        />
+        <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
       </Animated.View>
     </Pressable>
   )

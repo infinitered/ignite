@@ -9,8 +9,9 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { DrawerLayout } from "react-native-gesture-handler"
+import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useSharedValue } from "react-native-reanimated"
 import { Icon, Screen, Text } from "../../components"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors } from "../../theme"
@@ -30,6 +31,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
   const drawerRef = useRef<DrawerLayout>()
   const listRef = useRef<SectionList>()
   const menuRef = useRef<FlatList>()
+  const progress = useSharedValue(0)
 
   const toggleDrawer = () => {
     if (!open) {
@@ -56,8 +58,14 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       drawerWidth={326}
       drawerType={"slide"}
       drawerBackgroundColor={colors.palette.neutral100}
-      onDrawerOpen={() => setOpen(true)}
-      onDrawerClose={() => setOpen(false)}
+      onDrawerSlide={(drawerProgress) => {
+        progress.value = open ? 1 - drawerProgress : drawerProgress
+      }}
+      onDrawerStateChanged={(newState: DrawerState, drawerWillShow: boolean) => {
+        if (newState === "Settling") {
+          setOpen(drawerWillShow)
+        }
+      }}
       renderNavigationView={() => (
         <SafeAreaView style={$drawer} edges={["top"]}>
           <View style={$logoContainer}>
@@ -98,7 +106,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       )}
     >
       <Screen preset="fixed" safeAreaEdges={["top", "bottom"]}>
-        <DrawerIconButton open={open} onPress={toggleDrawer} />
+        <DrawerIconButton onPress={toggleDrawer} {...{ open, progress }} />
 
         <SectionList
           ref={listRef}
