@@ -2,7 +2,7 @@
 
 Ignite currently setup to have Internationalization setup in English, Arabic, and Korean! This is detected on app load and will set your app to that language.
 
-## RTL
+## Right to Left languages (RTL)
 
 Since Ignite already comes with an RTL language, Arabic, adding any new ones would work by default.
 
