@@ -8,10 +8,21 @@
     "invalidEmail": "Invalid email address."
   },
   "welcomeScreen": {
-    "postscript": "psst  — This probably isn’t what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
-    "letsGo": "Let’s go!",
+    "headerRight": "Log Out",
+    "postscript": "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
+    "letsGo": "Let's go!",
     "readyForLaunch": "Your app, almost ready for lauch!",
     "exciting": "(ohh, this is exciting!)"
+  },
+  "loginScreen": {
+    "signIn": "Sign In",
+    "enterDetails": "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
+    "emailFieldLabel": "Email",
+    "passwordFieldLabel": "Password",
+    "emailFieldPlaceholder": "Enter your email address",
+    "passwordFieldPlaceholder": "Super secret password here",
+    "tapToSignIn": "Tap to sign in!",
+    "hint": "Hint: you can use any email address and your favorite password :)"
   },
   "demoNavigator": {
     "componentsTab": "Components",
@@ -21,12 +32,14 @@
   "demoComponentsScreen": {
     "jumpStart": "Components to jump start your project!",
     "lorem2Sentences": "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
-    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id"
+    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id",
+    "demoTextFieldTxExample": "Via `{{prop}}Tx` Prop",
+    "demoHeaderTxExample": "Yay"
   },
   "demoDebugScreen": {
     "howTo": "HOW TO",
-    "title": "What’s In This Stack?",
-    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
+    "title": "What's In This Stack?",
+    "tagLine": "Congratulations, you've got a very advanced React Native app template here.  Take advantage of this boilerplate!",
     "reactotron": "Demo Reactotron",
     "demoList": "Demo List",
     "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",

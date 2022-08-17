@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { ImageStyle, Platform, TextStyle, View, ViewStyle, Image } from "react-native"
-import { BulletItem, Button, Header, Icon, Screen, Text } from "../components"
+import { Image, ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
+import { BulletItem, Button, Icon, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { Api } from "../services/api"
 import { colors, spacing } from "../theme"
@@ -28,18 +28,18 @@ const DEMO_TEXT: TextStyle = {
   fontSize: 13,
   letterSpacing: 2,
 }
-const HEADER: TextStyle = {
-  paddingTop: spacing[3],
-  paddingBottom: spacing[5] - 1,
-  paddingHorizontal: 0,
-}
-const HEADER_TITLE: TextStyle = {
-  ...BOLD,
-  fontSize: 12,
-  lineHeight: 15,
-  textAlign: "center",
-  letterSpacing: 1.5,
-}
+// const HEADER: TextStyle = {
+//   paddingTop: spacing[3],
+//   paddingBottom: spacing[5] - 1,
+//   paddingHorizontal: 0,
+// }
+// const HEADER_TITLE: TextStyle = {
+//   ...BOLD,
+//   fontSize: 12,
+//   lineHeight: 15,
+//   textAlign: "center",
+//   letterSpacing: 1.5,
+// }
 const TITLE: TextStyle = {
   ...BOLD,
   fontSize: 28,
@@ -86,7 +86,7 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
   props: DemoTabScreenProps<"DemoDebug">,
 ) {
   const { navigation } = props
-  const goBack = () => navigation.goBack()
+  // const goBack = () => navigation.goBack()
 
   const demoReactotron = React.useMemo(
     () => async () => {
@@ -130,13 +130,14 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
   return (
     <View testID="DemoScreen" style={FULL}>
       <Screen style={CONTAINER} preset="scroll" backgroundColor={colors.transparent}>
+        {/* 
+        MAVERICKTODO: move this to navigation.setOptions({}) similar to WelcomeScreen
         <Header
-          headerTx="demoDebugScreen.howTo"
+          titleTx=""="demoDebugScreen.howTo"
           leftIcon="back"
           onLeftPress={goBack}
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
+        /> */}
+
         <Text style={TITLE} preset="heading" tx="demoDebugScreen.title" />
         <Text style={TAGLINE} tx="demoDebugScreen.tagLine" />
         <BulletItem text="Integrated here, Navigation with State, TypeScript,  and i18n." />

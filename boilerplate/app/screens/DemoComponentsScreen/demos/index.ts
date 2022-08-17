@@ -1,4 +1,6 @@
 export * from "./DemoIcon"
+export * from "./DemoTextField"
 export * from "./DemoButton"
+export * from "./DemoHeader"
 export * from "./DemoAutoImage"
 export * from "./DemoText"
