@@ -29,7 +29,7 @@ describe("Checking for ignite. 🪔", () => {
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
   test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME} --debug`, {
+    const result = await runIgnite(`new ${APP_NAME} --debug --packager=npm`, {
       pre: `cd ${tempDir}`,
       post: `cd ${originalDir}`,
     })
@@ -87,7 +87,7 @@ async function checkForLeftoverHelloWorld(filePath: string) {
 
   // check to make sure there are no instances of helloworld or HelloWorld or hello-world
   // anywhere in the app -- including folder and filenames.
-  const appFiles = filesystem.list(filePath)
+  const appFiles = filesystem.list(filePath) ?? []
 
   for (const file of appFiles) {
     expect(file).not.toContain("helloworld")

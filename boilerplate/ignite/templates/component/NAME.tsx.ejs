@@ -9,18 +9,8 @@ patch:
 import * as React from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { color, typography } from "../../theme"
+import { colors, typography } from "../../theme"
 import { Text } from "../Text"
-
-const CONTAINER: ViewStyle = {
-  justifyContent: "center",
-}
-
-const TEXT: TextStyle = {
-  fontFamily: typography.primary.normal,
-  fontSize: 14,
-  color: color.primary,
-}
 
 export interface <%= props.pascalCaseName %>Props {
   /**
@@ -34,11 +24,21 @@ export interface <%= props.pascalCaseName %>Props {
  */
 export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
   const { style } = props
-  const styles = Object.assign({}, CONTAINER, style)
+  const $styles = Object.assign({}, $container, style)
 
   return (
-    <View style={styles}>
-      <Text style={TEXT}>Hello</Text>
+    <View style={$styles}>
+      <Text style={$text}>Hello</Text>
     </View>
   )
 })
+
+const $container: ViewStyle = {
+  justifyContent: "center",
+}
+
+const $text: TextStyle = {
+  fontFamily: typography.primary.normal,
+  fontSize: 14,
+  color: colors.palette.primary500,
+}
