@@ -54,8 +54,7 @@ export const useInitialRootStore = (callback: () => void) => {
 
   // Kick off initial async loading actions, like loading fonts and rehydrating RootStore
   useEffect(() => {
-    let _unsubscribe = undefined
-
+    let _unsubscribe
     ;(async () => {
       // set up the RootStore (returns the state restored from AsyncStorage)
       const { restoredState, unsubscribe } = await setupRootStore(rootStore)
