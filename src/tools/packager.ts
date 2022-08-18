@@ -39,11 +39,10 @@ function pnpmAvailable() {
 }
 
 function detectPackager(): "npm" | "yarn" | "pnpm" {
-  // Expo doesn't support pnpm, so we'll use yarn or npm
-  if (pnpmAvailable()) {
-    return "pnpm"
-  } else if (yarnAvailable()) {
+  if (yarnAvailable()) {
     return "yarn"
+  } else if (pnpmAvailable()) {
+    return "pnpm"
   } else {
     return "npm"
   }
