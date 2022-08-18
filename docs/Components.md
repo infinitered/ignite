@@ -89,42 +89,6 @@ const [on, setOn] = useState(false)
 
 [Full Checkbox Component Documentation](./Components-Checkbox.md)
 
-### FormRow
-
-This is a component that renders a horizontal container for a form row. It includes presets that control rounded borders.
-
-```tsx
-<FormRow preset="top">
-  <TextField
-    value={input}
-    onChangeText={setName}
-    labelTx="signup.name"
-    placeholderTx="signup.nameplaceholder"
-    style={$header}
-    inputStyle={$inputStyle}
-    preset="default"
-    forwardedRef={inputRef}
-  />
-</FormRow>
-<FormRow preset="middle">
-  <TextField
-    value={input}
-    onChangeText={setEmail}
-    labelTx="signup.email"
-    placeholderTx="signup.emailplaceholder"
-    style={$header}
-    inputStyle={$inputStyle}
-    preset="default"
-    forwardedRef={inputRef}
-  />
-</FormRow>
-<FormRow preset="bottom">
-  <Text>This is a form row</Text>
-</FormRow>
-```
-
-[Full FormRow Component Documentation](./Components-FormRow.md)
-
 ### Header
 
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.

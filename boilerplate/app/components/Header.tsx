@@ -121,7 +121,7 @@ export interface HeaderProps {
   SafeAreaViewProps?: SafeAreaViewProps
 }
 
-export interface HeaderActionProps {
+interface HeaderActionProps {
   backgroundColor?: string
   icon?: IconTypes
   iconColor?: string
@@ -143,7 +143,7 @@ export function Header(props: HeaderProps) {
     backgroundColor = colors.background,
     LeftActionComponent,
     leftIcon,
-    leftIconColor = colors.palette.neutral800,
+    leftIconColor,
     leftText,
     leftTx,
     leftTxOptions,
@@ -151,7 +151,7 @@ export function Header(props: HeaderProps) {
     onRightPress,
     RightActionComponent,
     rightIcon,
-    rightIconColor = colors.palette.neutral800,
+    rightIconColor,
     rightText,
     rightTx,
     rightTxOptions,
