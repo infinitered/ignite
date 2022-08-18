@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { translate } from "../i18n"
+import { isRTL, translate } from "../i18n"
 import { colors, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
@@ -144,7 +144,14 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyleOverride,
   ]
 
-  const $inputStyles = [$inputStyle, disabled && { color: colors.textDim }, $inputStyleOverride]
+  const $rtlStyles: TextStyle = isRTL && { textAlign: "right" }
+
+  const $inputStyles = [
+    $rtlStyles,
+    $inputStyle,
+    disabled && { color: colors.textDim },
+    $inputStyleOverride,
+  ]
 
   const $helperStyles = [
     $helperStyle,
