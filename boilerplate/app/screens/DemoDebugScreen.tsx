@@ -133,7 +133,7 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
         {/* 
         MAVERICKTODO: move this to navigation.setOptions({}) similar to WelcomeScreen
         <Header
-          titleTx=""="demoDebugScreen.howTo"
+          titleTx="demoDebugScreen.howTo"
           leftIcon="back"
           onLeftPress={goBack}
         /> */}
