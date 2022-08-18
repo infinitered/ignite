@@ -16,7 +16,17 @@ export interface ListItemProps extends TouchableOpacityProps {
    * How tall the list item should be.
    * Default: 56
    */
-  size?: number
+  height?: number
+  /**
+   * Whether to show the top separator.
+   * Default: false
+   */
+  topSeparator?: boolean
+  /**
+   * Whether to show the bottom separator.
+   * Default: false
+   */
+  bottomSeparator?: boolean
   /**
    * Text to display if not using `tx` or nested components.
    */
@@ -43,23 +53,13 @@ export interface ListItemProps extends TouchableOpacityProps {
    */
   TextProps?: TextProps
   /**
-   * Whether to show the top separator.
-   * Default: false
-   */
-  topSeparator?: boolean
-  /**
-   * Whether to show the bottom separator.
-   * Default: false
-   */
-  bottomSeparator?: boolean
-  /**
    * Optional View container style override.
    */
   containerStyle?: StyleProp<ViewStyle>
   /**
    * Optional TouchableOpacity style override.
    */
-  touchableStyle?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
   /**
    * Icon that should appear on the left.
    */
@@ -80,33 +80,39 @@ export interface ListItemProps extends TouchableOpacityProps {
    * Right action custom ReactElement.
    * Overrides `rightIcon`.
    */
-  RightActionComponent?: ReactElement
+  RightComponent?: ReactElement
   /**
    * Left action custom ReactElement.
    * Overrides `leftIcon`.
    */
-  LeftActionComponent?: ReactElement
+  LeftComponent?: ReactElement
 }
 
 interface ListItemActionProps {
   icon: IconTypes
   iconColor?: string
-  ActionComponent?: ReactElement
+  Component?: ReactElement
   size: number
   side: "left" | "right"
 }
 
+/**
+ * A styled row component that can be used in FlatList, SectionList, or by itself.
+ *
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-ListItem.md)
+ */
 export function ListItem(props: ListItemProps) {
   const {
     bottomSeparator,
     children,
-    LeftActionComponent,
+    height = 56,
+    LeftComponent,
     leftIcon,
     leftIconColor,
-    RightActionComponent,
+    RightComponent,
     rightIcon,
     rightIconColor,
-    size = 56,
+    style,
     text,
     TextProps,
     topSeparator,
@@ -114,7 +120,6 @@ export function ListItem(props: ListItemProps) {
     txOptions,
     textStyle: $textStyleOverride,
     containerStyle: $containerStyleOverride,
-    touchableStyle: $touchableStyleOverride,
     ...TouchableOpacityProps
   } = props
 
@@ -126,22 +131,17 @@ export function ListItem(props: ListItemProps) {
     $containerStyleOverride,
   ]
 
-  const $touchableStyles = [
-    $touchableStyle,
-    { minHeight: size },
-    $touchableStyleOverride,
-    TouchableOpacityProps?.style,
-  ]
+  const $touchableStyles = [$touchableStyle, { minHeight: height }, style]
 
   return (
     <View style={$containerStyles}>
       <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
         <ListItemAction
           side="left"
-          size={size}
+          size={height}
           icon={leftIcon}
           iconColor={leftIconColor}
-          ActionComponent={LeftActionComponent}
+          Component={LeftComponent}
         />
 
         <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={$textStyles}>
@@ -150,10 +150,10 @@ export function ListItem(props: ListItemProps) {
 
         <ListItemAction
           side="right"
-          size={size}
+          size={height}
           icon={rightIcon}
           iconColor={rightIconColor}
-          ActionComponent={RightActionComponent}
+          Component={RightComponent}
         />
       </TouchableOpacity>
     </View>
@@ -161,11 +161,11 @@ export function ListItem(props: ListItemProps) {
 }
 
 function ListItemAction(props: ListItemActionProps) {
-  const { icon, ActionComponent, iconColor, size, side } = props
+  const { icon, Component, iconColor, size, side } = props
 
   const $iconContainerStyles = [$iconContainer]
 
-  if (ActionComponent) return ActionComponent
+  if (Component) return Component
 
   if (icon) {
     return (
