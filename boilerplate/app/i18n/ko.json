@@ -8,10 +8,21 @@
     "invalidEmail": "잘못된 이메일 주소 입니다."
   },
   "welcomeScreen": {
+    "headerRight": "로그아웃",
     "postscript": "잠깐! — 지금 보시는 것은 아마도 당신의 앱의 모양새가 아닐겁니다. (디자이너분이 이렇게 건내주셨다면 모를까요. 만약에 그렇다면, 이대로 가져갑시다!) ",
     "letsGo": "가보자구요!",
     "readyForLaunch": "출시 준비가 거의 끝난 나만의 앱!",
     "exciting": "(오, 이거 신나는데요!)"
+  },
+  "loginScreen": {
+    "signIn": "로그인",
+    "enterDetails": "일급비밀 정보를 해제하기 위해 상세 정보를 입력하세요. 무엇이 기다리고 있는지 절대 모를겁니다. 혹은 알 수 있을지도 모르겠군요. 엄청 복잡한 뭔가는 아닙니다.",
+    "emailFieldLabel": "이메일",
+    "passwordFieldLabel": "비밀번호",
+    "emailFieldPlaceholder": "이메일을 입력하세요",
+    "passwordFieldPlaceholder": "엄청 비밀스러운 암호를 입력하세요",
+    "tapToSignIn": "눌러서 로그인 하기!",
+    "hint": "힌트: 가장 좋아하는 암호와 아무런 아무 이메일 주소나 사용할 수 있어요 :)"
   },
   "demoNavigator": {
     "componentsTab": "컴포넌트",
@@ -21,7 +32,9 @@
   "demoComponentsScreen": {
     "jumpStart": "프로젝트를 바로 시작할 수 있는 컴포넌트들!",
     "lorem2Sentences": "별 하나에 추억과, 별 하나에 사랑과, 별 하나에 쓸쓸함과, 별 하나에 동경(憧憬)과, 별 하나에 시와, 별 하나에 어머니, 어머니",
-    "demoButtonTxExample": "`tx` Prop 을 통한 윤동주의 별 헤는 밤"
+    "demoButtonTxExample": "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
+    "demoTextFieldTxExample": "`{{prop}}Tx` Prop 을 통해",
+    "demoHeaderTxExample": "야호"
   },
   "demoDebugScreen": {
     "howTo": "사용방법",
