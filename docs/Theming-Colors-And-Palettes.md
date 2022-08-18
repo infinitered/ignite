@@ -1,6 +1,6 @@
 # Colors & Palettes
 
-[Back to Theming](./../Theming.md)
+[Back to Theming](./Theming.md)
 
 In `app/theme/colors.ts`, we define a palette of colors and the semantic names to be used in the app. The palette is meant to be a simple list of colors, and the semantic names are meant to be used throughout the app. This matches how designers often think of colors & palettes, and lets us match designs which define these easily.
 

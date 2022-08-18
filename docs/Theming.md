@@ -10,15 +10,15 @@ Theming involves a few different things: palettes, colors, animation timings, fo
 
 ## Colors & Palettes
 
-Colors are defined in `app/theme/colors.ts`. We use a palette-based approach to colors, which means that we define the set of colors used int he app. We then use these colors to define semantic color names to be used throughout the app. This allows us to have a consistent color palette across the app, and also allows us to change the palette easily.
+Colors are defined in `app/theme/colors.ts`. We use a palette-based approach to colors, which means that we define the set of colors used in the app. We then use these colors to define semantic color names to be used throughout the app. This allows us to have a consistent color palette across the app, and also allows us to change the palette easily.
 
-[Colors & Palettes](./Theming/Colors-And-Palettes.md)]
+[Colors & Palettes](./Theming-Colors-And-Palettes.md)]
 
 ## Fonts & Typography
 
 Fonts are defined in `app/theme/fonts.ts`. We use a similar approach to colors, defining a set of fonts and then using those fonts to define semantic font names to be used throughout the app. This allows us to have a consistent font usage across the app, and also allows us to change the fonts easily.
 
-[Fonts & Typography](./Theming/Fonts-And-Typography.md)]
+[Fonts & Typography](./Theming-Fonts-And-Typography.md)]
 
 ## Timings
 
