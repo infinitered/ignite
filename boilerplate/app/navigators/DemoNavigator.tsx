@@ -4,7 +4,7 @@ import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { Icon } from "../components"
 import { translate } from "../i18n"
-import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
+import { DemoCommunityScreen, DemoComponentsScreen, DemoDebugScreen } from "../screens"
 import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
@@ -56,7 +56,7 @@ export function DemoNavigator() {
 
       <Tab.Screen
         name="DemoContributing"
-        component={DemoDebugScreen}
+        component={DemoCommunityScreen}
         options={{
           tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
