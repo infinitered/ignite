@@ -9,7 +9,7 @@
  *
  * @refresh reset
  */
-import { applySnapshot, onSnapshot } from "mobx-state-tree"
+import { applySnapshot, IDisposer, onSnapshot } from "mobx-state-tree"
 import type { RootStore } from "../RootStore"
 import * as storage from "../../utils/storage"
 
@@ -21,6 +21,7 @@ const ROOT_STATE_STORAGE_KEY = "root-v1"
 /**
  * Setup the root state.
  */
+let _disposer: IDisposer = undefined
 export async function setupRootStore(rootStore: RootStore) {
   let restoredState: any
 
@@ -35,8 +36,16 @@ export async function setupRootStore(rootStore: RootStore) {
     }
   }
 
-  // track changes & save to AsyncStorage
-  onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
+  // stop tracking state changes if we've already setup
+  if (_disposer) _disposer()
 
-  return { rootStore, restoredState }
+  // track changes & save to AsyncStorage
+  _disposer = onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
+
+  const unsubscribe = () => {
+    _disposer()
+    _disposer = undefined
+  }
+
+  return { rootStore, restoredState, unsubscribe }
 }

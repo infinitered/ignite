@@ -12,14 +12,14 @@
 import "./i18n"
 import "./utils/ignore-warnings"
 import { useFonts } from "expo-font"
-import React, { useEffect } from "react"
+import React from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
-import { setupRootStore, useStores } from "./models"
+import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
-import { setReactotronRootStore, setupReactotron } from "./services/reactotron"
+import { setupReactotron } from "./services/reactotron"
 
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
@@ -53,27 +53,17 @@ function App(props: AppProps) {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
-  // load in the rootStore (which initializes it)
-  const rootStore = useStores()
-
   const [areFontsLoaded] = useFonts(customFontsToLoad)
 
-  // Kick off initial async loading actions, like loading fonts and rehydrating RootStore
-  useEffect(() => {
-    ;(async () => {
-      // set up the RootStore (returns the state restored from AsyncStorage)
-      const { restoredState } = await setupRootStore(rootStore)
+  const { rehydrated } = useInitialRootStore(() => {
+    // This runs after the root store has been initialized and rehydrated.
 
-      // reactotron integration with the MST root store (DEV only)
-      setReactotronRootStore(rootStore, restoredState)
-
-      // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
-      // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
-      // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
-      // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
-      setTimeout(hideSplashScreen, 500)
-    })()
-  }, [])
+    // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
+    // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
+    // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
+    // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
+    setTimeout(hideSplashScreen, 500)
+  })
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -81,7 +71,7 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!isNavigationStateRestored || !areFontsLoaded) return null
+  if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null
 
   // otherwise, we're ready to render the app
   return (
