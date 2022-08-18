@@ -47,7 +47,7 @@ export const LoginScreen = observer(function LoginScreen(props: LoginScreenProps
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
         return (
           <Icon
-            icon="view"
+            icon={isAuthPasswordHidden ? "view" : "hidden"}
             color={colors.palette.neutral800}
             containerStyle={props.style}
             onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
