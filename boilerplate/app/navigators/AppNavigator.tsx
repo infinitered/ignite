@@ -12,10 +12,12 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StackScreenProps } from "@react-navigation/stack"
+import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
-import { WelcomeScreen } from "../screens"
-import { DemoNavigator, DemoTabParamList } from "./demo-navigator"
+import { useStores } from "../models"
+import { LoginScreen, WelcomeScreen } from "../screens"
+import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 
 /**
@@ -33,9 +35,16 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
  */
 export type AppStackParamList = {
   Welcome: undefined
+  Login: undefined
   Demo: NavigatorScreenParams<DemoTabParamList>
   // 🔥 Your screens go here
 }
+
+/**
+ * This is a list of all the route names that will exit the app if the back button
+ * is pressed while in that screen. Only affects Android.
+ */
+const exitRoutes = ["Welcome"]
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreenProps<
   AppStackParamList,
@@ -45,26 +54,37 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreen
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-function AppStack() {
+const AppStack = observer(function AppStack() {
+  const {
+    authenticationStore: { isAuthenticated },
+  } = useStores()
+
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName="Welcome"
+      screenOptions={{ headerShown: false }}
+      initialRouteName={isAuthenticated ? "Welcome" : "Login"}
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-      <Stack.Screen name="Demo" component={DemoNavigator} />
+      {isAuthenticated ? (
+        <>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Demo" component={DemoNavigator} />
+        </>
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreen} />
+      )}
+
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
-}
+})
 
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
-export function AppNavigator(props: NavigationProps) {
+export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
-  useBackButtonHandler(canExit)
+
+  useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -74,18 +94,4 @@ export function AppNavigator(props: NavigationProps) {
       <AppStack />
     </NavigationContainer>
   )
-}
-
-AppNavigator.displayName = "AppNavigator"
-
-/**
- * A list of routes from which we're allowed to leave the app when
- * the user presses the back button on Android.
- *
- * Anything not on this list will be a standard `back` action in
- * react-navigation.
- *
- * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
- */
-const exitRoutes = ["Welcome"]
-export const canExit = (routeName: string) => exitRoutes.includes(routeName)
+})

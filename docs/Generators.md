@@ -1,7 +1,5 @@
 # Generators
 
-_NOTE: This documentation is for Ignite CLI version 4.0+. For apps spun up by Ignite CLI 3.x or below (Andross or Bowser), please refer to [the previous documentation](https://github.com/infinitered/ignite/tree/2dd42a5957ff18211c9edd7524b6af5f4231baf6/docs)._
-
 _The true gem of Ignite._ When you spin up a new app with Ignite CLI, we copy in several generator templates into `./ignite/templates/*`. Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
 
 ```
@@ -36,12 +34,22 @@ npx ignite-cli generate screen Settings
 Creates a Mobx-State-Tree model.
 
 ```
-npx ignite-cli generate model No
+npx ignite-cli generate model Pizza
 ```
 
 - Creates the model
 - Creates a unit test file
 - Appends export to `models/index.ts` unless you pass `--skip-index-file`
+
+### Navigator generator
+
+Creates a React Navigation navigator in the `app/navigators` folder.
+
+```
+npx ignite-cli generate navigator OrderPizza
+```
+
+You can learn more about navigators [in the Navigation docs](./Navigation.md).
 
 ### App Icon generator
 
@@ -127,33 +135,20 @@ A few notes about sizes. iOS size has no upper limit, so be careful with the val
 
 Lastly, the splash-screen generator will exit if your input file has not been modified. The same source equality check, as the one on the app-icon generator, will encourage you to make customizations before using the generator (see the `--skip-source-equality-validation` section above).
 
+## Customizing generators
+
+You should feel free to make the provided templates your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files. Read more in the [Generator Templates](./Generator-Templates.md) documentation.
+
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
 
-```
-npx ignite-cli g screen Settings
-```
-
-This will copy over any files in `./ignite/templates/screen/*` to `./app/screens/settings/*` and process any `.ejs` templates at the same time.
-
-Props are passed into the **ejs templates** when you run the generator.
-
-```ts
-{
-  camelCaseName: string
-  kebabCaseName: string
-  pascalCaseName: string
-  filename: string
-}
-```
-
-You can use them in a template with `<%= props.camelCaseName %>`.
-
-## Customizing generators
-
-You should feel free to make them your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files.
+Read more about making your own generators in the [Generator Templates](./Generator-Templates.md) documentation.
 
 ## Updating generators
 
-Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from the root folder of your project to copy over the latest generators to your project. Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back.
+You may want to update your generators to the latest version of Ignite.
+
+Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from the root folder of your project to copy over the latest generators from Ignite to your project.
+
+⚠️ Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back!

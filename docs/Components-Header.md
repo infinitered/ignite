@@ -2,6 +2,8 @@
 
 [Back to all components](./Components.md)
 
+MAVERICKTODO: update documentation with new props
+
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.
 
 ```tsx

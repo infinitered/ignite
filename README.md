@@ -25,6 +25,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 - Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
+- React native Reanimated
 - And more!
 
 ## Quick Start
@@ -53,9 +54,11 @@ If you'd like to follow a tutorial, check out [this one from Robin Heinze](https
 
 The above commands may fail with various errors, depending on your operating system and dependency versions. Some troubleshooting steps to follow:
 
+- Uninstall global versions of the Ignite CLI via `npm uninstall -g ignite-cli` and use the CLI via `npx ignite-cli`
 - Make sure you are using the LTS version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v16.x.x.
 - If the installation fails because of an Xcode error (missing Xcode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
 - If Xcode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the Xcode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
+- Add the `--debug` switch to the Ignite CLI new command to provide additional output during project initialization
 
 ## Generators
 

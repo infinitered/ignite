@@ -1,5 +1,5 @@
 import { getEnv, IStateTreeNode } from "mobx-state-tree"
-import { Environment } from "../environment"
+import { Environment } from "../helpers/environment"
 
 /**
  * Adds a environment property to the node for accessing our

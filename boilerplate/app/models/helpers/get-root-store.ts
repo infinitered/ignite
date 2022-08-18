@@ -1,5 +1,5 @@
 import { getRoot, IStateTreeNode } from "mobx-state-tree"
-import { RootStore, RootStoreModel } from "../root-store/root-store"
+import { RootStore, RootStoreModel } from "../RootStore"
 
 /**
  * Returns a RootStore object in strongly typed way

@@ -37,6 +37,11 @@ interface IconProps extends TouchableOpacityProps {
    * Style overrides for the icon container
    */
   containerStyle?: StyleProp<ViewStyle>
+
+  /**
+   * An optional function to be called when the icon is pressed
+   */
+  onPress?: TouchableOpacityProps["onPress"]
 }
 
 /**
@@ -52,18 +57,19 @@ export function Icon(props: IconProps) {
     size,
     style: $imageStyleOverride,
     containerStyle: $containerStyleOverride,
-    onPress,
     ...WrapperProps
   } = props
 
-  const Wrapper: ComponentType<TouchableOpacityProps> = onPress ? TouchableOpacity : View
+  const Wrapper: ComponentType<TouchableOpacityProps> = WrapperProps?.onPress
+    ? TouchableOpacity
+    : View
 
   return (
     <Wrapper {...WrapperProps} style={$containerStyleOverride}>
       <Image
         style={[
           $imageStyle,
-          { tintColor: color },
+          color && { tintColor: color },
           size && { width: size, height: size },
           $imageStyleOverride,
         ]}

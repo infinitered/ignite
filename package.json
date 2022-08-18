@@ -50,7 +50,8 @@
   "dependencies": {
     "deepmerge-json": "^1.1.0",
     "gluegun": "5.1.2",
-    "sharp": "^0.30.4"
+    "sharp": "^0.30.4",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@rnx-kit/metro-config": "^1.2.26",

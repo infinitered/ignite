@@ -261,9 +261,10 @@ export default {
     // pnpm/yarn/npm install it
 
     if (normalize.boolean(options.installDeps) !== false) {
-      startSpinner("Unboxing npm dependencies")
+      const unboxingMessage = `Unboxing ${packagerName} dependencies`
+      startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner("Unboxing npm dependencies", "🧶")
+      stopSpinner(unboxingMessage, "🧶")
     }
 
     // remove the gitignore template

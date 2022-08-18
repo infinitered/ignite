@@ -1,3 +1,5 @@
+- [ ] I've read the [Troubleshooting tips in the README](https://github.com/infinitered/ignite#troubleshooting)
+
 What's going on?
 
 ---
