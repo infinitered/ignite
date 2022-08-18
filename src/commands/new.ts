@@ -12,7 +12,6 @@ import {
   stopSpinner,
   clearSpinners,
 } from "../tools/pretty"
-import { normalize } from "../tools/normalize"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -260,7 +259,7 @@ export default {
     // #region Run Packager Install
     // pnpm/yarn/npm install it
 
-    if (normalize.boolean(options.installDeps) !== false) {
+    if (options.installDeps !== false) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
