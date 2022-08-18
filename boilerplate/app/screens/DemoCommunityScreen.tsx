@@ -1,7 +1,11 @@
 import React from "react"
-import { TextStyle, ViewStyle } from "react-native"
-import { Screen, Text } from "../components"
+import { Linking, TextStyle, ViewStyle } from "react-native"
+import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+
+function openLinkInBrowser(url: string) {
+  Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
+}
 
 export function DemoCommunityScreen(props: DemoTabScreenProps<"DemoContributing">) {
   return (
@@ -11,6 +15,12 @@ export function DemoCommunityScreen(props: DemoTabScreenProps<"DemoContributing"
 
       <Text preset="subheading" tx="demoCommunityScreen.joinUsOnSlackTitle" />
       <Text tx="demoCommunityScreen.joinUsOnSlack" style={$description} />
+      <ListItem
+        tx="demoCommunityScreen.joinSlackLink"
+        bottomSeparator
+        rightIcon="caretRight"
+        onPress={() => openLinkInBrowser("https://google.com")}
+      />
 
       <Text preset="subheading" tx="demoCommunityScreen.makeIgniteEvenBetterTitle" />
       <Text tx="demoCommunityScreen.makeIgniteEvenBetter" style={$description} />
