@@ -28,9 +28,11 @@ setupReactotron({
   clearOnLoad: true,
   // generally going to be localhost
   host: "localhost",
-  // Reactotron can use AsyncStorage
+  // Reactotron can moniter AsyncStorage for you
   useAsyncStorage: true,
-  logInitialState: false,
+  // log the initial restored state from AsyncStorage
+  logInitialState: true,
+  // log out any snapshots as they happen (this is useful for debugging but slow)
   logSnapshots: false,
 })
 

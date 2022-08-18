@@ -1,3 +1,14 @@
+/**
+ * This file is where we do "rehydration" of your RootStore from AsyncStorage.
+ * This lets you persist your state between app launches.
+ *
+ * Navigation state persistence is handled in navigation-utilities.tsx.
+ *
+ * Note that Fast Refresh doesn't play well with this file, so if you edit this,
+ * do a full refresh of your app instead.
+ *
+ * @refresh reset
+ */
 import { applySnapshot, onSnapshot } from "mobx-state-tree"
 import type { RootStore } from "../RootStore"
 import * as storage from "../../utils/storage"
