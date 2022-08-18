@@ -8,11 +8,22 @@
     "invalidEmail": "عنوان البريد الالكتروني غير صالح"
   },
   "welcomeScreen": {
+    "headerRight": "تسجيل خروج",
     "postscript": "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
     "letsGo": "لنذهب",
     "readyForLaunch": "تطبيقك تقريبا جاهز للتشغيل",
     "exciting": "اوه هذا مثير"
   },
+  // "loginScreen": {
+  //   "signIn": "Sign In",
+  //   "enterDetails": "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
+  //   "emailFieldLabel": "Email",
+  //   "passwordFieldLabel": "Password",
+  //   "emailFieldPlaceholder": "Enter your email address",
+  //   "passwordFieldPlaceholder": "Super secret password here",
+  //   "tapToSignIn": "Tap to sign in!",
+  //   "hint": "Hint: you can use any email address and your favorite password :)"
+  // },
   "demoNavigator": {
     "componentsTab": "عناصر",
     "debugTab": "تصحيح",
@@ -21,7 +32,9 @@
   "demoComponentsScreen": {
     "jumpStart": "مكونات او عناصر لبدء مشروعك",
     "lorem2Sentences": "عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم",
-    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id"
+    "demoButtonTxExample": "Via `tx` Prop - Fugiat Id",
+    // "demoTextFieldTxExample": "Via `{{prop}}Tx` Prop",
+    // "demoHeaderTxExample": "Yay"
   },
   "demoDebugScreen": {
     "howTo": "كيف",

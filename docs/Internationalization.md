@@ -22,4 +22,4 @@ To remove RTL support, follow the following steps:
 ## Adding more languages
 
 1. add your language `.json` file to `app/i18n/`, e.g. `app/i18n/fr.json`
-2. update `app/i18n/i18n.ts` `i18n.translations` object to include the newly imported language, i.e. `i18n.translations = { en, "en-US": en, ja, fr }`
+2. update `app/i18n/i18n.ts` `i18n.translations` object to include the newly imported language, e.g. `i18n.translations = { en, "en-US": en, ja, fr }`
