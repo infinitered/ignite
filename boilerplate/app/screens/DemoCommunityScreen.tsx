@@ -7,7 +7,7 @@ function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }
 
-export function DemoCommunityScreen(props: DemoTabScreenProps<"DemoContributing">) {
+export function DemoCommunityScreen(props: DemoTabScreenProps<"DemoCommunity">) {
   return (
     <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
       <Text preset="heading" tx="demoCommunityScreen.title" style={$title} />

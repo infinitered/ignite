@@ -11,7 +11,7 @@ import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 export type DemoTabParamList = {
   DemoComponents: undefined
   DemoDebug: undefined
-  DemoContributing: undefined
+  DemoCommunity: undefined
 }
 
 export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
@@ -55,7 +55,7 @@ export function DemoNavigator() {
       />
 
       <Tab.Screen
-        name="DemoContributing"
+        name="DemoCommunity"
         component={DemoCommunityScreen}
         options={{
           tabBarLabel: translate("demoNavigator.communityTab"),
