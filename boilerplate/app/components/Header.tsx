@@ -8,10 +8,10 @@ import {
   ViewStyle,
 } from "react-native"
 import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
-import { translate } from "../i18n/"
 import { colors } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { isRTL, translate } from "../i18n"
 
 export interface HeaderProps {
   /**
@@ -243,6 +243,7 @@ function HeaderAction(props: HeaderActionProps) {
         color={iconColor}
         onPress={onPress}
         containerStyle={[$actionIconContainer, { backgroundColor }]}
+        style={isRTL ? { transform: [{ rotate: "180deg" }] } : {}}
       />
     )
   }

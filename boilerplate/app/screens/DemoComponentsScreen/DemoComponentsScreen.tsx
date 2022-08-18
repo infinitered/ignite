@@ -13,6 +13,7 @@ import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useSharedValue } from "react-native-reanimated"
 import { Icon, Screen, Text } from "../../components"
+import { isRTL } from "../../i18n"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors } from "../../theme"
 import * as Demos from "./demos"
@@ -57,6 +58,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
       ref={drawerRef}
       drawerWidth={326}
       drawerType={"slide"}
+      drawerPosition={isRTL ? "right" : "left"}
       drawerBackgroundColor={colors.palette.neutral100}
       onDrawerSlide={(drawerProgress) => {
         progress.value = open ? 1 - drawerProgress : drawerProgress
@@ -96,7 +98,7 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
                     style={$menuitem}
                   >
                     <Text>{u}</Text>
-                    <Icon icon="caretRight" />
+                    <Icon icon={isRTL ? "caretLeft" : "caretRight"} />
                   </Pressable>
                 ))}
               </View>
