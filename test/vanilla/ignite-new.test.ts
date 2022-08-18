@@ -1,8 +1,19 @@
 import { filesystem } from "gluegun"
-import * as path from "path"
+import * as tempy from "tempy"
 import { runIgnite, runError, testSpunUpApp } from "../_test-helpers"
 
 const APP_NAME = "Foo"
+
+const originalDir = process.cwd()
+let tempDir: string
+
+beforeEach(() => {
+  tempDir = tempy.directory({ prefix: "ignite-" })
+})
+
+afterEach(() => {
+  filesystem.remove(tempDir) // clean up our mess
+})
 
 describe("Checking for ignite. 🪔", () => {
   test(`ignite new (no name)`, async () => {
@@ -17,16 +28,8 @@ describe("Checking for ignite. 🪔", () => {
 })
 
 describe("Igniting new app! 🔥\nGo get a coffee or something. This is gonna take a while.", () => {
-  const originalDir = process.cwd()
-  const tempDir = path.join(originalDir, "temp")
-  const appDir = path.join(tempDir, APP_NAME)
-
-  beforeEach(() => {
-    filesystem.remove(appDir)
-  })
-
   test(`ignite new ${APP_NAME}`, async () => {
-    const result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn`, {
+    const result = await runIgnite(`new ${APP_NAME} --debug --packager=npm`, {
       pre: `cd ${tempDir}`,
       post: `cd ${originalDir}`,
     })
