@@ -5,7 +5,7 @@
 Ignite's `Icon` Component renders an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. If `onPress` is passed, it will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, otherwise it will use a [`View`](https://reactnative.dev/docs/view) component.
 
 ```tsx
-<Icon icon="ladybug" onPress={() => Alert.alert('Hello')} />
+<Icon icon="ladybug" onPress={() => Alert.alert("Hello")} />
 ```
 
 ## Props
@@ -78,13 +78,12 @@ The `containerStyle` is an optional prop that sets the style of the icon contain
 The `onPress` optional prop is a function that will be called when the icon is pressed. Note that when this prop is passed, the icon will be wrapped in a `TouchableOpacity` component rather than a `View` component.
 
 ```tsx
-<Icon icon="ladybug" onPress={() => Alert.alert('Hello')} />
+<Icon icon="ladybug" onPress={() => Alert.alert("Hello")} />
 ```
 
 ## Custom Icons
 
 To create your own custom icon, add your icon image(s) to the `assets/icons/` directory and then add it with its own name to the `iconRegistry` object in `app/components/Icon.tsx`.
-
 
 ```
 -- icon/

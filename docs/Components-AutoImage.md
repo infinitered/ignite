@@ -5,7 +5,9 @@
 Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit the size of the image and ensures you don't need to explicitly set the image size props on every image. This is mostly useful for images with an image source that is a remote URI or a data uri scheme. Local images (those loaded with `require()`) don't need this.
 
 ```tsx
-<AutoImage source={{uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg"}} />
+<AutoImage
+  source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
+/>
 ```
 
 ## Props
@@ -22,7 +24,7 @@ As with React Native's built in Image component, the `source` prop is always req
 
 ### `style`
 
-Setting the `style` prop will override the default styles. With `AutoImage`, you generally only need to specify width *or* height with dynamically loaded images. Setting both will override the resizing of `AutoImage` altogether, and if that is needed it's best to just use the default React Native `Image` component.
+Setting the `style` prop will override the default styles. With `AutoImage`, you generally only need to specify width _or_ height with dynamically loaded images. Setting both will override the resizing of `AutoImage` altogether, and if that is needed it's best to just use the default React Native `Image` component.
 
 ```tsx
 <AutoImage source={logoIgnite} style={{ width: 200 }} />

@@ -15,7 +15,8 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
-import { WelcomeScreen } from "../screens"
+import { useStores } from "../models"
+import { LoginScreen, WelcomeScreen } from "../screens"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 
@@ -34,6 +35,7 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
  */
 export type AppStackParamList = {
   Welcome: undefined
+  Login: undefined
   Demo: NavigatorScreenParams<DemoTabParamList>
   // 🔥 Your screens go here
 }
@@ -53,15 +55,24 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreen
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
+  const {
+    authenticationStore: { isAuthenticated },
+  } = useStores()
+
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName="Welcome"
+      screenOptions={{ headerShown: false }}
+      initialRouteName={isAuthenticated ? "Welcome" : "Login"}
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-      <Stack.Screen name="Demo" component={DemoNavigator} />
+      {isAuthenticated ? (
+        <>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Demo" component={DemoNavigator} />
+        </>
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreen} />
+      )}
+
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
