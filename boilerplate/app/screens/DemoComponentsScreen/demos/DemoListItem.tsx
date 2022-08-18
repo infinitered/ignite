@@ -1,11 +1,17 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+import { FlatList } from "react-native-gesture-handler"
 import { Icon, ListItem, Text } from "../../../components"
 import { colors } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+
+const flatListData =
+  `Tempor Id Ea Aliqua Pariatur Aliquip. Irure Minim Voluptate Consectetur Consequat Sint Esse Proident Irure. Nostrud Elit Veniam Nostrud Excepteur Minim Deserunt Quis Dolore Velit Nulla Irure Voluptate Tempor. Occaecat Amet Laboris Nostrud Qui Do Quis Lorem Ex Elit Fugiat Deserunt. In Pariatur Excepteur Exercitation Ex Incididunt Qui Mollit Dolor Sit Non. Culpa Officia Minim Cillum Exercitation Voluptate Proident Laboris Et Est Reprehenderit Quis Pariatur Nisi`
+    .split(".")
+    .map((item) => item.trim())
 
 const $customLeft: ViewStyle = {
   backgroundColor: colors.error,
@@ -28,6 +34,13 @@ const $customTouchableStyle: ViewStyle = {
 const $customContainerStyle: ViewStyle = {
   borderTopWidth: 5,
   borderTopColor: colors.palette.neutral100,
+}
+
+const $flatListStyle: ViewStyle = {
+  paddingHorizontal: 8,
+  backgroundColor: colors.palette.neutral200,
+  flex: 1,
+  overflow: "scroll",
 }
 
 export const DemoListItem: Demo = {
@@ -129,6 +142,26 @@ export const DemoListItem: Demo = {
           </Text>
         </Text>
       </ListItem>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="Integrating w/ FlatList"
+      description="The component can be easily integrated with your favorite list interface."
+    >
+      <View style={{ height: 148 }}>
+        <FlatList<string>
+          data={flatListData}
+          style={$flatListStyle}
+          renderItem={({ item, index }) => (
+            <ListItem
+              text={item}
+              rightIcon="caretRight"
+              TextProps={{ numberOfLines: 1 }}
+              topSeparator={index !== 0}
+            />
+          )}
+        />
+      </View>
     </DemoUseCase>,
 
     <DemoUseCase name="Styling" description="The component can be styled easily.">
