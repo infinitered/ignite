@@ -4,7 +4,7 @@
 
 Ignite's approach to styling individual components is, like many other things in Ignite, straightforward and direct.
 
-If you're looking to set app-wide styles such ass, check out the [Theming](./Theming.md) documentation.
+If you're looking to set app-wide styles such as, check out the [Theming](./Theming.md) documentation.
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
