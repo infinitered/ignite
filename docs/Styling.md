@@ -8,7 +8,7 @@ If you're looking to set app-wide styles such as fonts/typography or colors, che
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of bare JS objects, colocated with our components (usually above the component in the file), prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of bare JS objects, colocated with our components (usually below the component in the file), prefixed with `$`, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
