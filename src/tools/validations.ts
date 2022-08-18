@@ -1,17 +1,20 @@
 import { GluegunToolbox } from "gluegun"
 
-export function validateProjectName(toolbox: GluegunToolbox): string {
-  const { parameters, strings, print, runtime } = toolbox
+export async function validateProjectName(toolbox: GluegunToolbox): Promise<string> {
+  const { parameters, strings, print } = toolbox
   const { isBlank, upperFirst, camelCase } = strings
 
   // grab the project name
-  const projectName = (parameters.first || "").toString()
+  let projectName: string = (parameters.first || "").toString()
 
   // verify the project name is a thing
   if (isBlank(projectName)) {
-    print.info(`${runtime.brand} new <projectName>\n`)
-    print.error("Project name is required")
-    process.exit(1)
+    const projectNameResponse = await toolbox.prompt.ask({
+      name: "projectName",
+      type: "input",
+      message: "What do you want to call it?",
+    })
+    projectName = projectNameResponse.projectName
   }
 
   // warn if more than one argument is provided for <projectName>
@@ -78,4 +81,9 @@ export function validateBundleIdentifier(
   }
 
   return bundleID
+}
+
+export type ValidationsExports = {
+  validateProjectName: typeof validateProjectName
+  validateBundleIdentifier: typeof validateBundleIdentifier
 }

@@ -12,6 +12,7 @@ import {
   stopSpinner,
   clearSpinners,
 } from "../tools/pretty"
+import type { ValidationsExports } from "../tools/validations"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -22,7 +23,7 @@ export interface Options {
   /**
    * Log raw parameters for debugging, run formatting script not quietly
    *
-   * Input Source: `prompt.confirm` | `parameter.option`
+   * Input Source: `parameter.option`
    * @default false
    */
   debug?: boolean
@@ -48,7 +49,7 @@ export interface Options {
    */
   b?: string
   /**
-   * custom bundle identifier (android only)
+   * custom bundle identifier for iOS and Android
    *
    * Input Source: `prompt.ask` | `parameter.option`
    * @default `com.${name}`
@@ -65,8 +66,6 @@ export interface Options {
    * Package manager to install dependencies with
    *
    * Input Source: `prompt.ask`| `parameter.option`
-   *
-   * Default: packager that executed current command, i.e. `npx ignite new`, `yarn dlx ignite new`, `pnpm dlx ignite new`
    */
   packager?: "npm" | "yarn" | "pnpm"
   /**
@@ -79,6 +78,7 @@ export interface Options {
   /**
    * Whether or not to run packager install script after project is created
    *
+   * Input Source: `prompt.confirm` | `parameter.option`
    * @default true
    */
   installDeps?: boolean
@@ -86,16 +86,23 @@ export interface Options {
    * React Native Colo Loco is no longer installed with Ignite,
    * but we will give instructions on how to install it if they pass in `--colo-loco`   *
    *
-   * Input Source: `prompt.confirm` | `parameter.option`
+   * Input Source: `parameter.option`
    * @default false
    */
   coloLoco?: boolean
+  /**
+   * The target directory where the project will be created.
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
+   * @default `${cwd}/${projectName}`
+   */
+  targetPath?: string
 }
 
 export default {
   run: async (toolbox: GluegunToolbox) => {
     // #region Toolbox
-    const { print, filesystem, system, meta, parameters, strings } = toolbox
+    const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
     const { info, colors, warning } = print
@@ -119,23 +126,12 @@ export default {
     // #endregion
 
     // #region Project Name
-    // retrieve project name from toolbox
-    const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
-    const projectName = validateProjectName(toolbox)
-    const projectNameKebab = kebabCase(projectName)
-    // #endregion
+    heading("🔥 About to Ignite your new app! 🔥")
 
-    // #region Overwrite
-    // if they pass in --overwrite, remove existing directory otherwise throw if exists
-    if (options.overwrite) {
-      log(`Removing existing project ${projectName}`)
-      remove(projectName)
-    } else if (exists(projectName)) {
-      const alreadyExists = `Error: There's already a folder with the name "${projectName}". To force overwriting that folder, run with --overwrite.`
-      p()
-      p(yellow(alreadyExists))
-      process.exit(1)
-    }
+    // retrieve project name from toolbox
+    const { validateProjectName } = require("../tools/validations") as ValidationsExports
+    const projectName = await validateProjectName(toolbox)
+    const projectNameKebab = kebabCase(projectName)
     // #endregion
 
     // #region Boilerplate
@@ -151,22 +147,99 @@ export default {
     // #endregion
 
     // #region Bundle Identifier
-    // custom bundle identifier
-    // TODO: refactor alert, need to rethink this
-    const bundleIdentifier =
-      validateBundleIdentifier(toolbox, options.bundle) || `com.${projectName.toLowerCase()}`
+    let bundleIdentifier = options.bundle
+
+    if (bundleIdentifier === undefined) {
+      const bundleIdentifierResponse = await prompt.ask({
+        type: "input",
+        name: "bundleIdentifier",
+        message: "What bundle identifier?",
+        initial: `com.${projectName.toLowerCase()}`,
+      })
+
+      bundleIdentifier = bundleIdentifierResponse.bundleIdentifier
+    }
+
+    const { validateBundleIdentifier } = require("../tools/validations") as ValidationsExports
+    validateBundleIdentifier(toolbox, bundleIdentifier)
+
+    // #endregion
+
+    // #region Project Path
+    let targetPath = options.targetPath
+    if (targetPath === undefined) {
+      const targetPathResponse = await prompt.ask({
+        type: "input",
+        name: "targetPath",
+        message: "Where do you want to start your project?",
+        initial: path(projectName),
+      })
+
+      targetPath = targetPathResponse.targetPath
+    }
+
+    // #endregion
+
+    // #region Overwrite
+    // if they pass in --overwrite, remove existing directory otherwise throw if exists
+    let overwrite = options.overwrite
+    if (exists(targetPath)) {
+      if (overwrite === undefined) {
+        overwrite = await prompt.confirm(
+          `${targetPath} already exists. Do you want to overwrite it?`,
+          false,
+        )
+      }
+
+      if (overwrite === false) {
+        const alreadyExists = `Error: There's already a folder at ${targetPath}. To force overwriting that folder, run with --overwrite or say yes.`
+        p()
+        p(yellow(alreadyExists))
+        process.exit(1)
+      }
+
+      log(`Removing existing project ${projectName}`)
+      remove(projectName)
+    }
+    // #endregion
+
+    // #region Prompt Git Option
+    let git = options.git
+
+    if (git === undefined) {
+      git = await prompt.confirm("Do you want to initialize a git repository?", true)
+    }
     // #endregion
 
     // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
-    const packagerName = options.packager || packager.detectPackager()
+    let packagerName = options.packager
+    if (packagerName === undefined) {
+      const packagerNameResponse = await prompt.ask<{ packagerName: "npm" | "yarn" | "pnpm" }>({
+        type: "select",
+        name: "packagerName",
+        message: "Which package manager do you want to use?",
+        choices: ["npm", "yarn", "pnpm"],
+        initial: 1,
+      })
+      packagerName = packagerNameResponse.packagerName
+    }
+
     const packagerOptions = { packagerName }
 
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
+
+    let installDeps = options.installDeps
+    if (installDeps === undefined) {
+      installDeps = await prompt.confirm(
+        "Want us to install dependencies for you? (adds 50-100 seconds)",
+        true,
+      )
+    }
     // #endregion
 
     // #region Expo
@@ -205,7 +278,7 @@ export default {
     startSpinner(" 3D-printing a new React Native app")
     await copyBoilerplate(toolbox, {
       boilerplatePath,
-      projectName,
+      targetPath,
       excluded: [".vscode", "node_modules", "yarn.lock"],
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -259,7 +332,7 @@ export default {
     // #region Run Packager Install
     // pnpm/yarn/npm install it
 
-    if (options.installDeps !== false) {
+    if (installDeps === true) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
@@ -287,11 +360,13 @@ export default {
 
     // #region Install CocoaPods
     // install pods
-    startSpinner("Baking CocoaPods")
-    await spawnProgress(`npx pod-install@${deps.podInstall}`, {
-      onProgress: log,
-    })
-    stopSpinner("Baking CocoaPods", "☕️")
+    if (installDeps === true) {
+      startSpinner("Baking CocoaPods")
+      await spawnProgress(`npx pod-install@${deps.podInstall}`, {
+        onProgress: log,
+      })
+      stopSpinner("Baking CocoaPods", "☕️")
+    }
     // #endregion
 
     // #region Run Format
@@ -299,9 +374,9 @@ export default {
     await packager.run("format", { ...packagerOptions, silent: !debug })
     // #endregion
 
-    // #region Git
+    // #region Create Git Repostiory and Initial Commit
     // commit any changes
-    if (options.git !== false) {
+    if (git === true) {
       startSpinner(" Backing everything up in source control")
       try {
         await system.run(

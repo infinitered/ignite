@@ -11,7 +11,7 @@ export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
 
 type CopyBoilerplateOptions = {
   boilerplatePath: string
-  projectName: string
+  targetPath: string
   excluded: Array<string>
 }
 
@@ -24,7 +24,7 @@ export async function copyBoilerplate(toolbox: GluegunToolbox, options: CopyBoil
   const { copyAsync, path } = filesystem
 
   // ensure the destination folder exists
-  await filesystem.dirAsync(options.projectName)
+  await filesystem.dirAsync(options.targetPath)
 
   // rather than copying everything wholesale, let's check what's in the boilerplate folder
   // and copy over everything except stuff like lockfiles and node_modules
@@ -36,7 +36,7 @@ export async function copyBoilerplate(toolbox: GluegunToolbox, options: CopyBoil
 
   // kick off a bunch of copies
   const copyPromises = copyTargets.map((fileOrFolder) =>
-    copyAsync(path(options.boilerplatePath, fileOrFolder), path(options.projectName, fileOrFolder)),
+    copyAsync(path(options.boilerplatePath, fileOrFolder), path(options.targetPath, fileOrFolder)),
   )
 
   // copy them all at once
