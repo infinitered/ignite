@@ -78,22 +78,6 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     progress.value = withSpring(open ? 1 : 0)
   }, [open, progress])
 
-  // RTL support logic
-  // const topBarTransform = useMemo(
-  //   () =>
-  //     isRTL
-  //       ? [{ translateX: topBarTranslateX }, { rotate: topBarRotation }]
-  //       : [{ rotate: topBarRotation }],
-  //   [topBarTranslateX, topBarRotation],
-  // )
-  // const bottomBarTransform = useMemo(
-  //   () =>
-  //     isRTL
-  //       ? [{ translateX: bottomBarTranslateX }, { rotate: bottomBarRotation }]
-  //       : [{ rotate: bottomBarRotation }],
-  //   [bottomBarTranslateX, bottomBarRotation],
-  // )
-
   return (
     <Pressable {...PressableProps}>
       <Animated.View style={[$container, animatedContainerStyles]}>
