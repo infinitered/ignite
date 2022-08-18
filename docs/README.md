@@ -13,3 +13,4 @@ Check out this list of topics:
 - [TypeScript](./TypeScript.md) - An explanation of TypeScript in Ignite and lots of resources
 - [Upgrading Ignite](./Upgrading.md) - How to upgrade your app to the latest and greatest Ignite patterns
 - [Tour of Ignite](./Tour-of-Ignite.md) - Tour of the Ignite code base for interested contributors
+- [Internationalization](./Internationalization.md) — How to Internationalize your app
