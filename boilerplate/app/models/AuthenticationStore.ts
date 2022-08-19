@@ -7,36 +7,36 @@ export const AuthenticationStoreModel = types
     authEmail: types.optional(types.string, ""),
     authPassword: types.optional(types.string, ""),
   })
-  .views((self) => ({
+  .views((store) => ({
     get isAuthenticated() {
-      return !!self.authToken
+      return !!store.authToken
     },
     get validationErrors() {
       return {
         authEmail: (function () {
-          if (self.authEmail.length === 0) return "can't be blank"
-          if (self.authEmail.length < 6) return "must be at least 6 characters"
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(self.authEmail))
+          if (store.authEmail.length === 0) return "can't be blank"
+          if (store.authEmail.length < 6) return "must be at least 6 characters"
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(store.authEmail))
             return "must be a valid email address"
           return ""
         })(),
         authPassword: (function () {
-          if (self.authPassword.length === 0) return "can't be blank"
-          if (self.authPassword.length < 6) return "must be at least 6 characters"
+          if (store.authPassword.length === 0) return "can't be blank"
+          if (store.authPassword.length < 6) return "must be at least 6 characters"
           return ""
         })(),
       }
     },
   }))
-  .actions((self) => ({
+  .actions((store) => ({
     setAuthToken(value?: string) {
-      self.authToken = value
+      store.authToken = value
     },
     setAuthEmail(value: string) {
-      self.authEmail = value.replace(/ /g, "")
+      store.authEmail = value.replace(/ /g, "")
     },
     setAuthPassword(value: string) {
-      self.authPassword = value.replace(/ /g, "")
+      store.authPassword = value.replace(/ /g, "")
     },
   }))
 

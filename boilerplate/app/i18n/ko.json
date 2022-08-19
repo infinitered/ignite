@@ -27,6 +27,7 @@
   "demoNavigator": {
     "componentsTab": "컴포넌트",
     "debugTab": "디버그",
+    "listTab": "MAVERICKTODO: List",
     "communityTab": "커뮤니티"
   },
   "demoComponentsScreen": {
