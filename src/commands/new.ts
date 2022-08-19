@@ -228,10 +228,22 @@ export default {
     // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
+    type Packager = "npm" | "yarn" | "pnpm"
+    const validatePackager = (input: unknown): input is Packager =>
+      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
+
     const defaultPackagerName = "yarn"
     let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
+
+    if (packagerName !== undefined && validatePackager(packagerName) === false) {
+      const invalidPackager = `Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`
+      p()
+      p(yellow(invalidPackager))
+      process.exit(1)
+    }
+
     if (packagerName === undefined) {
-      const packagerNameResponse = await prompt.ask<{ packagerName: "npm" | "yarn" | "pnpm" }>({
+      const packagerNameResponse = await prompt.ask<{ packagerName: Packager }>({
         type: "select",
         name: "packagerName",
         message: "Which package manager do you want to use?",
