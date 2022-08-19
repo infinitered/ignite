@@ -38,14 +38,6 @@ export async function setupRootStore() {
     // if there's any problems loading, then let's at least fallback to an empty state
     // instead of crashing.
     rootStore = RootStoreModel.create({}, env)
-
-    // but please inform us what happened
-    __DEV__ && console.tron.error(e.message, null)
-  }
-
-  // reactotron logging
-  if (__DEV__) {
-    env.reactotron.setRootStore(rootStore, data)
   }
 
   // track changes & save to storage
