@@ -5,17 +5,22 @@ import { TextStyle, ViewStyle } from "react-native"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
-import { DemoListScreen } from "../screens/DemoListScreen"
+import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
   DemoComponents: undefined
   DemoDebug: undefined
-  DemoList: undefined
+  DemoPodcastList: undefined
   DemoContributing: undefined
 }
 
+/**
+ * Helper for automatically generating navigation prop types for each route.
+ *
+ * More info: https://reactnavigation.org/docs/typescript/#organizing-types
+ */
 export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<DemoTabParamList, T>,
   AppStackScreenProps<keyof AppStackParamList>
@@ -57,10 +62,10 @@ export function DemoNavigator() {
       />
 
       <Tab.Screen
-        name="DemoList"
-        component={DemoListScreen}
+        name="DemoPodcastList"
+        component={DemoPodcastListScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.listTab"),
+          tabBarLabel: translate("demoNavigator.podcastListTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="menu" style={{ tintColor: focused && colors.tint }} />
           ),

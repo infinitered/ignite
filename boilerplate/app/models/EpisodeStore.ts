@@ -6,7 +6,6 @@ import { withSetPropAction } from "./helpers/with-set-prop-action"
 export const EpisodeStoreModel = types
   .model("EpisodeStore")
   .props({
-    title: "React Native Radio",
     episodes: types.array(EpisodeModel),
   })
   .actions(withSetPropAction)
