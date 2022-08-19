@@ -21,26 +21,6 @@ const deps: { [k: string]: string } = {
 
 export interface Options {
   /**
-   * Log raw parameters for debugging, run formatting script not quietly
-   *
-   * Input Source: `parameter.option`
-   * @default false
-   */
-  debug?: boolean
-  /**
-   * Remove existing directory otherwise throw if exists
-   *
-   * Input Source: `prompt.confirm` | `parameter.option`
-   * @default false
-   */
-  overwrite?: boolean
-  /**
-   * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
-   * @default undefined
-   */
-  boilerplate?: string
-  /**
    * alias for `boilerplate`
    *
    * Input Source: `parameter.option`
@@ -48,6 +28,12 @@ export interface Options {
    * @default undefined
    */
   b?: string
+  /**
+   * Input Source: `parameter.option`
+   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @default undefined
+   */
+  boilerplate?: string
   /**
    * custom bundle identifier for iOS and Android
    *
@@ -57,17 +43,20 @@ export interface Options {
    */
   bundle?: string
   /**
-   * Input Source: `parameter.option`
-   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
-   * @default undefined
-   */
-  expo?: boolean
-  /**
-   * Package manager to install dependencies with
+   * React Native Colo Loco is no longer installed with Ignite,
+   * but we will give instructions on how to install it if they pass in `--colo-loco`   *
    *
-   * Input Source: `prompt.ask`| `parameter.option`
+   * Input Source: `parameter.option`
+   * @default false
    */
-  packager?: "npm" | "yarn" | "pnpm"
+  coloLoco?: boolean
+  /**
+   * Log raw parameters for debugging, run formatting script not quietly
+   *
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  debug?: boolean
   /**
    * Create new git repository and create an inital commit with boilerplate changes
    *
@@ -83,13 +72,24 @@ export interface Options {
    */
   installDeps?: boolean
   /**
-   * React Native Colo Loco is no longer installed with Ignite,
-   * but we will give instructions on how to install it if they pass in `--colo-loco`   *
+   * Remove existing directory otherwise throw if exists
    *
-   * Input Source: `parameter.option`
+   * Input Source: `prompt.confirm` | `parameter.option`
    * @default false
    */
-  coloLoco?: boolean
+  overwrite?: boolean
+  /**
+   * Input Source: `parameter.option`
+   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
+   * @default undefined
+   */
+  expo?: boolean
+  /**
+   * Package manager to install dependencies with
+   *
+   * Input Source: `prompt.ask`| `parameter.option`
+   */
+  packager?: "npm" | "yarn" | "pnpm"
   /**
    * The target directory where the project will be created.
    *
