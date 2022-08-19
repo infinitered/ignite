@@ -6,15 +6,22 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
+import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
   DemoComponents: undefined
   DemoDebug: undefined
+  DemoPodcastList: undefined
   DemoContributing: undefined
 }
 
+/**
+ * Helper for automatically generating navigation prop types for each route.
+ *
+ * More info: https://reactnavigation.org/docs/typescript/#organizing-types
+ */
 export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<DemoTabParamList, T>,
   AppStackScreenProps<keyof AppStackParamList>
@@ -54,6 +61,17 @@ export function DemoNavigator() {
           tabBarLabel: translate("demoNavigator.debugTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="debug" style={{ tintColor: focused && colors.tint }} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="DemoPodcastList"
+        component={DemoPodcastListScreen}
+        options={{
+          tabBarLabel: translate("demoNavigator.podcastListTab"),
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="menu" style={{ tintColor: focused && colors.tint }} />
           ),
         }}
       />

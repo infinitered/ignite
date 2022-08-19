@@ -70,12 +70,6 @@ We rely heavily on integration tests, which is why Ignite CLI's test suite is ki
 
 We also run the default tests in a generated Ignite app, which further ensures that the CLI is generating a valid Ignite app.
 
-### data
-
-This contains a JSON file that helps demonstrate an API request in the boilerplate's `DemoListScreen`. It's Rick & Morty themed, naturally.
-
-This file isn't even included in the npm package at all. Instead, we just call over to GitHub when we need it.
-
 ## boilerplate
 
 In the root is another folder called `boilerplate`. This used to be called `Ignite Bowser` and was originally located here: https://github.com/infinitered/ignite-bowser [deprecated].

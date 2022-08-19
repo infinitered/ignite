@@ -27,6 +27,7 @@
   "demoNavigator": {
     "componentsTab": "عناصر",
     "debugTab": "تصحيح",
+    "listTab": "MAVERICKTODO: List",
     "communityTab": "واصل اجتماعي"
   },
   "demoComponentsScreen": {
