@@ -2,6 +2,7 @@ import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigatio
 import { CompositeScreenProps } from "@react-navigation/native"
 import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
@@ -22,14 +23,17 @@ export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScre
 const Tab = createBottomTabNavigator<DemoTabParamList>()
 
 export function DemoNavigator() {
+  const { bottom } = useSafeAreaInsets()
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: $tabBar,
+        tabBarStyle: [$tabBar, { height: bottom + 70 }],
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.text,
         tabBarLabelStyle: $tabBarLabel,
+        tabBarItemStyle: $tabBarItem,
       }}
     >
       <Tab.Screen
@@ -69,13 +73,17 @@ export function DemoNavigator() {
 }
 
 const $tabBar: ViewStyle = {
-  marginTop: 11,
   backgroundColor: colors.background,
   borderTopColor: colors.transparent,
+}
+
+const $tabBarItem: ViewStyle = {
+  paddingTop: 14,
 }
 
 const $tabBarLabel: TextStyle = {
   fontSize: 12,
   fontFamily: typography.primary.medium,
   lineHeight: 16,
+  flex: 1,
 }
