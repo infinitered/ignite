@@ -15,6 +15,11 @@ export type DemoTabParamList = {
   DemoCommunity: undefined
 }
 
+/**
+ * Helper for automatically generating navigation prop types for each route.
+ *
+ * More info: https://reactnavigation.org/docs/typescript/#organizing-types
+ */
 export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<DemoTabParamList, T>,
   AppStackScreenProps<keyof AppStackParamList>

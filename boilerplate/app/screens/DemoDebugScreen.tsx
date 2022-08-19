@@ -117,8 +117,7 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
       })
       // make an API call for the demo
       const demo = new Api()
-      demo.setup()
-      demo.getUser("1")
+      await demo.getEpisodes()
       // Let's do some async storage stuff
       await save("Cool Name", "Boaty McBoatface")
     },
@@ -157,8 +156,8 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
         <Button
           style={DEMO}
           textStyle={DEMO_TEXT}
-          tx="demoDebugScreen.demoList"
-          onPress={() => navigation.navigate("DemoComponents")}
+          tx="demoDebugScreen.demoPodcastList"
+          onPress={() => navigation.navigate("DemoPodcastList")}
         />
         <Image source={logoIgnite} style={IGNITE} />
         <View style={LOVE_WRAPPER}>
