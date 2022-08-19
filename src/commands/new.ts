@@ -97,6 +97,13 @@ export interface Options {
    * @default `${cwd}/${projectName}`
    */
   targetPath?: string
+  /**
+   * Whether or not to accept the default options for all prompts
+   *
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  y?: boolean
 }
 
 export default {
@@ -108,6 +115,9 @@ export default {
     const { info, colors, warning } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
     const options: Options = parameters.options
+
+    const y = !!options.y
+    const useDefault = (option: unknown) => y && option === undefined
     // #endregion
 
     // #region Debug
@@ -147,14 +157,15 @@ export default {
     // #endregion
 
     // #region Bundle Identifier
-    let bundleIdentifier = options.bundle
+    const defaultBundleIdentifier = `com.${projectName.toLowerCase()}`
+    let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
       const bundleIdentifierResponse = await prompt.ask({
         type: "input",
         name: "bundleIdentifier",
         message: "What bundle identifier?",
-        initial: `com.${projectName.toLowerCase()}`,
+        initial: defaultBundleIdentifier,
       })
 
       bundleIdentifier = bundleIdentifierResponse.bundleIdentifier
@@ -166,13 +177,14 @@ export default {
     // #endregion
 
     // #region Project Path
-    let targetPath = options.targetPath
+    const defaultTargetPath = path(projectName)
+    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask({
         type: "input",
         name: "targetPath",
         message: "Where do you want to start your project?",
-        initial: path(projectName),
+        initial: defaultTargetPath,
       })
 
       targetPath = targetPathResponse.targetPath
@@ -182,7 +194,8 @@ export default {
 
     // #region Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
-    let overwrite = options.overwrite
+    const defaultOverwrite = false
+    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : options.overwrite
     if (exists(targetPath)) {
       if (overwrite === undefined) {
         overwrite = await prompt.confirm(
@@ -204,7 +217,8 @@ export default {
     // #endregion
 
     // #region Prompt Git Option
-    let git = options.git
+    const defaultGit = true
+    let git = useDefault(options.git) ? defaultGit : options.git
 
     if (git === undefined) {
       git = await prompt.confirm("Do you want to initialize a git repository?", true)
@@ -214,7 +228,8 @@ export default {
     // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
-    let packagerName = options.packager
+    const defaultPackagerName = "yarn"
+    let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
     if (packagerName === undefined) {
       const packagerNameResponse = await prompt.ask<{ packagerName: "npm" | "yarn" | "pnpm" }>({
         type: "select",
@@ -233,7 +248,8 @@ export default {
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
 
-    let installDeps = options.installDeps
+    const defaultInstallDeps = true
+    let installDeps = useDefault(options.installDeps) ? defaultInstallDeps : options.installDeps
     if (installDeps === undefined) {
       installDeps = await prompt.confirm(
         "Want us to install dependencies for you? (adds 50-100 seconds)",
@@ -469,11 +485,12 @@ export default {
       expo,
       packager: packagerName,
       targetPath,
+      y,
     }
 
     type Flag = keyof typeof flags
 
-    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo"]
+    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y"]
 
     const cliCommand = `npx ignite-cli new ${projectName} ${(
       Object.entries(flags) as [Flag, Options[Flag]][]
