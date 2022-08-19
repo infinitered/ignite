@@ -18,7 +18,6 @@ MST is...
   - `types.compose` and `model.extend` allow for easy code-sharing of common patterns
 - More than state management
   - Lifecycle hooks like `afterCreate`, `preProcessSnapshot`, and `beforeDestroy` let you have control over your data at various points in its lifecycle
-  - Dependency injection with `getEnv` allows you to reference your environment (like API or other services)
 - Performant
   - Round-trip store writes are much faster
   - Computed values (views) are only calculated when needed
