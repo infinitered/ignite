@@ -455,5 +455,37 @@ export default {
     heading("Now get cooking! 🍽")
     igniteHeading()
     // #endregion
+
+    // #region Print CLI command
+    const flags: Required<Options> = {
+      b: bname,
+      boilerplate: bname,
+      bundle: bundleIdentifier,
+      coloLoco,
+      debug,
+      git,
+      installDeps,
+      overwrite,
+      expo,
+      packager: packagerName,
+      targetPath,
+    }
+
+    type Flag = keyof typeof flags
+
+    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo"]
+
+    const cliCommand = `npx ignite-cli new ${projectName} ${(
+      Object.entries(flags) as [Flag, Options[Flag]][]
+    )
+      .filter(([key]) => !privateFlags.includes(key))
+      .map(([key, value]) => `--${kebabCase(key)}=${value}`)
+      .join(" ")}`
+
+    p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
+    command(`  ${cliCommand}`)
+    p()
+
+    // #endregion
   },
 }
