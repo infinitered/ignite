@@ -116,7 +116,6 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
         },
       })
       // make an API call for the demo
-      // Don't do API like this, use store's API
       const demo = new Api()
       demo.setup()
       demo.getUser("1")

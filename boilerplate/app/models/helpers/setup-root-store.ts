@@ -1,6 +1,16 @@
-import { onSnapshot } from "mobx-state-tree"
-import { RootStoreModel, RootStore } from "../RootStore"
-import { Environment } from "./environment"
+/**
+ * This file is where we do "rehydration" of your RootStore from AsyncStorage.
+ * This lets you persist your state between app launches.
+ *
+ * Navigation state persistence is handled in navigation-utilities.tsx.
+ *
+ * Note that Fast Refresh doesn't play well with this file, so if you edit this,
+ * do a full refresh of your app instead.
+ *
+ * @refresh reset
+ */
+import { applySnapshot, IDisposer, onSnapshot } from "mobx-state-tree"
+import type { RootStore } from "../RootStore"
 import * as storage from "../../utils/storage"
 
 /**
@@ -9,47 +19,33 @@ import * as storage from "../../utils/storage"
 const ROOT_STATE_STORAGE_KEY = "root-v1"
 
 /**
- * Setup the environment that all the models will be sharing.
- *
- * The environment includes other functions that will be picked from some
- * of the models that get created later. This is how we loosly couple things
- * like events between models.
- */
-export async function createEnvironment() {
-  const env = new Environment()
-  await env.setup()
-  return env
-}
-
-/**
  * Setup the root state.
  */
-export async function setupRootStore() {
-  let rootStore: RootStore
-  let data: any
+let _disposer: IDisposer
+export async function setupRootStore(rootStore: RootStore) {
+  let restoredState: any
 
-  // prepare the environment that will be associated with the RootStore.
-  const env = await createEnvironment()
   try {
-    // load data from storage
-    data = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}
-    rootStore = RootStoreModel.create(data, env)
+    // load the last known state from AsyncStorage
+    restoredState = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}
+    applySnapshot(rootStore, restoredState)
   } catch (e) {
-    // if there's any problems loading, then let's at least fallback to an empty state
-    // instead of crashing.
-    rootStore = RootStoreModel.create({}, env)
-
-    // but please inform us what happened
-    __DEV__ && console.tron.error(e.message, null)
+    // if there's any problems loading, then inform the dev what happened
+    if (__DEV__) {
+      console.tron.error(e.message, null)
+    }
   }
 
-  // reactotron logging
-  if (__DEV__) {
-    env.reactotron.setRootStore(rootStore, data)
+  // stop tracking state changes if we've already setup
+  if (_disposer) _disposer()
+
+  // track changes & save to AsyncStorage
+  _disposer = onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
+
+  const unsubscribe = () => {
+    _disposer()
+    _disposer = undefined
   }
 
-  // track changes & save to storage
-  onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
-
-  return rootStore
+  return { rootStore, restoredState, unsubscribe }
 }
