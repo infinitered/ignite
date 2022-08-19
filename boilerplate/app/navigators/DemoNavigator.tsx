@@ -5,12 +5,14 @@ import { TextStyle, ViewStyle } from "react-native"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoComponentsScreen, DemoDebugScreen } from "../screens"
+import { DemoListScreen } from "../screens/DemoListScreen"
 import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
   DemoComponents: undefined
   DemoDebug: undefined
+  DemoList: undefined
   DemoContributing: undefined
 }
 
@@ -50,6 +52,17 @@ export function DemoNavigator() {
           tabBarLabel: translate("demoNavigator.debugTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="debug" style={{ tintColor: focused && colors.tint }} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="DemoList"
+        component={DemoListScreen}
+        options={{
+          tabBarLabel: translate("demoNavigator.listTab"),
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="menu" style={{ tintColor: focused && colors.tint }} />
           ),
         }}
       />

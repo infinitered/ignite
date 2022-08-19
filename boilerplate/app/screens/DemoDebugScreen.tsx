@@ -158,7 +158,7 @@ export const DemoDebugScreen = observer(function DemoDebugScreen(
           style={DEMO}
           textStyle={DEMO_TEXT}
           tx="demoDebugScreen.demoList"
-          onPress={() => navigation.navigate("DemoComponents")}
+          onPress={() => navigation.navigate("DemoListScreen")}
         />
         <Image source={logoIgnite} style={IGNITE} />
         <View style={LOVE_WRAPPER}>
