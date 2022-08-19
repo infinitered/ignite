@@ -1,7 +1,7 @@
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
-import { packager } from "../tools/packager"
+import { packager, PackagerName } from "../tools/packager"
 import {
   command,
   direction,
@@ -228,27 +228,42 @@ export default {
     // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
-    type Packager = "npm" | "yarn" | "pnpm"
-    const validatePackager = (input: unknown): input is Packager =>
-      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
 
-    const defaultPackagerName = "yarn"
+    const availablePackagers = packager.availablePackagers()
+    const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
     let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
 
-    if (packagerName !== undefined && validatePackager(packagerName) === false) {
-      const invalidPackager = `Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`
+    const validatePackagerName = (input: unknown): input is PackagerName =>
+      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
+
+    if (packagerName !== undefined && validatePackagerName(packagerName) === false) {
       p()
-      p(yellow(invalidPackager))
+      p(yellow(`Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`))
+      process.exit(1)
+    }
+
+    if (packagerName !== undefined && availablePackagers.includes(packagerName) === false) {
+      p()
+      p(yellow(`Error: selected "${packagerName}" but packager was not available on system`))
       process.exit(1)
     }
 
     if (packagerName === undefined) {
-      const packagerNameResponse = await prompt.ask<{ packagerName: Packager }>({
+      const initial = availablePackagers.findIndex((p) => p === defaultPackagerName)
+      const NOT_FOUND = -1
+
+      if (initial === NOT_FOUND) {
+        p()
+        p(yellow(`Error: Default packager "${defaultPackagerName}" was not available on system`))
+        process.exit(1)
+      }
+
+      const packagerNameResponse = await prompt.ask<{ packagerName: PackagerName }>({
         type: "select",
         name: "packagerName",
         message: "Which package manager do you want to use?",
-        choices: ["npm", "yarn", "pnpm"],
-        initial: 1,
+        choices: availablePackagers,
+        initial,
       })
       packagerName = packagerNameResponse.packagerName
     }
