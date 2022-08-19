@@ -16,13 +16,8 @@ afterEach(() => {
 })
 
 describe("Checking for ignite. 🪔", () => {
-  test(`ignite new (no name)`, async () => {
-    const result = await runError(`new`)
-    expect((result as any).stdout).toContain(`Project name is required`)
-  })
-
   test(`ignite new (invalid bundle ID)`, async () => {
-    const result = await runError(`new BadBundleID --bundle thisisbad`)
+    const result = await runError(`new BadBundleID --bundle thisisbad --y`)
     expect((result as any).stdout).toContain(`Invalid Bundle Identifier.`)
   })
 })
