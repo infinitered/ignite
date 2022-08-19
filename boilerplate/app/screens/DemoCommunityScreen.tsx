@@ -1,6 +1,7 @@
 import React from "react"
 import { Linking, TextStyle, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
+import { isRTL } from "../i18n"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 
 function openLinkInBrowser(url: string) {
@@ -18,7 +19,7 @@ export function DemoCommunityScreen(props: DemoTabScreenProps<"DemoCommunity">) 
       <ListItem
         tx="demoCommunityScreen.joinSlackLink"
         bottomSeparator
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://google.com")}
       />
 
