@@ -28,7 +28,7 @@ setupReactotron({
   clearOnLoad: true,
   // generally going to be localhost
   host: "localhost",
-  // Reactotron can moniter AsyncStorage for you
+  // Reactotron can monitor AsyncStorage for you
   useAsyncStorage: true,
   // log the initial restored state from AsyncStorage
   logInitialState: true,

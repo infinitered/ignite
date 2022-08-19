@@ -138,6 +138,7 @@ export async function renameReactNativeApp(
     `android/app/src/main/jni/MainComponentsRegistry.h`,
     `android/app/src/main/res/values/strings.xml`,
     `ios/Podfile`,
+    `ios/main.jsbundle`, // this file could just be regenerated, but this isn't bad to do
     `ios/${newName}/Info.plist`,
     `ios/${newName}.xcodeproj/project.pbxproj`,
     `ios/${newName}.xcodeproj/xcshareddata/xcschemes/${newName}.xcscheme`,

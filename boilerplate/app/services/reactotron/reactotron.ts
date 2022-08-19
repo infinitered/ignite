@@ -52,7 +52,7 @@ if (__DEV__) {
   console.tron = fakeReactotron
 }
 
-let config = DEFAULT_REACTOTRON_CONFIG
+const config = DEFAULT_REACTOTRON_CONFIG
 
 /**
  * Hook into the root store for doing awesome state-related things.
