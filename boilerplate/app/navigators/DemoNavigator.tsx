@@ -6,13 +6,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoCommunityScreen, DemoComponentsScreen, DemoDebugScreen } from "../screens"
+import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
+  DemoCommunity: undefined
   DemoComponents: undefined
   DemoDebug: undefined
-  DemoCommunity: undefined
+  DemoPodcastList: undefined
 }
 
 /**
@@ -70,6 +72,17 @@ export function DemoNavigator() {
           tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="community" style={{ tintColor: focused && colors.tint }} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="DemoPodcastList"
+        component={DemoPodcastListScreen}
+        options={{
+          tabBarLabel: translate("demoNavigator.podcastListTab"),
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="menu" style={{ tintColor: focused && colors.tint }} />
           ),
         }}
       />

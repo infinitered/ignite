@@ -30,6 +30,7 @@ const en = {
     componentsTab: "Components",
     debugTab: "Debug",
     communityTab: "Community",
+    podcastListTab: "Podcast",
   },
   demoCommunityScreen: {
     title: "Connect with the community",
@@ -80,6 +81,9 @@ const en = {
       "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
     windowsReactotronHint:
       "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
+  },
+  demoPodcastListScreen: {
+    title: "React Native Radio episodes"
   },
   errorScreen: {
     title: "Something went wrong!",
