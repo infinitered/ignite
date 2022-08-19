@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
-import { translate } from "../i18n/"
+import { translate } from "../i18n"
 import { colors } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"

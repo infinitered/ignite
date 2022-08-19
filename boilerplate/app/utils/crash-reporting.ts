@@ -50,13 +50,6 @@ export enum ErrorType {
  * Manually report a handled error.
  */
 export const reportCrash = (error: any, type: ErrorType = ErrorType.FATAL) => {
-  if (__DEV__) {
-    // Log to console and Reactotron in development
-    const message = error.message || "Unknown"
-    console.error(error)
-    console.log(message, type)
-    console.tron.log(error)
-  } else {
     // In production, utilize crash reporting service of choice below:
     // RN
     // Sentry.captureException(error)
@@ -64,5 +57,4 @@ export const reportCrash = (error: any, type: ErrorType = ErrorType.FATAL) => {
     // Sentry.Native.captureException(error)
     // crashlytics().recordError(error)
     // Bugsnag.notify(error)
-  }
 }

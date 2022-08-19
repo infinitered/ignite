@@ -36,7 +36,7 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/webpack-config": "^0.17.0",
-    "@react-native-async-storage/async-storage": "^1.17.3",
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "~6.0.1",
     "@react-navigation/native-stack": "^6.0.2",
@@ -48,7 +48,7 @@
     "expo-device": "~4.3.0",
     "expo-font": "~10.2.0",
     "expo-linear-gradient": "~11.4.0",
-    "expo-localization": "13.1.0",
+    "expo-localization": "~13.1.0",
     "expo-modules-core": "~0.11.3",
     "expo-splash-screen": "~0.16.1",
     "expo-status-bar": "~1.4.0",
@@ -62,10 +62,7 @@
     "react-native-gesture-handler": "~2.5.0",
     "react-native-reanimated": "~2.9.1",
     "react-native-safe-area-context": "4.3.1",
-    "react-native-screens": "3.15.0",
-    "reactotron-mst": "3.1.4",
-    "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.2"
+    "react-native-screens": "~3.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
