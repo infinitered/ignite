@@ -32,6 +32,7 @@ const ko: TxType = {
     componentsTab: "컴포넌트",
     debugTab: "디버그",
     communityTab: "커뮤니티",
+    podcastListTab: "팟캐스트",
   },
   demoCommunityScreen: {
     title: "커뮤니티와 함께해요",
@@ -61,6 +62,7 @@ const ko: TxType = {
     lorem2Sentences:
       "별 하나에 추억과, 별 하나에 사랑과, 별 하나에 쓸쓸함과, 별 하나에 동경(憧憬)과, 별 하나에 시와, 별 하나에 어머니, 어머니",
     demoButtonTxExample: "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
+    demoListItemTxExample: "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
     demoTextFieldTxExample: "`{{prop}}Tx` Prop 을 통해",
     demoHeaderTxExample: "야호",
   },
@@ -81,6 +83,9 @@ const ko: TxType = {
       "만약에 동작하지 않는 경우, Reactotron 데스크탑 앱이 실행중인지 확인 후 앱을 다시 실행해보세요.",
     windowsReactotronHint:
       "만약에 동작하지 않는 경우, Reactotron 데스크탑 앱이 실행중인지 확인 후 앱을 다시 실행해보세요.",
+  },
+  demoPodcastListScreen: {
+    title: "React Native 라디오 에피소드"
   },
   errorScreen: {
     title: "뭔가 잘못되었습니다!",
