@@ -60,7 +60,7 @@ const $container: ViewStyle = {
 
 const $topContainer: ViewStyle = {
   flexShrink: 1,
-  flexGrow: 0,
+  flexGrow: 1,
   flexBasis: "57%",
   justifyContent: "center",
   paddingHorizontal: spacing[5],
@@ -71,7 +71,8 @@ const $bottomContainer: ViewStyle = {
   flexGrow: 0,
   flexBasis: "43%",
   backgroundColor: colors.palette.neutral100,
-  borderRadius: 16,
+  borderTopLeftRadius: 16,
+  borderTopRightRadius: 16,
 }
 
 const $bottomContentContainer: ViewStyle = {
