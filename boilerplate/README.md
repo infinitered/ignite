@@ -54,8 +54,12 @@ ignite-project
 │   ├── keystores
 │   └── settings.gradle
 ├── ignite
-│   ├── ignite.json
-│   └── plugins
+│   └── templates
+|       |── app-icon
+│       ├── component
+│       ├── model
+│       ├── navigator
+│       └── screen
 ├── index.js
 ├── ios
 │   ├── IgniteProject
@@ -115,7 +119,7 @@ This is a great place to put miscellaneous helpers and utilities. Things like da
 
 ### ./ignite directory
 
-The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find generators, plugins and examples to help you get started with React Native.
+The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find templates you can customize to help you get started with React Native.
 
 ### ./storybook directory
 
