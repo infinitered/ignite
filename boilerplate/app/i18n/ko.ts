@@ -73,6 +73,7 @@ const ko: TxType = {
       "축하합니다. 여기 아주 고급스러운 React Native 앱 템플릿이 있습니다. 이 보일러 플레이트를 사용해보세요!",
     reactotron: "Reactotron 데모",
     demoList: "데모 목록",
+    demoPodcastList: "데모 팟캐스트 목록",
     androidReactotronHint:
       "만약에 동작하지 않는 경우, Reactotron 데스크탑 앱이 실행중인지 확인 후, 터미널에서 adb reverse tcp:9090 tcp:9090 을 실행한 다음 앱을 다시 실행해보세요.",
     iosReactotronHint:

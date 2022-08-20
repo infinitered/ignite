@@ -71,6 +71,7 @@ const en = {
       "Congratulations, you've got a very advanced React Native app template here.  Take advantage of this boilerplate!",
     reactotron: "Demo Reactotron",
     demoList: "Demo List",
+    demoPodcastList: "Demo Podcast List",
     androidReactotronHint:
       "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
     iosReactotronHint:

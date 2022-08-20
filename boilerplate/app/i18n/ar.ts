@@ -32,6 +32,7 @@ const ar: TxType = {
     componentsTab: "عناصر",
     debugTab: "تصحيح",
     communityTab: "واصل اجتماعي",
+    podcastListTab: "البودكاست",
   },
   demoCommunityScreen: {
     title: "تواصل مع المجتمع",
@@ -71,6 +72,7 @@ const ar: TxType = {
     tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
     reactotron: "رد فعلي تجريبي",
     demoList: "قائمة تجريبية",
+    demoPodcastList: "قائمة البودكاست التجريبي",
     androidReactotronHint:
       "اذا لم ينجح ذللك، فتأكد من تشغيل تطبيق الحاسوب الخاص Reactotron، وقم بتشغيل عكس adb tcp:9090 \ntcp:9090 من جهازك الطرفي ، واعد تحميل التطبيق",
     iosReactotronHint:
@@ -79,6 +81,9 @@ const ar: TxType = {
     webReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
     windowsReactotronHint:
       "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+  },
+  demoPodcastListScreen: {
+    title:"حلقة إذاعية React Native",
   },
   errorScreen: {
     title: "هناك خطأ ما",
