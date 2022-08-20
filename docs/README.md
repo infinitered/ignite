@@ -4,7 +4,8 @@ Check out this list of topics:
 
 - [Getting Started Guide](./Guide.md) - If you're new to Ignite, start here
 - [Components](./Components.md) - Ignite's built-in UI components
-- [Styling](./Styling.md) - How we approach styling in Ignite
+- [Theming](./Theming.md) - How to customize the look and feel of your app
+- [Styling](./Styling.md) - How we approach styling components in Ignite
 - [Testing](./Testing.md) - How to test your Ignite app
 - [Generators](./Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./Generator-Templates.md) - Writing your own generator templates

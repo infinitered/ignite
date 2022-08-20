@@ -53,7 +53,7 @@ const fonts = {
 
 export const typography = {
   /**
-   * The fonts are available to use, but prefer using the name.
+   * The fonts are available to use, but prefer using the semantic name.
    */
   fonts,
   /**
