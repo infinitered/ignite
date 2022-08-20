@@ -83,7 +83,7 @@ const ar: TxType = {
       "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
   },
   demoPodcastListScreen: {
-    title:"حلقة إذاعية React Native",
+    title: "حلقة إذاعية React Native",
   },
   errorScreen: {
     title: "هناك خطأ ما",

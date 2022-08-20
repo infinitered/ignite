@@ -86,7 +86,7 @@ const ko: TxType = {
       "만약에 동작하지 않는 경우, Reactotron 데스크탑 앱이 실행중인지 확인 후 앱을 다시 실행해보세요.",
   },
   demoPodcastListScreen: {
-    title: "React Native 라디오 에피소드"
+    title: "React Native 라디오 에피소드",
   },
   errorScreen: {
     title: "뭔가 잘못되었습니다!",

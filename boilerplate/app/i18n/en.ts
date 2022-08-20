@@ -84,7 +84,7 @@ const en = {
       "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
   },
   demoPodcastListScreen: {
-    title: "React Native Radio episodes"
+    title: "React Native Radio episodes",
   },
   errorScreen: {
     title: "Something went wrong!",
