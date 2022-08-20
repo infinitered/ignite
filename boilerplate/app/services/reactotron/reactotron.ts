@@ -1,203 +1,194 @@
-import { Tron } from "./tron"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { ArgType } from "reactotron-core-client"
-import { RootStore } from "../../models/RootStore"
-import { onSnapshot } from "mobx-state-tree"
-import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
-import { mst } from "reactotron-mst"
-import { clear } from "../../utils/storage"
-import { goBack, resetRoot, navigate } from "../../navigators/navigation-utilities"
+/**
+ * This file does the setup for integration with Reactotron, which is a
+ * free desktop app for inspecting and debugging your React Native app.
+ *
+ * The functions are invoked from app.tsx and you can change the config there.
+ *
+ * Check out the "Custom Commands" section for some cool tools you can use,
+ * customize, and make your own.
+ *
+ * Note that Fast Refresh doesn't play well with this file, so if you edit this,
+ * do a full refresh of your app instead.
+ *
+ * @refresh reset
+ */
 import { Platform } from "react-native"
+import { Reactotron } from "./reactotron-client"
+import { ArgType } from "reactotron-core-client"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { onSnapshot } from "mobx-state-tree"
+import { mst } from "reactotron-mst"
+import { RootStore } from "../../models/RootStore"
+import { clear } from "../../utils/storage"
+import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
+import { goBack, resetRoot, navigate } from "../../navigators/navigation-utilities"
+import { fakeReactotron } from "./reactotron-fake"
 
-// Teach TypeScript about the bad things we want to do.
+/**
+ * We tell typescript we intend to hang Reactotron off of the console object.
+ *
+ * It'll live at console.tron, so you can use it like so:
+ *
+ *   console.tron.log('hello world')
+ *
+ * You can also import Reactotron yourself from ./reactotron-client
+ * and use it directly, like Reactotron.log('hello world')
+ */
 declare global {
   interface Console {
     /**
-     * Hey, it's Reactotron if we're in dev, and no-ops if we're in prod.
+     * Reactotron client for logging, displaying, measuring performance,
+     * and more. See https://github.com/infinitered/reactotron for more!
      */
-    tron: typeof Tron
+    tron: typeof Reactotron
   }
 }
-
-/** Do Nothing. */
-const noop = () => undefined
 
 // in dev, we attach Reactotron, in prod we attach a interface-compatible mock.
 if (__DEV__) {
-  console.tron = Tron // attach reactotron to `console.tron`
+  console.tron = Reactotron // attach reactotron to `console.tron`
 } else {
-  // attach a mock so if things sneaky by our __DEV__ guards, we won't crash.
-  console.tron = {
-    benchmark: noop,
-    clear: noop,
-    close: noop,
-    configure: noop,
-    connect: noop,
-    display: noop,
-    error: noop,
-    image: noop,
-    log: noop,
-    logImportant: noop,
-    onCustomCommand: noop,
-    overlay: noop,
-    reportError: noop,
-    send: noop,
-    startTimer: noop,
-    storybookSwitcher: noop,
-    use: noop,
-    useReactNative: noop,
-    warn: noop,
+  // attach a mock so if things sneak by our __DEV__ guards, we won't crash.
+  console.tron = fakeReactotron
+}
+
+const config = DEFAULT_REACTOTRON_CONFIG
+
+/**
+ * Hook into the root store for doing awesome state-related things.
+ *
+ * @param rootStore The root store
+ */
+export function setReactotronRootStore(rootStore: RootStore, initialData: any) {
+  if (__DEV__) {
+    const { logInitialState, logSnapshots } = config
+    const name = "ROOT STORE"
+
+    // logging features
+    if (logInitialState) {
+      Reactotron.display({ name, value: initialData, preview: "Initial State" })
+    }
+
+    // log state changes?
+    if (logSnapshots) {
+      onSnapshot(rootStore, (snapshot) => {
+        Reactotron.display({ name, value: snapshot, preview: "New State" })
+      })
+    }
+
+    // tracks the current MobX-State-Tree tree in Reactotron's "State" tab
+    Reactotron.trackMstNode(rootStore)
   }
 }
 
+// Avoid setting up Reactotron multiple times with Fast Refresh
+let _reactotronIsSetUp = false
+
 /**
- * You'll probably never use the service like this since we hang the Reactotron
- * instance off of `console.tron`. This is only to be consistent with the other
- * services.
+ * Configure reactotron based on the the config settings passed in, then connect if we need to.
  */
-export class Reactotron {
-  config: ReactotronConfig
+export function setupReactotron(customConfig: ReactotronConfig = {}) {
+  // only run this in dev... metro bundler will ignore this block: 🎉
+  if (__DEV__) {
+    // only setup once.
+    if (_reactotronIsSetUp) return
 
-  rootStore: any
+    // merge the passed in config with our default config
+    Object.assign(config, customConfig)
 
-  /**
-   * Create the Reactotron service.
-   *
-   * @param config the configuration
-   */
-  constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
-    // merge the passed in config with some defaults
-    this.config = {
-      host: "localhost",
-      useAsyncStorage: true,
-      ...config,
-      state: {
-        initial: false,
-        snapshots: false,
-        ...(config && config.state),
+    // configure reactotron
+    Reactotron.configure({
+      name: config.name || require("../../../package.json").name,
+      host: config.host,
+    })
+
+    // hookup middleware
+    if (Platform.OS !== "web") {
+      if (config.useAsyncStorage) {
+        Reactotron.setAsyncStorageHandler(AsyncStorage)
+      }
+      Reactotron.useReactNative({
+        asyncStorage: config.useAsyncStorage ? undefined : false,
+      })
+    }
+
+    // ignore some chatty `mobx-state-tree` actions
+    const RX = /postProcessSnapshot|@APPLY_SNAPSHOT/
+
+    // hookup mobx-state-tree middleware
+    Reactotron.use(
+      mst({
+        filter: (event) => RX.test(event.name) === false,
+      }),
+    )
+
+    // connect to the app
+    Reactotron.connect()
+
+    /**
+     * Reactotron allows you to define custom commands that you can run
+     * from Reactotron itself, and they will run in your app.
+     *
+     * Define them in the section below with `onCustomCommand`. Use your
+     * creativity -- this is great for development to quickly and easily
+     * get your app into the state you want.
+     */
+    Reactotron.onCustomCommand({
+      title: "Reset Root Store",
+      description: "Resets the MST store",
+      command: "resetStore",
+      handler: () => {
+        Reactotron.log("resetting store")
+        clear()
       },
-    }
-  }
+    })
 
-  /**
-   * Hook into the root store for doing awesome state-related things.
-   *
-   * @param rootStore The root store
-   */
-  setRootStore(rootStore: any, initialData: any) {
-    if (__DEV__) {
-      rootStore = rootStore as RootStore // typescript hack
-      this.rootStore = rootStore
+    Reactotron.onCustomCommand({
+      title: "Reset Navigation State",
+      description: "Resets the navigation state",
+      command: "resetNavigation",
+      handler: () => {
+        Reactotron.log("resetting navigation state")
+        resetRoot({ index: 0, routes: [] })
+      },
+    })
 
-      const { initial, snapshots } = this.config.state
-      const name = "ROOT STORE"
-
-      // logging features
-      if (initial) {
-        console.tron.display({ name, value: initialData, preview: "Initial State" })
-      }
-      // log state changes?
-      if (snapshots) {
-        onSnapshot(rootStore, (snapshot) => {
-          console.tron.display({ name, value: snapshot, preview: "New State" })
-        })
-      }
-
-      console.tron.trackMstNode(rootStore)
-    }
-  }
-
-  /**
-   * Configure reactotron based on the the config settings passed in, then connect if we need to.
-   */
-  async setup() {
-    // only run this in dev... metro bundler will ignore this block: 🎉
-    if (__DEV__) {
-      // configure reactotron
-      Tron.configure({
-        name: this.config.name || require("../../../package.json").name,
-        host: this.config.host,
-      })
-
-      // hookup middleware
-      if (Platform.OS !== "web") {
-        if (this.config.useAsyncStorage) {
-          Tron.setAsyncStorageHandler(AsyncStorage)
+    Reactotron.onCustomCommand({
+      command: "navigateTo",
+      handler: (args) => {
+        const { route } = args
+        if (route) {
+          console.log(`Navigating to: ${route}`)
+          navigate(route)
+        } else {
+          console.log("Could not navigate. No route provided.")
         }
-        Tron.useReactNative({
-          asyncStorage: this.config.useAsyncStorage ? undefined : false,
-        })
-      }
-
-      // ignore some chatty `mobx-state-tree` actions
-      const RX = /postProcessSnapshot|@APPLY_SNAPSHOT/
-
-      // hookup mobx-state-tree middleware
-      Tron.use(
-        mst({
-          filter: (event) => RX.test(event.name) === false,
-        }),
-      )
-
-      // connect to the app
-      Tron.connect()
-
-      // Register Custom Commands
-      Tron.onCustomCommand({
-        title: "Reset Root Store",
-        description: "Resets the MST store",
-        command: "resetStore",
-        handler: () => {
-          console.tron.log("resetting store")
-          clear()
+      },
+      title: "Navigate To Screen",
+      description: "Navigates to a screen by name.",
+      args: [
+        {
+          name: "route",
+          type: ArgType.String,
         },
-      })
+      ],
+    })
 
-      Tron.onCustomCommand({
-        title: "Reset Navigation State",
-        description: "Resets the navigation state",
-        command: "resetNavigation",
-        handler: () => {
-          console.tron.log("resetting navigation state")
-          resetRoot({ index: 0, routes: [] })
-        },
-      })
+    Reactotron.onCustomCommand({
+      title: "Go Back",
+      description: "Goes back",
+      command: "goBack",
+      handler: () => {
+        Reactotron.log("Going back")
+        goBack()
+      },
+    })
 
-      Tron.onCustomCommand({
-        command: "navigateTo",
-        handler: (args) => {
-          const { route } = args
-          if (route) {
-            console.log(`Navigating to: ${route}`)
-            navigate(route)
-          } else {
-            console.log("Could not navigate. No route provided.")
-          }
-        },
-        title: "Navigate To Screen",
-        description: "Navigates to a screen by name.",
-        args: [
-          {
-            name: "route",
-            type: ArgType.String,
-          },
-        ],
-      })
-
-      Tron.onCustomCommand({
-        title: "Go Back",
-        description: "Goes back",
-        command: "goBack",
-        handler: () => {
-          console.tron.log("Going back")
-          goBack()
-        },
-      })
-
-      // clear if we should
-      if (this.config.clearOnLoad) {
-        Tron.clear()
-      }
+    // clear if we should
+    if (config.clearOnLoad) {
+      Reactotron.clear()
     }
+
+    _reactotronIsSetUp = true
   }
 }
