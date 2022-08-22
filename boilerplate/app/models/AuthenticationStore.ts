@@ -4,8 +4,8 @@ export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
   .props({
     authToken: types.maybe(types.string),
-    authEmail: types.optional(types.string, ""),
-    authPassword: types.optional(types.string, ""),
+    authEmail: types.optional(types.string, "ignite@infinite.red"),
+    authPassword: types.optional(types.string, "ign1teIsAwes0m3"),
   })
   .views((store) => ({
     get isAuthenticated() {
