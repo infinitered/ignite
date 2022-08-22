@@ -5,8 +5,9 @@ import { spawnProgress } from "./spawn"
 // in the meantime, we'll use this hacked together version
 
 // Expo doesn't support pnpm, so we'll use yarn or npm
+export type PackagerName = "npm" | "yarn" | "pnpm"
 type PackageOptions = {
-  packagerName?: "npm" | "yarn" | "pnpm"
+  packagerName?: PackagerName
   dev?: boolean
   global?: boolean
   silent?: boolean
@@ -38,15 +39,27 @@ function pnpmAvailable() {
   return isPnpm
 }
 
-function detectPackager(): "npm" | "yarn" | "pnpm" {
-  // Expo doesn't support pnpm, so we'll use yarn or npm
-  if (pnpmAvailable()) {
-    return "pnpm"
-  } else if (yarnAvailable()) {
+function detectPackager(): PackagerName {
+  if (yarnAvailable()) {
     return "yarn"
+  } else if (pnpmAvailable()) {
+    return "pnpm"
   } else {
     return "npm"
   }
+}
+
+function availablePackagers(): PackagerName[] {
+  const packagers: PackagerName[] = ["npm"]
+
+  if (yarnAvailable()) {
+    packagers.push("yarn")
+  }
+  if (pnpmAvailable()) {
+    packagers.push("pnpm")
+  }
+
+  return packagers
 }
 
 /**
@@ -205,4 +218,5 @@ export const packager = {
   runCmd,
   addCmd,
   installCmd,
+  availablePackagers,
 }

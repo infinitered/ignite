@@ -39,13 +39,12 @@ Prerequisites:
 Run the CLI:
 
 ```bash
-# for vanilla React Native
+# Get walked through the prompts for the different options to start your new app
 npx ignite-cli new PizzaApp
-# to provide a custom bundle identifier (Android only):
-npx ignite-cli new PizzaApp --bundle=com.infinitered.pizzaapp
-```
 
-Ignite will walk you through the rest.
+# Accept all the recommended defaults and get straight to coding!
+npx ignite-cli new PizzaApp --yes
+```
 
 Once you're up and running, check out our new [Getting Started Guide](https://github.com/infinitered/ignite/blob/master/docs/Guide.md) guide or the rest of our [docs](https://github.com/infinitered/ignite/blob/master/docs).
 

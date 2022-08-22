@@ -33,6 +33,7 @@
     "lint": "eslint src test --ext .ts --fix && yarn format",
     "test": "yarn build && yarn lint && jest && yarn clean",
     "watch": "jest --watch",
+    "watch:debug": "yarn watch --runInBand --verbose",
     "coverage": "jest --coverage",
     "ci:prep": "yarn build && yarn ci:lint",
     "ci:lint": "eslint src test --ext .ts && yarn format",
@@ -40,7 +41,8 @@
     "ci:test": "yarn ci:prep && yarn ci:test:vanilla && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
-    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template"
+    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
+    "ignite:local": "node bin/ignite"
   },
   "devEngines": {
     "node": ">=7.x",
@@ -48,7 +50,7 @@
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
-    "gluegun": "^4.7.1",
+    "gluegun": "5.1.2",
     "sharp": "^0.30.4",
     "yaml": "^1.10.0"
   },

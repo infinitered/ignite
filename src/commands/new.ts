@@ -1,7 +1,7 @@
 import { GluegunToolbox } from "../types"
 import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
-import { packager } from "../tools/packager"
+import { packager, PackagerName } from "../tools/packager"
 import {
   command,
   direction,
@@ -12,25 +12,128 @@ import {
   stopSpinner,
   clearSpinners,
 } from "../tools/pretty"
+import type { ValidationsExports } from "../tools/validations"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
   podInstall: "0.1",
 }
 
+export interface Options {
+  /**
+   * alias for `boilerplate`
+   *
+   * Input Source: `parameter.option`
+   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @default undefined
+   */
+  b?: string
+  /**
+   * Input Source: `parameter.option`
+   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @default undefined
+   */
+  boilerplate?: string
+  /**
+   * custom bundle identifier for iOS and Android
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default `com.${name}`
+   * @example 'com.pizzaapp'
+   */
+  bundle?: string
+  /**
+   * React Native Colo Loco is no longer installed with Ignite,
+   * but we will give instructions on how to install it if they pass in `--colo-loco`   *
+   *
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  coloLoco?: boolean
+  /**
+   * Log raw parameters for debugging, run formatting script not quietly
+   *
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  debug?: boolean
+  /**
+   * Create new git repository and create an inital commit with boilerplate changes
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
+   * @default true
+   */
+  git?: boolean
+  /**
+   * Whether or not to run packager install script after project is created
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
+   * @default true
+   */
+  installDeps?: boolean
+  /**
+   * Remove existing directory otherwise throw if exists
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
+   * @default false
+   */
+  overwrite?: boolean
+  /**
+   * Input Source: `parameter.option`
+   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
+   * @default undefined
+   */
+  expo?: boolean
+  /**
+   * Package manager to install dependencies with
+   *
+   * Input Source: `prompt.ask`| `parameter.option`
+   */
+  packager?: "npm" | "yarn" | "pnpm"
+  /**
+   * The target directory where the project will be created.
+   *
+   * Input Source: `prompt.confirm` | `parameter.option`
+   * @default `${cwd}/${projectName}`
+   */
+  targetPath?: string
+  /**
+   * alias for `yes`
+   *
+   * Whether or not to accept the default options for all prompts
+   *
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  y?: boolean
+  /**
+   * Whether or not to accept the default options for all prompts
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  yes?: boolean
+}
+
 export default {
   run: async (toolbox: GluegunToolbox) => {
-    const { print, filesystem, system, meta, parameters, strings } = toolbox
+    // #region Toolbox
+    const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
     const { info, colors, warning } = print
     const { gray, red, magenta, cyan, yellow, green } = colors
+    const options: Options = parameters.options
 
+    const yname = !!options.y || !!options.yes
+    const useDefault = (option: unknown) => yname && option === undefined
+    // #endregion
+
+    // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
 
     // debug?
-    const debug = Boolean(parameters.options.debug)
+    const debug = Boolean(options.debug)
     const log = <T = unknown>(m: T): T => {
       debug && info(` ${m}`)
       return m
@@ -38,25 +141,20 @@ export default {
 
     // log raw parameters for debugging
     log(`ignite command: ${parameters.argv.join(" ")}`)
+    // #endregion
+
+    // #region Project Name
+    heading("🔥 About to Ignite your new app! 🔥")
 
     // retrieve project name from toolbox
-    const { validateProjectName, validateBundleIdentifier } = require("../tools/validations")
-    const projectName = validateProjectName(toolbox)
+    const { validateProjectName } = require("../tools/validations") as ValidationsExports
+    const projectName = await validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
+    // #endregion
 
-    // if they pass in --overwrite, remove existing directory otherwise throw if exists
-    if (parameters.options.overwrite) {
-      log(`Removing existing project ${projectName}`)
-      remove(projectName)
-    } else if (exists(projectName)) {
-      const alreadyExists = `Error: There's already a folder with the name "${projectName}". To force overwriting that folder, run with --overwrite.`
-      p()
-      p(yellow(alreadyExists))
-      process.exit(1)
-    }
-
+    // #region Boilerplate
     // if they pass in --boilerplate, warn them to use old Ignite
-    const bname = parameters.options.b || parameters.options.boilerplate
+    const bname = options.b || options.boilerplate
     if (bname) {
       p()
       p(yellow(`Different boilerplates are no longer supported in Ignite v4+.`))
@@ -64,16 +162,120 @@ export default {
       p(cyan(`npx ignite-cli@3 new ${projectName} --boilerplate ${bname}`))
       process.exit(1)
     }
+    // #endregion
 
-    // custom bundle identifier (android only)
-    // TODO: refactor alert, need to rethink this
-    const bundleIdentifier =
-      validateBundleIdentifier(toolbox, parameters.options.bundle) ||
-      `com.${projectName.toLowerCase()}`
+    // #region Bundle Identifier
+    const defaultBundleIdentifier = `com.${projectName.toLowerCase()}`
+    let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
+    if (bundleIdentifier === undefined) {
+      const bundleIdentifierResponse = await prompt.ask({
+        type: "input",
+        name: "bundleIdentifier",
+        message: "What bundle identifier?",
+        initial: defaultBundleIdentifier,
+      })
+
+      bundleIdentifier = bundleIdentifierResponse.bundleIdentifier
+    }
+
+    const { validateBundleIdentifier } = require("../tools/validations") as ValidationsExports
+    validateBundleIdentifier(toolbox, bundleIdentifier)
+
+    // #endregion
+
+    // #region Project Path
+    const defaultTargetPath = path(projectName)
+    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
+    if (targetPath === undefined) {
+      const targetPathResponse = await prompt.ask({
+        type: "input",
+        name: "targetPath",
+        message: "Where do you want to start your project?",
+        initial: defaultTargetPath,
+      })
+
+      targetPath = targetPathResponse.targetPath
+    }
+
+    // #endregion
+
+    // #region Overwrite
+    // if they pass in --overwrite, remove existing directory otherwise throw if exists
+    const defaultOverwrite = false
+    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : options.overwrite
+    if (exists(targetPath)) {
+      if (overwrite === undefined) {
+        overwrite = await prompt.confirm(
+          `${targetPath} already exists. Do you want to overwrite it?`,
+          false,
+        )
+      }
+
+      if (overwrite === false) {
+        const alreadyExists = `Error: There's already a folder at ${targetPath}. To force overwriting that folder, run with --overwrite or say yes.`
+        p()
+        p(yellow(alreadyExists))
+        process.exit(1)
+      }
+
+      log(`Removing existing project ${projectName}`)
+      remove(projectName)
+    }
+    // #endregion
+
+    // #region Prompt Git Option
+    const defaultGit = true
+    let git = useDefault(options.git) ? defaultGit : options.git
+
+    if (git === undefined) {
+      git = await prompt.confirm("Do you want to initialize a git repository?", true)
+    }
+    // #endregion
+
+    // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
-    const packagerName = parameters.options.packager || packager.detectPackager()
+
+    const availablePackagers = packager.availablePackagers()
+    const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
+    let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
+
+    const validatePackagerName = (input: unknown): input is PackagerName =>
+      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
+
+    if (packagerName !== undefined && validatePackagerName(packagerName) === false) {
+      p()
+      p(yellow(`Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`))
+      process.exit(1)
+    }
+
+    if (packagerName !== undefined && availablePackagers.includes(packagerName) === false) {
+      p()
+      p(yellow(`Error: selected "${packagerName}" but packager was not available on system`))
+      process.exit(1)
+    }
+
+    if (packagerName === undefined) {
+      const initial = availablePackagers.findIndex((p) => p === defaultPackagerName)
+      const NOT_FOUND = -1
+
+      if (initial === NOT_FOUND) {
+        p()
+        p(yellow(`Error: Default packager "${defaultPackagerName}" was not available on system`))
+        process.exit(1)
+      }
+
+      const packagerNameResponse = await prompt.ask<{ packagerName: PackagerName }>({
+        type: "select",
+        name: "packagerName",
+        message: "Which package manager do you want to use?",
+        choices: availablePackagers,
+        initial,
+      })
+      packagerName = packagerNameResponse.packagerName
+    }
+
     const packagerOptions = { packagerName }
 
     const ignitePath = path(`${meta.src}`, "..")
@@ -81,15 +283,28 @@ export default {
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
 
+    const defaultInstallDeps = true
+    let installDeps = useDefault(options.installDeps) ? defaultInstallDeps : options.installDeps
+    if (installDeps === undefined) {
+      installDeps = await prompt.confirm(
+        "Want us to install dependencies for you? (adds 50-100 seconds)",
+        true,
+      )
+    }
+    // #endregion
+
+    // #region Expo
     // show warning about --expo going away
-    const expo = Boolean(parameters.options.expo)
+    const expo = Boolean(options.expo)
     if (expo) {
       warning(
         " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
       )
       p()
     }
+    // #endregion
 
+    // #region Print Welcome
     // welcome everybody!
     igniteHeading()
     p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
@@ -100,6 +315,9 @@ export default {
     p(` ────────────────────────────────────────────────\n`)
 
     startSpinner("Igniting app")
+    // #endregion
+
+    // #region Copy Boilerplate Files
     // Remove some folders that we don't want to copy over
     // This mostly only applies to when you're developing locally
     remove(path(boilerplatePath, "ios", "Pods"))
@@ -111,7 +329,7 @@ export default {
     startSpinner(" 3D-printing a new React Native app")
     await copyBoilerplate(toolbox, {
       boilerplatePath,
-      projectName,
+      targetPath,
       excluded: [".vscode", "node_modules", "yarn.lock"],
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -139,7 +357,9 @@ export default {
       // copy the file over
       copy(sourceIgnorePath, targetIgnorePath)
     }
+    // #endregion
 
+    // #region Handle package.json
     // Update package.json:
     // - We need to replace the app name in the detox paths. We do it on the
     //   unparsed file content since that's easier than updating individual values
@@ -158,16 +378,23 @@ export default {
     // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
     // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
     // await packager.add(`react-native-safe-area-context`, packagerOptions)
+    // #endregion
 
+    // #region Run Packager Install
     // pnpm/yarn/npm install it
-    const unboxingMessage = `Unboxing ${packagerName} dependencies`
-    startSpinner(unboxingMessage)
-    await packager.install({ ...packagerOptions, onProgress: log })
-    stopSpinner(unboxingMessage, "🧶")
+
+    if (installDeps === true) {
+      const unboxingMessage = `Unboxing ${packagerName} dependencies`
+      startSpinner(unboxingMessage)
+      await packager.install({ ...packagerOptions, onProgress: log })
+      stopSpinner(unboxingMessage, "🧶")
+    }
 
     // remove the gitignore template
     remove(".gitignore.template")
+    // #endregion
 
+    // #region Rename App
     // rename the app using Ignite
     startSpinner(" Writing your app name in the sand")
 
@@ -180,19 +407,27 @@ export default {
     )
 
     stopSpinner(" Writing your app name in the sand", "🏝")
+    // #endregion
 
+    // #region Install CocoaPods
     // install pods
-    startSpinner("Baking CocoaPods")
-    await spawnProgress(`npx pod-install@${deps.podInstall}`, {
-      onProgress: log,
-    })
-    stopSpinner("Baking CocoaPods", "☕️")
+    if (installDeps === true) {
+      startSpinner("Baking CocoaPods")
+      await spawnProgress(`npx pod-install@${deps.podInstall}`, {
+        onProgress: log,
+      })
+      stopSpinner("Baking CocoaPods", "☕️")
+    }
+    // #endregion
 
+    // #region Run Format
     // Make sure all our modifications are formatted nicely
     await packager.run("format", { ...packagerOptions, silent: !debug })
+    // #endregion
 
+    // #region Create Git Repostiory and Initial Commit
     // commit any changes
-    if (parameters.options.git !== false) {
+    if (git === true) {
       startSpinner(" Backing everything up in source control")
       try {
         await system.run(
@@ -211,7 +446,9 @@ export default {
 
     // back to the original directory
     process.chdir(log(cwd))
+    // #endregion
 
+    // #region Print Finish
     // clean up any spinners we forgot to clear
     clearSpinners()
 
@@ -240,11 +477,13 @@ export default {
     p()
     direction("Or with Expo:")
     command(`  ${packager.runCmd("expo:start", packagerOptions)}`)
+    // #endregion
 
+    // #region React Native Colo Loco
     // React Native Colo Loco is no longer installed with Ignite, but
     // we will give instructions on how to install it if they
     // pass in `--colo-loco`
-    const coloLoco = Boolean(parameters.options.coloLoco)
+    const coloLoco = Boolean(options.coloLoco)
 
     if (coloLoco) {
       p()
@@ -256,7 +495,9 @@ export default {
       command(`  ${packager.addCmd("-g react-native-colo-loco")}`)
       command(`  ${packager.runCmd("install-colo-loco", packagerOptions)}`)
     }
+    // #endregion
 
+    // #region Infinite Red Plug
     p()
     p("Need additional help?")
     p()
@@ -264,5 +505,40 @@ export default {
     p()
     heading("Now get cooking! 🍽")
     igniteHeading()
+    // #endregion
+
+    // #region Print CLI command
+    const flags: Required<Options> = {
+      b: bname,
+      boilerplate: bname,
+      bundle: bundleIdentifier,
+      coloLoco,
+      debug,
+      git,
+      installDeps,
+      overwrite,
+      expo,
+      packager: packagerName,
+      targetPath,
+      y: yname,
+      yes: yname,
+    }
+
+    type Flag = keyof typeof flags
+
+    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y"]
+
+    const cliCommand = `npx ignite-cli new ${projectName} ${(
+      Object.entries(flags) as [Flag, Options[Flag]][]
+    )
+      .filter(([key]) => !privateFlags.includes(key))
+      .map(([key, value]) => `--${kebabCase(key)}=${value}`)
+      .join(" ")}`
+
+    p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
+    command(`  ${cliCommand}`)
+    p()
+
+    // #endregion
   },
 }
