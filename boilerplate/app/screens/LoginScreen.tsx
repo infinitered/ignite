@@ -24,6 +24,13 @@ export const LoginScreen = observer(function LoginScreen(_props: LoginScreenProp
     },
   } = useStores()
 
+  useEffect(() => {
+    // Here is where you could fetch credientials from keychain or storage
+    // and pre-fill the form fields.
+    setAuthEmail("ignite@infinite.red")
+    setAuthPassword("ign1teIsAwes0m3")
+  }, [])
+
   const errors: typeof validationErrors = isSubmitted ? validationErrors : ({} as any)
 
   function login() {
