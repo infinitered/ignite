@@ -8,7 +8,7 @@ import { colors } from "../theme"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
-export const LoginScreen = observer(function LoginScreen(props: LoginScreenProps) {
+export const LoginScreen = observer(function LoginScreen(_props: LoginScreenProps) {
   const authPasswordInput = useRef<TextInput>()
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)

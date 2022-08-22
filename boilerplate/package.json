@@ -218,13 +218,7 @@
       "comma-dangle": 0,
       "multiline-ternary": 0,
       "no-undef": 0,
-      "no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
-        }
-      ],
+      "no-unused-vars": 0,
       "no-use-before-define": "off",
       "quotes": 0,
       "react-native/no-raw-text": 0,
