@@ -1,9 +1,11 @@
 import * as Localization from "expo-localization"
 import i18n from "i18n-js"
 import { I18nManager } from "react-native"
-import ar from "./ar.json"
-import en from "./en.json"
-import ko from "./ko.json"
+
+// if English isn't your default language, move Translations to the appropriate language file.
+import en, { Translations } from "./en"
+import ar from "./ar"
+import ko from "./ko"
 
 i18n.fallbacks = true
 /**
@@ -22,10 +24,8 @@ I18nManager.forceRTL(isRTL)
 
 /**
  * Builds up valid keypaths for translations.
- * Update to your default locale of choice if not English.
  */
-type DefaultLocale = typeof en
-export type TxKeyPath = RecursiveKeyOf<DefaultLocale>
+export type TxKeyPath = RecursiveKeyOf<Translations>
 
 // via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
