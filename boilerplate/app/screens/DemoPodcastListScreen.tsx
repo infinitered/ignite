@@ -5,8 +5,23 @@ import { Screen, Text } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors } from "../theme"
+import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
+
+function EpisodeCard({ item }: { item: Episode }) {
+  return (
+    <View style={[$rowLayout, $item]}>
+      <View style={$description}>
+        <Text>{item.title}</Text>
+        <View style={[$rowLayout, $metadata]}>
+          <Text size="xs">{item.datePublished}</Text>
+          <Text size="xs">{item.duration}</Text>
+        </View>
+      </View>
+      <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
+    </View>
+  )
+}
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -39,38 +54,33 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
             <Text preset="heading" tx="demoPodcastListScreen.title" />
           </View>
         }
-        renderItem={({ item }) => {
-          return (
-            <View style={[$rowLayout, $item]}>
-              <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
-              <Text style={$description}>{item.title}</Text>
-            </View>
-          )
-        }}
+        renderItem={EpisodeCard}
       />
     </Screen>
   )
 })
 
+const THUMBNAIL_DIMENSION = 100
+
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: 24,
-  paddingTop: 24,
+  paddingHorizontal: spacing[5],
+  paddingTop: spacing[5],
 }
 
 const $heading: ViewStyle = {
-  marginBottom: 16,
+  marginBottom: spacing[4],
 }
 
 const $description: TextStyle = {
-  marginTop: 16,
   flex: 1,
+  justifyContent: "space-between",
 }
 
 const $item: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
-  padding: 24,
-  marginTop: 18,
+  padding: spacing[4],
+  marginTop: spacing[4],
 }
 
 const $rowLayout: ViewStyle = {
@@ -78,7 +88,12 @@ const $rowLayout: ViewStyle = {
 }
 
 const $itemThumbnail: ImageStyle = {
-  width: 100,
-  height: 100,
-  marginRight: 10,
+  width: THUMBNAIL_DIMENSION,
+  height: THUMBNAIL_DIMENSION,
+  marginStart: spacing[2],
+}
+
+const $metadata: TextStyle = {
+  justifyContent: "space-between",
+  color: colors.textDim,
 }
