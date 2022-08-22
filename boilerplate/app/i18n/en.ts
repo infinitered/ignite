@@ -66,10 +66,11 @@ const en = {
   },
   demoDebugScreen: {
     howTo: "HOW TO",
-    title: "What's In This Stack?",
+    title: "Debug",
     tagLine:
       "Congratulations, you've got a very advanced React Native app template here.  Take advantage of this boilerplate!",
-    reactotron: "Demo Reactotron",
+    reactotron: "Send to Reactotron",
+    reportBugs: "Report bugs about Ignite",
     demoList: "Demo List",
     demoPodcastList: "Demo Podcast List",
     androidReactotronHint:
