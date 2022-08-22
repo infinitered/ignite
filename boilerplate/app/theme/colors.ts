@@ -38,6 +38,8 @@ const palette = {
 export const colors = {
   /**
    * The palette is available to use, but prefer using the name.
+   * This is only included for rare, one-off cases. Try to use
+   * semantic names as much as possible.
    */
   palette,
   /**

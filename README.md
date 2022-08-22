@@ -25,6 +25,7 @@ Ignite apps include the following rock-solid technical decisions out of the box:
 - Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
+- Hermes enabled
 - React native Reanimated
 - And more!
 
