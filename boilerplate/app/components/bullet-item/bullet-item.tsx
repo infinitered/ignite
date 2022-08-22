@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import * as React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { spacing, typography } from "../../theme"
 import { Icon } from "../Icon"
