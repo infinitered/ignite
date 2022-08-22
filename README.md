@@ -42,7 +42,7 @@ Run the CLI:
 npx ignite-cli new PizzaApp
 
 # Accept all the recommended defaults and get straight to coding!
-npx ignite-cli new PizzaApp --y
+npx ignite-cli new PizzaApp --yes
 ```
 
 Once you're up and running, check out our new [Getting Started Guide](https://github.com/infinitered/ignite/blob/master/docs/Guide.md) guide or the rest of our [docs](https://github.com/infinitered/ignite/blob/master/docs).

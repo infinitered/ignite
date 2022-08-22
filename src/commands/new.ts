@@ -98,12 +98,20 @@ export interface Options {
    */
   targetPath?: string
   /**
+   * alias for `yes`
+   *
    * Whether or not to accept the default options for all prompts
    *
    * Input Source: `parameter.option`
    * @default false
    */
   y?: boolean
+  /**
+   * Whether or not to accept the default options for all prompts
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  yes?: boolean
 }
 
 export default {
@@ -116,8 +124,8 @@ export default {
     const { gray, red, magenta, cyan, yellow, green } = colors
     const options: Options = parameters.options
 
-    const y = !!options.y
-    const useDefault = (option: unknown) => y && option === undefined
+    const yname = !!options.y || !!options.yes
+    const useDefault = (option: unknown) => yname && option === undefined
     // #endregion
 
     // #region Debug
@@ -512,7 +520,8 @@ export default {
       expo,
       packager: packagerName,
       targetPath,
-      y,
+      y: yname,
+      yes: yname,
     }
 
     type Flag = keyof typeof flags
