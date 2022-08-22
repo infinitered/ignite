@@ -1,18 +1,9 @@
 import React, { ReactElement, useRef, useState } from "react"
-import {
-  FlatList,
-  Image,
-  ImageStyle,
-  Pressable,
-  SectionList,
-  TextStyle,
-  View,
-  ViewStyle,
-} from "react-native"
+import { FlatList, Image, ImageStyle, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
-import { SafeAreaView } from "react-native-safe-area-context"
 import { useSharedValue } from "react-native-reanimated"
-import { Icon, Screen, Text } from "../../components"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { ListItem, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors } from "../../theme"
@@ -92,14 +83,12 @@ export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">
                   {item.name}
                 </Text>
                 {item.useCases.map((u, index) => (
-                  <Pressable
-                    onPress={() => handleScroll(sectionIndex, index + 1)}
+                  <ListItem
                     key={`section${sectionIndex}-${u}`}
-                    style={$menuitem}
-                  >
-                    <Text>{u}</Text>
-                    <Icon icon={isRTL ? "caretLeft" : "caretRight"} />
-                  </Pressable>
+                    onPress={() => handleScroll(sectionIndex, index + 1)}
+                    text={u}
+                    rightIcon={isRTL ? "caretLeft" : "caretRight"}
+                  />
                 ))}
               </View>
             )}
@@ -168,13 +157,6 @@ const $logoContainer: ViewStyle = {
 const $menuContainer: ViewStyle = {
   paddingBottom: 8,
   paddingTop: 24,
-}
-
-const $menuitem: ViewStyle = {
-  alignItems: "center",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  height: 56,
 }
 
 const $demoItemName: TextStyle = {
