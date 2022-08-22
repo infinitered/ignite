@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-key */
+// @demo remove-file
 import React from "react"
 import { View, ViewStyle } from "react-native"
 import { AutoImage } from "../../../components"
