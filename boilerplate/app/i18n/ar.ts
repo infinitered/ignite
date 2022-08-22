@@ -1,6 +1,6 @@
-import { TxType } from "./en"
+import { Translations } from "./en"
 
-const ar: TxType = {
+const ar: Translations = {
   common: {
     ok: "نعم",
     cancel: "حذف",

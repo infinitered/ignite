@@ -96,4 +96,4 @@ const en = {
 }
 
 export default en
-export type TxType = typeof en
+export type Translations = typeof en

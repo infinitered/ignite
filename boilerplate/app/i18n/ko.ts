@@ -1,6 +1,6 @@
-import { TxType } from "./en"
+import { Translations } from "./en"
 
-const ko: TxType = {
+const ko: Translations = {
   common: {
     ok: "확인!",
     cancel: "취소",

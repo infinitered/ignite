@@ -2,8 +2,8 @@ import * as Localization from "expo-localization"
 import i18n from "i18n-js"
 import { I18nManager } from "react-native"
 
-// if English isn't your default language, move TxType to the appropriate language file.
-import en, { TxType } from "./en"
+// if English isn't your default language, move Translations to the appropriate language file.
+import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
 
@@ -25,7 +25,7 @@ I18nManager.forceRTL(isRTL)
 /**
  * Builds up valid keypaths for translations.
  */
-export type TxKeyPath = RecursiveKeyOf<TxType>
+export type TxKeyPath = RecursiveKeyOf<Translations>
 
 // via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
