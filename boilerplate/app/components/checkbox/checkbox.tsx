@@ -28,7 +28,7 @@ const FILL: ViewStyle = {
   backgroundColor: colors.tint,
 }
 
-const LABEL: TextStyle = { paddingLeft: spacing[2] }
+const LABEL: TextStyle = { paddingLeft: spacing[2], color: color.palette.black }
 
 export function Checkbox(props: CheckboxProps) {
   const numberOfLines = props.multiline ? 0 : 1
@@ -36,6 +36,7 @@ export function Checkbox(props: CheckboxProps) {
   const rootStyle = [ROOT, props.style]
   const outlineStyle = [OUTLINE, props.outlineStyle]
   const fillStyle = [FILL, props.fillStyle]
+  const labelStyle = [LABEL, props.labelStyle]
 
   const onPress = props.onToggle ? () => props.onToggle && props.onToggle(!props.value) : null
 
@@ -47,7 +48,7 @@ export function Checkbox(props: CheckboxProps) {
       style={rootStyle}
     >
       <View style={outlineStyle}>{props.value && <View style={fillStyle} />}</View>
-      <Text text={props.text} tx={props.tx} numberOfLines={numberOfLines} style={LABEL} />
+      <Text text={props.text} tx={props.tx} numberOfLines={numberOfLines} style={labelStyle} />
     </TouchableOpacity>
   )
 }
