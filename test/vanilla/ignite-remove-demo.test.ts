@@ -25,7 +25,7 @@ describe("ignite-cli remove-demo", () => {
     const result = await runIgnite(`remove-demo ${TEMP_DIR}`)
 
     const MOCK_DIR = `/user/home/ignite`
-    const output = result.replaceAll(TEMP_DIR, MOCK_DIR)
+    const output = result.replace(new RegExp(TEMP_DIR, "g"), MOCK_DIR)
     expect(output).toMatchSnapshot()
   })
 })
