@@ -6,12 +6,11 @@ import {
   Platform,
   ScrollView,
   ScrollViewProps,
-  StatusBar,
-  StatusBarProps,
   StyleProp,
   View,
   ViewStyle,
 } from "react-native"
+import { StatusBar, StatusBarProps } from "expo-status-bar"
 import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
 import { colors } from "../theme"
 
@@ -37,9 +36,9 @@ interface BaseScreenProps {
    */
   backgroundColor?: string
   /**
-   * Status bar setting. Defaults to dark-content.
+   * Status bar setting. Defaults to dark.
    */
-  statusBarStyle?: "light-content" | "dark-content"
+  statusBarStyle?: "light" | "dark"
   /**
    * By how much should we offset the keyboard? Defaults to 0.
    */
@@ -194,7 +193,7 @@ export function Screen(props: ScreenProps) {
     safeAreaEdges,
     SafeAreaViewProps,
     StatusBarProps,
-    statusBarStyle = "dark-content",
+    statusBarStyle = "dark",
   } = props
 
   const Wrapper = safeAreaEdges?.length ? SafeAreaView : View
@@ -205,7 +204,7 @@ export function Screen(props: ScreenProps) {
       {...SafeAreaViewProps}
       style={[$safeAreaStyle, SafeAreaViewProps?.style, { backgroundColor }]}
     >
-      <StatusBar barStyle={statusBarStyle} {...StatusBarProps} />
+      <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
         behavior={isIos ? "padding" : undefined}
