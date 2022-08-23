@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { createGetAllFilePaths } from "../tools/path"
-import { p } from "../tools/pretty"
+import { p, warning } from "../tools/pretty"
 
 module.exports = {
   alias: ["rd", "remove-demos"],
@@ -20,8 +20,8 @@ module.exports = {
     enum DemoComment {
       REMOVE_FILE = `// @demo remove-file`,
     }
-    // Go through every file path and handle the demo comment in each file
-    Promise.allSettled(
+    // Go through every file path and handle the operation for each demo comment
+    const demoCommentResults = await Promise.allSettled(
       paths.map(async (path) => {
         if (await patching.exists(path, DemoComment.REMOVE_FILE)) {
           filesystem.remove(path)
@@ -29,5 +29,12 @@ module.exports = {
         }
       }),
     )
+
+    // Report any errors
+    demoCommentResults.forEach((result) => {
+      if (result.status === "rejected") {
+        warning(result.reason)
+      }
+    })
   },
 }
