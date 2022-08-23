@@ -21,11 +21,13 @@ module.exports = {
       REMOVE_FILE = `// @demo remove-file`,
     }
     // Go through every file path and handle the demo comment in each file
-    for (const path of paths) {
-      if (await patching.exists(path, DemoComment.REMOVE_FILE)) {
-        filesystem.remove(path)
-        p(`Removed ${path}`)
-      }
-    }
+    Promise.allSettled(
+      paths.map(async (path) => {
+        if (await patching.exists(path, DemoComment.REMOVE_FILE)) {
+          filesystem.remove(path)
+          p(`Removed ${path}`)
+        }
+      }),
+    )
   },
 }
