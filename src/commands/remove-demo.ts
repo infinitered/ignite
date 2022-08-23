@@ -13,11 +13,11 @@ module.exports = {
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
     p()
-    p(`Removing demo code from ${TARGET_DIR}`)
+    p(`Removing demo code from '${TARGET_DIR}'`)
 
     const getAllFilePaths = createGetAllFilePaths(filesystem)
     const paths = getAllFilePaths(TARGET_DIR)
-    p(`Found ${paths.length} files in "${TARGET_DIR}"`)
+    p(`Found ${paths.length} files in '${TARGET_DIR}'`)
 
     // Go through every file path and handle the operation for each demo comment
     const demoCommentResults = await Promise.allSettled(
@@ -65,7 +65,7 @@ module.exports = {
         // Log any fulfilled results that have comments
         const { path, comments } = result.value
         if (comments.length > 0) {
-          p(`Found ${comments.map((c) => `"${c}"`).join(", ")} in ${path}`)
+          p(`Found ${comments.map((c) => `'${c}'`).join(", ")} in ${path}`)
         }
       })
   },
