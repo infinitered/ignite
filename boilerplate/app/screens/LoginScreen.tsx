@@ -8,7 +8,7 @@ import { colors } from "../theme"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
-export const LoginScreen = observer(function LoginScreen(props: LoginScreenProps) {
+export const LoginScreen = observer(function LoginScreen(_props: LoginScreenProps) {
   const authPasswordInput = useRef<TextInput>()
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -23,6 +23,13 @@ export const LoginScreen = observer(function LoginScreen(props: LoginScreenProps
       validationErrors,
     },
   } = useStores()
+
+  useEffect(() => {
+    // Here is where you could fetch credientials from keychain or storage
+    // and pre-fill the form fields.
+    setAuthEmail("ignite@infinite.red")
+    setAuthPassword("ign1teIsAwes0m3")
+  }, [])
 
   const errors: typeof validationErrors = isSubmitted ? validationErrors : ({} as any)
 

@@ -9,6 +9,7 @@
  * The app navigation resides in ./app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
+import "./utils/set-dev"
 import "./i18n"
 import "./utils/ignore-warnings"
 import { useFonts } from "expo-font"

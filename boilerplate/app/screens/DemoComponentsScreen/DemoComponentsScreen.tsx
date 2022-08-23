@@ -18,7 +18,7 @@ export interface Demo {
   data: ReactElement[]
 }
 
-export function DemoComponentsScreen(props: DemoTabScreenProps<"DemoComponents">) {
+export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents">) {
   const [open, setOpen] = useState(false)
   const drawerRef = useRef<DrawerLayout>()
   const listRef = useRef<SectionList>()
