@@ -1,4 +1,4 @@
-import { StyleProp, ViewStyle } from "react-native"
+import { StyleProp, ViewStyle, TextStyle } from "react-native"
 import { TxKeyPath } from "../../i18n"
 
 export interface CheckboxProps {
@@ -16,6 +16,11 @@ export interface CheckboxProps {
    * Additional fill style. Only visible when checked.
    */
   fillStyle?: StyleProp<ViewStyle>
+
+  /**
+   * Additional label style.
+   */
+  labelStyle?: StyleProp<TextStyle>
 
   /**
    * Is the checkbox checked?
