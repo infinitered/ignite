@@ -1,27 +1,12 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { FlatList, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Screen, Text } from "../components"
+import { Icon, Screen, Text } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
-
-function EpisodeCard({ item }: { item: Episode }) {
-  return (
-    <View style={[$rowLayout, $item]}>
-      <View style={$description}>
-        <Text>{item.title}</Text>
-        <View style={[$rowLayout, $metadata]}>
-          <Text size="xs">{item.datePublished}</Text>
-          <Text size="xs">{item.duration}</Text>
-        </View>
-      </View>
-      <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
-    </View>
-  )
-}
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -46,6 +31,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
     <Screen preset="fixed" safeAreaEdges={["top"]}>
       <FlatList<Episode>
         data={episodeStore.episodes}
+        extraData={episodeStore.favorites.size}
         contentContainerStyle={$flatListContentContainer}
         refreshing={refreshing}
         onRefresh={manualRefresh}
@@ -54,11 +40,45 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
             <Text preset="heading" tx="demoPodcastListScreen.title" />
           </View>
         }
-        renderItem={EpisodeCard}
+        renderItem={({ item }) => (
+          <EpisodeCard
+            item={item}
+            isFavorite={episodeStore.hasFavorite(item)}
+            onPressFavorite={() => episodeStore.toggleFavorite(item)}
+          />
+        )}
       />
     </Screen>
   )
 })
+
+const EpisodeCard = function EpisodeCard({
+  item,
+  isFavorite,
+  onPressFavorite,
+}: {
+  item: Episode
+  onPressFavorite: () => void
+  isFavorite: boolean
+}) {
+  return (
+    <View style={[$rowLayout, $item]}>
+      <View style={$description}>
+        <Text>{item.title}</Text>
+        <View style={[$rowLayout, $metadata]}>
+          <Icon
+            icon="heart"
+            color={isFavorite ? colors.palette.primary400 : undefined}
+            onPress={onPressFavorite}
+          />
+          <Text size="xs">{item.datePublished}</Text>
+          <Text size="xs">{item.duration}</Text>
+        </View>
+      </View>
+      <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
+    </View>
+  )
+}
 
 const THUMBNAIL_DIMENSION = 100
 
@@ -96,4 +116,5 @@ const $itemThumbnail: ImageStyle = {
 const $metadata: TextStyle = {
   justifyContent: "space-between",
   color: colors.textDim,
+  marginTop: spacing[2],
 }

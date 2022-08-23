@@ -26,8 +26,6 @@ export const EpisodeModel = types
     content: "",
     enclosure: types.frozen<Enclosure>(),
     categories: types.array(types.string),
-    // additional properties
-    favorite: false,
   })
   .actions(withSetPropAction)
   .views((episode) => ({
