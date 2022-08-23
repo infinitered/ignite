@@ -7,7 +7,7 @@ import { Demo } from "../DemoComponentsScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
-const $iconStyle: ImageStyle = { width: 30, height: 30 }
+const $iconStyle: ImageStyle = { width: 30, height: 30 } // @demo remove-current-line
 const $customButtonStyle: ViewStyle = { backgroundColor: colors.error, height: 100 }
 const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error }
 const $customButtonTextStyle: TextStyle = {

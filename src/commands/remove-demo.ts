@@ -1,4 +1,5 @@
 import { GluegunToolbox } from "gluegun"
+import { demo } from "../tools/demo"
 import { createGetAllFilePaths } from "../tools/path"
 import { p, warning } from "../tools/pretty"
 
@@ -15,17 +16,19 @@ module.exports = {
 
     const getAllFilePaths = createGetAllFilePaths(filesystem)
     const paths = getAllFilePaths(TARGET_DIR)
-    p(`Found ${paths.length} files`)
+    p(`Found ${paths.length} files in "${TARGET_DIR}"`)
 
-    enum DemoComment {
-      REMOVE_FILE = `// @demo remove-file`,
-    }
     // Go through every file path and handle the operation for each demo comment
     const demoCommentResults = await Promise.allSettled(
       paths.map(async (path) => {
-        if (await patching.exists(path, DemoComment.REMOVE_FILE)) {
+        if (await patching.exists(path, demo.CommentType.REMOVE_FILE)) {
           filesystem.remove(path)
-          p(`Removed ${path}`)
+          p(`Removed "${path}"`)
+        }
+
+        if (await patching.exists(path, demo.CommentType.REMOVE_CURRENT_LINE)) {
+          await patching.update(path, demo.removeCurrentLine)
+          p(`Found "${demo.CommentType.REMOVE_CURRENT_LINE}" in "${path}"`)
         }
       }),
     )
