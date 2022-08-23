@@ -11,4 +11,3 @@ We define the fonts used in `app/theme/typography.ts`. The custom fonts are load
 ## Typography
 
 Since we use the [`Text`](./Components-Text.md) component to encapsulate almost all text within an ignite app, the semantic names are essentially presets. As with all presets, they should only be created where there's a consistent pattern of usage across the app. To do this you'd add a new preset to the `Text` component with the associated styles. For one-off cases, it's recommended to use the [`size`](./Components-Text.md#size) and [`weight`](./Components-Text.md#weight) props on the `Text` component.
-

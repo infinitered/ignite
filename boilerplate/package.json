@@ -219,11 +219,12 @@
       "multiline-ternary": 0,
       "no-undef": 0,
       "no-unused-vars": 0,
-      "no-use-before-define": "off",
+      "no-use-before-define": 0,
+      "no-global-assign": 0,
       "quotes": 0,
       "react-native/no-raw-text": 0,
       "react/no-unescaped-entities": 0,
-      "react/prop-types": "off",
+      "react/prop-types": 0,
       "space-before-function-paren": 0
     }
   }
