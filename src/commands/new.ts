@@ -526,12 +526,13 @@ export default {
 
     type Flag = keyof typeof flags
 
-    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y"]
+    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y", "yes"]
 
     const cliCommand = `npx ignite-cli new ${projectName} ${(
       Object.entries(flags) as [Flag, Options[Flag]][]
     )
-      .filter(([key]) => !privateFlags.includes(key))
+      .filter(([key]) => privateFlags.includes(key) === false)
+      .filter(([, value]) => value !== undefined)
       .map(([key, value]) => `--${kebabCase(key)}=${value}`)
       .join(" ")}`
 
