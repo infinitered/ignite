@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { FlatList, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Screen, Text } from "../components"
@@ -7,7 +8,9 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors } from "../theme"
 import { delay } from "../utils/delay"
 
-export function DemoPodcastListScreen(props: DemoTabScreenProps<"DemoPodcastList">) {
+export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
+  _props: DemoTabScreenProps<"DemoPodcastList">,
+) {
   const { episodeStore } = useStores()
 
   const [refreshing, setRefreshing] = React.useState(false)
@@ -47,7 +50,7 @@ export function DemoPodcastListScreen(props: DemoTabScreenProps<"DemoPodcastList
       />
     </Screen>
   )
-}
+})
 
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: 24,

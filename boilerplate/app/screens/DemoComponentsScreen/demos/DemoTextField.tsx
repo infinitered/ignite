@@ -176,10 +176,10 @@ export const DemoTextField: Demo = {
         helper="Via `RightAccessory` & `LeftAccessory` style prop"
         value="Aute nisi dolore fugiat anim mollit nulla ex minim ipsum ex elit."
         style={$customInputWithAbsoluteAccessoriesStyle}
-        LeftAccessory={(props) => (
+        LeftAccessory={() => (
           <Icon icon="ladybug" containerStyle={$customLeftAccessoryStyle} color="white" size={41} />
         )}
-        RightAccessory={(props) => (
+        RightAccessory={() => (
           <Icon
             icon="ladybug"
             containerStyle={$customRightAccessoryStyle}
