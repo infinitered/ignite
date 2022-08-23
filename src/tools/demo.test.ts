@@ -38,4 +38,19 @@ describe("demo", () => {
       expect(result).not.toContain(demo.CommentType.REMOVE_CURRENT_LINE)
     })
   })
+
+  describe("removeNextLine", () => {
+    it(`should remove comment and next line after "${demo.CommentType.REMOVE_NEXT_LINE}"`, () => {
+      const contents = `
+        export * from "./WelcomeScreen"
+        export * from "./LoginScreen"
+        ${demo.CommentType.REMOVE_NEXT_LINE}
+        export * from "./DemoCommunityScreen"
+      `
+      const result = demo.removeNextLine(contents)
+      expect(result).toMatchSnapshot()
+      expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
+      expect(result).not.toContain("DemoCommunityScreen")
+    })
+  })
 })
