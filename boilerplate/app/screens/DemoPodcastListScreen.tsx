@@ -42,7 +42,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         }
         renderItem={({ item }) => (
           <EpisodeCard
-            item={item}
+            episode={item}
             isFavorite={episodeStore.hasFavorite(item)}
             onPressFavorite={() => episodeStore.toggleFavorite(item)}
           />
@@ -53,29 +53,29 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
 })
 
 const EpisodeCard = observer(function EpisodeCard({
-  item,
+  episode,
   isFavorite,
   onPressFavorite,
 }: {
-  item: Episode
+  episode: Episode
   onPressFavorite: () => void
   isFavorite: boolean
 }) {
   return (
     <View style={[$rowLayout, $item]}>
       <View style={$description}>
-        <Text>{item.title}</Text>
+        <Text>{episode.title}</Text>
         <View style={[$rowLayout, $metadata]}>
           <Icon
             icon="heart"
             color={isFavorite ? colors.palette.primary400 : undefined}
             onPress={onPressFavorite}
           />
-          <Text size="xs">{item.datePublished}</Text>
-          <Text size="xs">{item.duration}</Text>
+          <Text size="xs">{episode.datePublished}</Text>
+          <Text size="xs">{episode.duration}</Text>
         </View>
       </View>
-      <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
+      <Image source={{ uri: episode.thumbnail }} style={$itemThumbnail} />
     </View>
   )
 })
