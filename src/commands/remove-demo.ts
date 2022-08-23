@@ -21,13 +21,15 @@ module.exports = {
     // Go through every file path and handle the operation for each demo comment
     const demoCommentResults = await Promise.allSettled(
       paths.map(async (path) => {
-        if (await patching.exists(path, demo.CommentType.REMOVE_FILE)) {
+        const { exists, update } = patching
+
+        if (await exists(path, demo.CommentType.REMOVE_FILE)) {
           filesystem.remove(path)
           p(`Removed "${path}"`)
         }
 
-        if (await patching.exists(path, demo.CommentType.REMOVE_CURRENT_LINE)) {
-          await patching.update(path, demo.removeCurrentLine)
+        if (await exists(path, demo.CommentType.REMOVE_CURRENT_LINE)) {
+          await update(path, demo.removeCurrentLine)
           p(`Found "${demo.CommentType.REMOVE_CURRENT_LINE}" in "${path}"`)
         }
       }),
