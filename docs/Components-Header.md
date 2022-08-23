@@ -106,8 +106,8 @@ The `leftIconColor` is an optional prop that is used to set the tint color of th
 ```tsx
 <Header
   leftIcon="back"
-  onLeftPress={() => navigation.goBack()}
   leftIconColor="white"
+  onLeftPress={() => navigation.goBack()}
 />
 ```
 
@@ -141,11 +141,11 @@ The `leftTxOptions` is an optional prop that is used to pass props to the transl
 
 ### `LeftActionComponent`
 
-The `LeftActionComponent` is an optional prop that is used to set a custom component for the left navigation button. Overrides the `leftIcon`, `leftText`,  and `leftTx` props.
+The `LeftActionComponent` is an optional `ReactElement` prop that is used to set a custom component for the left navigation button. Overrides the `leftIcon`, `leftText`,  and `leftTx` props.
 
 ```tsx
 <Header
-  LeftActionComponent={() => <Text>Back</Text>}
+  LeftActionComponent={<Text>Back</Text>}
   onLeftPress={() => navigation.goBack()}
 />
 ```
@@ -208,11 +208,11 @@ The `rightTxOptions` is an optional prop that is used to pass props to the trans
 
 ### `RightActionComponent`
 
-The `RightActionComponent` is an optional prop that is used to set a custom component for the right navigation button. Overrides the `rightIcon`, `rightText`,  and `rightTx` props.
+The `RightActionComponent` is an optional `ReactElement` prop that is used to set a custom component for the right navigation button. Overrides the `rightIcon`, `rightText`,  and `rightTx` props.
 
 ```tsx
 <Header
-  RightActionComponent={() => <Text>Back</Text>}
+  RightActionComponent={<Text>Back</Text>}
   onRightPress={() => navigation.goBack()}
 />
 ```
@@ -227,16 +227,16 @@ The `onRightPress` is an optional prop that is used to set the function to be ca
 
 ### `safeAreaEdges`
 
-The `safeAreaEdges` optional prop can be used to override the default safe area edges. By default, the header will use the `top` safe area edge. If you want to use the `bottom` safe area edge, you can pass in `["bottom"]` to the `safeAreaEdges` prop.
+The `safeAreaEdges` optional prop can be used to override the default safe area edges. By default, the header will use the `top` safe area edge. If you want to not account for the safe area edges, you can pass in `[]` to the `safeAreaEdges` prop, and it will wrap the header in a `View` component instead of a `SafeAreaView` component.
 
 ```tsx
-<Header safeAreaEdges={["bottom"]} />
+<Header safeAreaEdges={[]} />
 ```
 
 ### `SafeAreaViewProps`
 
-The `SafeAreaViewProps` optional prop can be used to pass props to the `SafeAreaView` component. This is useful if you need to override the default `SafeAreaView` behavior.
+The `SafeAreaViewProps` optional prop can be used to pass props to the `SafeAreaView` component. This is useful if you need to style the wrapper `SaveAreaView`.
 
 ```tsx
-<Header SafeAreaViewProps={{ forceInset: { top: "never" } }} />
+<Header SafeAreaViewProps={{ style: { backgroundColor: "red" } }} />
 ```
