@@ -47,6 +47,22 @@ storiesOf("Checkbox", module)
           )}
         </Toggle>
       </UseCase>
+      <UseCase text=".labelStyle" usage="Override the label style">
+        <Toggle initial={false}>
+          {({ on, toggle }) => (
+            <View>
+              <Checkbox
+                text="Hello there!"
+                value={on}
+                labelStyle={{
+                  color: "red",
+                }}
+                onToggle={toggle}
+              />
+            </View>
+          )}
+        </Toggle>
+      </UseCase>
       <UseCase text=".style" usage="Override the container style">
         <Toggle initial={false}>
           {({ on, toggle }) => (
