@@ -52,7 +52,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   )
 })
 
-const EpisodeCard = function EpisodeCard({
+const EpisodeCard = observer(function EpisodeCard({
   item,
   isFavorite,
   onPressFavorite,
@@ -78,7 +78,7 @@ const EpisodeCard = function EpisodeCard({
       <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
     </View>
   )
-}
+})
 
 const THUMBNAIL_DIMENSION = 100
 

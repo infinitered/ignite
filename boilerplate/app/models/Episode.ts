@@ -18,7 +18,7 @@ export const EpisodeModel = types
   .props({
     guid: types.identifier,
     title: "",
-    pubDate: "",
+    pubDate: "", // Ex: 2022-08-12 21:05:36
     link: "",
     author: "",
     thumbnail: "",
