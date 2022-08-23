@@ -32,6 +32,11 @@ module.exports = {
           await update(path, demo.removeCurrentLine)
           p(`Found "${demo.CommentType.REMOVE_CURRENT_LINE}" in "${path}"`)
         }
+
+        if (await exists(path, demo.CommentType.REMOVE_NEXT_LINE)) {
+          await update(path, demo.removeNextLine)
+          p(`Found "${demo.CommentType.REMOVE_NEXT_LINE}" in "${path}"`)
+        }
       }),
     )
 
