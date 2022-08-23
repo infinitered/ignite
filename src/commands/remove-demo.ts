@@ -17,7 +17,6 @@ module.exports = {
 
     const getAllFilePaths = createGetAllFilePaths(filesystem)
     const paths = getAllFilePaths(TARGET_DIR)
-    p(`Found ${paths.length} files in '${TARGET_DIR}'`)
 
     // Go through every file path and handle the operation for each demo comment
     const demoCommentResults = await Promise.allSettled(
