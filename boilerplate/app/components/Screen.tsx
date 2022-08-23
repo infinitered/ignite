@@ -13,6 +13,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
+import { useScrollToTop } from "@react-navigation/native"
 import { colors } from "../theme"
 
 interface BaseScreenProps {
@@ -159,12 +160,17 @@ function ScreenWithScrolling(props: ScreenProps) {
     style,
   } = props as ScrollScreenProps
 
+  const ref = useRef<ScrollView>()
+
   const { scrollEnabled, onContentSizeChange, onLayout } = useAutoPreset(props as AutoScreenProps)
+
+  // Add native behavior of pressing the active tab to scroll to the top of the content
+  // More info at: https://reactnavigation.org/docs/use-scroll-to-top/
+  useScrollToTop(ref)
 
   return (
     <ScrollView
-      keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-      scrollEnabled={scrollEnabled}
+      {...{ keyboardShouldPersistTaps, scrollEnabled, ref }}
       {...ScrollViewProps}
       onLayout={(e) => {
         onLayout(e)
