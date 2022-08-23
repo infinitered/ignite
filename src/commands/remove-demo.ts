@@ -1,5 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { demo } from "../tools/demo"
+import type { CommentType } from "../tools/demo"
 import { createGetAllFilePaths } from "../tools/path"
 import { p, warning } from "../tools/pretty"
 
@@ -23,28 +24,49 @@ module.exports = {
       paths.map(async (path) => {
         const { exists, update } = patching
 
+        const comments: CommentType[] = []
+
         if (await exists(path, demo.CommentType.REMOVE_FILE)) {
           filesystem.remove(path)
-          p(`Removed "${path}"`)
+          comments.push(demo.CommentType.REMOVE_FILE)
+          return { path, comments }
         }
 
         if (await exists(path, demo.CommentType.REMOVE_CURRENT_LINE)) {
           await update(path, demo.removeCurrentLine)
-          p(`Found "${demo.CommentType.REMOVE_CURRENT_LINE}" in "${path}"`)
+          comments.push(demo.CommentType.REMOVE_CURRENT_LINE)
         }
 
         if (await exists(path, demo.CommentType.REMOVE_NEXT_LINE)) {
           await update(path, demo.removeNextLine)
-          p(`Found "${demo.CommentType.REMOVE_NEXT_LINE}" in "${path}"`)
+          comments.push(demo.CommentType.REMOVE_NEXT_LINE)
         }
+
+        return { path, comments }
       }),
     )
 
-    // Report any errors
-    demoCommentResults.forEach((result) => {
-      if (result.status === "rejected") {
-        warning(result.reason)
-      }
-    })
+    // Handle the results of the demo comment operations
+    demoCommentResults
+      // Sort the results by the path in alphabetical order
+      .sort((a, b) => {
+        if (a.status === "fulfilled" && b.status === "fulfilled") {
+          return a.value.path.localeCompare(b.value.path)
+        }
+        return 0
+      })
+      .forEach((result) => {
+        // Log any rejected results as warnings
+        if (result.status === "rejected") {
+          warning(result.reason)
+          return
+        }
+
+        // Log any fulfilled results that have comments
+        const { path, comments } = result.value
+        if (comments.length > 0) {
+          p(`Found ${comments.map((c) => `"${c}"`).join(", ")} in ${path}`)
+        }
+      })
   },
 }

@@ -4,8 +4,8 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
 "   
    Removing demo code from /user/home/ignite
    Found 313 files in \\"/user/home/ignite\\"
-   Removed \\"/user/home/ignite/app/screens/DemoComponentsScreen/demos/DemoAutoImage.tsx\\"
-   Found \\"// @demo remove-current-line\\" in \\"/user/home/ignite/app/screens/DemoComponentsScreen/demos/DemoButton.tsx\\"
-   Found \\"// @demo remove-next-line\\" in \\"/user/home/ignite/app/screens/index.ts\\"
+   Found \\"// @demo remove-file\\" in /user/home/ignite/app/screens/DemoComponentsScreen/demos/DemoAutoImage.tsx
+   Found \\"// @demo remove-current-line\\" in /user/home/ignite/app/screens/DemoComponentsScreen/demos/DemoButton.tsx
+   Found \\"// @demo remove-next-line\\" in /user/home/ignite/app/screens/index.ts
 "
 `;

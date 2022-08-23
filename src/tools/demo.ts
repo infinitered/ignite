@@ -1,4 +1,4 @@
-enum CommentType {
+export enum CommentType {
   REMOVE_FILE = `// @demo remove-file`,
   REMOVE_CURRENT_LINE = `// @demo remove-current-line`,
   REMOVE_NEXT_LINE = `// @demo remove-next-line`,
