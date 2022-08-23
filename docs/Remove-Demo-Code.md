@@ -22,7 +22,7 @@ export * from "./Text"
 export * from "./Screen"
 ```
 
-### `// @demo remove`
+### `// @demo remove-current-line`
 
 Remove the current line from the source code.
 
@@ -42,7 +42,7 @@ Remove the next line from the source code
 import { DemoScreen } from "./demo/screen"
 ```
 
-### `// @demo remove-next-line`
+### `// @demo remove-block`
 
 Remove the entire next line from the source block
 
