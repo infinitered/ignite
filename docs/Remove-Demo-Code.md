@@ -44,7 +44,7 @@ import { DemoScreen } from "./demo/screen"
 
 ### `// @demo remove-block-start && // @demo remove-block-end`
 
-Remove the entire next line from the source block
+Remove the entire block between these lines from the source code
 
 #### Example:
 
