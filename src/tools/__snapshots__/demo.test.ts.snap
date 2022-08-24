@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`demo removeBlock should remove comments and lines between "// @demo remove-block-start" and "// @demo remove-block-end" 1`] = `
+"
+        export * from \\"./WelcomeScreen\\"
+        export * from \\"./LoginScreen\\"
+        export * from \\"./ErrorScreen/ErrorBoundary\\"
+        // export other screens here
+      "
+`;
+
 exports[`demo removeCurrentLine should remove line with "// @demo remove-current-line" 1`] = `
 "
         import React from \\"react\\"

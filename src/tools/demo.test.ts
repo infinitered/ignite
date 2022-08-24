@@ -53,4 +53,27 @@ describe("demo", () => {
       expect(result).not.toContain("DemoCommunityScreen")
     })
   })
+
+  describe("removeBlock", () => {
+    it(`should remove comments and lines between "${demo.CommentType.REMOVE_BLOCK_START}" and "${demo.CommentType.REMOVE_BLOCK_END}"`, () => {
+      const contents = `
+        export * from "./WelcomeScreen"
+        export * from "./LoginScreen"
+        ${demo.CommentType.REMOVE_BLOCK_START}
+        export * from "./DemoCommunityScreen"
+        export * from "./DemoDebugScreen"
+        export * from "./DemoComponentsScreen/DemoComponentsScreen"
+        ${demo.CommentType.REMOVE_BLOCK_END}
+        export * from "./ErrorScreen/ErrorBoundary"
+        // export other screens here
+      `
+      const result = demo.removeBlock(contents)
+      expect(result).toMatchSnapshot()
+      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_START)
+      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_END)
+      expect(result).not.toContain("DemoCommunityScreen")
+      expect(result).not.toContain("DemoDebugScreen")
+      expect(result).not.toContain("DemoComponentsScreen")
+    })
+  })
 })
