@@ -1,7 +1,14 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
-import { FlatList, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import {
+  TouchableOpacity,
+  FlatList,
+  Image,
+  ImageStyle,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 import { Icon, Screen, Switch, Text } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -73,6 +80,7 @@ const EpisodeCard = observer(function EpisodeCard({
   return (
     <TouchableOpacity
       style={[$rowLayout, $item]}
+      pointerEvents="box-none"
       onPress={() => openLinkInBrowser(episode.enclosure.link)}
     >
       <View style={$description}>
