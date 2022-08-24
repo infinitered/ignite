@@ -9,7 +9,7 @@ function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }
 
-export function DemoDebugScreen(props: DemoTabScreenProps<"DemoDebug">) {
+export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
   const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
   const demoReactotron = React.useMemo(
