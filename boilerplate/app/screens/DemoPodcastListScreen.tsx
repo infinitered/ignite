@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { FlatList, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Icon, Screen, Text } from "../components"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import { Icon, Screen, Switch, Text } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
+import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -30,7 +32,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]}>
       <FlatList<Episode>
-        data={episodeStore.episodes}
+        data={episodeStore.episodesForList}
         extraData={episodeStore.favorites.length}
         contentContainerStyle={$flatListContentContainer}
         refreshing={refreshing}
@@ -38,6 +40,13 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         ListHeaderComponent={
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
+            <View style={[$rowLayout, $toggle]}>
+              <Switch
+                value={episodeStore.favoritesOnly}
+                onToggle={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
+              />
+              <Text style={$toggleText} tx="demoPodcastListScreen.onlyFavorites" />
+            </View>
           </View>
         }
         renderItem={({ item }) => (
@@ -62,7 +71,10 @@ const EpisodeCard = observer(function EpisodeCard({
   isFavorite: boolean
 }) {
   return (
-    <View style={[$rowLayout, $item]}>
+    <TouchableOpacity
+      style={[$rowLayout, $item]}
+      onPress={() => openLinkInBrowser(episode.enclosure.link)}
+    >
       <View style={$description}>
         <Text>{episode.title}</Text>
         <View style={[$rowLayout, $metadata]}>
@@ -76,7 +88,7 @@ const EpisodeCard = observer(function EpisodeCard({
         </View>
       </View>
       <Image source={{ uri: episode.thumbnail }} style={$itemThumbnail} />
-    </View>
+    </TouchableOpacity>
   )
 })
 
@@ -85,6 +97,8 @@ const THUMBNAIL_DIMENSION = 100
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing[5],
   paddingTop: spacing[5],
+  height: "100%",
+  width: "100%",
 }
 
 const $heading: ViewStyle = {
@@ -105,6 +119,15 @@ const $item: ViewStyle = {
 
 const $rowLayout: ViewStyle = {
   flexDirection: "row",
+}
+
+const $toggle: ViewStyle = {
+  alignItems: "center",
+  marginTop: spacing[3],
+}
+
+const $toggleText: TextStyle = {
+  marginLeft: spacing[2],
 }
 
 const $itemThumbnail: ImageStyle = {
