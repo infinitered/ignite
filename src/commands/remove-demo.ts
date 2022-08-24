@@ -16,7 +16,9 @@ module.exports = {
     p(`Removing demo code from '${TARGET_DIR}'`)
 
     const getAllFilePaths = createGetAllFilePaths(filesystem)
-    const paths = getAllFilePaths(TARGET_DIR)
+    const paths = getAllFilePaths(TARGET_DIR).filter(
+      (path) => path.includes("node_modules") === false,
+    )
 
     // Go through every file path and handle the operation for each demo comment
     const demoCommentResults = await Promise.allSettled(
@@ -78,7 +80,7 @@ module.exports = {
 
     // Recurisvely remove any empty directories in TARGET_DIR
     const removeEmptyDirs = (dir: string) => {
-      const files = filesystem.list(dir)
+      const files = filesystem.list(dir).filter((file) => file.includes("node_modules") === false)
       if (files.length === 0) {
         filesystem.remove(dir)
         p(`Removed empty directory '${dir}'`)
