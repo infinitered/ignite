@@ -4,7 +4,7 @@ export interface ConfigBaseProps {
   exitRoutes: string[]
 }
 
-export default {
+const BaseConfig: ConfigBaseProps = {
   // This feature is particularly useful in development mode.
   // It is selectively enabled in development mode with
   // the following approach. If you'd like to use navigation persistence
@@ -21,4 +21,6 @@ export default {
    * is pressed while in that screen. Only affects Android.
    */
   exitRoutes: ["Welcome"],
-} as ConfigBaseProps
+}
+
+export default  BaseConfig
