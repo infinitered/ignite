@@ -2,7 +2,6 @@
 
 [Back to all components](./Components.md)
 
-MAVERICKTODO: update documentation
 Ignite's `TextField` Component is an enhanced version of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component. It consists of TextInput and a Text(./Components-Text.md) label.
 
 With this component you will be able to standardise TextInput component across your app.
@@ -14,31 +13,141 @@ const [input, setInput] = useState("")
 <TextField
   value={input}
   onChangeText={(value) => setInput(value)}
+  status="error"
   label="Name"
-  placeholder="omg your name"
-  style={$header}
-  inputStyle={$inputStyle}
-  preset="default"
+  labelTx="login.nameLabel"
+  labelTxOptions={{ name: "John" }}
+  LabelTextProps={{ style: { color: "#FFFFFF" } }}
+  placeholder="John Doe"
+  placeholderTx="login.namePlaceholder"
+  placeholderTxOptions={{ name: "John" }}
+  helper="Enter your name"
+  helperTx="login.nameHelper"
+  helperTxOptions={{ name: "John" }}
+  HelperTextProps={{ style: { color: "#FFFFFF" } }}
+  style={{ backgroundColor: "#BFBFBF" }}
+  containerStyle={{ backgroundColor: "#BFBFBF" }}
+  inputWrapperStyle={{ backgroundColor: "#BFBFBF" }}
+  RightAccessory={() => <Icon name="check" />}
+  LeftAccessory={() => <Icon name="bell" />}
 />
 
 ```
 
 ## Props
 
-### `label`
+The `TextField` component accepts all the props of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component which will be forwarded to the `TextInput` component, as well as the following props:
 
-The `label` optional prop is a string that is used to set the label. If this is not set, the `labelTx` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component
+### `status`
+
+The `status` prop is used to set an `'error'` or `'disabled'` state on the component. The default value is `null`. You can use it to show an error message for validations or to disable the component. By default the `'error'` status will set the `borderColor` on the input wrapper to whatever `colors.error` is set to. Setting the status to `'disabled'` will disable editing on the `TextInput` component.
 
 ```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} label="Name" />
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  status="error"
+/>
+```
+
+### `label`
+
+The `label` optional prop is a string that is used to set the label. If this is not set, the `labelTx` prop must be present to set the label. If both are set, the `label` value will be used.
+
+```tsx
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  label="Name"
+/>
 ```
 
 ### `labelTx`
 
-The `labelTx` optional prop is a string that is used to set the label. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used. The label is rendered with a [`Text`](./Components-Text.md) component. The label text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization).
+The `labelTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used.
 
 ```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} labelTx="signup.name" />
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  labelTx="signup.name"
+/>
+```
+
+### `labelTxOptions`
+
+The `labelTxOptions` is an optional prop that is used to pass props to the translation lookup for the header title. This is useful if you need to pass in dynamic values to the translation.
+
+```tsx
+<TextField
+  value={input}
+  labelTx="signup.name"
+  labelTxOptions={{ name: "John" }}
+  onChangeText={(value) => setInput(value)}
+/>
+```
+
+### `LabelTextProps`
+
+The `LabelTextProps` is an optional prop that is used to pass props to the [`Text`](./Components-Text.md) component that renders the label.
+
+```tsx
+<TextField
+  value={input}
+  labelTx="signup.name"
+  onChangeText={(value) => setInput(value)}
+  LabelTextProps={{ style: { color: "red" } }}
+/>
+```
+
+### `helper`
+
+The `helper` optional prop is a string that is used to set the helper text. If this is not set, the `helperTx` prop must be present to set the helper text. If both are set, the `helper` value will be used. The helper text is rendered with a [`Text`](./Components-Text.md) component.
+
+```tsx
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  helper="This is a helper text"
+/>
+```
+
+### `helperTx`
+
+The `helperTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization. If this is not set, the `helper` prop must be present to set the helper text. If both are set, the `helper` value will be used.
+
+```tsx
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  helperTx="signup.name"
+/>
+```
+
+### `helperTxOptions`
+
+The `helperTxOptions` is an optional prop that is used to pass props to the translation lookup for the helper text. This is useful if you need to pass in dynamic values to the translation.
+
+```tsx
+<TextField
+  value={input}
+  helperTx="login.name"
+  helperTxOptions={{ name: "John" }}
+  onChangeText={(value) => setInput(value)}
+/>
+```
+
+### `HelperTextProps`
+
+The `HelperTextProps` is an optional prop that is used to pass props to the [`Text`](./Components-Text.md) component that renders the helper text.
+
+```tsx
+<TextField
+  value={input}
+  helper="Name"
+  onChangeText={(value) => setInput(value)}
+  HelperTextProps={{ style: { color: "red" } }}
+/>
 ```
 
 ### `placeholder`
@@ -46,79 +155,92 @@ The `labelTx` optional prop is a string that is used to set the label. If this i
 The `placeholder` optional prop is a string that is used to set the placeholder. If this is not set, the `placeholderTx` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
 
 ```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} placeholder="Name" />
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  placeholder="Name"
+/>
 ```
 
 ### `placeholderTx`
 
-The `placeholderTx` is an optional prop that is used to set the placeholder. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used. The placeholder text is looked up by [i18n-js](https://github.com/fnando/i18n-js) (used for internationalization).
+The `placeholderTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
 
 ```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} placeholderTx="signup.name" />
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  placeholderTx="signup.name"
+/>
+```
+
+### `placeholderTxOptions`
+
+The `placeholderTxOptions` is an optional prop that is used to pass props to the translation lookup for the placeholder text. This is useful if you need to pass in dynamic values to the translation.
+
+```tsx
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+/>
 ```
 
 ### `style`
 
-The `style` optional prop is an object used to override the container style and is useful for margins & padding.
+The `style` optional prop is an object used to override the input style.
 
 ```tsx
 <TextField
   value={input}
   onChangeText={(value) => setInput(value)}
-  labelTx="signup.name"
-  placeholderTx="signup.name"
-  style={{ paddingHorizontal: 10 }}
+  style={{ backgroundColor: "red" }}
 />
 ```
 
-### `inputStyle`
+### `containerStyle`
 
-The `inputStyle` optional prop is an object used to override the input style.
+The `containerStyle` optional prop is an object used to override the container style.
 
 ```tsx
 <TextField
   value={input}
   onChangeText={(value) => setInput(value)}
-  labelTx="signup.name"
-  placeholderTx="signup.name"
+  containerStyle={{ backgroundColor: "red" }}
 />
 ```
 
-### `preset`
+### `inputWrapperStyle`
 
-The `preset` optional prop is a string name of the style preset to use. Use preset to setup various default styles.
+The `inputWrapperStyle` optional prop is an object used to override the input wrapper style.
 
 ```tsx
 <TextField
   value={input}
   onChangeText={(value) => setInput(value)}
-  labelTx="signup.name"
-  placeholderTx="signup.name"
-  preset="default"
+  inputWrapperStyle={{ backgroundColor: "red" }}
 />
 ```
 
-If you find yourself overriding styles with the `style` prop a lot, you probably need a new preset for that use case.
+### `RightAccessory`
 
-#### Available Presets
-
-`default`: this a default empty preset
-
-#### Custom Presets
-
-Feel free to add your own presets by adding style you require. In a typical Infinite Red project, for `TextField` we would have a couple or more presets that we use across the project.
-
-### `forwardedRef`
-
-The `forwardedRef` prop is optional. It is a reference prop.
+The `RightAccessory` optional prop is a component that is rendered on the right side of the input. This is useful for rendering icons or buttons.
 
 ```tsx
-const inputRef = useRef()
-;<TextField
+<TextField
   value={input}
   onChangeText={(value) => setInput(value)}
-  labelTx="signup.name"
-  placeholderTx="signup.name"
-  forwardedRef={inputRef}
+  RightAccessory={<Icon name="bell" />}
+/>
+```
+
+### `LeftAccessory`
+
+The `LeftAccessory` optional prop is a component that is rendered on the left side of the input. This is useful for rendering icons or buttons.
+
+```tsx
+<TextField
+  value={input}
+  onChangeText={(value) => setInput(value)}
+  LeftAccessory={<Icon name="bell" />}
 />
 ```
