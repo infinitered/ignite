@@ -75,5 +75,24 @@ module.exports = {
           p(`Found ${comments.map((c) => `'${c}'`).join(", ")} in ${path}`)
         }
       })
+
+    // Recurisvely remove any empty directories in TARGET_DIR
+    const removeEmptyDirs = (dir: string) => {
+      const files = filesystem.list(dir)
+      if (files.length === 0) {
+        filesystem.remove(dir)
+        p(`Removed empty directory '${dir}'`)
+        return
+      }
+      files.forEach((file) => {
+        const filePath = `${dir}/${file}`
+        if (filesystem.isDirectory(filePath)) {
+          removeEmptyDirs(filePath)
+        }
+      })
+    }
+    removeEmptyDirs(TARGET_DIR)
+
+    p(`Done removing demo code from '${TARGET_DIR}'`)
   },
 }
