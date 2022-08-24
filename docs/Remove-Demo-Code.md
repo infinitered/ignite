@@ -1,6 +1,6 @@
 # Remove Demo Code
 
-Whenever users use command line boilerplate tool like `ignite` or `create-react-app`, the first thing that most users do is delete all the demo code to start their project.
+Whenever users use command line boilerplate tool like `ignite` or `create-react-app`, the first thing that many users do is delete all the demo code to start their project.
 
 Instead of going through the files yourself, or using find and replace, run `npx ignite-cli remove-demo`.
 
