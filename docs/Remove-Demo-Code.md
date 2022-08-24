@@ -42,14 +42,14 @@ Remove the next line from the source code
 import { DemoScreen } from "./demo/screen"
 ```
 
-### `// @demo remove-block`
+### `// @demo remove-block-start && // @demo remove-block-end`
 
 Remove the entire next line from the source block
 
 #### Example:
 
 ```tsx
-// @demo remove-block
+// @demo remove-block-start
 export function DemoDivider(props: DemoDividerProps) {
   const { type = "horizontal", size = 10, style: $styleOverride } = props
 
@@ -64,5 +64,5 @@ export function DemoDivider(props: DemoDividerProps) {
     />
   )
 }
-// @demo end-remove-block
+// @demo remove-block-end
 ```
