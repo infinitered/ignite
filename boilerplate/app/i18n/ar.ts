@@ -84,6 +84,7 @@ const ar: Translations = {
   },
   demoPodcastListScreen: {
     title: "حلقات إذاعية React Native",
+    onlyFavorites: "المفضلة فقط",
   },
   errorScreen: {
     title: "هناك خطأ ما",
