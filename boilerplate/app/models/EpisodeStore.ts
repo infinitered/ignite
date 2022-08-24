@@ -1,4 +1,4 @@
-import { clone, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { api } from "../services/api"
 import { Episode, EpisodeModel } from "./Episode"
 import { withSetPropAction } from "./helpers/with-set-prop-action"
@@ -7,7 +7,7 @@ export const EpisodeStoreModel = types
   .model("EpisodeStore")
   .props({
     episodes: types.array(EpisodeModel),
-    favorites: types.map(EpisodeModel),
+    favorites: types.array(types.reference(EpisodeModel)),
   })
   .actions(withSetPropAction)
   .actions((store) => ({
@@ -20,18 +20,18 @@ export const EpisodeStoreModel = types
       }
     },
     addFavorite(episode: Episode) {
-      store.favorites.set(episode.guid, clone(episode))
+      store.favorites.push(episode)
     },
     removeFavorite(episode: Episode) {
-      store.favorites.delete(episode.guid)
+      store.favorites.remove(episode)
     },
     hasFavorite(episode: Episode) {
-      return store.favorites.has(episode.guid)
+      return store.favorites.includes(episode)
     },
   }))
   .actions((store) => ({
     toggleFavorite(episode: Episode) {
-      if (store.favorites.has(episode.guid)) {
+      if (store.hasFavorite(episode)) {
         store.removeFavorite(episode)
       } else {
         store.addFavorite(episode)

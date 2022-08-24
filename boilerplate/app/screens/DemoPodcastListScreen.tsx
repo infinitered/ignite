@@ -31,7 +31,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
     <Screen preset="fixed" safeAreaEdges={["top"]}>
       <FlatList<Episode>
         data={episodeStore.episodes}
-        extraData={episodeStore.favorites.size}
+        extraData={episodeStore.favorites.length}
         contentContainerStyle={$flatListContentContainer}
         refreshing={refreshing}
         onRefresh={manualRefresh}
