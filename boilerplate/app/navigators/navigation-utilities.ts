@@ -95,7 +95,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
   // It is selectively enabled in development mode with
   // the following approach. If you'd like to use navigation persistence
   // in production and dev both, remove the __DEV__ and set the state to false
-  const [isRestored, setIsRestored] = useState(Config.NavigtaionIsRestored)
+  const [isRestored, setIsRestored] = useState(Config.NavigationIsRestored)
 
   const routeNameRef = useRef<string | undefined>()
 
