@@ -1,9 +1,9 @@
 export enum CommentType {
-  REMOVE_FILE = `// @demo remove-file`,
-  REMOVE_CURRENT_LINE = `// @demo remove-current-line`,
-  REMOVE_NEXT_LINE = `// @demo remove-next-line`,
-  REMOVE_BLOCK_START = `// @demo remove-block-start`,
-  REMOVE_BLOCK_END = `// @demo remove-block-end`,
+  REMOVE_FILE = `@demo remove-file`,
+  REMOVE_CURRENT_LINE = `@demo remove-current-line`,
+  REMOVE_NEXT_LINE = `@demo remove-next-line`,
+  REMOVE_BLOCK_START = `@demo remove-block-start`,
+  REMOVE_BLOCK_END = `@demo remove-block-end`,
 }
 
 /**
