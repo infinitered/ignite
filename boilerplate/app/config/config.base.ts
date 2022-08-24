@@ -23,4 +23,4 @@ const BaseConfig: ConfigBaseProps = {
   exitRoutes: ["Welcome"],
 }
 
-export default  BaseConfig
+export default BaseConfig
