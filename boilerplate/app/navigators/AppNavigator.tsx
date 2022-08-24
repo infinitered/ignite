@@ -36,7 +36,9 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 export type AppStackParamList = {
   Welcome: undefined
   Login: undefined
+  // @demo remove-block-start
   Demo: NavigatorScreenParams<DemoTabParamList>
+  // @demo remove-block-end
   // 🔥 Your screens go here
 }
 

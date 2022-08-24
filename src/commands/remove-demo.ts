@@ -41,6 +41,14 @@ module.exports = {
           comments.push(demo.CommentType.REMOVE_NEXT_LINE)
         }
 
+        if (
+          (await exists(path, demo.CommentType.REMOVE_BLOCK_START)) &&
+          (await exists(path, demo.CommentType.REMOVE_BLOCK_END))
+        ) {
+          await update(path, demo.removeBlock)
+          comments.push(demo.CommentType.REMOVE_BLOCK_START, demo.CommentType.REMOVE_BLOCK_END)
+        }
+
         return { path, comments }
       }),
     )
