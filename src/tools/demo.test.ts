@@ -17,14 +17,14 @@ describe("demo", () => {
             const { type = "horizontal", size = 10, style: $styleOverride } = props
         
             return (
-            <View
-                style={[
-                $divider,
-                type === "horizontal" && { height: size },
-                type === "vertical" && { width: size },
-                $styleOverride,
-                ]}
-            />
+              <View
+                  style={[
+                    $divider,
+                    type === "horizontal" && { height: size },
+                    type === "vertical" && { width: size },
+                    $styleOverride,
+                  ]}
+              />
             )
         }
         
