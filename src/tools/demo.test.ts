@@ -30,7 +30,7 @@ describe("demo", () => {
         
         const $divider: ViewStyle = {
             flexGrow: 0,
-            flexShrink: 0, ${demo.CommentType.REMOVE_CURRENT_LINE}
+            flexShrink: 0, // ${demo.CommentType.REMOVE_CURRENT_LINE}
         }
       `
       const result = demo.removeCurrentLine(contents)
