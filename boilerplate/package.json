@@ -38,6 +38,7 @@
     "@react-navigation/native-stack": "^6.0.2",
     "@react-navigation/stack": "~6.2.1",
     "apisauce": "2.1.5",
+    "date-fns": "^2.29.2",
     "expo": "~46.0.3",
     "expo-application": "~4.2.2",
     "expo-constants": "~13.2.3",
