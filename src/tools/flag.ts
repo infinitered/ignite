@@ -8,13 +8,7 @@
  * @param value The value to check.
  * @returns `true` for 'true', `false` for 'false', `Boolean` result otherwise.
  */
-export function bool<Value extends Parameters<typeof Boolean>[0]>(value: Value): boolean {
-  if (value === "true") {
-    return true
-  }
-  if (value === "false") {
-    return false
-  }
-
+export function bool(value: string | boolean): boolean {
+  if (value === "false") return false
   return Boolean<Value>(value)
 }
