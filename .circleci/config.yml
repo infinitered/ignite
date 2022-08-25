@@ -58,7 +58,7 @@ jobs:
           command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
           no_output_timeout: 5m
       - slack/notify:
-          event: fail
+          event: pass
           template: basic_fail_1
 
   tests_expo:
@@ -94,7 +94,7 @@ jobs:
           command: yarn ci:prep && yarn ci:test:expo && yarn clean
           no_output_timeout: 8m
       - slack/notify:
-          event: fail
+          event: pass
           template: basic_fail_1
 
   # detox:
