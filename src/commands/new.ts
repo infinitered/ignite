@@ -331,14 +331,6 @@ export default {
 
     startSpinner(" 3D-printing a new React Native app")
 
-    // ensure that the target path exists
-    if (exists(targetPath) === false) {
-      filesystem.dir(targetPath)
-    }
-
-    // jump into the project to do additional tasks
-    process.chdir(targetPath)
-
     await copyBoilerplate(toolbox, {
       boilerplatePath,
       targetPath,
