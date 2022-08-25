@@ -348,6 +348,9 @@ export default {
     // note the original directory
     const cwd = log(process.cwd())
 
+    // jump into the project to do additional tasks
+    process.chdir(targetPath)
+
     // copy the .gitignore if it wasn't copied over
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
