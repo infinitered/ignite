@@ -80,7 +80,6 @@ const EpisodeCard = observer(function EpisodeCard({
   return (
     <TouchableOpacity
       style={[$rowLayout, $item]}
-      pointerEvents="box-none"
       onPress={() => openLinkInBrowser(episode.enclosure.link)}
     >
       <View style={$description}>
