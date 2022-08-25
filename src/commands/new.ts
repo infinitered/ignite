@@ -13,7 +13,7 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
-import { bool } from "../tools/flag"
+import { boolFlag } from "../tools/flag"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -127,7 +127,6 @@ export default {
 
     const yname = !!options.y || !!options.yes
     const useDefault = (option: unknown) => yname && option === undefined
-    const boolFlag = (option: unknown) => (option !== undefined ? bool(option) : undefined)
     // #endregion
 
     // #region Debug

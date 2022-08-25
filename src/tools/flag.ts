@@ -8,7 +8,16 @@
  * @param value The value to check.
  * @returns `true` for 'true', `false` for 'false', `Boolean` result otherwise.
  */
-export function bool(value: string | boolean): boolean {
+export function bool(value: unknown): boolean {
   if (value === "false") return false
   return Boolean(value)
+}
+
+/**
+ * Utility for converting 'true' and 'false' strings to booleans,
+ * while preserving `undefined` values as `undefined` instead of `false`.
+ */
+export function boolFlag(option: unknown): boolean | undefined {
+  if (option === undefined) return undefined
+  return bool(option)
 }
