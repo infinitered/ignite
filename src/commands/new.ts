@@ -312,7 +312,7 @@ export default {
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan("ignite-cli")} with ${green(packagerName)}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
-    p(` █ Path: ${gray(path(process.cwd(), projectName))}`)
+    p(` █ Path: ${gray(targetPath)}`)
     p(` ────────────────────────────────────────────────\n`)
 
     startSpinner("Igniting app")
