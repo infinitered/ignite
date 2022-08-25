@@ -10,5 +10,5 @@
  */
 export function bool(value: string | boolean): boolean {
   if (value === "false") return false
-  return Boolean<Value>(value)
+  return Boolean(value)
 }
