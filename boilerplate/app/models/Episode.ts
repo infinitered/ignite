@@ -1,5 +1,14 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/with-set-prop-action"
+import { format } from "date-fns"
+
+interface Enclosure {
+  link: string
+  type: string
+  length: number
+  duration: number
+  rating: { scheme: string; value: string }
+}
 
 /**
  * This represents an episode of React Native Radio.
@@ -9,22 +18,31 @@ export const EpisodeModel = types
   .props({
     guid: types.identifier,
     title: "",
-    pubDate: "",
+    pubDate: "", // Ex: 2022-08-12 21:05:36
     link: "",
     author: "",
     thumbnail: "",
     description: "",
     content: "",
-    enclosure: types.frozen(),
+    enclosure: types.frozen<Enclosure>(),
     categories: types.array(types.string),
-
-    // additional properties
-    favorite: false,
   })
   .actions(withSetPropAction)
   .views((episode) => ({
     get datePublished() {
-      return new Date(episode.pubDate)
+      const date = new Date(episode.pubDate)
+      return format(date, "MMM dd, yyyy")
+    },
+    get duration() {
+      const seconds = Number(episode.enclosure.duration)
+      const h = Math.floor(seconds / 3600)
+      const m = Math.floor((seconds % 3600) / 60)
+      const s = Math.floor((seconds % 3600) % 60)
+
+      const hDisplay = h > 0 ? `${h}:` : ""
+      const mDisplay = m > 0 ? `${m}:` : ""
+      const sDisplay = s > 0 ? s : ""
+      return hDisplay + mDisplay + sDisplay
     },
   }))
 

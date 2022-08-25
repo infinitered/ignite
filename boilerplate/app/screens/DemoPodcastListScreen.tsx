@@ -1,12 +1,21 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
-import { FlatList, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Screen, Text } from "../components"
+import {
+  TouchableOpacity,
+  FlatList,
+  Image,
+  ImageStyle,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
+import { Icon, Screen, Switch, Text } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors } from "../theme"
+import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
+import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -30,55 +39,113 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]}>
       <FlatList<Episode>
-        data={episodeStore.episodes}
+        data={episodeStore.episodesForList}
+        extraData={episodeStore.favorites.length}
         contentContainerStyle={$flatListContentContainer}
         refreshing={refreshing}
         onRefresh={manualRefresh}
         ListHeaderComponent={
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
+            <View style={[$rowLayout, $toggle]}>
+              <Switch
+                value={episodeStore.favoritesOnly}
+                onToggle={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
+              />
+              <Text style={$toggleText} tx="demoPodcastListScreen.onlyFavorites" />
+            </View>
           </View>
         }
-        renderItem={({ item }) => {
-          return (
-            <View style={[$rowLayout, $item]}>
-              <Image source={{ uri: item.thumbnail }} style={$itemThumbnail} />
-              <Text style={$description}>{item.title}</Text>
-            </View>
-          )
-        }}
+        renderItem={({ item }) => (
+          <EpisodeCard
+            episode={item}
+            isFavorite={episodeStore.hasFavorite(item)}
+            onPressFavorite={() => episodeStore.toggleFavorite(item)}
+          />
+        )}
       />
     </Screen>
   )
 })
 
+const EpisodeCard = observer(function EpisodeCard({
+  episode,
+  isFavorite,
+  onPressFavorite,
+}: {
+  episode: Episode
+  onPressFavorite: () => void
+  isFavorite: boolean
+}) {
+  return (
+    <TouchableOpacity
+      style={[$rowLayout, $item]}
+      pointerEvents="box-none"
+      onPress={() => openLinkInBrowser(episode.enclosure.link)}
+    >
+      <View style={$description}>
+        <Text>{episode.title}</Text>
+        <View style={[$rowLayout, $metadata]}>
+          <Icon
+            icon="heart"
+            color={isFavorite ? colors.palette.primary400 : undefined}
+            onPress={onPressFavorite}
+          />
+          <Text size="xs">{episode.datePublished}</Text>
+          <Text size="xs">{episode.duration}</Text>
+        </View>
+      </View>
+      <Image source={{ uri: episode.thumbnail }} style={$itemThumbnail} />
+    </TouchableOpacity>
+  )
+})
+
+const THUMBNAIL_DIMENSION = 100
+
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: 24,
-  paddingTop: 24,
+  paddingHorizontal: spacing[5],
+  paddingTop: spacing[5],
+  height: "100%",
+  width: "100%",
 }
 
 const $heading: ViewStyle = {
-  marginBottom: 16,
+  marginBottom: spacing[4],
 }
 
 const $description: TextStyle = {
-  marginTop: 16,
   flex: 1,
+  justifyContent: "space-between",
 }
 
 const $item: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
-  padding: 24,
-  marginTop: 18,
+  padding: spacing[4],
+  marginTop: spacing[4],
 }
 
 const $rowLayout: ViewStyle = {
   flexDirection: "row",
 }
 
+const $toggle: ViewStyle = {
+  alignItems: "center",
+  marginTop: spacing[3],
+}
+
+const $toggleText: TextStyle = {
+  marginLeft: spacing[2],
+}
+
 const $itemThumbnail: ImageStyle = {
-  width: 100,
-  height: 100,
-  marginRight: 10,
+  width: THUMBNAIL_DIMENSION,
+  height: THUMBNAIL_DIMENSION,
+  marginStart: spacing[2],
+}
+
+const $metadata: TextStyle = {
+  justifyContent: "space-between",
+  color: colors.textDim,
+  marginTop: spacing[2],
 }
