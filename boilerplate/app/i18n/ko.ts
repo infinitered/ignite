@@ -88,6 +88,7 @@ const ko: Translations = {
   },
   demoPodcastListScreen: {
     title: "React Native 라디오 에피소드",
+    onlyFavorites: "즐겨찾기만 보기",
   },
   errorScreen: {
     title: "뭔가 잘못되었습니다!",

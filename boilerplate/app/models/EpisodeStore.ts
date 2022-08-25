@@ -8,6 +8,7 @@ export const EpisodeStoreModel = types
   .props({
     episodes: types.array(EpisodeModel),
     favorites: types.array(types.reference(EpisodeModel)),
+    favoritesOnly: false,
   })
   .actions(withSetPropAction)
   .actions((store) => ({
@@ -36,6 +37,11 @@ export const EpisodeStoreModel = types
       } else {
         store.addFavorite(episode)
       }
+    },
+  }))
+  .views((store) => ({
+    get episodesForList() {
+      return store.favoritesOnly ? store.favorites : store.episodes
     },
   }))
 

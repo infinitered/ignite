@@ -86,6 +86,7 @@ const en = {
   },
   demoPodcastListScreen: {
     title: "React Native Radio episodes",
+    onlyFavorites: "Only Show Favorites",
   },
   errorScreen: {
     title: "Something went wrong!",
