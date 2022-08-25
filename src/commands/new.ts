@@ -13,6 +13,7 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
+import { bool } from "../tools/flag"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -203,7 +204,7 @@ export default {
     // #region Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     const defaultOverwrite = false
-    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : options.overwrite
+    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : bool(options.overwrite)
     if (exists(targetPath)) {
       if (overwrite === undefined) {
         overwrite = await prompt.confirm(
@@ -327,18 +328,25 @@ export default {
     stopSpinner("Igniting app", "🔥")
 
     startSpinner(" 3D-printing a new React Native app")
+
+    // ensure that the target path exists
+    if (exists(targetPath) === false) {
+      filesystem.dir(targetPath)
+    }
+
+    // jump into the project to do additional tasks
+    process.chdir(targetPath)
+
     await copyBoilerplate(toolbox, {
       boilerplatePath,
       targetPath,
       excluded: [".vscode", "node_modules", "yarn.lock"],
+      overwrite,
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")
 
     // note the original directory
     const cwd = log(process.cwd())
-
-    // jump into the project to do additional tasks
-    process.chdir(projectName)
 
     // copy the .gitignore if it wasn't copied over
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
