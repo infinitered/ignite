@@ -10,8 +10,7 @@ afterEach(() => jest.clearAllMocks())
 
 test("load", async () => {
   const value = await load("something")
-  // expect(value).toEqual(JSON.parse(VALUE_STRING))
-  expect(value).toEqual(false)
+  expect(value).toEqual(JSON.parse(VALUE_STRING))
 })
 
 test("loadString", async () => {
