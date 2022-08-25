@@ -77,7 +77,7 @@ const ar: Translations = {
     reportBugs: "Ignite الابلاغ عن اخطاء",
     demoList: "قائمة تجريبية",
     demoPodcastList: "قائمة البودكاست التجريبي",
-    ...PT(
+    ...PT<"ReactotronHint">(
       "ReactotronHint",
       "اذا لم ينجح ذلك، فتأكد من تشغيل تطبيق الحاسوب الخاص ب Reactotron وأعد تحميل التطبيق",
       {

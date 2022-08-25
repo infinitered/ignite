@@ -77,7 +77,7 @@ const en = {
     reportBugs: "Report bugs about Ignite",
     demoList: "Demo List",
     demoPodcastList: "Demo Podcast List",
-    ...PT(
+    ...PT<"ReactotronHint">(
       "ReactotronHint",
       "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
       {

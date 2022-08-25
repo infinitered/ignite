@@ -1,4 +1,5 @@
 import i18n from "i18n-js"
+import { PlatformOSType } from "react-native"
 import { TxKeyPath } from "./i18n"
 
 /**
@@ -18,6 +19,10 @@ export interface PlatformValuesProps {
   windows?: string
 }
 
+export type PTKeyPath<keyPath extends string | number> = {
+  [TKey in keyof PlatformValuesProps as `${TKey}${keyPath}`]: string
+}
+
 /**
  * Return translated text for all platforms
  *
@@ -25,10 +30,14 @@ export interface PlatformValuesProps {
  * @param platformValues
  * @returns
  */
-export function PT(key: string, defaultValue: string, platformValues: PlatformValuesProps) {
+export function PT<keyPath extends string | number>(
+  key: string | number,
+  defaultValue: string,
+  platformValues: PlatformValuesProps,
+): PTKeyPath<keyPath> {
   const platformOSTypes = ["android", "ios", "web", "macos", "windows"]
 
-  let translationValues = platformOSTypes.reduce((data, platformType) => {
+  const translationValues = platformOSTypes.reduce((data, platformType) => {
     const keyPath = platformType + key
     data[keyPath] = platformValues[platformType] || defaultValue
     return data
