@@ -29,7 +29,7 @@ Remove the current line from the source code.
 #### Example:
 
 ```tsx
-const $style: ViewStyle = { padding: 10 } // @demo remove
+const $style: ViewStyle = { padding: 10 } // @demo remove-current-line
 ```
 
 ### `// @demo remove-next-line`
