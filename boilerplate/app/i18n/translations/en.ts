@@ -1,3 +1,5 @@
+import { PT } from "../translate"
+
 const en = {
   common: {
     ok: "OK!",
@@ -6,6 +8,8 @@ const en = {
   },
   errors: {
     invalidEmail: "Invalid email address.",
+    cannotBeEmpty: "can't be blank",
+    requireLength: "must be at least {{number}} characters",
   },
   welcomeScreen: {
     headerRight: "Log Out",
@@ -73,16 +77,14 @@ const en = {
     reportBugs: "Report bugs about Ignite",
     demoList: "Demo List",
     demoPodcastList: "Demo Podcast List",
-    androidReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
-    iosReactotronHint:
+    ...PT(
+      "ReactotronHint",
       "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
-    macosReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
-    webReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
-    windowsReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
+      {
+        android:
+          "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
+      },
+    ),
   },
   demoPodcastListScreen: {
     title: "React Native Radio episodes",

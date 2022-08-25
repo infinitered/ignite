@@ -3,9 +3,9 @@ import i18n from "i18n-js"
 import { I18nManager } from "react-native"
 
 // if English isn't your default language, move Translations to the appropriate language file.
-import en, { Translations } from "./en"
-import ar from "./ar"
-import ko from "./ko"
+import en, { Translations } from "./translations/en"
+import ar from "./translations/ar"
+import ko from "./translations/ko"
 
 i18n.fallbacks = true
 /**

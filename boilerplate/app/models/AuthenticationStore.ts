@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { translate } from "../i18n"
 
 export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
@@ -14,15 +15,15 @@ export const AuthenticationStoreModel = types
     get validationErrors() {
       return {
         authEmail: (function () {
-          if (store.authEmail.length === 0) return "can't be blank"
-          if (store.authEmail.length < 6) return "must be at least 6 characters"
+          if (store.authEmail.length === 0) return translate("errors.cannotBeEmpty")
+          if (store.authEmail.length < 6) return translate("errors.requireLength", { number: 6 })
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(store.authEmail))
-            return "must be a valid email address"
+            return translate("errors.invalidEmail")
           return ""
         })(),
         authPassword: (function () {
-          if (store.authPassword.length === 0) return "can't be blank"
-          if (store.authPassword.length < 6) return "must be at least 6 characters"
+          if (store.authPassword.length === 0) return translate("errors.cannotBeEmpty")
+          if (store.authPassword.length < 6) return translate("errors.requireLength", { number: 6 })
           return ""
         })(),
       }
