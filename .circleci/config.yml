@@ -15,6 +15,8 @@ defaults: &defaults
 #   working_directory: ~/repo
 
 version: 2.1
+orbs:
+  slack: circleci/slack@4.10.1
 jobs:
   tests:
     <<: *defaults
@@ -55,6 +57,9 @@ jobs:
           name: Run tests
           command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
           no_output_timeout: 5m
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   tests_expo:
     <<: *defaults
@@ -88,6 +93,9 @@ jobs:
           name: Run tests
           command: yarn ci:prep && yarn ci:test:expo && yarn clean
           no_output_timeout: 8m
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   # detox:
   #   <<: *mac
