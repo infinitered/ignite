@@ -127,6 +127,7 @@ export default {
 
     const yname = !!options.y || !!options.yes
     const useDefault = (option: unknown) => yname && option === undefined
+    const boolFlag = (option: unknown) => (option !== undefined ? bool(option) : undefined)
     // #endregion
 
     // #region Debug
@@ -204,7 +205,8 @@ export default {
     // #region Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     const defaultOverwrite = false
-    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : bool(options.overwrite)
+    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
+
     if (exists(targetPath)) {
       if (overwrite === undefined) {
         overwrite = await prompt.confirm(
