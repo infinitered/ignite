@@ -176,9 +176,9 @@ workflows:
   test_and_release:
     jobs:
       - tests:
-        context: Slack
+          context: Slack
       - tests_expo:
-        context: Slack
+          context: Slack
       # - detox # disabled until we can figure out detox CircleCI problems
       - publish:
           requires:
