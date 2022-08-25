@@ -68,9 +68,10 @@ const ar: Translations = {
   },
   demoDebugScreen: {
     howTo: "كيف",
-    title: "ماذا يوجد في المجموعة؟",
+    title: "التصحيح",
     tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
-    reactotron: "رد فعلي تجريبي",
+    reactotron: "Reactotron ارسل إلى",
+    reportBugs: "Ignite الابلاغ عن اخطاء",
     demoList: "قائمة تجريبية",
     demoPodcastList: "قائمة البودكاست التجريبي",
     androidReactotronHint:
