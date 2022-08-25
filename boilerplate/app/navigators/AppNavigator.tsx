@@ -15,6 +15,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
+import Config from "../config"
 import { useStores } from "../models"
 import { LoginScreen, WelcomeScreen } from "../screens"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
@@ -44,7 +45,7 @@ export type AppStackParamList = {
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
  */
-const exitRoutes = ["Welcome"]
+const exitRoutes = Config.exitRoutes
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreenProps<
   AppStackParamList,

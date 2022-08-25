@@ -6,6 +6,8 @@ import {
   NavigationAction,
   createNavigationContainerRef,
 } from "@react-navigation/native"
+import Config from "../config"
+import type { PersistNavigationConfig } from "../config/config.base"
 
 /* eslint-disable */
 export const RootNavigation = {
@@ -85,16 +87,26 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
 }
 
 /**
+ * This helper function will determine whether we should enable navigation persistence
+ * based on a config setting and the __DEV__ environment (dev or prod).
+ */
+function navigationRestoredDefaultState(persistNavigation: PersistNavigationConfig) {
+  if (persistNavigation === "always") return false
+  if (persistNavigation === "dev" && __DEV__) return false
+  if (persistNavigation === "prod" && !__DEV__) return false
+
+  // all other cases, disable restoration by returning true
+  return true
+}
+
+/**
  * Custom hook for persisting navigation state.
  */
 export function useNavigationPersistence(storage: any, persistenceKey: string) {
   const [initialNavigationState, setInitialNavigationState] = useState()
 
-  // This feature is particularly useful in development mode.
-  // It is selectively enabled in development mode with
-  // the following approach. If you'd like to use navigation persistence
-  // in production and dev both, remove the __DEV__ and set the state to false
-  const [isRestored, setIsRestored] = useState(!__DEV__)
+  const initNavState = navigationRestoredDefaultState(Config.persistNavigation)
+  const [isRestored, setIsRestored] = useState(initNavState)
 
   const routeNameRef = useRef<string | undefined>()
 
