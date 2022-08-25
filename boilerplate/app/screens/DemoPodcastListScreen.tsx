@@ -80,7 +80,6 @@ const EpisodeCard = observer(function EpisodeCard({
   return (
     <TouchableOpacity
       style={[$rowLayout, $item]}
-      pointerEvents="box-none"
       onPress={() => openLinkInBrowser(episode.enclosure.link)}
     >
       <View style={$description}>
@@ -105,8 +104,6 @@ const THUMBNAIL_DIMENSION = 100
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing[5],
   paddingTop: spacing[5],
-  height: "100%",
-  width: "100%",
 }
 
 const $heading: ViewStyle = {
