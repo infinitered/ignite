@@ -31,6 +31,6 @@ body:
   - type: textarea
     attributes:
       label: Additional info
-      description: Run `npx ignite-cli doctor` an paste the results
+      description: Run `npx ignite-cli doctor` and paste the results
     validations:
       required: true
