@@ -9,6 +9,8 @@ const ko: Translations = {
   },
   errors: {
     invalidEmail: "잘못된 이메일 주소 입니다.",
+    cannotBeEmpty: "can't be blank",
+    requireLength: "must be at least {{number}} characters",
   },
   welcomeScreen: {
     headerRight: "로그아웃",

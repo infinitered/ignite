@@ -1,4 +1,4 @@
-import { Translations } from "../en"
+import { Translations } from "./en"
 import { PT } from "../translate"
 
 const ar: Translations = {
@@ -9,6 +9,8 @@ const ar: Translations = {
   },
   errors: {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
+    cannotBeEmpty: "can't be blank",
+    requireLength: "must be at least {{number}} characters",
   },
   welcomeScreen: {
     headerRight: "تسجيل خروج",
