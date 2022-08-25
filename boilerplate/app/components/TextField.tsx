@@ -246,7 +246,7 @@ const $inputStyle: TextStyle = {
   fontFamily: typography.primary.normal,
   color: colors.text,
   fontSize: 16,
-  height: 20, // to make the height consistent on Android and iOS
+  height: 24, // to make the height consistent on Android and iOS
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
   paddingTop: 0,
   paddingBottom: 0,
