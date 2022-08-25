@@ -10,7 +10,7 @@ body:
           * Ensure you're running the latest version release.
           * Ensure there isn't an existing issue for your bug. If there is, leave a comment on the existing issue.
 
-        If you're unsure whether you've hit a bug, check out the #react-native channel in our [Slack Community](https://join.slack.com/t/infiniteredcommunity/shared_invite/zt-1f137np4h-zPTq_CbaRFUOR_glUFs2UA).
+        If you're unsure whether you've hit a bug, check out the #react-native channel in our [Slack Community](https://community.infinite.red).
 
   - type: textarea
     attributes:
