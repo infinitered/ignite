@@ -76,7 +76,7 @@ export function DemoNavigator() {
         component={DemoPodcastListScreen}
         options={{
           tabBarLabel: translate("demoNavigator.podcastListTab"),
-          tabBarIcon: ({ focused }) => <Icon icon="menu" color={focused && colors.tint} />,
+          tabBarIcon: ({ focused }) => <Icon icon="podcast" color={focused && colors.tint} />,
         }}
       />
     </Tab.Navigator>
