@@ -102,12 +102,12 @@ const EpisodeCard = observer(function EpisodeCard({
 const THUMBNAIL_DIMENSION = 100
 
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: spacing[5],
-  paddingTop: spacing[5],
+  paddingHorizontal: spacing.large,
+  paddingTop: spacing.large,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: spacing[4],
+  marginBottom: spacing.medium,
 }
 
 const $description: TextStyle = {
@@ -118,8 +118,8 @@ const $description: TextStyle = {
 const $item: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
-  padding: spacing[4],
-  marginTop: spacing[4],
+  padding: spacing.medium,
+  marginTop: spacing.medium,
 }
 
 const $rowLayout: ViewStyle = {
@@ -128,21 +128,21 @@ const $rowLayout: ViewStyle = {
 
 const $toggle: ViewStyle = {
   alignItems: "center",
-  marginTop: spacing[3],
+  marginTop: spacing.small,
 }
 
 const $toggleText: TextStyle = {
-  marginLeft: spacing[2],
+  marginLeft: spacing.extraSmall,
 }
 
 const $itemThumbnail: ImageStyle = {
   width: THUMBNAIL_DIMENSION,
   height: THUMBNAIL_DIMENSION,
-  marginStart: spacing[2],
+  marginStart: spacing.extraSmall,
 }
 
 const $metadata: TextStyle = {
   justifyContent: "space-between",
   color: colors.textDim,
-  marginTop: spacing[2],
+  marginTop: spacing.extraSmall,
 }

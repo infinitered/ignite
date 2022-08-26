@@ -63,7 +63,7 @@ const $topContainer: ViewStyle = {
   flexGrow: 1,
   flexBasis: "57%",
   justifyContent: "center",
-  paddingHorizontal: spacing[5],
+  paddingHorizontal: spacing.large,
 }
 
 const $bottomContainer: ViewStyle = {
@@ -77,14 +77,14 @@ const $bottomContainer: ViewStyle = {
 
 const $bottomContentContainer: ViewStyle = {
   flex: 1,
-  paddingHorizontal: spacing[5],
+  paddingHorizontal: spacing.large,
   justifyContent: "space-around",
 }
 
 const $welcomeLogo: ImageStyle = {
   height: 88,
   width: "100%",
-  marginBottom: spacing[7],
+  marginBottom: spacing.huge,
 }
 
 const $welcomeFace: ImageStyle = {
@@ -97,5 +97,5 @@ const $welcomeFace: ImageStyle = {
 }
 
 const $welcomeHeading: TextStyle = {
-  marginBottom: spacing[4],
+  marginBottom: spacing.medium,
 }
