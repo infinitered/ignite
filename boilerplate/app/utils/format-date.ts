@@ -5,13 +5,7 @@ import ar from "date-fns/locale/ar-SA"
 import ko from "date-fns/locale/ko"
 import en from "date-fns/locale/en-US"
 
-interface Options {
-  locale?: Locale
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
-  firstWeekContainsDate?: number
-  useAdditionalWeekYearTokens?: boolean
-  useAdditionalDayOfYearTokens?: boolean
-}
+type Options = Parameters<typeof format>[2]
 
 const getLocale = (): Locale => {
   const locale = I18n.currentLocale().split("-")[0]
