@@ -3,37 +3,30 @@ import * as path from "path"
 
 export const BOILERPLATE_PATH = path.join(__dirname, "../..", "/boilerplate")
 
+const IGNORED_PATHS = [
+  ".DS_Store",
+  "/.expo",
+  "/node_modules",
+  "/ios/build",
+  "/ios/Pods",
+  "/android/build",
+  "/android/app/build",
+]
+
 export function createGetAllFilePaths(filesystem: GluegunFilesystem) {
   /**
    * Recursively get all file paths in a directory
    */
   return function getAllFilePaths(dir: string): string[] {
-    const files = filesystem.list(dir)
-    const filePaths = files
+    const dirChildren = filesystem.list(dir)
+    const dirChildrenPaths = dirChildren
       .map((file) => `${dir}/${file}`)
-      .filter((file) => filesystem.isFile(file))
-    const subdirs = files.filter((file) => filesystem.isDirectory(`${dir}/${file}`))
-    const subdirPaths = subdirs.map((subdir) => getAllFilePaths(`${dir}/${subdir}`))
-    return [...filePaths, ...subdirPaths.flat()]
-  }
-}
+      .filter((path) => !IGNORED_PATHS.some((ignoredPath) => path.endsWith(ignoredPath)))
 
-export function createGetIgnoredFiles(filesystem: GluegunFilesystem) {
-  /**
-   * Get an array of all the files in a gitignore file
-   * @param gitignorePath Path to the gitignore file
-   * @returns Array of files to ignore
-   * @example
-   * getIgnoredFiles("/Users/username/project/.gitignore")
-   * // => ["/Users/username/project/node_modules", "/Users/username/project/dist"]
-   */
-  return function getIgnoredFiles(gitignorePath: string): string[] {
-    const gitignore = filesystem.read(gitignorePath)
-    const lines = gitignore.split("\n")
-    const ignoredFiles = lines
-      .filter((line) => !line.startsWith("#"))
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0)
-    return ignoredFiles
+    const filePaths = dirChildrenPaths.filter((path) => filesystem.isFile(path))
+    const dirPaths = dirChildrenPaths.filter((path) => filesystem.isDirectory(path))
+
+    const dirFilePaths = dirPaths.map(getAllFilePaths)
+    return [filePaths, dirFilePaths].flat(Infinity) as string[]
   }
 }
