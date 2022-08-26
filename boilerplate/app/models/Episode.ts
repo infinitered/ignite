@@ -1,6 +1,6 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/with-set-prop-action"
-import { format, parseISO } from "date-fns"
+import { formatDate } from "../utils/format-date"
 
 interface Enclosure {
   link: string
@@ -31,7 +31,7 @@ export const EpisodeModel = types
   .views((episode) => ({
     get datePublished() {
       try {
-        return format(parseISO(episode.pubDate), "MMM dd, yyyy")
+        return formatDate(episode.pubDate)
       } catch (error) {
         return ""
       }

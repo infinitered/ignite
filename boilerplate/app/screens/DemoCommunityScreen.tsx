@@ -124,7 +124,7 @@ const $sectionTitle: TextStyle = {
 }
 
 const $logoContainer: ViewStyle = {
-  marginRight: 16,
+  marginEnd: 16,
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",
