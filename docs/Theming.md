@@ -27,3 +27,5 @@ Timings are defined in `app/theme/timing.ts`. They can be used for consistent an
 ## Spacing
 
 Spacing is a first class citizen in Ignite. We use a spacing scale to define the spacing between elements in the app. This allows us to have a consistent spacing scale across the app, and also allows us to change the spacing easily. It is recommended to use the spacing scale for all spacing in the app if possible.
+
+[Spacing](./Theming-Spacing.md)
