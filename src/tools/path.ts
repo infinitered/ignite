@@ -17,3 +17,23 @@ export function createGetAllFilePaths(filesystem: GluegunFilesystem) {
     return [...filePaths, ...subdirPaths.flat()]
   }
 }
+
+export function createGetIgnoredFiles(filesystem: GluegunFilesystem) {
+  /**
+   * Get an array of all the files in a gitignore file
+   * @param gitignorePath Path to the gitignore file
+   * @returns Array of files to ignore
+   * @example
+   * getIgnoredFiles("/Users/username/project/.gitignore")
+   * // => ["/Users/username/project/node_modules", "/Users/username/project/dist"]
+   */
+  return function getIgnoredFiles(gitignorePath: string): string[] {
+    const gitignore = filesystem.read(gitignorePath)
+    const lines = gitignore.split("\n")
+    const ignoredFiles = lines
+      .filter((line) => !line.startsWith("#"))
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+    return ignoredFiles
+  }
+}
