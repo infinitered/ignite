@@ -145,8 +145,8 @@ const $baseTextStyle: TextStyle = {
   zIndex: 2,
 }
 
-const $rightAccessoryStyle: ViewStyle = { marginLeft: 8, zIndex: 1 }
-const $leftAccessoryStyle: ViewStyle = { marginRight: 8, zIndex: 1 }
+const $rightAccessoryStyle: ViewStyle = { marginStart: 8, zIndex: 1 }
+const $leftAccessoryStyle: ViewStyle = { marginEnd: 8, zIndex: 1 }
 
 const $viewPresets = {
   default: [

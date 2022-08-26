@@ -12,7 +12,7 @@ const BULLET_ITEM: ViewStyle = {
   borderBottomColor: "#3A3048",
 }
 const BULLET_CONTAINER: ViewStyle = {
-  marginRight: spacing[4] - 1,
+  marginEnd: spacing[4] - 1,
   marginTop: spacing[2],
 }
 const BULLET: ImageStyle = {

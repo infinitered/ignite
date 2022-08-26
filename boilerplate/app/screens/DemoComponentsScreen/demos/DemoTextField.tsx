@@ -26,8 +26,7 @@ const $customLabelAndHelperStyle: TextStyle = {
 }
 
 const $customInputWithAbsoluteAccessoriesStyle: ViewStyle = {
-  marginLeft: 50,
-  marginRight: 50,
+  marginHorizontal: 50,
 }
 
 const $customLeftAccessoryStyle: ViewStyle = {

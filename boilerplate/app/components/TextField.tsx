@@ -139,8 +139,8 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyle,
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
-    LeftAccessory && { paddingLeft: 0 },
-    RightAccessory && { paddingRight: 0 },
+    LeftAccessory && { paddingStart: 0 },
+    RightAccessory && { paddingEnd: 0 },
     $inputWrapperStyleOverride,
   ]
 
@@ -246,14 +246,10 @@ const $inputStyle: TextStyle = {
   fontSize: 16,
   height: 24,
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
-  paddingTop: 0,
-  paddingBottom: 0,
-  paddingLeft: 0,
-  paddingRight: 0,
-  marginTop: 8,
-  marginBottom: 8,
-  marginLeft: 10,
-  marginRight: 10,
+  paddingVertical: 0,
+  paddingHorizontal: 0,
+  marginVertical: 8,
+  marginHorizontal: 10,
 }
 
 const $helperStyle: TextStyle = {
@@ -261,13 +257,13 @@ const $helperStyle: TextStyle = {
 }
 
 const $rightAccessoryStyle: ViewStyle = {
-  marginRight: 8,
+  marginEnd: 8,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
 }
 const $leftAccessoryStyle: ViewStyle = {
-  marginLeft: 8,
+  marginStart: 8,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
