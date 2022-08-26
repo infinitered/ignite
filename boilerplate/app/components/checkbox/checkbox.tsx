@@ -6,7 +6,7 @@ import { CheckboxProps } from "./checkbox.props"
 
 const ROOT: ViewStyle = {
   flexDirection: "row",
-  paddingVertical: spacing[1],
+  paddingVertical: spacing.tiny,
   alignSelf: "flex-start",
 }
 
@@ -28,7 +28,7 @@ const FILL: ViewStyle = {
   backgroundColor: colors.tint,
 }
 
-const LABEL: TextStyle = { paddingLeft: spacing[2], color: colors.palette.neutral900 }
+const LABEL: TextStyle = { paddingLeft: spacing.extraSmall, color: colors.palette.neutral900 }
 
 export function Checkbox(props: CheckboxProps) {
   const numberOfLines = props.multiline ? 0 : 1

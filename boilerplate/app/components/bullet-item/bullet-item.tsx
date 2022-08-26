@@ -6,14 +6,14 @@ import { Text } from "../Text"
 
 const BULLET_ITEM: ViewStyle = {
   flexDirection: "row",
-  marginTop: spacing[4],
-  paddingBottom: spacing[4],
+  marginTop: spacing.medium,
+  paddingBottom: spacing.medium,
   borderBottomWidth: 1,
   borderBottomColor: "#3A3048",
 }
 const BULLET_CONTAINER: ViewStyle = {
-  marginRight: spacing[4] - 1,
-  marginTop: spacing[2],
+  marginRight: spacing.medium - 1,
+  marginTop: spacing.extraSmall,
 }
 const BULLET: ImageStyle = {
   width: 8,
