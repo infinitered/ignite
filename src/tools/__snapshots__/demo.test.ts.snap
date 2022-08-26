@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`demo removeBlock should remove comments and lines between "/* @demo remove-block-start */" and "/* @demo remove-block-end */" 1`] = `
+"
+        export * from \\"./WelcomeScreen\\"
+        export * from \\"./LoginScreen\\"
+        export * from \\"./ErrorScreen/ErrorBoundary\\"
+        // export other screens here
+      "
+`;
+
+exports[`demo removeBlock should remove comments and lines between "// @demo remove-block-start" and "// @demo remove-block-end" 1`] = `
+"
+        export * from \\"./WelcomeScreen\\"
+        export * from \\"./LoginScreen\\"
+        export * from \\"./ErrorScreen/ErrorBoundary\\"
+        // export other screens here
+      "
+`;
+
+exports[`demo removeCurrentLine should remove line with "/* @demo remove-current-line */" comment 1`] = `
+"
+        import React from \\"react\\"
+        import { StyleProp, View, ViewStyle } from \\"react-native\\"
+        
+        interface DemoDividerProps {
+            type?: \\"vertical\\" | \\"horizontal\\"
+            size?: number
+            style?: StyleProp<ViewStyle>
+        }
+        
+        export function DemoDivider(props: DemoDividerProps) {
+            const { type = \\"horizontal\\", size = 10, style: $styleOverride } = props
+        
+            return (
+              <View
+                  style={[
+                    $divider,
+                    type === \\"horizontal\\" && { height: size },
+                    type === \\"vertical\\" && { width: size },
+                  ]}
+              />
+            )
+        }
+        
+        const $divider: ViewStyle = {
+            flexGrow: 0,
+            flexShrink: 0,
+        }
+      "
+`;
+
+exports[`demo removeCurrentLine should remove line with "// @demo remove-current-line" comment 1`] = `
+"
+        import React from \\"react\\"
+        import { StyleProp, View, ViewStyle } from \\"react-native\\"
+        
+        interface DemoDividerProps {
+            type?: \\"vertical\\" | \\"horizontal\\"
+            size?: number
+            style?: StyleProp<ViewStyle>
+        }
+        
+        export function DemoDivider(props: DemoDividerProps) {
+            const { type = \\"horizontal\\", size = 10, style: $styleOverride } = props
+        
+            return (
+              <View
+                  style={[
+                    $divider,
+                    type === \\"horizontal\\" && { height: size },
+                    type === \\"vertical\\" && { width: size },
+                    $styleOverride,
+                  ]}
+              />
+            )
+        }
+        
+        const $divider: ViewStyle = {
+            flexGrow: 0,
+        }
+      "
+`;
+
+exports[`demo removeNextLine should remove comment and next line after "/* @demo remove-next-line */" 1`] = `
+"        export * from \\"./WelcomeScreen\\"
+        export * from \\"./LoginScreen\\"
+      "
+`;
+
+exports[`demo removeNextLine should remove comment and next line after "// @demo remove-next-line" 1`] = `
+"        export * from \\"./WelcomeScreen\\"
+        export * from \\"./LoginScreen\\"
+      "
+`;
