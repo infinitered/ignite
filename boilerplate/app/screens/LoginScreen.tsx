@@ -4,7 +4,7 @@ import { TextInput, TextStyle, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
-import { colors } from "../theme"
+import { colors, spacing } from "../theme"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -119,27 +119,27 @@ export const LoginScreen = observer(function LoginScreen(_props: LoginScreenProp
 })
 
 const $screenContentContainer: ViewStyle = {
-  paddingVertical: 40,
-  paddingHorizontal: 24,
+  paddingVertical: spacing.huge,
+  paddingHorizontal: spacing.large,
 }
 
 const $signIn: TextStyle = {
-  marginBottom: 10,
+  marginBottom: spacing.small,
 }
 
 const $enterDetails: TextStyle = {
-  marginBottom: 18,
+  marginBottom: spacing.large,
 }
 
 const $hint: TextStyle = {
   color: colors.tint,
-  marginBottom: 18,
+  marginBottom: spacing.medium,
 }
 
 const $textField: ViewStyle = {
-  marginBottom: 24,
+  marginBottom: spacing.large,
 }
 
 const $tapButton: ViewStyle = {
-  marginTop: 8,
+  marginTop: spacing.extraSmall,
 }

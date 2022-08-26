@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text } from "../../components"
-import { colors } from "../../theme"
+import { colors, spacing } from "../../theme"
 
 export interface ErrorDetailsProps {
   error: Error
@@ -43,8 +43,8 @@ export function ErrorDetails(props: ErrorDetailsProps) {
 
 const $contentContainer: ViewStyle = {
   alignItems: "center",
-  paddingHorizontal: 24,
-  paddingTop: 30,
+  paddingHorizontal: spacing.large,
+  paddingTop: spacing.extraLarge,
   flex: 1,
 }
 
@@ -55,18 +55,18 @@ const $topSection: ViewStyle = {
 
 const $heading: TextStyle = {
   color: colors.error,
-  marginBottom: 15,
+  marginBottom: spacing.medium,
 }
 
 const $errorSection: ViewStyle = {
   flex: 2,
   backgroundColor: colors.separator,
-  marginVertical: 15,
+  marginVertical: spacing.medium,
   borderRadius: 6,
 }
 
 const $errorSectionContentContainer: ViewStyle = {
-  padding: 15,
+  padding: spacing.medium,
 }
 
 const $errorContent: TextStyle = {
@@ -74,11 +74,11 @@ const $errorContent: TextStyle = {
 }
 
 const $errorBacktrace: TextStyle = {
-  marginTop: 15,
+  marginTop: spacing.medium,
   color: colors.textDim,
 }
 
 const $resetButton: ViewStyle = {
   backgroundColor: colors.error,
-  paddingHorizontal: 40,
+  paddingHorizontal: spacing.huge,
 }
