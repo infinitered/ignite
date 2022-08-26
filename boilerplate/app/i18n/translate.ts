@@ -1,5 +1,4 @@
 import i18n from "i18n-js"
-import { PlatformOSType } from "react-native"
 import { TxKeyPath } from "./i18n"
 
 /**
