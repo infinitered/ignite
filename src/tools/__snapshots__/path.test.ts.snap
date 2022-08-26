@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`paths getAllFilePaths should return expected paths in '/Users/joshuayoes/Code/ignite/boilerplate' 1`] = `
+exports[`paths getAllFilePaths should return expected paths in '~/boilerplate' 1`] = `
 Array [
   "/boilerplate/.gitignore",
+  "/boilerplate/.gitignore.template",
   "/boilerplate/.npmrc",
   "/boilerplate/.prettierignore",
   "/boilerplate/App.js",
@@ -16,6 +17,7 @@ Array [
   "/boilerplate/react-native.config.js",
   "/boilerplate/tsconfig.json",
   "/boilerplate/webpack.config.js",
+  "/boilerplate/yarn.lock",
   "/boilerplate/android/build.gradle",
   "/boilerplate/android/gradle.properties",
   "/boilerplate/android/gradlew",
@@ -91,6 +93,7 @@ Array [
   "/boilerplate/app/components/checkbox/checkbox.tsx",
   "/boilerplate/app/components/switch/switch.props.ts",
   "/boilerplate/app/components/switch/switch.tsx",
+  "/boilerplate/app/config/config.base.ts",
   "/boilerplate/app/config/config.dev.ts",
   "/boilerplate/app/config/config.prod.ts",
   "/boilerplate/app/config/index.ts",
@@ -101,6 +104,7 @@ Array [
   "/boilerplate/app/i18n/ko.ts",
   "/boilerplate/app/i18n/translate.ts",
   "/boilerplate/app/models/AuthenticationStore.ts",
+  "/boilerplate/app/models/Episode.test.ts",
   "/boilerplate/app/models/Episode.ts",
   "/boilerplate/app/models/EpisodeStore.ts",
   "/boilerplate/app/models/RootStore.ts",
@@ -152,6 +156,8 @@ Array [
   "/boilerplate/app/utils/crash-reporting.ts",
   "/boilerplate/app/utils/delay.ts",
   "/boilerplate/app/utils/ignore-warnings.ts",
+  "/boilerplate/app/utils/open-link-in-browser.ts",
+  "/boilerplate/app/utils/set-dev.js",
   "/boilerplate/app/utils/storage/index.ts",
   "/boilerplate/app/utils/storage/storage.test.ts",
   "/boilerplate/app/utils/storage/storage.ts",
@@ -267,6 +273,7 @@ Array [
   "/boilerplate/ignite/templates/screen/NAME-screen.tsx.ejs",
   "/boilerplate/ignite/templates/splash-screen/logo.png",
   "/boilerplate/ios/.xcode.env",
+  "/boilerplate/ios/.xcode.env.local",
   "/boilerplate/ios/HelloWorld-Bridging-Header.h",
   "/boilerplate/ios/Podfile",
   "/boilerplate/ios/Podfile.lock",
@@ -307,6 +314,9 @@ Array [
   "/boilerplate/ios/HelloWorld.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
   "/boilerplate/ios/HelloWorldTests/HelloWorldTests.m",
   "/boilerplate/ios/HelloWorldTests/Info.plist",
+  "/boilerplate/ios/build/generated/ios/React-Codegen.podspec.json",
+  "/boilerplate/ios/build/generated/ios/FBReactNativeSpec/FBReactNativeSpec-generated.mm",
+  "/boilerplate/ios/build/generated/ios/FBReactNativeSpec/FBReactNativeSpec.h",
   "/boilerplate/test/i18n.test.ts",
   "/boilerplate/test/mock-async-storage.ts",
   "/boilerplate/test/mock-file.ts",
