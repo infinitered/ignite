@@ -101,7 +101,7 @@ export const DemoListItem: Demo = {
       <ListItem
         topSeparator
         LeftComponent={
-          <View style={[$customLeft, { marginRight: 16 }]}>
+          <View style={[$customLeft, { marginEnd: 16 }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}
@@ -115,7 +115,7 @@ export const DemoListItem: Demo = {
         topSeparator
         bottomSeparator
         RightComponent={
-          <View style={[$customLeft, { marginLeft: 16 }]}>
+          <View style={[$customLeft, { marginStart: 16 }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}

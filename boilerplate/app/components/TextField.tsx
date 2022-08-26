@@ -139,8 +139,8 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyle,
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
-    LeftAccessory && { paddingLeft: 0 },
-    RightAccessory && { paddingRight: 0 },
+    LeftAccessory && { paddingStart: 0 },
+    RightAccessory && { paddingEnd: 0 },
     $inputWrapperStyleOverride,
   ]
 
@@ -233,8 +233,6 @@ const $inputWrapperStyle: ViewStyle = {
   alignItems: "flex-start",
   borderWidth: 1,
   borderRadius: 4,
-  paddingHorizontal: 16,
-  paddingVertical: 10,
   backgroundColor: colors.backgroundInput,
   borderColor: colors.borderInput,
   overflow: "hidden",
@@ -246,21 +244,27 @@ const $inputStyle: TextStyle = {
   fontFamily: typography.primary.normal,
   color: colors.text,
   fontSize: 16,
-  height: 24, // to make the height consistent on Android and iOS
+  height: 24,
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
-  paddingTop: 0,
-  paddingBottom: 0,
-  paddingLeft: 0,
-  paddingRight: 0,
-  marginTop: 0,
-  marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
+  paddingVertical: 0,
+  paddingHorizontal: 0,
+  marginVertical: 8,
+  marginHorizontal: 10,
 }
 
 const $helperStyle: TextStyle = {
   marginTop: 8,
 }
 
-const $rightAccessoryStyle: ViewStyle = { marginHorizontal: 8 }
-const $leftAccessoryStyle: ViewStyle = { marginHorizontal: 8 }
+const $rightAccessoryStyle: ViewStyle = {
+  marginEnd: 8,
+  height: 40,
+  justifyContent: "center",
+  alignItems: "center",
+}
+const $leftAccessoryStyle: ViewStyle = {
+  marginStart: 8,
+  height: 40,
+  justifyContent: "center",
+  alignItems: "center",
+}
