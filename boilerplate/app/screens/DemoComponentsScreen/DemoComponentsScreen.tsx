@@ -45,10 +45,9 @@ export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents"
     toggleDrawer()
   }
 
-  const scrollToIndexFailed = (info: { index: number; highestMeasuredFrameIndex: number; averageItemLength: number; sectionIndex: number}) => {
-    const offset = info.averageItemLength * info.index + 1000;
-    listRef.current?.getScrollResponder()?.scrollTo({ x: 0, y: offset, animated: true })
-    timeout.current = setTimeout(() => listRef.current?.scrollToLocation({animated: true, itemIndex: info.index, sectionIndex: info.sectionIndex}), 50) 
+  const scrollToIndexFailed = (info: { index: number; highestMeasuredFrameIndex: number; averageItemLength: number;}) => {
+    listRef.current?.getScrollResponder()?.scrollToEnd()
+    timeout.current = setTimeout(() => listRef.current?.scrollToLocation({animated: true, itemIndex: info.index, sectionIndex: 0}), 50) 
   }
 
   React.useEffect(() => {
