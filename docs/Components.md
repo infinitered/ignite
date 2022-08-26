@@ -68,9 +68,9 @@ const [on, setOn] = useState(false)
   multiline
   style={{
     backgroundColor: "purple",
-    marginLeft: 40,
+    marginStart: 40,
     paddingVertical: 30,
-    paddingLeft: 60,
+    paddingStart: 60,
   }}
   fillStyle={{
     backgroundColor: "red",

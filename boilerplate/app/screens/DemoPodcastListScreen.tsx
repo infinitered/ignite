@@ -132,7 +132,7 @@ const $toggle: ViewStyle = {
 }
 
 const $toggleText: TextStyle = {
-  marginLeft: spacing.extraSmall,
+  marginStart: spacing.extraSmall,
 }
 
 const $itemThumbnail: ImageStyle = {
