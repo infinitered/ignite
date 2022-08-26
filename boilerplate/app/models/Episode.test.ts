@@ -24,6 +24,10 @@ const data = {
 }
 const episode = EpisodeModel.create(data)
 
+jest.mock("i18n-js", () => ({
+  currentLocale: () => "en",
+}))
+
 test("publish date format", () => {
   expect(episode.datePublished).toBe("Jan 20, 2022")
 })
