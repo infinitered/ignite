@@ -529,15 +529,20 @@ export default {
     }
 
     type Flag = keyof typeof flags
+    type FlagEntry = [key: Flag, value: Options[Flag]]
 
     const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y", "yes"]
 
-    const cliCommand = `npx ignite-cli new ${projectName} ${(
-      Object.entries(flags) as [Flag, Options[Flag]][]
-    )
+    const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
+    const booleanFlag = ([key, value]: FlagEntry) =>
+      value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}}`
+
+    const cliCommand = `npx ignite-cli new ${projectName} ${(Object.entries(flags) as FlagEntry[])
       .filter(([key]) => privateFlags.includes(key) === false)
       .filter(([, value]) => value !== undefined)
-      .map(([key, value]) => `--${kebabCase(key)}=${value}`)
+      .map(([key, value]) =>
+        typeof value === "boolean" ? booleanFlag([key, value]) : stringFlag([key, value]),
+      )
       .join(" ")}`
 
     p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
