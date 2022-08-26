@@ -1,6 +1,6 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/with-set-prop-action"
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 
 interface Enclosure {
   link: string
@@ -30,8 +30,11 @@ export const EpisodeModel = types
   .actions(withSetPropAction)
   .views((episode) => ({
     get datePublished() {
-      const date = new Date(episode.pubDate)
-      return format(date, "MMM dd, yyyy")
+      try {
+        return format(parseISO(episode.pubDate), "MMM dd, yyyy")
+      } catch (error) {
+        return ""
+      }
     },
     get duration() {
       const seconds = Number(episode.enclosure.duration)
