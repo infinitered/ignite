@@ -40,7 +40,7 @@ The `TextField` component accepts all the props of the built-in React Native [`T
 
 ### `status`
 
-The `status` prop is used to set an `'error'` or `'disabled'` state on the component. The default value is `null`. You can use it to show an error message for validations or to disable the component. By default the `'error'` status will set the `borderColor` on the input wrapper to whatever `colors.error` is set to. Setting the status to `'disabled'` will disable editing on the `TextInput` component.
+The `status` prop is used to set an `'error'` or `'disabled'` state on the component. The default value is `null`. You can use it to show an error style for validations or to disable the component. By default the `'error'` status will set the `borderColor` on the input wrapper to whatever `colors.error` is set to. Setting the status to `'disabled'` will disable editing on the `TextInput` component.
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} status="error" />
@@ -190,26 +190,51 @@ The `inputWrapperStyle` optional prop is an object used to override the input wr
 />
 ```
 
-### `RightAccessory`
+### `RightAccessory` and `LeftAccessory`
 
-The `RightAccessory` optional prop is a component that is rendered on the right side of the input. This is useful for rendering icons or buttons.
+The `RightAccessory` and `LeftAccessory` optional props are components that are rendered on the right and left sides of the input, respectively. This is useful for rendering icons or buttons. The [`status`](#status), `multiline` from the `TextInputProps`, `editable` (negation of `disabled` status), and a default `style` attribute are passed into it via props for custom usage.
 
 ```tsx
 <TextField
   value={input}
   onChangeText={(value) => setInput(value)}
-  RightAccessory={<Icon name="bell" />}
+  RightAccessory={(props) => (
+    // props has `multiline`, `status`, `disabled`, and `style` attributes
+    {disabled, status} = props
+
+    if (!!disabled) return <Icon name="lock", color="gray" />
+    if (status === 'error') return <Icon name="x", color="red" />
+
+    return <Icon name="check" color="green" />
+  )}
 />
 ```
 
-### `LeftAccessory`
+It's also recommended to use `useMemo` on accessories to prevent flickering, as without `useMemo` they will rerender whenever the input value changes.
 
-The `LeftAccessory` optional prop is a component that is rendered on the left side of the input. This is useful for rendering icons or buttons.
+```tsx
+const PasswordRightAccessory = useMemo(
+  () =>
+    function PasswordRightAccessory(props: TextFieldAccessoryProps) {
+      return (
+        <Icon
+          icon={isAuthPasswordHidden ? "view" : "hidden"}
+          color={colors.palette.neutral800}
+          containerStyle={props.style}
+          onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
+        />
+      )
+    },
+  [isAuthPasswordHidden],
+)
+```
+
+This could then be passed to the `TextField` component directly.
 
 ```tsx
 <TextField
-  value={input}
-  onChangeText={(value) => setInput(value)}
-  LeftAccessory={<Icon name="bell" />}
+  value={password}
+  onChangeText={(value) => setPassword(password)}
+  RightAccessory={PasswordRightAccessory}
 />
 ```
