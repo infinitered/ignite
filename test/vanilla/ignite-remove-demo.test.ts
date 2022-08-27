@@ -1,8 +1,8 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-
 import { runIgnite } from "../_test-helpers"
-import { BOILERPLATE_PATH } from "../../src/tools/path"
+
+const BOILERPLATE_PATH = filesystem.path(__dirname, "../../boilerplate")
 
 const setup = (): { TEMP_DIR: string } => {
   const TEMP_DIR = tempy.directory({ prefix: "ignite-" })
@@ -26,6 +26,7 @@ describe("ignite-cli remove-demo", () => {
 
     const MOCK_DIR = `/user/home/ignite`
     const output = result.replace(new RegExp(TEMP_DIR, "g"), MOCK_DIR)
+
     expect(output).toMatchSnapshot()
   })
 })
