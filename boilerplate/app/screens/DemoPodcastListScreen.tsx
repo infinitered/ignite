@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
   StyleSheet,
+  Platform,
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -18,6 +19,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 import { Icon, Screen, Switch, Text } from "../components"
+import { translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -59,6 +61,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
             <Text preset="heading" tx="demoPodcastListScreen.title" />
             <View style={[$rowLayout, $toggle]}>
               <Switch
+                accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
                 value={episodeStore.favoritesOnly}
                 onToggle={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
               />
@@ -89,6 +92,7 @@ const EpisodeCard = observer(function EpisodeCard({
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
 
+  // Grey heart
   const animatedLikeButtonStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -96,11 +100,11 @@ const EpisodeCard = observer(function EpisodeCard({
           scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.EXTEND),
         },
       ],
+      opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
     }
   })
 
-  // pink heart icon
-  //
+  // Pink heart
   const animatedUnlikeButtonStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -121,31 +125,42 @@ const EpisodeCard = observer(function EpisodeCard({
       style={[$rowLayout, $item]}
       onPress={() => openLinkInBrowser(episode.enclosure.link)}
       onLongPress={handlePressFavorite}
-      accessibilityActions={[
-        {
-          name: "longpress",
-          label: "Toggle Favorite",
-        },
-      ]}
+      accessibilityHint={translate("demoPodcastListScreen.accessibility.cardHint", {
+        action: isFavorite ? "unfavorite" : "favorite",
+      })}
+      accessibilityActions={
+        Platform.OS === "android"
+          ? [
+              {
+                name: "longpress",
+                label: "Toggle Favorite",
+              },
+            ]
+          : []
+      }
     >
       <View style={$description}>
         <Text>{episode.title}</Text>
         <View style={[$rowLayout, $metadata]}>
-          <Animated.View
-            style={[$iconContainer, StyleSheet.absoluteFillObject, animatedLikeButtonStyles]}
-          >
-            <Icon icon="heart" size={ICON_SIZE} onPress={handlePressFavorite} />
-          </Animated.View>
-          <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
-            <Icon
-              icon="heart"
-              size={ICON_SIZE}
-              color={colors.palette.primary400}
-              onPress={handlePressFavorite}
-            />
-          </Animated.View>
+          <View accessibilityLabel={isFavorite ? "favorited" : "not favorited"}>
+            <Animated.View
+              style={[$iconContainer, StyleSheet.absoluteFillObject, animatedLikeButtonStyles]}
+            >
+              <Icon icon="heart" size={ICON_SIZE} onPress={handlePressFavorite} />
+            </Animated.View>
+            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+              <Icon
+                icon="heart"
+                size={ICON_SIZE}
+                color={colors.palette.primary400}
+                onPress={handlePressFavorite}
+              />
+            </Animated.View>
+          </View>
           <Text size="xs">{episode.datePublished}</Text>
-          <Text size="xs">{episode.duration}</Text>
+          <Text size="xs" accessibilityLabel={episode.duration.accessibilityLabel}>
+            {episode.duration.textLabel}
+          </Text>
         </View>
       </View>
       <Image source={{ uri: episode.thumbnail }} style={$itemThumbnail} />

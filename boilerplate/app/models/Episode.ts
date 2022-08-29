@@ -45,7 +45,10 @@ export const EpisodeModel = types
       const hDisplay = h > 0 ? `${h}:` : ""
       const mDisplay = m > 0 ? `${m}:` : ""
       const sDisplay = s > 0 ? s : ""
-      return hDisplay + mDisplay + sDisplay
+      return {
+        textLabel: hDisplay + mDisplay + sDisplay,
+        accessibilityLabel: `Duration: ${h} hours ${m} minutes ${s} seconds`,
+      }
     },
   }))
 
