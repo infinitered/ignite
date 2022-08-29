@@ -535,7 +535,7 @@ export default {
 
     const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
     const booleanFlag = ([key, value]: FlagEntry) =>
-      value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}}`
+      value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}`
 
     const cliCommand = `npx ignite-cli new ${projectName} ${(Object.entries(flags) as FlagEntry[])
       .filter(([key]) => privateFlags.includes(key) === false)
