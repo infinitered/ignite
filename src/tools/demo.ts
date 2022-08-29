@@ -25,15 +25,17 @@ function removeNextLine(contents: string, comment = CommentType.REMOVE_NEXT_LINE
   const result = lines.filter((line, index) => {
     const prevLine = lines[index - 1]
 
-    const commentInCurrent = line.includes(comment) === false
-    const commentInPrevious = prevLine?.includes(comment) === false
+    const preserveCurrent = line.includes(comment) === false
+    const preservePrevious = prevLine !== undefined && prevLine.includes(comment) === false
 
     if (index === 0) {
       // if we are on the first line, there is no previous line to check
-      return commentInCurrent
+      return preserveCurrent
     }
 
-    return commentInCurrent && commentInPrevious
+    // keep current line if there is no comment in current or previous line
+    const keepLine = preserveCurrent && preservePrevious
+    return keepLine
   })
   return result.join("\n")
 }
