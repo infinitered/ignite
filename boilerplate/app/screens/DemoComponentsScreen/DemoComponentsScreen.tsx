@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react"
+import React, { ReactElement, useEffect, useRef, useState } from "react"
 import { FlatList, Image, ImageStyle, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue } from "react-native-reanimated"
@@ -19,8 +19,8 @@ export interface Demo {
 }
 
 export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents">) {
-  const [open, setOpen] = useState(false)  
-  const timeout = React.useRef<ReturnType<typeof setTimeout>>();
+  const [open, setOpen] = useState(false)
+  const timeout = useRef<ReturnType<typeof setTimeout>>()
   const drawerRef = useRef<DrawerLayout>()
   const listRef = useRef<SectionList>()
   const menuRef = useRef<FlatList>()
@@ -45,15 +45,26 @@ export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents"
     toggleDrawer()
   }
 
-  const scrollToIndexFailed = (info: { index: number; highestMeasuredFrameIndex: number; averageItemLength: number;}) => {
+  const scrollToIndexFailed = (info: {
+    index: number
+    highestMeasuredFrameIndex: number
+    averageItemLength: number
+  }) => {
     listRef.current?.getScrollResponder()?.scrollToEnd()
-    timeout.current = setTimeout(() => listRef.current?.scrollToLocation({animated: true, itemIndex: info.index, sectionIndex: 0}), 50) 
+    timeout.current = setTimeout(
+      () =>
+        listRef.current?.scrollToLocation({
+          animated: true,
+          itemIndex: info.index,
+          sectionIndex: 0,
+        }),
+      50,
+    )
   }
 
-  React.useEffect(() => {
-    return () => timeout.current && clearTimeout(timeout.current);
-  }, []);
-
+  useEffect(() => {
+    return () => timeout.current && clearTimeout(timeout.current)
+  }, [])
 
   return (
     <DrawerLayout
