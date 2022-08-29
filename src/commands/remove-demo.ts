@@ -7,6 +7,7 @@ import { p, warning } from "../tools/pretty"
 const MATCHING_GLOBS = [
   "!**/.DS_Store",
   "!**/.expo{,/**}",
+  "!**/.git{,/**}",
   "!**/node_modules{,/**}",
   "!**/ios/build{,/**}",
   "!**/ios/Pods{,/**}",
