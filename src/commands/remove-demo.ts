@@ -5,19 +5,13 @@ import { demo } from "../tools/demo"
 import { p, warning } from "../tools/pretty"
 
 const MATCHING_GLOBS = [
-  "!**/.expo",
-  "!**/node_modules",
-  "!**/ios/build",
-  "!**/ios/Pods",
-  "!**/android/build",
-  "!**/android/app/build",
   "!**/.DS_Store",
-  "!**/.expo/**",
-  "!**/node_modules/**",
-  "!**/ios/build/**",
-  "!**/ios/Pods/**",
-  "!**/android/build/**",
-  "!**/android/app/build/**",
+  "!**/.expo{,/**}",
+  "!**/node_modules{,/**}",
+  "!**/ios/build{,/**}",
+  "!**/ios/Pods{,/**}",
+  "!**/android/build{,/**}",
+  "!**/android/app/build{,/**}",
 ]
 
 module.exports = {
