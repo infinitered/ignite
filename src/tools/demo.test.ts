@@ -101,6 +101,34 @@ describe("demo", () => {
       expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
       expect(result).not.toContain("DemoCommunityScreen")
     })
+
+    it(`should not modify other lines other than "// ${demo.CommentType.REMOVE_NEXT_LINE} and line after"`, () => {
+      // simulate whitespace and new lines of file after prettier format
+      const contents = [
+        `export * from "./DemoIcon"`,
+        `export * from "./DemoTextField"`,
+        `export * from "./DemoButton"`,
+        `export * from "./DemoListItem"`,
+        `export * from "./DemoHeader"`,
+        `// ${demo.CommentType.REMOVE_NEXT_LINE}`,
+        `export * from "./DemoAutoImage"`,
+        `export * from "./DemoText"`,
+      ].join("\n")
+
+      const result = demo.removeNextLine(contents)
+      expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
+      expect(result).not.toContain("DemoAutoImage")
+      expect(result).toEqual(
+        [
+          `export * from "./DemoIcon"`,
+          `export * from "./DemoTextField"`,
+          `export * from "./DemoButton"`,
+          `export * from "./DemoListItem"`,
+          `export * from "./DemoHeader"`,
+          `export * from "./DemoText"`,
+        ].join("\n"),
+      )
+    })
   })
 
   describe("removeBlock", () => {
