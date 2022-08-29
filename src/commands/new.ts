@@ -425,8 +425,11 @@ export default {
     // #endregion
 
     // #region Run Format
-    // Make sure all our modifications are formatted nicely
-    await packager.run("format", { ...packagerOptions, silent: !debug })
+    // we can't run this option if we didn't install deps
+    if (installDeps === true) {
+      // Make sure all our modifications are formatted nicely
+      await packager.run("format", { ...packagerOptions, silent: !debug })
+    }
     // #endregion
 
     // #region Create Git Repostiory and Initial Commit
