@@ -93,6 +93,9 @@ const ko: Translations = {
       cardHint:
         "에피소드를 들으려면 두 번 탭하세요. 이 에피소드를 좋아하거나 싫어하려면 두 번 탭하고 길게 누르세요.",
       switch: "즐겨찾기를 사용하려면 스위치를 사용하세요.",
+      favoriteAction: "즐겨찾기 토글",
+      favoriteIcon: "좋아하는 에피소드",
+      unfavoriteIcon: "즐겨찾기하지 않은 에피소드",
     },
   },
   errorScreen: {

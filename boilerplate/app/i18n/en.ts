@@ -91,6 +91,9 @@ const en = {
       cardHint:
         "Double tap to listen to the episode. Double tap and hold to {{action}} this episode.",
       switch: "Switch on to only show favorites",
+      favoriteAction: "Toggle Favorite",
+      favoriteIcon: "Episode not favorited",
+      unfavoriteIcon: "Episode favorited",
     },
   },
   errorScreen: {

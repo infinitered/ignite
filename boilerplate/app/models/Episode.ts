@@ -31,9 +31,10 @@ export const EpisodeModel = types
   .views((episode) => ({
     get datePublished() {
       try {
-        return formatDate(episode.pubDate)
+        const formatted = formatDate(episode.pubDate)
+        return { textLabel: formatted, accessibilityLabel: `Published on ${formatted}` }
       } catch (error) {
-        return ""
+        return { textLabel: "", accessibilityLabel: "" }
       }
     },
     get duration() {

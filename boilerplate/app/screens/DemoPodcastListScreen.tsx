@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { useEffect } from "react"
+import React, { useEffect, useMemo } from "react"
 import {
   TouchableOpacity,
   FlatList,
@@ -10,6 +10,7 @@ import {
   ViewStyle,
   StyleSheet,
   Platform,
+  AccessibilityProps,
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -116,48 +117,88 @@ const EpisodeCard = observer(function EpisodeCard({
     }
   })
 
+  /**
+   * Android has a "longpress" accessibility action. iOS does not, so we just have to use a hint.
+   * @see https://reactnative.dev/docs/accessibility#accessibilityactions
+   */
+  const accessibilityHintProps = useMemo(
+    () =>
+      Platform.select<AccessibilityProps>({
+        ios: {
+          accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
+            action: isFavorite ? "unfavorite" : "favorite",
+          }),
+        },
+        android: {
+          accessibilityLabel: episode.title,
+          accessibilityActions: [
+            {
+              name: "longpress",
+              label: translate("demoPodcastListScreen.accessibility.favoriteAction"),
+            },
+          ],
+          onAccessibilityAction: ({ nativeEvent }) => {
+            if (nativeEvent.actionName === "longpress") {
+              handlePressFavorite()
+            }
+          },
+        },
+      }),
+    [episode, isFavorite],
+  )
+
   const handlePressFavorite = () => {
     onPressFavorite()
     liked.value = withSpring(liked.value ? 0 : 1)
   }
+
+  const handlePressCard = () => {
+    openLinkInBrowser(episode.enclosure.link)
+  }
+
   return (
+    //  MAVERICKTODO: Switch this out for Card component when that is ready
     <TouchableOpacity
       style={[$rowLayout, $item]}
-      onPress={() => openLinkInBrowser(episode.enclosure.link)}
+      onPress={handlePressCard}
       onLongPress={handlePressFavorite}
-      accessibilityHint={translate("demoPodcastListScreen.accessibility.cardHint", {
-        action: isFavorite ? "unfavorite" : "favorite",
-      })}
-      accessibilityActions={
-        Platform.OS === "android"
-          ? [
-              {
-                name: "longpress",
-                label: "Toggle Favorite",
-              },
-            ]
-          : []
-      }
+      // MAVERICKTODO: This role should be set on the Card Component
+      accessibilityRole="button"
+      {...accessibilityHintProps}
     >
       <View style={$description}>
         <Text>{episode.title}</Text>
         <View style={[$rowLayout, $metadata]}>
-          <View accessibilityLabel={isFavorite ? "favorited" : "not favorited"}>
-            <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFillObject, animatedLikeButtonStyles]}
-            >
-              <Icon icon="heart" size={ICON_SIZE} onPress={handlePressFavorite} />
-            </Animated.View>
-            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
-              <Icon
-                icon="heart"
-                size={ICON_SIZE}
-                color={colors.palette.primary400}
-                onPress={handlePressFavorite}
-              />
-            </Animated.View>
-          </View>
-          <Text size="xs">{episode.datePublished}</Text>
+          <Animated.View
+            style={[$iconContainer, StyleSheet.absoluteFillObject, animatedLikeButtonStyles]}
+          >
+            <Icon
+              icon="heart"
+              size={ICON_SIZE}
+              onPress={handlePressFavorite}
+              accessibilityLabel={
+                !isFavorite
+                  ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
+                  : undefined
+              }
+            />
+          </Animated.View>
+          <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+            <Icon
+              icon="heart"
+              size={ICON_SIZE}
+              color={colors.palette.primary400}
+              onPress={handlePressFavorite}
+              accessibilityLabel={
+                isFavorite
+                  ? translate("demoPodcastListScreen.accessibility.favoriteIcon")
+                  : undefined
+              }
+            />
+          </Animated.View>
+          <Text size="xs" accessibilityLabel={episode.datePublished.accessibilityLabel}>
+            {episode.datePublished.textLabel}
+          </Text>
           <Text size="xs" accessibilityLabel={episode.duration.accessibilityLabel}>
             {episode.duration.textLabel}
           </Text>
