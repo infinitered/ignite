@@ -13,6 +13,7 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
+import * as crypto from "crypto"
 import { boolFlag } from "../tools/flag"
 
 // CLI tool versions we support
@@ -389,11 +390,69 @@ export default {
     // #region Run Packager Install
     // pnpm/yarn/npm install it
 
+    // check if there is a cache of node_modules using a hash of the package.json
+    function hash(str: string) {
+      return crypto.createHash("md5").update(str).digest("hex")
+    }
+
+    // check if there is a cache of node_modules using a hash of the package.json
+    const packageJsonHash = hash(packageJsonRaw)
+
+    // store hash at `~/.ignite/cache/${packageJsonHash}`
+    const cachePath = path(filesystem.homedir(), ".ignite", "cache", packageJsonHash)
+    const cacheExists = exists(cachePath) === "dir"
+
+    // construct cache paths
+    const lockFile = {
+      yarn: "yarn.lock",
+      pnpm: "pnpm-lock.yaml",
+      npm: "package-lock.json",
+    }
+    const cache = {
+      node_modules: path(cachePath, "node_modules"),
+      lock: path(cachePath, lockFile[packagerName]),
+      pods: path(cachePath, "ios", "Pods"),
+      build: path(cachePath, "ios", "build"),
+    }
+    const target = {
+      node_modules: path(targetPath, "node_modules"),
+      lock: path(targetPath, lockFile[packagerName]),
+      pods: path(targetPath, "ios", "Pods"),
+      build: path(targetPath, "ios", "build"),
+    }
+
+    // if there is a cache, copy it over to the target path node_modules
+    if (cacheExists) {
+      startSpinner("Copying cached node_modules")
+
+      // ensure that target path node_modules exists
+      filesystem.dir(target.node_modules)
+      // copy the cache to the target path node_modules
+      copy(cache.node_modules, target.node_modules, { overwrite: true })
+      copy(cache.lock, target.lock, { overwrite: true })
+      copy(cache.pods, target.pods, { overwrite: true })
+      copy(cache.build, target.build, { overwrite: true })
+      stopSpinner("Copying cached node_modules", "📦")
+    }
+
     if (installDeps === true) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
       stopSpinner(unboxingMessage, "🧶")
+    }
+
+    // if there is no cache, create one
+    if (!cacheExists) {
+      startSpinner("Caching node_modules")
+      // ensure that target path node_modules exists
+      filesystem.dir(cache.node_modules)
+      // copy the cache to the target path node_modules
+      copy(target.node_modules, cache.node_modules, { overwrite: true })
+      copy(target.lock, cache.lock, { overwrite: true })
+      copy(target.pods, cache.pods, { overwrite: true })
+      copy(target.build, cache.build, { overwrite: true })
+      stopSpinner("Caching node_modules", "📦")
     }
 
     // remove the gitignore template
