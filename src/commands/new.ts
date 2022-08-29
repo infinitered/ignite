@@ -125,7 +125,7 @@ export default {
     const { gray, red, magenta, cyan, yellow, green } = colors
     const options: Options = parameters.options
 
-    const yname = !!options.y || !!options.yes
+    const yname = boolFlag(options.y) || boolFlag(options.yes)
     const useDefault = (option: unknown) => yname && option === undefined
     // #endregion
 
@@ -134,7 +134,7 @@ export default {
     const perfStart = new Date().getTime()
 
     // debug?
-    const debug = Boolean(options.debug)
+    const debug = boolFlag(options.debug)
     const log = <T = unknown>(m: T): T => {
       debug && info(` ${m}`)
       return m
@@ -297,7 +297,7 @@ export default {
 
     // #region Expo
     // show warning about --expo going away
-    const expo = Boolean(options.expo)
+    const expo = boolFlag(options.expo)
     if (expo) {
       warning(
         " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
@@ -487,7 +487,7 @@ export default {
     // React Native Colo Loco is no longer installed with Ignite, but
     // we will give instructions on how to install it if they
     // pass in `--colo-loco`
-    const coloLoco = Boolean(options.coloLoco)
+    const coloLoco = boolFlag(options.coloLoco)
 
     if (coloLoco) {
       p()
@@ -529,15 +529,20 @@ export default {
     }
 
     type Flag = keyof typeof flags
+    type FlagEntry = [key: Flag, value: Options[Flag]]
 
     const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y", "yes"]
 
-    const cliCommand = `npx ignite-cli new ${projectName} ${(
-      Object.entries(flags) as [Flag, Options[Flag]][]
-    )
+    const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
+    const booleanFlag = ([key, value]: FlagEntry) =>
+      value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}}`
+
+    const cliCommand = `npx ignite-cli new ${projectName} ${(Object.entries(flags) as FlagEntry[])
       .filter(([key]) => privateFlags.includes(key) === false)
       .filter(([, value]) => value !== undefined)
-      .map(([key, value]) => `--${kebabCase(key)}=${value}`)
+      .map(([key, value]) =>
+        typeof value === "boolean" ? booleanFlag([key, value]) : stringFlag([key, value]),
+      )
       .join(" ")}`
 
     p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
