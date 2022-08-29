@@ -83,13 +83,15 @@ exports[`demo removeCurrentLine should remove line with "// @demo remove-current
 `;
 
 exports[`demo removeNextLine should remove comment and next line after "/* @demo remove-next-line */" 1`] = `
-"        export * from \\"./WelcomeScreen\\"
+"
+        export * from \\"./WelcomeScreen\\"
         export * from \\"./LoginScreen\\"
       "
 `;
 
 exports[`demo removeNextLine should remove comment and next line after "// @demo remove-next-line" 1`] = `
-"        export * from \\"./WelcomeScreen\\"
+"
+        export * from \\"./WelcomeScreen\\"
         export * from \\"./LoginScreen\\"
       "
 `;
