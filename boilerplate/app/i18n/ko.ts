@@ -96,6 +96,8 @@ const ko: Translations = {
       favoriteAction: "즐겨찾기 토글",
       favoriteIcon: "좋아하는 에피소드",
       unfavoriteIcon: "즐겨찾기하지 않은 에피소드",
+      publishLabel: "{{date}} 에 발행됨",
+      durationLabel: "소요시간: {{hours}}시간 {{minutes}}분 {{seconds}}초",
     },
   },
   errorScreen: {

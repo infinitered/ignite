@@ -67,8 +67,8 @@ export function Icon(props: IconProps) {
 
   return (
     <Wrapper
+      accessibilityRole={isPressable ? "imagebutton" : undefined}
       {...WrapperProps}
-      accessibilityRole={isPressable ? "imagebutton" : "image"}
       style={$containerStyleOverride}
     >
       <Image

@@ -93,6 +93,8 @@ const ar: Translations = {
       favoriteAction: "تبديل المفضلة",
       unfavoriteIcon: "الحلقة في المفضلة",
       favoriteIcon: "الحلقة ليست في المفضلة",
+      publishLabel: "{{date}} تم النشر في",
+      durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
     },
   },
   errorScreen: {
