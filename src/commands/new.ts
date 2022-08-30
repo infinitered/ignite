@@ -399,13 +399,13 @@ export default {
 
     // if there is a cache, copy it over to the target path node_modules
     if (cacheExists) {
-      startSpinner("Copying cached node_modules")
+      startSpinner(`Copying cached ${packagerName} dependencies`)
       cache.copy({
         fromRootDir: cachePath,
         toRootDir: targetPath,
         packagerName,
       })
-      stopSpinner("Copying cached node_modules", "📦")
+      stopSpinner("Copying cached dependencies", "📦")
     }
 
     if (installDeps === true) {
@@ -417,13 +417,13 @@ export default {
 
     // if there is no cache, create one
     if (!cacheExists) {
-      startSpinner("Caching node_modules")
+      startSpinner(`Caching ${packager} dependencies`)
       cache.copy({
         fromRootDir: targetPath,
         toRootDir: cachePath,
         packagerName,
       })
-      stopSpinner("Caching node_modules", "📦")
+      stopSpinner("Caching dependencies", "📦")
     }
 
     // remove the gitignore template
