@@ -229,6 +229,8 @@ const PasswordRightAccessory = useMemo(
 )
 ```
 
+This could then be passed to the `TextField` component directly.
+
 ```tsx
 <TextField
   value={password}
