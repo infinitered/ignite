@@ -51,10 +51,10 @@ export function createCacheTool(filesystem: GluegunFilesystem) {
     fromRootDir: string
     toRootDir: string
     packagerName: PackagerName
-    platform: NodeJS.Platform
+    platform?: NodeJS.Platform
   }
   function copy(options: CopyOptions) {
-    const { fromRootDir, toRootDir, packagerName, platform } = options
+    const { fromRootDir, toRootDir, packagerName, platform = process.platform } = options
 
     const fromTargets = targets({ rootDir: fromRootDir, packagerName, platform })
     const toTargets = targets({ rootDir: toRootDir, packagerName, platform })

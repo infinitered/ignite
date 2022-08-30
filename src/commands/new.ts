@@ -404,7 +404,6 @@ export default {
         fromRootDir: cachePath,
         toRootDir: targetPath,
         packagerName,
-        platform: process.platform,
       })
       stopSpinner("Copying cached node_modules", "📦")
     }
@@ -423,7 +422,6 @@ export default {
         fromRootDir: targetPath,
         toRootDir: cachePath,
         packagerName,
-        platform: process.platform,
       })
       stopSpinner("Caching node_modules", "📦")
     }
