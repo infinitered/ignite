@@ -29,9 +29,9 @@ jest.mock("i18n-js", () => ({
 }))
 
 test("publish date format", () => {
-  expect(episode.datePublished).toBe("Jan 20, 2022")
+  expect(episode.datePublished.textLabel).toBe("Jan 20, 2022")
 })
 
 test("duration format", () => {
-  expect(episode.duration).toBe("42:58")
+  expect(episode.duration.textLabel).toBe("42:58")
 })

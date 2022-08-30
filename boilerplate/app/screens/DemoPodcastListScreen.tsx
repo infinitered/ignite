@@ -162,7 +162,7 @@ const EpisodeCard = observer(function EpisodeCard({
       style={[$rowLayout, $item]}
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
-      // MAVERICKTODO: This role should be set on the Card Component
+      // MAVERICKTODO: This button role should be set on the Card Component
       accessibilityRole="button"
       {...accessibilityHintProps}
     >
@@ -175,11 +175,12 @@ const EpisodeCard = observer(function EpisodeCard({
             <Icon
               icon="heart"
               size={ICON_SIZE}
+              color={colors.palette.neutral800} // dark grey
               onPress={handlePressFavorite}
               accessibilityLabel={
-                !isFavorite
-                  ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-                  : undefined
+                isFavorite
+                  ? undefined
+                  : translate("demoPodcastListScreen.accessibility.favoriteIcon")
               }
             />
           </Animated.View>
@@ -187,11 +188,11 @@ const EpisodeCard = observer(function EpisodeCard({
             <Icon
               icon="heart"
               size={ICON_SIZE}
-              color={colors.palette.primary400}
+              color={colors.palette.primary400} // pink
               onPress={handlePressFavorite}
               accessibilityLabel={
                 isFavorite
-                  ? translate("demoPodcastListScreen.accessibility.favoriteIcon")
+                  ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
                   : undefined
               }
             />
