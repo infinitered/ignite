@@ -430,7 +430,9 @@ export default {
       // copy the cache to the target path node_modules
       copy(cache.node_modules, target.node_modules, { overwrite: true })
       copy(cache.lock, target.lock, { overwrite: true })
+      filesystem.dir(target.pods)
       copy(cache.pods, target.pods, { overwrite: true })
+      filesystem.dir(target.build)
       copy(cache.build, target.build, { overwrite: true })
       stopSpinner("Copying cached node_modules", "📦")
     }
@@ -450,7 +452,9 @@ export default {
       // copy the cache to the target path node_modules
       copy(target.node_modules, cache.node_modules, { overwrite: true })
       copy(target.lock, cache.lock, { overwrite: true })
+      filesystem.dir(cache.pods)
       copy(target.pods, cache.pods, { overwrite: true })
+      filesystem.dir(cache.build)
       copy(target.build, cache.build, { overwrite: true })
       stopSpinner("Caching node_modules", "📦")
     }
