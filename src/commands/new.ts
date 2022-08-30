@@ -15,6 +15,7 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import * as crypto from "crypto"
 import { boolFlag } from "../tools/flag"
+import { cache } from "../tools/cache"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -402,38 +403,16 @@ export default {
     const cachePath = path(filesystem.homedir(), ".ignite", "cache", packageJsonHash)
     const cacheExists = exists(cachePath) === "dir"
 
-    // construct cache paths
-    const lockFile = {
-      yarn: "yarn.lock",
-      pnpm: "pnpm-lock.yaml",
-      npm: "package-lock.json",
-    }
-    const cache = {
-      node_modules: path(cachePath, "node_modules"),
-      lock: path(cachePath, lockFile[packagerName]),
-      pods: path(cachePath, "ios", "Pods"),
-      build: path(cachePath, "ios", "build"),
-    }
-    const target = {
-      node_modules: path(targetPath, "node_modules"),
-      lock: path(targetPath, lockFile[packagerName]),
-      pods: path(targetPath, "ios", "Pods"),
-      build: path(targetPath, "ios", "build"),
-    }
-
     // if there is a cache, copy it over to the target path node_modules
     if (cacheExists) {
       startSpinner("Copying cached node_modules")
 
       // ensure that target path node_modules exists
-      filesystem.dir(target.node_modules)
-      // copy the cache to the target path node_modules
-      copy(cache.node_modules, target.node_modules, { overwrite: true })
-      copy(cache.lock, target.lock, { overwrite: true })
-      filesystem.dir(target.pods)
-      copy(cache.pods, target.pods, { overwrite: true })
-      filesystem.dir(target.build)
-      copy(cache.build, target.build, { overwrite: true })
+      cache.copy({
+        fromRootDir: cachePath,
+        toRootDir: targetPath,
+        packagerName,
+      })
       stopSpinner("Copying cached node_modules", "📦")
     }
 
@@ -447,15 +426,11 @@ export default {
     // if there is no cache, create one
     if (!cacheExists) {
       startSpinner("Caching node_modules")
-      // ensure that target path node_modules exists
-      filesystem.dir(cache.node_modules)
-      // copy the cache to the target path node_modules
-      copy(target.node_modules, cache.node_modules, { overwrite: true })
-      copy(target.lock, cache.lock, { overwrite: true })
-      filesystem.dir(cache.pods)
-      copy(target.pods, cache.pods, { overwrite: true })
-      filesystem.dir(cache.build)
-      copy(target.build, cache.build, { overwrite: true })
+      cache.copy({
+        fromRootDir: targetPath,
+        toRootDir: cachePath,
+        packagerName,
+      })
       stopSpinner("Caching node_modules", "📦")
     }
 
