@@ -25,25 +25,38 @@ export function createCacheTool(filesystem: GluegunFilesystem) {
     return crypto.createHash("md5").update(str).digest("hex")
   }
 
-  const targets = (rootDir: string, packagerName: PackagerName) => [
-    { type: "dir", path: path(rootDir, "node_modules") },
-    { type: "file", path: path(rootDir, lockFile[packagerName]) },
-    { type: "dir", path: path(rootDir, "ios", "Pods") },
-    { type: "dir", path: path(rootDir, "ios", "build") },
-  ]
+  interface TargetsOptions {
+    rootDir: string
+    packagerName: PackagerName
+    platform: NodeJS.Platform | undefined
+  }
+  const targets = ({ rootDir, packagerName, platform }: TargetsOptions) =>
+    [
+      { type: "dir", path: path(rootDir, "node_modules") },
+      { type: "file", path: path(rootDir, lockFile[packagerName]) },
+      { type: "dir", path: path(rootDir, "ios", "Pods"), platform: ["darwin"] },
+      { type: "dir", path: path(rootDir, "ios", "build"), platform: ["darwin"] },
+    ].filter((target) => (target.platform ? target.platform.includes(platform) : true))
 
-  function copy(options: { fromRootDir: string; toRootDir: string; packagerName: PackagerName }) {
-    const { fromRootDir, toRootDir, packagerName } = options
+  interface CopyOptions {
+    fromRootDir: string
+    toRootDir: string
+    packagerName: PackagerName
+    platform: NodeJS.Platform
+  }
+  function copy(options: CopyOptions) {
+    const { fromRootDir, toRootDir, packagerName, platform } = options
 
-    const fromTargets = targets(fromRootDir, packagerName)
-    const toTargets = targets(toRootDir, packagerName)
+    const fromTargets = targets({ rootDir: fromRootDir, packagerName, platform })
+    const toTargets = targets({ rootDir: toRootDir, packagerName, platform })
 
-    fromTargets.forEach((fromTarget, index) => {
-      const toTarget = toTargets[index]
-      if (toTarget.type === "dir") {
-        dir(fromTarget.path)
+    fromTargets.forEach((from, index) => {
+      const to = toTargets[index]
+      if (from.type === "dir") {
+        dir(from.path)
       }
-      filesystem.copy(fromTarget.path, toTarget.path)
+
+      filesystem.copy(from.path, to.path)
     })
   }
 

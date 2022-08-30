@@ -406,12 +406,11 @@ export default {
     // if there is a cache, copy it over to the target path node_modules
     if (cacheExists) {
       startSpinner("Copying cached node_modules")
-
-      // ensure that target path node_modules exists
       cache.copy({
         fromRootDir: cachePath,
         toRootDir: targetPath,
         packagerName,
+        platform: process.platform,
       })
       stopSpinner("Copying cached node_modules", "📦")
     }
@@ -430,6 +429,7 @@ export default {
         fromRootDir: targetPath,
         toRootDir: cachePath,
         packagerName,
+        platform: process.platform,
       })
       stopSpinner("Caching node_modules", "📦")
     }
