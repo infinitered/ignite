@@ -1,8 +1,19 @@
 import { GluegunToolbox } from "gluegun"
-import { demo } from "../tools/demo"
+import * as pathlib from "path"
 import type { CommentType } from "../tools/demo"
-import { createGetAllFilePaths } from "../tools/path"
+import { demo } from "../tools/demo"
 import { p, warning } from "../tools/pretty"
+
+const MATCHING_GLOBS = [
+  "!**/.DS_Store",
+  "!**/.expo{,/**}",
+  "!**/.git{,/**}",
+  "!**/node_modules{,/**}",
+  "!**/ios/build{,/**}",
+  "!**/ios/Pods{,/**}",
+  "!**/android/build{,/**}",
+  "!**/android/app/build{,/**}",
+]
 
 module.exports = {
   alias: ["rd", "remove-demos"],
@@ -15,14 +26,19 @@ module.exports = {
     p()
     p(`Removing demo code from '${TARGET_DIR}'`)
 
-    const getAllFilePaths = createGetAllFilePaths(filesystem)
-    const paths = getAllFilePaths(TARGET_DIR).filter(
-      (path) => path.includes("node_modules") === false,
-    )
+    const filePaths = filesystem
+      .cwd(TARGET_DIR)
+      .find({
+        matching: MATCHING_GLOBS,
+        recursive: true,
+        files: true,
+        directories: false,
+      })
+      .map((path) => pathlib.join(TARGET_DIR, path))
 
     // Go through every file path and handle the operation for each demo comment
     const demoCommentResults = await Promise.allSettled(
-      paths.map(async (path) => {
+      filePaths.map(async (path) => {
         const { exists, update } = patching
 
         const comments: CommentType[] = []
@@ -78,22 +94,21 @@ module.exports = {
         }
       })
 
-    // Recurisvely remove any empty directories in TARGET_DIR
-    const removeEmptyDirs = (dir: string) => {
-      const files = filesystem.list(dir).filter((file) => file.includes("node_modules") === false)
-      if (files.length === 0) {
-        filesystem.remove(dir)
-        p(`Removed empty directory '${dir}'`)
-        return
-      }
-      files.forEach((file) => {
-        const filePath = `${dir}/${file}`
-        if (filesystem.isDirectory(filePath)) {
-          removeEmptyDirs(filePath)
-        }
+    const emptyDirPaths = filesystem
+      .cwd(TARGET_DIR)
+      .find({
+        matching: MATCHING_GLOBS,
+        recursive: true,
+        files: false,
+        directories: true,
       })
-    }
-    removeEmptyDirs(TARGET_DIR)
+      .map((path) => pathlib.join(TARGET_DIR, path))
+      .filter((path) => !filesystem.list(path)?.length)
+
+    emptyDirPaths.forEach((path) => {
+      filesystem.remove(path)
+      p(`Removed empty directory '${path}'`)
+    })
 
     p(`Done removing demo code from '${TARGET_DIR}'`)
   },
