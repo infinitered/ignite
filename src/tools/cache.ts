@@ -8,6 +8,15 @@ const lockFile = {
   npm: "package-lock.json",
 } as const
 
+const MAC: NodeJS.Platform = "darwin"
+const WINDOWS: NodeJS.Platform = "win32"
+const LINUX: NodeJS.Platform = "linux"
+const cachePath = {
+  [MAC]: "Library/Caches",
+  [WINDOWS]: "AppData/Local/Temp",
+  [LINUX]: ".cache",
+} as const
+
 /**
  * Function to create cache tool
  *
@@ -19,7 +28,7 @@ const lockFile = {
  * }
  */
 export function createCacheTool(filesystem: GluegunFilesystem) {
-  const { path, dir } = filesystem
+  const { path, dir, homedir } = filesystem
 
   function hash(str: string) {
     return crypto.createHash("md5").update(str).digest("hex")
@@ -60,10 +69,19 @@ export function createCacheTool(filesystem: GluegunFilesystem) {
     })
   }
 
+  /**
+   * Root directory path of ignite dependency cache
+   */
+  function rootdir(platform: NodeJS.Platform = process.platform) {
+    const folder = cachePath[platform] ?? cachePath[LINUX]
+    return path(homedir(), folder, "ignite")
+  }
+
   return {
     copy,
     targets,
     hash,
+    rootdir,
   }
 }
 

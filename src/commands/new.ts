@@ -13,7 +13,6 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
-import * as crypto from "crypto"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 
@@ -391,17 +390,12 @@ export default {
     // #region Run Packager Install
     // pnpm/yarn/npm install it
 
-    // check if there is a cache of node_modules using a hash of the package.json
-    function hash(str: string) {
-      return crypto.createHash("md5").update(str).digest("hex")
-    }
-
-    // check if there is a cache of node_modules using a hash of the package.json
-    const packageJsonHash = hash(packageJsonRaw)
-
-    // store hash at `~/.ignite/cache/${packageJsonHash}`
-    const cachePath = path(filesystem.homedir(), ".ignite", "cache", packageJsonHash)
+    // check if there is a dependency cache using a hash of the package.json
+    const packageJsonHash = cache.hash(packageJsonRaw)
+    const cachePath = path(cache.rootdir(), packageJsonHash)
     const cacheExists = exists(cachePath) === "dir"
+
+    log(`cachePath: ${cachePath}`)
 
     // if there is a cache, copy it over to the target path node_modules
     if (cacheExists) {
