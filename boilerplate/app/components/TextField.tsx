@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { colors, typography } from "../theme"
+import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
 export interface TextFieldAccessoryProps {
@@ -225,7 +225,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 })
 
 const $labelStyle: TextStyle = {
-  marginBottom: 6,
+  marginBottom: spacing.extraSmall,
 }
 
 const $inputWrapperStyle: ViewStyle = {
@@ -248,22 +248,22 @@ const $inputStyle: TextStyle = {
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
   paddingVertical: 0,
   paddingHorizontal: 0,
-  marginVertical: 8,
-  marginHorizontal: 10,
+  marginVertical: spacing.extraSmall,
+  marginHorizontal: spacing.small,
 }
 
 const $helperStyle: TextStyle = {
-  marginTop: 8,
+  marginTop: spacing.extraSmall,
 }
 
 const $rightAccessoryStyle: ViewStyle = {
-  marginEnd: 8,
+  marginEnd: spacing.extraSmall,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
 }
 const $leftAccessoryStyle: ViewStyle = {
-  marginStart: 8,
+  marginStart: spacing.extraSmall,
   height: 40,
   justifyContent: "center",
   alignItems: "center",

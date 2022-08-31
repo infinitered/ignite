@@ -3,8 +3,8 @@ import * as Application from "expo-application"
 import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors } from "../theme"
-import {isRTL} from "../i18n"
+import { colors, spacing } from "../theme"
+import { isRTL } from "../i18n"
 
 function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
@@ -90,34 +90,34 @@ export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
 }
 
 const $container: ViewStyle = {
-  paddingTop: 40,
-  paddingBottom: 50,
-  paddingHorizontal: 24,
+  paddingTop: spacing.extraLarge,
+  paddingBottom: spacing.huge,
+  paddingHorizontal: spacing.large,
 }
 
 const $title: TextStyle = {
-  marginBottom: 36,
+  marginBottom: spacing.huge,
 }
 
 const $item: ViewStyle = {
-  marginBottom: 16,
+  marginBottom: spacing.medium,
 }
 
 const $itemsContainer: ViewStyle = {
-  marginBottom: 36,
+  marginBottom: spacing.extraLarge,
 }
 
 const $button: ViewStyle = {
-  marginBottom: 6,
+  marginBottom: spacing.extraSmall,
 }
 
 const $buttonContainer: ViewStyle = {
-  marginBottom: 16,
+  marginBottom: spacing.medium,
 }
 
 const $hint: TextStyle = {
   color: colors.palette.neutral600,
   fontSize: 12,
   lineHeight: 15,
-  paddingBottom: 24,
+  paddingBottom: spacing.large,
 }

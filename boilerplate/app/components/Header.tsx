@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
-import { colors } from "../theme"
+import { colors, spacing } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 import { isRTL, translate } from "../i18n"
@@ -266,7 +266,7 @@ const $centerTitle: TextStyle = {
   position: "absolute",
   width: "100%",
   textAlign: "center",
-  paddingHorizontal: 56,
+  paddingHorizontal: spacing.huge,
   zIndex: 1,
 }
 
@@ -280,7 +280,7 @@ const $actionTextContainer: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  paddingHorizontal: 16,
+  paddingHorizontal: spacing.medium,
   zIndex: 2,
 }
 
@@ -293,7 +293,7 @@ const $actionIconContainer: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  paddingHorizontal: 16,
+  paddingHorizontal: spacing.medium,
   zIndex: 2,
 }
 

@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
-import { colors, typography } from "../../theme"
+import { colors, spacing, typography } from "../../theme"
 
 interface DemoUseCaseProps {
   name: string
@@ -25,14 +25,14 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 }
 
 const $description: TextStyle = {
-  marginTop: 16,
+  marginTop: spacing.medium,
 }
 
 const $item: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
-  padding: 24,
-  marginVertical: 18,
+  padding: spacing.large,
+  marginVertical: spacing.medium,
 }
 
 const $name: TextStyle = {

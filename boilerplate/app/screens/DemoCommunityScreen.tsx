@@ -2,6 +2,7 @@ import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { spacing } from "../theme"
 import { openLinkInBrowser } from "../utils/open-link-in-browser"
 import { isRTL } from "../i18n"
 
@@ -103,29 +104,28 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
 }
 
 const $container: ViewStyle = {
-  paddingTop: 40,
-  paddingBottom: 50,
-  paddingHorizontal: 24,
+  paddingVertical: spacing.huge,
+  paddingHorizontal: spacing.large,
 }
 
 const $title: TextStyle = {
-  marginBottom: 10,
+  marginBottom: spacing.small,
 }
 
 const $tagline: TextStyle = {
-  marginBottom: 40,
+  marginBottom: spacing.huge,
 }
 
 const $description: TextStyle = {
-  marginBottom: 24,
+  marginBottom: spacing.large,
 }
 
 const $sectionTitle: TextStyle = {
-  marginTop: 40,
+  marginTop: spacing.huge,
 }
 
 const $logoContainer: ViewStyle = {
-  marginEnd: 16,
+  marginEnd: spacing.medium,
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",

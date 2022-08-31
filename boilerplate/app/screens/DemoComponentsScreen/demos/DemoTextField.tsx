@@ -2,7 +2,7 @@
 import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { Icon, TextField } from "../../../components"
-import { colors } from "../../../theme"
+import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -26,7 +26,7 @@ const $customLabelAndHelperStyle: TextStyle = {
 }
 
 const $customInputWithAbsoluteAccessoriesStyle: ViewStyle = {
-  marginHorizontal: 50,
+  marginHorizontal: spacing.huge,
 }
 
 const $customLeftAccessoryStyle: ViewStyle = {
