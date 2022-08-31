@@ -38,7 +38,7 @@
     "ci:prep": "yarn build && yarn ci:lint",
     "ci:lint": "eslint src test --ext .ts && yarn format",
     "ci:test:vanilla": "jest ./test/vanilla",
-    "ci:test": "yarn ci:prep && yarn clean && yarn test",
+    "ci:test": "yarn ci:prep && yarn test && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
     "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
