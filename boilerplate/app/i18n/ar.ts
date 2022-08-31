@@ -86,11 +86,21 @@ const ar: Translations = {
   demoPodcastListScreen: {
     title: "حلقات إذاعية React Native",
     onlyFavorites: "المفضلة فقط",
+    accessibility: {
+      cardHint:
+        "انقر نقرًا مزدوجًا للاستماع إلى الحلقة. انقر نقرًا مزدوجًا مع الاستمرار لإبداء الإعجاب أو عدم الإعجاب بهذه الحلقة.",
+      switch: "تحويل المفضلة",
+      favoriteAction: "تبديل المفضلة",
+      unfavoriteIcon: "الحلقة في المفضلة",
+      favoriteIcon: "الحلقة ليست في المفضلة",
+      publishLabel: "{{date}} تم النشر في",
+      durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
+    },
   },
   errorScreen: {
     title: "هناك خطأ ما",
     friendlySubtitle:
-      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تشخيص هذه الرسالة (الموجودة في التطبيق 'app/i18n/en.json') وربما التخطيط ايضاً ('app/screens/error'). اذا كنت تريد إزالة هذا تماماً انظر الى 'app/app.tsp' للتحقق من مكونات  <ErrorBoundary>",
+      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تشخيص هذه الرسالة (الموجودة في التطبيق 'app/i18n/ar.ts') وربما التخطيط ايضاً ('app/screens/error'). اذا كنت تريد إزالة هذا تماماً انظر الى 'app/app.tsp' للتحقق من مكونات  <ErrorBoundary>",
     traceTitle: "خطأ من مجموعة %{name}",
     reset: "اعادة تعيين التطبيق",
   },

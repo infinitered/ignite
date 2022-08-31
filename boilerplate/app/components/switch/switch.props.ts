@@ -1,7 +1,7 @@
-import { StyleProp, ViewStyle } from "react-native"
+import { StyleProp, ViewProps, ViewStyle } from "react-native"
 
-export interface SwitchProps {
-  /**
+export interface SwitchProps extends ViewProps {
+  /*
    * On or off.
    */
   value?: boolean
@@ -11,12 +11,6 @@ export interface SwitchProps {
    * @param newValue The new value we're switching to.
    */
   onToggle?: (newValue: boolean) => void
-
-  /**
-   * A style override to apply to the container.  Useful for margins and paddings.
-   */
-  style?: StyleProp<ViewStyle>
-
   /**
    * Additional track styling when on.
    */

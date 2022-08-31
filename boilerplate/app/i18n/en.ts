@@ -87,11 +87,21 @@ const en = {
   demoPodcastListScreen: {
     title: "React Native Radio episodes",
     onlyFavorites: "Only Show Favorites",
+    accessibility: {
+      cardHint:
+        "Double tap to listen to the episode. Double tap and hold to {{action}} this episode.",
+      switch: "Switch on to only show favorites",
+      favoriteAction: "Toggle Favorite",
+      favoriteIcon: "Episode not favorited",
+      unfavoriteIcon: "Episode favorited",
+      publishLabel: "Published {{date}}",
+      durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
+    },
   },
   errorScreen: {
     title: "Something went wrong!",
     friendlySubtitle:
-      "This is the screen that your users will see in production when an error is thrown. You'll want to customize this message (located in `app/i18n/en.json`) and probably the layout as well (`app/screens/ErrorScreen`). If you want to remove this entirely, check `app/app.tsx` for the <ErrorBoundary> component.",
+      "This is the screen that your users will see in production when an error is thrown. You'll want to customize this message (located in `app/i18n/en.ts`) and probably the layout as well (`app/screens/ErrorScreen`). If you want to remove this entirely, check `app/app.tsx` for the <ErrorBoundary> component.",
     traceTitle: "Error from %{name} stack",
     reset: "RESET APP",
   },
