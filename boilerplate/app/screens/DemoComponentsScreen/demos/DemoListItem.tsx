@@ -3,7 +3,7 @@ import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { Icon, ListItem, Text } from "../../../components"
-import { colors } from "../../../theme"
+import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -37,7 +37,7 @@ const $customContainerStyle: ViewStyle = {
 }
 
 const $flatListStyle: ViewStyle = {
-  paddingHorizontal: 8,
+  paddingHorizontal: spacing.extraSmall,
   backgroundColor: colors.palette.neutral200,
   flex: 1,
   overflow: "scroll",
@@ -101,7 +101,7 @@ export const DemoListItem: Demo = {
       <ListItem
         topSeparator
         LeftComponent={
-          <View style={[$customLeft, { marginEnd: 16 }]}>
+          <View style={[$customLeft, { marginEnd: spacing.medium }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}
@@ -115,7 +115,7 @@ export const DemoListItem: Demo = {
         topSeparator
         bottomSeparator
         RightComponent={
-          <View style={[$customLeft, { marginStart: 16 }]}>
+          <View style={[$customLeft, { marginStart: spacing.medium }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}

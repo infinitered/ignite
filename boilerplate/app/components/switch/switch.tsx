@@ -30,7 +30,7 @@ const TRACK = {
 }
 
 // the thumb always has these props
-const THUMB: ViewStyle = {
+const $thumb: ViewStyle = {
   position: "absolute",
   width: THUMB_SIZE,
   height: THUMB_SIZE,
@@ -100,7 +100,7 @@ export function Switch({
   ]
 
   const thumbStyle = [
-    THUMB,
+    $thumb,
     {
       transform: [{ translateX }],
     },

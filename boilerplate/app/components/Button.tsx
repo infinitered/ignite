@@ -7,7 +7,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native"
-import { colors, typography } from "../theme"
+import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
 type Presets = keyof typeof $viewPresets
@@ -130,8 +130,8 @@ const $baseViewStyle: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "row",
-  paddingVertical: 10,
-  paddingHorizontal: 10,
+  paddingVertical: spacing.small,
+  paddingHorizontal: spacing.small,
   overflow: "hidden",
 }
 
@@ -145,8 +145,8 @@ const $baseTextStyle: TextStyle = {
   zIndex: 2,
 }
 
-const $rightAccessoryStyle: ViewStyle = { marginStart: 8, zIndex: 1 }
-const $leftAccessoryStyle: ViewStyle = { marginEnd: 8, zIndex: 1 }
+const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.extraSmall, zIndex: 1 }
+const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.extraSmall, zIndex: 1 }
 
 const $viewPresets = {
   default: [

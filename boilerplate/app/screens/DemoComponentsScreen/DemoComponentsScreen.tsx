@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { ListItem, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import { colors } from "../../theme"
+import { colors, spacing } from "../../theme"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 
@@ -155,15 +155,15 @@ const $drawer: ViewStyle = {
 }
 
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: 24,
+  paddingHorizontal: spacing.large,
 }
 
 const $sectionListContentContainer: ViewStyle = {
-  paddingHorizontal: 24,
+  paddingHorizontal: spacing.large,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: 56,
+  marginBottom: spacing.massive,
 }
 
 const $logoImage: ImageStyle = {
@@ -174,23 +174,23 @@ const $logoImage: ImageStyle = {
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   height: 56,
-  paddingHorizontal: 24,
+  paddingHorizontal: spacing.large,
 }
 
 const $menuContainer: ViewStyle = {
-  paddingBottom: 8,
-  paddingTop: 24,
+  paddingBottom: spacing.extraSmall,
+  paddingTop: spacing.large,
 }
 
 const $demoItemName: TextStyle = {
   fontSize: 24,
-  marginBottom: 18,
+  marginBottom: spacing.medium,
 }
 
 const $demoItemDescription: TextStyle = {
-  marginBottom: 43,
+  marginBottom: spacing.huge,
 }
 
 const $demoUseCasesSpacer: ViewStyle = {
-  paddingBottom: 58,
+  paddingBottom: spacing.huge,
 }
