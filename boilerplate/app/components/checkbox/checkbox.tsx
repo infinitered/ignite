@@ -46,8 +46,8 @@ const $outline: ViewStyle = {
 }
 
 const $fill: ViewStyle = {
-  width: $dimensions.width - 4,
-  height: $dimensions.height - 4,
+  width: $dimensions.width - spacing.tiny,
+  height: $dimensions.height - spacing.tiny,
   backgroundColor: colors.tint,
 }
 
