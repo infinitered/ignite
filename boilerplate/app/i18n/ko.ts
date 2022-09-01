@@ -89,11 +89,21 @@ const ko: Translations = {
   demoPodcastListScreen: {
     title: "React Native 라디오 에피소드",
     onlyFavorites: "즐겨찾기만 보기",
+    accessibility: {
+      cardHint:
+        "에피소드를 들으려면 두 번 탭하세요. 이 에피소드를 좋아하거나 싫어하려면 두 번 탭하고 길게 누르세요.",
+      switch: "즐겨찾기를 사용하려면 스위치를 사용하세요.",
+      favoriteAction: "즐겨찾기 토글",
+      favoriteIcon: "좋아하는 에피소드",
+      unfavoriteIcon: "즐겨찾기하지 않은 에피소드",
+      publishLabel: "{{date}} 에 발행됨",
+      durationLabel: "소요시간: {{hours}}시간 {{minutes}}분 {{seconds}}초",
+    },
   },
   errorScreen: {
     title: "뭔가 잘못되었습니다!",
     friendlySubtitle:
-      "이 화면은 오류가 발생할 때 프로덕션에서 사용자에게 표시됩니다. 이 메시지를 커스터마이징 할 수 있고(해당 파일은 `app/i18n/en.json` 에 있습니다) 레이아웃도 마찬가지로 수정할 수 있습니다(`app/screens/error`). 만약 이 오류화면을 완전히 없에버리고 싶다면 `app/app.tsx` 파일에서 <ErrorBoundary> 컴포넌트를 확인하기 바랍니다.",
+      "이 화면은 오류가 발생할 때 프로덕션에서 사용자에게 표시됩니다. 이 메시지를 커스터마이징 할 수 있고(해당 파일은 `app/i18n/ko.ts` 에 있습니다) 레이아웃도 마찬가지로 수정할 수 있습니다(`app/screens/error`). 만약 이 오류화면을 완전히 없에버리고 싶다면 `app/app.tsx` 파일에서 <ErrorBoundary> 컴포넌트를 확인하기 바랍니다.",
     traceTitle: "%{name} 스택에서의 오류",
     reset: "초기화",
   },

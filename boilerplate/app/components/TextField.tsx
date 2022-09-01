@@ -167,7 +167,12 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   useImperativeHandle(ref, () => input.current)
 
   return (
-    <TouchableOpacity activeOpacity={1} style={$containerStyles} onPress={focusInput}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={$containerStyles}
+      onPress={focusInput}
+      accessibilityState={{ disabled }}
+    >
       {!!(label || labelTx) && (
         <Text
           preset="formLabel"

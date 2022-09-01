@@ -154,7 +154,14 @@ export function Toggle(props: ToggleProps) {
   }
 
   return (
-    <Wrapper activeOpacity={1} {...WrapperProps} style={$containerStyle} onPress={handlePress}>
+    <Wrapper
+      activeOpacity={1}
+      accessibilityRole={variant}
+      accessibilityState={{ checked: value }}
+      {...WrapperProps}
+      style={$containerStyle}
+      onPress={handlePress}
+    >
       {labelPosition === "left" && <FieldLabel {...props} labelPosition={labelPosition} />}
 
       <View style={$inputOuterStyle}>

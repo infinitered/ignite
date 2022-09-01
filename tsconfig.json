@@ -15,5 +15,5 @@
     "types": ["node", "jest"]
   },
   "include": ["./src"],
-  "exclude": ["./boilerplate", "./templates"]
+  "exclude": ["./boilerplate", "./templates", "**/**.test.ts"]
 }
