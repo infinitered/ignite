@@ -391,39 +391,29 @@ export default {
     // pnpm/yarn/npm install it
 
     // check if there is a dependency cache using a hash of the package.json
-    const packageJsonHash = cache.hash(packageJsonRaw)
-    const cachePath = path(cache.rootdir(), packageJsonHash)
+    const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
+    const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
     const cacheExists = exists(cachePath) === "dir"
 
-    log(`cachePath: ${cachePath}`)
+    log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
+    log(`cacheExists: ${cacheExists}`)
 
     // if there is a cache, copy it over to the target path node_modules
-    if (cacheExists) {
+    if (installDeps && cacheExists) {
       startSpinner(`Copying cached ${packagerName} dependencies`)
       cache.copy({
         fromRootDir: cachePath,
         toRootDir: targetPath,
         packagerName,
       })
-      stopSpinner("Copying cached dependencies", "📦")
+      stopSpinner(`Copying cached ${packagerName} dependencies`, "📦")
     }
 
-    if (installDeps === true) {
+    if (installDeps && cacheExists === false) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
       stopSpinner(unboxingMessage, "🧶")
-    }
-
-    // if there is no cache, create one
-    if (!cacheExists) {
-      startSpinner(`Caching ${packager} dependencies`)
-      cache.copy({
-        fromRootDir: targetPath,
-        toRootDir: cachePath,
-        packagerName,
-      })
-      stopSpinner("Caching dependencies", "📦")
     }
 
     // remove the gitignore template
@@ -447,12 +437,24 @@ export default {
 
     // #region Install CocoaPods
     // install pods
-    if (installDeps === true) {
+    if (installDeps && cacheExists === false) {
       startSpinner("Baking CocoaPods")
       await spawnProgress(`npx pod-install@${deps.podInstall}`, {
         onProgress: log,
       })
       stopSpinner("Baking CocoaPods", "☕️")
+    }
+    // #endregion
+
+    // #region Cache dependencies
+    if (installDeps && cacheExists === false) {
+      startSpinner(`Caching ${packagerName} dependencies`)
+      cache.copy({
+        fromRootDir: targetPath,
+        toRootDir: cachePath,
+        packagerName,
+      })
+      stopSpinner(`Caching ${packagerName} dependencies`, "📦")
     }
     // #endregion
 
