@@ -9,6 +9,10 @@ const ar: Translations = {
   errors: {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
   },
+  accessibility: {
+    switchOn: "⏽",
+    switchOff: "⭘",
+  },
   welcomeScreen: {
     headerRight: "تسجيل خروج",
     postscript:
@@ -65,6 +69,7 @@ const ar: Translations = {
     demoTextFieldTxExample: "Prop '{{prop}}Tx عبر",
     demoListItemTxExample: "عبر `tx` Prop - consequat commodo",
     demoHeaderTxExample: "ياي",
+    demoToggleLabelTxExample: "MAVERICKTODO",
   },
   demoDebugScreen: {
     howTo: "كيف",

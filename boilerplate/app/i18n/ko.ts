@@ -9,6 +9,10 @@ const ko: Translations = {
   errors: {
     invalidEmail: "잘못된 이메일 주소 입니다.",
   },
+  accessibility: {
+    switchOn: "⏽",
+    switchOff: "⭘",
+  },
   welcomeScreen: {
     headerRight: "로그아웃",
     postscript:
@@ -65,6 +69,7 @@ const ko: Translations = {
     demoListItemTxExample: "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
     demoTextFieldTxExample: "`{{prop}}Tx` Prop 을 통해",
     demoHeaderTxExample: "야호",
+    demoToggleLabelTxExample: "MAVERICKTODO",
   },
   demoDebugScreen: {
     howTo: "사용방법",
