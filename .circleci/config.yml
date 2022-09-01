@@ -54,7 +54,7 @@ jobs:
       - restore_cache:
           name: Restore ignite dependency cache
           keys:
-            - ignite-deps-cache-{{ checksum "boilerplate/package.json" }}-{{ arch }}
+            - ignite-deps-cache-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
             # fallback to using the latest cache if no exact match is found
             - ignite-deps-cache-
       - run:
@@ -65,7 +65,7 @@ jobs:
           name: Save ignite dependency cache
           paths:
             - ~/.cache/ignite
-          key: ignite-deps-cache-{{ checksum "boilerplate/package.json" }}-{{ arch }}
+          key: ignite-deps-cache-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
 
   # detox:
   #   <<: *mac
