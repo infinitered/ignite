@@ -12,7 +12,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
+import Animated, { FadeIn, useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { colors, spacing } from "../theme"
 import { iconRegistry } from "./Icon"
 import { Text, TextProps } from "./Text"
@@ -347,6 +347,7 @@ function Switch(props: ToggleInputProps) {
 
       <Animated.View
         ref={knob}
+        entering={FadeIn.delay(150).duration(150)}
         style={$switchKnobStyle}
         onLayout={(e) => {
           // measure knob on load only once
