@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text, Toggle, ToggleProps } from "../../../components"

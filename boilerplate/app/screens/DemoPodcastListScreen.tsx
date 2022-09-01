@@ -246,10 +246,6 @@ const $toggle: ViewStyle = {
   marginTop: spacing.small,
 }
 
-const $toggleText: TextStyle = {
-  marginStart: spacing.extraSmall,
-}
-
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
