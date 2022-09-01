@@ -12,6 +12,7 @@ import {
   Platform,
   AccessibilityProps,
 } from "react-native"
+import { Button, Icon, Screen, Switch, Text } from "../components"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -19,9 +20,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Button, Icon, Screen, Switch, Text } from "../components"
-import { translate } from "../i18n"
-import { isRTL } from "../i18n"
+import { translate, isRTL } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -30,7 +29,6 @@ import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
 const ICON_SIZE = 24
-
 const sadFace = require("../../assets/images/sad-face.png")
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
@@ -282,3 +280,33 @@ const $metadata: TextStyle = {
   color: colors.textDim,
   marginTop: spacing.extraSmall,
 }
+
+const $sadFace: ImageStyle = {
+  height: 169,
+  width: 269,
+  position: "absolute",
+  bottom: -47,
+  right: -80,
+  transform: [{ scaleX: isRTL ? -1 : 1 }],
+}
+
+const $container: ViewStyle = {
+  paddingVertical: spacing.large,
+}
+
+const $subheading: TextStyle = {
+  paddingBottom: spacing.small,
+}
+
+const $buttonContainer: ViewStyle = {
+  paddingBottom: spacing.huge,
+}
+
+const $button: ViewStyle = {
+  marginVertical: spacing.huge,
+}
+
+const $sadFaceContainer: ViewStyle = {
+  marginVertical: spacing.massive,
+}
+// #endregion
