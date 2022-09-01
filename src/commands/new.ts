@@ -405,7 +405,7 @@ export default {
     log(`cacheExists: ${cacheExists}`)
 
     const defaultUseCache = true
-    const useCache = useDefault(options.useCache) ? defaultUseCache : boolFlag(options.useCache)
+    const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
 
     const shouldUseCache = installDeps && cacheExists && useCache
     if (shouldUseCache) {
@@ -418,7 +418,7 @@ export default {
       stopSpinner(`Copying cached ${packagerName} dependencies`, "📦")
     }
 
-    const shouldFreshInstallDeps = installDeps && cacheExists === false
+    const shouldFreshInstallDeps = shouldUseCache === false
     if (shouldFreshInstallDeps) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
@@ -457,8 +457,7 @@ export default {
     // #endregion
 
     // #region Cache dependencies
-    const shouldUpdateCache = shouldFreshInstallDeps && useCache
-    if (shouldUpdateCache) {
+    if (shouldFreshInstallDeps) {
       startSpinner(`Caching ${packagerName} dependencies`)
       cache.copy({
         fromRootDir: targetPath,
