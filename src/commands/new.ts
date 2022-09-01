@@ -100,6 +100,12 @@ export interface Options {
    */
   targetPath?: string
   /**
+   * Whether or not to use the dependency cache to speed up installs
+   * Input Source: `parameter.option`
+   * @default true
+   */
+  useCache?: boolean
+  /**
    * alias for `yes`
    *
    * Whether or not to accept the default options for all prompts
@@ -398,8 +404,11 @@ export default {
     log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
     log(`cacheExists: ${cacheExists}`)
 
-    // if there is a cache, copy it over to the target path node_modules
-    if (installDeps && cacheExists) {
+    const defaultUseCache = true
+    const useCache = useDefault(options.useCache) ? defaultUseCache : boolFlag(options.useCache)
+
+    const shouldUseCache = installDeps && cacheExists && useCache
+    if (shouldUseCache) {
       startSpinner(`Copying cached ${packagerName} dependencies`)
       cache.copy({
         fromRootDir: cachePath,
@@ -409,7 +418,8 @@ export default {
       stopSpinner(`Copying cached ${packagerName} dependencies`, "📦")
     }
 
-    if (installDeps && cacheExists === false) {
+    const shouldFreshInstallDeps = installDeps && cacheExists === false
+    if (shouldFreshInstallDeps) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
@@ -437,7 +447,7 @@ export default {
 
     // #region Install CocoaPods
     // install pods
-    if (installDeps && cacheExists === false) {
+    if (shouldFreshInstallDeps) {
       startSpinner("Baking CocoaPods")
       await spawnProgress(`npx pod-install@${deps.podInstall}`, {
         onProgress: log,
@@ -447,7 +457,8 @@ export default {
     // #endregion
 
     // #region Cache dependencies
-    if (installDeps && cacheExists === false) {
+    const shouldUpdateCache = shouldFreshInstallDeps && useCache
+    if (shouldUpdateCache) {
       startSpinner(`Caching ${packagerName} dependencies`)
       cache.copy({
         fromRootDir: targetPath,
@@ -561,6 +572,7 @@ export default {
       expo,
       packager: packagerName,
       targetPath,
+      useCache,
       y: yname,
       yes: yname,
     }
@@ -568,7 +580,16 @@ export default {
     type Flag = keyof typeof flags
     type FlagEntry = [key: Flag, value: Options[Flag]]
 
-    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y", "yes"]
+    const privateFlags: Flag[] = [
+      "b",
+      "boilerplate",
+      "coloLoco",
+      "debug",
+      "expo",
+      "useCache",
+      "y",
+      "yes",
+    ]
 
     const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
     const booleanFlag = ([key, value]: FlagEntry) =>
