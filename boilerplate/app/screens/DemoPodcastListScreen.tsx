@@ -184,7 +184,7 @@ const $subheading: TextStyle = {
 }
 
 const $buttonContainer: ViewStyle = {
-  paddingBottom: 50,
+  paddingBottom: spacing.huge,
 }
 
 const $button: ViewStyle = {
