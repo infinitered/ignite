@@ -53,10 +53,7 @@ jobs:
             pnpm config set store-dir ../.pnpm-store
       - restore_cache:
           name: Restore ignite dependency cache
-          keys:
-            - ignite-deps-cache-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
-            # fallback to using the latest cache if no exact match is found
-            - ignite-deps-cache-
+          key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
       - run:
           name: Run tests
           command: yarn ci:test
@@ -65,7 +62,7 @@ jobs:
           name: Save ignite dependency cache
           paths:
             - ~/.cache/ignite
-          key: ignite-deps-cache-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
+          key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
 
   # detox:
   #   <<: *mac
