@@ -24,14 +24,16 @@ const data = {
 }
 const episode = EpisodeModel.create(data)
 
-jest.mock("i18n-js", () => ({
-  currentLocale: () => "en",
-}))
-
 test("publish date format", () => {
-  expect(episode.datePublished).toBe("Jan 20, 2022")
+  expect(episode.datePublished.textLabel).toBe("Jan 20, 2022")
+  expect(episode.datePublished.accessibilityLabel).toBe(
+    'demoPodcastListScreen.accessibility.publishLabel {"date":"Jan 20, 2022"}',
+  )
 })
 
 test("duration format", () => {
-  expect(episode.duration).toBe("42:58")
+  expect(episode.duration.textLabel).toBe("42:58")
+  expect(episode.duration.accessibilityLabel).toBe(
+    'demoPodcastListScreen.accessibility.durationLabel {"hours":0,"minutes":42,"seconds":58}',
+  )
 })

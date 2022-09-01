@@ -425,8 +425,11 @@ export default {
     // #endregion
 
     // #region Run Format
-    // Make sure all our modifications are formatted nicely
-    await packager.run("format", { ...packagerOptions, silent: !debug })
+    // we can't run this option if we didn't install deps
+    if (installDeps === true) {
+      // Make sure all our modifications are formatted nicely
+      await packager.run("format", { ...packagerOptions, silent: !debug })
+    }
     // #endregion
 
     // #region Create Git Repostiory and Initial Commit
@@ -549,6 +552,11 @@ export default {
     command(`  ${cliCommand}`)
     p()
 
+    // this is a hack to prevent the process from hanging
+    // if there are any tasks left in the event loop
+    // like I/O operations to process.stdout and process.stderr
+    // see https://github.com/infinitered/ignite/issues/2084
+    process.exit(0)
     // #endregion
   },
 }

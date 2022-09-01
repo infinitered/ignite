@@ -60,12 +60,17 @@ export function Icon(props: IconProps) {
     ...WrapperProps
   } = props
 
+  const isPressable = !!WrapperProps.onPress
   const Wrapper: ComponentType<TouchableOpacityProps> = WrapperProps?.onPress
     ? TouchableOpacity
     : View
 
   return (
-    <Wrapper {...WrapperProps} style={$containerStyleOverride}>
+    <Wrapper
+      accessibilityRole={isPressable ? "imagebutton" : undefined}
+      {...WrapperProps}
+      style={$containerStyleOverride}
+    >
       <Image
         style={[
           $imageStyle,

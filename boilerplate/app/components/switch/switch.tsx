@@ -30,7 +30,7 @@ const TRACK = {
 }
 
 // the thumb always has these props
-const THUMB: ViewStyle = {
+const $thumb: ViewStyle = {
   position: "absolute",
   width: THUMB_SIZE,
   height: THUMB_SIZE,
@@ -47,8 +47,16 @@ const THUMB: ViewStyle = {
 
 const makeAnimatedValue = (switchOn) => new Animated.Value(switchOn ? 1 : 0)
 
-export function Switch(props: SwitchProps) {
-  const [timer] = React.useState<Animated.Value>(makeAnimatedValue(props.value))
+export function Switch({
+  onToggle,
+  thumbOffStyle,
+  thumbOnStyle,
+  trackOnStyle,
+  trackOffStyle,
+  value,
+  ...rest
+}: SwitchProps) {
+  const [timer] = React.useState<Animated.Value>(makeAnimatedValue(value))
   const startAnimation = React.useMemo(
     () => (newValue: boolean) => {
       const toValue = newValue ? 1 : 0
@@ -63,18 +71,15 @@ export function Switch(props: SwitchProps) {
     [timer],
   )
 
-  const [previousValue, setPreviousValue] = React.useState<boolean>(props.value)
+  const [previousValue, setPreviousValue] = React.useState<boolean>(value)
   React.useEffect(() => {
-    if (props.value !== previousValue) {
-      startAnimation(props.value)
-      setPreviousValue(props.value)
+    if (value !== previousValue) {
+      startAnimation(value)
+      setPreviousValue(value)
     }
-  }, [props.value])
+  }, [value])
 
-  const handlePress = React.useMemo(
-    () => () => props.onToggle && props.onToggle(!props.value),
-    [props.onToggle, props.value],
-  )
+  const handlePress = React.useMemo(() => () => onToggle && onToggle(!value), [onToggle, value])
 
   if (!timer) {
     return null
@@ -85,27 +90,30 @@ export function Switch(props: SwitchProps) {
     outputRange: [OFF_POSITION, ON_POSITION],
   })
 
-  const style = props.style
-
   const trackStyle = [
     TRACK,
     {
-      backgroundColor: props.value ? ON_COLOR : OFF_COLOR,
-      borderColor: props.value ? BORDER_ON_COLOR : BORDER_OFF_COLOR,
+      backgroundColor: value ? ON_COLOR : OFF_COLOR,
+      borderColor: value ? BORDER_ON_COLOR : BORDER_OFF_COLOR,
     },
-    props.value ? props.trackOnStyle : props.trackOffStyle,
+    value ? trackOnStyle : trackOffStyle,
   ]
 
   const thumbStyle = [
-    THUMB,
+    $thumb,
     {
       transform: [{ translateX }],
     },
-    props.value ? props.thumbOnStyle : props.thumbOffStyle,
+    value ? thumbOnStyle : thumbOffStyle,
   ]
 
   return (
-    <TouchableWithoutFeedback onPress={handlePress} style={style}>
+    <TouchableWithoutFeedback
+      onPress={handlePress}
+      accessibilityRole="switch"
+      accessibilityState={{ checked: value }}
+      {...rest}
+    >
       <Animated.View style={trackStyle}>
         <Animated.View style={thumbStyle} />
       </Animated.View>

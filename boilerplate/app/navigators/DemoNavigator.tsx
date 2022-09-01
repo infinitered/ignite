@@ -7,7 +7,7 @@ import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoCommunityScreen, DemoComponentsScreen, DemoDebugScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
-import { colors, typography } from "../theme"
+import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
@@ -89,7 +89,7 @@ const $tabBar: ViewStyle = {
 }
 
 const $tabBarItem: ViewStyle = {
-  paddingTop: 14,
+  paddingTop: spacing.medium,
 }
 
 const $tabBarLabel: TextStyle = {
