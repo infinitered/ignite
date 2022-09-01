@@ -552,6 +552,11 @@ export default {
     command(`  ${cliCommand}`)
     p()
 
+    // this is a hack to prevent the process from hanging
+    // if there are any tasks left in the event loop
+    // like I/O operations to process.stdout and process.stderr
+    // see https://github.com/infinitered/ignite/issues/2084
+    process.exit(0)
     // #endregion
   },
 }
