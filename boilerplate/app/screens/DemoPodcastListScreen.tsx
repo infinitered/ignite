@@ -61,13 +61,28 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         ListEmptyComponent={
           <View>
             <View style={$container}>
-              <Text preset="subheading" style={$subheading}>
-                So empty... so sad
-              </Text>
-              <Text>No data found yet. You can click the button or reload the app.</Text>
+              {!episodeStore.favoritesOnly ? (
+                <View>
+                  <Text preset="subheading" style={$subheading}>
+                    So empty... so sad
+                  </Text>
+                  <Text>No data found yet. You can click the button or reload the app.</Text>
+                </View>
+              ) : (
+                <View>
+                  <Text preset="subheading" style={$subheading}>
+                    You don't have any favorites yet
+                  </Text>
+                  <Text>Please click the heart icon on each list to add it to your favorites.</Text>
+                </View>
+              )}
             </View>
             <View style={$buttonContainer}>
-              <Button text="Let's Try Again" onPress={manualRefresh} style={$button} />
+              <Button
+                text="Go back to the list"
+                onPress={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
+                style={$button}
+              />
             </View>
             <View style={$sadFaceContainer}>
               <Image source={sadFace} style={$sadFace} resizeMode="contain" />
