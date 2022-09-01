@@ -66,10 +66,15 @@ function rootdir(platform: NodeJS.Platform = process.platform) {
   return path(homedir(), folder, "ignite")
 }
 
+function clear() {
+  filesystem.remove(rootdir())
+}
+
 /** Tool for managing cache of dependencies related to the ignite boilerplate */
 export const cache = {
   copy,
   targets,
   hash,
   rootdir,
+  clear,
 } as const
