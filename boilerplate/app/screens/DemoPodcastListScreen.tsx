@@ -9,13 +9,16 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Icon, Screen, Switch, Text } from "../components"
+import { Button, Icon, Screen, Switch, Text } from "../components"
+import { isRTL } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/open-link-in-browser"
+
+const sadFace = require("../../assets/images/sad-face.png")
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -44,6 +47,22 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         contentContainerStyle={$flatListContentContainer}
         refreshing={refreshing}
         onRefresh={manualRefresh}
+        ListEmptyComponent={
+          <View>
+            <View style={$container}>
+              <Text preset="subheading" style={$subheading}>
+                So empty... so sad
+              </Text>
+              <Text>No data found yet. You can click the button or reload the app.</Text>
+            </View>
+            <View style={$buttonContainer}>
+              <Button text="Let's Try Again" onPress={manualRefresh} style={$button} />
+            </View>
+            <View style={$sadFaceContainer}>
+              <Image source={sadFace} style={$sadFace} resizeMode="contain" />
+            </View>
+          </View>
+        }
         ListHeaderComponent={
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
@@ -145,4 +164,33 @@ const $metadata: TextStyle = {
   justifyContent: "space-between",
   color: colors.textDim,
   marginTop: spacing.extraSmall,
+}
+
+const $sadFace: ImageStyle = {
+  height: 169,
+  width: 269,
+  position: "absolute",
+  bottom: -47,
+  right: -80,
+  transform: [{ scaleX: isRTL ? -1 : 1 }],
+}
+
+const $container: ViewStyle = {
+  paddingVertical: spacing.large,
+}
+
+const $subheading: TextStyle = {
+  paddingBottom: spacing.small,
+}
+
+const $buttonContainer: ViewStyle = {
+  paddingBottom: 50,
+}
+
+const $button: ViewStyle = {
+  marginVertical: spacing.huge,
+}
+
+const $sadFaceContainer: ViewStyle = {
+  marginVertical: spacing.massive,
 }
