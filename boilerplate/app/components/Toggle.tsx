@@ -157,7 +157,7 @@ export function Toggle(props: ToggleProps) {
     <Wrapper
       activeOpacity={1}
       accessibilityRole={variant}
-      accessibilityState={{ checked: value }}
+      accessibilityState={{ checked: value, disabled }}
       {...WrapperProps}
       style={$containerStyle}
       onPress={handlePress}
@@ -305,7 +305,7 @@ function Switch(props: ToggleInputProps) {
     const marginStart = withTiming(on ? -renderedKnobWidth : 0)
 
     return { backgroundColor, start, marginStart }
-  }, [status, disabled, on])
+  }, [status, disabled, on, renderedKnobWidth])
 
   const $switchContainerStyle = [
     $switchContainer,
@@ -336,8 +336,8 @@ function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off"
 
   const $switchAccessibilityStyle = [
     $switchAccessibility,
-    role === "off" && { end: "10%" },
-    role === "on" && { left: "10%" },
+    role === "off" && { end: "5%" },
+    role === "on" && { left: "5%" },
   ]
 
   const color = (function () {
