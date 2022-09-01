@@ -6,6 +6,7 @@ import {
   NavigationAction,
   createNavigationContainerRef,
 } from "@react-navigation/native"
+import { useIsMounted } from "../utils/is-mounted"
 
 /* eslint-disable */
 export const RootNavigation = {
@@ -84,6 +85,7 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
  */
 export function useNavigationPersistence(storage: any, persistenceKey: string) {
   const [initialNavigationState, setInitialNavigationState] = useState()
+  const isMounted = useIsMounted()
 
   // This feature is particularly useful in development mode.
   // It is selectively enabled in development mode with
@@ -114,7 +116,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
       const state = await storage.load(persistenceKey)
       if (state) setInitialNavigationState(state)
     } finally {
-      setIsRestored(true)
+      if (isMounted()) setIsRestored(true)
     }
   }
 
