@@ -22,16 +22,6 @@ This is a wrapper around React Native's [Image](https://reactnative.dev/docs/ima
 
 [Full AutoImage Component Documentation](./Components-AutoImage.md)
 
-### BulletItem
-
-This is a component that renders a bullet point with associated text.
-
-```tsx
-<BulletItem text="This is a bullet item" />
-```
-
-[Full BulletItem Component Documentation](./Components-BulletItem.md)
-
 ### Button
 
 This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with given text or children.
@@ -54,40 +44,6 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 ```
 
 [Full Button Component Documentation](./Components-Button.md)
-
-### Checkbox
-
-This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
-
-```tsx
-const [on, setOn] = useState(false)
-// ...
-;<Checkbox
-  text="Outline is the box frame"
-  value={on}
-  multiline
-  style={{
-    backgroundColor: "purple",
-    marginStart: 40,
-    paddingVertical: 30,
-    paddingStart: 60,
-  }}
-  fillStyle={{
-    backgroundColor: "red",
-    borderRadius: 8,
-  }}
-  outlineStyle={{
-    borderColor: "green",
-    borderRadius: 10,
-    borderWidth: 4,
-    width: 60,
-    height: 20,
-  }}
-  onToggle={setOn}
-/>
-```
-
-[Full Checkbox Component Documentation](./Components-Checkbox.md)
 
 ### Header
 
@@ -137,24 +93,6 @@ This is a component that renders a screen. It is used to wrap your entire screen
 ```
 
 [Full Screen Component Documentation](./Components-Screen.md)
-
-### Switch
-
-This is a component that renders a few animated views that can be toggled on and off like a switch. This component handles all the logic of the animation, and all you need to do is style it as you see fit.
-
-```tsx
-<Switch
-  value={switch}
-  onToggle={() => setSwitch(!switch)}
-  style={{ backgroundColor: "purple" }}
-  trackOnStyle={{ backgroundColor: "red" }}
-  trackOffStyle={{ backgroundColor: "blue" }}
-  thumbOnStyle={{ backgroundColor: "red" }}
-  thumbOffStyle={{ backgroundColor: "blue" }}
-/>
-```
-
-[Full Switch Component Documentation](./Components-Switch.md)
 
 ### Text
 

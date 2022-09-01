@@ -7,6 +7,10 @@ const en = {
   errors: {
     invalidEmail: "Invalid email address.",
   },
+  accessibility: {
+    switchOn: "⏽",
+    switchOff: "⭘",
+  },
   welcomeScreen: {
     headerRight: "Log Out",
     postscript:
@@ -63,6 +67,7 @@ const en = {
     demoListItemTxExample: "Via `tx` Prop - consequat commodo",
     demoTextFieldTxExample: "Via `{{prop}}Tx` Prop",
     demoHeaderTxExample: "Yay",
+    demoToggleLabelTxExample: "Via `labelTx` prop",
   },
   demoDebugScreen: {
     howTo: "HOW TO",
