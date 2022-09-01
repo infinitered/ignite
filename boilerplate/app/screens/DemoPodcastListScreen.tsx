@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Icon, Screen, Switch, Text } from "../components"
+import { Icon, Screen, Switch, Text, Toggle } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -48,11 +48,14 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
             <View style={[$rowLayout, $toggle]}>
-              <Switch
+              <Toggle
                 value={episodeStore.favoritesOnly}
-                onToggle={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
+                onValueChange={() =>
+                  episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                }
+                variant="switch"
+                labelTx="demoPodcastListScreen.onlyFavorites"
               />
-              <Text style={$toggleText} tx="demoPodcastListScreen.onlyFavorites" />
             </View>
           </View>
         }
