@@ -236,6 +236,8 @@ export const DemoToggle: Demo = {
         }}
         inputInnerStyle={{
           backgroundColor: colors.palette.accent500,
+          paddingLeft: 10,
+          paddingRight: 10,
         }}
       />
       <Text preset="formHelper" style={$centeredText}>
@@ -298,7 +300,8 @@ export const DemoToggle: Demo = {
         }}
         inputInnerStyle={{
           backgroundColor: colors.tint,
-          borderWidth: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
         }}
         inputDetailStyle={{
           backgroundColor: colors.palette.accent300,

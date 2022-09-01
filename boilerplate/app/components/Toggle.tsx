@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, useMemo, useState } from "react"
+import React, { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 import {
   GestureResponderEvent,
   Image,
@@ -267,63 +267,94 @@ function Switch(props: ToggleInputProps) {
     innerStyle: $switchContainerStyleOverride,
     detailStyle: $switchKnobStyleOverride,
   } = props
-  const [renderedKnobWidth, setRenderedKnobWidth] = useState(0)
+  const knob = useRef<Animated.View>()
+  const [renderedKnobWidth, setRenderedKnobWidth] = useState(null)
 
-  const $animatedSwitchContainer = useAnimatedStyle(() => {
-    const onBackgroundColor = (function () {
-      if ($switchContainerStyleOverride?.backgroundColor) {
-        return $switchContainerStyleOverride.backgroundColor
-      }
-      if (disabled) return colors.transparent
-      if (status === "error") return colors.error
-      return colors.palette.secondary500
-    })()
+  useEffect(() => {
+    // measure knob subsquently if the override changes
+    if (!knob.current) return
+    if (renderedKnobWidth === null) return
+    knob.current.measure((_x, _y, width) => setRenderedKnobWidth(width))
+  }, [$switchKnobStyleOverride?.width])
 
-    const backgroundColor = withTiming(on ? onBackgroundColor : colors.transparent)
-
-    return { backgroundColor }
-  }, [status, disabled, on])
+  const $animatedSwitchContainer = useAnimatedStyle(
+    () => ({ opacity: withTiming(on ? 1 : 0) }),
+    [on],
+  )
 
   const $animatedSwitchKnob = useAnimatedStyle(() => {
-    const offBackgroundColor = (function () {
-      if ($switchContainerStyleOverride?.backgroundColor) {
-        return $switchContainerStyleOverride.backgroundColor
-      }
-      if (disabled) return colors.palette.neutral600
-      if (status === "error") return colors.error
-      return colors.palette.secondary500
-    })()
+    if (renderedKnobWidth === null) return {}
 
-    const onBackgroundColor = (function () {
-      if ($switchKnobStyleOverride?.backgroundColor) return $switchKnobStyleOverride.backgroundColor
-      if (disabled) return colors.palette.neutral600
-      return colors.palette.neutral100
-    })()
+    const offsetLeft =
+      $switchContainerStyleOverride?.paddingStart ||
+      $switchContainerStyleOverride?.paddingLeft ||
+      $switchContainer?.paddingStart ||
+      $switchContainer?.paddingLeft ||
+      0
 
-    const backgroundColor = withTiming(on ? onBackgroundColor : offBackgroundColor)
+    const offsetRight =
+      $switchContainerStyleOverride?.paddingEnd ||
+      $switchContainerStyleOverride?.paddingRight ||
+      $switchContainer?.paddingEnd ||
+      $switchContainer?.paddingRight ||
+      0
+
     const start = withTiming(on ? "100%" : "0%")
-    const marginStart = withTiming(on ? -renderedKnobWidth : 0)
+    const marginStart = withTiming(on ? -(renderedKnobWidth || 0) - offsetRight : 0 + offsetLeft)
 
-    return { backgroundColor, start, marginStart }
-  }, [status, disabled, on, renderedKnobWidth])
+    return { start, marginStart }
+  }, [on, renderedKnobWidth])
 
   const $switchContainerStyle = [
     $switchContainer,
+    { backgroundColor: colors.palette.secondary500 },
+    status === "error" && { backgroundColor: colors.error },
+    disabled && { backgroundColor: colors.transparent },
     $animatedSwitchContainer,
     $switchContainerStyleOverride,
   ]
-  const $switchKnobStyle = [$switchKnob, $animatedSwitchKnob, $switchKnobStyleOverride]
+
+  const $switchKnobStyle = [
+    $switchKnob,
+    $animatedSwitchKnob,
+    $switchKnobStyleOverride,
+    {
+      backgroundColor: (function () {
+        if (on) {
+          return [
+            $switchKnobStyleOverride?.backgroundColor,
+            disabled && colors.palette.neutral600,
+            colors.palette.neutral100,
+          ].filter(Boolean)[0]
+        } else {
+          return [
+            $switchContainerStyleOverride?.backgroundColor,
+            disabled && colors.palette.neutral600,
+            status === "error" && colors.error,
+            colors.palette.secondary500,
+          ].filter(Boolean)[0]
+        }
+      })(),
+    },
+  ]
 
   return (
-    <Animated.View style={$switchContainerStyle}>
+    <>
+      <Animated.View style={$switchContainerStyle} />
+
       <SwitchAccessibilityLabel {...props} role="on" />
       <SwitchAccessibilityLabel {...props} role="off" />
 
       <Animated.View
+        ref={knob}
         style={$switchKnobStyle}
-        onLayout={(e) => setRenderedKnobWidth(Math.floor(e.nativeEvent.layout.width))}
+        onLayout={(e) => {
+          // measure knob on load only once
+          if (renderedKnobWidth !== null) return
+          setRenderedKnobWidth(e.nativeEvent.layout.width)
+        }}
       />
-    </Animated.View>
+    </>
   )
 }
 
@@ -409,10 +440,11 @@ const $inputOuterBase: ViewStyle = {
   width: 24,
   borderWidth: 2,
   alignItems: "center",
-  justifyContent: "center",
   overflow: "hidden",
   flexGrow: 0,
   flexShrink: 0,
+  justifyContent: "space-between",
+  flexDirection: "row",
 }
 
 const $inputOuterVariants: Record<Variants, StyleProp<ViewStyle>> = {
@@ -453,11 +485,11 @@ const $switchContainer: ViewStyle = {
   width: "100%",
   height: "100%",
   alignItems: "center",
-  borderWidth: 2,
   borderColor: colors.transparent,
-  justifyContent: "space-between",
   overflow: "hidden",
-  flexDirection: "row",
+  position: "absolute",
+  paddingStart: 2,
+  paddingEnd: 2,
 }
 
 const $switchKnob: ViewStyle = {
