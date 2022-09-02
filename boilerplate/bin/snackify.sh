@@ -2,12 +2,17 @@
 #
 # Setup Script
 #
-echo "This will snackify your project and will delete some important folders like ios and android"
-read -p "Are you sure you want to continue? " -n 1 -r
-echo    # (optional) move to a new line
+echo "This command will create an expo snack project for you. 
+This can be exported to an expo snack for you to test and play with your app. 
+This will be deleting some important folders that expo snack doesn't require. 
+
+So we strongly suggest that you create a different branch while executing this command."
+
+read -p "You want to continue? " -n 1 -r
+echo    # move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    # do dangerous stuff
+    # let's do some stuff
     rm -rf ios android e2e test jest.config.js metro.config.js webpack.config.js
     rm -rf ./app/services/reactotron
     mkdir ./app/services/reactotron && cd ./app/services/reactotron
