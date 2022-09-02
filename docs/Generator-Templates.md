@@ -30,7 +30,7 @@ There's a provided `props` object that contains the following properties:
 
 ```
 props.skipIndexFile  // boolean, if --skip-index-file is passed it's `true`
-props.filename       // string, the name of the file being generated (e.g. "user-model.tsx")
+props.filename       // string, the name of the file being generated (e.g. "UserModel.tsx")
 props.pascalCaseName // string, PascalCase version of the name that is passed in (e.g. "UserModel")
 props.camelCaseName  // string, camelCase version of the name (e.g. "userModel")
 props.kebabCaseName  // string, kebab-case version of the name (e.g. "user-model")

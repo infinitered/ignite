@@ -74,33 +74,31 @@ export async function testSpunUpApp(appPath: string, originalDir: string) {
   // #region Assert Generators Work
   // now lets test generators too, since we have a properly spun-up app!
   // components
-  const componentGen = await runIgnite(`generate component WompBomp`, runOpts)
-  expect(componentGen).toContain(`app/components/womp-bomp.tsx`)
-  expect(filesystem.list(`${appPath}/app/components`)).toContain("womp-bomp.tsx")
-  expect(filesystem.read(`${appPath}/app/components/womp-bomp.tsx`)).toContain(
+  const componentGen = await runIgnite(`generate component womp-bomp`, runOpts)
+  expect(componentGen).toContain(`app/components/WompBomp.tsx`)
+  expect(filesystem.list(`${appPath}/app/components`)).toContain("WompBomp.tsx")
+  expect(filesystem.read(`${appPath}/app/components/WompBomp.tsx`)).toContain(
     "export const WompBomp",
   )
 
   // models
   const modelGen = await runIgnite(`generate model mod-test`, runOpts)
-  expect(modelGen).toContain(`app/models/mod-test.ts`)
-  expect(modelGen).toContain(`app/models/mod-test.test.ts`)
-  expect(filesystem.list(`${appPath}/app/models`)).toContain("mod-test.ts")
-  expect(filesystem.read(`${appPath}/app/models/mod-test.ts`)).toContain(
-    "export const ModTestModel",
-  )
-  expect(filesystem.read(`${appPath}/app/models/index.ts`)).toContain(`export * from "./mod-test"`)
+  expect(modelGen).toContain(`app/models/ModTest.ts`)
+  expect(modelGen).toContain(`app/models/ModTest.test.ts`)
+  expect(filesystem.list(`${appPath}/app/models`)).toContain("ModTest.ts")
+  expect(filesystem.read(`${appPath}/app/models/ModTest.ts`)).toContain("export const ModTestModel")
+  expect(filesystem.read(`${appPath}/app/models/index.ts`)).toContain(`export * from "./ModTest"`)
 
   // screens
   const screenGen = await runIgnite(`generate screen bowser-screen --skip-index-file`, runOpts)
   expect(screenGen).toContain(`Stripping Screen from end of name`)
-  expect(screenGen).toContain(`app/screens/bowser-screen.tsx`)
-  expect(filesystem.list(`${appPath}/app/screens`)).toContain("bowser-screen.tsx")
-  expect(filesystem.read(`${appPath}/app/screens/bowser-screen.tsx`)).toContain(
+  expect(screenGen).toContain(`app/screens/BowserScreen.tsx`)
+  expect(filesystem.list(`${appPath}/app/screens`)).toContain("BowserScreen.tsx")
+  expect(filesystem.read(`${appPath}/app/screens/BowserScreen.tsx`)).toContain(
     "export const BowserScreen",
   )
   expect(filesystem.read(`${appPath}/app/screens/index.ts`)).not.toContain(
-    `export * from "./bowser-screen"`,
+    `export * from "./BowserScreen"`,
   )
 
   // app-icons
