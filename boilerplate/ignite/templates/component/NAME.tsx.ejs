@@ -1,7 +1,7 @@
 ---
 patch:
   path: "app/components/index.ts"
-  append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n"
+  append: "export * from \"./<%= props.kebabCaseName %>\"\n"
   skip: <%= props.skipIndexFile %>
 ---
 // MAVERICKTODO: update the generator template with new patterns
@@ -9,8 +9,8 @@ patch:
 import * as React from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { colors, typography } from "../../theme"
-import { Text } from "../Text"
+import { colors, typography } from "../theme"
+import { Text } from "./Text"
 
 export interface <%= props.pascalCaseName %>Props {
   /**
