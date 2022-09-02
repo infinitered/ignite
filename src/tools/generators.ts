@@ -257,7 +257,7 @@ export function generateFromTemplate(
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
-    const defaultDestinationDir = path(generatorDir, kebabCaseName)
+    const defaultDestinationDir = generatorDir // e.g. app/components, app/screens, app/models
     const templateDestinationDir = data.destinationDir
     const destinationDir = templateDestinationDir
       ? path(cwd(), templateDestinationDir)
