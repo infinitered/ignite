@@ -457,7 +457,7 @@ export default {
     // #endregion
 
     // #region Cache dependencies
-    if (shouldFreshInstallDeps) {
+    if (shouldFreshInstallDeps && cacheExists === false) {
       startSpinner(`Caching ${packagerName} dependencies`)
       cache.copy({
         fromRootDir: targetPath,
