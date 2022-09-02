@@ -1,16 +1,16 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo } from "react"
 import {
-  TouchableOpacity,
+  AccessibilityProps,
   FlatList,
   Image,
   ImageStyle,
+  Platform,
+  StyleSheet,
   TextStyle,
+  TouchableOpacity,
   View,
   ViewStyle,
-  StyleSheet,
-  Platform,
-  AccessibilityProps,
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -19,7 +19,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Icon, Screen, Switch, Text } from "../components"
+import { Icon, Screen, Text, Toggle } from "../components"
 import { translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -61,12 +61,15 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
             <View style={[$rowLayout, $toggle]}>
-              <Switch
-                accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
+              <Toggle
                 value={episodeStore.favoritesOnly}
-                onToggle={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
+                onValueChange={() =>
+                  episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                }
+                variant="switch"
+                labelTx="demoPodcastListScreen.onlyFavorites"
+                accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
               />
-              <Text style={$toggleText} tx="demoPodcastListScreen.onlyFavorites" />
             </View>
           </View>
         }
@@ -241,10 +244,6 @@ const $rowLayout: ViewStyle = {
 const $toggle: ViewStyle = {
   alignItems: "center",
   marginTop: spacing.small,
-}
-
-const $toggleText: TextStyle = {
-  marginStart: spacing.extraSmall,
 }
 
 const $iconContainer: ViewStyle = {
