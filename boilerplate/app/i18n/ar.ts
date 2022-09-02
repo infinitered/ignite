@@ -9,10 +9,6 @@ const ar: Translations = {
   errors: {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
   },
-  accessibility: {
-    switchOn: "⏽",
-    switchOff: "⭘",
-  },
   welcomeScreen: {
     headerRight: "تسجيل خروج",
     postscript:

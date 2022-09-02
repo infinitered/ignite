@@ -9,10 +9,6 @@ const ko: Translations = {
   errors: {
     invalidEmail: "잘못된 이메일 주소 입니다.",
   },
-  accessibility: {
-    switchOn: "⏽",
-    switchOff: "⭘",
-  },
   welcomeScreen: {
     headerRight: "로그아웃",
     postscript:

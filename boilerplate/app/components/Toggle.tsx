@@ -3,6 +3,7 @@ import {
   GestureResponderEvent,
   Image,
   ImageStyle,
+  Platform,
   StyleProp,
   SwitchProps,
   TextInputProps,
@@ -50,19 +51,19 @@ export interface ToggleProps extends Omit<TouchableOpacityProps, "style"> {
    * Optional input wrapper style override.
    * This gives the inputs their size, shape, "off" background-color, and outer border.
    */
-  inputOuterStyle?: StyleProp<ViewStyle>
+  inputOuterStyle?: ViewStyle
   /**
    * Optional input style override.
    * This gives the inputs their inner characteristics and "on" background-color.
    */
-  inputInnerStyle?: StyleProp<ViewStyle>
+  inputInnerStyle?: ViewStyle
   /**
    * Optional input detail style override.
    * For checkbox, this affects the Image component.
    * For radio, this affects the dot View.
    * For switch, this affects the knob View.
    */
-  inputDetailStyle?: StyleProp<ViewStyle | ImageStyle>
+  inputDetailStyle?: ViewStyle & ImageStyle
   /**
    * The position of the label relative to the action component.
    * Default: right
@@ -99,8 +100,9 @@ interface ToggleInputProps {
   on: boolean
   status: ToggleProps["status"]
   disabled: boolean
-  innerStyle: StyleProp<any>
-  detailStyle: StyleProp<any>
+  outerStyle: ViewStyle
+  innerStyle: ViewStyle
+  detailStyle: ViewStyle & ImageStyle
   switchAccessibilityMode?: ToggleProps["switchAccessibilityMode"]
 }
 
@@ -119,7 +121,6 @@ export function Toggle(props: ToggleProps) {
     onPress,
     onValueChange,
     labelPosition = "right",
-    inputOuterStyle: $inputOuterStyleOverride,
     containerStyle: $containerStyleOverride,
     ...WrapperProps
   } = props
@@ -133,19 +134,6 @@ export function Toggle(props: ToggleProps) {
   const ToggleInput = useMemo(() => ToggleInputs[variant] || (() => null), [variant])
 
   const $containerStyle = [$container, $containerStyleOverride]
-
-  const $inputOuterStyle = [
-    $inputOuterVariants[variant],
-    value && { borderColor: colors.palette.secondary500 },
-    !value && { borderColor: colors.palette.neutral800 },
-    status === "error" && { borderColor: colors.error },
-    disabled && {
-      borderColor: colors.palette.neutral300,
-      backgroundColor: colors.palette.neutral300,
-    },
-    !disabled && { backgroundColor: colors.palette.neutral200 },
-    $inputOuterStyleOverride,
-  ]
 
   function handlePress(e: GestureResponderEvent) {
     if (disabled) return
@@ -164,16 +152,15 @@ export function Toggle(props: ToggleProps) {
     >
       {labelPosition === "left" && <FieldLabel {...props} labelPosition={labelPosition} />}
 
-      <View style={$inputOuterStyle}>
-        <ToggleInput
-          on={value}
-          disabled={disabled}
-          status={status}
-          innerStyle={props.inputInnerStyle}
-          detailStyle={props.inputDetailStyle}
-          switchAccessibilityMode={props.switchAccessibilityMode}
-        />
-      </View>
+      <ToggleInput
+        on={value}
+        disabled={disabled}
+        status={status}
+        outerStyle={props.inputOuterStyle}
+        innerStyle={props.inputInnerStyle}
+        detailStyle={props.inputDetailStyle}
+        switchAccessibilityMode={props.switchAccessibilityMode}
+      />
 
       {labelPosition === "right" && <FieldLabel {...props} labelPosition={labelPosition} />}
     </Wrapper>
@@ -191,35 +178,55 @@ function Checkbox(props: ToggleInputProps) {
     on,
     status,
     disabled,
-    innerStyle: $checkboxContainerStyleOverride,
-    detailStyle: $checkboxIconStyleOverride,
+    outerStyle: $outerStyleOverride,
+    innerStyle: $innerStyleOverride,
+    detailStyle: $detailStyleOverride,
   } = props
 
-  const $animatedCheckboxContainer = useAnimatedStyle(
-    () => ({ opacity: withTiming(on ? 1 : 0) }),
-    [on],
-  )
+  const offBackgroundColor = [
+    disabled && colors.palette.neutral300,
+    colors.palette.neutral200,
+  ].filter(Boolean)[0]
 
-  const $checkboxContainerStyle = [
-    $checkboxContainer,
-    { backgroundColor: colors.palette.secondary500 },
-    status === "error" && { backgroundColor: colors.error },
-    disabled && { backgroundColor: colors.transparent },
-    $animatedCheckboxContainer,
-    $checkboxContainerStyleOverride,
-  ]
+  const outerBorderColor = [
+    disabled && colors.palette.neutral300,
+    status === "error" && colors.error,
+    !on && colors.palette.neutral800,
+    colors.palette.secondary500,
+  ].filter(Boolean)[0]
 
-  const $checkboxIconStyle = [
-    $checkboxIcon,
-    { tintColor: colors.palette.neutral100 },
-    disabled && { tintColor: colors.palette.neutral600 },
-    $checkboxIconStyleOverride,
-  ]
+  const onBackgroundColor = [
+    disabled && colors.transparent,
+    status === "error" && colors.error,
+    colors.palette.secondary500,
+  ].filter(Boolean)[0]
+
+  const iconTintColor = [disabled && colors.palette.neutral600, colors.palette.accent100].filter(
+    Boolean,
+  )[0]
 
   return (
-    <Animated.View style={$checkboxContainerStyle}>
-      <Image source={iconRegistry.check} style={$checkboxIconStyle} />
-    </Animated.View>
+    <View
+      style={[
+        $inputOuterVariants.checkbox,
+        { backgroundColor: offBackgroundColor, borderColor: outerBorderColor },
+        $outerStyleOverride,
+      ]}
+    >
+      <Animated.View
+        style={[
+          $checkboxInner,
+          { backgroundColor: onBackgroundColor },
+          $innerStyleOverride,
+          useAnimatedStyle(() => ({ opacity: withTiming(on ? 1 : 0) }), [on]),
+        ]}
+      >
+        <Image
+          source={iconRegistry.check}
+          style={[$checkboxDetail, { tintColor: iconTintColor }, $detailStyleOverride]}
+        />
+      </Animated.View>
+    </View>
   )
 }
 
@@ -228,34 +235,54 @@ function Radio(props: ToggleInputProps) {
     on,
     status,
     disabled,
-    innerStyle: $radioContainerStyleOverride,
-    detailStyle: $radioDotStyleOverride,
+    outerStyle: $outerStyleOverride,
+    innerStyle: $innerStyleOverride,
+    detailStyle: $detailStyleOverride,
   } = props
 
-  const $animatedRadioContainer = useAnimatedStyle(
-    () => ({ opacity: withTiming(on ? 1 : 0) }),
-    [on],
-  )
+  const offBackgroundColor = [
+    disabled && colors.palette.neutral300,
+    colors.palette.neutral200,
+  ].filter(Boolean)[0]
 
-  const $radioContainerStyle = [
-    $radioContainer,
-    { backgroundColor: colors.palette.neutral100 },
-    disabled && { backgroundColor: colors.transparent },
-    $animatedRadioContainer,
-    $radioContainerStyleOverride,
-  ]
-  const $radioDotStyle = [
-    $radioDot,
-    { backgroundColor: colors.palette.secondary500 },
-    status === "error" && { backgroundColor: colors.error },
-    disabled && { backgroundColor: colors.palette.neutral600 },
-    $radioDotStyleOverride,
-  ]
+  const outerBorderColor = [
+    disabled && colors.palette.neutral300,
+    status === "error" && colors.error,
+    !on && colors.palette.neutral800,
+    colors.palette.secondary500,
+  ].filter(Boolean)[0]
+
+  const onBackgroundColor = [disabled && colors.transparent, colors.palette.neutral100].filter(
+    Boolean,
+  )[0]
+
+  const dotBackgroundColor = [
+    disabled && colors.palette.neutral600,
+    status === "error" && colors.error,
+    colors.palette.secondary500,
+  ].filter(Boolean)[0]
 
   return (
-    <Animated.View style={$radioContainerStyle}>
-      <View style={$radioDotStyle} />
-    </Animated.View>
+    <View
+      style={[
+        $inputOuterVariants.radio,
+        { backgroundColor: offBackgroundColor, borderColor: outerBorderColor },
+        $outerStyleOverride,
+      ]}
+    >
+      <Animated.View
+        style={[
+          $radioInner,
+          { backgroundColor: onBackgroundColor },
+          $innerStyleOverride,
+          useAnimatedStyle(() => ({ opacity: withTiming(on ? 1 : 0) }), [on]),
+        ]}
+      >
+        <View
+          style={[$radioDetail, { backgroundColor: dotBackgroundColor }, $detailStyleOverride]}
+        />
+      </Animated.View>
+    </View>
   )
 }
 
@@ -264,9 +291,11 @@ function Switch(props: ToggleInputProps) {
     on,
     status,
     disabled,
-    innerStyle: $switchContainerStyleOverride,
-    detailStyle: $switchKnobStyleOverride,
+    outerStyle: $outerStyleOverride,
+    innerStyle: $innerStyleOverride,
+    detailStyle: $detailStyleOverride,
   } = props
+
   const knob = useRef<Animated.View>()
   const [renderedKnobWidth, setRenderedKnobWidth] = useState(null)
 
@@ -275,28 +304,58 @@ function Switch(props: ToggleInputProps) {
     if (!knob.current) return
     if (renderedKnobWidth === null) return
     knob.current.measure((_x, _y, width) => setRenderedKnobWidth(width))
-  }, [$switchKnobStyleOverride?.width])
+  }, [$detailStyleOverride?.width])
 
-  const $animatedSwitchContainer = useAnimatedStyle(
-    () => ({ opacity: withTiming(on ? 1 : 0) }),
-    [on],
-  )
+  const offBackgroundColor = [
+    disabled && colors.palette.neutral300,
+    colors.palette.neutral200,
+  ].filter(Boolean)[0]
+
+  const onBackgroundColor = [
+    disabled && colors.transparent,
+    status === "error" && colors.error,
+    colors.palette.secondary500,
+  ].filter(Boolean)[0]
+
+  const outerBorderColor = [
+    disabled && colors.palette.neutral300,
+    status === "error" && colors.error,
+    !on && colors.palette.neutral800,
+    colors.palette.secondary500,
+  ].filter(Boolean)[0]
+
+  const knobBackgroundColor = (function () {
+    if (on) {
+      return [
+        $detailStyleOverride?.backgroundColor,
+        disabled && colors.palette.neutral600,
+        colors.palette.neutral100,
+      ].filter(Boolean)[0]
+    } else {
+      return [
+        $innerStyleOverride?.backgroundColor,
+        disabled && colors.palette.neutral600,
+        status === "error" && colors.error,
+        colors.palette.secondary500,
+      ].filter(Boolean)[0]
+    }
+  })()
 
   const $animatedSwitchKnob = useAnimatedStyle(() => {
     if (renderedKnobWidth === null) return {}
 
     const offsetLeft =
-      $switchContainerStyleOverride?.paddingStart ||
-      $switchContainerStyleOverride?.paddingLeft ||
-      $switchContainer?.paddingStart ||
-      $switchContainer?.paddingLeft ||
+      $innerStyleOverride?.paddingStart ||
+      $innerStyleOverride?.paddingLeft ||
+      $switchInner?.paddingStart ||
+      $switchInner?.paddingLeft ||
       0
 
     const offsetRight =
-      $switchContainerStyleOverride?.paddingEnd ||
-      $switchContainerStyleOverride?.paddingRight ||
-      $switchContainer?.paddingEnd ||
-      $switchContainer?.paddingRight ||
+      $innerStyleOverride?.paddingEnd ||
+      $innerStyleOverride?.paddingRight ||
+      $switchInner?.paddingEnd ||
+      $switchInner?.paddingRight ||
       0
 
     const start = withTiming(on ? "100%" : "0%")
@@ -305,42 +364,22 @@ function Switch(props: ToggleInputProps) {
     return { start, marginStart }
   }, [on, renderedKnobWidth])
 
-  const $switchContainerStyle = [
-    $switchContainer,
-    { backgroundColor: colors.palette.secondary500 },
-    status === "error" && { backgroundColor: colors.error },
-    disabled && { backgroundColor: colors.transparent },
-    $animatedSwitchContainer,
-    $switchContainerStyleOverride,
-  ]
-
-  const $switchKnobStyle = [
-    $switchKnob,
-    $animatedSwitchKnob,
-    $switchKnobStyleOverride,
-    {
-      backgroundColor: (function () {
-        if (on) {
-          return [
-            $switchKnobStyleOverride?.backgroundColor,
-            disabled && colors.palette.neutral600,
-            colors.palette.neutral100,
-          ].filter(Boolean)[0]
-        } else {
-          return [
-            $switchContainerStyleOverride?.backgroundColor,
-            disabled && colors.palette.neutral600,
-            status === "error" && colors.error,
-            colors.palette.secondary500,
-          ].filter(Boolean)[0]
-        }
-      })(),
-    },
-  ]
-
   return (
-    <>
-      <Animated.View style={$switchContainerStyle} />
+    <View
+      style={[
+        $inputOuterVariants.switch,
+        { backgroundColor: offBackgroundColor, borderColor: outerBorderColor },
+        $outerStyleOverride,
+      ]}
+    >
+      <Animated.View
+        style={[
+          $switchInner,
+          { backgroundColor: onBackgroundColor },
+          $innerStyleOverride,
+          useAnimatedStyle(() => ({ opacity: withTiming(on ? 1 : 0) }), [on]),
+        ]}
+      />
 
       <SwitchAccessibilityLabel {...props} role="on" />
       <SwitchAccessibilityLabel {...props} role="off" />
@@ -348,14 +387,19 @@ function Switch(props: ToggleInputProps) {
       <Animated.View
         ref={knob}
         entering={FadeIn.delay(150).duration(150)}
-        style={$switchKnobStyle}
+        style={[
+          $switchDetail,
+          $animatedSwitchKnob,
+          $detailStyleOverride,
+          { backgroundColor: knobBackgroundColor },
+        ]}
         onLayout={(e) => {
           // measure knob on load only once
           if (renderedKnobWidth !== null) return
           setRenderedKnobWidth(e.nativeEvent.layout.width)
         }}
       />
-    </>
+    </View>
   )
 }
 
@@ -382,10 +426,13 @@ function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off"
   return (
     <View style={$switchAccessibilityStyle}>
       {switchAccessibilityMode === "text" && shouldLabelBeVisible && (
-        <Text
-          size="xs"
-          style={{ color }}
-          tx={role === "off" ? "accessibility.switchOff" : "accessibility.switchOn"}
+        <View
+          style={[
+            role === "on" && $switchAccessibilityLine,
+            role === "on" && { backgroundColor: color },
+            role === "off" && $switchAccessibilityCircle,
+            role === "off" && { borderColor: color },
+          ]}
         />
       )}
 
@@ -439,7 +486,7 @@ const $container: ViewStyle = {
 const $inputOuterBase: ViewStyle = {
   height: 24,
   width: 24,
-  borderWidth: 2,
+  borderWidth: Platform.select({ ios: 2, android: 1.5 }),
   alignItems: "center",
   overflow: "hidden",
   flexGrow: 0,
@@ -454,7 +501,7 @@ const $inputOuterVariants: Record<Variants, StyleProp<ViewStyle>> = {
   switch: [$inputOuterBase, { height: 32, width: 56, borderRadius: 16 }],
 }
 
-const $checkboxContainer: ViewStyle = {
+const $checkboxInner: ViewStyle = {
   width: "100%",
   height: "100%",
   alignItems: "center",
@@ -462,13 +509,13 @@ const $checkboxContainer: ViewStyle = {
   overflow: "hidden",
 }
 
-const $checkboxIcon: ImageStyle = {
+const $checkboxDetail: ImageStyle = {
   width: 20,
   height: 20,
   resizeMode: "contain",
 }
 
-const $radioContainer: ViewStyle = {
+const $radioInner: ViewStyle = {
   width: "100%",
   height: "100%",
   alignItems: "center",
@@ -476,13 +523,13 @@ const $radioContainer: ViewStyle = {
   overflow: "hidden",
 }
 
-const $radioDot: ViewStyle = {
+const $radioDetail: ViewStyle = {
   width: 12,
   height: 12,
   borderRadius: 6,
 }
 
-const $switchContainer: ViewStyle = {
+const $switchInner: ViewStyle = {
   width: "100%",
   height: "100%",
   alignItems: "center",
@@ -493,7 +540,7 @@ const $switchContainer: ViewStyle = {
   paddingEnd: 2,
 }
 
-const $switchKnob: ViewStyle = {
+const $switchDetail: ViewStyle = {
   borderRadius: 12,
   position: "absolute",
   width: 24,
@@ -523,4 +570,16 @@ const $switchAccessibilityIcon: ImageStyle = {
   width: 14,
   height: 14,
   resizeMode: "contain",
+}
+
+const $switchAccessibilityLine: ViewStyle = {
+  width: 2,
+  height: 12,
+}
+
+const $switchAccessibilityCircle: ViewStyle = {
+  borderWidth: 2,
+  width: 12,
+  height: 12,
+  borderRadius: 6,
 }

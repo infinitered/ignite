@@ -7,10 +7,6 @@ const en = {
   errors: {
     invalidEmail: "Invalid email address.",
   },
-  accessibility: {
-    switchOn: "⏽",
-    switchOff: "⭘",
-  },
   welcomeScreen: {
     headerRight: "Log Out",
     postscript:
