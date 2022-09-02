@@ -344,19 +344,17 @@ function Switch(props: ToggleInputProps) {
   const $animatedSwitchKnob = useAnimatedStyle(() => {
     if (renderedKnobWidth === null) return {}
 
-    const offsetLeft =
-      $innerStyleOverride?.paddingStart ||
+    const offsetLeft = ($innerStyleOverride?.paddingStart ||
       $innerStyleOverride?.paddingLeft ||
       $switchInner?.paddingStart ||
       $switchInner?.paddingLeft ||
-      0
+      0) as number
 
-    const offsetRight =
-      $innerStyleOverride?.paddingEnd ||
+    const offsetRight = ($innerStyleOverride?.paddingEnd ||
       $innerStyleOverride?.paddingRight ||
       $switchInner?.paddingEnd ||
       $switchInner?.paddingRight ||
-      0
+      0) as number
 
     const start = withTiming(on ? "100%" : "0%")
     const marginStart = withTiming(on ? -(renderedKnobWidth || 0) - offsetRight : 0 + offsetLeft)
