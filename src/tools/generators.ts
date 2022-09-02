@@ -232,7 +232,7 @@ export function generateFromTemplate(
   // loop through the files
   const newFiles = files.map(async (templateFilename: string) => {
     // get the filename and replace `NAME` with the actual name
-    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
+    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", pascalCaseName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
