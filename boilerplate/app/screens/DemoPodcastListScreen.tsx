@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
+  ActivityIndicator,
   FlatList,
   Image,
   ImageStyle,
@@ -37,10 +38,15 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   const { episodeStore } = useStores()
 
   const [refreshing, setRefreshing] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
 
   // initially, kick off a background refresh without the refreshing UI
   useEffect(() => {
-    episodeStore.fetchEpisodes()
+    ;(async function load() {
+      setIsLoading(true)
+      await episodeStore.fetchEpisodes()
+      setIsLoading(false)
+    })()
   }, [episodeStore])
 
   // simulate a longer refresh, if the refresh is too fast for UX
@@ -59,35 +65,41 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         refreshing={refreshing}
         onRefresh={manualRefresh}
         ListEmptyComponent={
-          <View>
-            <View style={$container}>
-              {!episodeStore.favoritesOnly ? (
-                <View>
-                  <Text preset="subheading" style={$subheading}>
-                    So empty... so sad
-                  </Text>
-                  <Text>No data found yet. You can click the button or reload the app.</Text>
-                </View>
-              ) : (
-                <View>
-                  <Text preset="subheading" style={$subheading}>
-                    You don't have any favorites yet
-                  </Text>
-                  <Text>Please click the heart icon on each list to add it to your favorites.</Text>
-                </View>
-              )}
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <View>
+              <View style={$container}>
+                {!episodeStore.favoritesOnly ? (
+                  <View>
+                    <Text preset="subheading" style={$subheading}>
+                      So empty... so sad
+                    </Text>
+                    <Text>No data found yet. You can click the button or reload the app.</Text>
+                  </View>
+                ) : (
+                  <View>
+                    <Text preset="subheading" style={$subheading}>
+                      You don't have any favorites yet
+                    </Text>
+                    <Text>
+                      Please click the heart icon on each list to add it to your favorites.
+                    </Text>
+                  </View>
+                )}
+              </View>
+              <View style={$buttonContainer}>
+                <Button
+                  text="Go back to the list"
+                  onPress={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
+                  style={$button}
+                />
+              </View>
+              <View style={$sadFaceContainer}>
+                <Image source={sadFace} style={$sadFace} resizeMode="contain" />
+              </View>
             </View>
-            <View style={$buttonContainer}>
-              <Button
-                text="Go back to the list"
-                onPress={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
-                style={$button}
-              />
-            </View>
-            <View style={$sadFaceContainer}>
-              <Image source={sadFace} style={$sadFace} resizeMode="contain" />
-            </View>
-          </View>
+          )
         }
         ListHeaderComponent={
           <View style={$heading}>
