@@ -1,4 +1,5 @@
 import { print } from "gluegun"
+import { AssetName, asset } from "../assets"
 
 const { cyan, gray, white, bold, red, yellow } = print.colors
 const { underline } = print.colors
@@ -63,3 +64,19 @@ export const command = (
 export const direction = (m = "") => p(cyan(m))
 
 export const warning = (m = "") => p(yellow(m))
+
+export const ascii = (assetname: AssetName) => console.log(asset.get(assetname))
+
+export const pretty = {
+  p,
+  startSpinner,
+  stopSpinner,
+  clearSpinners,
+  heading,
+  link,
+  igniteHeading,
+  command,
+  direction,
+  warning,
+  ascii,
+}
