@@ -4,14 +4,14 @@ import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../to
 import { packager, PackagerName } from "../tools/packager"
 import {
   command,
-  direction,
   heading,
-  igniteHeading,
   p,
   startSpinner,
   stopSpinner,
   clearSpinners,
   ascii,
+  em,
+  link,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -130,7 +130,7 @@ export default {
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
     const { info, colors, warning } = print
-    const { gray, red, magenta, cyan, yellow, green } = colors
+    const { gray, cyan, yellow } = colors
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
@@ -315,12 +315,11 @@ export default {
 
     // #region Print Welcome
     // welcome everybody!
-    igniteHeading()
-    p(` █ Creating ${magenta(projectName)} using ${red("Ignite")} ${meta.version()}`)
-    p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
-    p(` █ Using ${cyan("ignite-cli")} with ${green(packagerName)}`)
-    p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
-    p(` █ Path: ${gray(targetPath)}`)
+    p(` █ Creating ${em(projectName)} using Ignite ${meta.version()}`)
+    p(` █ Powered by ${em("Infinite Red")} (${link("https://infinite.red")})`)
+    p(` █ Using ${em("ignite-cli")} with ${em(packagerName)}`)
+    p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
+    p(` █ Path: ${targetPath}`)
     p(` ────────────────────────────────────────────────\n`)
 
     startSpinner("Igniting app")
@@ -522,9 +521,9 @@ export default {
 
     p()
     p()
-    heading(`${red("Ignite CLI")} ignited ${yellow(projectName)} in ${gray(`${perfDuration}s`)}`)
+    p(`${em("ignite-cli")} ignited ${em(projectName)} in ${gray(`${perfDuration}s`)}`)
     p()
-    direction(`To get started:`)
+    p(`To get started:`)
     command(`  cd ${projectName}`)
 
     if (process.platform === "darwin") {
@@ -533,14 +532,12 @@ export default {
     command(`  ${packager.runCmd("android", packagerOptions)}`)
     if (!isAndroidInstalled(toolbox)) {
       p()
-      direction("To run in Android, make sure you've followed the latest react-native setup")
-      direction("instructions at https://facebook.github.io/react-native/docs/getting-started")
-      direction(
-        "before using ignite. You won't be able to run Android successfully until you have.",
-      )
+      p("To run in Android, make sure you've followed the latest react-native setup")
+      p(`instructions at ${link("https://facebook.github.io/react-native/docs/getting-started")}`)
+      p("before using ignite. You won't be able to run Android successfully until you have.")
     }
     p()
-    direction("Or with Expo:")
+    p("Or with Expo:")
     command(`  ${packager.runCmd("expo:start", packagerOptions)}`)
     // #endregion
 
@@ -552,7 +549,7 @@ export default {
 
     if (coloLoco) {
       p()
-      direction(`React Native Colo Loco`)
+      p(`React Native Colo Loco`)
       p("React Native Colo Loco is no longer installed by default.")
       p("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
       p("However, you can install it with the following commands in your app folder:")
@@ -566,10 +563,9 @@ export default {
     p()
     p("Need additional help?")
     p()
-    direction("Join our Slack community at http://community.infinite.red.")
+    p(`Join our Slack community at ${link("http://community.infinite.red.")}`)
     p()
     heading("Now get cooking! 🍽")
-    igniteHeading()
     // #endregion
 
     // #region Print CLI command
@@ -616,6 +612,7 @@ export default {
       )
       .join(" ")}`
 
+    p()
     p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
     command(`  ${cliCommand}`)
     p()
