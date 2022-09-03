@@ -95,7 +95,7 @@ export const DemoListItem: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Custon Left/Right Components"
+      name="Custom Left/Right Components"
       description="If you need a custom left/right component, you can pass it in."
     >
       <ListItem
