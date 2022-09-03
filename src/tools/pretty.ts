@@ -66,7 +66,14 @@ export const direction = (m = "") => p(red(m))
 
 export const warning = (m = "") => p(yellow(m))
 
-export const ascii = (assetname: AssetName) => console.log(asset.get(assetname))
+export const ascii = (assetname: AssetName) =>
+  console.log(
+    asset
+      .get(assetname)
+      .split("\n")
+      .map((line) => INDENT + line)
+      .join("\n"),
+  )
 
 export const pretty = {
   p,
