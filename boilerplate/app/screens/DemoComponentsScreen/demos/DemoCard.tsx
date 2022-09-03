@@ -59,7 +59,7 @@ export const DemoCard: Demo = {
         heading="Force Footer Bottom"
         verticalAlignment="force-footer-bottom"
         content="This pushes the footer where it belongs."
-        footer="I'm so longely down here."
+        footer="I'm so lonely down here."
         style={{ minHeight: 160 }}
       />
     </DemoUseCase>,
