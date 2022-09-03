@@ -1,15 +1,10 @@
-/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
-import { View, ViewStyle } from "react-native"
 import { AutoImage, Button, Card, Icon } from "../../../components"
 import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-
-const $imageContainer: ViewStyle = {
-  alignItems: "center",
-}
 
 export const DemoCard: Demo = {
   name: "Card",

@@ -64,7 +64,7 @@ export const DemoAutoImage: Demo = {
       description="Providing a `maxWidth` and/or `maxHeight` props, the image will automatically scale while retaining it's aspect ratio. How is this different from `resizeMode: 'contain'`? Firstly, you can
       specify only one side's size (not both). Secondly, the image will scale to fit the desired dimensions instead of just being contained within its image-container."
     >
-      <View style={[$aspectRatioWidthExampleContainer]}>
+      <View style={$aspectRatioWidthExampleContainer}>
         <Text
           text="<View />"
           size="xxs"
@@ -112,7 +112,7 @@ export const DemoAutoImage: Demo = {
       <DemoDivider size={40} />
 
       <View style={{ flexDirection: "row" }}>
-        <View style={[$aspectRatioHeightExampleContainer]}>
+        <View style={$aspectRatioHeightExampleContainer}>
           <Text
             text="<View />"
             size="xxs"
@@ -158,7 +158,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={40} />
 
-      <View style={[$aspectRatioWidthExampleContainer]}>
+      <View style={$aspectRatioWidthExampleContainer}>
         <Text
           text="<View />"
           size="xxs"
@@ -181,7 +181,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={5} />
 
-      <View style={[$aspectRatioWidthExampleContainer]}>
+      <View style={$aspectRatioWidthExampleContainer}>
         <View style={[$aspectRatioBox, { width: 60, height: 60 }]} />
         <Image
           source={{
