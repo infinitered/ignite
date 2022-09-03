@@ -216,7 +216,7 @@ export default {
 
     // #endregion
 
-    // #region Overwrite
+    // #region Prompt Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     const defaultOverwrite = false
     let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
@@ -227,18 +227,6 @@ export default {
           `${targetPath} already exists. Do you want to overwrite it?`,
           false,
         )
-      }
-
-      if (overwrite === false) {
-        const alreadyExists = `Error: There's already a folder at ${targetPath}. To force overwriting that folder, run with --overwrite or say yes.`
-        p()
-        p(yellow(alreadyExists))
-        process.exit(1)
-      }
-
-      if (overwrite === true) {
-        log(`Removing existing project ${targetPath}`)
-        remove(targetPath)
       }
     }
     // #endregion
@@ -336,6 +324,22 @@ export default {
     p(` ────────────────────────────────────────────────\n`)
 
     startSpinner("Igniting app")
+    // #endregion
+
+    // #region Overwrite
+    if (overwrite === false) {
+      const alreadyExists = `Error: There's already a folder at ${targetPath}. To force overwriting that folder, run with --overwrite or say yes.`
+      p()
+      p(yellow(alreadyExists))
+      process.exit(1)
+    }
+
+    if (overwrite === true) {
+      const msg = ` Overwriting existing ${projectName}`
+      startSpinner(msg)
+      remove(targetPath)
+      stopSpinner(msg, "🗑️")
+    }
     // #endregion
 
     // #region Copy Boilerplate Files
