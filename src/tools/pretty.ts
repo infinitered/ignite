@@ -7,12 +7,13 @@ const { underline } = print.colors
 type Spinner = ReturnType<typeof print.spin>
 const spinners: { [key: string]: Spinner } = {}
 
-export const p = (m = "") => print.info(gray(`   ${m}`))
+export const INDENT = "   "
+export const p = (m = "") => print.info(gray(INDENT + m))
 
 export const startSpinner = (m = "") => {
   let spinner = spinners[m]
   if (!spinner) {
-    spinner = print.spin({ prefixText: "   ", text: gray(m) })
+    spinner = print.spin({ prefixText: INDENT, text: gray(m) })
     spinners[m] = spinner
   }
   return spinner
