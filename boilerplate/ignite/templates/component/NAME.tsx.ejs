@@ -1,7 +1,7 @@
 ---
 patch:
   path: "app/components/index.ts"
-  append: "export * from \"./<%= props.kebabCaseName %>\"\n"
+  append: "export * from \"./<%= props.pascalCaseName %>\"\n"
   skip: <%= props.skipIndexFile %>
 ---
 // MAVERICKTODO: update the generator template with new patterns
