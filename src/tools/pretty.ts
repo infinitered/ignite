@@ -1,7 +1,7 @@
 import { print } from "gluegun"
 import { AssetName, asset } from "../assets"
 
-const { cyan, gray, white, bold, red, yellow } = print.colors
+const { gray, white, bold, red, yellow } = print.colors
 const { underline } = print.colors
 
 type Spinner = ReturnType<typeof print.spin>
@@ -62,7 +62,7 @@ export const command = (
   }
 }
 
-export const direction = (m = "") => p(cyan(m))
+export const direction = (m = "") => p(red(m))
 
 export const warning = (m = "") => p(yellow(m))
 
