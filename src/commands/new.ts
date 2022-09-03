@@ -11,6 +11,7 @@ import {
   startSpinner,
   stopSpinner,
   clearSpinners,
+  ascii,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -151,9 +152,16 @@ export default {
     log(`ignite command: ${parameters.argv.join(" ")}`)
     // #endregion
 
-    // #region Project Name
-    heading("🔥 About to Ignite your new app! 🔥")
+    // #region Welcome Message
+    const terminalWidth = process.stdout.columns ?? 80
+    const logo =
+      terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
+    p()
+    logo()
+    p()
+    // #endregion
 
+    // #region Project Name
     // retrieve project name from toolbox
     const { validateProjectName } = require("../tools/validations") as ValidationsExports
     const projectName = await validateProjectName(toolbox)
