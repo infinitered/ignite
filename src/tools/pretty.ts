@@ -49,6 +49,8 @@ export const igniteHeading = () =>
     ),
   )
 
+export const em = (m = "") => bold(white(m))
+
 export const command = (
   m: string | { m: string; width: number } = "",
   second = "",
