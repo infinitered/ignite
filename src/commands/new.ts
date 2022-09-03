@@ -221,8 +221,10 @@ export default {
         process.exit(1)
       }
 
-      log(`Removing existing project ${projectName}`)
-      remove(projectName)
+      if (overwrite === true) {
+        log(`Removing existing project ${targetPath}`)
+        remove(targetPath)
+      }
     }
     // #endregion
 

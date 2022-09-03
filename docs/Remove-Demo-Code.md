@@ -39,6 +39,7 @@ Remove the next line from the source code
 #### Example:
 
 ```tsx
+// @demo remove-next-line
 import { DemoScreen } from "./demo/screen"
 ```
 
