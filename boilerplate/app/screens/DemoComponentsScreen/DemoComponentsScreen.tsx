@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react"
+import React, { ReactElement, useEffect, useRef, useState } from "react"
 import { FlatList, Image, ImageStyle, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue } from "react-native-reanimated"
@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { ListItem, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import { colors } from "../../theme"
+import { colors, spacing } from "../../theme"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 
@@ -20,6 +20,7 @@ export interface Demo {
 
 export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents">) {
   const [open, setOpen] = useState(false)
+  const timeout = useRef<ReturnType<typeof setTimeout>>()
   const drawerRef = useRef<DrawerLayout>()
   const listRef = useRef<SectionList>()
   const menuRef = useRef<FlatList>()
@@ -43,6 +44,27 @@ export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents"
     })
     toggleDrawer()
   }
+
+  const scrollToIndexFailed = (info: {
+    index: number
+    highestMeasuredFrameIndex: number
+    averageItemLength: number
+  }) => {
+    listRef.current?.getScrollResponder()?.scrollToEnd()
+    timeout.current = setTimeout(
+      () =>
+        listRef.current?.scrollToLocation({
+          animated: true,
+          itemIndex: info.index,
+          sectionIndex: 0,
+        }),
+      50,
+    )
+  }
+
+  useEffect(() => {
+    return () => timeout.current && clearTimeout(timeout.current)
+  }, [])
 
   return (
     <DrawerLayout
@@ -111,6 +133,7 @@ export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents"
               <Text preset="heading" tx="demoComponentsScreen.jumpStart" />
             </View>
           }
+          onScrollToIndexFailed={scrollToIndexFailed}
           renderSectionHeader={({ section }) => {
             return (
               <View>
@@ -132,15 +155,15 @@ const $drawer: ViewStyle = {
 }
 
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: 24,
+  paddingHorizontal: spacing.large,
 }
 
 const $sectionListContentContainer: ViewStyle = {
-  paddingHorizontal: 24,
+  paddingHorizontal: spacing.large,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: 56,
+  marginBottom: spacing.massive,
 }
 
 const $logoImage: ImageStyle = {
@@ -151,23 +174,23 @@ const $logoImage: ImageStyle = {
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   height: 56,
-  paddingHorizontal: 24,
+  paddingHorizontal: spacing.large,
 }
 
 const $menuContainer: ViewStyle = {
-  paddingBottom: 8,
-  paddingTop: 24,
+  paddingBottom: spacing.extraSmall,
+  paddingTop: spacing.large,
 }
 
 const $demoItemName: TextStyle = {
   fontSize: 24,
-  marginBottom: 18,
+  marginBottom: spacing.medium,
 }
 
 const $demoItemDescription: TextStyle = {
-  marginBottom: 43,
+  marginBottom: spacing.huge,
 }
 
 const $demoUseCasesSpacer: ViewStyle = {
-  paddingBottom: 58,
+  paddingBottom: spacing.huge,
 }

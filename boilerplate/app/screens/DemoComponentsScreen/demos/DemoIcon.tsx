@@ -2,27 +2,27 @@
 import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
-import { colors } from "../../../theme"
+import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $demoIconContainer: ViewStyle = {
-  padding: 10,
+  padding: spacing.extraSmall,
 }
 
 const $iconTile: ViewStyle = {
   width: "33.333%",
   alignItems: "center",
-  paddingVertical: 10,
+  paddingVertical: spacing.extraSmall,
 }
 
 const $iconTileLabel: TextStyle = {
-  marginTop: 4,
+  marginTop: spacing.tiny,
   color: colors.textDim,
 }
 
 const $customIconContainer: ViewStyle = {
-  padding: 20,
+  padding: spacing.medium,
   backgroundColor: colors.palette.angry500,
 }
 

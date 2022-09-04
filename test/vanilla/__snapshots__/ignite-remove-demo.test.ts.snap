@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ignite-cli remove-demo should print the expected response 1`] = `
+"   
+   Removing demo code from '/user/home/ignite'
+   Done removing demo code from '/user/home/ignite'
+"
+`;

@@ -232,7 +232,7 @@ export function generateFromTemplate(
   // loop through the files
   const newFiles = files.map(async (templateFilename: string) => {
     // get the filename and replace `NAME` with the actual name
-    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
+    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", pascalCaseName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
@@ -257,7 +257,7 @@ export function generateFromTemplate(
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
-    const defaultDestinationDir = path(generatorDir, kebabCaseName)
+    const defaultDestinationDir = generatorDir // e.g. app/components, app/screens, app/models
     const templateDestinationDir = data.destinationDir
     const destinationDir = templateDestinationDir
       ? path(cwd(), templateDestinationDir)

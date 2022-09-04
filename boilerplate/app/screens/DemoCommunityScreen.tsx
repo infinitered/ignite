@@ -2,7 +2,9 @@ import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { spacing } from "../theme"
 import { openLinkInBrowser } from "../utils/open-link-in-browser"
+import { isRTL } from "../i18n"
 
 const chainReactLogo = require("../../assets/images/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/rnl-logo.png")
@@ -21,7 +23,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
         tx="demoCommunityScreen.joinSlackLink"
         bottomSeparator
         leftIcon="slack"
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://infiniteredcommunity.slack.com/")}
       />
       <Text
@@ -34,7 +36,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
         tx="demoCommunityScreen.contributeToIgniteLink"
         bottomSeparator
         leftIcon="github"
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
       />
 
@@ -47,7 +49,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <ListItem
         tx="demoCommunityScreen.reactNativeRadioLink"
         bottomSeparator
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         LeftComponent={
           <View style={$logoContainer}>
             <Image source={reactNativeRadioLogo} style={$logo} />
@@ -58,7 +60,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <ListItem
         tx="demoCommunityScreen.reactNativeNewsletterLink"
         bottomSeparator
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         LeftComponent={
           <View style={$logoContainer}>
             <Image source={reactNativeNewsletterLogo} style={$logo} />
@@ -69,7 +71,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <ListItem
         tx="demoCommunityScreen.reactNativeLiveLink"
         bottomSeparator
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         LeftComponent={
           <View style={$logoContainer}>
             <Image source={reactNativeLiveLogo} style={$logo} />
@@ -80,7 +82,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <ListItem
         tx="demoCommunityScreen.chainReactConferenceLink"
         bottomSeparator
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         LeftComponent={
           <View style={$logoContainer}>
             <Image source={chainReactLogo} style={$logo} />
@@ -94,7 +96,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
         tx="demoCommunityScreen.hireUsLink"
         bottomSeparator
         leftIcon="clap"
-        rightIcon="caretRight"
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://infinite.red/contact")}
       />
     </Screen>
@@ -102,29 +104,28 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
 }
 
 const $container: ViewStyle = {
-  paddingTop: 40,
-  paddingBottom: 50,
-  paddingHorizontal: 24,
+  paddingVertical: spacing.huge,
+  paddingHorizontal: spacing.large,
 }
 
 const $title: TextStyle = {
-  marginBottom: 10,
+  marginBottom: spacing.small,
 }
 
 const $tagline: TextStyle = {
-  marginBottom: 40,
+  marginBottom: spacing.huge,
 }
 
 const $description: TextStyle = {
-  marginBottom: 24,
+  marginBottom: spacing.large,
 }
 
 const $sectionTitle: TextStyle = {
-  marginTop: 40,
+  marginTop: spacing.huge,
 }
 
 const $logoContainer: ViewStyle = {
-  marginRight: 16,
+  marginEnd: spacing.medium,
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",

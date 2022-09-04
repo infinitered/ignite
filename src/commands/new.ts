@@ -13,6 +13,7 @@ import {
   clearSpinners,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
+import { boolFlag } from "../tools/flag"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -124,7 +125,7 @@ export default {
     const { gray, red, magenta, cyan, yellow, green } = colors
     const options: Options = parameters.options
 
-    const yname = !!options.y || !!options.yes
+    const yname = boolFlag(options.y) || boolFlag(options.yes)
     const useDefault = (option: unknown) => yname && option === undefined
     // #endregion
 
@@ -133,7 +134,7 @@ export default {
     const perfStart = new Date().getTime()
 
     // debug?
-    const debug = Boolean(options.debug)
+    const debug = boolFlag(options.debug)
     const log = <T = unknown>(m: T): T => {
       debug && info(` ${m}`)
       return m
@@ -203,7 +204,8 @@ export default {
     // #region Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     const defaultOverwrite = false
-    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : options.overwrite
+    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
+
     if (exists(targetPath)) {
       if (overwrite === undefined) {
         overwrite = await prompt.confirm(
@@ -219,8 +221,10 @@ export default {
         process.exit(1)
       }
 
-      log(`Removing existing project ${projectName}`)
-      remove(projectName)
+      if (overwrite === true) {
+        log(`Removing existing project ${targetPath}`)
+        remove(targetPath)
+      }
     }
     // #endregion
 
@@ -295,7 +299,7 @@ export default {
 
     // #region Expo
     // show warning about --expo going away
-    const expo = Boolean(options.expo)
+    const expo = boolFlag(options.expo)
     if (expo) {
       warning(
         " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
@@ -311,7 +315,7 @@ export default {
     p(` █ Powered by ${red("Infinite Red")} - https://infinite.red`)
     p(` █ Using ${cyan("ignite-cli")} with ${green(packagerName)}`)
     p(` █ Bundle identifier: ${magenta(bundleIdentifier)}`)
-    p(` █ Path: ${gray(path(process.cwd(), projectName))}`)
+    p(` █ Path: ${gray(targetPath)}`)
     p(` ────────────────────────────────────────────────\n`)
 
     startSpinner("Igniting app")
@@ -327,10 +331,12 @@ export default {
     stopSpinner("Igniting app", "🔥")
 
     startSpinner(" 3D-printing a new React Native app")
+
     await copyBoilerplate(toolbox, {
       boilerplatePath,
       targetPath,
       excluded: [".vscode", "node_modules", "yarn.lock"],
+      overwrite,
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")
 
@@ -338,7 +344,7 @@ export default {
     const cwd = log(process.cwd())
 
     // jump into the project to do additional tasks
-    process.chdir(projectName)
+    process.chdir(targetPath)
 
     // copy the .gitignore if it wasn't copied over
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
@@ -421,8 +427,11 @@ export default {
     // #endregion
 
     // #region Run Format
-    // Make sure all our modifications are formatted nicely
-    await packager.run("format", { ...packagerOptions, silent: !debug })
+    // we can't run this option if we didn't install deps
+    if (installDeps === true) {
+      // Make sure all our modifications are formatted nicely
+      await packager.run("format", { ...packagerOptions, silent: !debug })
+    }
     // #endregion
 
     // #region Create Git Repostiory and Initial Commit
@@ -483,7 +492,7 @@ export default {
     // React Native Colo Loco is no longer installed with Ignite, but
     // we will give instructions on how to install it if they
     // pass in `--colo-loco`
-    const coloLoco = Boolean(options.coloLoco)
+    const coloLoco = boolFlag(options.coloLoco)
 
     if (coloLoco) {
       p()
@@ -525,21 +534,31 @@ export default {
     }
 
     type Flag = keyof typeof flags
+    type FlagEntry = [key: Flag, value: Options[Flag]]
 
     const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y", "yes"]
 
-    const cliCommand = `npx ignite-cli new ${projectName} ${(
-      Object.entries(flags) as [Flag, Options[Flag]][]
-    )
+    const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
+    const booleanFlag = ([key, value]: FlagEntry) =>
+      value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}`
+
+    const cliCommand = `npx ignite-cli new ${projectName} ${(Object.entries(flags) as FlagEntry[])
       .filter(([key]) => privateFlags.includes(key) === false)
       .filter(([, value]) => value !== undefined)
-      .map(([key, value]) => `--${kebabCase(key)}=${value}`)
+      .map(([key, value]) =>
+        typeof value === "boolean" ? booleanFlag([key, value]) : stringFlag([key, value]),
+      )
       .join(" ")}`
 
     p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
     command(`  ${cliCommand}`)
     p()
 
+    // this is a hack to prevent the process from hanging
+    // if there are any tasks left in the event loop
+    // like I/O operations to process.stdout and process.stderr
+    // see https://github.com/infinitered/ignite/issues/2084
+    process.exit(0)
     // #endregion
   },
 }

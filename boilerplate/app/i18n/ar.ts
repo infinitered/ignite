@@ -62,9 +62,10 @@ const ar: Translations = {
     lorem2Sentences:
       "عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم",
     demoButtonTxExample: "عبر `tx` Prop - Fugiat Id",
-    demoTextFieldTxExample: "Prop '{{prop}}Tx عبر",
+    demoTextFieldTxExample: "Prop `{{prop}}Tx` عبر",
     demoListItemTxExample: "عبر `tx` Prop - consequat commodo",
     demoHeaderTxExample: "ياي",
+    demoToggleLabelTxExample: "Prop `labelTx` عبر",
   },
   demoDebugScreen: {
     howTo: "كيف",
@@ -86,11 +87,20 @@ const ar: Translations = {
   demoPodcastListScreen: {
     title: "حلقات إذاعية React Native",
     onlyFavorites: "المفضلة فقط",
+    accessibility: {
+      cardHint: "انقر مرّتين للاستماع على الحلقة. انقر مرّتين وانتظر لتفعيل {{action}} هذه الحلقة.",
+      switch: "قم بالتبديل لاظهار المفضّلة فقط.",
+      favoriteAction: "تبديل المفضلة",
+      favoriteIcon: "الحلقة الغير مفضّلة",
+      unfavoriteIcon: "الحلقة المفضّلة",
+      publishLabel: "نشرت {{date}}",
+      durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
+    },
   },
   errorScreen: {
     title: "هناك خطأ ما",
     friendlySubtitle:
-      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تشخيص هذه الرسالة (الموجودة في التطبيق 'app/i18n/en.json') وربما التخطيط ايضاً ('app/screens/error'). اذا كنت تريد إزالة هذا تماماً انظر الى 'app/app.tsp' للتحقق من مكونات  <ErrorBoundary>",
+      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة ( الموجودة في 'ts.en/i18n/app') وربما التخطيط ايضاً ('app/screens/ErrorScreen'). إذا كنت تريد إزالة هذا بالكامل، تحقق من 'app/app.tsp' من اجل عنصر <ErrorBoundary>.",
     traceTitle: "خطأ من مجموعة %{name}",
     reset: "اعادة تعيين التطبيق",
   },

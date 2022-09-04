@@ -60,12 +60,17 @@ export function Icon(props: IconProps) {
     ...WrapperProps
   } = props
 
+  const isPressable = !!WrapperProps.onPress
   const Wrapper: ComponentType<TouchableOpacityProps> = WrapperProps?.onPress
     ? TouchableOpacity
     : View
 
   return (
-    <Wrapper {...WrapperProps} style={$containerStyleOverride}>
+    <Wrapper
+      accessibilityRole={isPressable ? "imagebutton" : undefined}
+      {...WrapperProps}
+      style={$containerStyleOverride}
+    >
       <Image
         style={[
           $imageStyle,
@@ -97,6 +102,7 @@ export const iconRegistry = {
   menu: require("../../assets/icons/menu.png"),
   more: require("../../assets/icons/more.png"),
   pin: require("../../assets/icons/pin.png"),
+  podcast: require("../../assets/icons/podcast.png"),
   settings: require("../../assets/icons/settings.png"),
   slack: require("../../assets/icons/slack.png"),
   view: require("../../assets/icons/view.png"),
