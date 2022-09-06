@@ -64,6 +64,7 @@ const en = {
     demoTextFieldTxExample: "Via `{{prop}}Tx` Prop",
     demoHeaderTxExample: "Yay",
     demoToggleLabelTxExample: "Via `labelTx` prop",
+    demoCardTxExample: "Via `{{prop}}Tx` Prop",
   },
   demoDebugScreen: {
     howTo: "HOW TO",
