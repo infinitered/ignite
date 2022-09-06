@@ -295,7 +295,9 @@ export default {
     log(`boilerplatePath: ${boilerplatePath}`)
 
     const defaultInstallDeps = true
-    let installDeps = useDefault(options.installDeps) ? defaultInstallDeps : options.installDeps
+    let installDeps = useDefault(options.installDeps)
+      ? defaultInstallDeps
+      : boolFlag(options.installDeps)
     if (installDeps === undefined) {
       installDeps = await prompt.confirm(
         "Want us to install dependencies for you? (adds 50-100 seconds)",
@@ -418,7 +420,7 @@ export default {
       stopSpinner(`Copying cached ${packagerName} dependencies`, "📦")
     }
 
-    const shouldFreshInstallDeps = shouldUseCache === false
+    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
     if (shouldFreshInstallDeps) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
