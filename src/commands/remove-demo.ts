@@ -8,9 +8,11 @@ const MATCHING_GLOBS = [
   "!**/.DS_Store",
   "!**/.expo{,/**}",
   "!**/.git{,/**}",
+  "!**/.vscode{,/**}",
   "!**/node_modules{,/**}",
   "!**/ios/build{,/**}",
   "!**/ios/Pods{,/**}",
+  "!**/ios/*.xcworkspace{,/**}",
   "!**/android/build{,/**}",
   "!**/android/app/build{,/**}",
 ]
