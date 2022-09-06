@@ -53,7 +53,7 @@ jobs:
             pnpm config set store-dir ../.pnpm-store
       - run:
           name: Run tests
-          command: yarn ci:prep && yarn ci:test:vanilla && yarn clean
+          command: yarn ci:test
           no_output_timeout: 5m
 
   # detox:

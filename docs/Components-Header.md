@@ -55,11 +55,7 @@ The `containerStyle` prop is an optional prop that is used to set the style of t
 The `backgroundColor` prop is an optional prop that is used to set the background color of the header container.
 
 ```tsx
-<Header
-  title="Header Title"
-  onLeftPress={() => navigation.goBack()}
-  backgroundColor="purple"
-/>
+<Header title="Header Title" onLeftPress={() => navigation.goBack()} backgroundColor="purple" />
 ```
 
 ### `title`
@@ -67,11 +63,7 @@ The `backgroundColor` prop is an optional prop that is used to set the backgroun
 The `title` is an optional prop that is used to set the header title. If this is not set, the `titleTx` prop must be present to set the title. If both are set, the `title` value will be used.
 
 ```tsx
-<Header
-  title="Header Title"
-  leftIcon="back"
-  onLeftPress={() => navigation.goBack()}
-/>
+<Header title="Header Title" leftIcon="back" onLeftPress={() => navigation.goBack()} />
 ```
 
 ### `titleTx`
@@ -79,11 +71,7 @@ The `title` is an optional prop that is used to set the header title. If this is
 The `titleTx` is an optional prop that is used to lookup the translation for the header title. If this is not set, the `title` prop must be present to set the header title. If both are set, the `title` value will be used.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  leftIcon="back"
-  onLeftPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" leftIcon="back" onLeftPress={() => navigation.goBack()} />
 ```
 
 ### `titleTxOptions`
@@ -104,11 +92,7 @@ The `titleTxOptions` is an optional prop that is used to pass props to the trans
 The `leftIcon` is an optional prop that is used to set the icon for the left navigation button. Options are 'back', 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `leftIcon` prop.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  leftIcon="back"
-  onLeftPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" leftIcon="back" onLeftPress={() => navigation.goBack()} />
 ```
 
 ### `leftIconColor`
@@ -129,11 +113,7 @@ The `leftIconColor` is an optional prop that is used to set the tint color of th
 The `leftText` is an optional prop that is used to set the text for the left navigation button. Overrides the `leftIcon` prop.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  leftText="Back"
-  onLeftPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" leftText="Back" onLeftPress={() => navigation.goBack()} />
 ```
 
 ### `leftTx`
@@ -141,11 +121,7 @@ The `leftText` is an optional prop that is used to set the text for the left nav
 The `leftTx` is an optional prop that is used to lookup the translation for the left navigation button. Overrides the `leftIcon` and `leftText` prop`.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  leftTx="header.back"
-  onLeftPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" leftTx="header.back" onLeftPress={() => navigation.goBack()} />
 ```
 
 ### `leftTxOptions`
@@ -166,10 +142,7 @@ The `leftTxOptions` is an optional prop that is used to pass props to the transl
 The `LeftActionComponent` is an optional `ReactElement` prop that is used to set a custom component for the left navigation button. Overrides the `leftIcon`, `leftText`, `leftTx`, and `onLeftText` props (since the passed component is completely customizable).
 
 ```tsx
-<Header
-  titleTx="header.title"
-  LeftActionComponent={<Text>Back</Text>}
-/>
+<Header titleTx="header.title" LeftActionComponent={<Text>Back</Text>} />
 ```
 
 ### `onLeftPress`
@@ -177,11 +150,7 @@ The `LeftActionComponent` is an optional `ReactElement` prop that is used to set
 The `onLeftPress` is an optional prop that is used to set the function to be called when the left navigation button is pressed.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  leftIcon="back"
-  onLeftPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" leftIcon="back" onLeftPress={() => navigation.goBack()} />
 ```
 
 ### `rightIcon`
@@ -189,11 +158,7 @@ The `onLeftPress` is an optional prop that is used to set the function to be cal
 The `rightIcon` is an optional prop that is used to set the icon for the right navigation button. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `rightIcon` prop.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  rightIcon="back"
-  onRightPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" rightIcon="back" onRightPress={() => navigation.goBack()} />
 ```
 
 ### `rightIconColor`
@@ -214,11 +179,7 @@ The `rightIconColor` is an optional prop that is used to set the tint color of t
 The `rightText` is an optional prop that is used to set the text for the right navigation button. Overrides the `rightIcon` prop.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  rightText="Back"
-  onRightPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" rightText="Back" onRightPress={() => navigation.goBack()} />
 ```
 
 ### `rightTx`
@@ -226,11 +187,7 @@ The `rightText` is an optional prop that is used to set the text for the right n
 The `rightTx` is an optional prop that is used to lookup the translation for the right navigation button. Overrides the `rightIcon` and `rightText` prop`.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  rightTx="header.back"
-  onRightPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" rightTx="header.back" onRightPress={() => navigation.goBack()} />
 ```
 
 ### `rightTxOptions`
@@ -251,10 +208,7 @@ The `rightTxOptions` is an optional prop that is used to pass props to the trans
 The `RightActionComponent` is an optional `ReactElement` prop that is used to set a custom component for the right navigation button. Overrides the `rightIcon`, `rightText`, `rightTx`, and `onRightPress` props (since the right action component can customize all that).
 
 ```tsx
-<Header
-  titleTx="header.title"
-  RightActionComponent={<Text>Back</Text>}
-/>
+<Header titleTx="header.title" RightActionComponent={<Text>Back</Text>} />
 ```
 
 ### `onRightPress`
@@ -262,11 +216,7 @@ The `RightActionComponent` is an optional `ReactElement` prop that is used to se
 The `onRightPress` is an optional prop that is used to set the function to be called when the right navigation button is pressed.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  rightIcon="back"
-  onRightPress={() => navigation.goBack()}
-/>
+<Header titleTx="header.title" rightIcon="back" onRightPress={() => navigation.goBack()} />
 ```
 
 ### `safeAreaEdges`
@@ -274,10 +224,7 @@ The `onRightPress` is an optional prop that is used to set the function to be ca
 The `safeAreaEdges` optional prop can be used to override the default safe area edges. By default, the header will use the `top` safe area edge. If you want to not account for the safe area edges, you can pass in `[]` to the `safeAreaEdges` prop, and it will wrap the header in a `View` component instead of a `SafeAreaView` component.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  safeAreaEdges={[]}
-/>
+<Header titleTx="header.title" safeAreaEdges={[]} />
 ```
 
 ### `SafeAreaViewProps`
@@ -285,8 +232,5 @@ The `safeAreaEdges` optional prop can be used to override the default safe area 
 The `SafeAreaViewProps` optional prop can be used to pass props to the `SafeAreaView` component. This is useful if you need to style the wrapper `SaveAreaView`.
 
 ```tsx
-<Header
-  titleTx="header.title"
-  SafeAreaViewProps={{ style: { backgroundColor: "red" } }}
-/>
+<Header titleTx="header.title" SafeAreaViewProps={{ style: { backgroundColor: "red" } }} />
 ```

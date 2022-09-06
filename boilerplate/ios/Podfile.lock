@@ -4,7 +4,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (4.2.2):
     - ExpoModulesCore
-  - EXConstants (13.2.4):
+  - EXConstants (13.2.3):
     - ExpoModulesCore
   - EXDevice (4.3.0):
     - ExpoModulesCore
@@ -12,7 +12,7 @@ PODS:
     - ExpoModulesCore
   - EXFont (10.2.0):
     - ExpoModulesCore
-  - Expo (46.0.9):
+  - Expo (46.0.7):
     - ExpoModulesCore
   - ExpoKeepAwake (10.2.0):
     - ExpoModulesCore
@@ -20,10 +20,10 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (13.1.0):
     - ExpoModulesCore
-  - ExpoModulesCore (0.11.4):
+  - ExpoModulesCore (0.11.3):
     - React-Core
     - ReactCommon/turbomodule/core
-  - EXSplashScreen (0.16.2):
+  - EXSplashScreen (0.16.1):
     - ExpoModulesCore
     - React-Core
   - FBLazyVector (0.69.4)
@@ -643,16 +643,16 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: e418d737a036e788510f2c4ad6c10a7d54d18586
-  EXConstants: 7c44785d41d8e959d527d23d29444277a4d1ee73
+  EXConstants: 75c40827af38bd6bfcf69f880a5b45037eeff9c9
   EXDevice: 7647ca9b1fd8b269dfd896a7643d659343358054
   EXFileSystem: 927e0a8885aa9c49e50fc38eaba2c2389f2f1019
   EXFont: a5d80bd9b3452b2d5abbce2487da89b0150e6487
-  Expo: 73412414e62f5cbc6e713def821de70b92cd3ad6
+  Expo: 8cb51419dfec611e6125e09384669eb71d3c4c6d
   ExpoKeepAwake: 0e8f18142e71bbf2c7f6aa66ebed249ba1420320
   ExpoLinearGradient: 1a3af07c6dab3c612967a294836df9ae717431df
   ExpoLocalization: 63204f4b9d4f653469d266332ceaa6c6ac8a305d
-  ExpoModulesCore: e281bb7b78ea47e227dd5af94d04b24d8b2e1255
-  EXSplashScreen: 799bece80089219b2c989c1082d70f3b00995cda
+  ExpoModulesCore: 8303cc952788be09fc6eab62815d257016ae6dec
+  EXSplashScreen: 31ab6df6d23e97e074d1330224741979943f1d82
   FBLazyVector: c71b8c429a8af2aff1013934a7152e9d9d0c937d
   FBReactNativeSpec: cb0df4f0084281b394f76bb9b4d1d9540f35963f
   Flipper: 19985db5fff887a746c0e15585917bf1ab304317

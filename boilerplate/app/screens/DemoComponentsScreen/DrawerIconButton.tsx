@@ -8,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated"
 import type { SharedValue } from "react-native-reanimated"
 import { isRTL } from "../../i18n"
-import { colors } from "../../theme"
+import { colors, spacing } from "../../theme"
 
 interface DrawerIconButtonProps extends PressableProps {
   open: boolean
@@ -100,7 +100,7 @@ const $topBar: ViewStyle = {
 
 const $middleBar: ViewStyle = {
   height: barHeight,
-  marginTop: 4,
+  marginTop: spacing.tiny,
 }
 
 const $bottomBar: ViewStyle = {

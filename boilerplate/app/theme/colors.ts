@@ -60,17 +60,9 @@ export const colors = {
    */
   background: palette.neutral200,
   /**
-   * The background color of most inputs.
-   */
-  backgroundInput: palette.neutral200,
-  /**
    * The default border color.
    */
   border: palette.neutral400,
-  /**
-   * The border colors of most inputs.
-   */
-  borderInput: palette.neutral400,
   /**
    * The main tinting color.
    */

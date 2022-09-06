@@ -1,6 +1,7 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/with-set-prop-action"
-import { format } from "date-fns"
+import { formatDate } from "../utils/format-date"
+import { translate } from "../i18n"
 
 interface Enclosure {
   link: string
@@ -30,8 +31,17 @@ export const EpisodeModel = types
   .actions(withSetPropAction)
   .views((episode) => ({
     get datePublished() {
-      const date = new Date(episode.pubDate)
-      return format(date, "MMM dd, yyyy")
+      try {
+        const formatted = formatDate(episode.pubDate)
+        return {
+          textLabel: formatted,
+          accessibilityLabel: translate("demoPodcastListScreen.accessibility.publishLabel", {
+            date: formatted,
+          }),
+        }
+      } catch (error) {
+        return { textLabel: "", accessibilityLabel: "" }
+      }
     },
     get duration() {
       const seconds = Number(episode.enclosure.duration)
@@ -42,7 +52,14 @@ export const EpisodeModel = types
       const hDisplay = h > 0 ? `${h}:` : ""
       const mDisplay = m > 0 ? `${m}:` : ""
       const sDisplay = s > 0 ? s : ""
-      return hDisplay + mDisplay + sDisplay
+      return {
+        textLabel: hDisplay + mDisplay + sDisplay,
+        accessibilityLabel: translate("demoPodcastListScreen.accessibility.durationLabel", {
+          hours: h,
+          minutes: m,
+          seconds: s,
+        }),
+      }
     },
   }))
 

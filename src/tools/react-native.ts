@@ -13,6 +13,7 @@ type CopyBoilerplateOptions = {
   boilerplatePath: string
   targetPath: string
   excluded: Array<string>
+  overwrite?: boolean
 }
 
 /**
@@ -34,9 +35,12 @@ export async function copyBoilerplate(toolbox: GluegunToolbox, options: CopyBoil
     (file) => !options.excluded.find((exclusion) => file.includes(exclusion)),
   )
 
+  const { overwrite } = options
   // kick off a bunch of copies
   const copyPromises = copyTargets.map((fileOrFolder) =>
-    copyAsync(path(options.boilerplatePath, fileOrFolder), path(options.targetPath, fileOrFolder)),
+    copyAsync(path(options.boilerplatePath, fileOrFolder), path(options.targetPath, fileOrFolder), {
+      ...(overwrite && { overwrite }),
+    }),
   )
 
   // copy them all at once

@@ -2,7 +2,7 @@
 import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { Icon, TextField } from "../../../components"
-import { colors } from "../../../theme"
+import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -26,8 +26,7 @@ const $customLabelAndHelperStyle: TextStyle = {
 }
 
 const $customInputWithAbsoluteAccessoriesStyle: ViewStyle = {
-  marginLeft: 50,
-  marginRight: 50,
+  marginHorizontal: spacing.huge,
 }
 
 const $customLeftAccessoryStyle: ViewStyle = {
@@ -124,6 +123,7 @@ export const DemoTextField: Demo = {
         helper="Enables a taller input for multiline text."
         value="Eiusmod exercitation mollit elit magna occaecat eiusmod Lorem minim veniam. Laborum Lorem velit velit minim irure ad in ut adipisicing consectetur."
         multiline
+        RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
     </DemoUseCase>,
 
