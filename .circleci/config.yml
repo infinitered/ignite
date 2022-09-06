@@ -9,16 +9,11 @@ defaults: &defaults
     - image: cimg/node:14.19
   working_directory: /mnt/ramdisk/repo
 
-# mac: &mac
-#   macos:
-#     xcode: "13.2.1"
-#   working_directory: ~/repo
-
 version: 2.1
 jobs:
   tests:
     <<: *defaults
-    parallelism: 4
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
@@ -45,82 +40,21 @@ jobs:
           command: |
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
-      - run:
-          name: Install PNPM for tests
-          command: |
-            sudo chmod 777 /usr/local/bin
-            curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@7
-            pnpm config set store-dir ../.pnpm-store
       - restore_cache:
           name: Restore ignite dependency cache
           key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
       - run:
-          name: Run tests
-          command: yarn ci:test
+          name: Run static tests
+          command: yarn format:check && yarn lint && yarn typecheck
+      - run:
+          name: Run jest tests
+          command: yarn test
           no_output_timeout: 5m
       - save_cache:
           name: Save ignite dependency cache
           paths:
             - ~/.cache/ignite
           key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
-
-  # detox:
-  #   <<: *mac
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         name: Restore node modules
-  #         keys:
-  #           - v1-dependencies-mac-{{ checksum "package.json" }}
-  #           # fallback to using the latest cache if no exact match is found
-  #           - v1-dependencies-mac-
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           yarn install
-  #     - save_cache:
-  #         name: Save node modules
-  #         paths:
-  #           - node_modules
-  #         key: v1-dependencies-mac-{{ checksum "package.json" }}
-  #     - run:
-  #         name: Install Detox CLI
-  #         command: |
-  #           sudo yarn global add detox-cli
-  #     - run:
-  #         name: Install Ruby and CocoaPods
-  #         command: |
-  #           sudo apt-get update &&
-  #           sudo apt-get install ruby-full &&
-  #           sudo gem install cocoapods --no-ri --no-rdoc
-  #     - run:
-  #         name: Install CocoaPods Specs
-  #         command: |
-  #           curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-  #     - run:
-  #         name: Change Permissions
-  #         command: sudo chown -R $(whoami) /Users/distiller/.config/
-  #     - run:
-  #         name: Install applesimutils
-  #         command: brew tap wix/brew && brew install applesimutils
-  #     - run:
-  #         name: Install fbsimctl
-  #         command: brew tap facebook/fb
-  #     - run:
-  #         name: Create temp directory
-  #         command: mkdir tempApp
-  #     - run:
-  #         name: Ignite app
-  #         command: cd tempApp && ignite new DetoxTests --detox --skip-git -b ../
-  #     - run:
-  #         name: Build Detox in ignited app
-  #         command: cd tempApp/DetoxTests && yarn ci:build:e2e
-  #     - run:
-  #         name: Run detox tests in ignited app
-  #         command: cd tempApp/DetoxTests && yarn ci:test:e2e
-  #     - run:
-  #         name: Remove temp directory
-  #         command: rm -rf tempApp
 
   publish:
     <<: *defaults
@@ -133,6 +67,9 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+      - run:
+          name: Build package
+          command: yarn build
       # Run semantic-release after all the above is set.
       - run:
           name: Publish to npm
@@ -143,7 +80,6 @@ workflows:
   test_and_release:
     jobs:
       - tests
-      # - detox # disabled until we can figure out detox CircleCI problems
       - publish:
           requires:
             - tests
