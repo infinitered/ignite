@@ -1,12 +1,38 @@
-/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
-import { View, ViewStyle } from "react-native"
-import { AutoImage } from "../../../components"
+import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { AutoImage, Text } from "../../../components"
+import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoComponentsScreen"
+import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $imageContainer: ViewStyle = {
   alignItems: "center",
+}
+
+const $aspectRatioDescription: TextStyle = {
+  textAlign: "center",
+  width: "100%",
+  marginTop: spacing.extraSmall,
+}
+
+const $aspectRatioWidthExampleContainer: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "space-between",
+}
+
+const $aspectRatioHeightExampleContainer: ViewStyle = {
+  alignItems: "stretch",
+  justifyContent: "space-between",
+  height: 130,
+}
+
+const $aspectRatioBox: ViewStyle & ImageStyle = {
+  borderRadius: 4,
+  borderWidth: 3,
+  borderColor: colors.palette.secondary300,
+  backgroundColor: colors.palette.neutral800,
 }
 
 export const DemoAutoImage: Demo = {
@@ -31,6 +57,152 @@ export const DemoAutoImage: Demo = {
           }}
         />
       </View>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="Scaled to Fit Dimensions"
+      description="Providing a `maxWidth` and/or `maxHeight` props, the image will automatically scale while retaining it's aspect ratio. How is this different from `resizeMode: 'contain'`? Firstly, you can
+      specify only one side's size (not both). Secondly, the image will scale to fit the desired dimensions instead of just being contained within its image-container."
+    >
+      <View style={$aspectRatioWidthExampleContainer}>
+        <Text
+          text="<View />"
+          size="xxs"
+          weight="bold"
+          style={{ flexBasis: "33.3333%", color: colors.palette.secondary400 }}
+        />
+        <Text
+          text="<Image />"
+          size="xxs"
+          weight="bold"
+          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+        />
+        <Text
+          text="<AutoImage />"
+          size="xxs"
+          weight="bold"
+          style={{ flexBasis: "33.3333%", textAlign: "right", color: colors.palette.secondary400 }}
+        />
+      </View>
+
+      <DemoDivider size={5} />
+
+      <View style={[$aspectRatioWidthExampleContainer, { height: 80 }]}>
+        <View style={[$aspectRatioBox, { width: 60 }]} />
+        <Image
+          source={{
+            uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
+          }}
+          style={[$aspectRatioBox, { width: 60 }]}
+          resizeMode="contain"
+        />
+        <AutoImage
+          maxWidth={60}
+          style={$aspectRatioBox}
+          source={{
+            uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
+          }}
+        />
+      </View>
+
+      <Text weight="bold" size="xs" style={$aspectRatioDescription}>
+        width: 60 / height: auto
+      </Text>
+
+      <DemoDivider size={40} />
+
+      <View style={{ flexDirection: "row" }}>
+        <View style={$aspectRatioHeightExampleContainer}>
+          <Text
+            text="<View />"
+            size="xxs"
+            weight="bold"
+            style={{ color: colors.palette.secondary400 }}
+          />
+          <Text
+            text="<Image />"
+            size="xxs"
+            weight="bold"
+            style={{ color: colors.palette.secondary400 }}
+          />
+          <Text
+            text="<AutoImage />"
+            size="xxs"
+            weight="bold"
+            style={{ color: colors.palette.secondary400 }}
+          />
+        </View>
+
+        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginLeft: spacing.small }]}>
+          <View style={[$aspectRatioBox, { height: 32 }]} />
+          <Image
+            source={{
+              uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
+            }}
+            style={[$aspectRatioBox, { height: 32 }]}
+            resizeMode="contain"
+          />
+          <AutoImage
+            maxHeight={32}
+            style={[$aspectRatioBox, { alignSelf: "center" }]}
+            source={{
+              uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
+            }}
+          />
+        </View>
+      </View>
+
+      <Text weight="bold" size="xs" style={$aspectRatioDescription}>
+        width: auto / height: 32
+      </Text>
+
+      <DemoDivider size={40} />
+
+      <View style={$aspectRatioWidthExampleContainer}>
+        <Text
+          text="<View />"
+          size="xxs"
+          weight="bold"
+          style={{ flexBasis: "33.3333%", color: colors.palette.secondary400 }}
+        />
+        <Text
+          text="<Image />"
+          size="xxs"
+          weight="bold"
+          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+        />
+        <Text
+          text="<AutoImage />"
+          size="xxs"
+          weight="bold"
+          style={{ flexBasis: "33.3333%", textAlign: "right", color: colors.palette.secondary400 }}
+        />
+      </View>
+
+      <DemoDivider size={5} />
+
+      <View style={$aspectRatioWidthExampleContainer}>
+        <View style={[$aspectRatioBox, { width: 60, height: 60 }]} />
+        <Image
+          source={{
+            uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
+          }}
+          style={[$aspectRatioBox, { width: 60, height: 60 }]}
+          resizeMode="contain"
+        />
+        <AutoImage
+          maxWidth={60}
+          maxHeight={60}
+          style={$aspectRatioBox}
+          source={{
+            uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
+          }}
+        />
+      </View>
+
+      <Text weight="bold" size="xs" style={$aspectRatioDescription}>
+        width: 60 / height: 60
+      </Text>
     </DemoUseCase>,
   ],
 }

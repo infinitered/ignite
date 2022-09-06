@@ -79,6 +79,7 @@ const $sizeStyles = {
   md: { fontSize: 18, lineHeight: 26 } as TextStyle,
   sm: { fontSize: 16, lineHeight: 24 } as TextStyle,
   xs: { fontSize: 14, lineHeight: 21 } as TextStyle,
+  xxs: { fontSize: 12, lineHeight: 18 } as TextStyle,
 }
 
 const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weight, fontFamily]) => {

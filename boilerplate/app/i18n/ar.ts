@@ -66,6 +66,7 @@ const ar: Translations = {
     demoListItemTxExample: "عبر `tx` Prop - consequat commodo",
     demoHeaderTxExample: "ياي",
     demoToggleLabelTxExample: "Prop `labelTx` عبر",
+    demoCardTxExample: "MAVERICKTODO",
   },
   demoDebugScreen: {
     howTo: "كيف",
