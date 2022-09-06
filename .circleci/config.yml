@@ -44,8 +44,11 @@ jobs:
           name: Restore ignite dependency cache
           key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
       - run:
-          name: Run tests
-          command: yarn ci:test
+          name: Run static tests
+          command: yarn format:check & yarn lint & yarn typecheck
+      - run:
+          name: Run jest tests
+          command: yarn test
           no_output_timeout: 5m
       - save_cache:
           name: Save ignite dependency cache
@@ -64,6 +67,9 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+      - run:
+          name: Build package
+          command: yarn build
       # Run semantic-release after all the above is set.
       - run:
           name: Publish to npm

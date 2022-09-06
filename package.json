@@ -24,21 +24,16 @@
   },
   "scripts": {
     "compile": "tsc -p .",
+    "typecheck": "tsc -p . --noEmit",
     "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template",
-    "format": "yarn format:js && yarn format:json && yarn format:md && yarn format:ts;",
-    "format:js": "prettier --write '**/*.js'",
-    "format:json": "prettier --write '**/*.json'",
-    "format:md": "prettier --write '**/*.md'",
-    "format:ts": "prettier --write '**/*.ts{,x}'",
-    "lint": "eslint src test --ext .ts --fix && yarn format",
+    "format": "prettier '**/*{.js,.ts,.tsx,.json,.md}'",
+    "format:write": "yarn format --write",
+    "format:check": "yarn format --check",
+    "lint": "eslint 'src/**' 'test/**'",
     "test": "jest",
     "watch": "jest --watch",
     "watch:debug": "yarn watch --runInBand --verbose",
     "coverage": "jest --coverage",
-    "ci:prep": "yarn build && yarn ci:lint",
-    "ci:lint": "eslint src test --ext .ts && yarn format",
-    "ci:test:vanilla": "jest ./test/vanilla",
-    "ci:test": "yarn ci:prep && yarn test && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
     "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
@@ -61,8 +56,8 @@
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",
     "@types/sharp": "^0.30.2",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
@@ -122,7 +117,10 @@
       "no-use-before-define": "off",
       "quotes": 0,
       "space-before-function-paren": 0
-    }
+    },
+    "ignorePatterns": [
+      "**/*.snap"
+    ]
   },
   "prettier": {
     "printWidth": 100,
