@@ -13,7 +13,7 @@ version: 2.1
 jobs:
   tests:
     <<: *defaults
-    parallelism: 4
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
