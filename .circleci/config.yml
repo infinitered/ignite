@@ -51,10 +51,18 @@ jobs:
             sudo chmod 777 /usr/local/bin
             curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@7
             pnpm config set store-dir ../.pnpm-store
+      - restore_cache:
+          name: Restore ignite dependency cache
+          key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
       - run:
           name: Run tests
           command: yarn ci:test
           no_output_timeout: 5m
+      - save_cache:
+          name: Save ignite dependency cache
+          paths:
+            - ~/.cache/ignite
+          key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
 
   # detox:
   #   <<: *mac

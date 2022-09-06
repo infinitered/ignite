@@ -47,11 +47,16 @@ export const igniteHeading = () =>
     ),
   )
 
-export const command = (m = "", second = "", examples: string[] = []) => {
+export const command = (
+  m: string | { m: string; width: number } = "",
+  second = "",
+  examples: string[] = [],
+) => {
+  m = typeof m === "string" ? m : m.m + " ".repeat(m.width - m.m.length)
   p(white(m) + "  " + gray(second))
   const indent = m.length + 2
   if (examples) {
-    examples.forEach((ex) => p(gray(" ".repeat(indent) + ex)))
+    examples.forEach((ex) => p(gray(" ".repeat(indent) + white(ex))))
   }
 }
 
