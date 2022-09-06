@@ -45,7 +45,7 @@ jobs:
           key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
       - run:
           name: Run static tests
-          command: yarn format:check & yarn lint & yarn typecheck
+          command: yarn format:check && yarn lint && yarn typecheck
       - run:
           name: Run jest tests
           command: yarn test
