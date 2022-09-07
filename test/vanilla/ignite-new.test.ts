@@ -43,7 +43,6 @@ describe("ignite new", () => {
 
     it("should print expected text to std out", () => {
       expect(result).toContain(`Using ignite-cli`)
-      expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
     })
 
     it("should have created expected directories", () => {

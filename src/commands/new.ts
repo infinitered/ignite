@@ -152,15 +152,6 @@ export default {
     log(`ignite command: ${parameters.argv.join(" ")}`)
     // #endregion
 
-    // #region Welcome Message
-    const terminalWidth = process.stdout.columns ?? 80
-    const logo =
-      terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
-    p()
-    logo()
-    p()
-    // #endregion
-
     // #region Project Name
     // retrieve project name from toolbox
     const { validateProjectName } = require("../tools/validations") as ValidationsExports
@@ -221,13 +212,18 @@ export default {
     const defaultOverwrite = false
     let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
 
-    if (exists(targetPath)) {
-      if (overwrite === undefined) {
-        overwrite = await prompt.confirm(
-          `${targetPath} already exists. Do you want to overwrite it?`,
-          false,
-        )
-      }
+    if (exists(targetPath) && overwrite === undefined) {
+      overwrite = await prompt.confirm(
+        `${targetPath} already exists. Do you want to overwrite it?`,
+        false,
+      )
+    }
+
+    if (exists(targetPath) && overwrite === false) {
+      const alreadyExists = `Error: There's already a folder at ${targetPath}. To force overwriting that folder, run with --overwrite or say yes.`
+      p()
+      p(yellow(alreadyExists))
+      process.exit(1)
     }
     // #endregion
 
@@ -315,6 +311,12 @@ export default {
 
     // #region Print Welcome
     // welcome everybody!
+    const terminalWidth = process.stdout.columns ?? 80
+    const logo =
+      terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
+    p()
+    logo()
+    p()
 
     const packagerColors: Record<PackagerName, keyof typeof colors> = {
       npm: "red",
@@ -330,37 +332,25 @@ export default {
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${targetPath}`)
     p(` ────────────────────────────────────────────────\n`)
-
-    startSpinner("Igniting app")
     // #endregion
 
     // #region Overwrite
-    if (overwrite === false) {
-      const alreadyExists = `Error: There's already a folder at ${targetPath}. To force overwriting that folder, run with --overwrite or say yes.`
-      p()
-      p(yellow(alreadyExists))
-      process.exit(1)
-    }
-
-    if (overwrite === true) {
+    if (exists(targetPath) === "dir" && overwrite === true) {
       const msg = ` Overwriting existing ${projectName}`
       startSpinner(msg)
       remove(targetPath)
       stopSpinner(msg, "🗑️")
     }
-    // #endregion
-
-    // #region Copy Boilerplate Files
     // Remove some folders that we don't want to copy over
     // This mostly only applies to when you're developing locally
     remove(path(boilerplatePath, "ios", "Pods"))
     remove(path(boilerplatePath, "node_modules"))
     remove(path(boilerplatePath, "android", ".idea"))
     remove(path(boilerplatePath, "android", ".gradle"))
-    stopSpinner("Igniting app", "🔥")
+    // #endregion
 
+    // #region Copy Boilerplate Files
     startSpinner(" 3D-printing a new React Native app")
-
     await copyBoilerplate(toolbox, {
       boilerplatePath,
       targetPath,
