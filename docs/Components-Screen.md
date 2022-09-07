@@ -167,7 +167,7 @@ The `ScrollViewProps` prop is a `ScrollViewProps` object that is passed to the R
 
 ### `scrollEnabledToggleThreshold`
 
-The `scrollEnabledToggleThreshold` prop is an optional `number` that determines the threshold at which the `scrollEnabled` prop of the `ScrollView` is toggled. This only applies for the `auto` preset. The default value is `{ percent: 0.92 }`. You can pass a point value in lieu of a percentage, e.g. `{ point: 100 }` will enable scrolling when the scroll view height is greater than 100 points larger than the scroll view content height.
+The `scrollEnabledToggleThreshold` prop is an optional `number` that determines the threshold at which the `scrollEnabled` prop of the `ScrollView` is toggled. This only applies for the `auto` preset. The default value is `{ percent: 0.92 }`. You can pass a point value in lieu of a percentage, e.g. `{ point: 100 }` will enable scrolling when the scroll view height is less than 100 points larger than the scroll view content height.
 
 ```tsx
 <Screen preset="scroll" scrollEnabledToggleThreshold={{percent: 0.95}}>
