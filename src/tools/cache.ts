@@ -54,7 +54,7 @@ function copy(options: CopyOptions) {
       dir(from.path)
     }
 
-    filesystem.copy(from.path, to.path)
+    filesystem.copy(from.path, to.path, { overwrite: true })
   })
 }
 
