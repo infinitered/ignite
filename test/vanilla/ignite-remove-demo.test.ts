@@ -24,6 +24,7 @@ describe("ignite-cli remove-demo", () => {
   it("should print the expected response", async () => {
     const result = await runIgnite(`remove-demo ${TEMP_DIR}`)
 
+    // "/user/home/ignite" replaces the temp directory, so we don't get failures when it changes every test run
     const MOCK_DIR = `/user/home/ignite`
     const output = result.replace(new RegExp(TEMP_DIR, "g"), MOCK_DIR)
 

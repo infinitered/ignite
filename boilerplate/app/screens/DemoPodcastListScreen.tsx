@@ -3,12 +3,10 @@ import React, { useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
   FlatList,
-  Image,
   ImageStyle,
   Platform,
   StyleSheet,
   TextStyle,
-  TouchableOpacity,
   View,
   ViewStyle,
 } from "react-native"
@@ -19,7 +17,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Icon, Screen, Text, Toggle } from "../components"
+import { AutoImage, Card, Icon, Screen, Text, Toggle } from "../components"
 import { translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -160,18 +158,19 @@ const EpisodeCard = observer(function EpisodeCard({
   }
 
   return (
-    //  MAVERICKTODO: Switch this out for Card component when that is ready
-    <TouchableOpacity
-      style={[$rowLayout, $item]}
+    <Card
+      style={$item}
+      verticalAlignment="force-footer-bottom"
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
-      // MAVERICKTODO: This button role should be set on the Card Component
-      accessibilityRole="button"
+      heading={episode.parsedTitleAndSubtitle.title}
+      content={episode.parsedTitleAndSubtitle.subtitle}
       {...accessibilityHintProps}
-    >
-      <View style={$description}>
-        <Text>{episode.title}</Text>
-        <View style={[$rowLayout, $metadata]}>
+      RightComponent={
+        <AutoImage maxWidth={80} source={{ uri: episode.thumbnail }} style={$itemThumbnail} />
+      }
+      FooterComponent={
+        <View style={$metadata}>
           <Animated.View
             style={[$iconContainer, StyleSheet.absoluteFillObject, animatedLikeButtonStyles]}
           >
@@ -207,34 +206,29 @@ const EpisodeCard = observer(function EpisodeCard({
             {episode.duration.textLabel}
           </Text>
         </View>
-      </View>
-      <Image source={{ uri: episode.thumbnail }} style={$itemThumbnail} />
-    </TouchableOpacity>
+      }
+    />
   )
 })
 
 // #region Styles
-const THUMBNAIL_DIMENSION = 100
-
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing.large,
-  paddingTop: spacing.large,
+  paddingVertical: spacing.large,
 }
 
 const $heading: ViewStyle = {
   marginBottom: spacing.medium,
 }
 
-const $description: TextStyle = {
-  flex: 1,
-  justifyContent: "space-between",
+const $item: ViewStyle = {
+  marginTop: spacing.medium,
+  minHeight: 120,
 }
 
-const $item: ViewStyle = {
-  backgroundColor: colors.palette.neutral100,
+const $itemThumbnail: ImageStyle = {
   borderRadius: 8,
-  padding: spacing.medium,
-  marginTop: spacing.medium,
+  alignSelf: "center",
 }
 
 const $rowLayout: ViewStyle = {
@@ -251,15 +245,11 @@ const $iconContainer: ViewStyle = {
   width: ICON_SIZE,
 }
 
-const $itemThumbnail: ImageStyle = {
-  width: THUMBNAIL_DIMENSION,
-  height: THUMBNAIL_DIMENSION,
-  marginStart: spacing.extraSmall,
-}
-
 const $metadata: TextStyle = {
   justifyContent: "space-between",
   color: colors.textDim,
   marginTop: spacing.extraSmall,
+  flexDirection: "row",
+  alignItems: "center",
 }
 // #endregion

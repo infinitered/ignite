@@ -14,6 +14,7 @@ import {
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
+import { cache } from "../tools/cache"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -98,6 +99,12 @@ export interface Options {
    * @default `${cwd}/${projectName}`
    */
   targetPath?: string
+  /**
+   * Whether or not to use the dependency cache to speed up installs
+   * Input Source: `parameter.option`
+   * @default true
+   */
+  useCache?: boolean
   /**
    * alias for `yes`
    *
@@ -288,7 +295,9 @@ export default {
     log(`boilerplatePath: ${boilerplatePath}`)
 
     const defaultInstallDeps = true
-    let installDeps = useDefault(options.installDeps) ? defaultInstallDeps : options.installDeps
+    let installDeps = useDefault(options.installDeps)
+      ? defaultInstallDeps
+      : boolFlag(options.installDeps)
     if (installDeps === undefined) {
       installDeps = await prompt.confirm(
         "Want us to install dependencies for you? (adds 50-100 seconds)",
@@ -389,7 +398,30 @@ export default {
     // #region Run Packager Install
     // pnpm/yarn/npm install it
 
-    if (installDeps === true) {
+    // check if there is a dependency cache using a hash of the package.json
+    const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
+    const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
+    const cacheExists = exists(cachePath) === "dir"
+
+    log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
+    log(`cacheExists: ${cacheExists}`)
+
+    const defaultUseCache = true
+    const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
+
+    const shouldUseCache = installDeps && cacheExists && useCache
+    if (shouldUseCache) {
+      startSpinner(`Copying cached ${packagerName} dependencies`)
+      cache.copy({
+        fromRootDir: cachePath,
+        toRootDir: targetPath,
+        packagerName,
+      })
+      stopSpinner(`Copying cached ${packagerName} dependencies`, "📦")
+    }
+
+    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
+    if (shouldFreshInstallDeps) {
       const unboxingMessage = `Unboxing ${packagerName} dependencies`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
@@ -417,12 +449,24 @@ export default {
 
     // #region Install CocoaPods
     // install pods
-    if (installDeps === true) {
+    if (shouldFreshInstallDeps) {
       startSpinner("Baking CocoaPods")
       await spawnProgress(`npx pod-install@${deps.podInstall}`, {
         onProgress: log,
       })
       stopSpinner("Baking CocoaPods", "☕️")
+    }
+    // #endregion
+
+    // #region Cache dependencies
+    if (shouldFreshInstallDeps && cacheExists === false) {
+      startSpinner(`Caching ${packagerName} dependencies`)
+      cache.copy({
+        fromRootDir: targetPath,
+        toRootDir: cachePath,
+        packagerName,
+      })
+      stopSpinner(`Caching ${packagerName} dependencies`, "📦")
     }
     // #endregion
 
@@ -529,6 +573,7 @@ export default {
       expo,
       packager: packagerName,
       targetPath,
+      useCache,
       y: yname,
       yes: yname,
     }
@@ -536,7 +581,16 @@ export default {
     type Flag = keyof typeof flags
     type FlagEntry = [key: Flag, value: Options[Flag]]
 
-    const privateFlags: Flag[] = ["b", "boilerplate", "coloLoco", "debug", "expo", "y", "yes"]
+    const privateFlags: Flag[] = [
+      "b",
+      "boilerplate",
+      "coloLoco",
+      "debug",
+      "expo",
+      "useCache",
+      "y",
+      "yes",
+    ]
 
     const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
     const booleanFlag = ([key, value]: FlagEntry) =>
