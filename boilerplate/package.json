@@ -27,8 +27,7 @@
     "expo:ios": "expo start --ios",
     "expo:web": "expo start --web",
     "expo:build:e2e": "detox build -c ios.sim.expo",
-    "expo:test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo",
-    "snackify": "./bin/snackify.sh"
+    "expo:test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
