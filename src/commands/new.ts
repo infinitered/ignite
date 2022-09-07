@@ -315,9 +315,18 @@ export default {
 
     // #region Print Welcome
     // welcome everybody!
+
+    const packagerColors: Record<PackagerName, keyof typeof colors> = {
+      npm: "red",
+      yarn: "blue",
+      pnpm: "yellow",
+    }
+
+    const packagerColor = colors[packagerColors[packagerName]] as (text: string) => string
+
     p(` █ Creating ${em(projectName)} using Ignite ${meta.version()}`)
     p(` █ Powered by ${em("Infinite Red")} (${link("https://infinite.red")})`)
-    p(` █ Using ${em("ignite-cli")} with ${em(packagerName)}`)
+    p(` █ Using ${em("ignite-cli")} with ${em(packagerColor(packagerName))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${targetPath}`)
     p(` ────────────────────────────────────────────────\n`)
