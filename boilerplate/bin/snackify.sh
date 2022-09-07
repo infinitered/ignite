@@ -2,13 +2,37 @@
 #
 # Setup Script
 #
+ 
+
+if [[ -z $(git status -s) ]]
+then
+ if [[ "$(git name-rev --name-only HEAD)" =~ snack ]]; 
+then
+    echo 
+else
+    echo "Creating a new branch for your snack"
+    echo $(git checkout -b snack-$(date +'%m%d%y'))
+    
+fi
+else
+  echo "There are uncommitted changes in your current branch, please commit changes before running this"
+  exit
+fi
+
 echo "This command will create an expo snack project for you. 
 This can be exported to an expo snack for you to test and play with your app. 
-This will be deleting some important folders that expo snack doesn't require. 
+In order to snackify(an expo snack) this project, we must delete:
+- /ios
+- /android
+- /e2e
+- /test
+- /app/services/reactotron
+- jest.config.js
+- metro.config.js
+- webpack.config.js
+"
 
-So we strongly suggest that you create a different branch while executing this command."
-
-read -p "You want to continue? " -n 1 -r
+read -p "Do you wish to continue? " -n 1 -r
 echo    # move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
