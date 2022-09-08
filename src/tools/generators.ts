@@ -58,9 +58,6 @@ function validateGenerator(generator?: string) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function showGeneratorHelp(toolbox: GluegunToolbox) {
-  const inIgnite = isIgniteProject()
-  const generators = inIgnite ? installedGenerators() : []
-
   igniteHeading()
   heading("Ignite Generators")
   p()
@@ -79,26 +76,40 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   p()
   heading("Installed generators")
   p()
-  if (inIgnite) {
-    const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
-    generators.forEach((g) => {
-      if (g === "app-icon") {
-        command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
-      } else if (g === "splash-screen") {
-        command(g.padEnd(longestGen), `generates splash-screen`, [
-          `ignite g ${g} "#191015" [--android-size=180 --ios-size=212]`,
-        ])
-      } else {
-        command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
-      }
-    })
-  } else {
+  showGenerators()
+}
+
+function showGenerators() {
+  if (!isIgniteProject()) {
     warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
+    return
   }
+
+  const generators = installedGenerators()
+  const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
+  generators.forEach((g) => {
+    if (g === "app-icon") {
+      // specialty app-icon generator
+      command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
+    } else if (g === "splash-screen") {
+      // specialty splash-screen generator
+      command(g.padEnd(longestGen), `generates splash-screen`, [
+        `ignite g ${g} "#191015" [--android-size=180 --ios-size=212]`,
+      ])
+    } else {
+      // standard generators
+      command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
+    }
+  })
 }
 
 export function updateGenerators(toolbox: GluegunToolbox) {
   const { parameters } = toolbox
+
+  if (!isIgniteProject()) {
+    warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
+    return
+  }
 
   let generatorsToUpdate
   if (parameters.first) {
@@ -306,10 +317,6 @@ function installGenerators(generators: string[]): string[] {
   const { path, find, copy, dir, cwd, separator, exists, read } = filesystem
   const sourceDir = sourceDirectory()
   const targetDir = path(cwd(), "ignite", "templates")
-
-  if (!isIgniteProject()) {
-    throw new Error("Not in an Ignite root directory (can't find ./ignite folder)")
-  }
 
   // for each generator type, copy it over to the ignite/templates folder
   const changedGenerators = generators.filter((gen) => {
