@@ -90,7 +90,9 @@ export const prefix = (state: { status: "pending" | "submitted" | "canceled" }):
     cancelled: "❌",
   }[state.status])
 
+/** Format displayed messages for prompts */
 export const format = {
+  /** Format boolean values for human on prompts  */
   boolean: (value: string): string | Promise<string> => {
     return value ? "Yes" : "No"
   },
