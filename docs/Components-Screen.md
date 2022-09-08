@@ -13,7 +13,6 @@ This is a component that renders a screen. It is used to wrap your entire screen
 
 ## Props
 
-
 ### `children`
 
 As the `Screen` component is a top level wrapper component, it is expected that you will pass in your screen's content as children.
@@ -170,7 +169,7 @@ The `ScrollViewProps` prop is an object that is passed as props to the React Nat
 The `scrollEnabledToggleThreshold` prop is an optional `number` that determines the threshold at which the `scrollEnabled` prop of the `ScrollView` is toggled. This only applies for the `auto` preset. The default value is `{ percent: 0.92 }`. You can pass a point value in lieu of a percentage, e.g. `{ point: 100 }` will enable scrolling when the scroll view height is less than 100 points larger than the scroll view content height.
 
 ```tsx
-<Screen preset="scroll" scrollEnabledToggleThreshold={{percent: 0.95}}>
+<Screen preset="scroll" scrollEnabledToggleThreshold={{ percent: 0.95 }}>
   <Header headerTitle="screen" />
   // ... content here ...
 </Screen>
