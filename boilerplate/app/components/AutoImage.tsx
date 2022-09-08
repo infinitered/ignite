@@ -22,7 +22,6 @@ export interface AutoImageProps extends ImageProps {
  * specify only one side's size (not both). Secondly, the image will scale to fit
  * the desired dimensions instead of just being contained within its image-container.
  *
- * MAVERICKTODO: document hook
  */
 
 export function useAutoImage(
