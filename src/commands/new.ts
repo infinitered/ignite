@@ -131,7 +131,7 @@ export default {
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
     const { info, colors, warning } = print
-    const { gray, cyan, yellow } = colors
+    const { gray, cyan, yellow, underline } = colors
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
@@ -331,7 +331,7 @@ export default {
     p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
     p(` █ Using ${em("ignite-cli")} with ${em(packagerColor(packagerName))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
-    p(` █ Path: ${targetPath}`)
+    p(` █ Path: ${underline(targetPath)}`)
     p(` ────────────────────────────────────────────────\n`)
     // #endregion
 
