@@ -74,12 +74,8 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
                 </View>
                 {!episodeStore.favoritesOnly ? (
                   <View>
-                    <Text preset="subheading" style={$subheading}>
-                      So empty... so sad
-                    </Text>
-                    <Text style={$description}>
-                      No data found yet. Try clicking the button to refresh or reload the app.
-                    </Text>
+                    <Text preset="subheading" style={$subheading} tx="demoPodcastListScreen.noDataEmptyState.title" />
+                    <Text style={$message} tx="demoPodcastListScreen.noDataEmptyState.message" />
                     <Button
                       text="Let's try this again"
                       onPress={() => manualRefresh()}
@@ -88,12 +84,9 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
                   </View>
                 ) : (
                   <View>
-                    <Text preset="subheading" style={$subheading}>
-                      This looks a bit empty
-                    </Text>
-                    <Text style={$description}>
-                      No favorites have been added yet. Tap the heart on an episode to add it to your favorites!
-                    </Text>
+                    <Text preset="subheading" style={$subheading} tx="demoPodcastListScreen.noFavoritesEmptyState.title" />
+                    <Text style={$message} tx="demoPodcastListScreen.noFavoritesEmptyState.message" />
+
                   </View>
                 )}
               </View>
@@ -321,7 +314,7 @@ const $subheading: TextStyle = {
   paddingBottom: spacing.small,
 }
 
-const $description: TextStyle = {
+const $message: TextStyle = {
   textAlign: "left",
   paddingHorizontal: spacing.large,
   paddingBottom: spacing.huge,

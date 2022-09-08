@@ -97,6 +97,14 @@ const ar: Translations = {
       publishLabel: "نشرت {{date}}",
       durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
     },
+    noDataEmptyState: {
+      title: "So empty... so sad",
+      message: "No data found yet. Try clicking the button to refresh or reload the app.",
+    },
+    noFavoritesEmptyState: {
+      title: "This looks a bit empty",
+      message: "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
+    }
   },
   errorScreen: {
     title: "هناك خطأ ما",

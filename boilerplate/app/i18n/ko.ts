@@ -101,6 +101,14 @@ const ko: Translations = {
       publishLabel: "{{date}} 에 발행됨",
       durationLabel: "소요시간: {{hours}}시간 {{minutes}}분 {{seconds}}초",
     },
+    noDataEmptyState: {
+      title: "너무 텅 비어서.. 너무 슬퍼요..",
+      message: "데이터가 없습니다. 버튼을 눌러서 리프레쉬 하시거나 앱을 리로드하세요.",
+    },
+    noFavoritesEmptyState: {
+      title: "조금 텅 비어 있네요.",
+      message: "즐겨찾기가 없습니다. 에피소드에 있는 하트를 눌러서 즐겨찾기에 추가하세요.",
+    }
   },
   errorScreen: {
     title: "뭔가 잘못되었습니다!",
