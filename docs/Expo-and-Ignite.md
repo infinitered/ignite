@@ -2,7 +2,7 @@
 
 ![ignite+expo](https://miro.medium.com/max/1400/1*Ii4JuTWmVLeVBcqFyX3v5g.jpeg)
 
-> Expo is the easiest, nicest experience for Ignite apps. And I am convinced Ignite (especially the upcoming version 8, Maverick) is the nicest boilerplate for Expo apps you can possibly get.
+> Expo is the easiest, nicest experience for Ignite apps. And I am convinced Ignite (especially the upcoming version 8, Maverick) is the nicest boilerplate for Expo apps you can possibly get. - Jamon Holmgren
 
 If you're not familiar with [Expo](https://expo.dev), it's an open-source platform for making universal native apps for Android, iOS, and the web with [React Native](https://reactnative.dev). It's essentially a series of layers built around React Native. Here's a partial list of what Expo is:
 
