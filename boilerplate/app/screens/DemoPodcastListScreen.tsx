@@ -89,18 +89,11 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
                 ) : (
                   <View>
                     <Text preset="subheading" style={$subheading}>
-                      You don't have any favorites yet
+                      This looks a bit empty
                     </Text>
                     <Text style={$description}>
-                      Please click the heart icon on each episode to add it to your favorites.
+                      No favorites have been added yet. Tap the heart on an episode to add it to your favorites!
                     </Text>
-                    <Button
-                      text="Go back to the list"
-                      onPress={() =>
-                        episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
-                      }
-                      style={$button}
-                    />
                   </View>
                 )}
               </View>
@@ -110,7 +103,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         ListHeaderComponent={
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
-            {episodeStore.episodesForList.length > 0 && (
+            {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
               <View style={[$rowLayout, $toggle]}>
                 <Toggle
                   value={episodeStore.favoritesOnly}
@@ -124,7 +117,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
               </View>
             )}
           </View>
-        }
+          }
         renderItem={({ item }) => (
           <EpisodeCard
             episode={item}
@@ -329,7 +322,7 @@ const $subheading: TextStyle = {
 }
 
 const $description: TextStyle = {
-  textAlign: "center",
+  textAlign: "left",
   paddingHorizontal: spacing.large,
   paddingBottom: spacing.huge,
 }
