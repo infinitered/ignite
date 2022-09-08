@@ -79,6 +79,21 @@ export const ascii = (assetname: AssetName) =>
 
 export const ir = (m = "") => bgRed(bold(white(m)))
 
+/**
+ * enquirer style customization
+ * @see https://github.dev/enquirer/enquirer/blob/36785f3399a41cd61e9d28d1eb9c2fcd73d69b4c/examples/select/option-elements.js#L19
+ */
+export const prefix = (state: { status: "pending" | "submitted" | "canceled" }): string =>
+  ({
+    pending: "📝",
+    submitted: "✅",
+    cancelled: "❌",
+  }[state.status])
+
+export const prompt = {
+  prefix,
+}
+
 export const pretty = {
   ascii,
   clearSpinners,

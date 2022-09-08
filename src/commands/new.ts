@@ -13,6 +13,7 @@ import {
   em,
   link,
   ir,
+  prefix,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -177,12 +178,13 @@ export default {
     let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
-      const bundleIdentifierResponse = await prompt.ask({
+      const bundleIdentifierResponse = await prompt.ask(() => ({
         type: "input",
         name: "bundleIdentifier",
         message: "What bundle identifier?",
         initial: defaultBundleIdentifier,
-      })
+        prefix,
+      }))
 
       bundleIdentifier = bundleIdentifierResponse.bundleIdentifier
     }
@@ -196,12 +198,13 @@ export default {
     const defaultTargetPath = path(projectName)
     let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
     if (targetPath === undefined) {
-      const targetPathResponse = await prompt.ask({
+      const targetPathResponse = await prompt.ask(() => ({
         type: "input",
         name: "targetPath",
         message: "Where do you want to start your project?",
         initial: defaultTargetPath,
-      })
+        prefix,
+      }))
 
       targetPath = targetPathResponse.targetPath
     }
@@ -270,13 +273,14 @@ export default {
         process.exit(1)
       }
 
-      const packagerNameResponse = await prompt.ask<{ packagerName: PackagerName }>({
+      const packagerNameResponse = await prompt.ask<{ packagerName: PackagerName }>(() => ({
         type: "select",
         name: "packagerName",
         message: "Which package manager do you want to use?",
         choices: availablePackagers,
         initial,
-      })
+        prefix,
+      }))
       packagerName = packagerNameResponse.packagerName
     }
 
