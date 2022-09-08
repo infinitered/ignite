@@ -30,6 +30,17 @@ export const EpisodeModel = types
   })
   .actions(withSetPropAction)
   .views((episode) => ({
+    get parsedTitleAndSubtitle() {
+      const defaultValue = { title: episode.title?.trim(), subtitle: "" }
+
+      if (!defaultValue.title) return defaultValue
+
+      const titleMatches = defaultValue.title.match(/^(RNR.*\d)(?: - )(.*$)/)
+
+      if (!titleMatches || titleMatches.length !== 3) return defaultValue
+
+      return { title: titleMatches[1], subtitle: titleMatches[2] }
+    },
     get datePublished() {
       try {
         const formatted = formatDate(episode.pubDate)
