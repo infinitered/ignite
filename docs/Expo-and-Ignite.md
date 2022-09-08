@@ -13,19 +13,19 @@ If you're not familiar with [Expo](https://expo.dev), it's an open-source platfo
 
 ## Overview
 
-In previous versions of Ignite (versions 6 and 7), you could pass in a `--expo` flag to make the resulting generated app "Expo-ready". In version 8 (code-named "Maverick") we made the boilerplate "Expo-ready" by default -- but without locking you into using Expo Go or Expo's services if you don't want to. Every new Ignited app is ready to run with Expo CLI or with "vanilla" React Native CLI.
-
-To run your new Ignite app in Expo CLI (and launch Expo Go in a simulator/emulator):
+In previous versions of Ignite (versions 6 and 7), you could pass in a `--expo` flag to make the resulting generated app "Expo-ready". In version 8 (code-named "Maverick") we made the boilerplate "Expo-ready" by default -- but without locking you into using Expo Go or Expo's services if you don't want to. Every new Ignited app is ready to run with Expo CLI or with "vanilla" React Native CLI right out of the box.
 
 ```
+# Spin up a new app
+npx ignite-cli new PizzaApp
+cd PizzaApp
+
+# Expo CLI / Expo Go
 yarn expo:start
 yarn expo:ios
 yarn expo:android
-```
 
-To run with the React Native CLI:
-
-```
+# React Native CLI
 yarn ios
 yarn android
 ```
