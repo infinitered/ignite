@@ -303,7 +303,8 @@ const $sadFace: ImageStyle = {
 const $sadFaceContainer: ViewStyle = {
   alignItems: "center",
   paddingTop: spacing.huge,
-  paddingBottom: spacing.extraSmall,}
+  paddingBottom: spacing.extraSmall,
+}
 
 const $container: ViewStyle = {
   paddingVertical: spacing.large,
