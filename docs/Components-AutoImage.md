@@ -2,17 +2,40 @@
 
 [Back to all components](./Components.md)
 
-Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit the size of the image and ensures you don't need to explicitly set the image size props on every image. This is mostly useful for images with an image source that is a remote URI or a data uri scheme. Local images (those loaded with `require()`) don't need this.
+Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit a max width or height constraint
 
 ```tsx
 <AutoImage
   source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
+  maxWidth={200}
 />
+```
+
+`AutoImage` uses a `useAutoImage` hook to calculate the image's dimensions when you have a specific values you need to constrain the image within. This hook is also available for use in your own components.
+
+```tsx
+const { width, height } = useAutoImage(uri, maxWidth, maxHeight)
 ```
 
 ## Props
 
-Ignite's `AutoImage` component doesn't have any props of its own. As its only purpose is to automatically resize the image, it will accept all React Native `Image` props and forward them to the built in `Image` component.
+Ignite's `AutoImage` component has two props of its own: `maxWidth` and `maxHeight`.
+
+### `maxWidth` and `maxHeight`
+
+These props are used to constrain the image to a specific size. Use `maxWidth` or `maxHeight` to set the maximum width or height of the image, and it will resize to whichever dimension you specify without skewing the aspect ratio. e.g. If the image is 300w x 200h, and you set `maxWidth={200}`, the image will be resized to 200w x 133h.
+
+```tsx
+<AutoImage
+  source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
+  maxWidth={200}
+  maxHeight={200}
+/>
+```
+
+## Default Image props
+
+As `AutoImage` is a wrapper around React Native's `Image` component, it also accepts all of the props that `Image` accepts. See the [React Native Image documentation](https://reactnative.dev/docs/image) for more information.
 
 ### `source`
 
