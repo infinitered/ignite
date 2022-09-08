@@ -349,7 +349,7 @@ export default {
     p()
 
     const pkg = pkgBgColor(packagerName)
-    p(` █ Creating ${highlight(` ${projectName} `)} using Ignite ${meta.version()}`)
+    p(` █ Creating ${highlight(` ${projectName} `)} using ${ir(` Ignite ${meta.version()} `)}`)
     p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
     p(` █ Package Manager: ${pkg(em(` ${packagerName} `))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
@@ -543,7 +543,7 @@ export default {
 
     p()
     p()
-    p(`${em("ignite-cli")} ignited ${em(projectName)} in ${gray(`${perfDuration}s`)}`)
+    p(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
     p()
     p(`To get started:`)
     command(`  cd ${projectName}`)
