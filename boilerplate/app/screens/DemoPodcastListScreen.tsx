@@ -4,6 +4,7 @@ import {
   AccessibilityProps,
   ActivityIndicator,
   FlatList,
+  Image,
   ImageStyle,
   Platform,
   StyleSheet,
@@ -11,7 +12,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Button, Icon, Screen, Toggle, Text } from "../components"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -20,7 +20,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 import { translate, isRTL } from "../i18n"
-import { AutoImage, Card, Icon, Screen, Text, Toggle } from "../components"
+import { AutoImage, Button, Card, Icon, Screen, Text, Toggle } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -69,33 +69,40 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
           ) : (
             <View>
               <View style={$container}>
+                <View style={$sadFaceContainer}>
+                  <Image source={sadFace} style={$sadFace} resizeMode="contain" />
+                </View>
                 {!episodeStore.favoritesOnly ? (
                   <View>
                     <Text preset="subheading" style={$subheading}>
                       So empty... so sad
                     </Text>
-                    <Text>No data found yet. You can click the button or reload the app.</Text>
+                    <Text style={$description}>
+                      No data found yet. Try clicking the button to refresh or reload the app.
+                    </Text>
+                    <Button
+                      text="Let's try this again"
+                      onPress={() => manualRefresh()}
+                      style={$button}
+                    />
                   </View>
                 ) : (
                   <View>
                     <Text preset="subheading" style={$subheading}>
                       You don't have any favorites yet
                     </Text>
-                    <Text>
-                      Please click the heart icon on each list to add it to your favorites.
+                    <Text style={$description}>
+                      Please click the heart icon on each episode to add it to your favorites.
                     </Text>
+                    <Button
+                      text="Go back to the list"
+                      onPress={() =>
+                        episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                      }
+                      style={$button}
+                    />
                   </View>
                 )}
-              </View>
-              <View style={$buttonContainer}>
-                <Button
-                  text="Go back to the list"
-                  onPress={() => episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)}
-                  style={$button}
-                />
-              </View>
-              <View style={$sadFaceContainer}>
-                <Image source={sadFace} style={$sadFace} resizeMode="contain" />
               </View>
             </View>
           )
@@ -103,17 +110,19 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         ListHeaderComponent={
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
-            <View style={[$rowLayout, $toggle]}>
-              <Toggle
-                value={episodeStore.favoritesOnly}
-                onValueChange={() =>
-                  episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
-                }
-                variant="switch"
-                labelTx="demoPodcastListScreen.onlyFavorites"
-                accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
-              />
-            </View>
+            {episodeStore.episodesForList.length > 0 && (
+              <View style={[$rowLayout, $toggle]}>
+                <Toggle
+                  value={episodeStore.favoritesOnly}
+                  onValueChange={() =>
+                    episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                  }
+                  variant="switch"
+                  labelTx="demoPodcastListScreen.onlyFavorites"
+                  accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
+                />
+              </View>
+            )}
           </View>
         }
         renderItem={({ item }) => (
@@ -259,7 +268,8 @@ const EpisodeCard = observer(function EpisodeCard({
 // #region Styles
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing.large,
-  paddingVertical: spacing.large,
+  paddingTop: spacing.large + spacing.extraLarge,
+  paddingBottom: spacing.large,
 }
 
 const $heading: ViewStyle = {
@@ -299,31 +309,32 @@ const $metadata: TextStyle = {
 }
 
 const $sadFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
+  height: 163,
+  width: 189,
   transform: [{ scaleX: isRTL ? -1 : 1 }],
 }
+
+const $sadFaceContainer: ViewStyle = {
+  alignItems: "center",
+  paddingTop: spacing.huge,
+  paddingBottom: spacing.extraSmall,}
 
 const $container: ViewStyle = {
   paddingVertical: spacing.large,
 }
 
 const $subheading: TextStyle = {
+  textAlign: "center",
   paddingBottom: spacing.small,
 }
 
-const $buttonContainer: ViewStyle = {
+const $description: TextStyle = {
+  textAlign: "center",
+  paddingHorizontal: spacing.large,
   paddingBottom: spacing.huge,
 }
 
 const $button: ViewStyle = {
   marginVertical: spacing.huge,
-}
-
-const $sadFaceContainer: ViewStyle = {
-  marginVertical: spacing.massive,
 }
 // #endregion

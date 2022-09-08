@@ -90,7 +90,7 @@ export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
 }
 
 const $container: ViewStyle = {
-  paddingTop: spacing.extraLarge,
+  paddingTop: spacing.large + spacing.extraLarge,
   paddingBottom: spacing.huge,
   paddingHorizontal: spacing.large,
 }
