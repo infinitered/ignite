@@ -339,7 +339,11 @@ export default {
     const logo =
       terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
     p()
+    p()
+    p()
+    p()
     logo()
+    p()
     p()
 
     const packagerColors: Record<PackagerName, keyof typeof colors> = {
