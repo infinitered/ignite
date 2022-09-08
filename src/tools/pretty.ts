@@ -1,7 +1,7 @@
 import { print } from "gluegun"
 import { AssetName, asset } from "../assets"
 
-const { gray, white, bold, red, yellow } = print.colors
+const { gray, white, bold, red, yellow, bgRed } = print.colors
 const { underline } = print.colors
 
 type Spinner = ReturnType<typeof print.spin>
@@ -77,6 +77,8 @@ export const ascii = (assetname: AssetName) =>
       .join("\n"),
   )
 
+export const ir = (m = "") => bgRed(bold(white(m)))
+
 export const pretty = {
   p,
   startSpinner,
@@ -89,4 +91,5 @@ export const pretty = {
   direction,
   warning,
   ascii,
+  ir,
 }

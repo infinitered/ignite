@@ -12,6 +12,7 @@ import {
   ascii,
   em,
   link,
+  ir,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -327,7 +328,7 @@ export default {
     const packagerColor = colors[packagerColors[packagerName]] as (text: string) => string
 
     p(` █ Creating ${em(projectName)} using Ignite ${meta.version()}`)
-    p(` █ Powered by ${em("Infinite Red")} (${link("https://infinite.red")})`)
+    p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
     p(` █ Using ${em("ignite-cli")} with ${em(packagerColor(packagerName))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${targetPath}`)
