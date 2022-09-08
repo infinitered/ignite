@@ -359,7 +359,7 @@ export default {
 
     // #region Overwrite
     if (exists(targetPath) === "dir" && overwrite === true) {
-      const msg = ` Overwriting existing ${projectName}`
+      const msg = ` Tossing that old app like it's hot`
       startSpinner(msg)
       remove(targetPath)
       stopSpinner(msg, "🗑️")
@@ -444,18 +444,19 @@ export default {
 
     const shouldUseCache = installDeps && cacheExists && useCache
     if (shouldUseCache) {
-      startSpinner(`Copying cached ${packagerName} dependencies`)
+      const msg = `Grabbing those ${packagerName} dependencies from the back`
+      startSpinner(msg)
       cache.copy({
         fromRootDir: cachePath,
         toRootDir: targetPath,
         packagerName,
       })
-      stopSpinner(`Copying cached ${packagerName} dependencies`, "📦")
+      stopSpinner(msg, "📦")
     }
 
     const shouldFreshInstallDeps = installDeps && shouldUseCache === false
     if (shouldFreshInstallDeps) {
-      const unboxingMessage = `Unboxing ${packagerName} dependencies`
+      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
       startSpinner(unboxingMessage)
       await packager.install({ ...packagerOptions, onProgress: log })
       stopSpinner(unboxingMessage, "🧶")
@@ -467,7 +468,8 @@ export default {
 
     // #region Rename App
     // rename the app using Ignite
-    startSpinner(" Writing your app name in the sand")
+    const renameSpinnerMsg = `Getting those last few details perfect`
+    startSpinner(renameSpinnerMsg)
 
     await renameReactNativeApp(
       toolbox,
@@ -477,7 +479,7 @@ export default {
       bundleIdentifier,
     )
 
-    stopSpinner(" Writing your app name in the sand", "🏝")
+    stopSpinner(renameSpinnerMsg, "🎨")
     // #endregion
 
     // #region Install CocoaPods
@@ -493,13 +495,14 @@ export default {
 
     // #region Cache dependencies
     if (shouldFreshInstallDeps && cacheExists === false) {
-      startSpinner(`Caching ${packagerName} dependencies`)
+      const msg = `Saving ${packagerName} dependencies for next time`
+      startSpinner(msg)
       cache.copy({
         fromRootDir: targetPath,
         toRootDir: cachePath,
         packagerName,
       })
-      stopSpinner(`Caching ${packagerName} dependencies`, "📦")
+      stopSpinner(msg, "📦")
     }
     // #endregion
 
