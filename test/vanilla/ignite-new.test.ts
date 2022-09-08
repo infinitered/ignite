@@ -42,7 +42,8 @@ describe("ignite new", () => {
     })
 
     it("should print expected text to std out", () => {
-      expect(result).toContain(`Using ignite-cli`)
+      // at some point this should probably be a snapshot?
+      expect(result).toContain(`Ignite`)
     })
 
     it("should have created expected directories", () => {
