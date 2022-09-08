@@ -80,14 +80,12 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
 }
 
 function showGenerators() {
-  const inIgnite = isIgniteProject()
-
-  if (!inIgnite) {
+  if (!isIgniteProject()) {
     warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
     return
   }
 
-  const generators = inIgnite ? installedGenerators() : []
+  const generators = installedGenerators()
   const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
   generators.forEach((g) => {
     if (g === "app-icon") {
