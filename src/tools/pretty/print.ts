@@ -43,11 +43,14 @@ export const ascii = (assetname: AssetName) =>
       .join("\n"),
   )
 
+export const hr = () => p(` ────────────────────────────────────────────────────`)
+
 export const prettyprint = {
   ascii,
   command,
   direction,
   heading,
+  hr,
   igniteHeading,
   p,
   warning,

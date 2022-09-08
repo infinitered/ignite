@@ -17,6 +17,7 @@ import {
   format,
   highlight,
   pkgBgColor,
+  hr,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -354,7 +355,8 @@ export default {
     p(` █ Package Manager: ${pkg(em(` ${packagerName} `))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${underline(targetPath)}`)
-    p(` ────────────────────────────────────────────────\n`)
+    hr()
+    p()
     // #endregion
 
     // #region Overwrite
@@ -539,12 +541,14 @@ export default {
 
     // #region Print Finish
     // clean up any spinners we forgot to clear
+    p()
+    hr()
+    p()
     clearSpinners()
 
     // we're done! round performance stats to .xx digits
     const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
-    p()
     p()
     p(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
     p()
