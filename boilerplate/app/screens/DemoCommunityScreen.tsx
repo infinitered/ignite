@@ -132,6 +132,6 @@ const $logoContainer: ViewStyle = {
 }
 
 const $logo: ImageStyle = {
-  height: 24,
-  width: 24,
+  height: 38,
+  width: 38,
 }
