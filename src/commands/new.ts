@@ -15,6 +15,8 @@ import {
   ir,
   prefix,
   format,
+  highlight,
+  pkgBgColor,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -346,17 +348,10 @@ export default {
     p()
     p()
 
-    const packagerColors: Record<PackagerName, keyof typeof colors> = {
-      npm: "red",
-      yarn: "blue",
-      pnpm: "yellow",
-    }
-
-    const packagerColor = colors[packagerColors[packagerName]] as (text: string) => string
-
-    p(` █ Creating ${em(projectName)} using Ignite ${meta.version()}`)
+    const pkg = pkgBgColor(packagerName)
+    p(` █ Creating ${highlight(` ${projectName} `)} using Ignite ${meta.version()}`)
     p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
-    p(` █ Using ${em("ignite-cli")} with ${em(packagerColor(packagerName))}`)
+    p(` █ Package Manager: ${pkg(em(` ${packagerName} `))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${underline(targetPath)}`)
     p(` ────────────────────────────────────────────────\n`)
