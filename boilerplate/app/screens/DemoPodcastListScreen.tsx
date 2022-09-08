@@ -2,7 +2,9 @@ import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
+  ActivityIndicator,
   FlatList,
+  Image,
   ImageStyle,
   Platform,
   StyleSheet,
@@ -17,8 +19,8 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { AutoImage, Card, Icon, Screen, Text, Toggle } from "../components"
-import { translate } from "../i18n"
+import { translate, isRTL } from "../i18n"
+import { AutoImage, Button, Card, Icon, Screen, Text, Toggle } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -27,6 +29,7 @@ import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
 const ICON_SIZE = 24
+const sadFace = require("../../assets/images/sad-face.png")
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -34,10 +37,15 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   const { episodeStore } = useStores()
 
   const [refreshing, setRefreshing] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
 
   // initially, kick off a background refresh without the refreshing UI
   useEffect(() => {
-    episodeStore.fetchEpisodes()
+    ;(async function load() {
+      setIsLoading(true)
+      await episodeStore.fetchEpisodes()
+      setIsLoading(false)
+    })()
   }, [episodeStore])
 
   // simulate a longer refresh, if the refresh is too fast for UX
@@ -55,22 +63,54 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
         contentContainerStyle={$flatListContentContainer}
         refreshing={refreshing}
         onRefresh={manualRefresh}
+        ListEmptyComponent={
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <View>
+              <View style={$container}>
+                <View style={$sadFaceContainer}>
+                  <Image source={sadFace} style={$sadFace} resizeMode="contain" />
+                </View>
+                {!episodeStore.favoritesOnly ? (
+                  <View>
+                    <Text preset="subheading" style={$subheading} tx="demoPodcastListScreen.noDataEmptyState.title" />
+                    <Text style={$message} tx="demoPodcastListScreen.noDataEmptyState.message" />
+                    <Button
+                      text="Let's try this again"
+                      onPress={() => manualRefresh()}
+                      style={$button}
+                    />
+                  </View>
+                ) : (
+                  <View>
+                    <Text preset="subheading" style={$subheading} tx="demoPodcastListScreen.noFavoritesEmptyState.title" />
+                    <Text style={$message} tx="demoPodcastListScreen.noFavoritesEmptyState.message" />
+
+                  </View>
+                )}
+              </View>
+            </View>
+          )
+        }
         ListHeaderComponent={
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
-            <View style={[$rowLayout, $toggle]}>
-              <Toggle
-                value={episodeStore.favoritesOnly}
-                onValueChange={() =>
-                  episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
-                }
-                variant="switch"
-                labelTx="demoPodcastListScreen.onlyFavorites"
-                accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
-              />
-            </View>
+            {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
+              <View style={[$rowLayout, $toggle]}>
+                <Toggle
+                  value={episodeStore.favoritesOnly}
+                  onValueChange={() =>
+                    episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                  }
+                  variant="switch"
+                  labelTx="demoPodcastListScreen.onlyFavorites"
+                  accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
+                />
+              </View>
+            )}
           </View>
-        }
+          }
         renderItem={({ item }) => (
           <EpisodeCard
             episode={item}
@@ -214,7 +254,8 @@ const EpisodeCard = observer(function EpisodeCard({
 // #region Styles
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing.large,
-  paddingVertical: spacing.large,
+  paddingTop: spacing.large + spacing.extraLarge,
+  paddingBottom: spacing.large,
 }
 
 const $heading: ViewStyle = {
@@ -251,5 +292,36 @@ const $metadata: TextStyle = {
   marginTop: spacing.extraSmall,
   flexDirection: "row",
   alignItems: "center",
+}
+
+const $sadFace: ImageStyle = {
+  height: 163,
+  width: 189,
+  transform: [{ scaleX: isRTL ? -1 : 1 }],
+}
+
+const $sadFaceContainer: ViewStyle = {
+  alignItems: "center",
+  paddingTop: spacing.huge,
+  paddingBottom: spacing.extraSmall,
+}
+
+const $container: ViewStyle = {
+  paddingVertical: spacing.large,
+}
+
+const $subheading: TextStyle = {
+  textAlign: "center",
+  paddingBottom: spacing.small,
+}
+
+const $message: TextStyle = {
+  textAlign: "left",
+  paddingHorizontal: spacing.large,
+  paddingBottom: spacing.huge,
+}
+
+const $button: ViewStyle = {
+  marginVertical: spacing.huge,
 }
 // #endregion

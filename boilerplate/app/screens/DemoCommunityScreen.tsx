@@ -104,7 +104,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
 }
 
 const $container: ViewStyle = {
-  paddingVertical: spacing.huge,
+  paddingTop: spacing.large + spacing.extraLarge,
   paddingHorizontal: spacing.large,
 }
 

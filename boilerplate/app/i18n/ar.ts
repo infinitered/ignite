@@ -66,7 +66,7 @@ const ar: Translations = {
     demoListItemTxExample: "عبر `tx` Prop - consequat commodo",
     demoHeaderTxExample: "ياي",
     demoToggleLabelTxExample: "Prop `labelTx` عبر",
-    demoCardTxExample: "MAVERICKTODO",
+    demoCardTxExample: "Prop `{{prop}}Tx` عبر",
   },
   demoDebugScreen: {
     howTo: "كيف",
@@ -97,6 +97,14 @@ const ar: Translations = {
       publishLabel: "نشرت {{date}}",
       durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
     },
+    noDataEmptyState: {
+      title: "فارغة جداً....حزين",
+      message: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
+    },
+    noFavoritesEmptyState: {
+      title: "هذا يبدو فارغاً بعض الشيء.",
+      message: "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
+    }
   },
   errorScreen: {
     title: "هناك خطأ ما",
