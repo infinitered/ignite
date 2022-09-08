@@ -93,7 +93,7 @@ The `keyboardOffset` prop is an optional `number` that determines the offset of 
 
 ### `SafeAreaViewProps`
 
-The `SafeAreaViewProps` prop is a `SafeAreaViewProps` object that is passed to the [`SafeAreaView`](https://github.com/th3rdwave/react-native-safe-area-context#safeareaview).
+The `SafeAreaViewProps` prop is an object that is passed as props to the [`SafeAreaView`](https://github.com/th3rdwave/react-native-safe-area-context#safeareaview).
 
 ```tsx
 <Screen SafeAreaViewProps={{ padding: 10 }}>
@@ -104,7 +104,7 @@ The `SafeAreaViewProps` prop is a `SafeAreaViewProps` object that is passed to t
 
 ### `StatusBarProps`
 
-The `StatusBarProps` prop is a `StatusBarProps` object that is passed to the `expo-status-bar` [`StatusBar`](https://docs.expo.io/versions/latest/sdk/status-bar/) component.
+The `StatusBarProps` prop is an object that is passed as props to the `expo-status-bar` [`StatusBar`](https://docs.expo.io/versions/latest/sdk/status-bar/) component.
 
 ```tsx
 <Screen StatusBarProps={{ animated: false }}>
@@ -115,7 +115,7 @@ The `StatusBarProps` prop is a `StatusBarProps` object that is passed to the `ex
 
 ### `KeyboardAvoidingViewProps`
 
-The `KeyboardAvoidingViewProps` prop is a `KeyboardAvoidingViewProps` object that is passed to the [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview).
+The `KeyboardAvoidingViewProps` prop is an object that is passed as props to the [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview).
 
 ```tsx
 <Screen KeyboardAvoidingViewProps={{ behavior: "padding" }}>
@@ -156,7 +156,7 @@ The valid values for this prop are: `"handled"`, `"always"`,and `"never"`.
 
 ### `ScrollViewProps`
 
-The `ScrollViewProps` prop is a `ScrollViewProps` object that is passed to the React Native [`ScrollView`](https://facebook.github.io/react-native/docs/scrollview.html) component. This only applies for the `scroll` preset.
+The `ScrollViewProps` prop is an object that is passed as props to the React Native [`ScrollView`](https://facebook.github.io/react-native/docs/scrollview.html) component. This only applies for the `scroll` preset.
 
 ```tsx
 <Screen preset="scroll" ScrollViewProps={{ contentContainerStyle: { padding: 10 } }}>
