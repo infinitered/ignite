@@ -21,7 +21,6 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <Text tx="demoCommunityScreen.joinUsOnSlack" style={$description} />
       <ListItem
         tx="demoCommunityScreen.joinSlackLink"
-        bottomSeparator
         leftIcon="slack"
         rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://infiniteredcommunity.slack.com/")}
@@ -34,7 +33,6 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <Text tx="demoCommunityScreen.makeIgniteEvenBetter" style={$description} />
       <ListItem
         tx="demoCommunityScreen.contributeToIgniteLink"
-        bottomSeparator
         leftIcon="github"
         rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
@@ -81,7 +79,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       />
       <ListItem
         tx="demoCommunityScreen.chainReactConferenceLink"
-        bottomSeparator
+
         rightIcon={isRTL ? "caretLeft" : "caretRight"}
         LeftComponent={
           <View style={$logoContainer}>
@@ -94,7 +92,6 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       <Text tx="demoCommunityScreen.hireUs" style={$description} />
       <ListItem
         tx="demoCommunityScreen.hireUsLink"
-        bottomSeparator
         leftIcon="clap"
         rightIcon={isRTL ? "caretLeft" : "caretRight"}
         onPress={() => openLinkInBrowser("https://infinite.red/contact")}
