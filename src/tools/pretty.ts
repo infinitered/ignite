@@ -90,8 +90,15 @@ export const prefix = (state: { status: "pending" | "submitted" | "canceled" }):
     cancelled: "❌",
   }[state.status])
 
+export const format = {
+  boolean: (value: string): string | Promise<string> => {
+    return value ? "Yes" : "No"
+  },
+}
+
 export const prompt = {
   prefix,
+  format,
 }
 
 export const pretty = {

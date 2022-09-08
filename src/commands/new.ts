@@ -14,6 +14,7 @@ import {
   link,
   ir,
   prefix,
+  format,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
@@ -65,21 +66,21 @@ export interface Options {
   /**
    * Create new git repository and create an inital commit with boilerplate changes
    *
-   * Input Source: `prompt.confirm` | `parameter.option`
+   * Input Source: `prompt.ask` | `parameter.option`
    * @default true
    */
   git?: boolean
   /**
    * Whether or not to run packager install script after project is created
    *
-   * Input Source: `prompt.confirm` | `parameter.option`
+   * Input Source: `prompt.ask` | `parameter.option`
    * @default true
    */
   installDeps?: boolean
   /**
    * Remove existing directory otherwise throw if exists
    *
-   * Input Source: `prompt.confirm` | `parameter.option`
+   * Input Source: `prompt.ask` | `parameter.option`
    * @default false
    */
   overwrite?: boolean
@@ -98,7 +99,7 @@ export interface Options {
   /**
    * The target directory where the project will be created.
    *
-   * Input Source: `prompt.confirm` | `parameter.option`
+   * Input Source: `prompt.ask` | `parameter.option`
    * @default `${cwd}/${projectName}`
    */
   targetPath?: string
@@ -217,10 +218,15 @@ export default {
     let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
 
     if (exists(targetPath) && overwrite === undefined) {
-      overwrite = await prompt.confirm(
-        `${targetPath} already exists. Do you want to overwrite it?`,
-        false,
-      )
+      const overwriteResponse = await prompt.ask<{ overwrite: boolean }>(() => ({
+        type: "confirm",
+        name: "overwrite",
+        message: `Directory ${targetPath} already exists. Do you want to overwrite it?`,
+        initial: defaultOverwrite,
+        format: format.boolean,
+        prefix,
+      }))
+      overwrite = overwriteResponse.overwrite
     }
 
     if (exists(targetPath) && overwrite === false) {
@@ -236,7 +242,15 @@ export default {
     let git = useDefault(options.git) ? defaultGit : options.git
 
     if (git === undefined) {
-      git = await prompt.confirm("Do you want to initialize a git repository?", true)
+      const gitResponse = await prompt.ask<{ git: boolean }>(() => ({
+        type: "confirm",
+        name: "git",
+        message: "Do you want to initialize a git repository?",
+        initial: defaultGit,
+        format: format.boolean,
+        prefix,
+      }))
+      git = gitResponse.git
     }
     // #endregion
 
@@ -296,10 +310,15 @@ export default {
       ? defaultInstallDeps
       : boolFlag(options.installDeps)
     if (installDeps === undefined) {
-      installDeps = await prompt.confirm(
-        "Want us to install dependencies for you? (adds 50-100 seconds)",
-        true,
-      )
+      const installDepsResponse = await prompt.ask<{ installDeps: boolean }>(() => ({
+        type: "confirm",
+        name: "installDeps",
+        message: "Do you want to install dependencies?",
+        initial: defaultInstallDeps,
+        format: format.boolean,
+        prefix,
+      }))
+      installDeps = installDepsResponse.installDeps
     }
     // #endregion
 
