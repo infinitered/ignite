@@ -80,16 +80,16 @@ export const ascii = (assetname: AssetName) =>
 export const ir = (m = "") => bgRed(bold(white(m)))
 
 export const pretty = {
+  ascii,
+  clearSpinners,
+  command,
+  direction,
+  heading,
+  igniteHeading,
+  ir,
+  link,
   p,
   startSpinner,
   stopSpinner,
-  clearSpinners,
-  heading,
-  link,
-  igniteHeading,
-  command,
-  direction,
   warning,
-  ascii,
-  ir,
 }
