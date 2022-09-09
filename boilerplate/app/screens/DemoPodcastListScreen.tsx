@@ -66,6 +66,8 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
                 }
                 variant="switch"
                 labelTx="demoPodcastListScreen.onlyFavorites"
+                labelPosition="left"
+                labelStyle={$labelStyle}
                 accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
               />
             </View>
@@ -236,9 +238,13 @@ const $rowLayout: ViewStyle = {
 }
 
 const $toggle: ViewStyle = {
-  alignItems: "center",
+  alignItems: "flex-end",
   marginTop: spacing.small,
 }
+
+const $labelStyle: TextStyle = {
+  textAlign: "left"
+};
 
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
