@@ -6,24 +6,27 @@ module.exports = {
   description: "Snackify Ignite app",
   run: async (toolbox: GluegunToolbox) => {
     const { print, prompt, system, patching } = toolbox
-    const { remove } = filesystem
+    const { remove, exists } = filesystem
     const { info } = print
 
-    // getStatus checks if there are any uncommitted changes inside the branch
-    const getStatus = await system.run(`git status -s`)
-
-    if (getStatus === "") {
-      // test if the branch name has substring snack
-      const branchName = await system.run(`git branch --show-current`)
-      if (!branchName.includes("snack")) {
-        info("Creating a new branch for your snack")
-        system.run(`git checkout -b snack-$(date +'%m%d%y')`)
+    // check if git is enabled in the project
+    const gitExists = exists("./.git")
+    if (gitExists === "dir") {
+      // getStatus checks if there are any uncommitted changes inside the branch
+      const getStatus = await system.run(`git status -s`)
+      if (getStatus === "") {
+        // test if the branch name has substring snack
+        const branchName = await system.run(`git branch --show-current`)
+        if (!branchName.includes("snack")) {
+          info("Creating a new branch for your snack")
+          system.run(`git checkout -b snack-$(date +'%m%d%y')`)
+        }
+      } else {
+        info(
+          "There are uncommitted changes in your current branch, please commit changes before running this",
+        )
+        return
       }
-    } else {
-      info(
-        "There are uncommitted changes in your current branch, please commit changes before running this",
-      )
-      return
     }
 
     info("This command will create an expo snack project for you. ")
@@ -56,30 +59,37 @@ module.exports = {
         "",
         "/*** This file is loaded for snack to resolve Reactotron for expo snack**/ \n export const setupReactotron = (arg1:any) => null \nexport const setReactotronRootStore=(arg1:any, arg2:any)=>null",
       )
+
       // 3. Update/Add packages as per expo snack's requirements
-      await packager.add("expo-constants@~13.2.4")
-      await packager.add("expo-localization@~13.1.0")
-      await packager.add("expo-modules-core@~0.11.4")
-      await packager.add("expo-splash-screen@~0.16.2")
-      await packager.add("react-native-screens@~3.15.0")
-      await packager.add("@react-native-async-storage/async-storage@~1.17.3")
+      const addPackages = [
+        "expo-constants@~13.2.4",
+        "expo-localization@~13.1.0",
+        "expo-modules-core@~0.11.4",
+        "expo-splash-screen@~0.16.2",
+        "react-native-screens@~3.15.0",
+        "@react-native-async-storage/async-storage@~1.17.3",
+      ]
 
       // 4. Remove packages that are not required
-      await packager.remove("@expo/webpack-config")
-      await packager.remove("reactotron-react-native")
-      await packager.remove("detox")
-      await packager.remove("detox-expo-helpers")
-      await packager.remove("ts-jest")
-      await packager.remove("jest")
-      await packager.remove("metro-config")
-      await packager.remove("@rnx-kit/metro-config")
-      await packager.remove("reactotron-mst")
-      await packager.remove("reactotron-react-js")
-      await packager.remove("reactotron-core-client")
+      const removePackages = [
+        "@expo/webpack-config",
+        "reactotron-react-native",
+        "detox",
+        "detox-expo-helpers",
+        "ts-jest",
+        "jest",
+        "metro-config",
+        "@rnx-kit/metro-config",
+        "reactotron-mst",
+        "reactotron-react-js",
+        "reactotron-core-client",
+      ]
+      await packager.add(addPackages.join(" "))
+      await packager.remove(removePackages.join(" "))
     }
     info("All done, your app is ready to be imported into expo snack")
     info(
-      "The best way to import this project into an expo snack is via publishing this project into a public repository on github and then adding your repo's URL to an expo snack",
+      "The best way to import this project into an expo snack is via publishing this project into a public repository on github and then adding your repo's URL to an expo snack - https://snack.expo.dev/",
     )
   },
 }
