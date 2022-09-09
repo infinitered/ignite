@@ -12,12 +12,12 @@ import {
   link,
   ir,
   prefix,
-  format,
   highlight,
   pkgBgColor,
   hr,
   INDENT,
 } from "../tools/pretty"
+import { prettyPrompt } from "../tools/pretty/prompt"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
@@ -222,7 +222,7 @@ export default {
         name: "overwrite",
         message: `Directory ${targetPath} already exists. Do you want to overwrite it?`,
         initial: defaultOverwrite,
-        format: format.boolean,
+        format: prettyPrompt.format.boolean,
         prefix,
       }))
       overwrite = overwriteResponse.overwrite
@@ -246,7 +246,7 @@ export default {
         name: "git",
         message: "Do you want to initialize a git repository?",
         initial: defaultGit,
-        format: format.boolean,
+        format: prettyPrompt.format.boolean,
         prefix,
       }))
       git = gitResponse.git
@@ -314,7 +314,7 @@ export default {
         name: "installDeps",
         message: "Do you want to install dependencies?",
         initial: defaultInstallDeps,
-        format: format.boolean,
+        format: prettyPrompt.format.boolean,
         prefix,
       }))
       installDeps = installDepsResponse.installDeps

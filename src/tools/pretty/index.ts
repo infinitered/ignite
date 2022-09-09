@@ -1,5 +1,4 @@
-export const INDENT = "   "
-
+export * from "./indent"
 export * from "./print"
 export * from "./prompt"
 export * from "./spinners"

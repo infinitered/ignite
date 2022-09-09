@@ -1,5 +1,5 @@
 import { print } from "gluegun"
-import { INDENT } from "."
+import { INDENT } from "./indent"
 
 const { gray } = print.colors
 
