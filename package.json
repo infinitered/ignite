@@ -119,7 +119,8 @@
       "space-before-function-paren": 0
     },
     "ignorePatterns": [
-      "**/*.snap"
+      "**/*.snap",
+      "**/*.txt"
     ]
   },
   "prettier": {

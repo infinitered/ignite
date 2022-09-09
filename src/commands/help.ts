@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { showGeneratorHelp } from "../tools/generators"
-import { p, command, heading, igniteHeading, direction, link } from "../tools/pretty"
+import { p, command, heading, direction, link } from "../tools/pretty"
 
 module.exports = {
   dashed: true,
@@ -19,7 +19,6 @@ module.exports = {
       return showGeneratorHelp(toolbox)
     }
 
-    igniteHeading()
     heading(`Welcome to Ignite ${meta.version()}!`)
     p()
     p("Ignite is a CLI that helps you spin up a new React Native app using a")
@@ -57,6 +56,5 @@ module.exports = {
       `If you need additional help, join our Slack at ${link("http://community.infinite.red")}`,
     )
     p()
-    igniteHeading()
   },
 }
