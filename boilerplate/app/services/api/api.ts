@@ -81,7 +81,7 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
-  // @demo remove-block-start
+  // @demo remove-block-end
 }
 
 // Singleton instance of the API for convenience
