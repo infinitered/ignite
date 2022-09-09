@@ -77,7 +77,7 @@ export const LoginScreen = observer(function LoginScreen(_props: LoginScreenProp
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text tx="loginScreen.signIn" preset="heading" style={$signIn} />
+      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
       <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
       {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
 
@@ -113,7 +113,13 @@ export const LoginScreen = observer(function LoginScreen(_props: LoginScreenProp
         RightAccessory={PasswordRightAccessory}
       />
 
-      <Button tx="loginScreen.tapToSignIn" style={$tapButton} preset="reversed" onPress={login} />
+      <Button
+        testID="login-button"
+        tx="loginScreen.tapToSignIn"
+        style={$tapButton}
+        preset="reversed"
+        onPress={login}
+      />
     </Screen>
   )
 })
