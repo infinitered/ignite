@@ -13,11 +13,11 @@ import {
   ir,
   prefix,
   highlight,
+  prettyPrompt,
   pkgBgColor,
   hr,
   INDENT,
 } from "../tools/pretty"
-import { prettyPrompt } from "../tools/pretty/prompt"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
