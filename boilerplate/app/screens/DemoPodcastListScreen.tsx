@@ -9,6 +9,7 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  Image,
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -17,7 +18,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { AutoImage, Card, Icon, Screen, Text, Toggle } from "../components"
+import { Button, Card, Icon, Screen, Text, Toggle } from "../components"
 import { translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -26,7 +27,12 @@ import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
-const ICON_SIZE = 24
+const ICON_SIZE = 14
+
+const rnrImage1 = require("../../assets/images/rnr-image-1.png")
+const rnrImage2 = require("../../assets/images/rnr-image-2.png")
+const rnrImage3 = require("../../assets/images/rnr-image-3.png")
+const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
 export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   _props: DemoTabScreenProps<"DemoPodcastList">,
@@ -165,49 +171,64 @@ const EpisodeCard = observer(function EpisodeCard({
       verticalAlignment="force-footer-bottom"
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
-      heading={episode.parsedTitleAndSubtitle.title}
-      content={episode.parsedTitleAndSubtitle.subtitle}
-      {...accessibilityHintProps}
-      RightComponent={
-        <AutoImage maxWidth={80} source={{ uri: episode.thumbnail }} style={$itemThumbnail} />
-      }
-      FooterComponent={
+      HeadingComponent={
         <View style={$metadata}>
-          <Animated.View
-            style={[$iconContainer, StyleSheet.absoluteFillObject, animatedLikeButtonStyles]}
-          >
-            <Icon
-              icon="heart"
-              size={ICON_SIZE}
-              color={colors.palette.neutral800} // dark grey
-              onPress={handlePressFavorite}
-              accessibilityLabel={
-                isFavorite
-                  ? undefined
-                  : translate("demoPodcastListScreen.accessibility.favoriteIcon")
-              }
-            />
-          </Animated.View>
-          <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
-            <Icon
-              icon="heart"
-              size={ICON_SIZE}
-              color={colors.palette.primary400} // pink
-              onPress={handlePressFavorite}
-              accessibilityLabel={
-                isFavorite
-                  ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-                  : undefined
-              }
-            />
-          </Animated.View>
-          <Text size="xs" accessibilityLabel={episode.datePublished.accessibilityLabel}>
+          <Text style={$metadataText} size="xxs" accessibilityLabel={episode.datePublished.accessibilityLabel}>
             {episode.datePublished.textLabel}
           </Text>
-          <Text size="xs" accessibilityLabel={episode.duration.accessibilityLabel}>
+          <Text style={$metadataText} size="xxs" accessibilityLabel={episode.duration.accessibilityLabel}>
             {episode.duration.textLabel}
           </Text>
         </View>
+      }
+      content={
+        `${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`
+      }
+      {...accessibilityHintProps}
+      RightComponent={
+        <Image source={rnrImages[Math.floor(Math.random()*rnrImages.length)]} style={$itemThumbnail} />
+      }
+      FooterComponent={
+        <Button 
+          onPress={handlePressFavorite} 
+          style={[$favoriteButton, isFavorite && $unFavoriteButton]}
+          LeftAccessory={() => 
+            <View>
+              <Animated.View
+                style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              >
+                <Icon
+                  icon="heart"
+                  size={ICON_SIZE}
+                  color={colors.palette.neutral800} // dark grey
+                  onPress={handlePressFavorite}
+                  accessibilityLabel={
+                    isFavorite
+                      ? undefined
+                      : translate("demoPodcastListScreen.accessibility.favoriteIcon")
+                  }
+                />
+              </Animated.View>
+              <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+                <Icon
+                  icon="heart"
+                  size={ICON_SIZE}
+                  color={colors.palette.primary400} // pink
+                  onPress={handlePressFavorite}
+                  accessibilityLabel={
+                    isFavorite
+                      ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
+                      : undefined
+                  }
+                />
+              </Animated.View>
+            </View>
+          }
+        >
+          <Text size="xxs" accessibilityLabel={episode.duration.accessibilityLabel}>
+            {isFavorite ? "Unfavorite" : "Favorite"}
+          </Text>
+        </Button>
       }
     />
   )
@@ -224,13 +245,15 @@ const $heading: ViewStyle = {
 }
 
 const $item: ViewStyle = {
+  padding: spacing.medium,
   marginTop: spacing.medium,
   minHeight: 120,
 }
 
 const $itemThumbnail: ImageStyle = {
-  borderRadius: 8,
-  alignSelf: "center",
+  marginTop: spacing.small,
+  borderRadius: 50,
+  alignSelf: "flex-start",
 }
 
 const $rowLayout: ViewStyle = {
@@ -249,13 +272,36 @@ const $labelStyle: TextStyle = {
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
+  flexDirection: "row",
+  marginRight: spacing.small,
 }
 
 const $metadata: TextStyle = {
-  justifyContent: "space-between",
   color: colors.textDim,
   marginTop: spacing.extraSmall,
   flexDirection: "row",
-  alignItems: "center",
+}
+
+const $metadataText: TextStyle = {
+  color: colors.textDim,
+  marginRight: spacing.medium,
+  marginBottom: spacing.extraSmall,
+}
+
+const $favoriteButton: ViewStyle = {
+  borderRadius: 17,
+  marginTop: spacing.medium,
+  justifyContent: "flex-start",
+  backgroundColor: colors.palette.neutral300,
+  borderColor: colors.palette.neutral300,
+  paddingHorizontal: spacing.medium,
+  paddingVertical: spacing.extraSmall,
+  minHeight: 32,
+  alignSelf: "flex-start",
+}
+
+const $unFavoriteButton: ViewStyle = {
+  borderColor: colors.palette.primary100,
+  backgroundColor: colors.palette.primary100,
 }
 // #endregion
