@@ -41,9 +41,9 @@ describe("ignite new", () => {
       filesystem.remove(tempDir) // clean up our mess
     })
 
-    it("should print expected text to std out", () => {
+    it("should print success message", () => {
       // at some point this should probably be a snapshot?
-      expect(result).toContain(`Ignite`)
+      expect(result).toContain("Now get cooking! 🍽")
     })
 
     it("should have created expected directories", () => {
