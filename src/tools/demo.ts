@@ -52,7 +52,7 @@ function removeBlock(
   const lines = contents.split("\n")
 
   const findIndex = (l: typeof lines, c: typeof start | typeof end) =>
-    lines.findIndex((line) => line.includes(c))
+    l.findIndex((line) => line.includes(c))
   const NOT_FOUND = -1
 
   const blockStartIndex = findIndex(lines, start)
