@@ -163,6 +163,7 @@ export default {
 
     // #region Project Name
     // retrieve project name from toolbox
+    p()
     const { validateProjectName } = require("../tools/validations") as ValidationsExports
     const projectName = await validateProjectName(toolbox)
     const projectNameKebab = kebabCase(projectName)
