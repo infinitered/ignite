@@ -51,7 +51,7 @@ NOTE: as of October 2021, do not set the iOS value to `15.0` or higher, or a Det
 
 ## Adding tests
 
-We've gotten you started with `./e2e/firstTest.spec.js`, which tests that the two main example screens render properly.
+We've gotten you started with `./detox/firstTest.spec.js`, which tests that the two main example screens render properly using Detox.
 
 Note that in order to pick up elements by ID, we've added the `testID` prop to the component.
 
@@ -70,7 +70,7 @@ _(Expo-only note: for testing [production code](https://docs.expo.io/workflow/de
 In a separate terminal window from the packager:
 
 ```
-yarn build:e2e
+yarn build:detox
 ```
 
 _(Expo-only note: this is unnecessary for Expo apps)_
@@ -78,7 +78,7 @@ _(Expo-only note: this is unnecessary for Expo apps)_
 3. Run the tests
 
 ```
-yarn test:e2e
+yarn test:detox
 ```
 
 For more information, make sure to check out the official [Detox Docs](https://github.com/wix/Detox/blob/master/docs/README.md)
