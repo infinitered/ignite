@@ -184,12 +184,13 @@ function Checkbox(props: ToggleInputProps) {
   } = props
 
   const offBackgroundColor = [
-    disabled && colors.palette.neutral300,
+    disabled && colors.palette.neutral400,
+    status === "error" && colors.palette.angry100,
     colors.palette.neutral200,
   ].filter(Boolean)[0]
 
   const outerBorderColor = [
-    disabled && colors.palette.neutral300,
+    disabled && colors.palette.neutral400,
     status === "error" && colors.error,
     !on && colors.palette.neutral800,
     colors.palette.secondary500,
@@ -197,13 +198,15 @@ function Checkbox(props: ToggleInputProps) {
 
   const onBackgroundColor = [
     disabled && colors.transparent,
-    status === "error" && colors.error,
+    status === "error" && colors.palette.angry100,
     colors.palette.secondary500,
   ].filter(Boolean)[0]
 
-  const iconTintColor = [disabled && colors.palette.neutral600, colors.palette.accent100].filter(
-    Boolean,
-  )[0]
+  const iconTintColor = [
+    disabled && colors.palette.neutral600,
+    status === "error" && colors.error,
+    colors.palette.accent100
+  ].filter(Boolean)[0]
 
   return (
     <View
@@ -241,20 +244,23 @@ function Radio(props: ToggleInputProps) {
   } = props
 
   const offBackgroundColor = [
-    disabled && colors.palette.neutral300,
+    disabled && colors.palette.neutral400,
+    status === "error" && colors.palette.angry100,
     colors.palette.neutral200,
   ].filter(Boolean)[0]
 
   const outerBorderColor = [
-    disabled && colors.palette.neutral300,
+    disabled && colors.palette.neutral400,
     status === "error" && colors.error,
     !on && colors.palette.neutral800,
     colors.palette.secondary500,
   ].filter(Boolean)[0]
 
-  const onBackgroundColor = [disabled && colors.transparent, colors.palette.neutral100].filter(
-    Boolean,
-  )[0]
+  const onBackgroundColor = [
+    disabled && colors.transparent,
+    status === "error" && colors.palette.angry100,
+    colors.palette.neutral100
+  ].filter(Boolean)[0]
 
   const dotBackgroundColor = [
     disabled && colors.palette.neutral600,
@@ -307,20 +313,21 @@ function Switch(props: ToggleInputProps) {
   }, [$detailStyleOverride?.width])
 
   const offBackgroundColor = [
-    disabled && colors.palette.neutral300,
-    colors.palette.neutral200,
+    disabled && colors.palette.neutral400,
+    status === "error" && colors.palette.angry100,
+    colors.palette.neutral300,
   ].filter(Boolean)[0]
 
   const onBackgroundColor = [
     disabled && colors.transparent,
-    status === "error" && colors.error,
+    status === "error" && colors.palette.angry100,
     colors.palette.secondary500,
   ].filter(Boolean)[0]
 
   const outerBorderColor = [
-    disabled && colors.palette.neutral300,
-    status === "error" && colors.error,
-    !on && colors.palette.neutral800,
+    disabled && colors.palette.neutral400,
+    status === "error" && colors.palette.angry100,
+    !on && colors.palette.neutral300,
     colors.palette.secondary500,
   ].filter(Boolean)[0]
 
@@ -328,6 +335,7 @@ function Switch(props: ToggleInputProps) {
     if (on) {
       return [
         $detailStyleOverride?.backgroundColor,
+        status === "error" && colors.error,
         disabled && colors.palette.neutral600,
         colors.palette.neutral100,
       ].filter(Boolean)[0]
@@ -336,7 +344,7 @@ function Switch(props: ToggleInputProps) {
         $innerStyleOverride?.backgroundColor,
         disabled && colors.palette.neutral600,
         status === "error" && colors.error,
-        colors.palette.secondary500,
+        colors.palette.neutral200,
       ].filter(Boolean)[0]
     }
   })()
