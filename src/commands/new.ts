@@ -622,9 +622,6 @@ export default {
     p2()
     // #endregion
 
-    // #region Infinite Red Plug
-    // #endregion
-
     // this is a hack to prevent the process from hanging
     // if there are any tasks left in the event loop
     // like I/O operations to process.stdout and process.stderr
