@@ -3,8 +3,6 @@ import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
-  command,
-  heading,
   p,
   startSpinner,
   stopSpinner,
@@ -549,25 +547,43 @@ export default {
     // we're done! round performance stats to .xx digits
     const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
-    p()
-    p(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
-    p()
-    p(`To get started:`)
-    command(`  cd ${projectName}`)
+    /** Add just a _little_ more spacing to match with spinners and heading */
+    const p2 = (m = "") => p(` ${m}`)
 
-    if (process.platform === "darwin") {
-      command(`  ${packager.runCmd("ios", packagerOptions)}`)
-    }
-    command(`  ${packager.runCmd("android", packagerOptions)}`)
+    p2(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
+    p2()
+
     if (!isAndroidInstalled(toolbox)) {
-      p()
-      p("To run in Android, make sure you've followed the latest react-native setup")
-      p(`instructions at ${link("https://facebook.github.io/react-native/docs/getting-started")}`)
-      p("before using ignite. You won't be able to run Android successfully until you have.")
+      hr()
+      p2()
+      p2("To run in Android, make sure you've followed the latest")
+      p2(`react-native setup instructions. You reference them at:`)
+      p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
+      p2()
+      hr()
+      p2()
     }
-    p()
-    p("Or with Expo:")
-    command(`  ${packager.runCmd("expo:start", packagerOptions)}`)
+
+    p2("Now get cooking! 🍽")
+    const CMD_INDENT = "  "
+    const command = (cmd: string) => p2(print.colors.white(CMD_INDENT + cmd))
+    command(`cd ${projectName}`)
+    if (installDeps === false) {
+      command(packager.installCmd({ packagerName }))
+    }
+    command(`${packagerName} start`)
+
+    const isMac = process.platform === "darwin"
+    if (isMac) {
+      command(`${packager.runCmd("ios", packagerOptions)}`)
+    } else {
+      command(`${packager.runCmd("android", packagerOptions)}`)
+    }
+
+    p2()
+    p2("Or with Expo:")
+    command(`cd ${projectName}`)
+    command(`${packager.runCmd("expo:start", packagerOptions)}`)
     // #endregion
 
     // #region React Native Colo Loco
@@ -577,24 +593,27 @@ export default {
     const coloLoco = boolFlag(options.coloLoco)
 
     if (coloLoco) {
-      p()
-      p(`React Native Colo Loco`)
-      p("React Native Colo Loco is no longer installed by default.")
-      p("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
-      p("However, you can install it with the following commands in your app folder:")
-      p()
-      command(`  ${packager.addCmd("-g react-native-colo-loco")}`)
-      command(`  ${packager.runCmd("install-colo-loco", packagerOptions)}`)
+      p2()
+      p2(`React Native Colo Loco`)
+      p2("React Native Colo Loco is no longer installed by default.")
+      p2("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
+      p2("However, you can install it with the following commands in your app folder:")
+      p2()
+      command(`${packager.addCmd("-g react-native-colo-loco")}`)
+      command(`${packager.runCmd("install-colo-loco", packagerOptions)}`)
     }
     // #endregion
 
     // #region Infinite Red Plug
-    p()
-    p("Need additional help?")
-    p()
-    p(`Join our Slack community at ${link("http://community.infinite.red.")}`)
-    p()
-    heading("Now get cooking! 🍽")
+    p2()
+    hr()
+    p2()
+    p2("Need additional help?")
+    p2()
+    p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
+    p2()
+    hr()
+    p2()
     // #endregion
 
     // #region Print CLI command
@@ -641,16 +660,15 @@ export default {
       )
       .join(" ")}`
 
-    p()
-    p(`In the future, if you'd like to skip the questions, you can run Ignite with these options:`)
-    command(`  ${cliCommand}`)
-    p()
+    p2(`For next time: here are the Ignite options you picked!`)
+    command(`${cliCommand}`)
+    p2()
+    // #endregion
 
     // this is a hack to prevent the process from hanging
     // if there are any tasks left in the event loop
     // like I/O operations to process.stdout and process.stderr
     // see https://github.com/infinitered/ignite/issues/2084
     process.exit(0)
-    // #endregion
   },
 }
