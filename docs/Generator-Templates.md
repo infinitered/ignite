@@ -20,9 +20,9 @@ If you use all upper-case `NAME` in your template filenames, that will be replac
 
 It's best to just look at an example:
 
-Let's say you have a file called `NAMEModel.ts`.
+Let's say you have a file called `NAMEScreen.ts`.
 
-If they run `npx ignite-cli generate model Pizza`, it'll name the file `PizzaModel.ts`.
+If they run `npx ignite-cli generate screen Pizza`, it'll name the file `PizzaScreen.ts`.
 
 If you'd like to customize the filename you can provide a filename option in the frontmatter of the template like so:
 
