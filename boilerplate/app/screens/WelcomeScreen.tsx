@@ -38,7 +38,12 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
     <View style={$container}>
       <View style={$topContainer}>
         <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text style={$welcomeHeading} tx="welcomeScreen.readyForLaunch" preset="heading" />
+        <Text
+          testID="welcome-heading"
+          style={$welcomeHeading}
+          tx="welcomeScreen.readyForLaunch"
+          preset="heading"
+        />
         <Text tx="welcomeScreen.exciting" preset="subheading" />
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
@@ -46,7 +51,12 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
       <SafeAreaView style={$bottomContainer} edges={["bottom"]}>
         <View style={$bottomContentContainer}>
           <Text tx="welcomeScreen.postscript" size="md" />
-          <Button preset="reversed" tx="welcomeScreen.letsGo" onPress={goNext} />
+          <Button
+            testID="next-screen-button"
+            preset="reversed"
+            tx="welcomeScreen.letsGo"
+            onPress={goNext}
+          />
         </View>
       </SafeAreaView>
     </View>
