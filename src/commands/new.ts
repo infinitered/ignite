@@ -52,14 +52,6 @@ export interface Options {
    */
   bundle?: string
   /**
-   * React Native Colo Loco is no longer installed with Ignite,
-   * but we will give instructions on how to install it if they pass in `--colo-loco`   *
-   *
-   * Input Source: `parameter.option`
-   * @default false
-   */
-  coloLoco?: boolean
-  /**
    * Log raw parameters for debugging, run formatting script not quietly
    *
    * Input Source: `parameter.option`
@@ -563,7 +555,6 @@ export default {
         b: bname,
         boilerplate: bname,
         bundle: bundleIdentifier,
-        coloLoco: boolFlag(options.coloLoco),
         debug,
         git,
         installDeps,
@@ -598,24 +589,6 @@ export default {
       p2("To run in Android, make sure you've followed the latest")
       p2(`react-native setup instructions. You reference them at:`)
       p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
-      p2()
-    }
-
-    // React Native Colo Loco is no longer installed with Ignite, but
-    // we will give instructions on how to install it if they
-    // pass in `--colo-loco`
-    const coloLoco = boolFlag(options.coloLoco)
-
-    if (coloLoco) {
-      hr()
-      p2()
-      p2("React Native Colo Loco is no longer installed by default.")
-      p2(`${link("https://github.com/jamonholmgren/react-native-colo-loco")}`)
-      p2()
-      p2("However, you can install it with the following commands in your app folder:")
-      p2()
-      command(`${packager.addCmd("-g react-native-colo-loco")}`)
-      command(`${packager.runCmd("install-colo-loco", packagerOptions)}`)
       p2()
     }
 
@@ -672,16 +645,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = [
-    "b",
-    "boilerplate",
-    "coloLoco",
-    "debug",
-    "expo",
-    "useCache",
-    "y",
-    "yes",
-  ]
+  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "expo", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>
