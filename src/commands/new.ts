@@ -134,11 +134,13 @@ export default {
     const { kebabCase } = strings
     const { exists, path, remove, copy, read, write } = filesystem
     const { info, colors, warning } = print
-    const { gray, cyan, yellow, underline } = colors
+    const { gray, cyan, yellow, underline, white } = colors
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
     const useDefault = (option: unknown) => yname && option === undefined
+
+    const command = (cmd: string) => p2(white("  " + cmd))
     // #endregion
 
     // #region Debug
@@ -552,6 +554,30 @@ export default {
 
     p2(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
     p2()
+    const cliCommand = buildCliCommand({
+      flags: {
+        b: bname,
+        boilerplate: bname,
+        bundle: bundleIdentifier,
+        coloLoco: boolFlag(options.coloLoco),
+        debug,
+        git,
+        installDeps,
+        overwrite,
+        expo,
+        packager: packagerName,
+        targetPath,
+        useCache,
+        y: yname,
+        yes: yname,
+      },
+      projectName,
+      toolbox,
+    })
+
+    p2(`For next time: here are the Ignite options you picked!`)
+    command(`${cliCommand}`)
+    p2()
 
     if (!isAndroidInstalled(toolbox)) {
       hr()
@@ -560,17 +586,38 @@ export default {
       p2(`react-native setup instructions. You reference them at:`)
       p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
       p2()
+    }
+
+    // React Native Colo Loco is no longer installed with Ignite, but
+    // we will give instructions on how to install it if they
+    // pass in `--colo-loco`
+    const coloLoco = boolFlag(options.coloLoco)
+
+    if (coloLoco) {
       hr()
+      p2()
+      p2("React Native Colo Loco is no longer installed by default.")
+      p2(`${link("https://github.com/jamonholmgren/react-native-colo-loco")}`)
+      p2()
+      p2("However, you can install it with the following commands in your app folder:")
+      p2()
+      command(`${packager.addCmd("-g react-native-colo-loco")}`)
+      command(`${packager.runCmd("install-colo-loco", packagerOptions)}`)
       p2()
     }
 
+    hr()
+    p2()
+    p2("Need additional help?")
+    p2()
+    p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
+    p2()
+
+    hr()
+    p2()
     p2("Now get cooking! 🍽")
-    const CMD_INDENT = "  "
-    const command = (cmd: string) => p2(print.colors.white(CMD_INDENT + cmd))
     command(`cd ${projectName}`)
-    if (installDeps === false) {
-      command(packager.installCmd({ packagerName }))
-    }
+    if (!installDeps) command(packager.installCmd({ packagerName }))
     command(`${packagerName} start`)
 
     const isMac = process.platform === "darwin"
@@ -581,88 +628,15 @@ export default {
     }
 
     p2()
-    p2("Or with Expo:")
+    p2("With Expo:")
     command(`cd ${projectName}`)
+    if (!installDeps) command(packager.installCmd({ packagerName }))
     command(`${packager.runCmd("expo:start", packagerOptions)}`)
-    // #endregion
-
-    // #region React Native Colo Loco
-    // React Native Colo Loco is no longer installed with Ignite, but
-    // we will give instructions on how to install it if they
-    // pass in `--colo-loco`
-    const coloLoco = boolFlag(options.coloLoco)
-
-    if (coloLoco) {
-      p2()
-      p2(`React Native Colo Loco`)
-      p2("React Native Colo Loco is no longer installed by default.")
-      p2("(More info: https://github.com/jamonholmgren/react-native-colo-loco)")
-      p2("However, you can install it with the following commands in your app folder:")
-      p2()
-      command(`${packager.addCmd("-g react-native-colo-loco")}`)
-      command(`${packager.runCmd("install-colo-loco", packagerOptions)}`)
-    }
+    p2()
+    p2()
     // #endregion
 
     // #region Infinite Red Plug
-    p2()
-    hr()
-    p2()
-    p2("Need additional help?")
-    p2()
-    p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
-    p2()
-    hr()
-    p2()
-    // #endregion
-
-    // #region Print CLI command
-    const flags: Required<Options> = {
-      b: bname,
-      boilerplate: bname,
-      bundle: bundleIdentifier,
-      coloLoco,
-      debug,
-      git,
-      installDeps,
-      overwrite,
-      expo,
-      packager: packagerName,
-      targetPath,
-      useCache,
-      y: yname,
-      yes: yname,
-    }
-
-    type Flag = keyof typeof flags
-    type FlagEntry = [key: Flag, value: Options[Flag]]
-
-    const privateFlags: Flag[] = [
-      "b",
-      "boilerplate",
-      "coloLoco",
-      "debug",
-      "expo",
-      "useCache",
-      "y",
-      "yes",
-    ]
-
-    const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
-    const booleanFlag = ([key, value]: FlagEntry) =>
-      value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}`
-
-    const cliCommand = `npx ignite-cli new ${projectName} ${(Object.entries(flags) as FlagEntry[])
-      .filter(([key]) => privateFlags.includes(key) === false)
-      .filter(([, value]) => value !== undefined)
-      .map(([key, value]) =>
-        typeof value === "boolean" ? booleanFlag([key, value]) : stringFlag([key, value]),
-      )
-      .join(" ")}`
-
-    p2(`For next time: here are the Ignite options you picked!`)
-    command(`${cliCommand}`)
-    p2()
     // #endregion
 
     // this is a hack to prevent the process from hanging
@@ -671,4 +645,42 @@ export default {
     // see https://github.com/infinitered/ignite/issues/2084
     process.exit(0)
   },
+}
+
+function buildCliCommand(args: {
+  flags: Required<Options>
+  toolbox: GluegunToolbox
+  projectName: string
+}): string {
+  const { flags, toolbox, projectName } = args
+  const { strings } = toolbox
+  const { kebabCase } = strings
+
+  type Flag = keyof typeof flags
+  type FlagEntry = [key: Flag, value: Options[Flag]]
+
+  const privateFlags: Flag[] = [
+    "b",
+    "boilerplate",
+    "coloLoco",
+    "debug",
+    "expo",
+    "useCache",
+    "y",
+    "yes",
+  ]
+
+  const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
+  const booleanFlag = ([key, value]: FlagEntry) =>
+    value ? `--${kebabCase(key)}` : `--${kebabCase(key)}=${value}`
+
+  const cliCommand = `npx ignite-cli new ${projectName} ${(Object.entries(flags) as FlagEntry[])
+    .filter(([key]) => privateFlags.includes(key) === false)
+    .filter(([, value]) => value !== undefined)
+    .map(([key, value]) =>
+      typeof value === "boolean" ? booleanFlag([key, value]) : stringFlag([key, value]),
+    )
+    .join(" ")}`
+
+  return cliCommand
 }
