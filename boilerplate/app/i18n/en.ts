@@ -99,6 +99,14 @@ const en = {
       publishLabel: "Published {{date}}",
       durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
     },
+    noDataEmptyState: {
+      title: "So empty... so sad",
+      message: "No data found yet. Try clicking the button to refresh or reload the app.",
+    },
+    noFavoritesEmptyState: {
+      title: "This looks a bit empty",
+      message: "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
+    }
   },
   errorScreen: {
     title: "Something went wrong!",

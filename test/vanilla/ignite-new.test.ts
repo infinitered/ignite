@@ -41,9 +41,9 @@ describe("ignite new", () => {
       filesystem.remove(tempDir) // clean up our mess
     })
 
-    it("should print expected text to std out", () => {
-      expect(result).toContain(`Using ignite-cli`)
-      expect(result).toContain(`Ignite CLI ignited ${APP_NAME}`)
+    it("should print success message", () => {
+      // at some point this should probably be a snapshot?
+      expect(result).toContain("Now get cooking! 🍽")
     })
 
     it("should have created expected directories", () => {
@@ -92,7 +92,7 @@ describe("ignite new", () => {
       expect(appJS).toContain("RootStore")
     })
 
-    it("should be able to use `generate` command and have pass output pass npm run test, npmr run lint, and npm run compile scripts", async () => {
+    it("should be able to use `generate` command and have pass output pass npm run test, npm run lint, and npm run compile scripts", async () => {
       // other common test operations
       const runOpts = {
         pre: `cd ${appPath}`,

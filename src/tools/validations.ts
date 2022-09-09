@@ -1,4 +1,5 @@
 import { GluegunToolbox } from "gluegun"
+import { prefix } from "./pretty"
 
 export async function validateProjectName(toolbox: GluegunToolbox): Promise<string> {
   const { parameters, strings, print } = toolbox
@@ -9,11 +10,12 @@ export async function validateProjectName(toolbox: GluegunToolbox): Promise<stri
 
   // verify the project name is a thing
   if (isBlank(projectName)) {
-    const projectNameResponse = await toolbox.prompt.ask({
+    const projectNameResponse = await toolbox.prompt.ask(() => ({
       name: "projectName",
       type: "input",
       message: "What do you want to call it?",
-    })
+      prefix,
+    }))
     projectName = projectNameResponse.projectName
   }
 

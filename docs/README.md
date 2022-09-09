@@ -11,6 +11,7 @@ Check out this list of topics:
   - [Generator Templates](./Generator-Templates.md) - Writing your own generator templates
 - [Folder-Structure](./Folder-Structure.md) - An explanation of the Ignite folder structure
 - [Why MobX-State-Tree?](./MobX-State-Tree.md) - All about MobX-State-Tree, and why we use it instead of Redux
+- [Expo and Ignite](./Expo-and-Ignite.md) - How Expo fits in with Ignite, and whether you should use it
 - [TypeScript](./TypeScript.md) - An explanation of TypeScript in Ignite and lots of resources
 - [Upgrading Ignite](./Upgrading.md) - How to upgrade your app to the latest and greatest Ignite patterns
 - [Tour of Ignite](./Tour-of-Ignite.md) - Tour of the Ignite code base for interested contributors

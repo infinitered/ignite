@@ -8,6 +8,7 @@ import {
 } from "@react-navigation/native"
 import Config from "../config"
 import type { PersistNavigationConfig } from "../config/config.base"
+import { useIsMounted } from "../utils/is-mounted"
 
 /* eslint-disable */
 export const RootNavigation = {
@@ -104,6 +105,7 @@ function navigationRestoredDefaultState(persistNavigation: PersistNavigationConf
  */
 export function useNavigationPersistence(storage: any, persistenceKey: string) {
   const [initialNavigationState, setInitialNavigationState] = useState()
+  const isMounted = useIsMounted()
 
   const initNavState = navigationRestoredDefaultState(Config.persistNavigation)
   const [isRestored, setIsRestored] = useState(initNavState)
@@ -133,7 +135,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
       const state = await storage.load(persistenceKey)
       if (state) setInitialNavigationState(state)
     } finally {
-      setIsRestored(true)
+      if (isMounted()) setIsRestored(true)
     }
   }
 
