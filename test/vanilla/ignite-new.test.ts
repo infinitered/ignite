@@ -92,7 +92,7 @@ describe("ignite new", () => {
       expect(appJS).toContain("RootStore")
     })
 
-    it("should be able to use `generate` command and have pass output pass npm run test, npmr run lint, and npm run compile scripts", async () => {
+    it("should be able to use `generate` command and have pass output pass npm run test, npm run lint, and npm run compile scripts", async () => {
       // other common test operations
       const runOpts = {
         pre: `cd ${appPath}`,
