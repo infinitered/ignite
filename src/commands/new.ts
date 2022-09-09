@@ -16,10 +16,12 @@ import {
   highlight,
   pkgBgColor,
   hr,
+  INDENT,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
+import { EOL } from "os"
 
 // CLI tool versions we support
 const deps: { [k: string]: string } = {
@@ -140,7 +142,8 @@ export default {
     const yname = boolFlag(options.y) || boolFlag(options.yes)
     const useDefault = (option: unknown) => yname && option === undefined
 
-    const command = (cmd: string) => p2(white("  " + cmd))
+    const CMD_INDENT = "  "
+    const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
     // #endregion
 
     // #region Debug
@@ -576,7 +579,16 @@ export default {
     })
 
     p2(`For next time: here are the Ignite options you picked!`)
-    command(`${cliCommand}`)
+
+    // create a multi-line string of the command, where each --flag is on it's own line
+    const prettyCliCommand = cliCommand
+      .split(" ")
+      .map((c) => (c === projectName || c.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
+      .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
+      .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
+      .join(" ")
+
+    command(`${prettyCliCommand}`)
     p2()
 
     if (!isAndroidInstalled(toolbox)) {
