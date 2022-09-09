@@ -7,3 +7,5 @@ export * from "./DemoCard"
 export * from "./DemoAutoImage"
 export * from "./DemoText"
 export * from "./DemoHeader"
+
+// @demo remove-file

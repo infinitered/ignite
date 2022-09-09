@@ -206,3 +206,5 @@ export const DemoAutoImage: Demo = {
     </DemoUseCase>,
   ],
 }
+
+// @demo remove-file

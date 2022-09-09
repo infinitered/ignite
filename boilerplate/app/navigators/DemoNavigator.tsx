@@ -98,3 +98,5 @@ const $tabBarLabel: TextStyle = {
   lineHeight: 16,
   flex: 1,
 }
+
+// @demo remove-file

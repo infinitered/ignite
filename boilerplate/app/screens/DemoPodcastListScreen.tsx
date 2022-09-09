@@ -325,3 +325,5 @@ const $button: ViewStyle = {
   marginVertical: spacing.huge,
 }
 // #endregion
+
+// @demo remove-file

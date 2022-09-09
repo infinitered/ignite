@@ -77,3 +77,5 @@ export const EpisodeModel = types
 export interface Episode extends Instance<typeof EpisodeModel> {}
 export interface EpisodeSnapshotOut extends SnapshotOut<typeof EpisodeModel> {}
 export interface EpisodeSnapshotIn extends SnapshotIn<typeof EpisodeModel> {}
+
+// @demo remove-file

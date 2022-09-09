@@ -1,4 +1,20 @@
 const en = {
+  welcomeScreen: {
+    postscript:
+    "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
+    readyForLaunch: "Your app, almost ready for launch!",
+    exciting: "(ohh, this is exciting!)",
+    headerRight: "Log Out", // @demo remove-current-line
+    letsGo: "Let's go!", // @demo remove-current-line
+  },
+  errorScreen: {
+    title: "Something went wrong!",
+    friendlySubtitle:
+      "This is the screen that your users will see in production when an error is thrown. You'll want to customize this message (located in `app/i18n/en.ts`) and probably the layout as well (`app/screens/ErrorScreen`). If you want to remove this entirely, check `app/app.tsx` for the <ErrorBoundary> component.",
+    reset: "RESET APP",
+    traceTitle: "Error from %{name} stack", // @demo remove-current-line
+  },
+  // @demo remove-block-start
   common: {
     ok: "OK!",
     cancel: "Cancel",
@@ -6,14 +22,6 @@ const en = {
   },
   errors: {
     invalidEmail: "Invalid email address.",
-  },
-  welcomeScreen: {
-    headerRight: "Log Out",
-    postscript:
-      "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
-    letsGo: "Let's go!",
-    readyForLaunch: "Your app, almost ready for launch!",
-    exciting: "(ohh, this is exciting!)",
   },
   loginScreen: {
     signIn: "Sign In",
@@ -108,13 +116,7 @@ const en = {
       message: "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
     }
   },
-  errorScreen: {
-    title: "Something went wrong!",
-    friendlySubtitle:
-      "This is the screen that your users will see in production when an error is thrown. You'll want to customize this message (located in `app/i18n/en.ts`) and probably the layout as well (`app/screens/ErrorScreen`). If you want to remove this entirely, check `app/app.tsx` for the <ErrorBoundary> component.",
-    traceTitle: "Error from %{name} stack",
-    reset: "RESET APP",
-  },
+  // @demo remove-block-end
 }
 
 export default en
