@@ -232,44 +232,6 @@ describe("demo", () => {
       )
       expect(result).not.toContain(") : (")
     })
-
-    it(`should remove all comments in AppStack component snippet`, () => {
-      const contents = /* jsx */ `
-        const AppStack = observer(function AppStack() {
-          // @demo remove-block-start
-          const {
-            authenticationStore: { isAuthenticated },
-          } = useStores()
-          
-          // @demo remove-block-end
-          return (
-            <Stack.Navigator
-              screenOptions={{ headerShown: false }}
-              initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
-            >
-              {isAuthenticated ? ( // @demo remove-current-line
-                <>
-                  <Stack.Screen name="Welcome" component={WelcomeScreen} />
-                  <Stack.Screen name="Demo" component={DemoNavigator} /> {/* @demo remove-current-line */}
-                </>
-              ) : ( // @demo remove-block-start 
-                <Stack.Screen name="Login" component={LoginScreen} />
-              )} {/* @demo remove-block-end */}
-        
-              {/** 🔥 Your screens go here */}
-            </Stack.Navigator>
-          )
-        })`
-        .split("\n")
-        .map((line) => line.replace("        ", ""))
-        .join("\n")
-      const result = demo.remove(contents)
-
-      expect(result).toMatchSnapshot()
-      expect(result).not.toContain(REMOVE_BLOCK_START)
-      expect(result).not.toContain(REMOVE_BLOCK_END)
-      expect(result).not.toContain(REMOVE_CURRENT_LINE)
-    })
   })
 })
 
@@ -446,22 +408,26 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
-  // @demo remove-block-end
 
+  // @demo remove-block-end
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
     >
-      {isAuthenticated ? ( // @demo remove-current-line
+      {/* @demo remove-block-start */}
+      {isAuthenticated ? (
         <>
+          {/* @demo remove-block-end */}
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Demo" component={DemoNavigator} /> {/* @demo remove-current-line */}
+          <Stack.Screen name="Demo" component={DemoNavigator} /> {/* @demo remove-block-start */}
         </>
-      ) : ( // @demo remove-block-start 
-        <Stack.Screen name="Login" component={LoginScreen} />
-      )} {/* @demo remove-block-end */}
-
+      ) : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </>
+      )}
+      {/* @demo remove-block-end */}
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

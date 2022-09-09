@@ -57,15 +57,11 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreen
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
     >
-        <>
           <Stack.Screen name=\\"Welcome\\" component={WelcomeScreen} />
-        </>
-
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
@@ -89,23 +85,6 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   )
 })
 "
-`;
-
-exports[`demo remove should remove all comments in AppStack component snippet 1`] = `
-"
-const AppStack = observer(function AppStack() {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-    >
-        <>
-          <Stack.Screen name=\\"Welcome\\" component={WelcomeScreen} />
-        </>
-
-      {/** 🔥 Your screens go here */}
-    </Stack.Navigator>
-  )
-})"
 `;
 
 exports[`demo remove should remove all comments in WelcomeScreen 1`] = `

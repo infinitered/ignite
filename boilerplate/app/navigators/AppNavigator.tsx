@@ -63,21 +63,25 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
-  
+
   // @demo remove-block-end
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
     >
-      {isAuthenticated ? ( // @demo remove-current-line
+      {/* @demo remove-block-start */}
+      {isAuthenticated ? (
         <>
+          {/* @demo remove-block-end */}
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Demo" component={DemoNavigator} /> {/* @demo remove-current-line */}
+          <Stack.Screen name="Demo" component={DemoNavigator} /> {/* @demo remove-block-start */}
         </>
-      ) : ( // @demo remove-block-start 
-        <Stack.Screen name="Login" component={LoginScreen} />
-      )} 
+      ) : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </>
+      )}
       {/* @demo remove-block-end */}
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
