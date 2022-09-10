@@ -32,7 +32,7 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoPodcastListScreen.tsx
    Found '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/index.ts
    Found '@demo remove-file' in /user/home/ignite/app/screens/LoginScreen.tsx
-   Found '@demo remove-current-line', '@demo remove-next-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/api.ts
    Removed empty directory '/user/home/ignite/app/screens/DemoComponentsScreen/demos'
    Done removing demo code from '/user/home/ignite'
