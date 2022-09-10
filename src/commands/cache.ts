@@ -19,9 +19,8 @@ const help = (_toolbox: GluegunToolbox) => {
   igniteHeading()
   heading("ignite cache")
   p()
-  p(
-    "ignite cache is a parent command for interacting with the dependency cache ignite uses on your machine to speed up the packager installation process.",
-  )
+  p("ignite cache is a parent command for interacting with the dependency cache")
+  p("ignite uses on your machine to speed up the packager installation process.")
   p()
   heading("Subcommands:")
   p()

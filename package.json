@@ -25,7 +25,7 @@
   "scripts": {
     "compile": "tsc -p .",
     "typecheck": "tsc -p . --noEmit",
-    "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template",
+    "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template && cp ./src/assets/*.txt ./build/assets/",
     "format": "prettier '**/*{.js,.ts,.tsx,.json,.md}'",
     "format:write": "yarn format --write",
     "format:check": "yarn format --check",

@@ -126,7 +126,7 @@ export default {
     // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
     const { kebabCase } = strings
-    const { exists, path, remove, copy, read, write } = filesystem
+    const { exists, path, removeAsync, copy, read, write } = filesystem
     const { info, colors, warning } = print
     const { gray, cyan, yellow, underline, white } = colors
     const options: Options = parameters.options
@@ -359,15 +359,22 @@ export default {
     if (exists(targetPath) === "dir" && overwrite === true) {
       const msg = ` Tossing that old app like it's hot`
       startSpinner(msg)
-      remove(targetPath)
+      await removeAsync(targetPath)
       stopSpinner(msg, "🗑️")
     }
+    // #endregion
+
+    // #region Local build folder clean
     // Remove some folders that we don't want to copy over
-    // This mostly only applies to when you're developing locally
-    remove(path(boilerplatePath, "ios", "Pods"))
-    remove(path(boilerplatePath, "node_modules"))
-    remove(path(boilerplatePath, "android", ".idea"))
-    remove(path(boilerplatePath, "android", ".gradle"))
+    // This mostly only applies when you're developing locally
+    await Promise.all([
+      removeAsync(path(boilerplatePath, "node_modules")),
+      removeAsync(path(boilerplatePath, "ios", "Pods")),
+      removeAsync(path(boilerplatePath, "ios", "build")),
+      removeAsync(path(boilerplatePath, "android", ".idea")),
+      removeAsync(path(boilerplatePath, "android", ".gradle")),
+      removeAsync(path(boilerplatePath, "android", "build")),
+    ])
     // #endregion
 
     // #region Copy Boilerplate Files
@@ -437,14 +444,16 @@ export default {
     log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
     log(`cacheExists: ${cacheExists}`)
 
-    const defaultUseCache = true
+    // use-cache defaults to `false` for now; if we make it robust enough,
+    // we can enable it by default in the future.
+    const defaultUseCache = false
     const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
 
     const shouldUseCache = installDeps && cacheExists && useCache
     if (shouldUseCache) {
       const msg = `Grabbing those ${packagerName} dependencies from the back`
       startSpinner(msg)
-      cache.copy({
+      await cache.copy({
         fromRootDir: cachePath,
         toRootDir: targetPath,
         packagerName,
@@ -461,7 +470,7 @@ export default {
     }
 
     // remove the gitignore template
-    remove(".gitignore.template")
+    await removeAsync(".gitignore.template")
     // #endregion
 
     // #region Rename App
@@ -495,7 +504,8 @@ export default {
     if (shouldFreshInstallDeps && cacheExists === false) {
       const msg = `Saving ${packagerName} dependencies for next time`
       startSpinner(msg)
-      cache.copy({
+      log(targetPath)
+      await cache.copy({
         fromRootDir: targetPath,
         toRootDir: cachePath,
         packagerName,
