@@ -11,12 +11,12 @@ import {
   create 
 } from "apisauce"
 import Config from "../../config"
-import { GeneralApiProblem, getGeneralApiProblem } from "./api-problem" // @demo remove-curent-line
+import { GeneralApiProblem, getGeneralApiProblem } from "./api-problem" // @demo remove-current-line
 import type { 
   ApiConfig, 
   ApiFeedResponse // @demo remove-curent-line
 } from "./api.types"
-import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-curent-line
+import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-current-line
 
 /**
  * Configuring the apisauce instance.
