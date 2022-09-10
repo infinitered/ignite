@@ -444,7 +444,9 @@ export default {
     log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
     log(`cacheExists: ${cacheExists}`)
 
-    const defaultUseCache = true
+    // use-cache defaults to `false` for now; if we make it robust enough,
+    // we can enable it by default in the future.
+    const defaultUseCache = false
     const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
 
     const shouldUseCache = installDeps && cacheExists && useCache
