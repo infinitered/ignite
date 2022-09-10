@@ -28,13 +28,14 @@ interface TargetsOptions {
   packagerName: PackagerName
   platform: NodeJS.Platform | undefined
 }
-const targets = ({ rootDir, packagerName, platform }: TargetsOptions) =>
-  [
+const targets = ({ rootDir, packagerName, platform }: TargetsOptions) => {
+  return [
     { type: "dir", path: path(rootDir, "node_modules") },
     { type: "file", path: path(rootDir, lockFile[packagerName]) },
     { type: "dir", path: path(rootDir, "ios", "Pods"), platform: ["darwin"] },
     { type: "dir", path: path(rootDir, "ios", "build"), platform: ["darwin"] },
   ].filter((target) => (target.platform ? target.platform.includes(platform) : true))
+}
 
 interface CopyOptions {
   fromRootDir: string
@@ -48,14 +49,16 @@ function copy(options: CopyOptions) {
   const fromTargets = targets({ rootDir: fromRootDir, packagerName, platform })
   const toTargets = targets({ rootDir: toRootDir, packagerName, platform })
 
-  fromTargets.forEach((from, index) => {
-    const to = toTargets[index]
-    if (from.type === "dir") {
-      dir(from.path)
-    }
+  return Promise.all(
+    fromTargets.map((from, index) => {
+      const to = toTargets[index]
+      if (from.type === "dir") {
+        dir(from.path)
+      }
 
-    filesystem.copy(from.path, to.path, { overwrite: true })
-  })
+      return filesystem.copyAsync(from.path, to.path, { overwrite: true })
+    }),
+  )
 }
 
 /**
