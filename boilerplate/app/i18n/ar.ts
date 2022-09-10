@@ -1,6 +1,22 @@
 import { Translations } from "./en"
 
 const ar: Translations = {
+  welcomeScreen: {
+    postscript:
+    "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
+    readyForLaunch: "تطبيقك تقريبا جاهز للتشغيل",
+    exciting: "اوه هذا مثير",
+    headerRight: "تسجيل خروج", // @demo remove-current-line
+    letsGo: "لنذهب", // @demo remove-current-line
+  },
+  errorScreen: {
+    title: "هناك خطأ ما",
+    friendlySubtitle:
+      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة ( الموجودة في 'ts.en/i18n/app') وربما التخطيط ايضاً ('app/screens/ErrorScreen'). إذا كنت تريد إزالة هذا بالكامل، تحقق من 'app/app.tsp' من اجل عنصر <ErrorBoundary>.",
+    reset: "اعادة تعيين التطبيق",
+    traceTitle: "خطأ من مجموعة %{name}", // @demo remove-current-line
+  },
+  // @demo remove-block-start
   common: {
     ok: "نعم",
     cancel: "حذف",
@@ -8,14 +24,6 @@ const ar: Translations = {
   },
   errors: {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
-  },
-  welcomeScreen: {
-    headerRight: "تسجيل خروج",
-    postscript:
-      "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
-    letsGo: "لنذهب",
-    readyForLaunch: "تطبيقك تقريبا جاهز للتشغيل",
-    exciting: "اوه هذا مثير",
   },
   loginScreen: {
     signIn: "تسجيل الدخول",
@@ -106,13 +114,7 @@ const ar: Translations = {
       message: "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
     }
   },
-  errorScreen: {
-    title: "هناك خطأ ما",
-    friendlySubtitle:
-      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة ( الموجودة في 'ts.en/i18n/app') وربما التخطيط ايضاً ('app/screens/ErrorScreen'). إذا كنت تريد إزالة هذا بالكامل، تحقق من 'app/app.tsp' من اجل عنصر <ErrorBoundary>.",
-    traceTitle: "خطأ من مجموعة %{name}",
-    reset: "اعادة تعيين التطبيق",
-  },
+  // @demo remove-block-end
 }
 
 export default ar

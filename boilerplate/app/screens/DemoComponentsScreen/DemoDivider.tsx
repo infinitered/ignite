@@ -26,3 +26,5 @@ const $divider: ViewStyle = {
   flexGrow: 0,
   flexShrink: 0,
 }
+
+// @demo remove-file

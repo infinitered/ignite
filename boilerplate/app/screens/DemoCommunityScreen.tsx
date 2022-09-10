@@ -135,3 +135,5 @@ const $logo: ImageStyle = {
   height: 24,
   width: 24,
 }
+
+// @demo remove-file

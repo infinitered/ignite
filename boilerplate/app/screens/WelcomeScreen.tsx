@@ -1,19 +1,28 @@
 import { observer } from "mobx-react-lite"
-import React, { useLayoutEffect } from "react"
+import React, { 
+  useLayoutEffect // @demo remove-current-line
+} from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Button, Header, Text } from "../components"
+import { 
+  Button, // @demo remove-current-line
+  Header, // @demo remove-current-line
+  Text 
+} from "../components"
 import { isRTL } from "../i18n"
-import { useStores } from "../models"
-import { AppStackScreenProps } from "../navigators"
+import { useStores } from "../models" // @demo remove-current-line
+import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
 import { colors, spacing } from "../theme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
-interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
+interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {} // @demo remove-current-line
 
-export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScreenProps) {
+export const WelcomeScreen = observer(function WelcomeScreen(
+  props: WelcomeScreenProps // @demo remove-current-line
+  ) {
+  // @demo remove-block-start
   const { navigation } = props
   const {
     authenticationStore: { setAuthToken },
@@ -33,6 +42,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
       header: () => <Header rightTx="welcomeScreen.headerRight" onRightPress={logout} />,
     })
   }, [])
+  // @demo remove-block-end
 
   return (
     <View style={$container}>
@@ -51,12 +61,14 @@ export const WelcomeScreen = observer(function WelcomeScreen(props: WelcomeScree
       <SafeAreaView style={$bottomContainer} edges={["bottom"]}>
         <View style={$bottomContentContainer}>
           <Text tx="welcomeScreen.postscript" size="md" />
+          {/* @demo remove-block-start */}
           <Button
             testID="next-screen-button"
             preset="reversed"
             tx="welcomeScreen.letsGo"
             onPress={goNext}
           />
+          {/* @demo remove-block-end */}
         </View>
       </SafeAreaView>
     </View>

@@ -42,3 +42,5 @@ export const AuthenticationStoreModel = types
 
 export interface AuthenticationStore extends Instance<typeof AuthenticationStoreModel> {}
 export interface AuthenticationStoreSnapshot extends SnapshotOut<typeof AuthenticationStoreModel> {}
+
+// @demo remove-file

@@ -42,31 +42,41 @@ module.exports = {
     const demoCommentResults = await Promise.allSettled(
       filePaths.map(async (path) => {
         const { exists, update } = patching
+        const { read } = filesystem
+        const {
+          REMOVE_CURRENT_LINE,
+          REMOVE_NEXT_LINE,
+          REMOVE_BLOCK_START,
+          REMOVE_BLOCK_END,
+          REMOVE_FILE,
+        } = demo.CommentType
 
         const comments: CommentType[] = []
 
-        if (await exists(path, demo.CommentType.REMOVE_FILE)) {
+        if (await exists(path, REMOVE_FILE)) {
           filesystem.remove(path)
-          comments.push(demo.CommentType.REMOVE_FILE)
+          comments.push(REMOVE_FILE)
           return { path, comments }
         }
 
-        if (await exists(path, demo.CommentType.REMOVE_CURRENT_LINE)) {
-          await update(path, demo.removeCurrentLine)
-          comments.push(demo.CommentType.REMOVE_CURRENT_LINE)
-        }
+        const operations = [
+          REMOVE_CURRENT_LINE,
+          REMOVE_NEXT_LINE,
+          REMOVE_BLOCK_START,
+          REMOVE_BLOCK_END,
+        ]
+        const shouldUpdate = RegExp(operations.join("|"), "g")
 
-        if (await exists(path, demo.CommentType.REMOVE_NEXT_LINE)) {
-          await update(path, demo.removeNextLine)
-          comments.push(demo.CommentType.REMOVE_NEXT_LINE)
-        }
+        if (await exists(path, shouldUpdate)) {
+          const before = read(path)
 
-        if (
-          (await exists(path, demo.CommentType.REMOVE_BLOCK_START)) &&
-          (await exists(path, demo.CommentType.REMOVE_BLOCK_END))
-        ) {
-          await update(path, demo.removeBlock)
-          comments.push(demo.CommentType.REMOVE_BLOCK_START, demo.CommentType.REMOVE_BLOCK_END)
+          operations.forEach((operation) => {
+            if (before.includes(operation)) {
+              comments.push(operation)
+            }
+          })
+
+          await update(path, demo.remove)
         }
 
         return { path, comments }
