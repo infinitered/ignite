@@ -1,8 +1,14 @@
 import { observer } from "mobx-react-lite"
-import React, { useLayoutEffect } from "react"
+import React, { 
+  useLayoutEffect // @demo remove-current-line
+} from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Button, Header, Text } from "../components"
+import { 
+  Button, // @demo remove-current-line
+  Header, // @demo remove-current-line
+  Text 
+} from "../components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
