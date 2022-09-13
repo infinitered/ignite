@@ -195,8 +195,12 @@ export default {
     // #endregion
 
     // #region Project Path
+    const parsePath = (p: string) =>
+      p.startsWith("~") ? path(p.replace("~", filesystem.homedir())) : path(p)
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : path(options.targetPath)
+    let targetPath = useDefault(options.targetPath)
+      ? defaultTargetPath
+      : parsePath(options.targetPath)
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
