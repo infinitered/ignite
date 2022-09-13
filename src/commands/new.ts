@@ -196,7 +196,7 @@ export default {
 
     // #region Project Path
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
+    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : path(options.targetPath)
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
