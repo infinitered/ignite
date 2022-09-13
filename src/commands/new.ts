@@ -397,7 +397,7 @@ export default {
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
-    const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
+    const targetIgnorePath = log(path(boilerplatePath, ".gitignore"))
     if (!exists(targetIgnorePath)) {
       // gitignore in dev mode?
       let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
