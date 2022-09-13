@@ -5,16 +5,16 @@
  * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
  * documentation for more details.
  */
-import { 
+import {
   ApiResponse, // @demo remove-current-line
-  ApisauceInstance, 
-  create 
+  ApisauceInstance,
+  create,
 } from "apisauce"
 import Config from "../../config"
 import { GeneralApiProblem, getGeneralApiProblem } from "./api-problem" // @demo remove-current-line
-import type { 
-  ApiConfig, 
-  ApiFeedResponse // @demo remove-curent-line
+import type {
+  ApiConfig,
+  ApiFeedResponse, // @demo remove-curent-line
 } from "./api.types"
 import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-current-line
 

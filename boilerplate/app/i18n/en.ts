@@ -1,7 +1,7 @@
 const en = {
   welcomeScreen: {
     postscript:
-    "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
+      "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
     headerRight: "Log Out", // @demo remove-current-line
@@ -113,8 +113,9 @@ const en = {
     },
     noFavoritesEmptyState: {
       title: "This looks a bit empty",
-      message: "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
-    }
+      message:
+        "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
+    },
   },
   // @demo remove-block-end
 }

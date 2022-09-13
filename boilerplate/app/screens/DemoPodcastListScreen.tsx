@@ -74,7 +74,11 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
                 </View>
                 {!episodeStore.favoritesOnly ? (
                   <View>
-                    <Text preset="subheading" style={$subheading} tx="demoPodcastListScreen.noDataEmptyState.title" />
+                    <Text
+                      preset="subheading"
+                      style={$subheading}
+                      tx="demoPodcastListScreen.noDataEmptyState.title"
+                    />
                     <Text style={$message} tx="demoPodcastListScreen.noDataEmptyState.message" />
                     <Button
                       text="Let's try this again"
@@ -84,9 +88,15 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
                   </View>
                 ) : (
                   <View>
-                    <Text preset="subheading" style={$subheading} tx="demoPodcastListScreen.noFavoritesEmptyState.title" />
-                    <Text style={$message} tx="demoPodcastListScreen.noFavoritesEmptyState.message" />
-
+                    <Text
+                      preset="subheading"
+                      style={$subheading}
+                      tx="demoPodcastListScreen.noFavoritesEmptyState.title"
+                    />
+                    <Text
+                      style={$message}
+                      tx="demoPodcastListScreen.noFavoritesEmptyState.message"
+                    />
                   </View>
                 )}
               </View>
@@ -110,7 +120,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
               </View>
             )}
           </View>
-          }
+        }
         renderItem={({ item }) => (
           <EpisodeCard
             key={item.guid}

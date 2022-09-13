@@ -3,7 +3,7 @@ import { Translations } from "./en"
 const ko: Translations = {
   welcomeScreen: {
     postscript:
-    "잠깐! — 지금 보시는 것은 아마도 당신의 앱의 모양새가 아닐겁니다. (디자이너분이 이렇게 건내주셨다면 모를까요. 만약에 그렇다면, 이대로 가져갑시다!) ",
+      "잠깐! — 지금 보시는 것은 아마도 당신의 앱의 모양새가 아닐겁니다. (디자이너분이 이렇게 건내주셨다면 모를까요. 만약에 그렇다면, 이대로 가져갑시다!) ",
     readyForLaunch: "출시 준비가 거의 끝난 나만의 앱!",
     exciting: "(오, 이거 신나는데요!)",
     headerRight: "로그아웃", // @demo remove-current-line
@@ -116,7 +116,7 @@ const ko: Translations = {
     noFavoritesEmptyState: {
       title: "조금 텅 비어 있네요.",
       message: "즐겨찾기가 없습니다. 에피소드에 있는 하트를 눌러서 즐겨찾기에 추가하세요.",
-    }
+    },
   },
   // @demo remove-block-end
 }
