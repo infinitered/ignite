@@ -113,6 +113,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
           }
         renderItem={({ item }) => (
           <EpisodeCard
+            key={item.guid}
             episode={item}
             isFavorite={episodeStore.hasFavorite(item)}
             onPressFavorite={() => episodeStore.toggleFavorite(item)}
