@@ -2,6 +2,7 @@ import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
 import type { CommentType } from "../tools/demo"
 import { demo } from "../tools/demo"
+import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 
 const MATCHING_GLOBS = [
@@ -26,7 +27,7 @@ module.exports = {
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
-    const dryRun = parameters.options.dryRun ?? false
+    const dryRun = boolFlag(parameters.options.dryRun) ?? false
 
     p()
     p(`Removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
