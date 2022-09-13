@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite"
-import React, { 
-  useLayoutEffect // @demo remove-current-line
+import React, {
+  useLayoutEffect, // @demo remove-current-line
 } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { 
+import {
   Button, // @demo remove-current-line
   Header, // @demo remove-current-line
-  Text 
+  Text,
 } from "../components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
@@ -20,8 +20,8 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {} // @demo remove-current-line
 
 export const WelcomeScreen = observer(function WelcomeScreen(
-  props: WelcomeScreenProps // @demo remove-current-line
-  ) {
+  props: WelcomeScreenProps, // @demo remove-current-line
+) {
   // @demo remove-block-start
   const { navigation } = props
   const {

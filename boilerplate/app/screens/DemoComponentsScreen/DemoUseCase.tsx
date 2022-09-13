@@ -45,4 +45,3 @@ const $rowLayout: ViewStyle = {
 }
 
 // @demo remove-file
-
