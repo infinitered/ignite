@@ -505,7 +505,7 @@ export default {
     // #endregion
 
     // #region Cache dependencies
-    if (shouldFreshInstallDeps && cacheExists === false) {
+    if (shouldFreshInstallDeps && cacheExists === false && useCache) {
       const msg = `Saving ${packagerName} dependencies for next time`
       startSpinner(msg)
       log(targetPath)
