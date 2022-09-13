@@ -1,8 +1,8 @@
 import { Api } from "../services/api"
-
+import { Reactotron } from "../services/reactotron"
+  
 let ReactotronDev
 if (__DEV__) {
-  const { Reactotron } = require("../services/reactotron")
   ReactotronDev = Reactotron
 }
 
