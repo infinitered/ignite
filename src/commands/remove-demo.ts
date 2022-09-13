@@ -2,6 +2,7 @@ import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
 import type { CommentType } from "../tools/demo"
 import { demo } from "../tools/demo"
+import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 
 const MATCHING_GLOBS = [
@@ -19,14 +20,17 @@ const MATCHING_GLOBS = [
 
 module.exports = {
   alias: ["rd", "remove-demos"],
-  description: "Remove demo code from generated boilerplate",
+  description:
+    "Remove demo code from generated boilerplate. Add --dry-run to see what would be removed.",
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, patching, filesystem } = toolbox
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
+    const dryRun = boolFlag(parameters.options.dryRun) ?? false
+
     p()
-    p(`Removing demo code from '${TARGET_DIR}'`)
+    p(`Removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
 
     const filePaths = filesystem
       .cwd(TARGET_DIR)
@@ -54,7 +58,7 @@ module.exports = {
         const comments: CommentType[] = []
 
         if (await exists(path, REMOVE_FILE)) {
-          filesystem.remove(path)
+          if (!dryRun) filesystem.remove(path)
           comments.push(REMOVE_FILE)
           return { path, comments }
         }
@@ -76,7 +80,7 @@ module.exports = {
             }
           })
 
-          await update(path, demo.remove)
+          if (!dryRun) await update(path, demo.remove)
         }
 
         return { path, comments }
@@ -118,10 +122,10 @@ module.exports = {
       .filter((path) => !filesystem.list(path)?.length)
 
     emptyDirPaths.forEach((path) => {
-      filesystem.remove(path)
+      if (!dryRun) filesystem.remove(path)
       p(`Removed empty directory '${path}'`)
     })
 
-    p(`Done removing demo code from '${TARGET_DIR}'`)
+    p(`Done removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },
 }

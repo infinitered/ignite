@@ -6,6 +6,8 @@ Instead of going through the files yourself, or using find and replace, run `npx
 
 After the command, the Ignite boilerplate will now have the smallest amount of demo code possible, while having all of Ignite's set up still at your fingertips.
 
+_Note: You can pass `--dry-run` to have the command tell you what it would remove/change._
+
 ## How It Works
 
 When adding demo code to the boilerplate, use the following comments to have fine grained control over what gets stripped out. The goal is to be able to remove as much source code as possible while still having the generated Ignite app build correctly.
