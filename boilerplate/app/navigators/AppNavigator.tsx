@@ -75,8 +75,8 @@ const AppStack = observer(function AppStack() {
         <>
           {/* @demo remove-block-end */}
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Demo" component={DemoNavigator} />
           {/* @demo remove-block-start */}
+          <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
         <>
