@@ -247,6 +247,11 @@ const EpisodeCard = observer(function EpisodeCard({
           key={episode.guid}
           onPress={handlePressFavorite} 
           style={[$favoriteButton, isFavorite && $unFavoriteButton]}
+          accessibilityLabel={
+            isFavorite
+              ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
+              : translate("demoPodcastListScreen.accessibility.favoriteIcon")
+          }
           LeftAccessory={() => 
             <View>
               <Animated.View
@@ -256,12 +261,6 @@ const EpisodeCard = observer(function EpisodeCard({
                   icon="heart"
                   size={ICON_SIZE}
                   color={colors.palette.neutral800} // dark grey
-                  onPress={handlePressFavorite}
-                  accessibilityLabel={
-                    isFavorite
-                      ? undefined
-                      : translate("demoPodcastListScreen.accessibility.favoriteIcon")
-                  }
                 />
               </Animated.View>
               <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
@@ -269,12 +268,6 @@ const EpisodeCard = observer(function EpisodeCard({
                   icon="heart"
                   size={ICON_SIZE}
                   color={colors.palette.primary400} // pink
-                  onPress={handlePressFavorite}
-                  accessibilityLabel={
-                    isFavorite
-                      ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-                      : undefined
-                  }
                 />
               </Animated.View>
             </View>
