@@ -35,7 +35,7 @@ describe("ignite-cli generate", () => {
     result.replace(new RegExp(temp, "g"), mock)
 
   describe("model", () => {
-    it("should generate Pizza model & test, modify RootStore & index model export", async () => {
+    it("should generate Pizza model and test, patch index model export, and not patch RootStore", async () => {
       const result = await runIgnite(`generate model Pizza`, options)
 
       expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
@@ -74,31 +74,6 @@ describe("ignite-cli generate", () => {
         })
         "
       `)
-      expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toMatchInlineSnapshot(`
-        "import { Instance, SnapshotOut, types } from \\"mobx-state-tree\\"
-        import { PizzaModel } from \\"./Pizza\\"
-        import { AuthenticationStoreModel } from \\"./AuthenticationStore\\" // @demo remove-current-line
-        import { EpisodeStoreModel } from \\"./EpisodeStore\\" // @demo remove-current-line
-
-        /**
-         * A RootStore model.
-         */
-        export const RootStoreModel = types.model(\\"RootStore\\").props({
-          pizza: types.optional(PizzaModel, {} as any),
-          authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
-          episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
-        })
-
-        /**
-         * The RootStore instance.
-         */
-        export interface RootStore extends Instance<typeof RootStoreModel> {}
-        /**
-         * The data of a RootStore.
-         */
-        export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
-        "
-      `)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
         "export * from \\"./RootStore\\"
         export * from \\"./helpers/get-root-store\\"
@@ -107,9 +82,12 @@ describe("ignite-cli generate", () => {
         export * from \\"./Pizza\\"
         "
       `)
+      expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toEqual(
+        read(`${BOILERPLATE_PATH}/app/models/RootStore.ts`),
+      )
     })
 
-    it("should generate PizzaStore model & test, modify index model export, and not modify RootStore", async () => {
+    it("should generate PizzaStore model and test, patch index model export and RootStore", async () => {
       const result = await runIgnite(`generate model PizzaStore`, options)
 
       expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
@@ -120,9 +98,6 @@ describe("ignite-cli generate", () => {
            /user/home/ignite/app/models/PizzaStore.ts
         "
       `)
-      expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toEqual(
-        read(`${BOILERPLATE_PATH}/app/models/RootStore.ts`),
-      )
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.ts`)).toMatchInlineSnapshot(`
         "import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
 
@@ -157,6 +132,31 @@ describe("ignite-cli generate", () => {
         export * from \\"./helpers/use-stores\\"
         export * from \\"./helpers/setup-root-store\\"
         export * from \\"./PizzaStore\\"
+        "
+      `)
+      expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toMatchInlineSnapshot(`
+        "import { Instance, SnapshotOut, types } from \\"mobx-state-tree\\"
+        import { PizzaStoreModel } from \\"./PizzaStore\\"
+        import { AuthenticationStoreModel } from \\"./AuthenticationStore\\" // @demo remove-current-line
+        import { EpisodeStoreModel } from \\"./EpisodeStore\\" // @demo remove-current-line
+
+        /**
+         * A RootStore model.
+         */
+        export const RootStoreModel = types.model(\\"RootStore\\").props({
+          pizzaStore: types.optional(PizzaStoreModel, {} as any),
+          authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
+          episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
+        })
+
+        /**
+         * The RootStore instance.
+         */
+        export interface RootStore extends Instance<typeof RootStoreModel> {}
+        /**
+         * The data of a RootStore.
+         */
+        export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
         "
       `)
     })
