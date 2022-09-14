@@ -6,7 +6,21 @@ The `Card` component is intended to be used for vertically aligned related conte
 
 ## Props
 
-
+<Card
+  preset="reversed"
+  verticalAlignment="space-between"
+  LeftComponent={<Text>Left</Text>}
+  RightComponent={<Text>Right</Text>}
+  heading="Card Heading"
+  headingStyle={{ color: "#a511dc" }}
+  HeadingTextProps={{ weight: "bold" }}
+  content="Card Content"
+  contentStyle={{ color: "#a511dc" }}
+  ContentTextProps={{ weight: "light" }}
+  footer="Card Footer"
+  footerStyle={{ color: "#a511dc" }}
+  FooterTextProps={{ weight: "medium" }}
+/>
 ### `preset`
 
 The `preset` prop is used to set the preset container style of the card. This affects the border and background color of the container. There are two preconfigured presets: `default` and `reversed`.
