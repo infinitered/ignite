@@ -59,28 +59,29 @@ This is a special kind of generator - "special" in that it modifies the native p
 
 The following files will be found in your templates folder (`ignite/templates/app-icon`) which can be customized:
 
-- `ios-universal.png`:
+- `android-adaptive-background.png`:
 
-  - The generator will use this file to create all required app-icons for iOS.
-  - (vanilla) Updates `./ios/**/Images.xcassets/AppIcon.appiconset/` including `Content.json`.
-  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+  - The generator will use this file to create all required adaptive launcher-icon background layers for Android 8.0 and above.
+  - Updates same directories as the legacy icon.
 
-- `ios-android-legacy.png`:
+- `android-adaptive-foreground.png`:
+
+  - The generator will use this file to create all required adaptive launcher-icon foreground layers for Android 8.0 and above.
+  - Updates same directories as the legacy icon.
+
+- `android-legacy.png`:
 
   - The generator will use this file to create all required legacy launcher-icons for Android 7.1 and below.
   - Automatically transforms the icon to add necessary padding and radius. Note, when creating your custom input file, do not include the padding or radius.
   - (vanilla) Updates `./android/app/src/main/res/` including the `mipmap-anydpi-v26/ic_launcher.xml`.
   - (expo) Updates `./assets/images/` including the root file `./app.json`.
 
-- `ios-android-adaptive-background.png`:
+- `ios-universal.png`:
 
-  - The generator will use this file to create all required adaptive launcher-icon background layers for Android 8.0 and above.
-  - Updates same directories as the legacy icon.
+  - The generator will use this file to create all required app-icons for iOS.
+  - (vanilla) Updates `./ios/**/Images.xcassets/AppIcon.appiconset/` including `Content.json`.
+  - (expo) Updates `./assets/images/` including the root file `./app.json`.
 
-- `ios-android-adaptive-foreground.png`:
-
-  - The generator will use this file to create all required adaptive launcher-icon foreground layers for Android 8.0 and above.
-  - Updates same directories as the legacy icon.
 
 When updating the template files, please note that names must stay the same as well as the size (1024x1024px). A Sketch template file can be [found here](https://github.com/infinitered/ignite/files/8576614/ignite-app-icon-template.zip) - just make your changes, hide the grids, then click File -> Export.
 

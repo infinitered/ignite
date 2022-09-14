@@ -1,10 +1,10 @@
 ---
 patches:
-  - path: "app/models/root-store/root-store.ts"
+  - path: "app/models/RootStore.ts"
     after: "from \"mobx-state-tree\"\n"
-    insert: "import { <%= props.pascalCaseName %>Model } from \"../<%= props.pascalCaseName %>\"\n"
+    insert: "import { <%= props.pascalCaseName %>Model } from \"./<%= props.pascalCaseName %>\"\n"
     skip: <%= !props.pascalCaseName.endsWith('Store') %>
-  - path: "app/models/root-store/root-store.ts"
+  - path: "app/models/RootStore.ts"
     after: "types.model(\"RootStore\").props({\n"
     insert: "  <%= props.camelCaseName %>: types.optional(<%= props.pascalCaseName %>Model, {} as any),\n"
     skip: <%= !props.pascalCaseName.endsWith('Store') %>
