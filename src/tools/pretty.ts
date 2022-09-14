@@ -125,11 +125,11 @@ export const ir = (m = "") => bgRed(bold(white(m)))
 
 export const highlight = (m = "") => bold(bgWhite(red(m)))
 
-export const pkgBgColor = (packagerName: PackagerName) => {
+export const pkgColor = (packagerName: PackagerName) => {
   const packagerColors: Record<PackagerName, keyof typeof print.colors> = {
-    npm: "bgRed",
-    yarn: "bgBlue",
-    pnpm: "bgYellow",
+    npm: "red",
+    yarn: "blue",
+    pnpm: "yellow",
   }
   return print.colors[packagerColors[packagerName]] as (text: string) => string
 }
