@@ -82,7 +82,6 @@ The following files will be found in your templates folder (`ignite/templates/ap
   - (vanilla) Updates `./ios/**/Images.xcassets/AppIcon.appiconset/` including `Content.json`.
   - (expo) Updates `./assets/images/` including the root file `./app.json`.
 
-
 When updating the template files, please note that names must stay the same as well as the size (1024x1024px). A Sketch template file can be [found here](https://github.com/infinitered/ignite/files/8576614/ignite-app-icon-template.zip) - just make your changes, hide the grids, then click File -> Export.
 
 ```
