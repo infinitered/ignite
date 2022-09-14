@@ -195,8 +195,12 @@ export default {
     // #endregion
 
     // #region Project Path
+    const parsePath = (p: string) =>
+      p.startsWith("~") ? path(p.replace("~", filesystem.homedir())) : path(p)
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
+    let targetPath = useDefault(options.targetPath)
+      ? defaultTargetPath
+      : parsePath(options.targetPath)
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
@@ -397,7 +401,7 @@ export default {
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
-    const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
+    const targetIgnorePath = log(path(boilerplatePath, ".gitignore"))
     if (!exists(targetIgnorePath)) {
       // gitignore in dev mode?
       let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
@@ -501,7 +505,7 @@ export default {
     // #endregion
 
     // #region Cache dependencies
-    if (shouldFreshInstallDeps && cacheExists === false) {
+    if (shouldFreshInstallDeps && cacheExists === false && useCache) {
       const msg = `Saving ${packagerName} dependencies for next time`
       startSpinner(msg)
       log(targetPath)
