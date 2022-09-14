@@ -76,4 +76,9 @@ export const colors = {
    * Error messages.
    */
   error: palette.angry500,
+  /**
+   * Error Background.
+   *
+   */
+  errorBackground: palette.angry100,
 }

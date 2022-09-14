@@ -97,6 +97,8 @@ const en = {
   demoPodcastListScreen: {
     title: "React Native Radio episodes",
     onlyFavorites: "Only Show Favorites",
+    favoriteButton: "Favorite",
+    unfavoriteButton: "Unfavorite",
     accessibility: {
       cardHint:
         "Double tap to listen to the episode. Double tap and hold to {{action}} this episode.",

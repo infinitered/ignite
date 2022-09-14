@@ -244,6 +244,7 @@ const EpisodeCard = observer(function EpisodeCard({
       }
       FooterComponent={
         <Button 
+          key={episode.guid}
           onPress={handlePressFavorite} 
           style={[$favoriteButton, isFavorite && $unFavoriteButton]}
           LeftAccessory={() => 
@@ -279,9 +280,12 @@ const EpisodeCard = observer(function EpisodeCard({
             </View>
           }
         >
-          <Text size="xxs" accessibilityLabel={episode.duration.accessibilityLabel}>
-            {isFavorite ? "Unfavorite" : "Favorite"}
-          </Text>
+          <Text 
+            size="xxs" 
+            accessibilityLabel={episode.duration.accessibilityLabel} 
+            text={isFavorite ? translate("demoPodcastListScreen.unfavoriteButton") : translate("demoPodcastListScreen.favoriteButton")} 
+          />
+
         </Button>
       }
     />
