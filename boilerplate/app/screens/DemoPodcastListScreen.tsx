@@ -152,6 +152,10 @@ const EpisodeCard = observer(function EpisodeCard({
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
 
+  const imageUri = useMemo(() => {
+    return rnrImages[ Math.floor(Math.random() * rnrImages.length)]
+  }, [])
+
   // Grey heart
   const animatedLikeButtonStyles = useAnimatedStyle(() => {
     return {
@@ -236,7 +240,7 @@ const EpisodeCard = observer(function EpisodeCard({
       }
       {...accessibilityHintProps}
       RightComponent={
-        <Image source={rnrImages[Math.floor(Math.random()*rnrImages.length)]} style={$itemThumbnail} />
+        <Image source={imageUri} style={$itemThumbnail} />
       }
       FooterComponent={
         <Button 
