@@ -75,3 +75,5 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
   ],
 }
+
+// @demo remove-file

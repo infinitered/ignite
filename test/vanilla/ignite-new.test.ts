@@ -23,14 +23,14 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=npm --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=npm --yes --use-cache`, () => {
     let tempDir: string
     let result: string
     let appPath: string
 
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=npm --yes`, {
+      result = await runIgnite(`new ${APP_NAME} --debug --packager=npm --yes --use-cache`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
       })

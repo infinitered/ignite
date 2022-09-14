@@ -48,16 +48,41 @@ function removeBlock(
   contents: string,
   comment = { start: CommentType.REMOVE_BLOCK_START, end: CommentType.REMOVE_BLOCK_END },
 ): string {
+  const { start, end } = comment
   const lines = contents.split("\n")
-  const blockStartIndex = lines.findIndex((line) => line.includes(comment.start))
-  const blockEndIndex = lines.findIndex((line) => line.includes(comment.end))
-  const blockLength = blockEndIndex - blockStartIndex + 1
 
-  if (blockStartIndex !== -1 && blockEndIndex !== -1) {
-    lines.splice(blockStartIndex, blockLength)
+  const findIndex = (l: typeof lines, c: typeof start | typeof end) =>
+    l.findIndex((line) => line.includes(c))
+  const NOT_FOUND = -1
+
+  const blockStartIndex = findIndex(lines, start)
+  const blockEndIndex = findIndex(lines, end)
+  const blockExists = findIndex(lines, start) !== NOT_FOUND && blockEndIndex !== NOT_FOUND
+
+  if (blockExists) {
+    const blockLength = blockEndIndex - blockStartIndex + 1
+    lines.splice(blockStartIndex, blockLength) // mutates `lines`
   }
 
-  return lines.join("\n")
+  const updateContents = lines.join("\n")
+
+  const anotherBlockExists =
+    findIndex(lines, start) !== NOT_FOUND && findIndex(lines, end) !== NOT_FOUND
+  if (anotherBlockExists) {
+    return removeBlock(updateContents, comment)
+  }
+
+  return updateContents
+}
+
+/**
+ * Perform all remove operations possible in a file
+ * @param contents The file contents as a string
+ * @return The file contents with all remove operations performed
+ */
+function remove(contents: string): string {
+  const result = removeBlock(removeNextLine(removeCurrentLine(contents)))
+  return result
 }
 
 export const demo = {
@@ -65,4 +90,5 @@ export const demo = {
   removeCurrentLine,
   removeNextLine,
   removeBlock,
+  remove,
 } as const

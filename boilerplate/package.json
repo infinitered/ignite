@@ -7,10 +7,10 @@
     "start": "react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
-    "test:e2e": "detox test -c ios.sim.debug",
-    "build:e2e": "detox build -c ios.sim.debug",
-    "ci:test:e2e": "detox test -c ios.sim.release -l verbose --cleanup",
-    "ci:build:e2e": "detox build -c ios.sim.release",
+    "test:detox": "detox test -c ios.sim.debug",
+    "build:detox": "detox build -c ios.sim.debug",
+    "ci:test:detox": "detox test -c ios.sim.release -l verbose --cleanup",
+    "ci:build:detox": "detox build -c ios.sim.release",
     "compile": "tsc --noEmit -p . --pretty",
     "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "eslint index.js App.js app test --fix --ext .js,.ts,.tsx && npm run format",
@@ -18,16 +18,18 @@
     "test": "jest",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "postinstall": "node ./bin/postInstall",
-    "build-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
-    "build-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
-    "clean": "react-native-clean-project",
+    "bundle:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "release:ios": "echo 'Not implemented yet: release:ios. Use Xcode. More info: https://reactnative.dev/docs/next/publishing-to-app-store'",
+    "release:android": "cd android && rm -rf app/src/main/res/drawable-* && ./gradlew assembleRelease && cd - && echo 'APK generated in ./android/app/build/outputs/apk/release/app-release.apk'",
+    "clean": "npx react-native-clean-project",
     "clean-all": "npx react-native clean-project-auto",
     "expo:start": "expo start",
     "expo:android": "expo start --android",
     "expo:ios": "expo start --ios",
     "expo:web": "expo start --web",
-    "expo:build:e2e": "detox build -c ios.sim.expo",
-    "expo:test:e2e": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
+    "expo:build:detox": "detox build -c ios.sim.expo",
+    "expo:test:detox": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
@@ -82,7 +84,7 @@
     "@typescript-eslint/parser": "5.28.0",
     "babel-jest": "26.6.3",
     "babel-loader": "8.2.5",
-    "detox": "19.7.1",
+    "detox": "19.12.1",
     "detox-expo-helpers": "0.6.0",
     "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
@@ -111,7 +113,6 @@
     "query-string": "^7.0.1",
     "react-devtools-core": "4.24.7",
     "react-dom": "18.0.0",
-    "react-native-clean-project": "^4.0.1",
     "react-native-web": "^0.18.7",
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
@@ -131,29 +132,31 @@
   },
   "detox": {
     "test-runner": "jest",
+    "runnerConfig": "./detox/config.json",
+    "specs": "detox",
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/HelloWorld.app",
-        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
+        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 13'",
         "type": "ios.simulator",
         "device": {
-          "name": "iPhone 11",
-          "os": "iOS 13.2"
+          "name": "iPhone 13",
+          "os": "iOS 15.5"
         }
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/HelloWorld.app",
-        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
+        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 13'",
         "type": "ios.simulator",
         "device": {
-          "name": "iPhone 11",
-          "os": "iOS 13.2"
+          "name": "iPhone 13",
+          "os": "iOS 15.5"
         }
       },
       "ios.sim.expo": {
         "binaryPath": "bin/Exponent.app",
         "type": "ios.simulator",
-        "name": "iPhone 11"
+        "name": "iPhone 15"
       }
     }
   },

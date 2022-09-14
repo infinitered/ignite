@@ -28,7 +28,7 @@ brew tap wix/brew && brew install applesimutils
 4. Install the Detox CLI
 
 ```bash
-  yarn global add detox-cli
+npm install -g detox-cli
 ```
 
 ## Configuring tests
@@ -47,11 +47,9 @@ Example:
 
 "device": { "name": "iPhone 11", "os": "iOS 13.2" }
 
-NOTE: as of October 2021, do not set the iOS value to `15.0` or higher, or a Detox crash may occur. This is a Detox issue that is well documented and should be fixed soon.
-
 ## Adding tests
 
-We've gotten you started with `./e2e/firstTest.spec.js`, which tests that the two main example screens render properly.
+We've gotten you started with `./detox/firstTest.spec.js`, which tests that the two main example screens render properly using Detox.
 
 Note that in order to pick up elements by ID, we've added the `testID` prop to the component.
 
@@ -65,20 +63,28 @@ yarn start
 
 _(Expo-only note: for testing [production code](https://docs.expo.io/workflow/development-mode/#production-mode), start the packager with `yarn start --no-dev --minify`)_
 
-2. Run the app
-
-In a separate terminal window from the packager:
+2. Run the tests
 
 ```
-yarn build:e2e
+yarn build:detox
+yarn test:detox
 ```
 
-_(Expo-only note: this is unnecessary for Expo apps)_
-
-3. Run the tests
+or for Expo:
 
 ```
-yarn test:e2e
+yarn expo:build:detox
+yarn expo:test:detox
 ```
 
 For more information, make sure to check out the official [Detox Docs](https://github.com/wix/Detox/blob/master/docs/README.md)
+
+## Debugging Flaky Detox Tests
+
+To debug and see view hierarchy, run the command with `--loglevel verbose`.
+
+```
+yarn test:detox --loglevel verbose
+```
+
+You can also read the official recommendations here: [https://github.com/wix/Detox/blob/master/docs/Troubleshooting.Flakiness.md](https://github.com/wix/Detox/blob/master/docs/Troubleshooting.Flakiness.md)
