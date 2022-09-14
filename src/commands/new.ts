@@ -12,9 +12,8 @@ import {
   link,
   ir,
   prefix,
-  highlight,
   prettyPrompt,
-  pkgBgColor,
+  pkgColor,
   hr,
   INDENT,
 } from "../tools/pretty"
@@ -349,10 +348,10 @@ export default {
     p()
     p()
 
-    const pkg = pkgBgColor(packagerName)
-    p(` █ Creating ${highlight(` ${projectName} `)} using ${ir(` Ignite ${meta.version()} `)}`)
+    const pkg = pkgColor(packagerName)
+    p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
     p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
-    p(` █ Package Manager: ${pkg(em(` ${packagerName} `))}`)
+    p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${underline(targetPath)}`)
     hr()
@@ -562,7 +561,7 @@ export default {
     /** Add just a _little_ more spacing to match with spinners and heading */
     const p2 = (m = "") => p(` ${m}`)
 
-    p2(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
+    p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
     p2()
     const cliCommand = buildCliCommand({
       flags: {
