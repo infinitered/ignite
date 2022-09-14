@@ -45,6 +45,30 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 
 [Full Button Component Documentation](./Components-Button.md)
 
+### Card
+
+The `Card` component useful for displaying related information in a contained way. Where you'll use `ListItem` for horizontal information, `Card` can be used for vertical information.
+
+```tsx
+<Card
+  preset="reversed"
+  verticalAlignment="space-between"
+  LeftComponent={<Text>Left</Text>}
+  RightComponent={<Text>Right</Text>}
+  heading="Card Heading"
+  headingStyle={{ color: "#a511dc" }}
+  HeadingTextProps={{ weight: "bold" }}
+  content="Card Content"
+  contentStyle={{ color: "#a511dc" }}
+  ContentTextProps={{ weight: "light" }}
+  footer="Card Footer"
+  footerStyle={{ color: "#a511dc" }}
+  FooterTextProps={{ weight: "medium" }}
+/>
+```
+
+[Full Card Component Documentation](./Components-Card.md)
+
 ### Header
 
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.

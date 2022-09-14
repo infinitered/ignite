@@ -120,7 +120,6 @@ interface CardProps extends TouchableOpacityProps {
  * If a ListItem displays content horizontally, a Card can be used to display content vertically.
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Card.md)
- * MAVERICKTODO: write docs
  */
 export function Card(props: CardProps) {
   const {
