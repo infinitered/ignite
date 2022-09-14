@@ -7,31 +7,27 @@ The `Card` component is intended to be used for vertically aligned related conte
 ## Props
 
 <Card
-  preset="reversed"
-  verticalAlignment="space-between"
-  LeftComponent={<Text>Left</Text>}
-  RightComponent={<Text>Right</Text>}
-  heading="Card Heading"
-  headingStyle={{ color: "#a511dc" }}
-  HeadingTextProps={{ weight: "bold" }}
-  content="Card Content"
-  contentStyle={{ color: "#a511dc" }}
-  ContentTextProps={{ weight: "light" }}
-  footer="Card Footer"
-  footerStyle={{ color: "#a511dc" }}
-  FooterTextProps={{ weight: "medium" }}
+preset="reversed"
+verticalAlignment="space-between"
+LeftComponent={<Text>Left</Text>}
+RightComponent={<Text>Right</Text>}
+heading="Card Heading"
+headingStyle={{ color: "#a511dc" }}
+HeadingTextProps={{ weight: "bold" }}
+content="Card Content"
+contentStyle={{ color: "#a511dc" }}
+ContentTextProps={{ weight: "light" }}
+footer="Card Footer"
+footerStyle={{ color: "#a511dc" }}
+FooterTextProps={{ weight: "medium" }}
 />
+
 ### `preset`
 
 The `preset` prop is used to set the preset container style of the card. This affects the border and background color of the container. There are two preconfigured presets: `default` and `reversed`.
 
 ```tsx
-<Card
-  preset="reversed"
-  heading="Card Heading"
-  content="Card Content"
-  footer="Card Footer"
-/>
+<Card preset="reversed" heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
 
 ### `verticalAlignment`
@@ -64,11 +60,7 @@ The `LeftComponent` and `RightComponent` props are used to set the component tha
     />
   }
   RightComponent={
-    <Button
-      preset="default"
-      text="Click It"
-      onPress={() => Alert.alert("pressed")}
-    />
+    <Button preset="default" text="Click It" onPress={() => Alert.alert("pressed")} />
   }
   heading="Card Heading"
   content="Card Content"
@@ -81,11 +73,7 @@ The `LeftComponent` and `RightComponent` props are used to set the component tha
 The `heading` prop is used to set the heading text of the card.
 
 ```tsx
-<Card
-  heading="Card Heading"
-  content="Card Content"
-  footer="Card Footer"
-/>
+<Card heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
 
 ### `headingTx`
@@ -93,11 +81,7 @@ The `heading` prop is used to set the heading text of the card.
 The `headingTx` prop is used to set the heading text of the card using a translation key.
 
 ```tsx
-<Card
-  headingTx="card.heading"
-  content="Card Content"
-  footer="Card Footer"
-/>
+<Card headingTx="card.heading" content="Card Content" footer="Card Footer" />
 ```
 
 ### `headingTxOptions`
@@ -145,13 +129,7 @@ The `HeadingComponent` prop is used to set the component that will be used for t
 
 ```tsx
 <Card
-  HeadingComponent={
-    <Button
-      preset="reversed"
-      text="HeadingComponent"
-      icon="ladybug"
-    />
-  }
+  HeadingComponent={<Button preset="reversed" text="HeadingComponent" icon="ladybug" />}
   content="Card Content"
   footer="Card Footer"
 />
@@ -162,11 +140,7 @@ The `HeadingComponent` prop is used to set the component that will be used for t
 The `content` prop is used to set the content text of the card.
 
 ```tsx
-<Card
-  heading="Card Heading"
-  content="Card Content"
-  footer="Card Footer"
-/>
+<Card heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
 
 ### `contentTx`
@@ -174,11 +148,7 @@ The `content` prop is used to set the content text of the card.
 The `contentTx` prop is used to set the content text of the card using a translation key.
 
 ```tsx
-<Card
-  heading="Card Heading"
-  contentTx="card.content"
-  footer="Card Footer"
-/>
+<Card heading="Card Heading" contentTx="card.content" footer="Card Footer" />
 ```
 
 ### `contentTxOptions`
@@ -227,13 +197,7 @@ The `ContentComponent` prop is used to set the component that will be used for t
 ```tsx
 <Card
   heading="Card Heading"
-  ContentComponent={
-    <Button
-      preset="reversed"
-      text="ContentComponent"
-      icon="ladybug"
-    />
-  }
+  ContentComponent={<Button preset="reversed" text="ContentComponent" icon="ladybug" />}
   footer="Card Footer"
 />
 ```
@@ -243,11 +207,7 @@ The `ContentComponent` prop is used to set the component that will be used for t
 The `footer` prop is used to set the footer text of the card.
 
 ```tsx
-<Card
-  heading="Card Heading"
-  content="Card Content"
-  footer="Card Footer"
-/>
+<Card heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
 
 ### `footerTx`
@@ -255,11 +215,7 @@ The `footer` prop is used to set the footer text of the card.
 The `footerTx` prop is used to set the footer text of the card using a translation key.
 
 ```tsx
-<Card
-  heading="Card Heading"
-  content="Card Content"
-  footerTx="card.footer"
-/>
+<Card heading="Card Heading" content="Card Content" footerTx="card.footer" />
 ```
 
 ### `footerTxOptions`
@@ -309,12 +265,6 @@ The `FooterComponent` prop is used to set the component that will be used for th
 <Card
   heading="Card Heading"
   content="Card Content"
-  FooterComponent={
-    <Button
-      preset="reversed"
-      text="FooterComponent"
-      icon="ladybug"
-    />
-  }
+  FooterComponent={<Button preset="reversed" text="FooterComponent" icon="ladybug" />}
 />
 ```
