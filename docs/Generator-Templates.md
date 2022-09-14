@@ -16,13 +16,21 @@ Any files in that folder will be copied over & run through the generator with th
 
 ## File naming conventions
 
-If you use all upper-case `NAME` in your template filenames, that will be replaced by a kebab-case version of the name provided by the person running the generator.
+If you use all upper-case `NAME` in your template filenames, that will be replaced by a pascal-case version of the name provided by the person running the generator.
 
 It's best to just look at an example:
 
-Let's say you have a file called `NAME-model.ts`.
+Let's say you have a file called `NAMEScreen.ts`.
 
-If they run `npx ignite-cli generate model Pizza`, it'll name the file `pizza-model.ts`.
+If they run `npx ignite-cli generate screen Pizza`, it'll name the file `PizzaScreen.ts`.
+
+If you'd like to customize the filename you can provide a filename option in the frontmatter of the template like so:
+
+```
+---
+filename: <%= props.camelCaseName %>.tsx
+---
+```
 
 ## Props
 
