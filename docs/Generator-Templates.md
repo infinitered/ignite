@@ -84,11 +84,11 @@ You can patch multiple files with `patches`. It works just the same as `patch`, 
 ```tsx
 ---
 patches:
-  - path: "app/models/root-store/root-store.ts"
+  - path: "app/models/RootStore.ts"
     after: "from \"mobx-state-tree\"\n"
     insert: "import { <%= props.pascalCaseName %>Model } from \"../<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n"
     skip: <%= !props.kebabCaseName.endsWith('store') %>
-  - path: "app/models/root-store/root-store.ts"
+  - path: "app/models/RootStore.ts"
     after: "types.model(\"RootStore\").props({\n"
     insert: "  <%= props.camelCaseName %>: types.optional(<%= props.pascalCaseName %>Model, {} as any),\n"
     skip: <%= !props.kebabCaseName.endsWith('store') %>
