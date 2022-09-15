@@ -195,7 +195,7 @@ export default {
 
     // #region Project Path
     const parsePath = (p: string) =>
-      p.startsWith("~") ? path(p.replace("~", filesystem.homedir())) : path(p)
+      p?.startsWith("~") ? path(p?.replace("~", filesystem.homedir())) : path(p)
     const defaultTargetPath = path(projectName)
     let targetPath = useDefault(options.targetPath)
       ? defaultTargetPath
@@ -588,7 +588,7 @@ export default {
     // create a multi-line string of the command, where each --flag is on it's own line
     const prettyCliCommand = cliCommand
       .split(" ")
-      .map((c) => (c === projectName || c.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
+      .map((c) => (c === projectName || c?.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
       .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
       .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
       .join(" ")
