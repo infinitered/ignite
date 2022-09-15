@@ -40,7 +40,7 @@
     "semantic-release": "semantic-release",
     "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
     "ignite-cli:dev": "node bin/ignite",
-    "ignite-cli:prod": "wrap () { node bin/ignite \"$*\" --compiled-build | cat; }; wrap"
+    "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
   "devEngines": {
     "node": ">=7.x",
@@ -123,7 +123,8 @@
     },
     "ignorePatterns": [
       "**/*.snap",
-      "**/*.txt"
+      "**/*.txt",
+      "bin/ignite"
     ]
   },
   "prettier": {
