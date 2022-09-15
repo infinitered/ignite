@@ -73,6 +73,7 @@ export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents"
       drawerType={"slide"}
       drawerPosition={isRTL ? "right" : "left"}
       drawerBackgroundColor={colors.palette.neutral100}
+      overlayColor={colors.palette.overlay20}
       onDrawerSlide={(drawerProgress) => {
         progress.value = open ? 1 - drawerProgress : drawerProgress
       }}
