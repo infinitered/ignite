@@ -18,6 +18,8 @@ It'll walk you through several questions.
 
 Once it's up and running, you can use the Ignite CLI to [generate](./Generators.md) components, screens, MST models, and more.
 
+Running into errors? have a look at [upgrading Ignite CLI](./Upgrading-Ignite.md)
+
 ### Ignite Boilerplate
 
 Your new Ignite project (whether you start with Expo or not) comes with a full stack of useful libraries, pre-set up for you so you can start coding.
