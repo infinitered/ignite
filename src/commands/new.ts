@@ -125,7 +125,7 @@ export default {
     // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
     const { kebabCase } = strings
-    const { exists, path, removeAsync, copy, read, write } = filesystem
+    const { exists, path, removeAsync, copy, read, write, homedir } = filesystem
     const { info, colors, warning } = print
     const { gray, cyan, yellow, underline, white } = colors
     const options: Options = parameters.options
@@ -194,12 +194,8 @@ export default {
     // #endregion
 
     // #region Project Path
-    const parsePath = (p: string) =>
-      p?.startsWith("~") ? path(p?.replace("~", filesystem.homedir())) : path(p)
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath)
-      ? defaultTargetPath
-      : parsePath(options.targetPath)
+    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
@@ -211,6 +207,10 @@ export default {
 
       targetPath = targetPathResponse.targetPath
     }
+
+    const handleHomePrefix = (p: string | undefined) =>
+      p?.startsWith("~") ? p.replace("~", homedir()) : p
+    targetPath = path(handleHomePrefix(targetPath))
 
     // #endregion
 
