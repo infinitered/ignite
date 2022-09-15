@@ -273,7 +273,7 @@ export function generateFromTemplate(
     const destinationDir = templateDestinationDir
       ? path(cwd(), templateDestinationDir)
       : defaultDestinationDir
-    const destinationPath = path(destinationDir, filename)
+    const destinationPath = path(destinationDir, data.filename ?? filename)
 
     // ensure destination folder exists
     dir(destinationDir)

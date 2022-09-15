@@ -1,7 +1,7 @@
 ---
 patch:
   path: "app/screens/index.ts"
-  append: "export * from \"./<%= props.kebabCaseName %>-screen\"\n"
+  append: "export * from \"./<%= props.pascalCaseName %>Screen\"\n"
   skip: <%= props.skipIndexFile %>
 ---
 import React, { FC } from "react"

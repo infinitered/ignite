@@ -12,9 +12,8 @@ import {
   link,
   ir,
   prefix,
-  highlight,
   prettyPrompt,
-  pkgBgColor,
+  pkgColor,
   hr,
   INDENT,
 } from "../tools/pretty"
@@ -195,8 +194,12 @@ export default {
     // #endregion
 
     // #region Project Path
+    const parsePath = (p: string) =>
+      p?.startsWith("~") ? path(p?.replace("~", filesystem.homedir())) : path(p)
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
+    let targetPath = useDefault(options.targetPath)
+      ? defaultTargetPath
+      : parsePath(options.targetPath)
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
@@ -345,10 +348,10 @@ export default {
     p()
     p()
 
-    const pkg = pkgBgColor(packagerName)
-    p(` █ Creating ${highlight(` ${projectName} `)} using ${ir(` Ignite ${meta.version()} `)}`)
+    const pkg = pkgColor(packagerName)
+    p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
     p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
-    p(` █ Package Manager: ${pkg(em(` ${packagerName} `))}`)
+    p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
     p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
     p(` █ Path: ${underline(targetPath)}`)
     hr()
@@ -397,7 +400,7 @@ export default {
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
-    const targetIgnorePath = log(path(process.cwd(), ".gitignore"))
+    const targetIgnorePath = log(path(boilerplatePath, ".gitignore"))
     if (!exists(targetIgnorePath)) {
       // gitignore in dev mode?
       let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
@@ -501,7 +504,7 @@ export default {
     // #endregion
 
     // #region Cache dependencies
-    if (shouldFreshInstallDeps && cacheExists === false) {
+    if (shouldFreshInstallDeps && cacheExists === false && useCache) {
       const msg = `Saving ${packagerName} dependencies for next time`
       startSpinner(msg)
       log(targetPath)
@@ -558,7 +561,7 @@ export default {
     /** Add just a _little_ more spacing to match with spinners and heading */
     const p2 = (m = "") => p(` ${m}`)
 
-    p2(`Ignited ${highlight(` ${projectName} `)} in ${gray(`${perfDuration}s`)}  🚀 `)
+    p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
     p2()
     const cliCommand = buildCliCommand({
       flags: {
@@ -585,7 +588,7 @@ export default {
     // create a multi-line string of the command, where each --flag is on it's own line
     const prettyCliCommand = cliCommand
       .split(" ")
-      .map((c) => (c === projectName || c.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
+      .map((c) => (c === projectName || c?.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
       .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
       .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
       .join(" ")
