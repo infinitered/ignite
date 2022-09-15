@@ -25,7 +25,9 @@
   "scripts": {
     "compile": "tsc -p .",
     "typecheck": "tsc -p . --noEmit",
-    "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template && cp ./src/assets/*.txt ./build/assets/",
+    "build": "yarn clean && yarn compile && yarn build:assets",
+    "build:assets": "cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template && cp ./src/assets/*.txt ./build/assets/",
+    "build:watch": "yarn build && yarn compile --watch",
     "format": "prettier '**/*{.js,.ts,.tsx,.json,.md}'",
     "format:write": "yarn format --write",
     "format:check": "yarn format --check",
@@ -37,7 +39,8 @@
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
     "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
-    "ignite:local": "node bin/ignite"
+    "ignite-cli:dev": "node bin/ignite",
+    "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
   "devEngines": {
     "node": ">=7.x",
@@ -120,7 +123,8 @@
     },
     "ignorePatterns": [
       "**/*.snap",
-      "**/*.txt"
+      "**/*.txt",
+      "bin/ignite"
     ]
   },
   "prettier": {
