@@ -69,7 +69,7 @@ Ignite's approach to styling is, like many other things in Ignite, straightforwa
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of constants, colocated with our components, prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of constants, colocated with our components, camelCase and prefixed with `$`, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
