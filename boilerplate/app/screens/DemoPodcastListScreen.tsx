@@ -20,7 +20,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 import { translate, isRTL } from "../i18n"
-import {  Button, Card, Icon, Screen, Text, Toggle } from "../components"
+import { Button, Card, Icon, Screen, Text, Toggle } from "../components"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -153,7 +153,7 @@ const EpisodeCard = observer(function EpisodeCard({
   const liked = useSharedValue(isFavorite ? 1 : 0)
 
   const imageUri = useMemo(() => {
-    return rnrImages[ Math.floor(Math.random() * rnrImages.length)]
+    return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
 
   // Grey heart
@@ -227,32 +227,35 @@ const EpisodeCard = observer(function EpisodeCard({
       onLongPress={handlePressFavorite}
       HeadingComponent={
         <View style={$metadata}>
-          <Text style={$metadataText} size="xxs" accessibilityLabel={episode.datePublished.accessibilityLabel}>
+          <Text
+            style={$metadataText}
+            size="xxs"
+            accessibilityLabel={episode.datePublished.accessibilityLabel}
+          >
             {episode.datePublished.textLabel}
           </Text>
-          <Text style={$metadataText} size="xxs" accessibilityLabel={episode.duration.accessibilityLabel}>
+          <Text
+            style={$metadataText}
+            size="xxs"
+            accessibilityLabel={episode.duration.accessibilityLabel}
+          >
             {episode.duration.textLabel}
           </Text>
         </View>
       }
-      content={
-        `${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`
-      }
+      content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
       {...accessibilityHintProps}
-      RightComponent={
-        <Image source={imageUri} style={$itemThumbnail} />
-      }
+      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
       FooterComponent={
-        <Button 
-          key={episode.guid}
-          onPress={handlePressFavorite} 
+        <Button
+          onPress={handlePressFavorite}
           style={[$favoriteButton, isFavorite && $unFavoriteButton]}
           accessibilityLabel={
             isFavorite
               ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
               : translate("demoPodcastListScreen.accessibility.favoriteIcon")
           }
-          LeftAccessory={() => 
+          LeftAccessory={() => (
             <View>
               <Animated.View
                 style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
@@ -271,14 +274,17 @@ const EpisodeCard = observer(function EpisodeCard({
                 />
               </Animated.View>
             </View>
-          }
+          )}
         >
-          <Text 
-            size="xxs" 
-            accessibilityLabel={episode.duration.accessibilityLabel} 
-            text={isFavorite ? translate("demoPodcastListScreen.unfavoriteButton") : translate("demoPodcastListScreen.favoriteButton")} 
+          <Text
+            size="xxs"
+            accessibilityLabel={episode.duration.accessibilityLabel}
+            text={
+              isFavorite
+                ? translate("demoPodcastListScreen.unfavoriteButton")
+                : translate("demoPodcastListScreen.favoriteButton")
+            }
           />
-
         </Button>
       }
     />
@@ -318,8 +324,8 @@ const $toggle: ViewStyle = {
 }
 
 const $labelStyle: TextStyle = {
-  textAlign: "left"
-};
+  textAlign: "left",
+}
 
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,

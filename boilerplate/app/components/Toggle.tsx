@@ -205,7 +205,7 @@ function Checkbox(props: ToggleInputProps) {
   const iconTintColor = [
     disabled && colors.textDim,
     status === "error" && colors.error,
-    colors.palette.accent100
+    colors.palette.accent100,
   ].filter(Boolean)[0]
 
   return (
@@ -259,7 +259,7 @@ function Radio(props: ToggleInputProps) {
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
-    colors.palette.neutral100
+    colors.palette.neutral100,
   ].filter(Boolean)[0]
 
   const dotBackgroundColor = [

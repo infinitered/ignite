@@ -79,7 +79,6 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
       />
       <ListItem
         tx="demoCommunityScreen.chainReactConferenceLink"
-
         rightIcon={isRTL ? "caretLeft" : "caretRight"}
         LeftComponent={
           <View style={$logoContainer}>
