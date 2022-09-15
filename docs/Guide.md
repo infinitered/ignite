@@ -11,8 +11,10 @@ In short -- if you use Ignite to start your next React Native project, you're us
 In order to start a new Ignite project, you can use the CLI. No need to install it globally as it works great with `npx`:
 
 ```bash
-npx ignite-cli new PizzaApp --expo
+npx ignite-cli@next new PizzaApp
 ```
+
+It'll walk you through several questions.
 
 Once it's up and running, you can use the Ignite CLI to [generate](./Generators.md) components, screens, MST models, and more.
 
@@ -21,7 +23,7 @@ Once it's up and running, you can use the Ignite CLI to [generate](./Generators.
 Your new Ignite project (whether you start with Expo or not) comes with a full stack of useful libraries, pre-set up for you so you can start coding.
 
 - React Native
-- React Navigation 6
+- React Navigation
 - MobX-State-Tree [(Why not Redux?)](https://github.com/infinitered/ignite/blob/master/docs/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
@@ -35,15 +37,15 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 
 ## Where do I start?
 
-First, spin up the app and make sure you can see the welcome screen. If you have any issues, please report them.
+First, spin up the app and make sure you can see the initial screen. If you have any issues, please report them.
 
 Once it's running, you'll want to get familiarized with the following concepts:
 
 ### Navigation
 
-We use React Navigation v6 in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `app-navigator.tsx` being the primary one.
+We use React Navigation v6 in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `AppNavigator.tsx` being the primary one.
 
-There's also a `navigation-utilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
+There's also a `navigation-utilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
 Learn more in our [Navigation](./Navigation.md) documentation.
 
@@ -51,7 +53,7 @@ Learn more in our [Navigation](./Navigation.md) documentation.
 
 Ignite comes with some prebuilt, flexible, and customizable components. Unlike most component libraries, it's not built to drop in out of the box, but rather with custom design in mind (you do have a nice, custom design, don't you?)
 
-Ignite works fine with other component libraries, but the built-in component system works quite well for most apps.
+Ignite works fine with other component libraries, but the built-in component system works the best for custom-designed apps.
 
 Check out the [Components](./components.md) documentation.
 
@@ -67,19 +69,19 @@ Ignite's approach to styling is, like many other things in Ignite, straightforwa
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of constants, colocated with our components, all upper-case, and typed with TypeScript:
+We instead use a strategy of constants, colocated with our components, camelCase and prefixed with `$`, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
 import { palette } from "../theme"
 
-const CONTAINER: ViewStyle = {
+const $container: ViewStyle = {
   flex: 1,
   backgroundColor: palette.bgColor,
 }
 
 const MyComponent = () => {
-  return <View style={CONTAINER}>...</View>
+  return <View style={$container}>...</View>
 }
 ```
 
