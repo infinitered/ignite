@@ -34,7 +34,8 @@ const targets = ({ rootDir, packagerName, platform }: TargetsOptions) => {
     { type: "file", path: path(rootDir, lockFile[packagerName]) },
     { type: "dir", path: path(rootDir, "ios", "Pods"), platform: ["darwin"] },
     { type: "dir", path: path(rootDir, "ios", "build"), platform: ["darwin"] },
-  ].filter((target) => (target.platform ? target.platform.includes(platform) : true))
+    { type: "file", path: path(rootDir, "ios", ".xcode.env.local"), platform: ["darwin"] },
+  ].filter((target) => (target?.platform ? target.platform.includes(platform) : true))
 }
 
 interface CopyOptions {
