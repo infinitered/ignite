@@ -184,7 +184,7 @@ function Checkbox(props: ToggleInputProps) {
   } = props
 
   const offBackgroundColor = [
-    disabled && colors.border,
+    disabled && colors.palette.neutral600,
     status === "error" && colors.errorBackground,
     colors.palette.neutral200,
   ].filter(Boolean)[0]
@@ -244,7 +244,7 @@ function Radio(props: ToggleInputProps) {
   } = props
 
   const offBackgroundColor = [
-    disabled && colors.border,
+    disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
     colors.palette.neutral200,
   ].filter(Boolean)[0]
@@ -263,7 +263,7 @@ function Radio(props: ToggleInputProps) {
   ].filter(Boolean)[0]
 
   const dotBackgroundColor = [
-    disabled && colors.textDim,
+    disabled && colors.palette.neutral600,
     status === "error" && colors.error,
     colors.palette.secondary500,
   ].filter(Boolean)[0]
@@ -313,7 +313,7 @@ function Switch(props: ToggleInputProps) {
   }, [$detailStyleOverride?.width])
 
   const offBackgroundColor = [
-    disabled && colors.border,
+    disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
     colors.palette.neutral300,
   ].filter(Boolean)[0]
