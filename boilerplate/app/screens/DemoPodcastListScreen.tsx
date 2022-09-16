@@ -249,6 +249,7 @@ const EpisodeCard = observer(function EpisodeCard({
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
+          onLongPress={handlePressFavorite}
           style={[$favoriteButton, isFavorite && $unFavoriteButton]}
           accessibilityLabel={
             isFavorite
