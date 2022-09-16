@@ -34,7 +34,7 @@ export const EpisodeStoreModel = types
 
     hasFavorite(episode: Episode) {
       return store.favorites.includes(episode)
-    }
+    },
   }))
   .actions((store) => ({
     toggleFavorite(episode: Episode) {

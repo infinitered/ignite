@@ -255,10 +255,10 @@ const EpisodeCard = observer(function EpisodeCard({
           accessibilityLabel={
             isFavorite
               ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-              : translate("demoPodcastListScreen.accessibility.favoriteIcon")}
-
+              : translate("demoPodcastListScreen.accessibility.favoriteIcon")
+          }
         >
-          <View style={{ flexDirection: "row", alignItems: "center"}}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Animated.View
               style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
             >
