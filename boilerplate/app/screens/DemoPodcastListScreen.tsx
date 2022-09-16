@@ -366,7 +366,7 @@ const $unFavoriteButton: ViewStyle = {
 
 const $favoriteButtonChildView: ViewStyle = {
   flexDirection: "row",
-  alignItems: "center"
+  alignItems: "center",
 }
 
 const $sadFace: ImageStyle = {
