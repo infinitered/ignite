@@ -81,7 +81,7 @@ const ar: Translations = {
     title: "التصحيح",
     tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
     reactotron: "Reactotron ارسل إلى",
-    reportBugs: "Ignite الابلاغ عن اخطاء",
+    reportBugs: "الابلاغ عن اخطاء",
     demoList: "قائمة تجريبية",
     demoPodcastList: "قائمة البودكاست التجريبي",
     androidReactotronHint:

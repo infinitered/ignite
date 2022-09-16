@@ -82,7 +82,7 @@ const ko: Translations = {
     tagLine:
       "축하합니다. 여기 아주 고급스러운 React Native 앱 템플릿이 있습니다. 이 보일러 플레이트를 사용해보세요!",
     reactotron: "Reactotron 으로 보내기",
-    reportBugs: "Ignite 에 관한 버그 보고하기",
+    reportBugs: "버그 보고하기",
     demoList: "데모 목록",
     demoPodcastList: "데모 팟캐스트 목록",
     androidReactotronHint:
