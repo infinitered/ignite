@@ -258,7 +258,7 @@ const EpisodeCard = observer(function EpisodeCard({
               : translate("demoPodcastListScreen.accessibility.favoriteIcon")
           }
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={$favoriteButtonChildView}>
             <Animated.View
               style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
             >
@@ -362,6 +362,11 @@ const $favoriteButton: ViewStyle = {
 const $unFavoriteButton: ViewStyle = {
   borderColor: colors.palette.primary100,
   backgroundColor: colors.palette.primary100,
+}
+
+const $favoriteButtonChildView: ViewStyle = {
+  flexDirection: "row",
+  alignItems: "center"
 }
 
 const $sadFace: ImageStyle = {
