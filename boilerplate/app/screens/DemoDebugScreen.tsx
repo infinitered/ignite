@@ -4,6 +4,7 @@ import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
+import { isRTL } from '../i18n'
 
 function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
@@ -100,7 +101,7 @@ const $title: TextStyle = {
 const $reportBugsLink: TextStyle = {
   color: colors.tint,
   marginBottom: spacing.large,
-  alignSelf: "flex-end",
+  alignSelf: isRTL ? "flex-start" : "flex-end",
 }
 
 const $item: ViewStyle = {
