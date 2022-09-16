@@ -99,7 +99,7 @@ const ko: Translations = {
   demoPodcastListScreen: {
     title: "React Native 라디오 에피소드",
     onlyFavorites: "즐겨찾기만 보기",
-    favoriteButton: "즐겨찾기,
+    favoriteButton: "즐겨찾기",
     unfavoriteButton: "즐겨찾기 해제",
     accessibility: {
       cardHint:
