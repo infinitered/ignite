@@ -165,7 +165,6 @@ const EpisodeCard = observer(function EpisodeCard({
         },
       ],
       opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
-      marginTop: spacing.micro,
     }
   })
 
@@ -220,6 +219,33 @@ const EpisodeCard = observer(function EpisodeCard({
     openLinkInBrowser(episode.enclosure.link)
   }
 
+  const ButtonLeftAccessory = useMemo(
+    () =>
+      function ButtonLeftAccessory() {
+        return (
+          <View style={$favoriteButtonAccessory}>
+            <Animated.View
+              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+            >
+              <Icon
+                icon="heart"
+                size={ICON_SIZE}
+                color={colors.palette.neutral800} // dark grey
+              />
+            </Animated.View>
+            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+              <Icon
+                icon="heart"
+                size={ICON_SIZE}
+                color={colors.palette.primary400} // pink
+              />
+            </Animated.View>
+          </View>
+        )
+      },
+    [],
+  )
+
   return (
     <Card
       style={$item}
@@ -257,27 +283,13 @@ const EpisodeCard = observer(function EpisodeCard({
               ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
               : translate("demoPodcastListScreen.accessibility.favoriteIcon")
           }
+          LeftAccessory={ButtonLeftAccessory}
         >
           <View style={$favoriteButtonChildView}>
-            <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
-            >
-              <Icon
-                icon="heart"
-                size={ICON_SIZE}
-                color={colors.palette.neutral800} // dark grey
-              />
-            </Animated.View>
-            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
-              <Icon
-                icon="heart"
-                size={ICON_SIZE}
-                color={colors.palette.primary400} // pink
-              />
-            </Animated.View>
             <Text
               size="xxs"
               accessibilityLabel={episode.duration.accessibilityLabel}
+              weight="medium"
               text={
                 isFavorite
                   ? translate("demoPodcastListScreen.unfavoriteButton")
@@ -357,6 +369,10 @@ const $favoriteButton: ViewStyle = {
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
+}
+
+const $favoriteButtonAccessory: ViewStyle = {
+  marginTop: -spacing.tiny,
 }
 
 const $unFavoriteButton: ViewStyle = {
