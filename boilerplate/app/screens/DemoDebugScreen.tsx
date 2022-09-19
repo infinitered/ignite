@@ -32,6 +32,11 @@ export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
 
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+      <Text
+        style={$reportBugsLink}
+        tx="demoDebugScreen.reportBugs"
+        onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
+      />
       <Text style={$title} preset="heading" tx="demoDebugScreen.title" />
       <View style={$itemsContainer}>
         <ListItem
@@ -79,12 +84,6 @@ export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
         <Button style={$button} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
         <Text style={$hint} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
       </View>
-      <ListItem
-        tx="demoDebugScreen.reportBugs"
-        leftIcon="ladybug"
-        rightIcon={isRTL ? "caretLeft" : "caretRight"}
-        onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
-      />
     </Screen>
   )
 }
@@ -97,6 +96,12 @@ const $container: ViewStyle = {
 
 const $title: TextStyle = {
   marginBottom: spacing.huge,
+}
+
+const $reportBugsLink: TextStyle = {
+  color: colors.tint,
+  marginBottom: spacing.large,
+  alignSelf: isRTL ? "flex-start" : "flex-end",
 }
 
 const $item: ViewStyle = {

@@ -26,6 +26,12 @@ export const EpisodeStoreModel = types
     removeFavorite(episode: Episode) {
       store.favorites.remove(episode)
     },
+  }))
+  .views((store) => ({
+    get episodesForList() {
+      return store.favoritesOnly ? store.favorites : store.episodes
+    },
+
     hasFavorite(episode: Episode) {
       return store.favorites.includes(episode)
     },
@@ -37,11 +43,6 @@ export const EpisodeStoreModel = types
       } else {
         store.addFavorite(episode)
       }
-    },
-  }))
-  .views((store) => ({
-    get episodesForList() {
-      return store.favoritesOnly ? store.favorites : store.episodes
     },
   }))
 

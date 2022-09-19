@@ -82,7 +82,7 @@ const ko: Translations = {
     tagLine:
       "축하합니다. 여기 아주 고급스러운 React Native 앱 템플릿이 있습니다. 이 보일러 플레이트를 사용해보세요!",
     reactotron: "Reactotron 으로 보내기",
-    reportBugs: "Ignite 에 관한 버그 보고하기",
+    reportBugs: "버그 보고하기",
     demoList: "데모 목록",
     demoPodcastList: "데모 팟캐스트 목록",
     androidReactotronHint:
@@ -99,6 +99,8 @@ const ko: Translations = {
   demoPodcastListScreen: {
     title: "React Native 라디오 에피소드",
     onlyFavorites: "즐겨찾기만 보기",
+    favoriteButton: "즐겨찾기",
+    unfavoriteButton: "즐겨찾기 해제",
     accessibility: {
       cardHint:
         "에피소드를 들으려면 두 번 탭하세요. 이 에피소드를 좋아하거나 싫어하려면 두 번 탭하고 길게 누르세요.",

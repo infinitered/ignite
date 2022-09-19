@@ -81,7 +81,7 @@ const ar: Translations = {
     title: "التصحيح",
     tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
     reactotron: "Reactotron ارسل إلى",
-    reportBugs: "Ignite الابلاغ عن اخطاء",
+    reportBugs: "الابلاغ عن اخطاء",
     demoList: "قائمة تجريبية",
     demoPodcastList: "قائمة البودكاست التجريبي",
     androidReactotronHint:
@@ -96,6 +96,8 @@ const ar: Translations = {
   demoPodcastListScreen: {
     title: "حلقات إذاعية React Native",
     onlyFavorites: "المفضلة فقط",
+    favoriteButton: "المفضل",
+    unfavoriteButton: "غير مفضل",
     accessibility: {
       cardHint: "انقر مرّتين للاستماع على الحلقة. انقر مرّتين وانتظر لتفعيل {{action}} هذه الحلقة.",
       switch: "قم بالتبديل لاظهار المفضّلة فقط.",

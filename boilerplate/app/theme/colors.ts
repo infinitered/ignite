@@ -11,10 +11,10 @@ const palette = {
   neutral800: "#191015",
   neutral900: "#000000",
 
-  primary100: "#FFDCC0",
-  primary200: "#F9B790",
-  primary300: "#F0A17A",
-  primary400: "#E78A64",
+  primary100: "#F4E0D9",
+  primary200: "#E8C1B4",
+  primary300: "#DDA28E",
+  primary400: "#D28468",
   primary500: "#C76542",
   primary600: "#A54F31",
 
@@ -30,6 +30,7 @@ const palette = {
   accent400: "#FBC878",
   accent500: "#FFBB50",
 
+  angry100: "#F2D6CD",
   angry500: "#C03403",
 
   overlay20: "rgba(25, 16, 21, 0.2)",
@@ -75,4 +76,9 @@ export const colors = {
    * Error messages.
    */
   error: palette.angry500,
+  /**
+   * Error Background.
+   *
+   */
+  errorBackground: palette.angry100,
 }
