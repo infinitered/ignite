@@ -223,7 +223,7 @@ const EpisodeCard = observer(function EpisodeCard({
     () =>
       function ButtonLeftAccessory() {
         return (
-          <View style={$favoriteButtonAccessory}>
+          <View>
             <Animated.View
               style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
             >
@@ -285,18 +285,16 @@ const EpisodeCard = observer(function EpisodeCard({
           }
           LeftAccessory={ButtonLeftAccessory}
         >
-          <View style={$favoriteButtonChildView}>
-            <Text
-              size="xxs"
-              accessibilityLabel={episode.duration.accessibilityLabel}
-              weight="medium"
-              text={
-                isFavorite
-                  ? translate("demoPodcastListScreen.unfavoriteButton")
-                  : translate("demoPodcastListScreen.favoriteButton")
-              }
-            />
-          </View>
+          <Text
+            size="xxs"
+            accessibilityLabel={episode.duration.accessibilityLabel}
+            weight="medium"
+            text={
+              isFavorite
+                ? translate("demoPodcastListScreen.unfavoriteButton")
+                : translate("demoPodcastListScreen.favoriteButton")
+            }
+          />
         </Button>
       }
     />
@@ -365,24 +363,15 @@ const $favoriteButton: ViewStyle = {
   backgroundColor: colors.palette.neutral300,
   borderColor: colors.palette.neutral300,
   paddingHorizontal: spacing.medium,
-  paddingTop: spacing.extraSmall,
+  paddingTop: spacing.micro,
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
 }
 
-const $favoriteButtonAccessory: ViewStyle = {
-  marginTop: -spacing.tiny,
-}
-
 const $unFavoriteButton: ViewStyle = {
   borderColor: colors.palette.primary100,
   backgroundColor: colors.palette.primary100,
-}
-
-const $favoriteButtonChildView: ViewStyle = {
-  flexDirection: "row",
-  alignItems: "center",
 }
 
 const $sadFace: ImageStyle = {
