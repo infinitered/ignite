@@ -14,7 +14,8 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/navigators/AppNavigator.tsx
    Found '@demo remove-file' in /user/home/ignite/app/navigators/DemoNavigator.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoCommunityScreen.tsx
-   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoShowroomScreen.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoDebugScreen.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoPodcastListScreen.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoDivider.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoAutoImage.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoButton.tsx
@@ -26,10 +27,9 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoTextField.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoToggle.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/index.ts
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoShowroomScreen.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoUseCase.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DrawerIconButton.tsx
-   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoDebugScreen.tsx
-   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoPodcastListScreen.tsx
    Found '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/index.ts
    Found '@demo remove-file' in /user/home/ignite/app/screens/LoginScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx
