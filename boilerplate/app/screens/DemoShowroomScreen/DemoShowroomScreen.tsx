@@ -18,7 +18,7 @@ export interface Demo {
   data: ReactElement[]
 }
 
-export function DemoComponentsScreen(_props: DemoTabScreenProps<"DemoComponents">) {
+export function DemoShowroomScreen(_props: DemoTabScreenProps<"DemoShowroom">) {
   const [open, setOpen] = useState(false)
   const timeout = useRef<ReturnType<typeof setTimeout>>()
   const drawerRef = useRef<DrawerLayout>()

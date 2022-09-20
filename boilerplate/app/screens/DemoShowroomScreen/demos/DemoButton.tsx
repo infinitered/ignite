@@ -3,7 +3,7 @@ import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Text } from "../../../components"
 import { colors, typography } from "../../../theme"
-import { Demo } from "../DemoComponentsScreen"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
