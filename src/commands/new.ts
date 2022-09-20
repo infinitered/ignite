@@ -135,6 +135,7 @@ export default {
 
     const CMD_INDENT = "  "
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
+
     // #endregion
 
     // #region Debug
@@ -304,6 +305,7 @@ export default {
 
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
+    const boilerplate = (...pathParts: string[]) => path(boilerplatePath, ...pathParts)
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
 
@@ -389,30 +391,25 @@ export default {
       overwrite,
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")
+    // copy the .gitignore if it wasn't copied over
+    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
+    // (see https://github.com/npm/npm/issues/3763); development Ignite still
+    // has it in .gitignore. Copy it from one or the other.
+    const boilerplateIgnorePath = exists(boilerplate(".gitignore.template"))
+      ? boilerplate(".gitignore.template")
+      : boilerplate(".gitignore")
+    const targetIgnorePath = log(path(targetPath, ".gitignore"))
+    copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
+
+    if (exists(targetIgnorePath) === false) {
+      warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
+    }
 
     // note the original directory
     const cwd = log(process.cwd())
 
     // jump into the project to do additional tasks
     process.chdir(targetPath)
-
-    // copy the .gitignore if it wasn't copied over
-    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
-    // (see https://github.com/npm/npm/issues/3763); development Ignite still
-    // has it in .gitignore. Copy it from one or the other.
-    const targetIgnorePath = log(path(boilerplatePath, ".gitignore"))
-    if (!exists(targetIgnorePath)) {
-      // gitignore in dev mode?
-      let sourceIgnorePath = log(path(boilerplatePath, ".gitignore"))
-
-      // gitignore in release mode?
-      if (!exists(sourceIgnorePath)) {
-        sourceIgnorePath = log(path(boilerplatePath, ".gitignore.template"))
-      }
-
-      // copy the file over
-      copy(sourceIgnorePath, targetIgnorePath)
-    }
     // #endregion
 
     // #region Handle package.json
