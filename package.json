@@ -38,7 +38,7 @@
     "coverage": "jest --coverage",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
-    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template",
+    "clean": "rm -drf ./build ./boilerplate/.gitignore.template ./boilerplate/node_modules ./boilerplate/ios/build/ ./boilerplate/ios/Pods/ ./boilerplate/android/app/build ./boilerplate/ios/.xcode.env.local",
     "ignite-cli:dev": "node bin/ignite",
     "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
