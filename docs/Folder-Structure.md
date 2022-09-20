@@ -51,7 +51,20 @@ app
 ```
 
 **components**
-MAVERICKTODO: update this documentation
+
+This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
+
+- [Component Overview](./Components.md)
+- [AutoImage](./Components-AutoImage.md)
+- [Button](./Components-Button.md)
+- [Card](./Components-Card.md)
+- [Header](./Components-Header.md)
+- [Icon](./Components-Icon.md)
+- [ListItem](./Components-ListItem.md)
+- [Screen](./Components-Screen.md)
+- [Text](./Components-Text.md)
+- [TextField](./Components-TextField.md)
+- [Toggle](./Components-Toggle.md)
 
 **i18n**
 
