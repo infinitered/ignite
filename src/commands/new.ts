@@ -401,6 +401,11 @@ export default {
     const targetIgnorePath = log(path(targetPath, ".gitignore"))
     copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
 
+    if (exists(targetIgnorePath) === false) {
+      warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
+      process.exit(1)
+    }
+
     // note the original directory
     const cwd = log(process.cwd())
 
