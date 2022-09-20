@@ -135,6 +135,7 @@ export default {
 
     const CMD_INDENT = "  "
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
+
     // #endregion
 
     // #region Debug
@@ -304,6 +305,7 @@ export default {
 
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
+    const boilerplate = (...pathParts: string[]) => path(boilerplatePath, ...pathParts)
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
 
@@ -393,9 +395,11 @@ export default {
     // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
     // (see https://github.com/npm/npm/issues/3763); development Ignite still
     // has it in .gitignore. Copy it from one or the other.
-    const boilerplateIgnorePath = log(path(boilerplatePath, ".gitignore.template"))
+    const boilerplateIgnorePath = exists(boilerplate(".gitignore.template"))
+      ? boilerplate(".gitignore.template")
+      : boilerplate(".gitignore")
     const targetIgnorePath = log(path(targetPath, ".gitignore"))
-    copy(boilerplateIgnorePath, targetIgnorePath, { overwrite: true })
+    copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
 
     // note the original directory
     const cwd = log(process.cwd())
