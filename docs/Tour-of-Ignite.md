@@ -30,6 +30,10 @@ There are a couple folders at the root, `.circleci` and `.github`. These contain
 
 We use `semantic-release`, an excellent package that allows for automatically releasing new versions of Ignite based on commit messages. You can read more about how Infinite Red uses semantic-release in [this document](https://github.com/infinitered/open-source/blob/master/Continuous-Deployment-Setup-NPM.md).
 
+## Manual Beta Releases
+
+If you need to manually release a beta version, [the steps are documented here]().
+
 ## Gluegun
 
 Ignite's CLI (`ignite-cli` on npm) is powered by [Gluegun](https://github.com/infinitered/gluegun). Gluegun is another Infinite Red library that makes building a full-featured command line interface (CLI) much easier.
