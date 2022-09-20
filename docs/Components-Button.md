@@ -14,8 +14,8 @@ The `Button` component is a wrapper around the [`Pressable`](https://reactnative
   pressedStyle={[{ backgroundColor: "red" }, { borderRadius: 0 }]}
   textStyle={[{ fontSize: 20 }, { color: "#a511dc" }]}
   pressedTextStyle={[{ fontSize: 20 }, { color: "#a51111" }]}
-  RightAccessory={(props) => <Icon name="check" />}
-  LeftAccessory={(props) => <Icon name="close" />}
+  RightAccessory={(props) => <Icon icon="check" />}
+  LeftAccessory={(props) => <Icon icon="close" />}
 />
 ```
 
@@ -116,12 +116,34 @@ The `pressedStyle` prop is optional. This can be used to style the `Pressable` c
 
 ### `LeftAccessory` and `RightAccessory`
 
-The `LeftAccessory` and `RightAccessory` props are optional. They can be used to render an accessory on the left or right side of the button. It can be a React component or a function that returns a React component. The accessory component will receive the `pressed` prop of the `Button`, so you can make a custom accessory component render differently when pressed.
+The `LeftAccessory` and `RightAccessory` props are optional. They can be used to render an accessory on the left or right side of the button. It can be a React component or a function that returns a React component. The accessory component will receive the pressed state of the `Pressable` via the the `pressableState` prop, so you can make a custom accessory component render differently when pressed. Additionally, you can utilize the default accessory styles via the `style` prop.
 
 ```tsx
-<Button LeftAccessory={(props) => <Icon name="check" />} />
+<Button
+  LeftAccessory={(props) => (
+    <Icon containerStyle={props.style} size={props.pressableState.pressed ? 50 : 40} icon="check" />
+  )}
+/>
 ```
 
 ```tsx
-<Button RightAccessory={(props) => <Icon name="check" />} />
+<Button
+  RightAccessory={(props) => (
+    <Icon containerStyle={props.style} size={props.pressableState.pressed ? 50 : 40} icon="check" />
+  )}
+/>
+```
+
+If the accessories flicker when some prop or state changes, you can memoize the accessory with `useMemo`.
+
+```tsx
+<Button
+  LeftAccessory={useMemo(
+    () =>
+      function LeftIcon(props: ButtonAccessoryProps) {
+        return <Icon icon={props.pressableState.pressed ? "view" : "hidden"} />
+      },
+    [],
+  )}
+/>
 ```
