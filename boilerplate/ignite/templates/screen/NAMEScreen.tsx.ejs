@@ -15,14 +15,14 @@ import { Screen, Text } from "../components"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
-// - Add `<%= props.camelCaseName %>: undefined` to AppStackParamList
+// - Add `<%= props.pascalCaseName %>: undefined` to AppStackParamList
 // - Import your screen, and add it to the stack:
-//     `<Stack.Screen name="<%= props.camelCaseName %>" component={<%= props.pascalCaseName%>Screen} />`
+//     `<Stack.Screen name="<%= props.pascalCaseName %>" component={<%= props.pascalCaseName%>Screen} />`
 // Hint: Look for the 🔥!
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<AppStackParamList, "<%= props.camelCaseName %>">> = observer(function <%= props.pascalCaseName %>Screen() {
+export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<AppStackParamList, "<%= props.pascalCaseName %>">> = observer(function <%= props.pascalCaseName %>Screen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
 
