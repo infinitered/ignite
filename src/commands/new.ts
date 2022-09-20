@@ -403,7 +403,6 @@ export default {
 
     if (exists(targetIgnorePath) === false) {
       warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
-      process.exit(1)
     }
 
     // note the original directory
