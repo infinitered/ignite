@@ -6,21 +6,23 @@ The `Card` component is intended to be used for vertically aligned related conte
 
 ## Props
 
+```tsx
 <Card
-preset="reversed"
-verticalAlignment="space-between"
-LeftComponent={<Text>Left</Text>}
-RightComponent={<Text>Right</Text>}
-heading="Card Heading"
-headingStyle={{ color: "#a511dc" }}
-HeadingTextProps={{ weight: "bold" }}
-content="Card Content"
-contentStyle={{ color: "#a511dc" }}
-ContentTextProps={{ weight: "light" }}
-footer="Card Footer"
-footerStyle={{ color: "#a511dc" }}
-FooterTextProps={{ weight: "medium" }}
+  preset="reversed"
+  verticalAlignment="space-between"
+  LeftComponent={<Text>Left</Text>}
+  RightComponent={<Text>Right</Text>}
+  heading="Card Heading"
+  headingStyle={{ color: "#a511dc" }}
+  HeadingTextProps={{ weight: "bold" }}
+  content="Card Content"
+  contentStyle={{ color: "#a511dc" }}
+  ContentTextProps={{ weight: "light" }}
+  footer="Card Footer"
+  footerStyle={{ color: "#a511dc" }}
+  FooterTextProps={{ weight: "medium" }}
 />
+```
 
 ### `preset`
 
