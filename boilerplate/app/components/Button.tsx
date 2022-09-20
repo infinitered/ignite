@@ -12,6 +12,11 @@ import { Text, TextProps } from "./Text"
 
 type Presets = keyof typeof $viewPresets
 
+export interface ButtonAccessoryProps {
+  style: StyleProp<any>
+  pressableState: PressableStateCallbackType
+}
+
 export interface ButtonProps extends PressableProps {
   /**
    * Text which is looked up via i18n.
@@ -50,18 +55,12 @@ export interface ButtonProps extends PressableProps {
    * An optional component to render on the right side of the text.
    * Example: `RightAccessory={(props) => <View {...props} />}`
    */
-  RightAccessory?: ComponentType<{
-    style: StyleProp<any>
-    pressableState: PressableStateCallbackType
-  }>
+  RightAccessory?: ComponentType<ButtonAccessoryProps>
   /**
    * An optional component to render on the left side of the text.
    * Example: `LeftAccessory={(props) => <View {...props} />}`
    */
-  LeftAccessory?: ComponentType<{
-    style: StyleProp<any>
-    pressableState: PressableStateCallbackType
-  }>
+  LeftAccessory?: ComponentType<ButtonAccessoryProps>
   /**
    * Children components.
    */

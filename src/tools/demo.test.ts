@@ -141,7 +141,7 @@ describe("demo", () => {
         // ${demo.CommentType.REMOVE_BLOCK_START}
         export * from "./DemoCommunityScreen"
         export * from "./DemoDebugScreen"
-        export * from "./DemoComponentsScreen/DemoComponentsScreen"
+        export * from "./DemoShowroomScreen/DemoShowroomScreen"
         // ${demo.CommentType.REMOVE_BLOCK_END}
         export * from "./ErrorScreen/ErrorBoundary"
         // export other screens here
@@ -152,7 +152,7 @@ describe("demo", () => {
       expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_END)
       expect(result).not.toContain("DemoCommunityScreen")
       expect(result).not.toContain("DemoDebugScreen")
-      expect(result).not.toContain("DemoComponentsScreen")
+      expect(result).not.toContain("DemoShowroomScreen")
     })
 
     it(`should remove comments and lines between "/* ${demo.CommentType.REMOVE_BLOCK_START} */" and "/* ${demo.CommentType.REMOVE_BLOCK_END} */"`, () => {
@@ -162,7 +162,7 @@ describe("demo", () => {
         /* ${demo.CommentType.REMOVE_BLOCK_START} */
         export * from "./DemoCommunityScreen"
         export * from "./DemoDebugScreen"
-        export * from "./DemoComponentsScreen/DemoComponentsScreen"
+        export * from "./DemoShowroomScreen/DemoShowroomScreen"
         /* ${demo.CommentType.REMOVE_BLOCK_END} */
         export * from "./ErrorScreen/ErrorBoundary"
         // export other screens here
@@ -173,7 +173,7 @@ describe("demo", () => {
       expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_END)
       expect(result).not.toContain("DemoCommunityScreen")
       expect(result).not.toContain("DemoDebugScreen")
-      expect(result).not.toContain("DemoComponentsScreen")
+      expect(result).not.toContain("DemoShowroomScreen")
     })
 
     it(`should remove multiple "// ${demo.CommentType.REMOVE_BLOCK_START}" and "// ${demo.CommentType.REMOVE_BLOCK_END}" sections in the same file string`, () => {
@@ -185,7 +185,7 @@ describe("demo", () => {
         `// ${REMOVE_BLOCK_START}`,
         `export * from "./DemoCommunityScreen"`,
         `export * from "./DemoDebugScreen"`,
-        `export * from "./DemoComponentsScreen/DemoComponentsScreen"`,
+        `export * from "./DemoShowroomScreen/DemoShowroomScreen"`,
         `// ${REMOVE_BLOCK_END}`,
         `export * from "./ErrorScreen/ErrorBoundary"`,
         `// export other screens here'`,
@@ -261,7 +261,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(
   } = useStores()
 
   function goNext() {
-    navigation.navigate("Demo", { screen: "DemoComponents" })
+    navigation.navigate("Demo", { screen: "DemoShowroom" })
   }
 
   function logout() {

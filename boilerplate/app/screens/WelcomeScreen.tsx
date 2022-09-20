@@ -29,7 +29,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(
   } = useStores()
 
   function goNext() {
-    navigation.navigate("Demo", { screen: "DemoComponents" })
+    navigation.navigate("Demo", { screen: "DemoShowroom" })
   }
 
   function logout() {

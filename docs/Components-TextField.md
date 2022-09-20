@@ -28,8 +28,8 @@ const [input, setInput] = useState("")
   style={{ backgroundColor: "#BFBFBF" }}
   containerStyle={{ backgroundColor: "#BFBFBF" }}
   inputWrapperStyle={{ backgroundColor: "#BFBFBF" }}
-  RightAccessory={() => <Icon name="check" />}
-  LeftAccessory={() => <Icon name="bell" />}
+  RightAccessory={() => <Icon icon="check" />}
+  LeftAccessory={() => <Icon icon="bell" />}
 />
 
 ```
@@ -202,10 +202,10 @@ The `RightAccessory` and `LeftAccessory` optional props are components that are 
     // props has `multiline`, `status`, `disabled`, and `style` attributes
     {disabled, status} = props
 
-    if (!!disabled) return <Icon name="lock", color="gray" />
-    if (status === 'error') return <Icon name="x", color="red" />
+    if (!!disabled) return <Icon icon="lock" color="gray" />
+    if (status === 'error') return <Icon icon="x" color="red" />
 
-    return <Icon name="check" color="green" />
+    return <Icon icon="check" color="green" />
   )}
 />
 ```
