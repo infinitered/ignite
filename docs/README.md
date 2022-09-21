@@ -4,8 +4,21 @@ Check out this list of topics:
 
 - [Getting Started Guide](./Guide.md) - If you're new to Ignite, start here
 - [Components](./Components.md) - Ignite's built-in UI components
+  - [Auto Image](./Components-AutoImage.md)
+  - [Button](./Components-Button.md.md)
+  - [Card](./Components-Card.md.md)
+  - [Header](./Components-Header.md.md)
+  - [Icon](./Components-Icon.md.md)
+  - [List Item](./Components-ListItem.md.md)
+  - [Screen](./Components-Screen.md.md)
+  - [Text](./Components-Text.md.md)
+  - [TextField](./Components-TextField.md.md)
 - [Theming](./Theming.md) - How to customize the look and feel of your app
+  - [Colors & Palettes](./Theming-Colors-And-Palettes.md) - Explanation of our palette-based approach to colors
+  - [Fonts & Typography](./Theming-Fonts-And-Typography.md) - How we define fonts in a semantic way
+  - [Spacing](./Theming-Spacing.md) - How to approach consistent spacing throughout your Ignite app
 - [Styling](./Styling.md) - How we approach styling components in Ignite
+- [Navigation](./Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
 - [Testing](./Testing.md) - How to test your Ignite app
 - [Generators](./Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./Generator-Templates.md) - Writing your own generator templates
@@ -17,3 +30,5 @@ Check out this list of topics:
 - [Tour of Ignite](./Tour-of-Ignite.md) - Tour of the Ignite code base for interested contributors
 - [Releasing Ignite](./Releasing-Ignite.md) - How we release Ignite
 - [Internationalization](./Internationalization.md) — How to Internationalize your app
+- [Backend API Integration](./Backend-API-Integration.md) - An explanation of Ignite's basic API setup
+- [Remove Demo Code](./Remove-Demo-Code.md) - A quick guide on how to remove Ignite's demo code via command line
