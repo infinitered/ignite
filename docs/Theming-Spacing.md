@@ -2,7 +2,7 @@
 
 [Back to Theming](./Theming.md)
 
-Spacing refers to the whitespace in between the elements in your app. 
+Spacing refers to the whitespace in between the elements in your app.
 
 Spacing should be consistent and thought of as a first class technique right alongside [colors](./Theming-Colors-And-Palettes.md) and [typography](./Theming-Fonts-And-Typography.md).
 
