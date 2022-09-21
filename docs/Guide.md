@@ -47,7 +47,7 @@ Once it's running, you'll want to get familiarized with the following concepts:
 
 We use React Navigation v6 in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `AppNavigator.tsx` being the primary one.
 
-There's also a `navigation-utilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
+There's also a `navigationUtilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
 Learn more in our [Navigation](./Navigation.md) documentation.
 

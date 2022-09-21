@@ -22,7 +22,7 @@ import Config from \\"../config\\"
 import { 
   WelcomeScreen 
 } from \\"../screens\\"
-import { navigationRef, useBackButtonHandler } from \\"./navigation-utilities\\"
+import { navigationRef, useBackButtonHandler } from \\"./navigationUtilities\\"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

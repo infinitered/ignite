@@ -11,7 +11,7 @@ import {
   create,
 } from "apisauce"
 import Config from "../../config"
-import { GeneralApiProblem, getGeneralApiProblem } from "./api-problem" // @demo remove-current-line
+import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
 import type {
   ApiConfig,
   ApiFeedResponse, // @demo remove-curent-line

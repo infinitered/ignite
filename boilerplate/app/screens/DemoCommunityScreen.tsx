@@ -3,7 +3,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { spacing } from "../theme"
-import { openLinkInBrowser } from "../utils/open-link-in-browser"
+import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
 
 const chainReactLogo = require("../../assets/images/cr-logo.png")

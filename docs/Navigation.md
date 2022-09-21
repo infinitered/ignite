@@ -2,7 +2,7 @@
 
 We use [React Navigation v6](https://reactnavigation.org/docs/getting-started/) in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `app-navigator.tsx` being the primary one.
 
-There's also a `navigation-utilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
+There's also a `navigationUtilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
 There's a provided Ignite CLI generator for creating new navigators. Learn more in the [Generator docs](./Generators.md#navigator-generator).
 
@@ -99,7 +99,7 @@ export const AppNavigator = (props) => {
 
 ### `useNavigationPersistence`
 
-This helper custom hook persists app navigation state between app loads. This is only enabled in dev by default, but can be enabled in production as well by editing the hook in `navigation-utilities.tsx`.
+This helper custom hook persists app navigation state between app loads. This is only enabled in dev by default, but can be enabled in production as well by editing the hook in `navigationUtilities.tsx`.
 
 ```tsx
 import * as storage from "./utils/storage"

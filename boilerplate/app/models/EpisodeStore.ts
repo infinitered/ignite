@@ -1,7 +1,7 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { api } from "../services/api"
 import { Episode, EpisodeModel } from "./Episode"
-import { withSetPropAction } from "./helpers/with-set-prop-action"
+import { withSetPropAction } from "./helpers/withSetPropAction"
 
 export const EpisodeStoreModel = types
   .model("EpisodeStore")

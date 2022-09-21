@@ -26,7 +26,7 @@ import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
-import { openLinkInBrowser } from "../utils/open-link-in-browser"
+import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 
 const ICON_SIZE = 14
 

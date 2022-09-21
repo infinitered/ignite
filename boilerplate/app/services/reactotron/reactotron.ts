@@ -13,16 +13,16 @@
  * @refresh reset
  */
 import { Platform } from "react-native"
-import { Reactotron } from "./reactotron-client"
+import { Reactotron } from "./reactotronClient"
 import { ArgType } from "reactotron-core-client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { onSnapshot } from "mobx-state-tree"
 import { mst } from "reactotron-mst"
 import { RootStore } from "../../models/RootStore"
 import { clear } from "../../utils/storage"
-import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
-import { goBack, resetRoot, navigate } from "../../navigators/navigation-utilities"
-import { fakeReactotron } from "./reactotron-fake"
+import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotronConfig"
+import { goBack, resetRoot, navigate } from "../../navigators/navigationUtilities"
+import { fakeReactotron } from "./reactotronFake"
 
 /**
  * We tell typescript we intend to hang Reactotron off of the console object.
@@ -31,7 +31,7 @@ import { fakeReactotron } from "./reactotron-fake"
  *
  *   console.tron.log('hello world')
  *
- * You can also import Reactotron yourself from ./reactotron-client
+ * You can also import Reactotron yourself from ./reactotronClient
  * and use it directly, like Reactotron.log('hello world')
  */
 declare global {
