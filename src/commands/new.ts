@@ -522,19 +522,28 @@ export default {
     }
     // #endregion
 
-    // #region Create Git Repostiory and Initial Commit
+    // #region Create Git Repository and Initial Commit
     // commit any changes
     if (git === true) {
       startSpinner(" Backing everything up in source control")
       try {
-        await system.run(
-          log(`
-            \\rm -rf ./.git
-            git init;
-            git add -A;
-            git commit -m "New Ignite ${meta.version()} app";
-          `),
-        )
+        const isWindows = process.platform === "win32"
+
+        // The separate commands works on Windows, but not Mac OS
+        if (isWindows) {
+          await system.run(log("git init"))
+          await system.run(log("git add -A"))
+          await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
+        } else {
+          await system.run(
+            log(`
+              \\rm -rf ./.git
+              git init;
+              git add -A;
+              git commit -m "New Ignite ${meta.version()} app";
+            `),
+          )
+        }
       } catch (e) {
         p(yellow("Unable to commit the initial changes. Please check your git username and email."))
       }
