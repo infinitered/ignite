@@ -527,14 +527,9 @@ export default {
     if (git === true) {
       startSpinner(" Backing everything up in source control")
       try {
-        await system.run(
-          log(`
-            \\rm -rf ./.git
-            git init;
-            git add -A;
-            git commit -m "New Ignite ${meta.version()} app";
-          `),
-        )
+        await system.run(log("git init"))
+        await system.run(log("git add -A"))
+        await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
       } catch (e) {
         p(yellow("Unable to commit the initial changes. Please check your git username and email."))
       }
