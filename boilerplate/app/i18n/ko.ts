@@ -73,7 +73,7 @@ const ko: Translations = {
     demoListItemTxExample: "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
     demoTextFieldTxExample: "`{{prop}}Tx` Prop 을 통해",
     demoHeaderTxExample: "야호",
-    demoToggleLabelTxExample: "`labelTx` prop을 통해",
+    demoToggleTxExample: "`{{prop}}Tx` prop을 통해",
     demoCardTxExample: "MAVERICKTODO",
   },
   demoDebugScreen: {
