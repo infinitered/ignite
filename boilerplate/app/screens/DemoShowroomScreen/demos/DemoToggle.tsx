@@ -12,7 +12,11 @@ function ControlledToggle(props: ToggleProps) {
   return <Toggle {...props} value={value} onPress={() => setValue(!value)} />
 }
 
-const $centeredOneThirdCol: ViewStyle = { width: "33.33333%", justifyContent: "center" }
+const $centeredOneThirdCol: ViewStyle = {
+  width: "33.33333%",
+  alignItems: "center",
+  justifyContent: "center",
+}
 const $centeredText: TextStyle = {
   textAlign: "center",
   width: "100%",
@@ -28,11 +32,23 @@ export const DemoToggle: Demo = {
       name="Variants"
       description="The component supports a few different variants. If heavy customization of a specific variant is needed, it can be easily refactored. The default is `checkbox`."
     >
-      <ControlledToggle variant="checkbox" label="`checkbox` variant" />
+      <ControlledToggle
+        variant="checkbox"
+        label="`checkbox` variant"
+        helper="This can be used for a single on/off input."
+      />
       <DemoDivider size={24} />
-      <ControlledToggle variant="radio" label="`radio` variant" />
+      <ControlledToggle
+        variant="radio"
+        label="`radio` variant"
+        helper="Use this when you have multiple options."
+      />
       <DemoDivider size={24} />
-      <ControlledToggle variant="switch" label="`switch` variant" />
+      <ControlledToggle
+        variant="switch"
+        label="`switch` variant"
+        helper="A more prominent on/off input. Has better accessibility support."
+      />
     </DemoUseCase>,
 
     <DemoUseCase
@@ -116,12 +132,20 @@ export const DemoToggle: Demo = {
       name="Passing Content"
       description="There are a few different ways to pass content."
     >
-      <ControlledToggle variant="checkbox" value label="Via `label` prop" />
+      <ControlledToggle
+        variant="checkbox"
+        value
+        label="Via `label` prop"
+        helper="Via `helper` prop."
+      />
       <DemoDivider size={24} />
       <ControlledToggle
         variant="radio"
         value
-        labelTx="demoComponentsScreen.demoToggleLabelTxExample"
+        labelTx="demoComponentsScreen.demoToggleTxExample"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoComponentsScreen.demoToggleTxExample"
+        helperTxOptions={{ prop: "helper" }}
       />
       <DemoDivider size={24} />
       <ControlledToggle
@@ -144,6 +168,7 @@ export const DemoToggle: Demo = {
         switchAccessibilityMode="text"
         label="Switches can be read as text"
         status="error"
+        helper="By default, this option doesn't use `Text` since depending on the font, the on/off characters might look weird. Customize as needed."
       />
       <DemoDivider size={24} />
       <ControlledToggle

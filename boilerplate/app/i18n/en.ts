@@ -71,7 +71,7 @@ const en = {
     demoListItemTxExample: "Via `tx` Prop - consequat commodo",
     demoTextFieldTxExample: "Via `{{prop}}Tx` Prop",
     demoHeaderTxExample: "Yay",
-    demoToggleLabelTxExample: "Via `labelTx` prop",
+    demoToggleTxExample: "Via `{{prop}}Tx` prop",
     demoCardTxExample: "Via `{{prop}}Tx` Prop",
   },
   demoDebugScreen: {

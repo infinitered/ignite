@@ -73,7 +73,7 @@ const ar: Translations = {
     demoTextFieldTxExample: "Prop `{{prop}}Tx` عبر",
     demoListItemTxExample: "عبر `tx` Prop - consequat commodo",
     demoHeaderTxExample: "ياي",
-    demoToggleLabelTxExample: "Prop `labelTx` عبر",
+    demoToggleTxExample: "Prop `{{prop}}Tx` عبر",
     demoCardTxExample: "Prop `{{prop}}Tx` عبر",
   },
   demoDebugScreen: {
