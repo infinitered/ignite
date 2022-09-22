@@ -64,7 +64,7 @@ Some developers believe that every line of code should have a co-responding test
 
 - **complicated regexes**: for many developers, regex's only make sense as you are writing them. Testing with a series of valid and invalid inputs can help ensure that they work as intended for future developers.
 - **nested if/else statements**: if you rely heavily on a function with a lot of if/else statements, it can be helpful to have tests to make sure that you can visit each condition. Often times when we have more than a handful of conditionals, it can become impossible to visit all of them without realizing it.
-- **validation functions**: often times we may write functions like `isJson()` to validate that a value is a specific shape. If critical parts of our code rely on the correctness of this function, it can be useful to add tests to make sure that it fails on invalid inputs and passes on valid inputs.
+- **validation functions**: often times we may write functions like `isJson()` to validate that a value is a specific shape. If critical parts of our code rely on the correctness of this function, we want to test that code!
 
 ## Mocking
 
