@@ -18,11 +18,15 @@ We provide a [README.md]([../boilerplate/detox/README.md]) inside of Ignite for 
 
 -- <cite>[React Native docs](https://reactnative.dev/docs/testing-overview#unit-tests)</cite>
 
-### Example
+### Test Structure
+
+In Ignite, we include unit tests for pure functions, such as models or utility functions.
 
 Ignite uses Jest as our test runner. Jest tests are written using `it` or `test` statements, which take a describe of the test, and a function to execute the test code.
 
 Then, inside the test function, we can make "assertions", or what we expect a value to be using the `expect` function. We pass the value as the first argument to the `expect` function, then we use one of the "matcher" methods on `expect`, such as `.toBe` to describe what the value should match.
+
+[The React Native doc](https://reactnative.dev/docs/testing-overview#unit-tests) provide the following example for a unit test:
 
 ```ts
 it("given a date in the past, colorForDueDate() returns red", () => {
@@ -33,17 +37,16 @@ it("given a date in the past, colorForDueDate() returns red", () => {
 
 Jest functions like `it`, `test`, `expect`, and more are loaded globally by the Jest test runner, so you don't need to import them.
 
-### Usage
+### Best Practices
 
-In Ignite, we include unit tests for pure functions, such as models or utility functions.
+> When writing a test, do your best to make sure that your tests > include the following information:
+>
+> - Given - some precondition
+> - When - some action executed by the function that you’re testing
+> - Then - the expected outcome
+>   This is also known as AAA (Arrange, Act, Assert).
 
-When writing a test, do your best to make sure that your tests include the following information:
-
-- Given - some precondition
-- When - some action executed by the function that you’re testing
-- Then - the expected outcome
-
-This is also known as AAA (Arrange, Act, Assert).
+-- <cite>[Structuring Tests in React Native Docs](https://reactnative.dev/docs/testing-overview#structuring-tests)</cite>
 
 You can read more about how to best practices for creating tests in the [Structuring Tests](https://reactnative.dev/docs/testing-overview#structuring-tests) section of the React Native docs.
 
@@ -59,9 +62,9 @@ When writing tests, you can also run Jest in watch mode by running `yarn test:wa
 
 Some developers believe that every line of code should have a co-responding test. However, Infinite Red believes that some unit tests provide more values than others. Here are a few situations where we have found unit tests to be helpful in client projects:
 
-- _complicated regex_: writing a series of valid and invalid inputs can help track down sneaky bugs
-- _nested if/else statements_: if you rely heavily on a function with a lot of if/else statements, it can be helpful to have tests to make sure that you can visit each condition. Often times when we have more than a handful of conditionals, it can be impossible to visit all of them without realizing it.
-- _validation functions_: Often times we may write functions like `isJson()` to validate that a value is a specific shape. If critical parts of our code rely on the correctness of this function, it can be useful to add tests to make sure that it fails on invalid inputs and passes on valid inputs.
+- **complicated regex's**: for many developers, regex's only as you are writing them. Test with a series of valid and invalid inputs can help ensure that they work as intended for future developers.
+- **nested if/else statements**: if you rely heavily on a function with a lot of if/else statements, it can be helpful to have tests to make sure that you can visit each condition. Often times when we have more than a handful of conditionals, it can be impossible to visit all of them without realizing it.
+- **validation functions**: Often times we may write functions like `isJson()` to validate that a value is a specific shape. If critical parts of our code rely on the correctness of this function, it can be useful to add tests to make sure that it fails on invalid inputs and passes on valid inputs.
 
 ## Mocking
 
@@ -95,7 +98,7 @@ But it also has a variety of properties added to it, such as `.mock`, which you 
 expect(mockCallback.mock.calls.length).toBe(2)
 ```
 
-See the [official Jest docs](https://jestjs.io/docs/mock-functions#mock-property) for what other properties are available on the `.mock` property.
+This particular example from the [official Jest docs](https://jestjs.io/docs/mock-functions#using-a-mock-function). You can read more about about [what other properties are available on the `.mock` property](https://jestjs.io/docs/mock-functions#mock-property) as well at the Jest docs.
 
 ### Mock Modules
 
@@ -129,7 +132,7 @@ test("should fetch users", () => {
 })
 ```
 
-You can read more in the [Mocking Modules](https://jestjs.io/docs/mock-functions#mocking-modules) section of the Jest docs.
+This example is derived from the the [Mocking Modules](https://jestjs.io/docs/mock-functions#mocking-modules) section of the Jest docs, where you can read about more sophisticated use cases.
 
 ### React Native Modules
 
@@ -143,7 +146,7 @@ The first argument of `jest.mock` is the name of the module want to mock, but yo
 
 In this example, this will return a default export.
 
-You can read more in the [Testing React Native](https://jestjs.io/docs/tutorial-react-native#mock-native-modules-using-jestmock) section of the Jest docs.
+This example is derived from [Testing React Native](https://jestjs.io/docs/tutorial-react-native#mock-native-modules-using-jestmock) section of the Jest docs, where you can read more.
 
 ## Resources
 
