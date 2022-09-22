@@ -60,7 +60,7 @@ When writing tests, you can also run Jest in watch mode by running `yarn test:wa
 
 ### When to write Unit Tests
 
-Some developers believe that every line of code should have a co-responding test. However, Infinite Red believes that some unit tests provide more values than others. Here are a few situations where we have found unit tests to be helpful in client projects:
+The most important question to ask when writing tests is "what code should be unit tested?" Not every line of code will benefit from a unit test. Typically, you'll want a unit test when you have code that can be run without external dependencies (like an API) that has some non-trivial logic.
 
 - **complicated regexes**: for many developers, regex's only make sense as you are writing them. Testing with a series of valid and invalid inputs can help ensure that they work as intended for future developers.
 - **nested if/else statements**: if you rely heavily on a function with a lot of if/else statements, it can be helpful to have tests to make sure that you can visit each condition. Often times when we have more than a handful of conditionals, it can become impossible to visit all of them without realizing it.
