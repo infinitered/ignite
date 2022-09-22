@@ -162,4 +162,4 @@ There are a variety of testing libraries available in React Native that you may 
 - [React Native docs on Testing](https://reactnative.dev/docs/testing-overview)
 - [Testing React Native Apps with Jest](https://jestjs.io/docs/tutorial-react-native)
 - [Detox docs](https://wix.github.io/Detox/)
-- [Ken C. Dodds articles on Testing](https://kentcdodds.com/blog?q=test)
+- [Kent C. Dodds articles on Testing](https://kentcdodds.com/blog?q=test)
