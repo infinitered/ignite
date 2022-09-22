@@ -70,9 +70,9 @@ The most important question to ask when writing tests is "what code should be un
 
 However, often our code is not entirely written as pure functions. Most apps have side effects like making network requests, calling native modules, or reaching for global objects.
 
-Relying on external code can make our code difficult and slow to test.
+In integration tests, we can set up a suitable testing environment to handle these side effects.
 
-One solution to making our tests easier to write is by utilizing mocks.
+But in unit tests, where we want to test an isolated piece of code, another option is to provide mocks for these external dependencies.
 
 Jest provides a variety of mocking strategies for our code:
 
