@@ -10,7 +10,7 @@ This isn't a hard and fast rule, but it does express our approach fairly well.
 
 ## Detox Testing
 
-MAVERICKTODO: Add info about detox here, or even a separate Testing-Detox.md.
+We provide a [README.md]([../boilerplate/detox/README.md]) inside of Ignite for how to get started with and run Detox tests once you have Ignited your app.
 
 ## Unit Testing
 
