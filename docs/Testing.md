@@ -16,7 +16,7 @@ We provide a [README.md]([../boilerplate/detox/README.md]) inside of Ignite for 
 
 > Unit tests cover the smallest parts of code, like individual functions or classes.
 
--- <cite>[React Native docs](https://reactnative.dev/docs/testing-overview#unit-tests)</cite>
+-- <cite>[React Native docs](https://reactnative.dev/docs/testing-overview#unit-tests), under [CC By 4.0](https://creativecommons.org/licenses/by/4.0/)</cite>
 
 ### Test Structure
 
