@@ -324,10 +324,6 @@ const $itemThumbnail: ImageStyle = {
   alignSelf: "flex-start",
 }
 
-const $rowLayout: ViewStyle = {
-  flexDirection: "row",
-}
-
 const $toggle: ViewStyle = {
   marginTop: spacing.medium,
 }
