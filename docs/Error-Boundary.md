@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<Props, State> {
 }
 ```
 
-`ErrorBoundary` components leverage the `componentDidCatch` method on Class Components to capture and allow us to store errors when children throw a prop.
+`ErrorBoundary` components leverage the `componentDidCatch` method on Class Components to capture and allow us to store errors when children throw an exception.
 
 This allows us to show alternative UI components when an error is thrown on child components.
 
