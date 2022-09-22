@@ -53,14 +53,11 @@ module.exports = {
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
     const pnpmPath = which("pnpm")
     const pnpmVersion = pnpmPath && (await run("pnpm --version", { trim: true }))
-    const gitPath = which("git")
-    const gitVersion = gitPath && (await run("git -v", { trim: true }))
 
     const nodeInfo = [column1("node"), column2(nodeVersion), column3(nodePath)]
     const npmInfo = [column1("npm"), column2(npmVersion), column3(npmPath || "not installed")]
     const yarnInfo = [column1("yarn"), column2(yarnVersion), column3(yarnPath || "not installed")]
     const pnpmInfo = [column1("pnpm"), column2(pnpmVersion), column3(pnpmPath || "not installed")]
-    const gitInfo = [column1("git"), column2(gitVersion), column3(gitPath || "not installed")]
 
     async function packageInfo(packagerName: "npm" | "yarn" | "pnpm") {
       return (await packager.list({ packagerName, global: true })).map((nameAndVersion) => [
@@ -109,7 +106,6 @@ module.exports = {
       pnpmInfo,
       ...pnpmPackages,
       expoInfo,
-      gitInfo,
     ])
 
     // -=-=-=- ignite -=-=-=-
@@ -172,5 +168,13 @@ module.exports = {
       // info(colors.cyan('Windows'))
       // table([])
     }
+
+    // -=-=-=- tools -=-=-=-
+    info("")
+    info(colors.cyan("Tools"))
+    const gitPath = which("git")
+    const gitVersion = gitPath && (await run("git -v", { trim: true }))
+    const gitInfo = [column1("git"), column2(gitVersion), column3(gitPath || "not installed")]
+    table([gitInfo])
   },
 }
