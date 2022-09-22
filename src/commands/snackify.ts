@@ -29,9 +29,9 @@ module.exports = {
       }
     }
 
-    info("This command will create an expo snack project for you. ")
-    info("This can be exported to an expo snack for you to test and play with your app.")
-    info("In order to snackify(create an expo snack) this project, we must delete:")
+    info("This command will create an Expo snack project for you. ")
+    info("This can be exported to an Expo snack for you to test and play with your app.")
+    info("In order to snackify (create an Expo snack) this project, we must delete:")
     info(
       "- /ios\n- /android\n- /e2e\n- /test\n- /app/services/reactotron\n- jest.config.js\n- metro.config.js\n- webpack.config.js",
     )
@@ -87,9 +87,9 @@ module.exports = {
       await packager.add(addPackages.join(" "))
       await packager.remove(removePackages.join(" "))
     }
-    info("All done, your app is ready to be imported into expo snack")
+    info("All done, your app is ready to be imported into Expo snack")
     info(
-      "The best way to import this project into an expo snack is via publishing this project into a public repository on github and then adding your repo's URL to an expo snack - https://snack.expo.dev/",
+      "The best way to import this project into an Expo snack is via publishing this project into a public repository on github and then adding your repo's URL to an expo snack - https://snack.expo.dev/",
     )
   },
 }
