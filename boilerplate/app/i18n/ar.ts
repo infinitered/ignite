@@ -1,6 +1,11 @@
 import { Translations } from "./en"
 
 const ar: Translations = {
+  common: {
+    ok: "نعم",
+    cancel: "حذف",
+    back: "خلف",
+  },
   welcomeScreen: {
     postscript:
       "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
@@ -16,12 +21,14 @@ const ar: Translations = {
     reset: "اعادة تعيين التطبيق",
     traceTitle: "خطأ من مجموعة %{name}", // @demo remove-current-line
   },
-  // @demo remove-block-start
-  common: {
-    ok: "نعم",
-    cancel: "حذف",
-    back: "خلف",
+  emptyStateComponent: {
+    generic: {
+      heading: "فارغة جداً....حزين",
+      content: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
+      button: "لنحاول هذا مرّة أخرى",
+    },
   },
+  // @demo remove-block-start
   errors: {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
   },
@@ -65,16 +72,13 @@ const ar: Translations = {
       "سواء كان الامر يتعلّق بتشغيل مشروع كامل او اعداد الفرق بسرعة من خلال التدريب العلمي لدينا، يمكن ان يساعد Infinite Red اللامتناهي في اي مشروع محلي يتفاعل معه.",
     hireUsLink: "ارسل لنا رسالة",
   },
-  demoComponentsScreen: {
+  demoShowroomScreen: {
     jumpStart: "مكونات او عناصر لبدء مشروعك",
     lorem2Sentences:
       "عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم",
-    demoButtonTxExample: "عبر `tx` Prop - Fugiat Id",
-    demoTextFieldTxExample: "Prop `{{prop}}Tx` عبر",
-    demoListItemTxExample: "عبر `tx` Prop - consequat commodo",
     demoHeaderTxExample: "ياي",
-    demoToggleTxExample: "Prop `{{prop}}Tx` عبر",
-    demoCardTxExample: "Prop `{{prop}}Tx` عبر",
+    demoViaTxProp: "عبر `tx` Prop",
+    demoViaSpecifiedTxProp: "Prop `{{prop}}Tx` عبر",
   },
   demoDebugScreen: {
     howTo: "كيف",
@@ -107,13 +111,9 @@ const ar: Translations = {
       publishLabel: "نشرت {{date}}",
       durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
     },
-    noDataEmptyState: {
-      title: "فارغة جداً....حزين",
-      message: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
-    },
     noFavoritesEmptyState: {
-      title: "هذا يبدو فارغاً بعض الشيء.",
-      message:
+      heading: "هذا يبدو فارغاً بعض الشيء.",
+      content:
         "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
     },
   },

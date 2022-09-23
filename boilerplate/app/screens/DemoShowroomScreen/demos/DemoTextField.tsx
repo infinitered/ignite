@@ -90,11 +90,11 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        labelTx="demoComponentsScreen.demoTextFieldTxExample"
+        labelTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         labelTxOptions={{ prop: "label" }}
-        helperTx="demoComponentsScreen.demoTextFieldTxExample"
+        helperTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         helperTxOptions={{ prop: "helper" }}
-        placeholderTx="demoComponentsScreen.demoTextFieldTxExample"
+        placeholderTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         placeholderTxOptions={{ prop: "placeholder" }}
       />
 

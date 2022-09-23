@@ -49,7 +49,7 @@ export const DemoButton: Demo = {
       <Button text="Via `text` Prop - Billum In" />
       <DemoDivider />
 
-      <Button tx="demoComponentsScreen.demoButtonTxExample" />
+      <Button tx="demoShowroomScreen.demoViaTxProp" />
       <DemoDivider />
 
       <Button>Children - Irure Reprehenderit</Button>

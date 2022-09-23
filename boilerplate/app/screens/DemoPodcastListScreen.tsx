@@ -4,13 +4,13 @@ import {
   AccessibilityProps,
   ActivityIndicator,
   FlatList,
+  Image,
   ImageStyle,
   Platform,
   StyleSheet,
   TextStyle,
   View,
   ViewStyle,
-  Image,
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -19,8 +19,8 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { translate, isRTL } from "../i18n"
-import { Button, Card, Icon, Screen, Text, Toggle } from "../components"
+import { Button, Card, EmptyState, Icon, Screen, Text, Toggle } from "../components"
+import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -30,7 +30,6 @@ import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
 const ICON_SIZE = 14
 
-const sadFace = require("../../assets/images/sad-face.png")
 const rnrImage1 = require("../../assets/images/rnr-image-1.png")
 const rnrImage2 = require("../../assets/images/rnr-image-2.png")
 const rnrImage3 = require("../../assets/images/rnr-image-3.png")
@@ -61,7 +60,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
   }
 
   return (
-    <Screen preset="fixed" safeAreaEdges={["top"]}>
+    <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContentContainer}>
       <FlatList<Episode>
         data={episodeStore.episodesForList}
         extraData={episodeStore.favorites.length + episodeStore.episodes.length}
@@ -72,40 +71,24 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
           isLoading ? (
             <ActivityIndicator />
           ) : (
-            <View>
-              <View style={$container}>
-                <View style={$sadFaceContainer}>
-                  <Image source={sadFace} style={$sadFace} resizeMode="contain" />
-                </View>
-                {!episodeStore.favoritesOnly ? (
-                  <View>
-                    <Text
-                      preset="subheading"
-                      style={$subheading}
-                      tx="demoPodcastListScreen.noDataEmptyState.title"
-                    />
-                    <Text style={$message} tx="demoPodcastListScreen.noDataEmptyState.message" />
-                    <Button
-                      text="Let's try this again"
-                      onPress={() => manualRefresh()}
-                      style={$button}
-                    />
-                  </View>
-                ) : (
-                  <View>
-                    <Text
-                      preset="subheading"
-                      style={$subheading}
-                      tx="demoPodcastListScreen.noFavoritesEmptyState.title"
-                    />
-                    <Text
-                      style={$message}
-                      tx="demoPodcastListScreen.noFavoritesEmptyState.message"
-                    />
-                  </View>
-                )}
-              </View>
-            </View>
+            <EmptyState
+              preset="generic"
+              style={$emptyState}
+              headingTx={
+                episodeStore.favoritesOnly
+                  ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
+                  : undefined
+              }
+              contentTx={
+                episodeStore.favoritesOnly
+                  ? "demoPodcastListScreen.noFavoritesEmptyState.content"
+                  : undefined
+              }
+              button={episodeStore.favoritesOnly ? null : undefined}
+              buttonOnPress={manualRefresh}
+              imageStyle={$emptyStateImage}
+              ImageProps={{ resizeMode: "contain" }}
+            />
           )
         }
         ListHeaderComponent={
@@ -302,6 +285,10 @@ const EpisodeCard = observer(function EpisodeCard({
 })
 
 // #region Styles
+const $screenContentContainer: ViewStyle = {
+  flex: 1,
+}
+
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing.large,
   paddingTop: spacing.large + spacing.extraLarge,
@@ -369,35 +356,12 @@ const $unFavoriteButton: ViewStyle = {
   backgroundColor: colors.palette.primary100,
 }
 
-const $sadFace: ImageStyle = {
-  height: 163,
-  width: 189,
+const $emptyState: ViewStyle = {
+  marginTop: spacing.huge,
+}
+
+const $emptyStateImage: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $sadFaceContainer: ViewStyle = {
-  alignItems: "center",
-  paddingTop: spacing.huge,
-  paddingBottom: spacing.extraSmall,
-}
-
-const $container: ViewStyle = {
-  paddingVertical: spacing.large,
-}
-
-const $subheading: TextStyle = {
-  textAlign: "center",
-  paddingBottom: spacing.small,
-}
-
-const $message: TextStyle = {
-  textAlign: "left",
-  paddingHorizontal: spacing.large,
-  paddingBottom: spacing.huge,
-}
-
-const $button: ViewStyle = {
-  marginVertical: spacing.huge,
 }
 // #endregion
 
