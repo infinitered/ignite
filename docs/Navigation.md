@@ -20,31 +20,31 @@ The AppNavigator is the root navigator for your whole app. It will have the navi
 
 The AppStack is a native stack navigator (via [React Native Screens](https://github.com/software-mansion/react-native-screens)) and contains all the screens and subnavigators of your app.
 
-MAVERICKTODO: Update with new navigation structure that Lizzi and Kate are working on.
+TODO: Update with new navigation structure that Lizzi and Kate are working on.
 
 ## Useful Patterns
 
 We've found that there are some useful patterns for building navigators in React Native.
 
-MAVERICKTODO: Point them to the relevant Ignite cookbook docs.
+TODO: Point them to the relevant Ignite cookbook docs.
 
 ### Tab Navigation
 
 We recommend using the [React Navigation Tabs](https://reactnavigation.org/docs/tab-based-navigation/) for tabs.
 
-MAVERICKTODO: Expand and add any useful tips for tab navigation here.
+TODO: Expand and add any useful tips for tab navigation here.
 
 ### Sidebar Navigation
 
 Ignite comes with an example sidebar navigation, aka "drawer" navigator.
 
-MAVERICKTODO: Add info about the example drawer here.
+TODO: Add info about the example drawer here.
 
 ### Modals
 
 Ignite comes with an example modal screen.
 
-MAVERICKTODO: Add info about the example modal screen here.
+TODO: Add info about the example modal screen here.
 
 ## Utility Functions
 

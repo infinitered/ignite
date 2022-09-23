@@ -1,4 +1,4 @@
-// MAVERICKTODO: write documentation for colors and palette in own markdown file and add links from here
+// TODO: write documentation for colors and palette in own markdown file and add links from here
 
 const palette = {
   neutral100: "#FFFFFF",

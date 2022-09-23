@@ -90,4 +90,4 @@ You can then use it with your Button like this:
 
 ## Styling Workflow
 
-MAVERICKTODO: Finish this section?
+TODO: Finish this section?
