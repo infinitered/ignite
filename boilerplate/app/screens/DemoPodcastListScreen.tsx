@@ -112,7 +112,7 @@ export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
           <View style={$heading}>
             <Text preset="heading" tx="demoPodcastListScreen.title" />
             {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
-              <View style={[$rowLayout, $toggle]}>
+              <View style={$toggle}>
                 <Toggle
                   value={episodeStore.favoritesOnly}
                   onValueChange={() =>
@@ -324,13 +324,8 @@ const $itemThumbnail: ImageStyle = {
   alignSelf: "flex-start",
 }
 
-const $rowLayout: ViewStyle = {
-  flexDirection: "row",
-}
-
 const $toggle: ViewStyle = {
-  alignItems: "flex-end",
-  marginTop: spacing.small,
+  marginTop: spacing.medium,
 }
 
 const $labelStyle: TextStyle = {
