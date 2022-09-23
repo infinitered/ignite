@@ -7,13 +7,11 @@ import { Text, TextProps } from "./Text"
 
 const sadFace = require("../../assets/images/sad-face.png")
 
-type EmptyStatePresets = keyof typeof EmptyStatePresets
-
 interface EmptyStateProps {
   /**
    * An optional prop that specifies the text/image set to use for the empty state.
    */
-  preset?: EmptyStatePresets
+  preset?: keyof typeof EmptyStatePresets
   /**
    * Style override for the container.
    */

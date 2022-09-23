@@ -30,7 +30,6 @@ import { openLinkInBrowser } from "../utils/open-link-in-browser"
 
 const ICON_SIZE = 14
 
-const sadFace = require("../../assets/images/sad-face.png")
 const rnrImage1 = require("../../assets/images/rnr-image-1.png")
 const rnrImage2 = require("../../assets/images/rnr-image-2.png")
 const rnrImage3 = require("../../assets/images/rnr-image-3.png")
