@@ -103,7 +103,6 @@
     "jest-circus": "26",
     "jest-environment-node": "26",
     "jest-expo": "^46.0.1",
-    "jetifier": "2.0.0",
     "metro-config": "0.71.1",
     "metro-react-native-babel-preset": "0.71.1",
     "metro-source-map": "0.71.1",
