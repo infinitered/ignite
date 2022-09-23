@@ -25,7 +25,7 @@ const ar: Translations = {
     generic: {
       heading: "فارغة جداً....حزين",
       content: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
-      button: "MAVERICKTODO",
+      button: "لنحاول هذا مرّة أخرى",
     },
   },
   // @demo remove-block-start
