@@ -1,6 +1,6 @@
 # Navigation in Ignite
 
-We use [React Navigation v6](https://reactnavigation.org/docs/getting-started/) in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `app-navigator.tsx` being the primary one.
+We use [React Navigation v6](https://reactnavigation.org/docs/getting-started/) in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `AppNavigator.tsx` being the primary one.
 
 There's also a `navigationUtilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
@@ -8,43 +8,97 @@ There's a provided Ignite CLI generator for creating new navigators. Learn more 
 
 ## General Structure
 
-The root navigator is called `AppNavigator` and is rendered in `./app/app.tsx`.
-
 ```tsx
 <AppNavigator initialState={initialNavigationState} onStateChange={onNavigationStateChange} />
 ```
 
-If you open the file `app/navigators/app-navigator.tsx` up, you'll find the AppNavigator and the AppStack.
+If you open the file `app/navigators/AppNavigator.tsx` up, you'll find the AppNavigator and the AppStack.
 
 The AppNavigator is the root navigator for your whole app. It will have the navigation container and wrap the AppStack.
 
-The AppStack is a native stack navigator (via [React Native Screens](https://github.com/software-mansion/react-native-screens)) and contains all the screens and subnavigators of your app.
+The AppStack is a native stack navigator (via [React Navigation](https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator)) and contains all the screens and subnavigators of your app.
 
-TODO: Update with new navigation structure that Lizzi and Kate are working on.
+In the case of Ignite's demo code, it is prepared with an example flow for an app requiring authentication. The screens included within the AppStack are dependent on value of `isAuthenticated` from `authenticationStore`. If in an unauthenticated state, the only screen to be shown will be the `LoginScreen`. Otherwise, that screen is left out of the navigator and the user is presented with the `WelcomeScreen` and screens that fall under the `DemoNavigator`
 
 ## Useful Patterns
 
 We've found that there are some useful patterns for building navigators in React Native.
 
-TODO: Point them to the relevant Ignite cookbook docs.
+### Authentication Flow
+
+We recommend following the guidance of [React Navigation's Authentication Flows](https://reactnavigation.org/docs/auth-flow/) and Ignite comes bootstrapped with this pattern in its demo code.
+
+```tsx
+const AppStack = observer(function AppStack() {
+  const {
+    authenticationStore: { isAuthenticated },
+  } = useStores()
+
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={isAuthenticated ? "Welcome" : "Login"}
+    >
+      {isAuthenticated ? (
+        <>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Demo" component={DemoNavigator} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </>
+      )}
+    </Stack.Navigator>
+  )
+})
+```
+
+The screens included within the AppStack are dependent on value of `isAuthenticated` from `authenticationStore`. If the user hasn't been authenticated yet, the only screen to be shown will be the `LoginScreen`.
+
+When authenticated, `LoginScreen` is left out of the navigator and the user is presented with the `WelcomeScreen` and screens that fall under the `DemoNavigator`
 
 ### Tab Navigation
 
 We recommend using the [React Navigation Tabs](https://reactnavigation.org/docs/tab-based-navigation/) for tabs.
 
-TODO: Expand and add any useful tips for tab navigation here.
+Inside `./app/navigators/DemoNavigator.tsx` you'll see the definition of the bottom tab navigator. Here is where you can customize the style and behavior of the tab bar itself, as well as each individual tab.
+
+In addition to the user pressing the tab buttons, you may also navigate from tab to tab programmatically via the same familiar navigation API:
+
+```tsx
+// currently on the DemoShowroom tab, navigate to the DemoDebug tab
+navigation.navigate("DemoDebug")
+```
+
+Tabs can jump to a single screen (as seen in Ignite's demo code) or another stack navigator comprised of many screens the user could navigate through within the same tab. Let's use a message inbox as an example:
+
+```tsx
+const InboxStack = createNativeStackNavigator()
+
+function InboxStackScreen() {
+  return (
+    <InboxStack.Navigator>
+      <InboxStack.Screen name="List" component={ListScreen} />
+      <InboxStack.Screen name="MessageDetails" component={MessageDetailsScreen} />
+    </InboxStack.Navigator>
+  )
+}
+```
+
+A tab could be added to the tab navigator as a child component.
+
+`<Tab.Screen name="Inbox" component={InboxStackScreen} />`
+
+This would initially display the `ListScreen` with all of the messages and if the user happened to press a list item, the app would then navigate to a `MessageDetailsScreen`.
 
 ### Sidebar Navigation
 
-Ignite comes with an example sidebar navigation, aka "drawer" navigator.
+Ignite comes with an example sidebar navigation, aka "drawer" navigator. It is implemented using the `DrawerLayout` from [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout/), a cross-platform replacement for [React Native's DrawerLayoutAndroid](https://reactnative.dev/docs/drawerlayoutandroid.html).
 
-TODO: Add info about the example drawer here.
+The view passed via `renderNavigationView` prop is the content rendered to the side of the screen, which can be pulled in or opened by the toggle button press. Here is where you can render header information (perhaps a company logo or logged in user avatar along with labels), menu items, logout or settings functionality and more.
 
-### Modals
-
-Ignite comes with an example modal screen.
-
-TODO: Add info about the example modal screen here.
+`DrawerLayout` also allows you to customize the behavior (open/close speed, overlay position), style and even has events to track the progress and states of the drawer transitioning. See more info at the [documentation](https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout/).
 
 ## Utility Functions
 
@@ -123,3 +177,7 @@ function App(props: AppProps) {
   )
 }
 ```
+
+## More Examples
+
+TODO: Ignite cookbook examples coming soon!
