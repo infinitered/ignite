@@ -100,12 +100,6 @@ The view passed via `renderNavigationView` prop is the content rendered to the s
 
 `DrawerLayout` also allows you to customize the behavior (open/close speed, overlay position), style and even has events to track the progress and states of the drawer transitioning. See more info at the [documentation](https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout/).
 
-### Modals
-
-Ignite comes with an example modal screen.
-
-MAVERICKTODO: Add info about the example modal screen here.
-
 ## Utility Functions
 
 ### `getActiveRouteName`
