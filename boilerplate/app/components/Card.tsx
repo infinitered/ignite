@@ -150,9 +150,9 @@ export function Card(props: CardProps) {
 
   const preset: Presets = $containerPresets[props.preset] ? props.preset : "default"
   const isPressable = !!WrapperProps.onPress
-  const headingPreset = !!(HeadingComponent || heading || headingTx)
-  const contentPreset = !!(ContentComponent || content || contentTx)
-  const footerPreset = !!(FooterComponent || footer || footerTx)
+  const isHeadingPresent = !!(HeadingComponent || heading || headingTx)
+  const isContentPresent = !!(ContentComponent || content || contentTx)
+  const isFooterPresent = !!(FooterComponent || footer || footerTx)
 
   const Wrapper: ComponentType<TouchableOpacityProps> = isPressable ? TouchableOpacity : View
   const HeaderContentWrapper = verticalAlignment === "force-footer-bottom" ? View : Fragment
@@ -160,20 +160,20 @@ export function Card(props: CardProps) {
   const $containerStyle = [$containerPresets[preset], $containerStyleOverride]
   const $headingStyle = [
     $headingPresets[preset],
-    (footerPreset || contentPreset) && { marginBottom: spacing.micro },
+    (isFooterPresent || isContentPresent) && { marginBottom: spacing.micro },
     $headingStyleOverride,
     HeadingTextProps?.style,
   ]
   const $contentStyle = [
     $contentPresets[preset],
-    headingPreset && { marginTop: spacing.micro },
-    footerPreset && { marginBottom: spacing.micro },
+    isHeadingPresent && { marginTop: spacing.micro },
+    isFooterPresent && { marginBottom: spacing.micro },
     $contentStyleOverride,
     ContentTextProps?.style,
   ]
   const $footerStyle = [
     $footerPresets[preset],
-    (headingPreset || contentPreset) && { marginTop: spacing.micro },
+    (isHeadingPresent || isContentPresent) && { marginTop: spacing.micro },
     $footerStyleOverride,
     FooterTextProps?.style,
   ]
@@ -196,7 +196,7 @@ export function Card(props: CardProps) {
       <View style={$alignmentWrapperStyle}>
         <HeaderContentWrapper>
           {HeadingComponent ||
-            (headingPreset && (
+            (isHeadingPresent && (
               <Text
                 weight="bold"
                 text={heading}
@@ -208,7 +208,7 @@ export function Card(props: CardProps) {
             ))}
 
           {ContentComponent ||
-            (contentPreset && (
+            (isContentPresent && (
               <Text
                 weight="normal"
                 text={content}
@@ -221,7 +221,7 @@ export function Card(props: CardProps) {
         </HeaderContentWrapper>
 
         {FooterComponent ||
-          (footerPreset && (
+          (isFooterPresent && (
             <Text
               weight="normal"
               size="xs"
