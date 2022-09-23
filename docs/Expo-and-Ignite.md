@@ -52,4 +52,4 @@ This is one of the coolest ways to demo an app to someone else without having to
 
 Note there are some limitations to Expo Snacks, and making those work (other than out of the box for Ignite) is beyond the scope of this documentation. You can learn more in [the Snack docs](https://docs.expo.dev/workflow/snack/).
 
-MAVERICKTODO: add documentation for `npx ignite-cli snackify` here.
+TODO: add documentation for `npx ignite-cli snackify` here.
