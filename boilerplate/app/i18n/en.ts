@@ -1,4 +1,9 @@
 const en = {
+  common: {
+    ok: "OK!",
+    cancel: "Cancel",
+    back: "Back",
+  },
   welcomeScreen: {
     postscript:
       "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
@@ -14,12 +19,14 @@ const en = {
     reset: "RESET APP",
     traceTitle: "Error from %{name} stack", // @demo remove-current-line
   },
-  // @demo remove-block-start
-  common: {
-    ok: "OK!",
-    cancel: "Cancel",
-    back: "Back",
+  emptyStateComponent: {
+    generic: {
+      heading: "So empty... so sad",
+      content: "No data found yet. Try clicking the button to refresh or reload the app.",
+      button: "Let's try this again",
+    },
   },
+  // @demo remove-block-start
   errors: {
     invalidEmail: "Invalid email address.",
   },
@@ -63,16 +70,13 @@ const en = {
       "Whether it's running a full project or getting teams up to speed with our hands-on training, Infinite Red can help with just about any React Native project.",
     hireUsLink: "Send us a message",
   },
-  demoComponentsScreen: {
+  demoShowroomScreen: {
     jumpStart: "Components to jump start your project!",
     lorem2Sentences:
       "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
-    demoButtonTxExample: "Via `tx` Prop - Fugiat Id",
-    demoListItemTxExample: "Via `tx` Prop - consequat commodo",
-    demoTextFieldTxExample: "Via `{{prop}}Tx` Prop",
     demoHeaderTxExample: "Yay",
-    demoToggleTxExample: "Via `{{prop}}Tx` prop",
-    demoCardTxExample: "Via `{{prop}}Tx` Prop",
+    demoViaTxProp: "Via `tx` Prop",
+    demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
   },
   demoDebugScreen: {
     howTo: "HOW TO",
@@ -109,13 +113,9 @@ const en = {
       publishLabel: "Published {{date}}",
       durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
     },
-    noDataEmptyState: {
-      title: "So empty... so sad",
-      message: "No data found yet. Try clicking the button to refresh or reload the app.",
-    },
     noFavoritesEmptyState: {
-      title: "This looks a bit empty",
-      message:
+      heading: "This looks a bit empty",
+      content:
         "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
     },
   },

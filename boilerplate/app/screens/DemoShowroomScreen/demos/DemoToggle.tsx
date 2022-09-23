@@ -142,9 +142,9 @@ export const DemoToggle: Demo = {
       <ControlledToggle
         variant="radio"
         value
-        labelTx="demoComponentsScreen.demoToggleTxExample"
+        labelTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         labelTxOptions={{ prop: "label" }}
-        helperTx="demoComponentsScreen.demoToggleTxExample"
+        helperTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         helperTxOptions={{ prop: "helper" }}
       />
       <DemoDivider size={24} />

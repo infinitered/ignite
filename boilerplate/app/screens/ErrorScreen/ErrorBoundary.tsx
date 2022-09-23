@@ -17,7 +17,7 @@ interface State {
  * class component because according to the documentation, only class
  * components can be error boundaries.
  *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/) MAVERICKTODO
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Error-Boundary.md)
  * - [React Error Boundaries](https://reactjs.org/docs/error-boundaries.html)
  */
 export class ErrorBoundary extends Component<Props, State> {
