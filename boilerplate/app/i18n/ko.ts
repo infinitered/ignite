@@ -1,6 +1,11 @@
 import { Translations } from "./en"
 
 const ko: Translations = {
+  common: {
+    ok: "확인!",
+    cancel: "취소",
+    back: "뒤로",
+  },
   welcomeScreen: {
     postscript:
       "잠깐! — 지금 보시는 것은 아마도 당신의 앱의 모양새가 아닐겁니다. (디자이너분이 이렇게 건내주셨다면 모를까요. 만약에 그렇다면, 이대로 가져갑시다!) ",
@@ -16,12 +21,14 @@ const ko: Translations = {
     reset: "초기화",
     traceTitle: "%{name} 스택에서의 오류", // @demo remove-current-line
   },
-  // @demo remove-block-start
-  common: {
-    ok: "확인!",
-    cancel: "취소",
-    back: "뒤로",
+  emptyStateComponent: {
+    generic: {
+      heading: "너무 텅 비어서.. 너무 슬퍼요..",
+      content: "데이터가 없습니다. 버튼을 눌러서 리프레쉬 하시거나 앱을 리로드하세요.",
+      button: "다시 시도해봅시다",
+    },
   },
+  // @demo remove-block-start
   errors: {
     invalidEmail: "잘못된 이메일 주소 입니다.",
   },
@@ -69,12 +76,9 @@ const ko: Translations = {
     jumpStart: "프로젝트를 바로 시작할 수 있는 컴포넌트들!",
     lorem2Sentences:
       "별 하나에 추억과, 별 하나에 사랑과, 별 하나에 쓸쓸함과, 별 하나에 동경(憧憬)과, 별 하나에 시와, 별 하나에 어머니, 어머니",
-    demoButtonTxExample: "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
-    demoListItemTxExample: "`tx` Prop 을 통한 윤동주의 별 헤는 밤",
-    demoTextFieldTxExample: "`{{prop}}Tx` Prop 을 통해",
     demoHeaderTxExample: "야호",
-    demoToggleTxExample: "`{{prop}}Tx` prop을 통해",
-    demoCardTxExample: "MAVERICKTODO",
+    demoViaTxProp: "`tx` Prop 을 통해",
+    demoViaSpecifiedTxProp: "`{{prop}}Tx` Prop 을 통해",
   },
   demoDebugScreen: {
     howTo: "사용방법",
@@ -111,13 +115,9 @@ const ko: Translations = {
       publishLabel: "{{date}} 에 발행됨",
       durationLabel: "소요시간: {{hours}}시간 {{minutes}}분 {{seconds}}초",
     },
-    noDataEmptyState: {
-      title: "너무 텅 비어서.. 너무 슬퍼요..",
-      message: "데이터가 없습니다. 버튼을 눌러서 리프레쉬 하시거나 앱을 리로드하세요.",
-    },
     noFavoritesEmptyState: {
-      title: "조금 텅 비어 있네요.",
-      message: "즐겨찾기가 없습니다. 에피소드에 있는 하트를 눌러서 즐겨찾기에 추가하세요.",
+      heading: "조금 텅 비어 있네요.",
+      content: "즐겨찾기가 없습니다. 에피소드에 있는 하트를 눌러서 즐겨찾기에 추가하세요.",
     },
   },
   // @demo remove-block-end
