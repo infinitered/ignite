@@ -39,11 +39,11 @@ export const DemoEmptyState: Demo = {
       <DemoDivider size={30} line />
 
       <EmptyState
-        headingTx="demoComponentsScreen.demoViaSpecifiedTxProp"
+        headingTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         headingTxOptions={{ prop: "heading" }}
-        contentTx="demoComponentsScreen.demoViaSpecifiedTxProp"
+        contentTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         contentTxOptions={{ prop: "content" }}
-        buttonTx="demoComponentsScreen.demoViaSpecifiedTxProp"
+        buttonTx="demoShowroomScreen.demoViaSpecifiedTxProp"
         buttonTxOptions={{ prop: "button" }}
       />
     </DemoUseCase>,

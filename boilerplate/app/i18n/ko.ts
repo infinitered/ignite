@@ -72,7 +72,7 @@ const ko: Translations = {
       "프로젝트 전체를 수행하든, 실무 교육을 통해 팀의 개발 속도에 박차를 가하든 상관없이, Infinite Red 는 React Native 프로젝트의 모든 분야의 에서 도움을 드릴 수 있습니다.",
     hireUsLink: "메세지 보내기",
   },
-  demoComponentsScreen: {
+  demoShowroomScreen: {
     jumpStart: "프로젝트를 바로 시작할 수 있는 컴포넌트들!",
     lorem2Sentences:
       "별 하나에 추억과, 별 하나에 사랑과, 별 하나에 쓸쓸함과, 별 하나에 동경(憧憬)과, 별 하나에 시와, 별 하나에 어머니, 어머니",

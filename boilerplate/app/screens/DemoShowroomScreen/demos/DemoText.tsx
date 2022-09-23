@@ -93,7 +93,7 @@ export const DemoText: Demo = {
 
       <Text>
         <Text text="via `tx` prop - " />
-        <Text tx="demoComponentsScreen.lorem2Sentences" />
+        <Text tx="demoShowroomScreen.lorem2Sentences" />
       </Text>
 
       <DemoDivider />
