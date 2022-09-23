@@ -62,7 +62,35 @@ When authenticated, `LoginScreen` is left out of the navigator and the user is p
 
 We recommend using the [React Navigation Tabs](https://reactnavigation.org/docs/tab-based-navigation/) for tabs.
 
-MAVERICKTODO: Expand and add any useful tips for tab navigation here.
+Inside `./app/navigators/DemoNavigator.tsx` you'll see the definition of the bottom tab navigator. Here is where you can customize the style and behavior of the tab bar itself, as well as each individual tab.
+
+In addition to the user pressing the tab buttons, you may also navigate from tab to tab programmatically via the same familiar navigation API:
+
+```tsx
+// currently on the DemoShowroom tab, navigate to the DemoDebug tab
+navigation.navigate("DemoDebug")
+```
+
+Tabs can jump to a single screen (as seen in Ignite's demo code) or another stack navigator comprised of many screens the user could navigate through within the same tab. Let's use a message inbox as an example:
+
+```tsx
+const InboxStack = createNativeStackNavigator()
+
+function InboxStackScreen() {
+  return (
+    <InboxStack.Navigator>
+      <InboxStack.Screen name="List" component={ListScreen} />
+      <InboxStack.Screen name="MessageDetails" component={MessageDetailsScreen} />
+    </InboxStack.Navigator>
+  )
+}
+```
+
+A tab could be added to the tab navigator as a child component.
+
+`<Tab.Screen name="Inbox" component={InboxStackScreen} />`
+
+This would initially display the `ListScreen` with all of the messages and if the user happened to press a list item, the app would then navigate to a `MessageDetailsScreen`.
 
 ### Sidebar Navigation
 
