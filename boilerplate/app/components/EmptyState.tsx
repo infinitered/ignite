@@ -115,7 +115,7 @@ const EmptyStatePresets = {
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-EmptyState.md)
  *
- * MAVERICKTODO: document component (lots of props are similar to Card's and can be copied over)
+ * TODO: document component (lots of props are similar to Card's and can be copied over)
  */
 export function EmptyState(props: EmptyStateProps) {
   const preset = EmptyStatePresets[props.preset] ? EmptyStatePresets[props.preset] : undefined
