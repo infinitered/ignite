@@ -20,6 +20,7 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoAutoImage.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoButton.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoCard.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoEmptyState.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoHeader.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoIcon.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoListItem.tsx
