@@ -1,3 +1,3 @@
 export * from "./AppNavigator"
-export * from "./navigation-utilities"
+export * from "./navigationUtilities"
 // export other navigators from here

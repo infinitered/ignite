@@ -367,7 +367,7 @@ import {
   WelcomeScreen 
 } from "../screens"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
-import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
+import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
