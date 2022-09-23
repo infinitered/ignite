@@ -94,9 +94,11 @@ This would initially display the `ListScreen` with all of the messages and if th
 
 ### Sidebar Navigation
 
-Ignite comes with an example sidebar navigation, aka "drawer" navigator.
+Ignite comes with an example sidebar navigation, aka "drawer" navigator. It is implemented using the `DrawerLayout` from [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout/), a cross-platform replacement for [React Native's DrawerLayoutAndroid](https://reactnative.dev/docs/drawerlayoutandroid.html).
 
-MAVERICKTODO: Add info about the example drawer here.
+The view passed via `renderNavigationView` prop is the content rendered to the side of the screen, which can be pulled in or opened by the toggle button press. Here is where you can render header information (perhaps a company logo or logged in user avatar along with labels), menu items, logout or settings functionality and more.
+
+`DrawerLayout` also allows you to customize the behavior (open/close speed, overlay position), style and even has events to track the progress and states of the drawer transitioning. See more info at the [documentation](https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout/).
 
 ### Modals
 
