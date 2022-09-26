@@ -8,18 +8,18 @@ patch:
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import {
-  DemoScreen
+  WelcomeScreen
 } from "../screens"
 
 export type <%= props.pascalCaseName %>NavigatorParamList = {
-  demo: undefined
+  Demo: undefined
 }
 
 const Stack = createStackNavigator<<%= props.pascalCaseName %>NavigatorParamList>()
 export const <%= props.pascalCaseName %>Navigator = () => {
   return (
     <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false, }}>
-      <Stack.Screen name="Demo" component={DemoScreen} />
+      <Stack.Screen name="Demo" component={WelcomeScreen} />
     </Stack.Navigator>
   )
 }
