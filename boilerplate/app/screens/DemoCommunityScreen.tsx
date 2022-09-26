@@ -23,7 +23,7 @@ export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">)
         tx="demoCommunityScreen.joinSlackLink"
         leftIcon="slack"
         rightIcon={isRTL ? "caretLeft" : "caretRight"}
-        onPress={() => openLinkInBrowser("https://infiniteredcommunity.slack.com/")}
+        onPress={() => openLinkInBrowser("https://community.infinite.red/")}
       />
       <Text
         preset="subheading"
