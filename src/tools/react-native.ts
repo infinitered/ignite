@@ -11,8 +11,9 @@ export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
 
 type CopyBoilerplateOptions = {
   boilerplatePath: string
-  projectName: string
+  targetPath: string
   excluded: Array<string>
+  overwrite?: boolean
 }
 
 /**
@@ -24,7 +25,7 @@ export async function copyBoilerplate(toolbox: GluegunToolbox, options: CopyBoil
   const { copyAsync, path } = filesystem
 
   // ensure the destination folder exists
-  await filesystem.dirAsync(options.projectName)
+  await filesystem.dirAsync(options.targetPath)
 
   // rather than copying everything wholesale, let's check what's in the boilerplate folder
   // and copy over everything except stuff like lockfiles and node_modules
@@ -34,9 +35,12 @@ export async function copyBoilerplate(toolbox: GluegunToolbox, options: CopyBoil
     (file) => !options.excluded.find((exclusion) => file.includes(exclusion)),
   )
 
+  const { overwrite } = options
   // kick off a bunch of copies
   const copyPromises = copyTargets.map((fileOrFolder) =>
-    copyAsync(path(options.boilerplatePath, fileOrFolder), path(options.projectName, fileOrFolder)),
+    copyAsync(path(options.boilerplatePath, fileOrFolder), path(options.targetPath, fileOrFolder), {
+      ...(overwrite && { overwrite }),
+    }),
   )
 
   // copy them all at once
@@ -138,6 +142,7 @@ export async function renameReactNativeApp(
     `android/app/src/main/jni/MainComponentsRegistry.h`,
     `android/app/src/main/res/values/strings.xml`,
     `ios/Podfile`,
+    `ios/main.jsbundle`, // this file could just be regenerated, but this isn't bad to do
     `ios/${newName}/Info.plist`,
     `ios/${newName}.xcodeproj/project.pbxproj`,
     `ios/${newName}.xcodeproj/xcshareddata/xcschemes/${newName}.xcscheme`,

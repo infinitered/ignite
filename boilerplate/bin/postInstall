@@ -14,9 +14,6 @@ if (["darwin", "linux"].includes(process.platform)) {
   run('pkill -f "cli.js start" || set exit 0')
 }
 
-// Make sure our Android native modules are androidX-happy
-run("jetify")
-
 // On iOS, make sure CocoaPods are installed
 if (process.platform === "darwin") {
   run('if [ -d "ios" ]; then cd ios && pod install && cd -; fi')

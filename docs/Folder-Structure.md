@@ -17,18 +17,11 @@ ignite-project
 │   ├── utils
 │   ├── app.tsx
 |   ├── assets/fonts/
-├── storybook
-│   ├── views
-│   ├── index.ts
-│   ├── storybook-registry.ts
-│   ├── storybook.ts
 ├── test
 │   ├── __snapshots__
-│   ├── storyshots.test.ts.snap
 │   ├── mock-i18n.ts
 │   ├── mock-reactotron.ts
 │   ├── setup.ts
-│   ├── storyshots.test.ts
 ├── e2e
 │   └── config.json
 ├── ignite
@@ -59,7 +52,19 @@ app
 
 **components**
 
-This is where your basic components will live. Each component will have a directory containing the `.tsx` file, along with a story file, and optionally `.presets`, and `.props` files for larger components. The app will come with some commonly used components like Button.
+This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
+
+- [Component Overview](./Components.md)
+- [AutoImage](./Components-AutoImage.md)
+- [Button](./Components-Button.md)
+- [Card](./Components-Card.md)
+- [Header](./Components-Header.md)
+- [Icon](./Components-Icon.md)
+- [ListItem](./Components-ListItem.md)
+- [Screen](./Components-Screen.md)
+- [Text](./Components-Text.md)
+- [TextField](./Components-TextField.md)
+- [Toggle](./Components-Toggle.md)
 
 **i18n**
 
@@ -67,7 +72,7 @@ This is where your translations will live if you are using the included `react-n
 
 **models**
 
-This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc. There's also an extensions directory with useful shared extensions that you can include in your models like `.extend(withEnvironment)` to access the environment. In addition, a helpers directory contains utility functions such as `getRootStore` to access the root store.
+This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc. In addition, a helpers directory contains utility functions such as `getRootStore` to access the root store.
 
 **navigators**
 
@@ -93,16 +98,12 @@ This is a great place to put miscellaneous helpers and utilities. Things like da
 
 **app.tsx**
 
-This is the entry point to your app. This is where you will find the main App component which renders the rest of the application. This is also where you will specify whether you want to run the app in storybook mode.
+This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
 ### ./ignite directory
 
 The `ignite` directory stores all things Ignite, including generator templates.
 
-### ./storybook directory
-
-This is where your stories will be registered and where the Storybook configs will live
-
 ### ./test directory
 
-This directory will hold your Jest configs and mocks, as well as your [storyshots](https://github.com/storybooks/storybook/tree/master/addons/storyshots) test file. This is a file that contains the snapshots of all your component storybooks.
+This directory will hold your Jest configs and mocks.

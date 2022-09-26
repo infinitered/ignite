@@ -20,11 +20,11 @@ The `text` optional prop is the text of the component. We encourage you to not u
 
 The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization.
 
-```tsx
+````tsx
 
 ```tsx
 <Text tx="welcomeScreen.readyForLaunch" />
-```
+````
 
 ### `txOptions`
 
@@ -56,6 +56,22 @@ The `style` optional prop is an object with overrides for this particular compon
 <Text tx="welcome.title" style={{ fontSize: 40 }} />
 ```
 
+### `weight`
+
+The `weight` optional prop is the font weight to use for the text. It utilizes the fonts defined in the `app/theme/typography.tsx` file.
+
+```tsx
+<Text tx="welcome.title" weight="medium" />
+```
+
+### `size`
+
+The `size` optional prop is the font size to use for the text. The options are defined as `$sizeStyles` in `app/components/Text.tsx`. You can add sizes as you need to the `$sizeStyles` object and use them in your `Text` component.
+
+```tsx
+<Text tx="welcome.title" size="lg" />
+```
+
 ### `preset`
 
 The `preset` optional prop specifies the string of the preset style you want to use. You can use style overrides with presets.
@@ -84,10 +100,18 @@ If you find yourself overriding styles with the `style` prop a lot, you probably
 
 `header`: Large headers.
 
-`fieldLabel`: Field labels that appear on forms above the inputs.
-
-`secondary`: A smaller piece of secondary information.
+`subheading`: A smaller piece of secondary information.
 
 ### Custom Presets
 
-Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, we will have a dozen or more presets that we use across the project.
+Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, we will have a dozen or more presets that we use across the project. Simply add a new key to the `$presets` object in `app/components/Text.tsx` and then pass the name of the preset to the `preset` prop.
+
+```tsx
+$presets = {
+  label: [$baseStyle, $sizeStyles.md, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+}
+```
+
+```tsx
+<Text preset="label" text="Email" />
+```

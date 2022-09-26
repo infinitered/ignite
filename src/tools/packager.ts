@@ -5,28 +5,19 @@ import { spawnProgress } from "./spawn"
 // in the meantime, we'll use this hacked together version
 
 // Expo doesn't support pnpm, so we'll use yarn or npm
-type PackageOptions =
-  | {
-      packagerName?: "npm" | "yarn" | "pnpm"
-      dev?: boolean
-      expo?: false
-      global?: boolean
-      silent?: boolean
-    }
-  | {
-      packagerName?: "npm" | "yarn"
-      dev?: boolean
-      expo?: true
-      global?: boolean
-      silent?: boolean
-    }
+export type PackagerName = "npm" | "yarn" | "pnpm"
+type PackageOptions = {
+  packagerName?: PackagerName
+  dev?: boolean
+  global?: boolean
+  silent?: boolean
+}
 
 type PackageRunOptions = PackageOptions & {
   onProgress?: (out: string) => void
 }
 const packageInstallOptions: PackageRunOptions = {
   dev: false,
-  expo: false,
   onProgress: (out: string) => console.log(out),
 }
 
@@ -48,15 +39,27 @@ function pnpmAvailable() {
   return isPnpm
 }
 
-function detectPackager(options: PackageOptions): "npm" | "yarn" | "pnpm" {
-  // Expo doesn't support pnpm, so we'll use yarn or npm
-  if (!options?.expo && pnpmAvailable()) {
-    return "pnpm"
-  } else if (yarnAvailable()) {
+function detectPackager(): PackagerName {
+  if (yarnAvailable()) {
     return "yarn"
+  } else if (pnpmAvailable()) {
+    return "pnpm"
   } else {
     return "npm"
   }
+}
+
+function availablePackagers(): PackagerName[] {
+  const packagers: PackagerName[] = ["npm"]
+
+  if (yarnAvailable()) {
+    packagers.push("yarn")
+  }
+  if (pnpmAvailable()) {
+    packagers.push("pnpm")
+  }
+
+  return packagers
 }
 
 /**
@@ -71,9 +74,7 @@ function addCmd(pkg: string, options: PackageRunOptions = packageInstallOptions)
 
   let cmd
 
-  if (options.expo) {
-    cmd = `npx expo-cli install`
-  } else if (options.packagerName === "pnpm") {
+  if (options.packagerName === "pnpm") {
     cmd = `pnpm install`
   } else if (options.packagerName === "yarn") {
     cmd = `yarn add`
@@ -81,7 +82,7 @@ function addCmd(pkg: string, options: PackageRunOptions = packageInstallOptions)
     cmd = `npm install`
   } else {
     // neither expo nor a packagerName was provided, so let's detect one
-    return addCmd(pkg, { ...options, expo: false, packagerName: detectPackager(options) })
+    return addCmd(pkg, { ...options, packagerName: detectPackager() })
   }
 
   return `${cmd} ${pkg}${options.dev ? " --save-dev" : ""}${silent}`
@@ -99,9 +100,7 @@ function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions)
 
   let cmd
 
-  if (options.expo) {
-    cmd = "npx expo-cli uninstall"
-  } else if (options.packagerName === "pnpm") {
+  if (options.packagerName === "pnpm") {
     cmd = "pnpm uninstall"
   } else if (options.packagerName === "yarn") {
     cmd = `yarn remove`
@@ -109,7 +108,7 @@ function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions)
     cmd = `npm uninstall`
   } else {
     // neither expo nor a packagerName was provided, so let's detect one
-    return removeCmd(pkg, { ...options, expo: false, packagerName: detectPackager(options) })
+    return removeCmd(pkg, { ...options, packagerName: detectPackager() })
   }
 
   return `${cmd} ${pkg}${options.dev ? " --save-dev" : ""}${silent}`
@@ -125,16 +124,14 @@ function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions)
 function installCmd(options: PackageRunOptions) {
   const silent = options.silent ? " --silent" : ""
 
-  if (options.expo) {
-    return `npx expo-cli install${silent}`
-  } else if (options.packagerName === "pnpm") {
+  if (options.packagerName === "pnpm") {
     return `pnpm install${silent}`
   } else if (options.packagerName === "yarn") {
     return `yarn install${silent}`
   } else if (options.packagerName === "npm") {
     return `npm install${silent}`
   } else {
-    return installCmd({ ...options, expo: false, packagerName: detectPackager(options) })
+    return installCmd({ ...options, packagerName: detectPackager() })
   }
 }
 
@@ -221,4 +218,5 @@ export const packager = {
   runCmd,
   addCmd,
   installCmd,
+  availablePackagers,
 }

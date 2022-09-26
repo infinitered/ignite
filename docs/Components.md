@@ -15,23 +15,12 @@ _NOTE: Work-in-progress -- stay tuned, as our new docs will be landing soon!_
 This is a wrapper around React Native's [Image](https://reactnative.dev/docs/image) component, which automatically resizes the image to fit the container.
 
 ```tsx
-import { AutoImage as Image } from '../components/AutoImage';
-export const logoIgnite = require("./logo-ignite.png");
-
-<Image source={logoIgnite} />
+<AutoImage
+  source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
+/>
 ```
 
 [Full AutoImage Component Documentation](./Components-AutoImage.md)
-
-### BulletItem
-
-This is a component that renders a bullet point with associated text.
-
-```tsx
-<BulletItem text="This is a bullet item" />
-```
-
-[Full BulletItem Component Documentation](./Components-BulletItem.md)
 
 ### Button
 
@@ -56,85 +45,29 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 
 [Full Button Component Documentation](./Components-Button.md)
 
-### Checkbox
+### Card
 
-This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with a view to hold a checkbox and a text label.
+The `Card` component useful for displaying related information in a contained way. Where you'll use `ListItem` for horizontal information, `Card` can be used for vertical information.
 
 ```tsx
-const [on, setOn] = useState(false);
-// ...
-<Checkbox
-  text="Outline is the box frame"
-  value={on}
-  multiline
-  style={{
-    backgroundColor: "purple",
-    marginLeft: 40,
-    paddingVertical: 30,
-    paddingLeft: 60,
-  }}
-  fillStyle={{
-    backgroundColor: "red",
-    borderRadius: 8
-  }}
-  outlineStyle={{
-    borderColor: "green",
-    borderRadius: 10,
-    borderWidth: 4,
-    width: 60,
-    height: 20,
-  }}
-  onToggle={setOn}
+<Card
+  preset="reversed"
+  verticalAlignment="space-between"
+  LeftComponent={<Text>Left</Text>}
+  RightComponent={<Text>Right</Text>}
+  heading="Card Heading"
+  headingStyle={{ color: "#a511dc" }}
+  HeadingTextProps={{ weight: "bold" }}
+  content="Card Content"
+  contentStyle={{ color: "#a511dc" }}
+  ContentTextProps={{ weight: "light" }}
+  footer="Card Footer"
+  footerStyle={{ color: "#a511dc" }}
+  FooterTextProps={{ weight: "medium" }}
 />
 ```
 
-[Full Checkbox Component Documentation](./Components-Checkbox.md)
-
-### FormRow
-
-This is a component that renders a horizontal container for a form row. It includes presets that control rounded borders.
-
-```tsx
-<FormRow preset="top">
-  <TextField
-    value={input}
-    onChangeText={setName}
-    labelTx="signup.name"
-    placeholderTx="signup.nameplaceholder"
-    style={$header}
-    inputStyle={$inputStyle}
-    preset="default"
-    forwardedRef={inputRef}
-  />
-</FormRow>
-<FormRow preset="middle">
-  <TextField
-    value={input}
-    onChangeText={setEmail}
-    labelTx="signup.email"
-    placeholderTx="signup.emailplaceholder"
-    style={$header}
-    inputStyle={$inputStyle}
-    preset="default"
-    forwardedRef={inputRef}
-  />
-</FormRow>
-<FormRow preset="bottom">
-  <Text>This is a form row</Text>
-</FormRow>
-```
-
-[Full FormRow Component Documentation](./Components-FormRow.md)
-
-### GradientBackground
-
-This is a convenience component that wraps [`LinearGradient`]((https://docs.expo.dev/versions/latest/sdk/linear-gradient/)) from `expo-linear-gradient` and handles the styling for you.
-
-```tsx
-<GradientBackground colors={["#422443", "#281b34"]} />
-```
-
-[Full GradientBackground Component Documentation](./Components-GradientBackground.md)
+[Full Card Component Documentation](./Components-Card.md)
 
 ### Header
 
@@ -161,9 +94,12 @@ This is a component that renders an icon.
 
 ```tsx
 <Icon
-  icon='back'
-  containerStyle={{backgroundColor: '#fff'}}
-  style={{resizeMode: 'contain'}}
+  icon="back"
+  color="#a511dc"
+  size={30}
+  containerStyle={{ backgroundColor: "#fff" }}
+  style={{ resizeMode: "contain" }}
+  onPress={() => Alert.alert("pressed")}
 />
 ```
 
@@ -174,31 +110,13 @@ This is a component that renders an icon.
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
 
 ```tsx
-<Screen preset="scroll" >
-  <Header headerTitle="screen"/>
+<Screen preset="scroll">
+  <Header headerTitle="screen" />
   // ... content here ...
 </Screen>
 ```
 
 [Full Screen Component Documentation](./Components-Screen.md)
-
-### Switch
-
-This is a component that renders a few animated views that can be toggled on and off like a switch. This component handles all the logic of the animation, and all you need to do is style it as you see fit.
-
-```tsx
-<Switch
-  value={switch}
-  onToggle={() => setSwitch(!switch)}
-  style={{ backgroundColor: "purple" }}
-  trackOnStyle={{ backgroundColor: "red" }}
-  trackOffStyle={{ backgroundColor: "blue" }}
-  thumbOnStyle={{ backgroundColor: "red" }}
-  thumbOffStyle={{ backgroundColor: "blue" }}
-/>
-```
-
-[Full Switch Component Documentation](./Components-Switch.md)
 
 ### Text
 
@@ -219,13 +137,12 @@ This is an enhanced version of the built-in React Native Text component. It adds
 
 ### TextField
 
-
 This component renders a View with a [`TextInput`](https://reactnative.dev/docs/textinput) and a text label.
 
 ```tsx
-const [input, setInput] = useState("");
-const inputRef = useRef();
-<TextField
+const [input, setInput] = useState("")
+const inputRef = useRef()
+;<TextField
   value={input}
   onChangeText={setInput}
   labelTx="signup.name"
@@ -236,23 +153,8 @@ const inputRef = useRef();
   forwardedRef={inputRef}
 />
 ```
+
 [Full Text Component Documentation](./Components-TextField.md)
-
-### Wallpaper
-
-This component renders an image background to a component or a screen.
-
-```tsx
- <Wallpaper
-  style={{
-    marginHorizontal: 10,
-    paddingVertical: 10,
-  }}
-  backgroundImage={newImage}
-  preset="stretch"
- />
-```
-[Full Text Component Documentation](./Components-Wallpaper.md)
 
 ## Custom Components
 
@@ -265,7 +167,5 @@ Running the generator will create a new component in the `components` directory.
 ```
 -- app
   -- components
-    -- my-custom-button
-      -- my-custom-button.tsx
-      -- my-custom-button.story.tsx
+    -- MyCustomButton.tsx
 ```

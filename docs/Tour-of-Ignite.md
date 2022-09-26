@@ -30,6 +30,10 @@ There are a couple folders at the root, `.circleci` and `.github`. These contain
 
 We use `semantic-release`, an excellent package that allows for automatically releasing new versions of Ignite based on commit messages. You can read more about how Infinite Red uses semantic-release in [this document](https://github.com/infinitered/open-source/blob/master/Continuous-Deployment-Setup-NPM.md).
 
+## Manual Beta Releases
+
+If you need to manually release a beta version, [the steps are documented here]().
+
 ## Gluegun
 
 Ignite's CLI (`ignite-cli` on npm) is powered by [Gluegun](https://github.com/infinitered/gluegun). Gluegun is another Infinite Red library that makes building a full-featured command line interface (CLI) much easier.
@@ -69,12 +73,6 @@ Back in the root, there's a `test` folder. This contains Jest tests for Ignite C
 We rely heavily on integration tests, which is why Ignite CLI's test suite is kinda slow. We mainly spin up a new Ignite app (in a temporary location) and then inspect the textual output from the result of the command as well as look at folders and files that it generates to ensure that it's actually doing what we want it to do.
 
 We also run the default tests in a generated Ignite app, which further ensures that the CLI is generating a valid Ignite app.
-
-### data
-
-This contains a JSON file that helps demonstrate an API request in the boilerplate's `DemoListScreen`. It's Rick & Morty themed, naturally.
-
-This file isn't even included in the npm package at all. Instead, we just call over to GitHub when we need it.
 
 ## boilerplate
 

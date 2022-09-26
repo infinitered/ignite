@@ -1,17 +1,64 @@
-import { GluegunToolbox } from "gluegun"
+import { GluegunToolbox, strings } from "gluegun"
+import { prefix } from "./pretty"
+const { pascalCase } = strings
 
-export function validateProjectName(toolbox: GluegunToolbox): string {
-  const { parameters, strings, print, runtime } = toolbox
-  const { isBlank, upperFirst, camelCase } = strings
+// #region Error Guards
+type IsError = (str: string) => boolean
+type ErrorMessage = (str?: string) => string
+type ErrorGuard = [IsError, ErrorMessage]
+
+const isIgnite: ErrorGuard = [
+  (str) => str.toLowerCase() === "ignite",
+  (str) => `Hey...that's my name! Please name your project something other than '${str}'.`,
+]
+const isOnlyNumbers: ErrorGuard = [
+  (str) => /^\d+$/.test(str),
+  () => `Please use at least one non-numeric character for your project name`,
+]
+const isKebabCase: ErrorGuard = [
+  (str) => str.includes("-"),
+  (str) =>
+    `Please use 'PascalCase', not 'kebab-case' for your project name. Ex: ${pascalCase(str)}`,
+]
+const isNotAlphaNumeric: ErrorGuard = [
+  (str) => !/^[a-z_][a-z0-9_]+$/i.test(str),
+  () =>
+    `The project name can only contain alphanumeric characters and underscore, but must not begin with a number.`,
+]
+
+const guards: ErrorGuard[] = [isIgnite, isOnlyNumbers, isKebabCase, isNotAlphaNumeric]
+
+/**
+ * check if the value matches any of the error guards
+ * @returns error message from the first guard that matches, or `true` if no guards match
+ */
+const validate = (value: string): true | string => {
+  for (const [isError, errorMessage] of guards) {
+    if (isError(value)) {
+      return errorMessage(value)
+    }
+  }
+  return true
+}
+// #endregion
+
+export async function validateProjectName(toolbox: GluegunToolbox): Promise<string> {
+  const { parameters, strings, print } = toolbox
+  const { isBlank } = strings
 
   // grab the project name
-  const projectName = (parameters.first || "").toString()
+  let projectName: string = (parameters.first || "").toString()
 
   // verify the project name is a thing
   if (isBlank(projectName)) {
-    print.info(`${runtime.brand} new <projectName>\n`)
-    print.error("Project name is required")
-    process.exit(1)
+    const projectNameResponse = await toolbox.prompt.ask(() => ({
+      name: "projectName",
+      type: "input",
+      message: "What do you want to call it?",
+      prefix,
+      validate,
+    }))
+    projectName = projectNameResponse.projectName
   }
 
   // warn if more than one argument is provided for <projectName>
@@ -19,34 +66,9 @@ export function validateProjectName(toolbox: GluegunToolbox): string {
     print.info(`Info: You provided more than one argument for <projectName>. The first one (${projectName}) will be used and the rest are ignored.`) // prettier-ignore
   }
 
-  // guard against `ignite new ignite`
-  if (projectName.toLowerCase() === "ignite") {
-    print.error(
-      `Hey...that's my name! Please name your project something other than '${projectName}'.`,
-    )
-    process.exit(1)
-  }
-
-  // check for kebabs
-  if (`${projectName}`.includes("-")) {
-    // camelCase the project name for user example
-    const projectNameCamel = upperFirst(camelCase(projectName))
-
-    print.error(`Please use camel case for your project name. Ex: ${projectNameCamel}`)
-    process.exit(1)
-  }
-
-  // check for numbers-only names
-  if (/^\d+$/.test(projectName)) {
-    print.error(`Please use at least one non-numeric character for your project name.`)
-    process.exit(1)
-  }
-
-  // check for alphanumeric name, beginning with a letter
-  if (!/^[a-z_][a-z0-9_]+$/i.test(projectName)) {
-    print.error(
-      `The project name can only contain alphanumeric characters and underscore, but must not begin with a number.`,
-    )
+  const error = validate(projectName)
+  if (typeof error === "string") {
+    print.error(error)
     process.exit(1)
   }
 
@@ -78,4 +100,9 @@ export function validateBundleIdentifier(
   }
 
   return bundleID
+}
+
+export type ValidationsExports = {
+  validateProjectName: typeof validateProjectName
+  validateBundleIdentifier: typeof validateBundleIdentifier
 }

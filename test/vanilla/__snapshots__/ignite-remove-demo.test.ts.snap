@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ignite-cli remove-demo should print the expected response 1`] = `
+"   
+   Removing demo code from '/user/home/ignite'
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ar.ts
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/en.ts
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ko.ts
+   Found '@demo remove-file' in /user/home/ignite/app/models/AuthenticationStore.ts
+   Found '@demo remove-file' in /user/home/ignite/app/models/Episode.test.ts
+   Found '@demo remove-file' in /user/home/ignite/app/models/Episode.ts
+   Found '@demo remove-file' in /user/home/ignite/app/models/EpisodeStore.ts
+   Found '@demo remove-current-line' in /user/home/ignite/app/models/RootStore.ts
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/navigators/AppNavigator.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/navigators/DemoNavigator.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoCommunityScreen.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoDebugScreen.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoPodcastListScreen.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoDivider.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoAutoImage.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoButton.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoCard.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoEmptyState.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoHeader.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoIcon.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoListItem.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoText.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoTextField.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoToggle.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/demos/index.ts
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoShowroomScreen.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoUseCase.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DrawerIconButton.tsx
+   Found '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/index.ts
+   Found '@demo remove-file' in /user/home/ignite/app/screens/LoginScreen.tsx
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/api.ts
+   Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen/demos'
+   Done removing demo code from '/user/home/ignite'
+"
+`;

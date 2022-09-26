@@ -18,7 +18,7 @@ if [ ! -d $APP_PATH ]; then
   mkdir $APP_PATH
 
   # query expo.io to find most recent ipaUrl
-  IPA_URL=`curl --silent --show-error https://expo.io/--/api/v2/versions | python -c 'import sys, json; print json.load(sys.stdin)["iosUrl"]'`
+  IPA_URL=`curl --silent --show-error https://expo.io/--/api/v2/versions | python3 -c 'import sys, json; print(json.load(sys.stdin)["iosUrl"])'`
 
   # download tar.gz
   TMP_PATH=./exponent.tar.gz

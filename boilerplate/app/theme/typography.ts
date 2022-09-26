@@ -1,31 +1,71 @@
-import { Platform } from "react-native"
+// TODO: write documentation about fonts and typography along with guides on how to add custom fonts in own
+// markdown file and add links from here
 
-/**
- * You can find a list of available fonts on both iOS and Android here:
- * https://github.com/react-native-training/react-native-fonts
- *
- * If you're interested in adding a custom font to your project,
- * check out the readme file in ./assets/fonts/ then come back here
- * and enter your new font name. Remember the Android font name
- * is probably different than iOS.
- * More on that here:
- * https://github.com/lendup/react-native-cross-platform-text
- *
- * The various styles of fonts are defined in the <Text /> component.
- */
+import { Platform } from "react-native"
+import {
+  SpaceGrotesk_300Light as spaceGroteskLight,
+  SpaceGrotesk_400Regular as spaceGroteskRegular,
+  SpaceGrotesk_500Medium as spaceGroteskMedium,
+  SpaceGrotesk_600SemiBold as spaceGroteskSemiBold,
+  SpaceGrotesk_700Bold as spaceGroteskBold,
+} from "@expo-google-fonts/space-grotesk"
+
+export const customFontsToLoad = {
+  spaceGroteskLight,
+  spaceGroteskRegular,
+  spaceGroteskMedium,
+  spaceGroteskSemiBold,
+  spaceGroteskBold,
+}
+
+const fonts = {
+  spaceGrotesk: {
+    // Cross-platform Google font.
+    light: "spaceGroteskLight",
+    normal: "spaceGroteskRegular",
+    medium: "spaceGroteskMedium",
+    semiBold: "spaceGroteskSemiBold",
+    bold: "spaceGroteskBold",
+  },
+  helveticaNeue: {
+    // iOS only font.
+    thin: "HelveticaNeue-Thin",
+    light: "HelveticaNeue-Light",
+    normal: "Helvetica Neue",
+    medium: "HelveticaNeue-Medium",
+  },
+  courier: {
+    // iOS only font.
+    normal: "Courier",
+  },
+  sansSerif: {
+    // Android only font.
+    thin: "sans-serif-thin",
+    light: "sans-serif-light",
+    normal: "sans-serif",
+    medium: "sans-serif-medium",
+  },
+  monospace: {
+    // Android only font.
+    normal: "monospace",
+  },
+}
+
 export const typography = {
   /**
-   * The primary font.  Used in most places.
+   * The fonts are available to use, but prefer using the semantic name.
    */
-  primary: Platform.select({ ios: "Helvetica", android: "normal" }),
-
+  fonts,
+  /**
+   * The primary font. Used in most places.
+   */
+  primary: fonts.spaceGrotesk,
   /**
    * An alternate font used for perhaps titles and stuff.
    */
-  secondary: Platform.select({ ios: "Arial", android: "sans-serif" }),
-
+  secondary: Platform.select({ ios: fonts.helveticaNeue, android: fonts.sansSerif }),
   /**
    * Lets get fancy with a monospace font!
    */
-  code: Platform.select({ ios: "Courier", android: "monospace" }),
+  code: Platform.select({ ios: fonts.courier, android: fonts.monospace }),
 }
