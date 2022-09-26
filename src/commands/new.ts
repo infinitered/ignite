@@ -138,10 +138,6 @@ export default {
 
     // #endregion
 
-    // #region Debug
-    // start tracking performance
-    const perfStart = new Date().getTime()
-
     // debug?
     const debug = boolFlag(options.debug)
     const log = <T = unknown>(m: T): T => {
@@ -336,6 +332,10 @@ export default {
       p()
     }
     // #endregion
+
+    // #region Debug
+    // start tracking performance
+    const perfStart = new Date().getTime()
 
     // #region Print Welcome
     // welcome everybody!
