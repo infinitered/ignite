@@ -47,7 +47,7 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 
 ### Card
 
-The `Card` component useful for displaying related information in a contained way. Where you'll use `ListItem` for horizontal information, `Card` can be used for vertical information.
+The `Card` component is useful for displaying related information in a contained way. Where you'll use `ListItem` for horizontal information, `Card` can be used for vertical information.
 
 ```tsx
 <Card
@@ -68,6 +68,30 @@ The `Card` component useful for displaying related information in a contained wa
 ```
 
 [Full Card Component Documentation](./Components-Card.md)
+
+### EmptyState
+
+The `EmptyState` component can be used when there is no data to display and direct the user on how to proceed.
+
+```tsx
+<EmptyState
+  preset="default"
+  style={{ padding: 10 }}
+  imageSource={require("../../assets/images/sad-face.png")}
+  imageStyle={{ height: 400, width: 400 }}
+  ImageProps={{ resizeMode: "contain" }}
+  heading="EmptyState Heading"
+  headingStyle={{ color: "#a511dc" }}
+  HeadingTextProps={{ weight: "bold" }}
+  content="EmptyState Content"
+  contentStyle={{ color: "#a511dc" }}
+  ContentTextProps={{ weight: "light" }}
+  button="Press here"
+  buttonOnPress={handleButtonPress}
+/>
+```
+
+[Full EmptyState Component Documentation](./Components-EmptyState.md)
 
 ### Header
 
@@ -142,7 +166,7 @@ This component renders a View with a [`TextInput`](https://reactnative.dev/docs/
 ```tsx
 const [input, setInput] = useState("")
 const inputRef = useRef()
-;<TextField
+<TextField
   value={input}
   onChangeText={setInput}
   labelTx="signup.name"

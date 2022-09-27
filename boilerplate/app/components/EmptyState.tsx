@@ -25,7 +25,7 @@ interface EmptyStateProps {
    */
   imageStyle?: StyleProp<ImageStyle>
   /**
-   * Pass any additional props directly to the Image component..
+   * Pass any additional props directly to the Image component.
    */
   ImageProps?: Omit<ImageProps, "source">
   /**
@@ -114,8 +114,6 @@ const EmptyStatePresets = {
  * A component to use when there is no data to display. It can be utilized to direct the user what to do next.
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-EmptyState.md)
- *
- * TODO: document component (lots of props are similar to Card's and can be copied over)
  */
 export function EmptyState(props: EmptyStateProps) {
   const preset = EmptyStatePresets[props.preset] ? EmptyStatePresets[props.preset] : undefined

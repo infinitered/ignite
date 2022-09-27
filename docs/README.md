@@ -4,15 +4,16 @@ Check out this list of topics:
 
 - [Getting Started Guide](./Guide.md) - If you're new to Ignite, start here
 - [Components](./Components.md) - Ignite's built-in UI components
-  - [Auto Image](./Components-AutoImage.md)
-  - [Button](./Components-Button.md.md)
-  - [Card](./Components-Card.md.md)
-  - [Header](./Components-Header.md.md)
-  - [Icon](./Components-Icon.md.md)
-  - [List Item](./Components-ListItem.md.md)
-  - [Screen](./Components-Screen.md.md)
-  - [Text](./Components-Text.md.md)
-  - [TextField](./Components-TextField.md.md)
+  - [AutoImage](./Components-AutoImage.md)
+  - [Button](./Components-Button.md)
+  - [Card](./Components-Card.md)
+  - [EmptyState](./Components-EmptyState.md)
+  - [Header](./Components-Header.md)
+  - [Icon](./Components-Icon.md)
+  - [ListItem](./Components-ListItem.md)
+  - [Screen](./Components-Screen.md)
+  - [Text](./Components-Text.md)
+  - [TextField](./Components-TextField.md)
 - [Theming](./Theming.md) - How to customize the look and feel of your app
   - [Colors & Palettes](./Theming-Colors-And-Palettes.md) - Explanation of our palette-based approach to colors
   - [Fonts & Typography](./Theming-Fonts-And-Typography.md) - How we define fonts in a semantic way
