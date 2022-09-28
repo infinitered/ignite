@@ -1,4 +1,4 @@
-# Releases
+# Releasing Ignite
 
 Ignite is released via CI and [semantic release](https://semantic-release.gitbook.io/semantic-release/). When you merge a PR into `master`, you'll have the opportunity to edit the squash commit message, which determines what version level will be bumped as well as the automatically generated changelog that will be generated.
 
@@ -12,7 +12,7 @@ Since you're unlikely to be directly depending on Ignite in your app, this shoul
 
 ### bugfixes
 
-```
+```bash
 fix(cli): Check for undefined in packager - fixes #1234 (#1300 by @jamonholmgren)
 ```
 
@@ -22,7 +22,7 @@ The important part is the `fix:` ... the parenthesis are optional, and simply pr
 
 ### features
 
-```
+```bash
 feat(tests): Added react-native-testing-library (#1300 by @joshuayoes)
 ```
 
@@ -36,7 +36,7 @@ For breaking changes (bumping the first number, aka `2.0.0`), you need to includ
 
 Example:
 
-```
+```bash
 feat(cli): Changes init to new in CLI (#1234 by @GantMan)
 
 BREAKING CHANGE: To spin up a new app, you'll use "ignite new" instead of "ignite init".
@@ -50,19 +50,19 @@ For beta releases, the process is manual. Here are the steps:
 
 Run this to find your username:
 
-```
+```bash
 npm whoami
 ```
 
 In my case, it's `jamonholmgren`. Then run this to see if you have access:
 
-```
+```bash
 npm author list ignite-cli
 ```
 
 If your name is not included, you'll need to be added to the Infinite Red team:
 
-https://www.npmjs.com/settings/infinitered/members
+[https://www.npmjs.com/settings/infinitered/members](https://www.npmjs.com/settings/infinitered/members)
 
 Then run the author list command again to ensure you are listed.
 
@@ -70,7 +70,7 @@ Then run the author list command again to ensure you are listed.
 
 Run these commands from the Ignite root to clean & build the CLI:
 
-```
+```bash
 yarn clean
 yarn build
 ```
@@ -93,7 +93,7 @@ Update the version to what you want. Note that you will NOT be checking this int
 
 You'll want to use `npm` for this, not `yarn`. I don't remember why.
 
-```
+```bash
 npm publish --tag=next
 ```
 
@@ -109,7 +109,7 @@ If you do it as listed above, you'll be able to test the new beta version using 
 
 You can quickly roll back an erroneous release with:
 
-```
+```bash
 npm unpublish ignite-cli@1.2.3
 ```
 
