@@ -8,7 +8,7 @@ The `EmptyState` component is to be used when there is no data to display, usual
 
 ```tsx
 <EmptyState
-  preset="default"
+  preset="generic"
   style={{ padding: 10 }}
   imageSource={require("../../assets/images/sad-face.png")}
   imageStyle={{ height: 400, width: 400 }}
@@ -26,10 +26,10 @@ The `EmptyState` component is to be used when there is no data to display, usual
 
 ### `preset`
 
-The `preset` prop is used to set the preset container style of the EmptyState. This affects the default image, heading, content and button. Currently, only one preconfigured preset exists: `default` and `reversed`.
+The `preset` prop is used to set the preset container style of the EmptyState. This affects the default image, heading, content and button. Currently, only one preconfigured preset exists: `generic`.
 
 ```tsx
-<EmptyState preset="default" heading="EmptyState Heading" content="EmptyState Content" />
+<EmptyState preset="generic" heading="EmptyState Heading" content="EmptyState Content" />
 ```
 
 ### `style`
@@ -71,12 +71,12 @@ The `imageStyle` prop is used to set any style overrides to be applied to the im
 
 ### `ImageProps`
 
-The `imageProps` prop is used to pass any additional props directly to the `Image` component. It will accept any prop that the `Image` component accepts.
+The `ImageProps` prop is used to pass any additional props directly to the `Image` component. It will accept any prop that the `Image` component accepts.
 
 ```tsx
 <EmptyState
   imageSource={require("../../assets/images/empty-state.png")}
-  imageProps={{ onLoad: handleImageLoaded }}
+  ImageProps={{ onLoad: handleImageLoaded }}
   heading="EmptyState Heading"
   content="EmptyState Content"
 />
@@ -141,18 +141,6 @@ The `HeadingTextProps` prop is used to pass any additional props to the heading 
 />
 ```
 
-### `HeadingComponent`
-
-The `HeadingComponent` prop is used to set the component that will be used for the heading. This can be used to set a custom heading component.
-
-```tsx
-<EmptyState
-  HeadingComponent={<Button preset="reversed" text="HeadingComponent" icon="ladybug" />}
-  content="EmptyState Content"
-  button="EmptyState Button"
-/>
-```
-
 ### `content`
 
 The `content` prop is used to set the content text of the EmptyState.
@@ -208,18 +196,6 @@ The `ContentTextProps` prop is used to pass any additional props to the content 
   heading="EmptyState Heading"
   content="EmptyState Content"
   ContentTextProps={{ size: "lg" }}
-  button="EmptyState Button"
-/>
-```
-
-### `ContentComponent`
-
-The `ContentComponent` prop is used to set the component that will be used for the content. This can be used to set a custom content component.
-
-```tsx
-<EmptyState
-  heading="EmptyState Heading"
-  ContentComponent={<Button preset="reversed" text="ContentComponent" icon="ladybug" />}
   button="EmptyState Button"
 />
 ```
