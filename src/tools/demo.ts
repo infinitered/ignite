@@ -6,6 +6,8 @@ export enum CommentType {
   REMOVE_BLOCK_END = `@demo remove-block-end`,
 }
 
+export const demoMarkupRegex = /\s*\/\/\s*@demo.*|{?\/.*@demo.*\/}?/gm
+
 /**
  * Take the file content as a string and remove any
  * line of code with an `// @demo remove-current-line` comment
@@ -85,10 +87,21 @@ function remove(contents: string): string {
   return result
 }
 
+/**
+ * Perform replace on all types of @demo markup
+ * @param contents The file contents as a string
+ * @return The file contents with all @demo related CommentType removed
+ */
+function sanitize(contents: string): string {
+  const result = contents.replace(demoMarkupRegex, "")
+  return result
+}
+
 export const demo = {
   CommentType,
   removeCurrentLine,
   removeNextLine,
   removeBlock,
   remove,
+  sanitize,
 } as const
