@@ -32,13 +32,13 @@ export interface Options {
    * alias for `boilerplate`
    *
    * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
    * @default undefined
    */
   b?: string
   /**
    * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatability, warn them to use old Ignite
+   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
    * @default undefined
    */
   boilerplate?: string
@@ -58,7 +58,7 @@ export interface Options {
    */
   debug?: boolean
   /**
-   * Create new git repository and create an inital commit with boilerplate changes
+   * Create new git repository and create an initial commit with boilerplate changes
    *
    * Input Source: `prompt.ask` | `parameter.option`
    * @default true
@@ -97,6 +97,13 @@ export interface Options {
    * @default `${cwd}/${projectName}`
    */
   targetPath?: string
+  /**
+   * Whether or not to remove the boilerplate demo code
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default false
+   */
+  removeDemo?: boolean
   /**
    * Whether or not to use the dependency cache to speed up installs
    * Input Source: `parameter.option`
@@ -238,7 +245,7 @@ export default {
 
     // #region Prompt Git Option
     const defaultGit = true
-    let git = useDefault(options.git) ? defaultGit : options.git
+    let git = useDefault(options.git) ? defaultGit : boolFlag(options.git)
 
     if (git === undefined) {
       const gitResponse = await prompt.ask<{ git: boolean }>(() => ({
@@ -250,6 +257,25 @@ export default {
         prefix,
       }))
       git = gitResponse.git
+    }
+    // #endregion
+
+    // #region Prompt to Remove Demo code
+    const defaultRemoveDemo = false
+    let removeDemo = useDefault(options.removeDemo)
+      ? defaultRemoveDemo
+      : boolFlag(options.removeDemo)
+    if (removeDemo === undefined) {
+      const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
+        type: "confirm",
+        name: "removeDemo",
+        message:
+          "Remove demo code? We recommend leaving it in if it's your first time using Ignite",
+        initial: defaultRemoveDemo,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      removeDemo = removeDemoResponse.removeDemo
     }
     // #endregion
 
@@ -522,6 +548,24 @@ export default {
     }
     // #endregion
 
+    // #region Remove Demo code
+    if (removeDemo === true) {
+      startSpinner(" Removing fancy demo code")
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+
+        log(`Ignite bin path: ${IGNITE}`)
+        await system.run(`${IGNITE} remove-demo ${targetPath}`, {
+          onProgress: log,
+        })
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to remove demo code."))
+      }
+      stopSpinner(" Removing fancy demo code", "🛠️")
+    }
+    // #endregion
+
     // #region Create Git Repository and Initial Commit
     // commit any changes
     if (git === true) {
@@ -581,6 +625,7 @@ export default {
         expo,
         packager: packagerName,
         targetPath,
+        removeDemo,
         useCache,
         y: yname,
         yes: yname,

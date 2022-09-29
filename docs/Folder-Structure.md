@@ -58,6 +58,7 @@ This is where your components will live, the reusable building blocks to create 
 - [AutoImage](./Components-AutoImage.md)
 - [Button](./Components-Button.md)
 - [Card](./Components-Card.md)
+- [EmptyState](./Components-EmptyState.md)
 - [Header](./Components-Header.md)
 - [Icon](./Components-Icon.md)
 - [ListItem](./Components-ListItem.md)
