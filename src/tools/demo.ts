@@ -6,6 +6,11 @@ export enum CommentType {
   REMOVE_BLOCK_END = `@demo remove-block-end`,
 }
 
+/**
+ * Regex pattern to find the various types of // @demo remove-x comments
+ *
+ * NOTE: This currently will _NOT_ remove a multiline comment
+ */
 export const demoMarkupRegex = /\s*\/\/\s*@demo.*|{?\/.*@demo.*\/}?/gm
 
 /**
