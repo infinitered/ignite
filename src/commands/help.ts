@@ -54,6 +54,12 @@ module.exports = {
       ["ignite remove-demo", "ignite remove-demo --dry-run"],
     )
     p()
+    command(
+      "remove-demo-markup (rdm)",
+      "Removes @demo markup from the project (add --dry-run to list changes but not execute)",
+      ["ignite remove-demo-markup", "ignite remove-demo-markup --dry-run"],
+    )
+    p()
     command("snackify        ", "Creates a new branch which can be imported as an Expo snack", [
       "ignite snackify",
     ])
