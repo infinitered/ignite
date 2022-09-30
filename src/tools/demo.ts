@@ -1,3 +1,6 @@
+import { filesystem, patching } from "gluegun"
+import * as pathlib from "path"
+
 export enum CommentType {
   REMOVE_FILE = `@demo remove-file`,
   REMOVE_CURRENT_LINE = `@demo remove-current-line`,
@@ -102,6 +105,91 @@ function sanitize(contents: string): string {
   return result
 }
 
+function find(targetDir: string, matching?: string[]) {
+  const MATCHING_GLOBS = [
+    "!**/.DS_Store",
+    "!**/.expo{,/**}",
+    "!**/.git{,/**}",
+    "!**/.vscode{,/**}",
+    "!**/node_modules{,/**}",
+    "!**/ios/build{,/**}",
+    "!**/ios/Pods{,/**}",
+    "!**/ios/*.xcworkspace{,/**}",
+    "!**/android/build{,/**}",
+    "!**/android/app/build{,/**}",
+  ]
+
+  const filePaths = filesystem
+    .cwd(targetDir)
+    .find({
+      matching: matching ?? MATCHING_GLOBS,
+      recursive: true,
+      files: true,
+      directories: false,
+    })
+    .map((path) => pathlib.join(targetDir, path))
+  return filePaths
+}
+
+async function update({
+  filePaths,
+  dryRun = true,
+  onlyMarkup = false,
+}: {
+  filePaths: string[]
+  dryRun?: boolean
+  onlyMarkup?: boolean
+}) {
+  // Go through every file path and handle the operation for each demo comment
+  const demoCommentResults = await Promise.allSettled(
+    filePaths.map(async (path) => {
+      const { exists, update } = patching
+      const { read } = filesystem
+      const {
+        REMOVE_CURRENT_LINE,
+        REMOVE_NEXT_LINE,
+        REMOVE_BLOCK_START,
+        REMOVE_BLOCK_END,
+        REMOVE_FILE,
+      } = demo.CommentType
+
+      const comments: CommentType[] = []
+
+      if (await exists(path, REMOVE_FILE)) {
+        if (!dryRun && !onlyMarkup) filesystem.remove(path)
+        comments.push(REMOVE_FILE)
+        return { path, comments }
+      }
+
+      const operations = [
+        REMOVE_CURRENT_LINE,
+        REMOVE_NEXT_LINE,
+        REMOVE_BLOCK_START,
+        REMOVE_BLOCK_END,
+      ]
+      const shouldUpdate = onlyMarkup
+        ? RegExp(demoMarkupRegex, "gm")
+        : RegExp(operations.join("|"), "g")
+
+      if (await exists(path, shouldUpdate)) {
+        const before = read(path)
+
+        operations.forEach((operation) => {
+          if (before.includes(operation)) {
+            comments.push(operation)
+          }
+        })
+
+        if (!dryRun) await update(path, onlyMarkup ? demo.sanitize : demo.remove)
+      }
+
+      return { path, comments }
+    }),
+  )
+
+  return demoCommentResults
+}
+
 export const demo = {
   CommentType,
   removeCurrentLine,
@@ -109,4 +197,6 @@ export const demo = {
   removeBlock,
   remove,
   sanitize,
+  find,
+  update,
 } as const
