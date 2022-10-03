@@ -38,6 +38,9 @@ export const AuthenticationStoreModel = types
     setAuthPassword(value: string) {
       store.authPassword = value.replace(/ /g, "")
     },
+    logout() {
+      store.authToken = undefined
+    },
   }))
 
 export interface AuthenticationStore extends Instance<typeof AuthenticationStoreModel> {}

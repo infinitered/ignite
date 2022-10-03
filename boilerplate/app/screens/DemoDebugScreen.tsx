@@ -13,12 +13,8 @@ function openLinkInBrowser(url: string) {
 
 export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
   const {
-    authenticationStore: { setAuthToken },
+    authenticationStore: { logout },
   } = useStores()
-
-  function logout() {
-    setAuthToken(undefined)
-  }
 
   const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 

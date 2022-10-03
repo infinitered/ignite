@@ -25,15 +25,11 @@ export const WelcomeScreen = observer(function WelcomeScreen(
   // @demo remove-block-start
   const { navigation } = props
   const {
-    authenticationStore: { setAuthToken },
+    authenticationStore: { logout },
   } = useStores()
 
   function goNext() {
     navigation.navigate("Demo", { screen: "DemoShowroom" })
-  }
-
-  function logout() {
-    setAuthToken(undefined)
   }
 
   useLayoutEffect(() => {
