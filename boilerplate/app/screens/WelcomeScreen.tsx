@@ -39,7 +39,7 @@ export const WelcomeScreen = observer(function WelcomeScreen(
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header rightTx="welcomeScreen.headerRight" onRightPress={logout} />,
+      header: () => <Header rightTx="common.logOut" onRightPress={logout} />,
     })
   }, [])
   // @demo remove-block-end

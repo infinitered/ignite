@@ -5,13 +5,13 @@ const ar: Translations = {
     ok: "نعم",
     cancel: "حذف",
     back: "خلف",
+    logOut: "تسجيل خروج", // @demo remove-current-line
   },
   welcomeScreen: {
     postscript:
       "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
     readyForLaunch: "تطبيقك تقريبا جاهز للتشغيل",
     exciting: "اوه هذا مثير",
-    headerRight: "تسجيل خروج", // @demo remove-current-line
     letsGo: "لنذهب", // @demo remove-current-line
   },
   errorScreen: {
