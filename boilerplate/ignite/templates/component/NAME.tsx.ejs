@@ -22,7 +22,7 @@ export interface <%= props.pascalCaseName %>Props {
  */
 export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
   const { style } = props
-  const $styles = Object.assign({}, $container, style)
+  const $styles = [$container, style]
 
   return (
     <View style={$styles}>
