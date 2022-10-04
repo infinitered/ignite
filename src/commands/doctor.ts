@@ -173,7 +173,7 @@ module.exports = {
     info("")
     info(colors.cyan("Tools"))
     const gitPath = which("git")
-    const gitVersion = gitPath && (await run("git -v", { trim: true }))
+    const gitVersion = gitPath && (await run("git --version", { trim: true }))
     const gitInfo = [column1("git"), column2(gitVersion), column3(gitPath || "not installed")]
     table([gitInfo])
   },

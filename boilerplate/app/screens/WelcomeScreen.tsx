@@ -26,21 +26,17 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   // @demo remove-block-start
   const { navigation } = _props
   const {
-    authenticationStore: { setAuthToken },
+    authenticationStore: { logout },
   } = useStores()
 
   function goNext() {
     navigation.navigate("Demo", { screen: "DemoShowroom" })
   }
 
-  function logout() {
-    setAuthToken(undefined)
-  }
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header rightTx="welcomeScreen.headerRight" onRightPress={logout} />,
+      header: () => <Header rightTx="common.logOut" onRightPress={logout} />,
     })
   }, [])
   // @demo remove-block-end

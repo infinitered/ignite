@@ -180,6 +180,23 @@ const inputRef = useRef()
 
 [Full Text Component Documentation](./Components-TextField.md)
 
+### Toggle
+
+This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button.
+
+```tsx
+<Toggle
+  variant="checkbox"
+  value={value}
+  onValueChange={setValue}
+  labelTx="signup.rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Toggle Component Documentation](./Components-Toggle.md)
+
 ## Custom Components
 
 Ignite includes a generator for creating custom components. If the built in components don't fit your needs, you can create your own.

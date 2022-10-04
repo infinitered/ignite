@@ -32,6 +32,9 @@
     "expo:build:detox": "detox build -c ios.sim.expo",
     "expo:test:detox": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
   },
+  "overrides": {
+    "react-error-overlay": "6.0.9"
+  },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/webpack-config": "^0.17.0",
