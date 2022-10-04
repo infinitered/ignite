@@ -16,7 +16,7 @@ The `variant` prop determines the type of toggle to render. It can be one of the
 
 ### `status`
 
-The `status` prop is used to determine the interactibility or style of the toggle. It can be set to `disabled` or `error`. It is `null` by default.
+The `status` prop is used to determine the interactability or style of the toggle. It can be set to `disabled` or `error`. It is `null` by default.
 
 When set to `error`, elements of the toggle will have their colors set to `colors.errorBackground` or `colors.error`.
 
@@ -26,7 +26,7 @@ When set to `error`, elements of the toggle will have their colors set to `color
 
 ### `editable`
 
-The `editable` prop determines whether the toggle is interactible. It is `true` by default.
+The `editable` prop determines whether the toggle is interactable. It is `true` by default.
 
 ```tsx
 <Toggle value={value} onValueChange={setValue} editable={false} />
@@ -80,7 +80,7 @@ The `inputDetailStyle` prop is a style object that is applied to the detail cont
 <Toggle value={value} onValueChange={setValue} inputDetailStyle={{ backgroundColor: "#000" }} />
 ```
 
-### `labelPostion`
+### `labelPosition`
 
 The `labelPosition` prop determines the position of the label relative to the action component. It can be `left` or `right`. It is `right` by default.
 
