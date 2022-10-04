@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC } from "react"
 import * as Application from "expo-application"
 import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
@@ -10,7 +10,9 @@ function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }
 
-export function DemoDebugScreen(_props: DemoTabScreenProps<"DemoDebug">) {
+export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
+  _props,
+) {
   const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
   const demoReactotron = React.useMemo(

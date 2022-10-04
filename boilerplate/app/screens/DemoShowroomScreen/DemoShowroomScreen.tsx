@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react"
+import React, { FC, ReactElement, useEffect, useRef, useState } from "react"
 import { FlatList, Image, ImageStyle, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue } from "react-native-reanimated"
@@ -18,7 +18,8 @@ export interface Demo {
   data: ReactElement[]
 }
 
-export function DemoShowroomScreen(_props: DemoTabScreenProps<"DemoShowroom">) {
+export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
+  function DemoShowroomScreen(_props) {
   const [open, setOpen] = useState(false)
   const timeout = useRef<ReturnType<typeof setTimeout>>()
   const drawerRef = useRef<DrawerLayout>()

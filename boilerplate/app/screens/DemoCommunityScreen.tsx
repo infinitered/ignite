@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -11,7 +11,8 @@ const reactNativeLiveLogo = require("../../assets/images/rnl-logo.png")
 const reactNativeRadioLogo = require("../../assets/images/rnr-logo.png")
 const reactNativeNewsletterLogo = require("../../assets/images/rnn-logo.png")
 
-export function DemoCommunityScreen(_props: DemoTabScreenProps<"DemoCommunity">) {
+export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
+  function DemoCommunityScreen(_props) {
   return (
     <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
       <Text preset="heading" tx="demoCommunityScreen.title" style={$title} />
