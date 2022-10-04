@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { useEffect, useMemo } from "react"
+import React, { FC, useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -35,9 +35,8 @@ const rnrImage2 = require("../../assets/images/rnr-image-2.png")
 const rnrImage3 = require("../../assets/images/rnr-image-3.png")
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
-export const DemoPodcastListScreen = observer(function DemoPodcastListScreen(
-  _props: DemoTabScreenProps<"DemoPodcastList">,
-) {
+export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
+  function DemoPodcastListScreen(_props) {
   const { episodeStore } = useStores()
 
   const [refreshing, setRefreshing] = React.useState(false)

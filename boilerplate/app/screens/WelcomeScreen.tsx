@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, {
+  FC,
   useLayoutEffect, // @demo remove-current-line
 } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
@@ -19,11 +20,11 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {} // @demo remove-current-line
 
-export const WelcomeScreen = observer(function WelcomeScreen(
-  props: WelcomeScreenProps, // @demo remove-current-line
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
+  _props, // @demo remove-current-line
 ) {
   // @demo remove-block-start
-  const { navigation } = props
+  const { navigation } = _props
   const {
     authenticationStore: { logout },
   } = useStores()
