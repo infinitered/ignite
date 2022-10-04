@@ -11,7 +11,7 @@ In short -- if you use Ignite to start your next React Native project, you're us
 In order to start a new Ignite project, you can use the CLI. No need to install it globally as it works great with `npx`:
 
 ```bash
-npx ignite-cli@next new PizzaApp
+npx ignite-cli@latest new PizzaApp
 ```
 
 It'll walk you through several questions.
