@@ -213,7 +213,7 @@ export function Screen(props: ScreenProps) {
 
   return (
     <View
-      style={[$containerStyle, { backgroundColor, ...insetPadding }]}
+      style={[$containerStyle, { backgroundColor }, insetPadding ]}
     >
       <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
