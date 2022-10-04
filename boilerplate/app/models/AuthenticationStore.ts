@@ -40,6 +40,8 @@ export const AuthenticationStoreModel = types
     },
     logout() {
       store.authToken = undefined
+      store.authEmail = ""
+      store.authPassword = ""
     },
   }))
 
