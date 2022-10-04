@@ -26,7 +26,7 @@ When set to `error`, elements of the toggle will have their colors set to `color
 
 ### `editable`
 
-The `editable` prop determines whether the toggle is interactable. It is `true` by default.
+The `editable` prop determines whether the toggle is interactable. It is `true` by default. Setting the `status` prop to `disabled` also will set `editable` to `false`.
 
 ```tsx
 <Toggle value={value} onValueChange={setValue} editable={false} />
