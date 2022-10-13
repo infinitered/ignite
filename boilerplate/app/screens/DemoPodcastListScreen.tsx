@@ -1,3 +1,5 @@
+// Interested in migrating from FlatList to FlashList? Check out the recipe in our Ignite Cookbook
+// https://infinitered.github.io/ignite-cookbook/docs/MigratingToFlashList
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo } from "react"
 import {
