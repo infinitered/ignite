@@ -57,7 +57,7 @@ Ignite comes with some prebuilt, flexible, and customizable components. Unlike m
 
 Ignite works fine with other component libraries, but the built-in component system works the best for custom-designed apps.
 
-Check out the [Components](./components.md) documentation.
+Check out the [Components](./Components.md) documentation.
 
 ### Testing
 
