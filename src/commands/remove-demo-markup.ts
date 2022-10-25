@@ -1,7 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { demo } from "../tools/demo"
 import { boolFlag } from "../tools/flag"
-import { packager } from "../tools/packager"
 import { p, warning } from "../tools/pretty"
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
   description:
     "Remove all demo markup from generated boilerplate. Add --dry-run to see what would be removed.",
   run: async (toolbox: GluegunToolbox) => {
-    const { parameters } = toolbox
+    const { parameters, system } = toolbox
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
@@ -47,7 +46,11 @@ module.exports = {
       })
 
     // Run prettier at the end to clean up any spacing issues
-    if (!dryRun) await packager.run("format")
+    if (!dryRun) {
+      await system.run(`npx prettier@2.6.2 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
+        trim: true,
+      })
+    }
 
     p(`Done removing demo markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },
