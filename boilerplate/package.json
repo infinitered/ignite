@@ -51,7 +51,6 @@
     "expo-device": "~4.3.0",
     "expo-file-system": "~14.1.0",
     "expo-font": "~10.2.0",
-    "expo-linear-gradient": "~11.4.0",
     "expo-localization": "13.1.0",
     "expo-modules-core": "~0.11.3",
     "expo-splash-screen": "~0.16.1",
