@@ -45,7 +45,7 @@ module.exports = {
     if (parameters.array.length > 1 && !parameters.first.startsWith('"')) {
       const suggestedTitle = parameters.array.join(" ")
 
-      let titleResponse = await prompt.ask<{ title: boolean }>(() => ({
+      const titleResponse = await prompt.ask<{ title: boolean }>(() => ({
         type: "confirm",
         name: "title",
         message: `Received title "${title}" but without quotes, did you mean "${suggestedTitle}"?`,
