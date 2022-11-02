@@ -491,7 +491,12 @@ export default {
     if (shouldFreshInstallDeps) {
       const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
       startSpinner(unboxingMessage)
-      await packager.install({ ...packagerOptions, onProgress: log })
+      // generate packager install command string
+      const baseInstallCmd = packager.installCmd({ ...packagerOptions })
+      // prepend skip pod install for our ./boilerplate/bin/postInstall script
+      // since we npx pod-install in a few steps here
+      const packagerInstallCmd = `IGNITE_SKIP_POD_INSTALL=yes ${baseInstallCmd}`
+      await system.run(packagerInstallCmd, { onProgress: log })
       stopSpinner(unboxingMessage, "🧶")
     }
 
