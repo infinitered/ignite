@@ -1,7 +1,7 @@
 ---
 patch:
   path: "app/components/index.ts"
-  append: "export * from \"./<%= props.pascalCaseName %>\"\n"
+  append: "export * from \"./<%= props.subdirectory %><%= props.pascalCaseName %>\"\n"
   skip: <%= props.skipIndexFile %>
 ---
 import * as React from "react"
