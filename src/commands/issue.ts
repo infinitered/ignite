@@ -84,7 +84,7 @@ module.exports = {
     // TODO looked into gh cli but not sure that is worth it either
     try {
       p(cyan("Starting GitHub issue..."))
-      system.run(`${START_CMD} ${url}`)
+      await system.run(`${START_CMD} ${url}`)
 
       p(cyan("Paste the following in the comment body and fill out the description:"))
       p()
