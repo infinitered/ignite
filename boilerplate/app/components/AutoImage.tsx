@@ -15,7 +15,7 @@ export interface AutoImageProps extends ImageProps {
 
 /**
  * A hook that will return the scaled dimensions of an image based on the
- * provided dimesions' aspect ratio. If no desired dimensions are provided,
+ * provided dimensions' aspect ratio. If no desired dimensions are provided,
  * it will return the original dimensions of the remote image.
  *
  * How is this different from `resizeMode: 'contain'`? Firstly, you can
