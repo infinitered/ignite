@@ -84,7 +84,7 @@ module.exports = {
 
     try {
       p(cyan("Starting GitHub issue, thanks for alerting us!"))
-      await system.run(`${START_CMD} \"${url}?${params.toString()}\"`)
+      await system.run(`${START_CMD} "${url}?${params.toString()}"`)
     } catch (e) {
       p(yellow("Unable to start GitHub issue."))
     }
