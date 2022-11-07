@@ -76,19 +76,13 @@ module.exports = {
     const body = `${header}\n\n\`\`\`\n${doctorInfo}\`\`\``
 
     const url = new URL("https://github.com/infinitered/ignite/issues/new")
-    url.searchParams.append("title", title)
+    const params = new URLSearchParams(url.search)
+    params.append("title", title)
+    params.append("body", body)
 
-    // paste the comment body template for the user (unable to set searchParam `body`
-    // to a multiline value)
-    // TODO we could add clipboard support but Gluegun already removed that
-    // TODO looked into gh cli but not sure that is worth it either
     try {
-      p(cyan("Starting GitHub issue..."))
-      await system.run(`${START_CMD} ${url}`)
-
-      p(cyan("Paste the following in the comment body and fill out the description:"))
-      p()
-      p(white(body))
+      p(cyan("Starting GitHub issue, thanks for alerting us!"))
+      await system.run(`${START_CMD} \"${url}?${params.toString()}\"`)
     } catch (e) {
       p(yellow("Unable to start GitHub issue."))
     }
