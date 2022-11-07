@@ -12,6 +12,7 @@ import {
   prettyPrompt,
   prefix,
 } from "../tools/pretty"
+const stripANSI = require("strip-ansi")
 
 const isMac = process.platform === "darwin"
 
@@ -29,7 +30,7 @@ module.exports = {
       prompt,
     } = toolbox
 
-    const { yellow, cyan, white } = colors
+    const { yellow, cyan } = colors
 
     // title for issue
     let title = parameters.first
@@ -65,14 +66,15 @@ module.exports = {
     try {
       const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
 
-      doctorInfo = await system.run(`${IGNITE} doctor`)
+      const doctorANSI = await system.run(`${IGNITE} doctor`)
+      doctorInfo = stripANSI(doctorANSI)
     } catch (e) {
       p(yellow("Unable to gather system and project details."))
     }
     stopSpinner(" Gathering system and project details", "🛠️")
 
     // open up GitHub issue form
-    const header = `\n### Describe the bug\n\n[Fill out bug description here]\n\n### Additional info\nnpx ignite-cli doctor`
+    const header = `\n### Describe the bug\n\n<!--🚨🚨🚨 Fill out bug description here, please provide reproducible steps, repo/code snippets and any other helpful information if available! 🚨🚨🚨-->\n\n### Additional info\nnpx ignite-cli doctor`
     const body = `${header}\n\n\`\`\`\n${doctorInfo}\`\`\``
 
     const url = new URL("https://github.com/infinitered/ignite/issues/new")
