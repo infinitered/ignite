@@ -1,4 +1,5 @@
 const { getDefaultConfig } = require("metro-config")
+const { getDefaultConfig: getDefaultExpoConfig } = require("@expo/metro-config")
 
 let metroConfig
 let isExpo = false
@@ -18,7 +19,7 @@ if (isExpo) {
    * For one idea on how to support symlinks in Expo, see:
    * https://github.com/infinitered/ignite/issues/1904#issuecomment-1054535068
    */
-  metroConfig = getDefaultConfig(__dirname)
+  metroConfig = getDefaultExpoConfig(__dirname)
 } else {
   /**
    * Vanilla metro config - we're using a custom metro config because we want to support symlinks

@@ -13,6 +13,7 @@ patches:
     skip: <%= props.skipIndexFile %>
 ---
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { withSetPropAction } from "./helpers/withSetPropAction"
 
 /**
  * Model description here for TypeScript hints.
@@ -20,6 +21,7 @@ import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 export const <%= props.pascalCaseName %>Model = types
   .model("<%= props.pascalCaseName %>")
   .props({})
+  .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
 
