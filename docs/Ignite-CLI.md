@@ -91,7 +91,7 @@ For full documentation on this, head on over to the [Generators documentation](.
 - `npx ignite-cli help`
 - Alias: `npx ignite-cli h`
 
-Provides this list of commands and a small description of each in your terminal.
+Provides this list of commands and a small description of each command in your terminal.
 
 ### New
 
