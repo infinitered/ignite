@@ -20,7 +20,12 @@ Ignite comes with a dynamic CLI that does more than just get you started with de
 
 - `npx ignite-cli cache`
 
-Generally speaking, you shouldn't have to use this command. However, it is helpful for managing the dependency cache Ignite uses when spinning up new projects. You can opt out of using the cache, see more information under the [new command](#new).
+The [`new` command](#new) has a `useCache` flag that allows you to cache your dependencies to speed up future uses of `new`. By default, this flag is `false`. This command is provided to allow for interacting with the dependency cache file folder.
+
+#### Subcommands
+- `npx ignite-cli cache help` outputs help command to describe cache subcommands
+- `npx ignite-cli cache path` outputs the path of the cache folder on your system 
+- `npx ignite-cli cache clear` deletes the cache folder on your system
 
 #### Options
 
