@@ -116,7 +116,7 @@ Starts the interactive prompt for generating a new Ignite project. Any options n
 - `npx ignite-cli issue "Mac M1 install trouble"`
 - Alias: `npx ignite-cli i`
 
-Fires up a new issue on GitHub.com prefilled with collected [doctor](#doctor) information. Simply describe your steps to help reproduce the issue (and provide any relevant code snippets or repository) and press submit!
+Fires up a [new issue for Ignite on GitHub](https://github.com/infinitered/ignite/issues/new/) prefilled with collected [doctor](#doctor) information. Simply describe your steps to help reproduce the issue (and provide any relevant code snippets or repository) and press submit!
 
 ### Remove Demo Markup
 
