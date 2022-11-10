@@ -45,7 +45,7 @@
     "@react-navigation/stack": "~6.2.1",
     "apisauce": "2.1.5",
     "date-fns": "^2.29.2",
-    "expo": "^47.0.0-beta.7",
+    "expo": "~47.0.3",
     "expo-application": "~5.0.1",
     "expo-constants": "~14.0.2",
     "expo-device": "~5.0.0",
