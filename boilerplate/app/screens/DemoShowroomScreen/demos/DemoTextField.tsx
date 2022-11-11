@@ -102,7 +102,7 @@ export const DemoTextField: Demo = {
 
       <TextField
         label="RightAccessory"
-        helper="This props takes a function that returns a React element."
+        helper="This prop takes a function that returns a React element."
         value="Reprehenderit Lorem magna non consequat ullamco cupidatat."
         RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
@@ -111,7 +111,7 @@ export const DemoTextField: Demo = {
 
       <TextField
         label="LeftAccessory"
-        helper="This props takes a function that returns a React element."
+        helper="This prop takes a function that returns a React element."
         value="Eiusmod exercitation mollit elit magna occaecat eiusmod Lorem minim veniam."
         LeftAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
