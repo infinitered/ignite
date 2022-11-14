@@ -51,6 +51,7 @@
     "expo-device": "~4.3.0",
     "expo-file-system": "~14.1.0",
     "expo-font": "~10.2.0",
+    "expo-linking": "^3.2.3",
     "expo-localization": "13.1.0",
     "expo-modules-core": "~0.11.3",
     "expo-splash-screen": "~0.16.1",
@@ -125,7 +126,8 @@
   },
   "resolutions": {
     "@types/react": "^17",
-    "@types/react-dom": "^17"
+    "@types/react-dom": "^17",
+    "@expo/dev-server": "0.1.120"
   },
   "prettier": {
     "printWidth": 100,
