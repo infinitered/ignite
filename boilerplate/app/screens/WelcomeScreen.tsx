@@ -1,19 +1,16 @@
 import { observer } from "mobx-react-lite"
-import React, {
-  FC,
-  useLayoutEffect, // @demo remove-current-line
-} from "react"
+import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import {
   Button, // @demo remove-current-line
-  Header, // @demo remove-current-line
   Text,
 } from "../components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
 import { colors, spacing } from "../theme"
+import { useHeader } from "../utils/useHeader"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -33,12 +30,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
     navigation.navigate("Demo", { screen: "DemoShowroom" })
   }
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      header: () => <Header rightTx="common.logOut" onRightPress={logout} />,
-    })
-  }, [])
+  useHeader({
+    rightTx: "common.logOut",
+    onRightPress: logout,
+  })
   // @demo remove-block-end
 
   return (
