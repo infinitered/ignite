@@ -17,7 +17,7 @@ if (["darwin", "linux"].includes(process.platform)) {
 // On iOS, make sure CocoaPods are installed
 // set env var IGNITE_SKIP_POD_INSTALL to any value to skip
 if (process.platform === "darwin") {
-  run('if [ -d "ios" ] && [ -z "$IGNITE_SKIP_POD_INSTALL" ]; then cd ios && pod install && cd -; fi')
+  run('if [ -d "ios" ]; then cd ios && npx pod-install && cd -; fi')
 }
 
 // Run baby run
