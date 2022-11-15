@@ -1,5 +1,4 @@
 import { GluegunToolbox } from "../types"
-import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -21,11 +20,6 @@ import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { EOL } from "os"
-
-// CLI tool versions we support
-const deps: { [k: string]: string } = {
-  podInstall: "0.1",
-}
 
 export interface Options {
   /**
@@ -491,12 +485,7 @@ export default {
     if (shouldFreshInstallDeps) {
       const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
       startSpinner(unboxingMessage)
-      // generate packager install command string
-      const baseInstallCmd = packager.installCmd({ ...packagerOptions })
-      // prepend skip pod install for our ./boilerplate/bin/postInstall script
-      // since we npx pod-install in a few steps here
-      const packagerInstallCmd = `IGNITE_SKIP_POD_INSTALL=yes ${baseInstallCmd}`
-      await system.run(packagerInstallCmd, { onProgress: log })
+      await packager.install({ ...packagerOptions, onProgress: log })
       stopSpinner(unboxingMessage, "🧶")
     }
 
@@ -518,17 +507,6 @@ export default {
     )
 
     stopSpinner(renameSpinnerMsg, "🎨")
-    // #endregion
-
-    // #region Install CocoaPods
-    // install pods
-    if (shouldFreshInstallDeps) {
-      startSpinner("Baking CocoaPods")
-      await spawnProgress(`npx pod-install@${deps.podInstall}`, {
-        onProgress: log,
-      })
-      stopSpinner("Baking CocoaPods", "☕️")
-    }
     // #endregion
 
     // #region Cache dependencies
