@@ -4,7 +4,9 @@ import { useLayoutEffect } from "react"
 import { Header, HeaderProps } from "../components"
 
 /**
- * A hook to set the header for a screen.
+ * A hook that can be used to easily set the Header of a react-navigation screen from within the screen's component.
+ *
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Utils-useHeader.md)
  */
 export function useHeader(headerProps: HeaderProps, deps: any[] = []) {
   const navigation = useNavigation()
