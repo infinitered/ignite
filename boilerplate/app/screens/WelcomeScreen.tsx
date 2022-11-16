@@ -1,16 +1,13 @@
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
+import React, { FC, useMemo } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import {
-  Button, // @demo remove-current-line
-  Text,
-} from "../components"
+import { Button, Text } from "../components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
 import { colors, spacing } from "../theme"
-import { useHeader } from "../utils/useHeader"
+import { useHeader } from "../utils/useHeader" // @demo remove-current-line
+import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -36,6 +33,8 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   })
   // @demo remove-block-end
 
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
   return (
     <View style={$container}>
       <View style={$topContainer}>
@@ -50,19 +49,17 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
-      <SafeAreaView style={$bottomContainer} edges={["bottom"]}>
-        <View style={$bottomContentContainer}>
-          <Text tx="welcomeScreen.postscript" size="md" />
-          {/* @demo remove-block-start */}
-          <Button
-            testID="next-screen-button"
-            preset="reversed"
-            tx="welcomeScreen.letsGo"
-            onPress={goNext}
-          />
-          {/* @demo remove-block-end */}
-        </View>
-      </SafeAreaView>
+      <View style={[$bottomContainer, $bottomContainerInsets]}>
+        <Text tx="welcomeScreen.postscript" size="md" />
+        {/* @demo remove-block-start */}
+        <Button
+          testID="next-screen-button"
+          preset="reversed"
+          tx="welcomeScreen.letsGo"
+          onPress={goNext}
+        />
+        {/* @demo remove-block-end */}
+      </View>
     </View>
   )
 })
@@ -87,14 +84,9 @@ const $bottomContainer: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
-}
-
-const $bottomContentContainer: ViewStyle = {
-  flex: 1,
   paddingHorizontal: spacing.large,
   justifyContent: "space-around",
 }
-
 const $welcomeLogo: ImageStyle = {
   height: 88,
   width: "100%",
