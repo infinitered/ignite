@@ -2,13 +2,10 @@
 
 [Back to all components](./Components.md)
 
-This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
+This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas insets](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
 
 ```tsx
-<Screen preset="scroll">
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen preset="scroll">{/* ... content here ... */}</Screen>
 ```
 
 ## Props
@@ -18,54 +15,39 @@ This is a component that renders a screen. It is used to wrap your entire screen
 As the `Screen` component is a top level wrapper component, it is expected that you will pass in your screen's content as children.
 
 ```tsx
-<Screen preset="scroll">
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen preset="scroll">{/* ... content here ... */}</Screen>
 ```
 
 ### `style`
 
-The `style` prop is an optional `StyleProp<ViewStyle>` object that applies to the outer `View` or `SafeAreaView` component (depending on what is passed to `safeAreaEdges`). This is useful for applying styles to the outermost component, such as `margin` and `padding`.
+The `style` prop is an optional `StyleProp<ViewStyle>` object that applies to the outer content `View` component. This is useful for applying styles such as `margin` and `padding`.
 
 ```tsx
-<Screen style={{ margin: 10, padding: 10 }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen style={{ padding: 10 }}>{/* ... content here ... */}</Screen>
 ```
 
 ### `contentContainerStyle`
 
-The `contentContainerStyle` prop is an optional `StyleProp<ViewStyle>` object that applies to the inner `View` component that wraps the `children`. This is useful for applying styles to the innermost component, such as `margin` and `padding`.
+The `contentContainerStyle` prop is an optional `StyleProp<ViewStyle>` object that applies to the inner content `View` component that wraps the `children`. This is useful for applying styles to the innermost component, such as `margin` and `padding`.
 
 ```tsx
-<Screen contentContainerStyle={{ margin: 10 }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen contentContainerStyle={{ margin: 10 }}>{/* ... content here ... */}</Screen>
 ```
 
 ### `safeAreaEdges`
 
-The `safeAreaEdges` prop is an an array of `SafeAreaEdges` that determines which edges of the screen should be considered safe areas. This is useful for handling the notch on iPhone X and other devices. The default value is `["top"]`.
+The `safeAreaEdges` prop is an an array of `SafeAreaEdges` that determines which edges of the screen should be considered safe areas. This is useful for handling the notch on iPhone X and other devices. Usage of this prop depends on how the Screen is used. If you have a Header above the screen, the "top" Edge can be omitted. If you have a TabBar, the "bottom" edge can be omitted. In other cases, a value of `["top", "bottom"]` is recommended. The default value is `undefined`.
 
 ```tsx
-<Screen safeAreaEdges={["top", "bottom"]}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen safeAreaEdges={["top", "bottom"]}>{/* ... content here ... */}</Screen>
 ```
 
 ### `backgroundColor`
 
-The `backgroundColor` prop is an optional `string` that determines the background color of the outer wrapper component (either a `View` or `SafeAreaView`, depending on whether or not `safeAreaEdges` is empty). The default value is `colors.background`.
+The `backgroundColor` prop is an optional `string` that determines the background color of the outer wrapper component. The default value is `colors.background`.
 
 ```tsx
-<Screen backgroundColor="red">
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen backgroundColor="red">{/* ... content here ... */}</Screen>
 ```
 
 ### `statusBarStyle`
@@ -73,10 +55,7 @@ The `backgroundColor` prop is an optional `string` that determines the backgroun
 The `statusBarStyle` prop is a prop that determines the style of the status bar. It can be either `"light"` or `"dark"`. The default value is `"dark"`.
 
 ```tsx
-<Screen statusBarStyle="light">
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen statusBarStyle="light">{/* ... content here ... */}</Screen>
 ```
 
 ### `keyboardOffset`
@@ -84,21 +63,7 @@ The `statusBarStyle` prop is a prop that determines the style of the status bar.
 The `keyboardOffset` prop is an optional `number` that determines the offset of the keyboard when it is shown. It is passed to the `keyboardVerticalOffset` of the `KeyboardAvoidingView`. The default value is `0`.
 
 ```tsx
-<Screen keyboardOffset={10}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
-```
-
-### `SafeAreaViewProps`
-
-The `SafeAreaViewProps` prop is an object that is passed as props to the [`SafeAreaView`](https://github.com/th3rdwave/react-native-safe-area-context#safeareaview).
-
-```tsx
-<Screen SafeAreaViewProps={{ padding: 10 }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen keyboardOffset={10}>{/* ... content here ... */}</Screen>
 ```
 
 ### `StatusBarProps`
@@ -106,10 +71,7 @@ The `SafeAreaViewProps` prop is an object that is passed as props to the [`SafeA
 The `StatusBarProps` prop is an object that is passed as props to the `expo-status-bar` [`StatusBar`](https://docs.expo.io/versions/latest/sdk/status-bar/) component.
 
 ```tsx
-<Screen StatusBarProps={{ animated: false }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen StatusBarProps={{ animated: false }}>{/* ... content here ... */}</Screen>
 ```
 
 ### `KeyboardAvoidingViewProps`
@@ -117,10 +79,7 @@ The `StatusBarProps` prop is an object that is passed as props to the `expo-stat
 The `KeyboardAvoidingViewProps` prop is an object that is passed as props to the [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview).
 
 ```tsx
-<Screen KeyboardAvoidingViewProps={{ behavior: "padding" }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen KeyboardAvoidingViewProps={{ behavior: "padding" }}>{/* ... content here ... */}</Screen>
 ```
 
 ### `preset`
@@ -134,10 +93,7 @@ The predefined presets are:
 - `auto` - A preset that applies an automatic behavior to the screen. i.e. The screen will scroll if the content is larger than the screen, but not otherwise.
 
 ```tsx
-<Screen preset="scroll">
-  <Header headerTitle="screen" />
-  // ... content here ...
-</Screen>
+<Screen preset="scroll">{/* ... content here ... */}</Screen>
 ```
 
 ### `keyboardShouldPersistTaps`
@@ -148,8 +104,7 @@ The valid values for this prop are: `"handled"`, `"always"`,and `"never"`.
 
 ```tsx
 <Screen preset="scroll" keyboardShouldPersistTaps="never">
-  <Header headerTitle="screen" />
-  // ... content here ...
+  {/* ... content here ... */}
 </Screen>
 ```
 
@@ -159,8 +114,7 @@ The `ScrollViewProps` prop is an object that is passed as props to the React Nat
 
 ```tsx
 <Screen preset="scroll" ScrollViewProps={{ contentContainerStyle: { padding: 10 } }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
+  {/* ... content here ... */}
 </Screen>
 ```
 
@@ -170,7 +124,6 @@ The `scrollEnabledToggleThreshold` prop is an optional `number` that determines 
 
 ```tsx
 <Screen preset="scroll" scrollEnabledToggleThreshold={{ percent: 0.95 }}>
-  <Header headerTitle="screen" />
-  // ... content here ...
+  {/* ... content here ... */}
 </Screen>
 ```
