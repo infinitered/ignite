@@ -481,18 +481,6 @@ export default {
       stopSpinner(msg, "📦")
     }
 
-    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
-    if (shouldFreshInstallDeps) {
-      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
-      startSpinner(unboxingMessage)
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner(unboxingMessage, "🧶")
-    }
-
-    // remove the gitignore template
-    await removeAsync(".gitignore.template")
-    // #endregion
-
     // #region Rename App
     // rename the app using Ignite
     const renameSpinnerMsg = `Getting those last few details perfect`
@@ -507,6 +495,18 @@ export default {
     )
 
     stopSpinner(renameSpinnerMsg, "🎨")
+    // #endregion
+
+    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
+    if (shouldFreshInstallDeps) {
+      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
+      startSpinner(unboxingMessage)
+      await packager.install({ ...packagerOptions, onProgress: log })
+      stopSpinner(unboxingMessage, "🧶")
+    }
+
+    // remove the gitignore template
+    await removeAsync(".gitignore.template")
     // #endregion
 
     // #region Cache dependencies
