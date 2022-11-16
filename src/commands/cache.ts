@@ -27,7 +27,7 @@ const help = (_toolbox: GluegunToolbox) => {
   const width = 10
   command({ m: "help", width }, "Display this message", ["ignite cache help"])
   p()
-  command({ m: "path", width }, "Return the path of the depdendency cache on your computer", [
+  command({ m: "path", width }, "Return the path of the dependency cache on your computer", [
     "ignite cache path",
   ])
   p()
