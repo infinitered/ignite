@@ -256,8 +256,7 @@ A convenience [`useHeader`](./Utils-useHeader.md) hook is provided that abstract
 ```tsx
 function AccountScreen(props) {
   useHeader({
-    headerShown: true,
-    header: () => <Header title="Hello" />,
+    title: "Hello",
   })
 
   return <Screen />
