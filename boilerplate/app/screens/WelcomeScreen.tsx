@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useMemo } from "react"
+import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "../components"
 import { isRTL } from "../i18n"

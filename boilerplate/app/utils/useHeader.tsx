@@ -1,6 +1,5 @@
-import React from "react"
+import React, { useLayoutEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
-import { useLayoutEffect } from "react"
 import { Header, HeaderProps } from "../components"
 
 /**
