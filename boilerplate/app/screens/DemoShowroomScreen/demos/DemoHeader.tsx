@@ -97,10 +97,10 @@ export const DemoHeader: Demo = {
       <Header title="Styled Title" titleStyle={$customTitle} safeAreaEdges={[]} />
       <DemoDivider size={24} />
       <Header
-        title="Styled Container"
+        title="Styled Wrapper"
         titleStyle={$customWhiteTitle}
         backgroundColor={colors.error}
-        containerStyle={{ height: 35 }}
+        style={{ height: 35 }}
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
