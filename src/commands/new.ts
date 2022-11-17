@@ -1,5 +1,4 @@
 import { GluegunToolbox } from "../types"
-import { spawnProgress } from "../tools/spawn"
 import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -21,11 +20,6 @@ import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { EOL } from "os"
-
-// CLI tool versions we support
-const deps: { [k: string]: string } = {
-  podInstall: "0.1",
-}
 
 export interface Options {
   /**
@@ -487,18 +481,6 @@ export default {
       stopSpinner(msg, "📦")
     }
 
-    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
-    if (shouldFreshInstallDeps) {
-      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
-      startSpinner(unboxingMessage)
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner(unboxingMessage, "🧶")
-    }
-
-    // remove the gitignore template
-    await removeAsync(".gitignore.template")
-    // #endregion
-
     // #region Rename App
     // rename the app using Ignite
     const renameSpinnerMsg = `Getting those last few details perfect`
@@ -515,15 +497,16 @@ export default {
     stopSpinner(renameSpinnerMsg, "🎨")
     // #endregion
 
-    // #region Install CocoaPods
-    // install pods
+    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
     if (shouldFreshInstallDeps) {
-      startSpinner("Baking CocoaPods")
-      await spawnProgress(`npx pod-install@${deps.podInstall}`, {
-        onProgress: log,
-      })
-      stopSpinner("Baking CocoaPods", "☕️")
+      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
+      startSpinner(unboxingMessage)
+      await packager.install({ ...packagerOptions, onProgress: log })
+      stopSpinner(unboxingMessage, "🧶")
     }
+
+    // remove the gitignore template
+    await removeAsync(".gitignore.template")
     // #endregion
 
     // #region Cache dependencies
