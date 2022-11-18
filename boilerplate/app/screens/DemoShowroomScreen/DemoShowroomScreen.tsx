@@ -43,7 +43,7 @@ const slugify = (str) =>
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
 
-const WebLisItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
+const WebListItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
   const sectionSlug = item.name.toLowerCase()
 
   return (
