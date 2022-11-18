@@ -376,8 +376,13 @@ function Switch(props: ToggleInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
-  const knobWidth = $detailStyleOverride?.width ?? $switchDetail?.width ?? 24
-  const knobHeight = $detailStyleOverride?.height ?? $switchDetail?.height ?? 24
+  const knobWidth = [$detailStyleOverride?.width, $switchDetail?.width, 24].filter(
+    (v) => typeof v === "number",
+  )[0]
+
+  const knobHeight = [$detailStyleOverride?.height, $switchDetail?.height, 24].filter(
+    (v) => typeof v === "number",
+  )[0]
 
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
@@ -451,9 +456,9 @@ function Switch(props: ToggleInputProps) {
       <Animated.View
         style={[
           $switchDetail,
-          { width: knobWidth, height: knobHeight },
-          $animatedSwitchKnob,
           $detailStyleOverride,
+          $animatedSwitchKnob,
+          { width: knobWidth, height: knobHeight },
           { backgroundColor: knobBackgroundColor },
         ]}
       />
