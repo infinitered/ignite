@@ -8,7 +8,7 @@ import {
 } from "@react-navigation/native"
 import Config from "../config"
 import type { PersistNavigationConfig } from "../config/config.base"
-import { useIsMounted } from "../utils/isMounted"
+import { useIsMounted } from "../utils/useIsMounted"
 
 /* eslint-disable */
 export const RootNavigation = {

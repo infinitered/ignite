@@ -13,11 +13,11 @@ import {
 } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue } from "react-native-reanimated"
-import { SafeAreaView } from "react-native-safe-area-context"
 import { ListItem, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors, spacing } from "../../theme"
+import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 
@@ -157,6 +157,8 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
       return () => timeout.current && clearTimeout(timeout.current)
     }, [])
 
+    const $drawerInsets = useSafeAreaInsetsStyle(["top"])
+
     return (
       <DrawerLayout
         ref={drawerRef}
@@ -174,7 +176,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           }
         }}
         renderNavigationView={() => (
-          <SafeAreaView style={$drawer} edges={["top"]}>
+          <View style={[$drawer, $drawerInsets]}>
             <View style={$logoContainer}>
               <Image source={logo} style={$logoImage} />
             </View>
@@ -191,14 +193,10 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
                 <ShowroomListItem {...{ item, sectionIndex, handleScroll }} />
               )}
             />
-          </SafeAreaView>
+          </View>
         )}
       >
-        <Screen
-          preset="fixed"
-          safeAreaEdges={["top", "bottom"]}
-          contentContainerStyle={$screenContainer}
-        >
+        <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
           <DrawerIconButton onPress={toggleDrawer} {...{ open, progress }} />
 
           <SectionList

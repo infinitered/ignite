@@ -14,6 +14,9 @@ Check out this list of topics:
   - [Screen](./Components-Screen.md)
   - [Text](./Components-Text.md)
   - [TextField](./Components-TextField.md)
+- [Utils](./Utils.md) - Collection of helpful utilities
+  - [useSafeAreaInsetsStyle](./Utils-useSafeAreaInsetsStyle.md)
+  - [useHeader](./Utils-useHeader.md)
 - [Theming](./Theming.md) - How to customize the look and feel of your app
   - [Colors & Palettes](./Theming-Colors-And-Palettes.md) - Explanation of our palette-based approach to colors
   - [Fonts & Typography](./Theming-Fonts-And-Typography.md) - How we define fonts in a semantic way
