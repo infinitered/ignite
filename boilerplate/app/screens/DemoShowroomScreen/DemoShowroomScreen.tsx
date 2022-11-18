@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react"
 import { FlatList, Image, ImageStyle, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
-import { useSharedValue } from "react-native-reanimated"
+import { useSharedValue, withTiming } from "react-native-reanimated"
 import { ListItem, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabScreenProps } from "../../navigators/DemoNavigator"
@@ -82,6 +82,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         }}
         onDrawerStateChanged={(newState: DrawerState, drawerWillShow: boolean) => {
           if (newState === "Settling") {
+            progress.value = withTiming(drawerWillShow ? 1 : 0, {
+              duration: 250,
+            })
             setOpen(drawerWillShow)
           }
         }}
