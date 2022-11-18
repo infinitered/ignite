@@ -82,7 +82,7 @@ const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) 
   )
 }
 
-const ShowroomListItem = Platform.select({ web: WebLisItem, default: NativeListItem })
+const ShowroomListItem = Platform.select({ web: WebListItem, default: NativeListItem })
 
 export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
