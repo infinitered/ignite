@@ -5,6 +5,8 @@ import { camelCase, prettier } from "../tools/string.mjs"
 import { dir } from "../tools/path.mjs"
 
 const name = await question("Model name? ")
+const fileName = name;
+const ext = "ts";
 
 const file = prettier(
   /*ts*/ `
@@ -28,9 +30,9 @@ export const createNameDefaultModel = () => types.optional(NameModel, {})
 `,
   { Name: name },
 )
-await fs.writeFile(dir.models(`${name}.ts`), file)
+await fs.writeFile(dir.models(`${fileName}.${ext}`), file)
 
-await update(dir.models("index.ts"), (file) => file + `export * from "./${name}"` + "\n")
+await update(dir.models("index.ts"), (file) => file + `export * from "./${fileName}"` + "\n")
 
 if (!name.endsWith("Store")) {
   process.exit(0)
@@ -39,7 +41,7 @@ if (!name.endsWith("Store")) {
 await update(
   dir.models("RootStore.ts"),
   (file) =>
-    insert(file, `"mobx-state-tree"`, (s) => s + `\n` + `import { ${name}Model } from "./${name}"`),
+    insert(file, `"mobx-state-tree"`, (s) => s + `\n` + `import { ${name}Model } from "./${fileName}"`),
   (file) =>
     insert(
       file,

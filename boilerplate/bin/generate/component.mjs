@@ -5,6 +5,8 @@ import { dir } from "../tools/path.mjs"
 import { update } from "../tools/patch.mjs"
 
 const name = await question("Component name? ")
+const fileName = name;
+const ext = "tsx"
 
 const file = prettier(
   /*ts*/ `
@@ -48,6 +50,6 @@ const $text: TextStyle = {
   { Name: name },
 )
 
-await fs.writeFile(dir.components(`${name}.tsx`), file)
+await fs.writeFile(dir.components(`${fileName}.${ext}`), file)
 
-await update(dir.components("index.ts"), (file) => file + `export * from "./${name}"` + "\n")
+await update(dir.components("index.ts"), (file) => file + `export * from "./${fileName}"` + "\n")
