@@ -30,7 +30,11 @@
     "expo:ios": "expo start --ios",
     "expo:web": "expo start --web",
     "expo:build:detox": "detox build -c ios.sim.expo",
-    "expo:test:detox": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
+    "expo:test:detox": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo",
+    "generate:component": "zx bin/generate/component.mjs",
+    "generate:model": "zx bin/generate/model.mjs",
+    "generate:navigator": "zx bin/generate/navigator.mjs",
+    "generate:screen": "zx bin/generate/screen.mjs"
   },
   "overrides": {
     "react-error-overlay": "6.0.9"
@@ -69,7 +73,8 @@
     "react-native-screens": "3.15.0",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.3"
+    "reactotron-react-native": "5.0.3",
+    "zx": "^7.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
@@ -168,6 +173,7 @@
   "eslintConfig": {
     "root": true,
     "parser": "@typescript-eslint/parser",
+    "ignorePatterns": ["bin/*"],
     "extends": [
       "plugin:@typescript-eslint/recommended",
       "plugin:react/recommended",
