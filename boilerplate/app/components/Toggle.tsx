@@ -376,13 +376,15 @@ function Switch(props: ToggleInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
-  const knobWidth = [$detailStyleOverride?.width, $switchDetail?.width, 24].filter(
-    (v) => typeof v === "number",
-  )[0]
+  const knobSizeFallback = 2
 
-  const knobHeight = [$detailStyleOverride?.height, $switchDetail?.height, 24].filter(
+  const knobWidth = [$detailStyleOverride?.width, $switchDetail?.width, knobSizeFallback].find(
     (v) => typeof v === "number",
-  )[0]
+  )
+
+  const knobHeight = [$detailStyleOverride?.height, $switchDetail?.height, knobSizeFallback].find(
+    (v) => typeof v === "number",
+  )
 
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
