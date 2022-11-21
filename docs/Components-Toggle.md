@@ -177,3 +177,11 @@ The `switchAccessibilityMode` is a special prop for the switch variant that adds
 ```tsx
 <Toggle value={value} onValueChange={setValue} variant="switch" switchAccessibilityMode="icon" />
 ```
+
+### `checkboxIcon`
+
+The `checkboxIcon` is a prop for the checkbox variant that allows you to customize the icon used for the "on" state.
+
+```tsx
+<Toggle variant="checkbox" checkboxIcon="ladybug" />
+```

@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
+import React, { ComponentType, FC, useMemo } from "react"
 import {
   GestureResponderEvent,
   Image,
@@ -12,20 +12,20 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import Animated, { FadeIn, useAnimatedStyle, withTiming } from "react-native-reanimated"
+import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { colors, spacing } from "../theme"
-import { iconRegistry } from "./Icon"
+import { iconRegistry, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 
 type Variants = "checkbox" | "switch" | "radio"
 
-export interface ToggleProps extends Omit<TouchableOpacityProps, "style"> {
+interface BaseToggleProps extends Omit<TouchableOpacityProps, "style"> {
   /**
    * The variant of the toggle.
    * Options: "checkbox", "switch", "radio"
    * Default: "checkbox"
    */
-  variant?: Variants
+  variant?: unknown
   /**
    * A style modifier for different input states.
    */
@@ -60,13 +60,6 @@ export interface ToggleProps extends Omit<TouchableOpacityProps, "style"> {
    * This gives the inputs their inner characteristics and "on" background-color.
    */
   inputInnerStyle?: ViewStyle
-  /**
-   * Optional input detail style override.
-   * For checkbox, this affects the Image component.
-   * For radio, this affects the dot View.
-   * For switch, this affects the knob View.
-   */
-  inputDetailStyle?: ViewStyle & ImageStyle
   /**
    * The position of the label relative to the action component.
    * Default: right
@@ -110,20 +103,52 @@ export interface ToggleProps extends Omit<TouchableOpacityProps, "style"> {
    * Pass any additional props directly to the helper Text component.
    */
   HelperTextProps?: TextProps
+}
+
+interface CheckboxToggleProps extends BaseToggleProps {
+  variant?: "checkbox"
   /**
-   * Special prop for the switch variant that adds a text/icon label for on/off states.
+   * Optional style prop that affects the Image component.
+   */
+  inputDetailStyle?: ImageStyle
+  /**
+   * Checkbox-only prop that changes the icon used for the "on" state.
+   */
+  checkboxIcon?: IconTypes
+}
+
+interface RadioToggleProps extends BaseToggleProps {
+  variant?: "radio"
+  /**
+   * Optional style prop that affects the dot View.
+   */
+  inputDetailStyle?: ViewStyle
+}
+
+interface SwitchToggleProps extends BaseToggleProps {
+  variant?: "switch"
+  /**
+   * Switch-only prop that adds a text/icon label for on/off states.
    */
   switchAccessibilityMode?: "text" | "icon"
+  /**
+   * Optional style prop that affects the knob View.
+   * Note: `width` and `height` rules should be points (numbers), not percentages.
+   */
+  inputDetailStyle?: Omit<ViewStyle, "width" | "height"> & { width?: number; height?: number }
 }
+
+export type ToggleProps = CheckboxToggleProps | RadioToggleProps | SwitchToggleProps
 
 interface ToggleInputProps {
   on: boolean
-  status: ToggleProps["status"]
+  status: BaseToggleProps["status"]
   disabled: boolean
   outerStyle: ViewStyle
   innerStyle: ViewStyle
-  detailStyle: ViewStyle & ImageStyle
-  switchAccessibilityMode?: ToggleProps["switchAccessibilityMode"]
+  detailStyle: Omit<ViewStyle & ImageStyle, "overflow">
+  switchAccessibilityMode?: SwitchToggleProps["switchAccessibilityMode"]
+  checkboxIcon?: CheckboxToggleProps["checkboxIcon"]
 }
 
 /**
@@ -150,7 +175,10 @@ export function Toggle(props: ToggleProps) {
     ...WrapperProps
   } = props
 
-  const disabled = editable === false || status === "disabled"
+  const { switchAccessibilityMode } = props as SwitchToggleProps
+  const { checkboxIcon } = props as CheckboxToggleProps
+
+  const disabled = editable === false || status === "disabled" || props.disabled
 
   const Wrapper = useMemo<ComponentType<TouchableOpacityProps>>(
     () => (disabled ? View : TouchableOpacity),
@@ -191,7 +219,8 @@ export function Toggle(props: ToggleProps) {
           outerStyle={props.inputOuterStyle}
           innerStyle={props.inputInnerStyle}
           detailStyle={props.inputDetailStyle}
-          switchAccessibilityMode={props.switchAccessibilityMode}
+          switchAccessibilityMode={switchAccessibilityMode}
+          checkboxIcon={checkboxIcon}
         />
 
         {labelPosition === "right" && <FieldLabel {...props} labelPosition={labelPosition} />}
@@ -222,6 +251,7 @@ function Checkbox(props: ToggleInputProps) {
     on,
     status,
     disabled,
+    checkboxIcon,
     outerStyle: $outerStyleOverride,
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,
@@ -269,7 +299,7 @@ function Checkbox(props: ToggleInputProps) {
         ]}
       >
         <Image
-          source={iconRegistry.check}
+          source={iconRegistry[checkboxIcon] || iconRegistry.check}
           style={[$checkboxDetail, { tintColor: iconTintColor }, $detailStyleOverride]}
         />
       </Animated.View>
@@ -346,15 +376,15 @@ function Switch(props: ToggleInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
-  const knob = useRef<Animated.View>()
-  const [renderedKnobWidth, setRenderedKnobWidth] = useState(null)
+  const knobSizeFallback = 2
 
-  useEffect(() => {
-    // measure knob subsquently if the override changes
-    if (!knob.current) return
-    if (renderedKnobWidth === null) return
-    knob.current.measure((_x, _y, width) => setRenderedKnobWidth(width))
-  }, [$detailStyleOverride?.width])
+  const knobWidth = [$detailStyleOverride?.width, $switchDetail?.width, knobSizeFallback].find(
+    (v) => typeof v === "number",
+  )
+
+  const knobHeight = [$detailStyleOverride?.height, $switchDetail?.height, knobSizeFallback].find(
+    (v) => typeof v === "number",
+  )
 
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
@@ -387,8 +417,6 @@ function Switch(props: ToggleInputProps) {
   })()
 
   const $animatedSwitchKnob = useAnimatedStyle(() => {
-    if (renderedKnobWidth === null) return {}
-
     const offsetLeft = ($innerStyleOverride?.paddingStart ||
       $innerStyleOverride?.paddingLeft ||
       $switchInner?.paddingStart ||
@@ -402,10 +430,10 @@ function Switch(props: ToggleInputProps) {
       0) as number
 
     const start = withTiming(on ? "100%" : "0%")
-    const marginStart = withTiming(on ? -(renderedKnobWidth || 0) - offsetRight : 0 + offsetLeft)
+    const marginStart = withTiming(on ? -(knobWidth || 0) - offsetRight : 0 + offsetLeft)
 
     return { start, marginStart }
-  }, [on, renderedKnobWidth])
+  }, [on, knobWidth])
 
   return (
     <View
@@ -428,19 +456,13 @@ function Switch(props: ToggleInputProps) {
       <SwitchAccessibilityLabel {...props} role="off" />
 
       <Animated.View
-        ref={knob}
-        entering={FadeIn.delay(150).duration(150)}
         style={[
           $switchDetail,
-          $animatedSwitchKnob,
           $detailStyleOverride,
+          $animatedSwitchKnob,
+          { width: knobWidth, height: knobHeight },
           { backgroundColor: knobBackgroundColor },
         ]}
-        onLayout={(e) => {
-          // measure knob on load only once
-          if (renderedKnobWidth !== null) return
-          setRenderedKnobWidth(e.nativeEvent.layout.width)
-        }}
       />
     </View>
   )
@@ -489,7 +511,7 @@ function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off"
   )
 }
 
-function FieldLabel(props: ToggleProps) {
+function FieldLabel(props: BaseToggleProps) {
   const {
     status,
     label,
@@ -585,7 +607,7 @@ const $switchInner: ViewStyle = {
   paddingEnd: 4,
 }
 
-const $switchDetail: ViewStyle = {
+const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
   borderRadius: 12,
   position: "absolute",
   width: 24,
