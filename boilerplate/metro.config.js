@@ -1,6 +1,3 @@
-const { getDefaultConfig } = require("metro-config")
-const { getDefaultConfig: getDefaultExpoConfig } = require("@expo/metro-config")
-
 let metroConfig
 let isExpo = false
 try {
@@ -12,6 +9,7 @@ try {
 } catch {}
 
 if (isExpo) {
+  const { getDefaultConfig: getDefaultExpoConfig } = require("@expo/metro-config")
   /**
    *  Expo metro config
    * Learn more https://docs.expo.io/guides/customizing-metro
@@ -29,14 +27,14 @@ if (isExpo) {
    * using PNPM or monorepo or symlinks at all.
    *
    * However, it doesn't hurt to have it either.
-   * 
+   *
    * We've also added metro-serializer-esbuild so that we can get tree shaking.
    */
-   const { makeMetroConfig } = require("@rnx-kit/metro-config")
-   const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
-   const { getDefaultConfig } = require("metro-config")
-   const { MetroSerializer, esbuildTransformerConfig } = require("@rnx-kit/metro-serializer-esbuild")
-   
+  const { makeMetroConfig } = require("@rnx-kit/metro-config")
+  const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
+  const { getDefaultConfig } = require("metro-config")
+  const { MetroSerializer, esbuildTransformerConfig } = require("@rnx-kit/metro-serializer-esbuild")
+
   metroConfig = (async () => {
     const defaultConfig = await getDefaultConfig()
     return makeMetroConfig({
