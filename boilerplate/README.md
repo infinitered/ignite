@@ -22,27 +22,19 @@ The Ignite boilerplate project's structure will look similar to this:
 ignite-project
 ├── app
 │   ├── components
+│   ├── config
 │   ├── i18n
-│   ├── utils
 │   ├── models
 │   ├── navigators
 │   ├── screens
 │   ├── services
 │   ├── theme
+│   ├── utils
 │   ├── app.tsx
-├── storybook
-│   ├── views
-│   ├── index.ts
-│   ├── storybook-registry.ts
-│   ├── storybook.ts
-│   ├── toggle-storybook.tsx
 ├── test
 │   ├── __snapshots__
-│   ├── storyshots.test.ts.snap
-│   ├── mock-i18n.ts
-│   ├── mock-reactotron.ts
+│   ├── mockFile.ts
 │   ├── setup.ts
-│   ├── storyshots.test.ts
 ├── README.md
 ├── android
 │   ├── app
@@ -76,23 +68,24 @@ ignite-project
 
 Included in an Ignite boilerplate project is the `app` directory. This is a directory you would normally have to create when using vanilla React Native.
 
-The inside of the src directory looks similar to the following:
+The inside of the `app` directory looks similar to the following:
 
 ```
 app
-│── components
-│── i18n
+├── components
+├── config
+├── i18n
 ├── models
 ├── navigators
 ├── screens
 ├── services
 ├── theme
 ├── utils
-└── app.tsx
+├── app.tsx
 ```
 
 **components**
-This is where your React components will live. Each component will have a directory containing the `.tsx` file, along with a story file, and optionally `.presets`, and `.props` files for larger components. The app will come with some commonly used components like Button.
+This is where your reusable components live which help you build your screens.
 
 **i18n**
 This is where your translations will live if you are using `react-native-i18n`.
@@ -113,7 +106,7 @@ Any services that interface with the outside world will live here (think REST AP
 Here lives the theme for your application, including spacing, colors, and typography.
 
 **utils**
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
+This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truly shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
 **app.tsx** This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
@@ -121,29 +114,17 @@ This is a great place to put miscellaneous helpers and utilities. Things like da
 
 The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find templates you can customize to help you get started with React Native.
 
-### ./storybook directory
-
-This is where your stories will be registered and where the Storybook configs will live.
-
 ### ./test directory
 
-This directory will hold your Jest configs and mocks, as well as your [storyshots](https://github.com/storybooks/storybook/tree/master/addons/storyshots) test file. This is a file that contains the snapshots of all your component storybooks.
+This directory will hold your Jest configs and mocks.
 
-## Running Storybook
+## Running Detox end-to-end tests
 
-From the command line in your generated app's root directory, enter `yarn run storybook`
-This starts up the storybook server and opens a story navigator in your browser. With your app
-running, choose Toggle Storybook from the developer menu to switch to Storybook; you can then
-use the story navigator in your browser to change stories.
-
-For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
-
-## Running e2e tests
-
-Read [e2e setup instructions](./e2e/README.md).
+Read [Detox setup instructions](./detox/README.md).
 
 ## Previous Boilerplates
 
 - [2018 aka Bowser](https://github.com/infinitered/ignite-bowser)
 - [2017 aka Andross](https://github.com/infinitered/ignite-andross)
 - [2016 aka Ignite 1.0](https://github.com/infinitered/ignite-ir-boilerplate-2016)
+

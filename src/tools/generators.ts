@@ -1,8 +1,11 @@
 import * as ejs from "ejs"
-import { filesystem, GluegunToolbox, strings } from "gluegun"
+import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
 import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
+import * as YAML from "yaml"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
+
+const NEW_LINE = process.platform === "win32" ? "\r\n" : "\n"
 
 export function runGenerator(
   toolbox: GluegunToolbox,
@@ -57,9 +60,6 @@ function validateGenerator(generator?: string) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function showGeneratorHelp(toolbox: GluegunToolbox) {
-  const inIgnite = isIgniteProject()
-  const generators = inIgnite ? installedGenerators() : []
-
   igniteHeading()
   heading("Ignite Generators")
   p()
@@ -78,24 +78,40 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   p()
   heading("Installed generators")
   p()
-  if (inIgnite) {
-    const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
-    generators.forEach((g) => {
-      const isAppIconGenerator = g === "app-icon"
+  showGenerators()
+}
 
-      if (isAppIconGenerator) {
-        command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
-      } else {
-        command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
-      }
-    })
-  } else {
+function showGenerators() {
+  if (!isIgniteProject()) {
     warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
+    return
   }
+
+  const generators = installedGenerators()
+  const longestGen = generators.reduce((c, g) => Math.max(c, g.length), 0)
+  generators.forEach((g) => {
+    if (g === "app-icon") {
+      // specialty app-icon generator
+      command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
+    } else if (g === "splash-screen") {
+      // specialty splash-screen generator
+      command(g.padEnd(longestGen), `generates splash-screen`, [
+        `ignite g ${g} "#191015" [--android-size=180 --ios-size=212]`,
+      ])
+    } else {
+      // standard generators
+      command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
+    }
+  })
 }
 
 export function updateGenerators(toolbox: GluegunToolbox) {
   const { parameters } = toolbox
+
+  if (!isIgniteProject()) {
+    warning("⚠️  Not in an Ignite project root. Go to your Ignite project root to see generators.")
+    return
+  }
 
   let generatorsToUpdate
   if (parameters.first) {
@@ -124,18 +140,66 @@ function isIgniteProject(): boolean {
   return filesystem.exists("./ignite") === "dir"
 }
 
+function cwd() {
+  return process.cwd()
+}
+
 function igniteDir() {
-  const cwd = process.cwd()
-  return filesystem.path(cwd, "ignite")
+  return filesystem.path(cwd(), "ignite")
 }
 
 function appDir() {
-  const cwd = process.cwd()
-  return filesystem.path(cwd, "app")
+  return filesystem.path(cwd(), "app")
 }
 
 function templatesDir() {
   return filesystem.path(igniteDir(), "templates")
+}
+
+function frontMatter(contents: string) {
+  const parts = contents.split(`---${NEW_LINE}`)
+  if (parts.length === 1 || parts.length === 3) {
+    return {
+      data: parts[1] ? YAML.parse(parts[1]) : {},
+      content: parts[2] ?? parts[0],
+    }
+  } else {
+    return {}
+  }
+}
+
+/**
+ * Patch front matter configuration
+ */
+type Patch = GluegunPatchingPatchOptions & {
+  path: string
+  append?: string
+  prepend?: string
+  replace?: string
+  skip?: boolean
+}
+
+/**
+ * Handles patching files via front matter config
+ */
+async function handlePatches(data: { patches?: Patch[]; patch?: Patch }) {
+  const patches = data.patches ?? []
+  if (data.patch) patches.push(data.patch)
+  for (const patch of patches) {
+    const { path: patchPath, skip, ...patchOpts } = patch
+    if (patchPath && !skip) {
+      if (patchOpts.append) {
+        await patching.append(patchPath, patchOpts.append)
+      }
+      if (patchOpts.prepend) {
+        await patching.prepend(patchPath, patchOpts.prepend)
+      }
+      if (patchOpts.replace) {
+        await patching.replace(patchPath, patchOpts.replace, patchOpts.insert)
+      }
+      await patching.patch(patchPath, patchOpts)
+    }
+  }
 }
 
 /**
@@ -157,8 +221,11 @@ type GeneratorOptions = {
 /**
  * Generates something using a template
  */
-export function generateFromTemplate(generator: string, options: GeneratorOptions): string[] {
-  const { find, path, dir, copy, separator } = filesystem
+export function generateFromTemplate(
+  generator: string,
+  options: GeneratorOptions,
+): Promise<string>[] {
+  const { find, path, dir, separator } = filesystem
   const { pascalCase, kebabCase, pluralize, camelCase } = strings
 
   // permutations of the name
@@ -167,81 +234,56 @@ export function generateFromTemplate(generator: string, options: GeneratorOption
   const camelCaseName = camelCase(options.name)
 
   // passed into the template generator
-  const props = { camelCaseName, kebabCaseName, pascalCaseName }
+  const props = { camelCaseName, kebabCaseName, pascalCaseName, ...options }
 
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
-  // where are we copying to?
-  const generatorDir = path(appDir(), pluralize(generator))
-  const destinationDir = path(generatorDir, kebabCaseName)
-
-  // find index file if it exists
-  let indexFile: string
-  let hasIndex: boolean
-  try {
-    indexFile = find(generatorDir, { matching: "index.@(ts|tsx|js|jsx)", recursive: false })[0]
-    hasIndex = !!indexFile
-  } catch (e) {
-    // just ignore if index doesn't exist
-  }
 
   // find the files
   const files = find(templateDir, { matching: "*" })
 
-  // create destination folder
-  dir(destinationDir)
-
   // loop through the files
-  const newFiles = files.map((templateFilename: string) => {
+  const newFiles = files.map(async (templateFilename: string) => {
     // get the filename and replace `NAME` with the actual name
-    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", kebabCaseName)
+    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", pascalCaseName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
 
-    let destinationFile: string
+    // read template file
+    let templateContents = filesystem.read(templateFilename)
 
-    // if .ejs, run through the ejs template system
+    // render ejs
     if (templateFilename.endsWith(".ejs")) {
-      // where we're going
-      destinationFile = path(destinationDir, filename)
-
-      // file-specific props
-      const data = { props: { ...props, filename } }
-
-      // read the template
-      const templateContent = filesystem.read(templateFilename)
-
-      // render the template
-      const content = ejs.render(templateContent, data)
-
-      // write to the destination file
-      filesystem.write(destinationFile, content)
-    } else {
-      // no .ejs, so just direct copy
-      destinationFile = path(destinationDir, filename)
-      copy(templateFilename, destinationFile)
+      templateContents = ejs.render(templateContents, { props: { ...props, filename } })
     }
 
-    // append to barrel export if applicable
-    if (
-      !options.skipIndexFile &&
-      hasIndex &&
-      !filename.includes(".test") &&
-      !filename.includes(".story") &&
-      !filename.includes(".styles")
-    ) {
-      const basename = filename.split(".")[0]
-      const exportLine = `export * from "./${kebabCaseName}/${basename}"\n`
-      const indexContents = filesystem.read(indexFile)
-      const exportExists = indexContents.includes(exportLine)
-
-      if (!exportExists) {
-        filesystem.append(indexFile, exportLine)
-      }
+    // parse out front matter data and content
+    const { data, content } = frontMatter(templateContents)
+    if (!content) {
+      warning("⚠️  Unable to parse front matter. Please check your delimiters.")
+      return ""
     }
 
-    return destinationFile
+    // apply any provided patches
+    await handlePatches(data)
+
+    // where are we copying to?
+    const generatorDir = path(appDir(), pluralize(generator))
+    const defaultDestinationDir = generatorDir // e.g. app/components, app/screens, app/models
+    const templateDestinationDir = data.destinationDir
+    const destinationDir = templateDestinationDir
+      ? path(cwd(), templateDestinationDir)
+      : defaultDestinationDir
+    const destinationPath = path(destinationDir, data.filename ?? filename)
+
+    // ensure destination folder exists
+    dir(destinationDir)
+
+    // write to the destination file
+    filesystem.write(destinationPath, content)
+
+    return destinationPath
   })
 
   return newFiles
@@ -277,10 +319,6 @@ function installGenerators(generators: string[]): string[] {
   const { path, find, copy, dir, cwd, separator, exists, read } = filesystem
   const sourceDir = sourceDirectory()
   const targetDir = path(cwd(), "ignite", "templates")
-
-  if (!isIgniteProject()) {
-    throw new Error("Not in an Ignite root directory (can't find ./ignite folder)")
-  }
 
   // for each generator type, copy it over to the ignite/templates folder
   const changedGenerators = generators.filter((gen) => {
@@ -319,7 +357,7 @@ enum Platforms {
 }
 
 // prettier-ignore
-const APP_ICON_RULES = {
+const APP_ICON_RULESET = {
   icons: [
     { platform: Platforms.Ios, type: "universal", name: "Icon-{size}-{idiom}{scale}.png", inputFile: "ios-universal.png" },
     { platform: Platforms.Android, type: "adaptive", name: "mipmap-{dpi}/ic_launcher_background.png", inputFile: "android-adaptive-background.png" },
@@ -383,7 +421,7 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all", f
   const optionsToValidate = option === "all" ? allowedOptions : [option]
 
   // get all the file-names that are required for the supplied option(s) and dedup
-  const inputFileNames = APP_ICON_RULES.icons
+  const inputFileNames = APP_ICON_RULESET.icons
     .filter((i) => optionsToValidate.includes(i.platform))
     .reduce((acc, i) => Array.from(new Set([...acc, i.inputFile])), [])
 
@@ -457,14 +495,19 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
     const relativeOutputDirPath = {
       expo: "assets/images",
       android: "android/app/src/main/res",
-      ios:
-        (exists("ios") &&
-          find("ios", {
+      ios: (function () {
+        const searchPath = path(cwd, "ios")
+
+        if (!exists(searchPath)) return searchPath
+
+        return (
+          find(searchPath, {
             directories: true,
             files: false,
             matching: "AppIcon.appiconset",
-          })?.[0]) ||
-        "ios/**/Images.xcassets/AppIcon.appiconset",
+          })?.[0] || "ios/**/Images.xcassets/AppIcon.appiconset"
+        )
+      })(),
     }[o]
     const outputDirPath = path(cwd, relativeOutputDirPath)
 
@@ -478,7 +521,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
     heading(`Generating ${optionProjectName} app icons...`)
 
-    const icons = APP_ICON_RULES.icons.filter((i) => i.platform === o)
+    const icons = APP_ICON_RULESET.icons.filter((i) => i.platform === o)
 
     // prepare each icon for generation sequentially
     for (const i of icons) {
@@ -507,7 +550,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
         } catch (error) {}
       })()
 
-      const rules = APP_ICON_RULES.rules.filter((i) => i.platform === o)
+      const rules = APP_ICON_RULESET.rules.filter((i) => i.platform === o)
 
       // actually resize the input files and save to output dir sequentially
       for (const r of rules) {
@@ -597,6 +640,280 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
     // if we reached this point, generation for this platform was successful
     optionGenerationSuccesses.push(true)
+  }
+
+  return !!optionGenerationSuccesses.length
+}
+/**
+ * Validates that splash screen icon input file exists in the template dir.
+ * Additionally validates the size and background parameters.
+ */
+export async function validateSplashScreenGenerator(
+  options: { androidSize: number; iosSize: number; backgroundColor: string },
+  flags: Options,
+) {
+  const { androidSize, iosSize, backgroundColor } = options || {}
+  const { skipSourceEqualityValidation } = flags || {}
+
+  const { path, exists, inspect } = filesystem
+
+  const validationMessages = []
+
+  // check if the android size option is numerical and non-zero
+  const androidMessages = [
+    Number.isNaN(androidSize) && "   • a numerical value",
+    androidSize <= 0 && "   • a value greater than 0",
+    androidSize >= 288 && "   • a value less than 288",
+  ].filter(Boolean)
+
+  if (androidMessages.length) {
+    validationMessages.push(`⚠️  "--android-size" option must be:`, ...androidMessages)
+  }
+
+  // check if the ios size option is numerical and non-zero
+  const iosMessages = [
+    Number.isNaN(iosSize) && "   • a numerical value",
+    iosSize <= 0 && "   • a value greater than 0",
+  ].filter(Boolean)
+
+  if (iosMessages.length) {
+    validationMessages.push(`⚠️  "--ios-size" option must be:`, ...iosMessages)
+  }
+
+  // check if the background option is a valid hex color
+  if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(backgroundColor)) {
+    validationMessages.push(`⚠️  background color parameter must be:`)
+    validationMessages.push(`   • a valid hex color`)
+  }
+
+  // validate template input file
+  const boilerplateInputFilePath = path(sourceDirectory(), "splash-screen", "logo.png")
+  const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
+
+  const isMissing = !exists(inputFilePath)
+  const isInvalidSize = await (async function () {
+    if (isMissing) return false
+
+    const metadata = await sharp(inputFilePath).metadata()
+    return metadata.width !== 1024 || metadata.height !== 1024
+  })()
+  const isSameAsSource = await (async function () {
+    if (skipSourceEqualityValidation) return false
+    if (isMissing) return false
+
+    const inputFileMd5 = inspect(inputFilePath, { checksum: "md5" }).md5
+    const sourceFileMd5 = inspect(boilerplateInputFilePath, { checksum: "md5" }).md5
+
+    return inputFileMd5 === sourceFileMd5
+  })()
+
+  const messages = [
+    isMissing && "   • the file is missing",
+    isInvalidSize && "   • the file is the wrong size (expected 1024x1024px)",
+    isSameAsSource &&
+      "   • looks like you're using our default template; customize the file with your own icon first",
+  ].filter(Boolean)
+
+  if (messages.length) {
+    validationMessages.push(`⚠️  ignite/templates/splash-screen/logo.png:`, ...messages)
+  }
+
+  return {
+    isValid: !validationMessages.length,
+    messages: validationMessages,
+  }
+}
+
+/**
+ * Generates splash screen for all platforms
+ */
+export async function generateSplashScreen(options: {
+  androidSize: number
+  iosSize: number
+  backgroundColor: string
+}) {
+  const { androidSize, iosSize, backgroundColor } = options || {}
+  const { path, exists, write, find } = filesystem
+  const cwd = process.cwd()
+
+  const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
+  const expoOutputDirPath = path(cwd, "assets/images")
+  const isExpoOutputDirExists = exists(expoOutputDirPath) === "dir"
+  const bootsplashCliPath = path(
+    cwd,
+    "node_modules/react-native-bootsplash/dist/commonjs/generate.js",
+  )
+  const isBootsplashCliInstalled = exists(bootsplashCliPath) === "file"
+  const optionGenerationSuccesses = []
+
+  async function generateForVanilla(type: "ios" | "android", size: number) {
+    const typeName = { ios: "iOS", android: "Android" }[type]
+
+    const bootsplashOutputPath = {
+      android: path(cwd, "android/app"),
+      ios: (function () {
+        const searchPath = path(cwd, "ios")
+
+        if (!exists(searchPath)) return searchPath
+
+        const xcodeprojPath = find(searchPath, {
+          directories: true,
+          files: false,
+          matching: "*.xcodeproj",
+          recursive: false,
+        })?.[0]
+
+        if (!xcodeprojPath) return searchPath
+
+        return xcodeprojPath.replace(/.xcodeproj$/, "")
+      })(),
+    }[type]
+
+    const isBootsplashOutputPathExists = exists(bootsplashOutputPath) === "dir"
+
+    heading(`Generating ${typeName} splash screen...`)
+
+    if (!isBootsplashOutputPathExists) {
+      warning(
+        `⚠️  No output directory found for "${typeName}" at "${bootsplashOutputPath}". Skipping...`,
+      )
+      return
+    }
+
+    if (!isBootsplashCliInstalled) {
+      warning(
+        `⚠️  If you are attempting to generate a splash screen for bare/vanilla ${typeName} react-native project, please install and configure the "react-native-bootsplash" package. Skipping...`,
+      )
+      return
+    }
+
+    const { generate } = require(bootsplashCliPath) || {}
+    const logFn = console.log
+    const outputFileNames: string[] = []
+
+    console.log = function (log: string) {
+      if (typeof log !== "string") return
+
+      const filePathMatch = log.match(/(?:android|ios)\/.*\.(?:png|storyboard|xml)/)
+
+      if (!filePathMatch) return
+
+      outputFileNames.push(`✅ ${filePathMatch[0]}`)
+    }
+
+    try {
+      await generate({
+        android: type === "android" && { sourceDir: bootsplashOutputPath },
+        ios: type === "ios" && { projectPath: bootsplashOutputPath },
+        workingPath: cwd,
+        logoPath: inputFilePath,
+        assetsPath: null,
+        backgroundColor,
+        flavor: "main",
+        logoWidth: size,
+      })
+
+      console.log = logFn
+
+      outputFileNames.forEach(direction)
+      optionGenerationSuccesses.push(true)
+    } catch (error) {
+      console.log = logFn
+
+      warning(
+        `⚠️  Something went wrong generating splash screen for ${typeName}, please file an issue on GitHub. Skipping...`,
+      )
+    }
+  }
+
+  async function generateForExpo(
+    type: "ios" | "android" | "web" | "all",
+    size: number,
+    expoRules: { name?: string; width: number; height: number; scale: number }[],
+  ) {
+    for (const expoRule of expoRules) {
+      const { name, width, height, scale } = expoRule
+
+      const outputFileName = [`splash-logo`, type, name].filter(Boolean).join("-") + ".png"
+      const outputFilePath = path(expoOutputDirPath, outputFileName)
+      const logoSize = size * scale
+      const verticalPadding = Math.ceil((height - logoSize) / 2)
+      const horizontalPadding = Math.ceil((width - logoSize) / 2)
+
+      try {
+        await sharp(inputFilePath)
+          .resize(logoSize, logoSize, { fit: "fill" })
+          .extend({
+            top: verticalPadding,
+            bottom: verticalPadding,
+            left: horizontalPadding,
+            right: horizontalPadding,
+            background: { r: 0, g: 0, b: 0, alpha: 0 },
+          })
+          .toFile(outputFilePath)
+
+        direction(`✅ assets/images/${outputFileName}`)
+        optionGenerationSuccesses.push(true)
+      } catch (error) {}
+    }
+  }
+
+  await generateForVanilla("ios", iosSize)
+  await generateForVanilla("android", androidSize)
+
+  heading(`Generating Expo splash screens (Android, iOS, and Web)...`)
+  if (isExpoOutputDirExists) {
+    await generateForExpo("ios", iosSize, [
+      { name: "mobile", width: 1284, height: 2778, scale: 3 },
+      { name: "tablet", width: 2048, height: 2732, scale: 2 },
+    ])
+    await generateForExpo("android", androidSize, [
+      { name: "universal", width: 1440, height: 2560, scale: 4 },
+    ])
+    await generateForExpo("web", 300, [{ width: 1920, height: 1080, scale: 1 }])
+    await generateForExpo("all", 180, [{ width: 1242, height: 2436, scale: 3 }])
+
+    // update app.json
+    const boilerplateDirPath = path(igniteCliRootDir(), "boilerplate")
+    const merge = require("deepmerge-json")
+    const sourceExpoConfig = require(path(boilerplateDirPath, "app.json"))?.expo
+    const outputAppConfig = require(path(cwd, "app.json"))
+
+    const updatedConfig = merge(outputAppConfig, {
+      expo: {
+        splash: {
+          backgroundColor,
+          image: sourceExpoConfig?.splash?.image,
+          resizeMode: sourceExpoConfig?.splash?.resizeMode,
+        },
+        android: {
+          splash: {
+            backgroundColor,
+            image: sourceExpoConfig?.android?.splash?.image,
+            resizeMode: sourceExpoConfig?.android?.splash?.resizeMode,
+          },
+        },
+        ios: {
+          splash: {
+            backgroundColor,
+            image: sourceExpoConfig?.ios?.splash?.image,
+            resizeMode: sourceExpoConfig?.ios?.splash?.resizeMode,
+          },
+        },
+        web: {
+          splash: {
+            backgroundColor,
+            image: sourceExpoConfig?.web?.splash?.image,
+            resizeMode: sourceExpoConfig?.web?.splash?.resizeMode,
+          },
+        },
+      },
+    })
+
+    write(path(cwd, "app.json"), updatedConfig)
+    direction(`✅ app.json`)
+  } else {
+    warning(`⚠️  No output directory found for "Expo" at "${expoOutputDirPath}". Skipping...`)
   }
 
   return !!optionGenerationSuccesses.length

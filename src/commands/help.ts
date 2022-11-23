@@ -1,6 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { showGeneratorHelp } from "../tools/generators"
-import { p, command, heading, igniteHeading, direction, link } from "../tools/pretty"
+import { p, command, heading, direction, link } from "../tools/pretty"
 
 module.exports = {
   dashed: true,
@@ -19,7 +19,6 @@ module.exports = {
       return showGeneratorHelp(toolbox)
     }
 
-    igniteHeading()
     heading(`Welcome to Ignite ${meta.version()}!`)
     p()
     p("Ignite is a CLI that helps you spin up a new React Native app using a")
@@ -27,13 +26,12 @@ module.exports = {
     p()
     heading("Commands")
     p()
-    command("new         ", "Creates a new React Native app", [
+    command("new             ", "Creates a new React Native app", [
       "ignite new MyApp",
-      "ignite new MyApp --expo",
       "ignite new MyApp --bundle com.mycompany.myapp",
     ])
     p()
-    command("generate (g)", "Generates components and other app features", [
+    command("generate (g)    ", "Generates components and other app features", [
       "ignite generate --hello",
       "ignite generate component Hello",
       "ignite generate model User",
@@ -41,13 +39,29 @@ module.exports = {
     ])
     p()
     command(
-      "doctor      ",
+      "doctor          ",
       "Checks your environment & displays versions of installed dependencies",
       ["ignite doctor"],
     )
     p()
-    command("rename      ", "Renames your React Native project (experimental)", [
+    command("rename          ", "Renames your React Native project (experimental)", [
       "ignite rename NewName com.mycompany.newname",
+    ])
+    p()
+    command(
+      "remove-demo (rd)",
+      "Removes demo code from the project (add --dry-run to list changes but not execute)",
+      ["ignite remove-demo", "ignite remove-demo --dry-run"],
+    )
+    p()
+    command(
+      "remove-demo-markup (rdm)",
+      "Removes @demo markup from the project (add --dry-run to list changes but not execute)",
+      ["ignite remove-demo-markup", "ignite remove-demo-markup --dry-run"],
+    )
+    p()
+    command("snackify        ", "Creates a new branch which can be imported as an Expo snack", [
+      "ignite snackify",
     ])
     p()
     direction(
@@ -58,6 +72,5 @@ module.exports = {
       `If you need additional help, join our Slack at ${link("http://community.infinite.red")}`,
     )
     p()
-    igniteHeading()
   },
 }

@@ -1,40 +1,44 @@
-import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./api-problem"
-import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
-import * as Types from "./api.types"
+/**
+ * This Api class lets you define an API endpoint and methods to request
+ * data and process it.
+ *
+ * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
+ * documentation for more details.
+ */
+import {
+  ApiResponse, // @demo remove-current-line
+  ApisauceInstance,
+  create,
+} from "apisauce"
+import Config from "../../config"
+import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
+import type {
+  ApiConfig,
+  ApiFeedResponse, // @demo remove-current-line
+} from "./api.types"
+import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-current-line
 
 /**
- * Manages all requests to the API.
+ * Configuring the apisauce instance.
+ */
+export const DEFAULT_API_CONFIG: ApiConfig = {
+  url: Config.API_URL,
+  timeout: 10000,
+}
+
+/**
+ * Manages all requests to the API. You can use this class to build out
+ * various requests that you need to call from your backend API.
  */
 export class Api {
-  /**
-   * The underlying apisauce instance which performs the requests.
-   */
   apisauce: ApisauceInstance
-
-  /**
-   * Configurable options.
-   */
   config: ApiConfig
 
   /**
-   * Creates the api.
-   *
-   * @param config The configuration to use.
+   * Set up our API instance. Keep this lightweight!
    */
   constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
     this.config = config
-  }
-
-  /**
-   * Sets up the API.  This will be called during the bootup
-   * sequence and will happen before the first React component
-   * is mounted.
-   *
-   * Be as quick as possible in here.
-   */
-  setup() {
-    // construct the apisauce instance
     this.apisauce = create({
       baseURL: this.config.url,
       timeout: this.config.timeout,
@@ -44,43 +48,15 @@ export class Api {
     })
   }
 
+  // @demo remove-block-start
   /**
-   * Gets a list of users.
+   * Gets a list of recent React Native Radio episodes.
    */
-  async getUsers(): Promise<Types.GetUsersResult> {
+  async getEpisodes(): Promise<{ kind: "ok"; episodes: EpisodeSnapshotIn[] } | GeneralApiProblem> {
     // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users`)
-
-    // the typical ways to die when calling an api
-    if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
-      if (problem) return problem
-    }
-
-    const convertUser = (raw) => {
-      return {
-        id: raw.id,
-        name: raw.name,
-      }
-    }
-
-    // transform the data into the format we are expecting
-    try {
-      const rawUsers = response.data
-      const resultUsers: Types.User[] = rawUsers.map(convertUser)
-      return { kind: "ok", users: resultUsers }
-    } catch {
-      return { kind: "bad-data" }
-    }
-  }
-
-  /**
-   * Gets a single user by ID
-   */
-
-  async getUser(id: string): Promise<Types.GetUserResult> {
-    // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users/${id}`)
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(
+      `api.json?rss_url=https%3A%2F%2Ffeeds.simplecast.com%2FhEI_f9Dx`,
+    )
 
     // the typical ways to die when calling an api
     if (!response.ok) {
@@ -90,13 +66,23 @@ export class Api {
 
     // transform the data into the format we are expecting
     try {
-      const resultUser: Types.User = {
-        id: response.data.id,
-        name: response.data.name,
+      const rawData = response.data
+
+      // This is where we transform the data into the shape we expect for our MST model.
+      const episodes: EpisodeSnapshotIn[] = rawData.items.map((raw) => ({
+        ...raw,
+      }))
+
+      return { kind: "ok", episodes }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
       }
-      return { kind: "ok", user: resultUser }
-    } catch {
       return { kind: "bad-data" }
     }
   }
+  // @demo remove-block-end
 }
+
+// Singleton instance of the API for convenience
+export const api = new Api()

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discussions
+    url: https://github.com/infinitered/ignite/discussions
+    about: For questions and discussion about ignite
+  - name: Slack Community
+    url: https://community.infinite.red/
+    about: Check out our community for more real-time discussion
+  - name: Twitter Community
+    url: https://twitter.com/i/communities/1509407040095068166
+    about: We post news, tips, requests for help, and other discussions.

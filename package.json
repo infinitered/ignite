@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "7.14.2",
+  "version": "8.4.2",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
@@ -24,24 +24,23 @@
   },
   "scripts": {
     "compile": "tsc -p .",
-    "build": "yarn compile && cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template",
-    "format": "yarn format:js && yarn format:json && yarn format:md && yarn format:ts;",
-    "format:js": "prettier --write '**/*.js'",
-    "format:json": "prettier --write '**/*.json'",
-    "format:md": "prettier --write '**/*.md'",
-    "format:ts": "prettier --write '**/*.ts{,x}'",
-    "lint": "eslint src test --ext .ts --fix && yarn format",
-    "test": "yarn build && yarn lint && jest && yarn clean",
+    "typecheck": "tsc -p . --noEmit",
+    "build": "yarn clean && yarn compile && yarn build:assets",
+    "build:assets": "cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template && cp ./src/assets/*.txt ./build/assets/",
+    "build:watch": "yarn build && yarn compile --watch",
+    "format": "prettier '**/*{.js,.ts,.tsx,.json,.md}'",
+    "format:write": "yarn format --write",
+    "format:check": "yarn format --check",
+    "lint": "eslint 'src/**' 'test/**'",
+    "test": "jest",
     "watch": "jest --watch",
+    "watch:debug": "yarn watch --runInBand --verbose",
     "coverage": "jest --coverage",
-    "ci:prep": "yarn build && yarn ci:lint",
-    "ci:lint": "eslint src test --ext .ts && yarn format",
-    "ci:test:expo": "jest ./test/expo",
-    "ci:test:vanilla": "jest ./test/vanilla",
-    "ci:test": "yarn ci:prep && yarn ci:test:vanilla && yarn ci:test:expo && yarn clean",
     "ci:publish": "yarn build && yarn semantic-release && yarn clean",
     "semantic-release": "semantic-release",
-    "clean": "rm -rf ./build && rm ./boilerplate/.gitignore.template"
+    "clean": "rm -drf ./build ./boilerplate/.gitignore.template ./boilerplate/node_modules ./boilerplate/ios/build/ ./boilerplate/ios/Pods/ ./boilerplate/android/app/build ./boilerplate/ios/.xcode.env.local",
+    "ignite-cli:dev": "node bin/ignite",
+    "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
   "devEngines": {
     "node": ">=7.x",
@@ -49,8 +48,9 @@
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
-    "gluegun": "^4.7.1",
-    "sharp": "^0.30.4"
+    "gluegun": "5.1.2",
+    "sharp": "^0.30.4",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@rnx-kit/metro-config": "^1.2.26",
@@ -59,8 +59,8 @@
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",
     "@types/sharp": "^0.30.2",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
@@ -112,6 +112,7 @@
       "@typescript-eslint/no-explicit-any": 0,
       "@typescript-eslint/no-object-literal-type-assertion": 0,
       "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/no-use-before-define": 0,
       "comma-dangle": 0,
       "multiline-ternary": 0,
       "no-undef": 0,
@@ -119,7 +120,12 @@
       "no-use-before-define": "off",
       "quotes": 0,
       "space-before-function-paren": 0
-    }
+    },
+    "ignorePatterns": [
+      "**/*.snap",
+      "**/*.txt",
+      "bin/ignite"
+    ]
   },
   "prettier": {
     "printWidth": 100,
