@@ -1,4 +1,4 @@
-export * from "./RootStore"
-export * from "./helpers/getRootStore"
-export * from "./helpers/useStores"
-export * from "./helpers/setupRootStore"
+export { RootStore, RootStoreModel, RootStoreSnapshot } from "./RootStore"
+export { getRootStore } from "./helpers/getRootStore"
+export { RootStoreProvider, useInitialRootStore, useStores } from "./helpers/useStores"
+export { setupRootStore } from "./helpers/setupRootStore"

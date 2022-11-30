@@ -1,3 +1,3 @@
 import "./i18n"
-export * from "./i18n"
-export * from "./translate"
+export { TxKeyPath, isRTL } from "./i18n"
+export { translate } from "./translate"

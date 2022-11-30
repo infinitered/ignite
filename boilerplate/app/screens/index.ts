@@ -1,9 +1,9 @@
-export * from "./WelcomeScreen"
+export { WelcomeScreen } from "./WelcomeScreen"
 // @demo remove-block-start
-export * from "./LoginScreen"
-export * from "./DemoCommunityScreen"
-export * from "./DemoDebugScreen"
-export * from "./DemoShowroomScreen/DemoShowroomScreen"
+export { LoginScreen } from "./LoginScreen"
+export { DemoCommunityScreen } from "./DemoCommunityScreen"
+export { DemoDebugScreen } from "./DemoDebugScreen"
+export { Demo } from "./DemoShowroomScreen/DemoShowroomScreen"
 // @demo remove-block-end
-export * from "./ErrorScreen/ErrorBoundary"
+export { ErrorBoundary } from "./ErrorScreen/ErrorBoundary"
 // export other screens here

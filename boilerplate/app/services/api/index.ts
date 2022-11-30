@@ -1,2 +1,2 @@
-export * from "./api"
-export * from "./api.types"
+export { Api, api, DEFAULT_API_CONFIG } from "./api"
+export { ApiConfig, ApiFeedResponse, EpisodeItem } from "./api.types"

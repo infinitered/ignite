@@ -1,1 +1,1 @@
-export * from "./reactotron"
+export { setReactotronRootStore, setupReactotron } from "./reactotron"
