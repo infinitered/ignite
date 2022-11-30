@@ -10,7 +10,12 @@ const plugins = [
 ]
 
 const vanillaConfig = {
-  presets: [["@rnx-kit/babel-preset-metro-react-native", { unstable_transformProfile: "esbuild" }]],
+  presets: [
+    [
+      "@rnx-kit/babel-preset-metro-react-native",
+      { disableImportExportTransform: true, looseClassTransform: true },
+    ],
+  ],
   env: {
     production: {},
   },

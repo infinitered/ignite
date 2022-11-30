@@ -51,7 +51,7 @@ if (isExpo) {
       },
       // esbuild custom serializer for speed and tree shaking
       // Note the caveats here: https://github.com/microsoft/rnx-kit/tree/main/packages/metro-serializer-esbuild#known-limitations
-      serializer: { customSerializer: MetroSerializer() },
+      serializer: { customSerializer: MetroSerializer([], { target: "es6" }) },
       transformer: esbuildTransformerConfig,
     })
   })()
