@@ -25,7 +25,7 @@ export interface HeaderProps {
    */
   titleStyle?: StyleProp<TextStyle>
   /**
-   * Optional outer title container style override for centered mode.
+   * Optional outer title container style override.
    */
   titleContainerStyle?: StyleProp<ViewStyle>
   /**
