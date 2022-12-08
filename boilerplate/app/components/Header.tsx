@@ -25,6 +25,10 @@ export interface HeaderProps {
    */
   titleStyle?: StyleProp<TextStyle>
   /**
+   * Optional outer title container style override for centered mode.
+   */
+  titleContainerStyle?: StyleProp<ViewStyle>
+  /**
    * Optional inner header wrapper style override.
    */
   style?: StyleProp<ViewStyle>
@@ -160,6 +164,7 @@ export function Header(props: HeaderProps) {
     titleMode = "center",
     titleTx,
     titleTxOptions,
+    titleContainerStyle: $titleContainerStyleOverride,
     style: $styleOverride,
     titleStyle: $titleStyleOverride,
     containerStyle: $containerStyleOverride,
@@ -168,6 +173,19 @@ export function Header(props: HeaderProps) {
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
   const titleContent = titleTx ? translate(titleTx, titleTxOptions) : title
+
+  const titleText = !!titleContent && (
+    <Text
+      weight="medium"
+      size="md"
+      text={titleContent}
+      style={[
+        titleMode === "center" && $centerTitle,
+        titleMode === "flex" && $flexTitle,
+        $titleStyleOverride,
+      ]}
+    />
+  )
 
   return (
     <View style={[$container, $containerInsets, { backgroundColor }, $containerStyleOverride]}>
@@ -183,18 +201,14 @@ export function Header(props: HeaderProps) {
           ActionComponent={LeftActionComponent}
         />
 
-        {!!titleContent && (
-          <Text
-            weight="medium"
-            size="md"
-            text={titleContent}
-            style={[
-              titleMode === "center" && $centerTitle,
-              titleMode === "flex" && $flexTitle,
-              $titleStyleOverride,
-            ]}
-          />
-        )}
+        {!!titleContent &&
+          (titleMode === "center" ? (
+            <View style={[$titleWrapper, $titleContainerStyleOverride]} pointerEvents="none">
+              {titleText}
+            </View>
+          ) : (
+            titleText
+          ))}
 
         <HeaderAction
           tx={rightTx}
@@ -259,11 +273,7 @@ const $container: ViewStyle = {
 }
 
 const $centerTitle: TextStyle = {
-  position: "absolute",
-  width: "100%",
   textAlign: "center",
-  paddingHorizontal: spacing.huge,
-  zIndex: 1,
 }
 
 const $flexTitle: TextStyle = {
@@ -295,4 +305,14 @@ const $actionIconContainer: ViewStyle = {
 
 const $actionFillerContainer: ViewStyle = {
   width: 16,
+}
+
+const $titleWrapper: ViewStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+  width: "100%",
+  position: "absolute",
+  paddingHorizontal: spacing.huge,
+  zIndex: 1,
 }
