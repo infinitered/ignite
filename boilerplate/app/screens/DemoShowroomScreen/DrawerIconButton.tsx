@@ -15,7 +15,7 @@ interface DrawerIconButtonProps extends PressableProps {
   progress: SharedValue<number>
 }
 
-const AnimatedPressible = Animated.createAnimatedComponent(Pressable)
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { open, progress, ...PressableProps } = props
@@ -75,13 +75,13 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
   }, [open, progress])
 
   return (
-    <AnimatedPressible {...PressableProps} style={[$container, animatedContainerStyles]}>
+    <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
       <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
       <Animated.View style={[$middleBar, animatedMiddleBarStyles]} />
 
       <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
-    </AnimatedPressible>
+    </AnimatedPressable>
   )
 }
 
