@@ -29,14 +29,14 @@ export function DemoDivider(props: DemoDividerProps) {
             type === "horizontal" && {
               width: 150,
               height: 1,
-              marginLeft: -75,
+              marginStart: -75,
               marginTop: -1,
             },
             type === "vertical" && {
               height: 50,
               width: 1,
               marginTop: -25,
-              marginLeft: -1,
+              marginStart: -1,
             },
           ]}
         />
