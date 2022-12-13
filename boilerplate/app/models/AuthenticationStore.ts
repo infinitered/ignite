@@ -4,8 +4,8 @@ export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
   .props({
     authToken: types.maybe(types.string),
-    authEmail: types.optional(types.string, ""),
-    authPassword: types.optional(types.string, ""),
+    authEmail: "",
+    authPassword: "",
   })
   .views((store) => ({
     get isAuthenticated() {
@@ -44,6 +44,11 @@ export const AuthenticationStoreModel = types
       store.authPassword = ""
     },
   }))
+  .preProcessSnapshot((snapshot) => {
+    // remove sensitive data from snapshot
+    const { authToken, authPassword, ...rest } = snapshot // eslint-disable-line @typescript-eslint/no-unused-vars
+    return rest
+  })
 
 export interface AuthenticationStore extends Instance<typeof AuthenticationStoreModel> {}
 export interface AuthenticationStoreSnapshot extends SnapshotOut<typeof AuthenticationStoreModel> {}
