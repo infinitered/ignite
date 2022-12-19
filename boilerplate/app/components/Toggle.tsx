@@ -623,11 +623,11 @@ const $label: TextStyle = {
 }
 
 const $labelRight: TextStyle = {
-  marginLeft: spacing.medium,
+  marginStart: spacing.medium,
 }
 
 const $labelLeft: TextStyle = {
-  marginRight: spacing.medium,
+  marginEnd: spacing.medium,
 }
 
 const $switchAccessibility: TextStyle = {

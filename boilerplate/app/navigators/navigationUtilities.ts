@@ -123,7 +123,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
       }
     }
 
-    // Save the current route name for later comparision
+    // Save the current route name for later comparison
     routeNameRef.current = currentRouteName
 
     // Persist state to storage

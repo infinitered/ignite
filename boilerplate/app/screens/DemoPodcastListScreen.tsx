@@ -329,7 +329,7 @@ const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
   flexDirection: "row",
-  marginRight: spacing.small,
+  marginEnd: spacing.small,
 }
 
 const $metadata: TextStyle = {
@@ -340,7 +340,7 @@ const $metadata: TextStyle = {
 
 const $metadataText: TextStyle = {
   color: colors.textDim,
-  marginRight: spacing.medium,
+  marginEnd: spacing.medium,
   marginBottom: spacing.extraSmall,
 }
 
