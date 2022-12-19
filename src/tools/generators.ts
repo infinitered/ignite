@@ -5,6 +5,8 @@ import * as sharp from "sharp"
 import * as YAML from "yaml"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
 
+const NEW_LINE = process.platform === "win32" ? "n" : "\n"
+
 export function runGenerator(
   toolbox: GluegunToolbox,
   generateFunc: (toolbox: GluegunToolbox) => Promise<void>,
@@ -155,7 +157,7 @@ function templatesDir() {
 }
 
 function frontMatter(contents: string) {
-  const parts = contents.split(`---`)
+  const parts = contents.split(`---${NEW_LINE}`)
   if (parts.length === 1 || parts.length === 3) {
     return {
       data: parts[1] ? YAML.parse(parts[1]) : {},
