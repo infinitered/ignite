@@ -14,13 +14,13 @@ PODS:
     - ExpoModulesCore
   - EXFont (11.0.1):
     - ExpoModulesCore
-  - Expo (47.0.8):
+  - Expo (47.0.10):
     - ExpoModulesCore
   - ExpoKeepAwake (11.0.1):
     - ExpoModulesCore
   - ExpoLocalization (14.0.0):
     - ExpoModulesCore
-  - ExpoModulesCore (1.0.3):
+  - ExpoModulesCore (1.1.0):
     - React-Core
     - ReactCommon/turbomodule/core
   - EXSplashScreen (0.17.5):
@@ -649,10 +649,10 @@ SPEC CHECKSUMS:
   EXErrorRecovery: ae43433feb0608a64dc5b1c8363b3e7769a9ea24
   EXFileSystem: 60602b6eefa6873f97172c684b7537c9760b50d6
   EXFont: 319606bfe48c33b5b5063fb0994afdc496befe80
-  Expo: 36b5f625d36728adbdd1934d4d57182f319ab832
+  Expo: a694d89d2461fdfc6b977bf489bf7d341ed03bca
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
   ExpoLocalization: e202d1e2a4950df17ac8d0889d65a1ffd7532d7e
-  ExpoModulesCore: b5d21c8880afda6fb6ee95469f9ac2ec9b98e995
+  ExpoModulesCore: 089e1ac0f0edee4dd0af0eb4e3f7b44d72cc418d
   EXSplashScreen: 3e989924f61a8dd07ee4ea584c6ba14be9b51949
   FBLazyVector: affa4ba1bfdaac110a789192f4d452b053a86624
   FBReactNativeSpec: fe8b5f1429cfe83a8d72dc8ed61dc7704cac8745
@@ -707,6 +707,6 @@ SPEC CHECKSUMS:
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 387980063d7ab8a0075ce2269bd6f9802413a18a
+PODFILE CHECKSUM: e994cb819092b90855028e70a600ecb8fc2a4751
 
 COCOAPODS: 1.11.3
