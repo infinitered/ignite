@@ -133,7 +133,7 @@ export const DemoAutoImage: Demo = {
           />
         </View>
 
-        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginLeft: spacing.small }]}>
+        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: spacing.small }]}>
           <View style={[$aspectRatioBox, { height: 32 }]} />
           <Image
             source={{

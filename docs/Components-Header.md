@@ -35,6 +35,14 @@ The `titleStyle` prop is an optional prop that is used to set the style of the h
 <Header title="Header Title" titleStyle={{ color: "white" }} />
 ```
 
+### `titleContainerStyle`
+
+The `titleContainerStyle` prop is an optional prop that is used to set the style of the header title's outer container. This is a [`StyleProp<ViewStyle>`](https://reactnative.dev/docs/view-style-props) object.
+
+```tsx
+<Header title="Header Title" titleContainerStyle={{ backgroundColor: "purple" }} />
+```
+
 ### `containerStyle`
 
 The `containerStyle` prop is an optional prop that is used to set the style of the header's outer container. This is useful specifically on notched devices to override insets. This is a [`StyleProp<ViewStyle>`](https://reactnative.dev/docs/view-style-props) object.

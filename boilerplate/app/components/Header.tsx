@@ -25,6 +25,10 @@ export interface HeaderProps {
    */
   titleStyle?: StyleProp<TextStyle>
   /**
+   * Optional outer title container style override.
+   */
+  titleContainerStyle?: StyleProp<ViewStyle>
+  /**
    * Optional inner header wrapper style override.
    */
   style?: StyleProp<ViewStyle>
@@ -160,6 +164,7 @@ export function Header(props: HeaderProps) {
     titleMode = "center",
     titleTx,
     titleTxOptions,
+    titleContainerStyle: $titleContainerStyleOverride,
     style: $styleOverride,
     titleStyle: $titleStyleOverride,
     containerStyle: $containerStyleOverride,
@@ -184,16 +189,21 @@ export function Header(props: HeaderProps) {
         />
 
         {!!titleContent && (
-          <Text
-            weight="medium"
-            size="md"
-            text={titleContent}
+          <View
             style={[
-              titleMode === "center" && $centerTitle,
-              titleMode === "flex" && $flexTitle,
-              $titleStyleOverride,
+              titleMode === "center" && $titleWrapperCenter,
+              titleMode === "flex" && $titleWrapperFlex,
+              $titleContainerStyleOverride,
             ]}
-          />
+            pointerEvents="none"
+          >
+            <Text
+              weight="medium"
+              size="md"
+              text={titleContent}
+              style={[$title, $titleStyleOverride]}
+            />
+          </View>
         )}
 
         <HeaderAction
@@ -258,16 +268,7 @@ const $container: ViewStyle = {
   width: "100%",
 }
 
-const $centerTitle: TextStyle = {
-  position: "absolute",
-  width: "100%",
-  textAlign: "center",
-  paddingHorizontal: spacing.huge,
-  zIndex: 1,
-}
-
-const $flexTitle: TextStyle = {
-  flex: 1,
+const $title: TextStyle = {
   textAlign: "center",
 }
 
@@ -295,4 +296,19 @@ const $actionIconContainer: ViewStyle = {
 
 const $actionFillerContainer: ViewStyle = {
   width: 16,
+}
+
+const $titleWrapperCenter: ViewStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+  width: "100%",
+  position: "absolute",
+  paddingHorizontal: spacing.huge,
+  zIndex: 1,
+}
+
+const $titleWrapperFlex: ViewStyle = {
+  justifyContent: "center",
+  flexGrow: 1,
 }
