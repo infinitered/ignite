@@ -144,13 +144,9 @@ export function ListItem(props: ListItemProps) {
           Component={LeftComponent}
         />
 
-        {!!text || !!tx || typeof children === "string" ? (
-          <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={$textStyles}>
-            {children}
-          </Text>
-        ) : (
-          children
-        )}
+        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={$textStyles}>
+          {children}
+        </Text>
 
         <ListItemAction
           side="right"
