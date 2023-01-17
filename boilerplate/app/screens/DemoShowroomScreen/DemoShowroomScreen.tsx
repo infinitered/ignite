@@ -162,7 +162,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     return (
       <DrawerLayout
         ref={drawerRef}
-        drawerWidth={Platform.select({ default: 326, web: Dimensions.get("screen").width * 0.3 })}
+        drawerWidth={Platform.select({ default: 326, web: Dimensions.get("window").width * 0.3 })}
         drawerType={"slide"}
         drawerPosition={isRTL ? "right" : "left"}
         overlayColor={open ? colors.palette.overlay20 : "transparent"}
