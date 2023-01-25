@@ -57,6 +57,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
             icon={isAuthPasswordHidden ? "view" : "hidden"}
             color={colors.palette.neutral800}
             containerStyle={props.style}
+            size={20}
             onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
           />
         )
