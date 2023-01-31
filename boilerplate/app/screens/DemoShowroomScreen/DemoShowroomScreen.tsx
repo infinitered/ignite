@@ -165,8 +165,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         drawerWidth={Platform.select({ default: 326, web: Dimensions.get("window").width * 0.3 })}
         drawerType={"slide"}
         drawerPosition={isRTL ? "right" : "left"}
-        drawerBackgroundColor={colors.palette.neutral100}
-        overlayColor={colors.palette.overlay20}
+        overlayColor={open ? colors.palette.overlay20 : "transparent"}
         onDrawerSlide={(drawerProgress) => {
           progress.value = open ? 1 - drawerProgress : drawerProgress
         }}
