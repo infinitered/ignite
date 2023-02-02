@@ -94,6 +94,10 @@ If you run into problems, first search the issues and discussions in this reposi
 
 If you still need help after reaching out to the proper channels, feel free to open a new GitHub issue via `npx ignite-cli issue "Unable to Ignite new app"` (as an example). This will help start writing your issue with the correct diagnostic information included.
 
+## Need Inspiration?
+
+If you need battle-tested solutions from Infinite Red experts on everything from Accessibility, to CI/CD configuration, head to [Ignite Cookbook](https://ignitecookbook.com) for code snippets from our team and the community!
+
 ## No time to learn React Native? Hire Infinite Red for your next project
 
 We get it – sometimes there just isn’t enough time on a project to learn the ins and outs of a new framework. Infinite Red’s here to help! Our experienced team of React Native engineers have worked with companies like GasBuddy, Zoom, and Mercari to bring even some of the most complex projects to life.
