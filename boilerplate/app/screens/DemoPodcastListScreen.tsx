@@ -177,6 +177,7 @@ const EpisodeCard = observer(function EpisodeCard({
     () =>
       Platform.select<AccessibilityProps>({
         ios: {
+          accessibilityLabel: episode.title,
           accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
             action: isFavorite ? "unfavorite" : "favorite",
           }),
