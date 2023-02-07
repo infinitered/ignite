@@ -45,7 +45,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #endif
 
   NSDictionary *initProps = [self prepareInitialProps];
-  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"HelloWorld", initProps);
+  UIView *rootView = [self.reactDelegate createRootViewWithBridge:bridge moduleName:@"main" initialProperties:nil];
 
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
