@@ -119,7 +119,7 @@
     "react-test-renderer": "18.2.0",
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
-    "ts-jest": "26",
+    "ts-jest": "29",
     "typescript": "^4.8.4",
     "webpack": "4",
     "webpack-dev-server": "^3"
