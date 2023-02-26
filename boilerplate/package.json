@@ -89,7 +89,7 @@
     "@typescript-eslint/parser": "5.28.0",
     "babel-jest": "^29.2.1",
     "babel-loader": "8.2.5",
-    "detox": "19.12.1",
+    "detox": "20.2.1",
     "detox-expo-helpers": "0.6.0",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "8.5.0",
@@ -106,9 +106,9 @@
     "jest-circus": "29",
     "jest-environment-node": "29",
     "jest-expo": "^48.0.0",
-    "metro-config": "0.73.7",
-    "metro-react-native-babel-preset": "0.73.7",
-    "metro-source-map": "0.73.7",
+    "metro-config": "0.75.1",
+    "metro-react-native-babel-preset": "0.75.1",
+    "metro-source-map": "0.75.1",
     "mocha": "6",
     "patch-package": "6.4.7",
     "postinstall-prepare": "1.0.1",
@@ -121,14 +121,11 @@
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
     "ts-jest": "29",
-    "typescript": "^4.8.4",
-    "webpack": "4",
-    "webpack-dev-server": "^3"
+    "typescript": "^4.8.4"
   },
   "resolutions": {
     "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@expo/dev-server": "0.1.120"
+    "@types/react-dom": "^18"
   },
   "prettier": {
     "printWidth": 100,
