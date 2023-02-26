@@ -74,8 +74,6 @@ module.exports = {
       const removePackages = [
         "@expo/webpack-config",
         "reactotron-react-native",
-        "detox",
-        "detox-expo-helpers",
         "ts-jest",
         "jest",
         "metro-config",

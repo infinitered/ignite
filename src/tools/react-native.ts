@@ -176,3 +176,41 @@ export async function renameReactNativeApp(
     }),
   )
 }
+
+export async function replaceMaestroBundleIds(
+  toolbox: GluegunToolbox,
+  oldBundleIdentifier: string,
+  newBundleIdentifier: string,
+) {
+  const { parameters, filesystem, print } = toolbox
+  const { path } = filesystem
+
+  // debug?
+  const debug = Boolean(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  // here's a list of all the files to patch the name in
+  const filesToPatch = [`.maestro/Login.yaml`, `.maestro/FavoritePodcast.yaml`]
+
+  // patch the files
+  await Promise.allSettled(
+    filesToPatch.map(async (file) => {
+      // no need to patch files that don't exist
+      const exists = await filesystem.existsAsync(path(file))
+      if (!exists) return
+
+      const content = await filesystem.readAsync(path(process.cwd(), file), "utf8")
+
+      log(`Patching ${file} - ${oldBundleIdentifier} to ${newBundleIdentifier} and variants`)
+
+      // replace all instances of the old name and all its variants
+      const newContent = content.replace(new RegExp(oldBundleIdentifier, "g"), newBundleIdentifier)
+
+      // write the new content back to the file
+      await filesystem.writeAsync(file, newContent, { atomic: true })
+    }),
+  )
+}

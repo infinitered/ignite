@@ -61,7 +61,7 @@ Check out the [Components](./Components.md) documentation.
 
 ### Testing
 
-Ignite is preconfigured to have [Detox](https://github.com/wix/Detox) and Jest.
+Ignite is preconfigured to have [Maestro](https://maestro.mobile.dev/) and Jest.
 
 You can learn more about why we chose these tests and how to use them in the [Testing](./Testing.md) docs.
 

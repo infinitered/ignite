@@ -34,7 +34,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | Reactotron RN     | Inspector/Debugger   | v2      | JS debugging                                   |
 | Hermes            | JS engine            |         | Fine-tuned JS engine for RN                    |
 | Jest              | Test Runner          | v26     | Standard test runner for JS apps               |
-| Detox             | Testing Framework    | v19     | Graybox end-to-end testing                     |
+| Maestro           | Testing Framework    |         | Automate UI testing end-to-end                 |
 | date-fns          | Date library         | v2      | Excellent date library                         |
 
 Ignite also comes with a [component library](https://github.com/infinitered/ignite/blob/master/docs/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.

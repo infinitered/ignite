@@ -8,9 +8,9 @@ Our philosophy is roughly based on the following idea from Guillermo Rauch:
 
 This isn't a hard and fast rule, but it does express our approach fairly well.
 
-## Detox Testing
+## Maestro Testing
 
-We provide a [README.md](../boilerplate/detox/README.md) inside of Ignite for how to get started with and run Detox tests once you have Ignited your app.
+We provide an [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/MaestroSetup) to help explain how to get started and run Maestro tests once you have ignited your app
 
 ## Unit Testing
 
@@ -155,11 +155,11 @@ This example is derived from [Testing React Native](https://jestjs.io/docs/tutor
 There are a variety of testing libraries available in React Native that you may find useful to add to your Ignite app
 
 - [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) - port of @testing-library/react for React Native. Useful for unit testing components.
-- [Appium](https://appium.io/) - alternative for integration testing to Detox.
+- [Appium](https://appium.io/) - alternative for integration testing to Maestro.
 
 ### Relevant Reading
 
 - [React Native docs on Testing](https://reactnative.dev/docs/testing-overview)
 - [Testing React Native Apps with Jest](https://jestjs.io/docs/tutorial-react-native)
-- [Detox docs](https://wix.github.io/Detox/)
+- [Why Maestro?](https://maestro.mobile.dev/#why-maestro)
 - [Kent C. Dodds articles on Testing](https://kentcdodds.com/blog?q=test)
