@@ -61,7 +61,9 @@ Check out the [Components](./Components.md) documentation.
 
 ### Testing
 
-Ignite is preconfigured to have [Maestro](https://maestro.mobile.dev/) and Jest.
+Ignite is pre-configured to use Jest for unit tests.
+
+Ignite includes samples of UI end-to-end tests using [Maestro](https://maestro.mobile.dev/). See our [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/MaestroSetup) for setup and walkthrough of the test samples or check out Maestro's docs on [Installing Maestro](https://maestro.mobile.dev/getting-started/installing-maestro) to run the flows.
 
 You can learn more about why we chose these tests and how to use them in the [Testing](./Testing.md) docs.
 

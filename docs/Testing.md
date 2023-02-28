@@ -155,7 +155,7 @@ This example is derived from [Testing React Native](https://jestjs.io/docs/tutor
 There are a variety of testing libraries available in React Native that you may find useful to add to your Ignite app
 
 - [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) - port of @testing-library/react for React Native. Useful for unit testing components.
-- [Appium](https://appium.io/) - alternative for integration testing to Maestro.
+- [Detox](https://wix.github.io/Detox/) and [Appium](https://appium.io/) - alternatives for integration testing to Maestro.
 
 ### Relevant Reading
 
