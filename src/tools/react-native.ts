@@ -1,5 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { children } from "./filesystem-ext"
+import { boolFlag } from "./flag"
 
 export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
   const androidHome = process.env.ANDROID_HOME
@@ -59,7 +60,7 @@ export async function renameReactNativeApp(
   const { path } = filesystem
 
   // debug?
-  const debug = Boolean(parameters.options.debug)
+  const debug = boolFlag(parameters.options.debug)
   const log = <T = unknown>(m: T): T => {
     debug && print.info(` ${m}`)
     return m
@@ -186,14 +187,19 @@ export async function replaceMaestroBundleIds(
   const { path } = filesystem
 
   // debug?
-  const debug = Boolean(parameters.options.debug)
+  const debug = boolFlag(parameters.options.debug)
   const log = <T = unknown>(m: T): T => {
     debug && print.info(` ${m}`)
     return m
   }
 
-  // here's a list of all the files to patch the name in
-  const filesToPatch = [`.maestro/Login.yaml`, `.maestro/FavoritePodcast.yaml`]
+  // here's a list of all the maestro test files to fix the bundle id
+  const TARGET_DIR = path(process.cwd())
+  const filesToPatch = filesystem.cwd(TARGET_DIR).find({
+    matching: `.maestro/**.yaml`,
+    files: true,
+    directories: false,
+  })
 
   // patch the files
   await Promise.allSettled(
@@ -206,7 +212,7 @@ export async function replaceMaestroBundleIds(
 
       log(`Patching ${file} - ${oldBundleIdentifier} to ${newBundleIdentifier} and variants`)
 
-      // replace all instances of the old name and all its variants
+      // replace all instances of the placeholder bundle id with the new one
       const newContent = content.replace(new RegExp(oldBundleIdentifier, "g"), newBundleIdentifier)
 
       // write the new content back to the file
