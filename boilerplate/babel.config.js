@@ -1,5 +1,14 @@
 const plugins = [
   [
+    "babel-plugin-root-import",
+    {
+      root: __dirname,
+      rootPathPrefix: "~/",
+      // mapping ~/ to the ./app directory (again, your app structure may differ here)
+      rootPathSuffix: "app",
+    },
+  ],
+  [
     "@babel/plugin-proposal-decorators",
     {
       legacy: true,

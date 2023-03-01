@@ -14,7 +14,11 @@
     "target": "esnext",
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "~/*": ["app/*"]
+    },
+    "baseUrl": "./"
   },
   "exclude": ["node_modules"],
   "include": ["index.js", "App.js", "app", "test"],
