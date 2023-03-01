@@ -16,3 +16,5 @@ appId: com.helloworld # the app id of the app we want to test
 - tapOn:
     text: "Let's go!"
 - assertVisible: "Components to jump start your project!"
+
+# @demo remove-file
