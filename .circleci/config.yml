@@ -81,6 +81,7 @@ workflows:
     jobs:
       - tests
       - publish:
+          context: infinitered-npm-package
           requires:
             - tests
           filters:

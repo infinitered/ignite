@@ -1,4 +1,4 @@
-<p align="center"><img src="https://s3.amazonaws.com/ir_public/projects/ignite/ignite-maverick-home-screen.png" alt="logo" width="414px"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/1479215/206780298-2b98221d-9c57-4cd3-866a-cf85ec1ddd9e.jpg" alt="Ignite README Splash Image" /></p>
 
 # Ignite - the battle-tested React Native boilerplate
 
@@ -17,13 +17,13 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 
 | Library           | Category             | Version | Description                                    |
 | ----------------- | -------------------- | ------- | ---------------------------------------------- |
-| React Native      | Mobile Framework     | v0.69   | The best cross-platform mobile framework       |
+| React Native      | Mobile Framework     | v0.70   | The best cross-platform mobile framework       |
 | React             | UI Framework         | v18     | The most popular UI framework in the world     |
 | TypeScript        | Language             | v4      | Static typechecking                            |
 | React Navigation  | Navigation           | v6      | Performant and consistent navigation framework |
 | MobX-State-Tree   | State Management     | v5      | Observable state tree                          |
 | MobX-React-Lite   | React Integration    | v3      | Re-render React performantly                   |
-| Expo              | SDK                  | v46     | Allows (optional) Expo modules                 |
+| Expo              | SDK                  | v47     | Allows (optional) Expo modules                 |
 | Expo Font         | Custom Fonts         | v10     | Import custom fonts                            |
 | Expo Localization | Internationalization | v13     | i18n support (including RTL!)                  |
 | Expo Status Bar   | Status Bar Library   | v1      | Status bar support                             |
@@ -91,6 +91,12 @@ Note:
 ## Reporting Bugs / Getting Help
 
 If you run into problems, first search the issues and discussions in this repository. If you don't find anything, you can come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
+
+If you still need help after reaching out to the proper channels, feel free to open a new GitHub issue via `npx ignite-cli issue "Unable to Ignite new app"` (as an example). This will help start writing your issue with the correct diagnostic information included.
+
+## Need Inspiration?
+
+If you need battle-tested solutions from Infinite Red experts on everything from Accessibility, to CI/CD configuration, head to [Ignite Cookbook](https://ignitecookbook.com) for code snippets from our team and the community!
 
 ## No time to learn React Native? Hire Infinite Red for your next project
 

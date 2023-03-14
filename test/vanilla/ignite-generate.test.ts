@@ -48,6 +48,7 @@ describe("ignite-cli generate", () => {
       `)
       expect(read(`${TEMP_DIR}/app/models/Pizza.ts`)).toMatchInlineSnapshot(`
         "import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
+        import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
 
         /**
          * Model description here for TypeScript hints.
@@ -55,6 +56,7 @@ describe("ignite-cli generate", () => {
         export const PizzaModel = types
           .model(\\"Pizza\\")
           .props({})
+          .actions(withSetPropAction)
           .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
           .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -100,6 +102,7 @@ describe("ignite-cli generate", () => {
       `)
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.ts`)).toMatchInlineSnapshot(`
         "import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
+        import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
 
         /**
          * Model description here for TypeScript hints.
@@ -107,6 +110,7 @@ describe("ignite-cli generate", () => {
         export const PizzaStoreModel = types
           .model(\\"PizzaStore\\")
           .props({})
+          .actions(withSetPropAction)
           .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
           .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
 

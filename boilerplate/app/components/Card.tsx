@@ -180,8 +180,8 @@ export function Card(props: CardProps) {
   const $alignmentWrapperStyle = [
     $alignmentWrapper,
     { justifyContent: $alignmentWrapperFlexOptions[verticalAlignment] },
-    LeftComponent && { marginLeft: spacing.medium },
-    RightComponent && { marginRight: spacing.medium },
+    LeftComponent && { marginStart: spacing.medium },
+    RightComponent && { marginEnd: spacing.medium },
   ]
 
   return (

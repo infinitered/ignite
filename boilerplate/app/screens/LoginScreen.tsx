@@ -10,34 +10,29 @@ interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
   const authPasswordInput = useRef<TextInput>()
+
+  const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
-    authenticationStore: {
-      authEmail,
-      authPassword,
-      setAuthEmail,
-      setAuthPassword,
-      setAuthToken,
-      validationErrors,
-    },
+    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
   } = useStores()
 
   useEffect(() => {
-    // Here is where you could fetch credientials from keychain or storage
+    // Here is where you could fetch credentials from keychain or storage
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
     setAuthPassword("ign1teIsAwes0m3")
   }, [])
 
-  const errors: typeof validationErrors = isSubmitted ? validationErrors : ({} as any)
+  const error = isSubmitted ? validationError : ""
 
   function login() {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
 
-    if (Object.values(validationErrors).some((v) => !!v)) return
+    if (validationError) return
 
     // Make a request to your server to get an authentication token.
     // If successful, reset the fields and set the token.
@@ -57,6 +52,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
             icon={isAuthPasswordHidden ? "view" : "hidden"}
             color={colors.palette.neutral800}
             containerStyle={props.style}
+            size={20}
             onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
           />
         )
@@ -91,8 +87,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         keyboardType="email-address"
         labelTx="loginScreen.emailFieldLabel"
         placeholderTx="loginScreen.emailFieldPlaceholder"
-        helper={errors?.authEmail}
-        status={errors?.authEmail ? "error" : undefined}
+        helper={error}
+        status={error ? "error" : undefined}
         onSubmitEditing={() => authPasswordInput.current?.focus()}
       />
 
@@ -107,8 +103,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         secureTextEntry={isAuthPasswordHidden}
         labelTx="loginScreen.passwordFieldLabel"
         placeholderTx="loginScreen.passwordFieldPlaceholder"
-        helper={errors?.authPassword}
-        status={errors?.authPassword ? "error" : undefined}
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
       />

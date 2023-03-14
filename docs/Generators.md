@@ -19,7 +19,6 @@ npx ignite-cli generate component MyAwesomeButton
 ```
 
 - Creates the component/function
-- Creates a style file
 
 ### Screen generator
 

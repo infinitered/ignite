@@ -7,11 +7,11 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
+import { isRTL, translate } from "../i18n"
 import { colors, spacing } from "../theme"
+import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
-import { isRTL, translate } from "../i18n"
 
 export interface HeaderProps {
   /**
@@ -25,7 +25,15 @@ export interface HeaderProps {
    */
   titleStyle?: StyleProp<TextStyle>
   /**
-   * Optional header style override.
+   * Optional outer title container style override.
+   */
+  titleContainerStyle?: StyleProp<ViewStyle>
+  /**
+   * Optional inner header wrapper style override.
+   */
+  style?: StyleProp<ViewStyle>
+  /**
+   * Optional outer header container style override.
    */
   containerStyle?: StyleProp<ViewStyle>
   /**
@@ -114,11 +122,7 @@ export interface HeaderProps {
   /**
    * Override the default edges for the safe area.
    */
-  safeAreaEdges?: Edge[]
-  /**
-   * Pass any additional props directly to the SafeAreaView component.
-   */
-  SafeAreaViewProps?: SafeAreaViewProps
+  safeAreaEdges?: ExtendedEdge[]
 }
 
 interface HeaderActionProps {
@@ -134,7 +138,7 @@ interface HeaderActionProps {
 
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
- * The Header is meant to be used with the `screenOptions.header` option on navigators,routes, or screen components via `navigation.setOptions({ header })`.
+ * The Header is meant to be used with the `screenOptions.header` option on navigators, routes, or screen components via `navigation.setOptions({ header })`.
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Header.md)
  */
@@ -156,26 +160,23 @@ export function Header(props: HeaderProps) {
     rightTx,
     rightTxOptions,
     safeAreaEdges = ["top"],
-    SafeAreaViewProps,
     title,
     titleMode = "center",
     titleTx,
     titleTxOptions,
+    titleContainerStyle: $titleContainerStyleOverride,
+    style: $styleOverride,
     titleStyle: $titleStyleOverride,
     containerStyle: $containerStyleOverride,
   } = props
 
-  const Wrapper = safeAreaEdges?.length ? SafeAreaView : View
+  const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
   const titleContent = titleTx ? translate(titleTx, titleTxOptions) : title
 
   return (
-    <Wrapper
-      edges={safeAreaEdges}
-      {...SafeAreaViewProps}
-      style={[$safeArea, SafeAreaViewProps?.style, { backgroundColor }]}
-    >
-      <View style={[$container, $containerStyleOverride]}>
+    <View style={[$container, $containerInsets, { backgroundColor }, $containerStyleOverride]}>
+      <View style={[$wrapper, $styleOverride]}>
         <HeaderAction
           tx={leftTx}
           text={leftText}
@@ -188,16 +189,21 @@ export function Header(props: HeaderProps) {
         />
 
         {!!titleContent && (
-          <Text
-            weight="medium"
-            size="md"
-            text={titleContent}
+          <View
             style={[
-              titleMode === "center" && $centerTitle,
-              titleMode === "flex" && $flexTitle,
-              $titleStyleOverride,
+              titleMode === "center" && $titleWrapperCenter,
+              titleMode === "flex" && $titleWrapperFlex,
+              $titleContainerStyleOverride,
             ]}
-          />
+            pointerEvents="none"
+          >
+            <Text
+              weight="medium"
+              size="md"
+              text={titleContent}
+              style={[$title, $titleStyleOverride]}
+            />
+          </View>
         )}
 
         <HeaderAction
@@ -211,7 +217,7 @@ export function Header(props: HeaderProps) {
           ActionComponent={RightActionComponent}
         />
       </View>
-    </Wrapper>
+    </View>
   )
 }
 
@@ -251,27 +257,18 @@ function HeaderAction(props: HeaderActionProps) {
   return <View style={[$actionFillerContainer, { backgroundColor }]} />
 }
 
-const $safeArea: ViewStyle = {
-  width: "100%",
-}
-
-const $container: ViewStyle = {
+const $wrapper: ViewStyle = {
   height: 56,
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
 }
 
-const $centerTitle: TextStyle = {
-  position: "absolute",
+const $container: ViewStyle = {
   width: "100%",
-  textAlign: "center",
-  paddingHorizontal: spacing.huge,
-  zIndex: 1,
 }
 
-const $flexTitle: TextStyle = {
-  flex: 1,
+const $title: TextStyle = {
   textAlign: "center",
 }
 
@@ -299,4 +296,19 @@ const $actionIconContainer: ViewStyle = {
 
 const $actionFillerContainer: ViewStyle = {
   width: 16,
+}
+
+const $titleWrapperCenter: ViewStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+  width: "100%",
+  position: "absolute",
+  paddingHorizontal: spacing.huge,
+  zIndex: 1,
+}
+
+const $titleWrapperFlex: ViewStyle = {
+  justifyContent: "center",
+  flexGrow: 1,
 }

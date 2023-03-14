@@ -5,7 +5,7 @@ import * as sharp from "sharp"
 import * as YAML from "yaml"
 import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
 
-const NEW_LINE = process.platform === "win32" ? "\r\n" : "\n"
+const NEW_LINE = filesystem.eol
 
 export function runGenerator(
   toolbox: GluegunToolbox,
