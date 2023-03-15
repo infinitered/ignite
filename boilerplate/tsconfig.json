@@ -15,10 +15,6 @@
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "paths": {
-      "app/*": ["app/*"],
-      "assets/*": ["assets/*"]
-    },
     "baseUrl": "./"
   },
   "exclude": ["node_modules"],
