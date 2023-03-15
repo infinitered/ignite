@@ -16,7 +16,8 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "paths": {
-      "~/*": ["app/*"]
+      "app/*": ["app/*"],
+      "assets/*": ["assets/*"]
     },
     "baseUrl": "./"
   },

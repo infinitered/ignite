@@ -181,8 +181,8 @@ describe("ignite-cli generate", () => {
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\"
-        import { colors, typography } from \\"~/theme\\"
-        import { Text } from \\"~/components/Text\\"
+        import { colors, typography } from \\"app/theme\\"
+        import { Text } from \\"app/components/Text\\"
         
         export interface ToppingProps {
           /**
@@ -247,8 +247,8 @@ describe("ignite-cli generate", () => {
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\"
-        import { colors, typography } from \\"~/theme\\"
-        import { Text } from \\"~/components/Text\\"
+        import { colors, typography } from \\"app/theme\\"
+        import { Text } from \\"app/components/Text\\"
         
         export interface ToppingProps {
           /**
