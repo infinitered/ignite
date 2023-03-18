@@ -6,10 +6,57 @@ import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import { useTranslation } from "../../../hooks/useTranslation"
+import { useStorage } from "../../../utils/storage"
+import { UPDATE_LANGUAGE } from "../../../utils/constants"
 
 function ControlledToggle(props: ToggleProps) {
   const [value, setValue] = React.useState(props.value || false)
   return <Toggle {...props} value={value} onPress={() => setValue(!value)} />
+}
+const LANGUAGE_TYPE = [
+  {
+    language: "English",
+    value: "en",
+  },
+  {
+    language: "Arabic",
+    value: "ar",
+  },
+  {
+    language: "Korean",
+    value: "ko",
+  },
+]
+
+const $centeredOne: ViewStyle = {
+  marginVertical: 10,
+}
+
+function ControlledToggleGroup(_props) {
+  const { changeLocale } = useTranslation()
+  const [language, setChangeLanguage] = useStorage(UPDATE_LANGUAGE, "en")
+
+  const useChange = (item) => {
+    changeLocale(item.value)
+    setChangeLanguage(item.value)
+  }
+
+  return (
+    <View>
+      {LANGUAGE_TYPE.map((item) => (
+        <Toggle
+          key={item.value}
+          variant="checkbox"
+          helper="Via `helper` prop." // why required?
+          label={item.language}
+          containerStyle={$centeredOne}
+          value={item.value === language}
+          onPress={() => useChange(item)}
+        />
+      ))}
+    </View>
+  )
 }
 
 const $centeredOneThirdCol: ViewStyle = {
@@ -380,6 +427,9 @@ export const DemoToggle: Demo = {
           labelStyle={{ color: colors.palette.neutral100 }}
         />
       </View>
+    </DemoUseCase>,
+    <DemoUseCase name="Language" description="Change language" layout="row">
+      <ControlledToggleGroup />
     </DemoUseCase>,
   ],
 }
