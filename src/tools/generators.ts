@@ -272,8 +272,6 @@ export async function generateFromTemplate(
       warning("⚠️  Unable to parse front matter. Please check your delimiters.")
       return { written, exists, overwritten }
     }
-    // apply any provided patches
-    await handlePatches(data)
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
@@ -284,10 +282,14 @@ export async function generateFromTemplate(
       : defaultDestinationDir
     const destinationPath = path(destinationDir, data.filename ?? filename)
 
+    // apply any provided patches
+    const isFileExist = filesystem.exists(destinationPath)
+    if (!isFileExist) await handlePatches(data)
+
     // ensure destination folder exists
     dir(destinationDir)
     // check if file exist or not and check of overwrite property
-    if (filesystem.exists(destinationPath)) {
+    if (isFileExist) {
       if (props.overwrite) {
         filesystem.write(destinationPath, content)
         overwritten.push(destinationPath)
