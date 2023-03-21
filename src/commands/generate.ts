@@ -52,8 +52,11 @@ async function generate(toolbox: GluegunToolbox) {
   })
 
   heading(`Generated new files:`)
+
   if (exists.length > 0) {
-    p(`<none>`)
+    if (written.length > 0) {
+      written.forEach((f) => p(f))
+    } else p(`<none>`)
     p()
     heading(`Skipped these files because they already exist:`)
     exists.forEach((f) => p(f))
