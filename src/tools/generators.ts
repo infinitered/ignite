@@ -216,15 +216,16 @@ function installedGenerators(): string[] {
 type GeneratorOptions = {
   name: string
   skipIndexFile?: boolean
+  overwrite: boolean
 }
 
 /**
  * Generates something using a template
  */
-export function generateFromTemplate(
+export async function generateFromTemplate(
   generator: string,
   options: GeneratorOptions,
-): Promise<string>[] {
+): Promise<{ written: string[]; overwritten: string[]; exists: string[] }> {
   const { find, path, dir, separator } = filesystem
   const { pascalCase, kebabCase, pluralize, camelCase } = strings
 
@@ -232,6 +233,11 @@ export function generateFromTemplate(
   const pascalCaseName = pascalCase(options.name)
   const kebabCaseName = kebabCase(options.name)
   const camelCaseName = camelCase(options.name)
+
+  // array of written, exists and overwritten files
+  const written: string[] = []
+  const overwritten: string[] = []
+  const exists: string[] = []
 
   // passed into the template generator
   const props = { camelCaseName, kebabCaseName, pascalCaseName, ...options }
@@ -243,12 +249,14 @@ export function generateFromTemplate(
   const files = find(templateDir, { matching: "*" })
 
   // loop through the files
-  const newFiles = files.map(async (templateFilename: string) => {
+  for (const templateFilename of files) {
     // get the filename and replace `NAME` with the actual name
     let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", pascalCaseName)
 
     // strip the .ejs
-    if (filename.endsWith(".ejs")) filename = filename.slice(0, -4)
+    if (filename.endsWith(".ejs")) {
+      filename = filename.slice(0, -4)
+    }
 
     // read template file
     let templateContents = filesystem.read(templateFilename)
@@ -262,11 +270,8 @@ export function generateFromTemplate(
     const { data, content } = frontMatter(templateContents)
     if (!content) {
       warning("⚠️  Unable to parse front matter. Please check your delimiters.")
-      return ""
+      return { written, exists, overwritten }
     }
-
-    // apply any provided patches
-    await handlePatches(data)
 
     // where are we copying to?
     const generatorDir = path(appDir(), pluralize(generator))
@@ -277,16 +282,26 @@ export function generateFromTemplate(
       : defaultDestinationDir
     const destinationPath = path(destinationDir, data.filename ?? filename)
 
+    // apply any provided patches
+    const isFileExist = filesystem.exists(destinationPath)
+    if (!isFileExist) await handlePatches(data)
+
     // ensure destination folder exists
     dir(destinationDir)
-
-    // write to the destination file
-    filesystem.write(destinationPath, content)
-
-    return destinationPath
-  })
-
-  return newFiles
+    // check if file exist or not and check of overwrite property
+    if (isFileExist) {
+      if (props.overwrite) {
+        filesystem.write(destinationPath, content)
+        overwritten.push(destinationPath)
+      } else {
+        exists.push(destinationPath)
+      }
+    } else {
+      filesystem.write(destinationPath, content)
+      written.push(destinationPath)
+    }
+  }
+  return { written, exists, overwritten }
 }
 
 /**
