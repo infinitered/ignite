@@ -4,6 +4,8 @@ import { generateFromTemplate, runGenerator } from "../tools/generators"
 import { command, heading, p, warning } from "../tools/pretty"
 import { Options } from "./new"
 
+const SUB_DIR_DELIMITER = "/"
+
 module.exports = {
   alias: ["g", "generator", "generators"],
   description: "Generates components and other features from templates",
@@ -20,12 +22,20 @@ async function generate(toolbox: GluegunToolbox) {
   const generator = parameters.first.toLowerCase()
 
   // we need a name for this component
-  const name = parameters.second
+  let name = parameters.second
   if (!name) {
     warning(`⚠️  Please specify a name for your ${generator}:`)
     p()
     command(`ignite g ${generator} MyName`)
     return
+  }
+
+  // parse any subdirectories from the specified name
+  let subdirectory = ""
+  if (name.indexOf(SUB_DIR_DELIMITER) > -1) {
+    const lastSlashIndex = name.lastIndexOf(SUB_DIR_DELIMITER)
+    subdirectory = name.substring(0, lastSlashIndex + 1)
+    name = name.substring(lastSlashIndex + 1)
   }
 
   // avoid the my-component-component phenomenon
@@ -48,7 +58,8 @@ async function generate(toolbox: GluegunToolbox) {
   const { written, overwritten, exists } = await generateFromTemplate(generator, {
     name: pascalName,
     skipIndexFile: parameters.options.skipIndexFile,
-    overwrite: overwrite,
+    overwrite,
+    subdirectory,
   })
 
   heading(`Generated new files:`)

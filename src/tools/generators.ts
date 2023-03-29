@@ -216,6 +216,7 @@ function installedGenerators(): string[] {
 type GeneratorOptions = {
   name: string
   skipIndexFile?: boolean
+  subdirectory: string
   overwrite: boolean
 }
 
@@ -274,7 +275,7 @@ export async function generateFromTemplate(
     }
 
     // where are we copying to?
-    const generatorDir = path(appDir(), pluralize(generator))
+    const generatorDir = path(appDir(), pluralize(generator), options.subdirectory)
     const defaultDestinationDir = generatorDir // e.g. app/components, app/screens, app/models
     const templateDestinationDir = data.destinationDir
     const destinationDir = templateDestinationDir
