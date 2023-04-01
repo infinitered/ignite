@@ -77,7 +77,7 @@ yarn expo:build:detox
 yarn expo:test:detox
 ```
 
-For more information, make sure to check out the official [Detox Docs](https://github.com/wix/Detox/blob/master/docs/README.md)
+For more information, make sure to check out the official [Detox Docs](https://github.com/wix/Detox/blob/master/README.md)
 
 ## Debugging Flaky Detox Tests
 
