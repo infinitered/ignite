@@ -1,5 +1,5 @@
 // For more info on how to write Detox tests, see the official docs:
-// https://github.com/wix/Detox/blob/master/docs/README.md
+// https://github.com/wix/Detox/blob/master/README.md
 
 const { reloadApp } = require("./reload")
 
