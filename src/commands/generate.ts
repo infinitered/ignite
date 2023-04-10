@@ -1,6 +1,10 @@
 import { GluegunToolbox } from "gluegun"
+import { boolFlag } from "../tools/flag"
 import { generateFromTemplate, runGenerator } from "../tools/generators"
 import { command, heading, p, warning } from "../tools/pretty"
+import { Options } from "./new"
+
+const SUB_DIR_DELIMITER = "/"
 
 module.exports = {
   alias: ["g", "generator", "generators"],
@@ -18,12 +22,20 @@ async function generate(toolbox: GluegunToolbox) {
   const generator = parameters.first.toLowerCase()
 
   // we need a name for this component
-  const name = parameters.second
+  let name = parameters.second
   if (!name) {
     warning(`⚠️  Please specify a name for your ${generator}:`)
     p()
     command(`ignite g ${generator} MyName`)
     return
+  }
+
+  // parse any subdirectories from the specified name
+  let subdirectory = ""
+  if (name.indexOf(SUB_DIR_DELIMITER) > -1) {
+    const lastSlashIndex = name.lastIndexOf(SUB_DIR_DELIMITER)
+    subdirectory = name.substring(0, lastSlashIndex + 1)
+    name = name.substring(lastSlashIndex + 1)
   }
 
   // avoid the my-component-component phenomenon
@@ -40,12 +52,30 @@ async function generate(toolbox: GluegunToolbox) {
 
   // okay, let's do it!
   p()
-  const updatedFiles = await Promise.all(
-    generateFromTemplate(generator, {
-      name: pascalName,
-      skipIndexFile: parameters.options.skipIndexFile,
-    }),
-  )
+  const options: Options = parameters.options
+  const defaultOverwrite = false
+  const overwrite = !options.overwrite ? defaultOverwrite : boolFlag(options.overwrite)
+  const { written, overwritten, exists } = await generateFromTemplate(generator, {
+    name: pascalName,
+    skipIndexFile: parameters.options.skipIndexFile,
+    overwrite,
+    subdirectory,
+  })
+
   heading(`Generated new files:`)
-  updatedFiles.forEach((f) => p(f))
+
+  if (exists.length > 0) {
+    if (written.length > 0) {
+      written.forEach((f) => p(f))
+    } else p(`<none>`)
+    p()
+    heading(`Skipped these files because they already exist:`)
+    exists.forEach((f) => p(f))
+    p()
+    heading("To overwrite these files, run the command again with the `--overwrite` flag")
+  } else if (overwritten.length > 0) {
+    overwritten.forEach((f) => p(f))
+  } else {
+    written.forEach((f) => p(f))
+  }
 }

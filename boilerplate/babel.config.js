@@ -1,5 +1,20 @@
 const plugins = [
   [
+    "babel-plugin-root-import",
+    {
+      paths: [
+        {
+          rootPathPrefix: "app/",
+          rootPathSuffix: "app",
+        },
+        {
+          rootPathPrefix: "assets/",
+          rootPathSuffix: "assets",
+        },
+      ],
+    },
+  ],
+  [
     "@babel/plugin-proposal-decorators",
     {
       legacy: true,

@@ -89,6 +89,7 @@
     "@typescript-eslint/parser": "5.28.0",
     "babel-jest": "^29.2.1",
     "babel-loader": "8.2.5",
+    "babel-plugin-root-import": "^6.6.0",
     "detox": "20.2.1",
     "detox-expo-helpers": "0.6.0",
     "eslint": "^8.19.0",

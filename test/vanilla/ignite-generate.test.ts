@@ -35,7 +35,7 @@ describe("ignite-cli generate", () => {
     result.replace(new RegExp(temp, "g"), mock)
 
   describe("model", () => {
-    it("should generate Pizza model and test, patch index model export, and not patch RootStore", async () => {
+    it("should generate Pizza model and test, patch index model export, not patch RootStore and testing --overwrite option", async () => {
       const result = await runIgnite(`generate model Pizza`, options)
 
       expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
@@ -87,9 +87,32 @@ describe("ignite-cli generate", () => {
       expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toEqual(
         read(`${BOILERPLATE_PATH}/app/models/RootStore.ts`),
       )
+      const resultWithoutOverwriteOption = await runIgnite(`generate model Pizza`, options)
+      expect(replaceHomeDir(resultWithoutOverwriteOption)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           <none>
+           
+           Skipped these files because they already exist:
+           /user/home/ignite/app/models/Pizza.test.ts
+           /user/home/ignite/app/models/Pizza.ts
+           
+           To overwrite these files, run the command again with the \`--overwrite\` flag
+        "
+      `)
+      const resultWithOverwriteOption = await runIgnite(`generate model Pizza --overwrite`, options)
+      expect(replaceHomeDir(resultWithOverwriteOption)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           /user/home/ignite/app/models/Pizza.test.ts
+           /user/home/ignite/app/models/Pizza.ts
+        "
+      `)
     })
 
-    it("should generate PizzaStore model and test, patch index model export and RootStore", async () => {
+    it("should generate PizzaStore model and test, patch index model export, patch RootStore and testing --overwrite option", async () => {
       const result = await runIgnite(`generate model PizzaStore`, options)
 
       expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
@@ -161,6 +184,166 @@ describe("ignite-cli generate", () => {
          * The data of a RootStore.
          */
         export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+        "
+      `)
+      const resultWithoutOverwriteOption = await runIgnite(`generate model PizzaStore`, options)
+      expect(replaceHomeDir(resultWithoutOverwriteOption)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           <none>
+           
+           Skipped these files because they already exist:
+           /user/home/ignite/app/models/PizzaStore.test.ts
+           /user/home/ignite/app/models/PizzaStore.ts
+           
+           To overwrite these files, run the command again with the \`--overwrite\` flag
+        "
+      `)
+      const resultWithOverwriteOption = await runIgnite(
+        `generate model PizzaStore --overwrite`,
+        options,
+      )
+      expect(replaceHomeDir(resultWithOverwriteOption)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           /user/home/ignite/app/models/PizzaStore.test.ts
+           /user/home/ignite/app/models/PizzaStore.ts
+        "
+      `)
+    })
+  })
+
+  describe("components", () => {
+    it("should generate Topping component and patch index components export", async () => {
+      const result = await runIgnite(`generate component Topping`, options)
+
+      expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           /user/home/ignite/app/components/Topping.tsx
+        "
+      `)
+      expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
+        "import * as React from \\"react\\"
+        import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
+        import { observer } from \\"mobx-react-lite\\"
+        import { colors, typography } from \\"app/theme\\"
+        import { Text } from \\"app/components/Text\\"
+        
+        export interface ToppingProps {
+          /**
+           * An optional style override useful for padding & margin.
+           */
+          style?: StyleProp<ViewStyle>
+        }
+        
+        /**
+         * Describe your component here
+         */
+        export const Topping = observer(function Topping(props: ToppingProps) {
+          const { style } = props
+          const $styles = [$container, style]
+        
+          return (
+            <View style={$styles}>
+              <Text style={$text}>Hello</Text>
+            </View>
+          )
+        })
+        
+        const $container: ViewStyle = {
+          justifyContent: \\"center\\",
+        }
+        
+        const $text: TextStyle = {
+          fontFamily: typography.primary.normal,
+          fontSize: 14,
+          color: colors.palette.primary500,
+        }
+        "
+      `)
+      expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
+        "export * from \\"./AutoImage\\"
+        export * from \\"./Button\\"
+        export * from \\"./Card\\"
+        export * from \\"./Header\\"
+        export * from \\"./Icon\\"
+        export * from \\"./ListItem\\"
+        export * from \\"./Screen\\"
+        export * from \\"./Text\\"
+        export * from \\"./TextField\\"
+        export * from \\"./Toggle\\"
+        export * from \\"./EmptyState\\"
+        export * from \\"./Topping\\"
+        "
+      `)
+    })
+
+    it("should generate Topping component in subdirectory and patch index components export", async () => {
+      const result = await runIgnite(`generate component sub/to/my/Topping`, options)
+
+      expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           /user/home/ignite/app/components/sub/to/my/Topping.tsx
+        "
+      `)
+      expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
+        "import * as React from \\"react\\"
+        import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
+        import { observer } from \\"mobx-react-lite\\"
+        import { colors, typography } from \\"app/theme\\"
+        import { Text } from \\"app/components/Text\\"
+        
+        export interface ToppingProps {
+          /**
+           * An optional style override useful for padding & margin.
+           */
+          style?: StyleProp<ViewStyle>
+        }
+        
+        /**
+         * Describe your component here
+         */
+        export const Topping = observer(function Topping(props: ToppingProps) {
+          const { style } = props
+          const $styles = [$container, style]
+        
+          return (
+            <View style={$styles}>
+              <Text style={$text}>Hello</Text>
+            </View>
+          )
+        })
+        
+        const $container: ViewStyle = {
+          justifyContent: \\"center\\",
+        }
+        
+        const $text: TextStyle = {
+          fontFamily: typography.primary.normal,
+          fontSize: 14,
+          color: colors.palette.primary500,
+        }
+        "
+      `)
+      expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
+        "export * from \\"./AutoImage\\"
+        export * from \\"./Button\\"
+        export * from \\"./Card\\"
+        export * from \\"./Header\\"
+        export * from \\"./Icon\\"
+        export * from \\"./ListItem\\"
+        export * from \\"./Screen\\"
+        export * from \\"./Text\\"
+        export * from \\"./TextField\\"
+        export * from \\"./Toggle\\"
+        export * from \\"./EmptyState\\"
+        export * from \\"./sub/to/my/Topping\\"
         "
       `)
     })
