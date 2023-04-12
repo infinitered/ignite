@@ -25,7 +25,7 @@ if (i18n.translations.hasOwnProperty(systemLocale)) {
     i18n.locale = generalLocale
   } else {
     i18n.locale = fallbackLocale
-  } 
+  }
 }
 
 // handle RTL languages
