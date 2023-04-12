@@ -8,7 +8,8 @@ import ar from "./ar"
 import ko from "./ko"
 
 i18n.fallbacks = true
-i18n.translations = { ar, en, "en-US": en, ko }
+// to use regional locales use { "en-US": enUS } etc
+i18n.translations = { ar, en, ko }
 
 const fallbackLocale = "en"
 const systemLocale = Localization.locale
