@@ -62,7 +62,7 @@ const config = {
 }
 
 interface AppProps {
-  hideSplashScreen: () => Promise<void>
+  hideSplashScreen: () => Promise<boolean>
 }
 
 /**

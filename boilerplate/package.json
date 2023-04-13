@@ -4,13 +4,10 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native start",
-    "ios": "react-native run-ios",
-    "android": "react-native run-android --active-arch-only",
-    "test:detox": "detox test -c ios.sim.debug",
-    "build:detox": "detox build -c ios.sim.debug",
-    "ci:test:detox": "detox test -c ios.sim.release -l verbose --cleanup",
-    "ci:build:detox": "detox build -c ios.sim.release",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
     "compile": "tsc --noEmit -p . --pretty",
     "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "eslint index.js App.js app test --fix --ext .js,.ts,.tsx && npm run format",
@@ -18,27 +15,14 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
-    "postinstall": "node ./bin/postInstall",
-    "bundle:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
-    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
-    "release:ios": "echo 'Not implemented yet: release:ios. Use Xcode. More info: https://reactnative.dev/docs/next/publishing-to-app-store'",
-    "release:android": "cd android && rm -rf app/src/main/res/drawable-* && ./gradlew assembleRelease && cd - && echo 'APK generated in ./android/app/build/outputs/apk/release/app-release.apk'",
-    "clean": "npx react-native-clean-project",
-    "clean-all": "npx react-native clean-project-auto",
-    "expo:start": "expo start",
-    "expo:android": "expo start --android",
-    "expo:ios": "expo start --ios",
-    "expo:web": "expo start --web",
-    "expo:build:detox": "detox build -c ios.sim.expo",
-    "expo:test:detox": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
+    "postinstall": "node ./bin/postInstall"
   },
   "overrides": {
     "react-error-overlay": "6.0.9"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
-    "@expo/webpack-config": "^18.0.1",
-    "@react-native-async-storage/async-storage": "~1.17.3",
+    "@react-native-async-storage/async-storage": "1.17.11",
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "~6.0.1",
     "@react-navigation/native-stack": "^6.0.2",
@@ -53,7 +37,6 @@
     "expo-font": "~11.1.1",
     "expo-linking": "~4.0.1",
     "expo-localization": "~14.1.1",
-    "expo-modules-core": "~1.2.3",
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.4",
     "i18n-js": "3.9.2",
@@ -61,15 +44,15 @@
     "mobx-react-lite": "3.4.0",
     "mobx-state-tree": "5.1.5",
     "react": "18.2.0",
-    "react-native": "0.71.3",
-    "react-native-bootsplash": "4.5.0",
+    "react-native": "0.71.6",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
-    "reactotron-mst": "3.1.4",
-    "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.3"
+    "react-native-web": "~0.18.10",
+    "reactotron-mst": "3.1.5-beta.0",
+    "reactotron-react-js": "^3.3.9-beta.0",
+    "reactotron-react-native": "5.0.4-beta.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -78,9 +61,6 @@
     "@babel/plugin-proposal-optional-catch-binding": "^7.18.6",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli-platform-ios": "^8.0.2",
-    "@rnx-kit/metro-config": "^1.3.5",
-    "@rnx-kit/metro-resolver-symlinks": "^0.1.26",
     "@types/i18n-js": "3.8.2",
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
@@ -90,8 +70,6 @@
     "babel-jest": "^29.2.1",
     "babel-loader": "8.2.5",
     "babel-plugin-root-import": "^6.6.0",
-    "detox": "20.2.1",
-    "detox-expo-helpers": "0.6.0",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "17.0.0",
@@ -101,68 +79,22 @@
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-react": "7.30.0",
     "eslint-plugin-react-native": "4.0.0",
-    "expo-detox-hook": "1.0.10",
-    "fbjs-scripts": "3.0.1",
     "jest": "^29.2.1",
-    "jest-circus": "29",
-    "jest-environment-node": "29",
     "jest-expo": "^48.0.0",
-    "metro-config": "0.75.1",
-    "metro-react-native-babel-preset": "0.75.1",
-    "metro-source-map": "0.75.1",
-    "mocha": "6",
     "patch-package": "6.4.7",
     "postinstall-prepare": "1.0.1",
     "prettier": "2.6.2",
-    "query-string": "^7.0.1",
-    "react-devtools-core": "4.24.7",
-    "react-dom": "18.2.0",
-    "react-native-web": "~0.18.7",
     "react-test-renderer": "18.2.0",
-    "reactotron-core-client": "^2.8.10",
+    "reactotron-core-client": "2.8.11-beta.0",
     "regenerator-runtime": "^0.13.4",
     "ts-jest": "29",
-    "typescript": "^4.8.4"
-  },
-  "resolutions": {
-    "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "typescript": "^4.9.4"
   },
   "prettier": {
     "printWidth": 100,
     "semi": false,
     "singleQuote": false,
     "trailingComma": "all"
-  },
-  "detox": {
-    "test-runner": "jest",
-    "runnerConfig": "./detox/config.json",
-    "specs": "detox",
-    "configurations": {
-      "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/HelloWorld.app",
-        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 14'",
-        "type": "ios.simulator",
-        "device": {
-          "name": "iPhone 14",
-          "os": "iOS 15.5"
-        }
-      },
-      "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/HelloWorld.app",
-        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 14'",
-        "type": "ios.simulator",
-        "device": {
-          "name": "iPhone 14",
-          "os": "iOS 15.5"
-        }
-      },
-      "ios.sim.expo": {
-        "binaryPath": "bin/Exponent.app",
-        "type": "ios.simulator",
-        "name": "iPhone 14"
-      }
-    }
   },
   "eslintConfig": {
     "root": true,
@@ -174,6 +106,7 @@
       "standard",
       "prettier"
     ],
+    "ignorePatterns": ["babel.config.js"],
     "plugins": [
       "@typescript-eslint",
       "react",
