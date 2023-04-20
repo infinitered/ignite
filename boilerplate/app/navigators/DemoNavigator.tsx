@@ -61,7 +61,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon="community" color={focused && colors.tint} size={30} />
           ),
         }}
       />
@@ -72,7 +72,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.podcastListTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon="podcast" color={focused && colors.tint} size={30} />
           ),
         }}
       />
@@ -83,7 +83,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.debugTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon="debug" color={focused && colors.tint} size={30} />
           ),
         }}
       />
