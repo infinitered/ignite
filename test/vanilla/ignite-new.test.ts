@@ -334,7 +334,7 @@ describe("ignite new", () => {
       await run(`npm run test`, runOpts)
       await run(`npm run lint`, runOpts)
       await run(`npm run compile`, runOpts)
-      expect(await run("git diff HEAD", runOpts)).toEqual("")
+      expect(await run("git diff HEAD", runOpts)).toContain("+  Bowser: undefined")
       // #endregion
 
       // we're done!
