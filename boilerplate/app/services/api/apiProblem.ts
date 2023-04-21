@@ -43,7 +43,7 @@ export type GeneralApiProblem =
  *
  * @param response The api response.
  */
-export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProblem | void {
+export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProblem | null {
   switch (response.problem) {
     case "CONNECTION_ERROR":
       return { kind: "cannot-connect", temporary: true }
