@@ -13,8 +13,10 @@ const MATCHING_GLOBS = [
   "!**/ios/build{,/**}",
   "!**/ios/Pods{,/**}",
   "!**/ios/*.xcworkspace{,/**}",
+  "!**/ios/*.xcodeproj{,/**}",
   "!**/android/build{,/**}",
   "!**/android/app/build{,/**}",
+  "!**/android/.gradle",
 ]
 
 module.exports = {
