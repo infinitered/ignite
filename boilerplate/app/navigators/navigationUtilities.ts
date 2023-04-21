@@ -9,6 +9,7 @@ import {
 import Config from "../config"
 import type { PersistNavigationConfig } from "../config/config.base"
 import { useIsMounted } from "../utils/useIsMounted"
+import type { AppStackParamList } from "./AppNavigator"
 
 /* eslint-disable */
 export const RootNavigation = {
@@ -22,7 +23,7 @@ export const RootNavigation = {
 }
 /* eslint-enable */
 
-export const navigationRef = createNavigationContainerRef()
+export const navigationRef = createNavigationContainerRef<AppStackParamList>()
 
 /**
  * Gets the current screen from any navigation state.
@@ -151,9 +152,9 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
  * prop. If you have access to the navigation prop, do not use this.
  * More info: https://reactnavigation.org/docs/navigating-without-navigation-prop/
  */
-export function navigate(name: any, params?: any) {
+export function navigate(...args: Parameters<typeof navigationRef.navigate>) {
   if (navigationRef.isReady()) {
-    ;(navigationRef.navigate as any)(name, params)
+    navigationRef.navigate(...args)
   }
 }
 
