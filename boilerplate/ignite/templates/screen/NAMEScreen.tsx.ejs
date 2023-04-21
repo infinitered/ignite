@@ -7,7 +7,7 @@ patch:
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { StackScreenProps } from "@react-navigation/stack"
+import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { AppStackScreenProps } from "app/navigators"
 import { Screen, Text } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
@@ -22,7 +22,7 @@ import { Screen, Text } from "app/components"
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<AppStackScreenProps, "<%= props.pascalCaseName %>">> = observer(function <%= props.pascalCaseName %>Screen() {
+export const <%= props.pascalCaseName %>Screen: FC<NativeStackScreenProps<AppStackScreenProps, "<%= props.pascalCaseName %>">> = observer(function <%= props.pascalCaseName %>Screen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
 
