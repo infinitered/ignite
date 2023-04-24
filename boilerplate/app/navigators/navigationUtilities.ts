@@ -10,6 +10,16 @@ import * as storage from "../utils/storage"
 
 type Storage = typeof storage
 
+/**
+ * Reference to the root App Navigator.
+ *
+ * If needed, you can use this to access the navigation object outside of a
+ * `NavigationContainer` context. However, it's recommended to use the `useNavigation` hook whenever possible.
+ * @see https://reactnavigation.org/docs/navigating-without-navigation-prop/
+ *
+ * The types on this reference will only let you reference top level navigators. If you have
+ * nested navigators, you'll need to use the `useNavigation` with the stack navigator's ParamList type.
+ */
 export const navigationRef = createNavigationContainerRef<AppStackParamList>()
 
 /**
@@ -140,7 +150,7 @@ export function useNavigationPersistence(storage: Storage, persistenceKey: strin
 /**
  * use this to navigate without the navigation
  * prop. If you have access to the navigation prop, do not use this.
- * More info: https://reactnavigation.org/docs/navigating-without-navigation-prop/
+ * @see https://reactnavigation.org/docs/navigating-without-navigation-prop/
  */
 export function navigate(...args: Parameters<typeof navigationRef.navigate>) {
   if (navigationRef.isReady()) {
@@ -148,14 +158,25 @@ export function navigate(...args: Parameters<typeof navigationRef.navigate>) {
   }
 }
 
+/**
+ * This function is used to go back in a navigation stack, if it's possible to go back.
+ * If the navigation stack can't go back, nothing happens.
+ * The navigationRef variable is a React ref that references a navigation object.
+ * The navigationRef variable is set in the App component.
+ */
 export function goBack() {
   if (navigationRef.isReady() && navigationRef.canGoBack()) {
     navigationRef.goBack()
   }
 }
 
-export function resetRoot(params = { index: 0, routes: [] }) {
+/**
+ * resetRoot will reset the root navigation state to the given params.
+ */
+export function resetRoot(
+  state: Parameters<typeof navigationRef.resetRoot>[0] = { index: 0, routes: [] },
+) {
   if (navigationRef.isReady()) {
-    navigationRef.resetRoot(params)
+    navigationRef.resetRoot(state)
   }
 }
