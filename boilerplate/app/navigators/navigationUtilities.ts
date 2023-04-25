@@ -153,7 +153,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
  */
 export function navigate(name: any, params?: any) {
   if (navigationRef.isReady()) {
-    navigationRef.navigate(name as never, params as never)
+    ;(navigationRef.navigate as any)(name, params)
   }
 }
 
