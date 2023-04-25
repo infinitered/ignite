@@ -7,7 +7,7 @@ env:
 
 ---
 - runFlow: Login.yaml
-- tapOn: "Podcast, tab, 3 of 4"
+- tapOn: "Podcast"
 - assertVisible: "React Native Radio episodes"
 - tapOn:
     text: ${FAVORITES_TEXT}
