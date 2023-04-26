@@ -7,16 +7,13 @@
     "start": "react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android --active-arch-only",
-    "test:detox": "detox test -c ios.sim.debug",
-    "build:detox": "detox build -c ios.sim.debug",
-    "ci:test:detox": "detox test -c ios.sim.release -l verbose --cleanup",
-    "ci:build:detox": "detox build -c ios.sim.release",
     "compile": "tsc --noEmit -p . --pretty",
     "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "eslint index.js App.js app test --fix --ext .js,.ts,.tsx && npm run format",
     "patch": "patch-package",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:maestro": "maestro test .maestro/FavoritePodcast.yaml",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "postinstall": "node ./bin/postInstall",
     "bundle:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
@@ -28,9 +25,7 @@
     "expo:start": "expo start",
     "expo:android": "expo start --android",
     "expo:ios": "expo start --ios",
-    "expo:web": "expo start --web",
-    "expo:build:detox": "detox build -c ios.sim.expo",
-    "expo:test:detox": "./bin/downloadExpoApp.sh && detox test --configuration ios.sim.expo"
+    "expo:web": "expo start --web"
   },
   "overrides": {
     "react-error-overlay": "6.0.9"
@@ -90,8 +85,6 @@
     "babel-jest": "26.6.3",
     "babel-loader": "8.2.5",
     "babel-plugin-root-import": "^6.6.0",
-    "detox": "19.12.1",
-    "detox-expo-helpers": "0.6.0",
     "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "17.0.0",
@@ -101,7 +94,6 @@
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-react": "7.30.0",
     "eslint-plugin-react-native": "4.0.0",
-    "expo-detox-hook": "1.0.10",
     "expo-modules-autolinking": "~1.0.0",
     "fbjs-scripts": "3.0.1",
     "jest": "^26.6.3",
@@ -136,36 +128,6 @@
     "semi": false,
     "singleQuote": false,
     "trailingComma": "all"
-  },
-  "detox": {
-    "test-runner": "jest",
-    "runnerConfig": "./detox/config.json",
-    "specs": "detox",
-    "configurations": {
-      "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/HelloWorld.app",
-        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 14'",
-        "type": "ios.simulator",
-        "device": {
-          "name": "iPhone 14",
-          "os": "iOS 15.5"
-        }
-      },
-      "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/HelloWorld.app",
-        "build": "xcodebuild -workspace ios/HelloWorld.xcworkspace -scheme HelloWorld -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 14'",
-        "type": "ios.simulator",
-        "device": {
-          "name": "iPhone 14",
-          "os": "iOS 15.5"
-        }
-      },
-      "ios.sim.expo": {
-        "binaryPath": "bin/Exponent.app",
-        "type": "ios.simulator",
-        "name": "iPhone 14"
-      }
-    }
   },
   "eslintConfig": {
     "root": true,

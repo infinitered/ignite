@@ -118,9 +118,9 @@ The `ignite` directory stores all things Ignite, including CLI and boilerplate i
 
 This directory will hold your Jest configs and mocks.
 
-## Running Detox end-to-end tests
+## Running Maestro end-to-end tests
 
-Read [Detox setup instructions](./detox/README.md).
+Follow our [Maestro Setup](https://ignitecookbook.com/docs/recipes/MaestroSetup) recipe from the [Ignite Cookbook](https://ignitecookbook.com/)!
 
 ## Previous Boilerplates
 

@@ -70,6 +70,7 @@ export function DemoNavigator() {
         name="DemoPodcastList"
         component={DemoPodcastListScreen}
         options={{
+          tabBarAccessibilityLabel: translate("demoNavigator.podcastListTab"),
           tabBarLabel: translate("demoNavigator.podcastListTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="podcast" color={focused && colors.tint} size={30} />

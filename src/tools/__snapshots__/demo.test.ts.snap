@@ -171,6 +171,16 @@ const $welcomeHeading: TextStyle = {
 "
 `;
 
+exports[`demo removeBlock should remove comments and lines between "# @demo remove-block-start" and "# @demo remove-block-end" 1`] = `
+"
+
+      ---
+      - runFlow: Login.yaml
+      - tapOn: \\"Podcast, tab, 3 of 4\\"
+      - assertVisible: \\"React Native Radio episodes\\"
+      "
+`;
+
 exports[`demo removeBlock should remove comments and lines between "/* @demo remove-block-start */" and "/* @demo remove-block-end */" 1`] = `
 "
         export * from \\"./WelcomeScreen\\"
@@ -186,6 +196,20 @@ exports[`demo removeBlock should remove comments and lines between "// @demo rem
         export * from \\"./LoginScreen\\"
         export * from \\"./ErrorScreen/ErrorBoundary\\"
         // export other screens here
+      "
+`;
+
+exports[`demo removeCurrentLine should remove line with "# @demo remove-current-line" comment 1`] = `
+"
+      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+      env:
+        TITLE: \\"RNR 257 - META RESPONDS! How can we improve React Native, part 2\\"
+        FAVORITES_TEXT: \\"Switch on to only show favorites\\"
+
+      ---
+      - runFlow: Login.yaml
+      - tapOn: \\"Podcast, tab, 3 of 4\\"
+      - assertVisible: \\"React Native Radio episodes\\"
       "
 `;
 
@@ -250,6 +274,20 @@ exports[`demo removeCurrentLine should remove line with "// @demo remove-current
         const $divider: ViewStyle = {
             flexGrow: 0,
         }
+      "
+`;
+
+exports[`demo removeNextLine should remove comment and next line after "# @demo remove-next-line" 1`] = `
+"
+      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+      env:
+        TITLE: \\"RNR 257 - META RESPONDS! How can we improve React Native, part 2\\"
+        FAVORITES_TEXT: \\"Switch on to only show favorites\\"
+
+      ---
+      - runFlow: Login.yaml
+      - tapOn: \\"Podcast, tab, 3 of 4\\"
+      - assertVisible: \\"React Native Radio episodes\\"
       "
 `;
 
