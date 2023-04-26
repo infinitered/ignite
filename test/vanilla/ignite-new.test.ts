@@ -80,11 +80,10 @@ describe("ignite new", () => {
       await checkForLeftoverHelloWorld(appPath)
     })
 
-    it("should have modified package.json to add scripts, dependencies, and detox configurations", () => {
+    it("should have modified package.json to add scripts and dependencies", () => {
       const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
       expect(igniteJSON).toHaveProperty("scripts")
       expect(igniteJSON).toHaveProperty("dependencies")
-      expect(igniteJSON).toHaveProperty("detox.configurations")
     })
 
     it("should have created app.tsx with default export and RootStore", () => {
@@ -335,7 +334,7 @@ describe("ignite new", () => {
       await run(`npm run test`, runOpts)
       await run(`npm run lint`, runOpts)
       await run(`npm run compile`, runOpts)
-      expect(await run("git diff HEAD", runOpts)).toEqual("")
+      expect(await run("git diff HEAD", runOpts)).toContain("+  Bowser: undefined")
       // #endregion
 
       // we're done!

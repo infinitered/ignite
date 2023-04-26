@@ -1,6 +1,7 @@
 import { demo } from "./demo"
 
-const { REMOVE_BLOCK_START, REMOVE_BLOCK_END, REMOVE_CURRENT_LINE } = demo.CommentType
+const { REMOVE_BLOCK_START, REMOVE_BLOCK_END, REMOVE_CURRENT_LINE, REMOVE_NEXT_LINE } =
+  demo.CommentType
 
 describe("demo", () => {
   describe("removeCurrentLine", () => {
@@ -75,6 +76,24 @@ describe("demo", () => {
       expect(result).toMatchSnapshot()
       expect(result).not.toContain(demo.CommentType.REMOVE_CURRENT_LINE)
     })
+
+    it(`should remove line with "# ${REMOVE_CURRENT_LINE}" comment`, () => {
+      const contents = `
+      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+      appId: com.helloworld # ${REMOVE_CURRENT_LINE}
+      env:
+        TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+        FAVORITES_TEXT: "Switch on to only show favorites"
+
+      ---
+      - runFlow: Login.yaml
+      - tapOn: "Podcast, tab, 3 of 4"
+      - assertVisible: "React Native Radio episodes"
+      `
+      const result = demo.removeCurrentLine(contents)
+      expect(result).toMatchSnapshot()
+      expect(result).not.toContain(REMOVE_CURRENT_LINE)
+    })
   })
 
   describe("removeNextLine", () => {
@@ -102,6 +121,25 @@ describe("demo", () => {
       expect(result).toMatchSnapshot()
       expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
       expect(result).not.toContain("DemoCommunityScreen")
+    })
+    it(`should remove comment and next line after "# ${REMOVE_NEXT_LINE}"`, () => {
+      const contents = `
+      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+      # ${REMOVE_NEXT_LINE}
+      appId: com.helloworld
+      env:
+        TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+        FAVORITES_TEXT: "Switch on to only show favorites"
+
+      ---
+      - runFlow: Login.yaml
+      - tapOn: "Podcast, tab, 3 of 4"
+      - assertVisible: "React Native Radio episodes"
+      `
+      const result = demo.removeNextLine(contents)
+      expect(result).toMatchSnapshot()
+      expect(result).not.toContain(REMOVE_NEXT_LINE)
+      expect(result).not.toContain("appId: com.helloworld")
     })
 
     it(`should not modify other lines other than "// ${demo.CommentType.REMOVE_NEXT_LINE} and line after"`, () => {
@@ -174,6 +212,32 @@ describe("demo", () => {
       expect(result).not.toContain("DemoCommunityScreen")
       expect(result).not.toContain("DemoDebugScreen")
       expect(result).not.toContain("DemoShowroomScreen")
+    })
+
+    it(`should remove comments and lines between "# ${REMOVE_BLOCK_START}" and "# ${REMOVE_BLOCK_END}"`, () => {
+      const contents = `
+      # ${REMOVE_BLOCK_START}
+      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+      appId: com.helloworld
+      env:
+      TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+      FAVORITES_TEXT: "Switch on to only show favorites"
+      # ${REMOVE_BLOCK_END}
+
+      ---
+      - runFlow: Login.yaml
+      - tapOn: "Podcast, tab, 3 of 4"
+      - assertVisible: "React Native Radio episodes"
+      `
+      const result = demo.removeBlock(contents)
+      expect(result).toMatchSnapshot()
+      expect(result).not.toContain(REMOVE_BLOCK_START)
+      expect(result).not.toContain(REMOVE_BLOCK_END)
+      expect(result).not.toContain("# flow")
+      expect(result).not.toContain("appId: com.helloworld")
+      expect(result).not.toContain("env:")
+      expect(result).not.toContain("TITLE:")
+      expect(result).not.toContain("FAVORITES_TEXT:")
     })
 
     it(`should remove multiple "// ${demo.CommentType.REMOVE_BLOCK_START}" and "// ${demo.CommentType.REMOVE_BLOCK_END}" sections in the same file string`, () => {

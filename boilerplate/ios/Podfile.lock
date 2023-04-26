@@ -444,11 +444,11 @@ PODS:
     - React-perflogger (= 0.71.6)
   - RNBootSplash (4.5.0):
     - React-Core
-  - RNCAsyncStorage (1.17.11):
+  - RNCAsyncStorage (1.17.12):
     - React-Core
-  - RNGestureHandler (2.9.0):
+  - RNGestureHandler (2.8.0):
     - React-Core
-  - RNReanimated (2.14.4):
+  - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec

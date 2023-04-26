@@ -1,5 +1,10 @@
 import { GluegunToolbox } from "../types"
-import { isAndroidInstalled, copyBoilerplate, renameReactNativeApp } from "../tools/react-native"
+import {
+  isAndroidInstalled,
+  copyBoilerplate,
+  renameReactNativeApp,
+  replaceMaestroBundleIds,
+} from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
   p,
@@ -434,8 +439,8 @@ export default {
 
     // #region Handle package.json
     // Update package.json:
-    // - We need to replace the app name in the detox paths. We do it on the
-    //   unparsed file content since that's easier than updating individual values
+    // - Replacing app name: We do it on the unparsed file content
+    //   since that's easier than updating individual values
     //   in the parsed structure, then we parse that as JSON.
     // - If Expo, we also merge in our extra expo stuff.
     // - Then write it back out.
@@ -446,11 +451,6 @@ export default {
     const packageJson = JSON.parse(packageJsonRaw)
 
     write("./package.json", packageJson)
-
-    // TODO: still need this in this order, was an if (expo) ?
-    // for some reason we need to do this, or we get an error about duplicate RNCSafeAreaProviders
-    // see https://github.com/th3rdwave/react-native-safe-area-context/issues/110#issuecomment-668864576
-    // await packager.add(`react-native-safe-area-context`, packagerOptions)
     // #endregion
 
     // #region Run Packager Install
@@ -486,13 +486,16 @@ export default {
     const renameSpinnerMsg = `Getting those last few details perfect`
     startSpinner(renameSpinnerMsg)
 
+    const boilerplateBundleIdentifier = "com.helloworld"
     await renameReactNativeApp(
       toolbox,
       "HelloWorld",
       projectName,
-      "com.helloworld",
+      boilerplateBundleIdentifier,
       bundleIdentifier,
     )
+
+    await replaceMaestroBundleIds(toolbox, boilerplateBundleIdentifier, bundleIdentifier)
 
     stopSpinner(renameSpinnerMsg, "🎨")
     // #endregion

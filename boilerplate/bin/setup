@@ -61,11 +61,14 @@ command -v react-native >/dev/null 2>&1 || {
 #   brew install applesimutils
 # }
 
-# IF NEEDED: Ensure detox-cli is installed
-# command -v detox >/dev/null 2>&1 || {
-#   echo "This app requires detox-cli to run end to end tests, but it was not found on your system."
-#   echo "Installing detox globally with npm..."
-#   npm install -g detox-cli
+# IF NEEDED: Ensure maestro is installed
+# command -v maestro >/dev/null 2>&1 || {
+#   echo "This app requires maestro to run end to end tests, but it was not found on your system."
+#   echo "Installing maestro..."
+#   curl -Ls "https://get.maestro.mobile.dev" | bash
+#   echo "Maestro requires the Facebook IDB tool to run Flows on the iOS Simulator"
+#   brew tap facebook/fb
+#   brew install facebook/fb/idb-companion
 # }
 
 # IF NEEDED: Ensure phraseapp is installed

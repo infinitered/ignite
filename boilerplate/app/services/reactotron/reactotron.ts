@@ -18,7 +18,7 @@ import { ArgType } from "reactotron-core-client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { onSnapshot } from "mobx-state-tree"
 import { mst } from "reactotron-mst"
-import { RootStore } from "../../models/RootStore"
+import { RootStore, RootStoreSnapshot } from "../../models/RootStore"
 import { clear } from "../../utils/storage"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotronConfig"
 import { goBack, resetRoot, navigate } from "../../navigators/navigationUtilities"
@@ -59,7 +59,7 @@ const config = DEFAULT_REACTOTRON_CONFIG
  *
  * @param rootStore The root store
  */
-export function setReactotronRootStore(rootStore: RootStore, initialData: any) {
+export function setReactotronRootStore(rootStore: RootStore, initialData: RootStoreSnapshot) {
   if (__DEV__) {
     const { logInitialState, logSnapshots } = config
     const name = "ROOT STORE"

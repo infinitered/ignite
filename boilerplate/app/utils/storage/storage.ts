@@ -34,7 +34,7 @@ export async function saveString(key: string, value: string): Promise<boolean> {
  *
  * @param key The key to fetch.
  */
-export async function load(key: string): Promise<any | null> {
+export async function load(key: string): Promise<unknown | null> {
   try {
     const almostThere = await AsyncStorage.getItem(key)
     return JSON.parse(almostThere)
@@ -49,7 +49,7 @@ export async function load(key: string): Promise<any | null> {
  * @param key The key to fetch.
  * @param value The value to store.
  */
-export async function save(key: string, value: any): Promise<boolean> {
+export async function save(key: string, value: unknown): Promise<boolean> {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
     return true
