@@ -14,6 +14,8 @@ env:
 - assertVisible: "This looks a bit empty"
 - tapOn:
     text: ${FAVORITES_TEXT}
+    # https://maestro.mobile.dev/troubleshooting/known-issues#android-accidental-double-tap
+    retryTapIfNoChange: false
 - scrollUntilVisible:
     element:
       text: ${TITLE}
