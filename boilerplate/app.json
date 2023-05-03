@@ -17,7 +17,9 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.helloworld",
@@ -49,6 +51,9 @@
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
-    }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }

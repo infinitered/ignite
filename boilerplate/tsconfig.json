@@ -18,6 +18,6 @@
     "baseUrl": "./"
   },
   "exclude": ["node_modules"],
-  "include": ["index.js", "App.js", "app", "test"],
+  "include": ["index.js", "App.js", "app", "test", "*.js"],
   "extends": "expo/tsconfig.base"
 }

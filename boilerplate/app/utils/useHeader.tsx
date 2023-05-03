@@ -13,10 +13,10 @@ export function useHeader(
 ) {
   const navigation = useNavigation()
 
-  useLayoutEffect(() => {
+  React.useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       header: () => <Header {...headerProps} />,
     })
-  }, deps)
+  }, [...deps, navigation])
 }

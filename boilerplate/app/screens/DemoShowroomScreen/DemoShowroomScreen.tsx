@@ -235,6 +235,7 @@ const $screenContainer: ViewStyle = {
 }
 
 const $drawer: ViewStyle = {
+  backgroundColor: colors.background,
   flex: 1,
 }
 
@@ -257,6 +258,7 @@ const $logoImage: ImageStyle = {
 
 const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
+  justifyContent: "center",
   height: 56,
   paddingHorizontal: spacing.large,
 }

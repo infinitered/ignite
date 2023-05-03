@@ -118,6 +118,10 @@ export async function renameReactNativeApp(
         `android/app/src/debug/java/${oldPath}`,
         `android/app/src/debug/java/${newPath}`,
       ),
+      filesystem.moveAsync(
+        `android/app/src/release/java/${oldPath}`,
+        `android/app/src/release/java/${newPath}`,
+      ),
     ])
   }
 
@@ -131,6 +135,7 @@ export async function renameReactNativeApp(
     `android/app/BUCK`,
     `android/app/build.gradle`,
     `android/app/src/debug/java/${newPath}/ReactNativeFlipper.java`,
+    `android/app/src/release/java/${newPath}/ReactNativeFlipper.java`,
     `android/app/src/main/AndroidManifest.xml`,
     `android/app/src/main/java/${newPath}/MainActivity.java`,
     `android/app/src/main/java/${newPath}/MainApplication.java`,
