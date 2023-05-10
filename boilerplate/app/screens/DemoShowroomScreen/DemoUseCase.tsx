@@ -25,14 +25,14 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 }
 
 const $description: TextStyle = {
-  marginTop: spacing.medium,
+  marginTop: spacing.md,
 }
 
 const $item: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
-  padding: spacing.large,
-  marginVertical: spacing.medium,
+  padding: spacing.lg,
+  marginVertical: spacing.md,
 }
 
 const $name: TextStyle = {

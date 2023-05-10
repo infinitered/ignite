@@ -7,22 +7,22 @@ import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $demoIconContainer: ViewStyle = {
-  padding: spacing.extraSmall,
+  padding: spacing.xs,
 }
 
 const $iconTile: ViewStyle = {
   width: "33.333%",
   alignItems: "center",
-  paddingVertical: spacing.extraSmall,
+  paddingVertical: spacing.xs,
 }
 
 const $iconTileLabel: TextStyle = {
-  marginTop: spacing.tiny,
+  marginTop: spacing.xxs,
   color: colors.textDim,
 }
 
 const $customIconContainer: ViewStyle = {
-  padding: spacing.medium,
+  padding: spacing.md,
   backgroundColor: colors.palette.angry500,
 }
 

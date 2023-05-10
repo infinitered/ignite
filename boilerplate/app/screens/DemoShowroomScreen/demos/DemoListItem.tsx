@@ -37,7 +37,7 @@ const $customContainerStyle: ViewStyle = {
 }
 
 const $flatListStyle: ViewStyle = {
-  paddingHorizontal: spacing.extraSmall,
+  paddingHorizontal: spacing.xs,
   backgroundColor: colors.palette.neutral200,
   flex: 1,
   overflow: "scroll",
@@ -101,7 +101,7 @@ export const DemoListItem: Demo = {
       <ListItem
         topSeparator
         LeftComponent={
-          <View style={[$customLeft, { marginEnd: spacing.medium }]}>
+          <View style={[$customLeft, { marginEnd: spacing.md }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}
@@ -115,7 +115,7 @@ export const DemoListItem: Demo = {
         topSeparator
         bottomSeparator
         RightComponent={
-          <View style={[$customLeft, { marginStart: spacing.medium }]}>
+          <View style={[$customLeft, { marginStart: spacing.md }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}
