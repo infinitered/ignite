@@ -112,7 +112,7 @@
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
     "ts-jest": "29",
-    "typescript": "^4.8.4"
+    "typescript": "^5.0.4"
   },
   "resolutions": {
     "@types/react": "^18",
