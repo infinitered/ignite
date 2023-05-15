@@ -240,15 +240,15 @@ const $drawer: ViewStyle = {
 }
 
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: spacing.large,
+  paddingHorizontal: spacing.lg,
 }
 
 const $sectionListContentContainer: ViewStyle = {
-  paddingHorizontal: spacing.large,
+  paddingHorizontal: spacing.lg,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: spacing.massive,
+  marginBottom: spacing.xxxl,
 }
 
 const $logoImage: ImageStyle = {
@@ -260,25 +260,25 @@ const $logoContainer: ViewStyle = {
   alignSelf: "flex-start",
   justifyContent: "center",
   height: 56,
-  paddingHorizontal: spacing.large,
+  paddingHorizontal: spacing.lg,
 }
 
 const $menuContainer: ViewStyle = {
-  paddingBottom: spacing.extraSmall,
-  paddingTop: spacing.large,
+  paddingBottom: spacing.xs,
+  paddingTop: spacing.lg,
 }
 
 const $demoItemName: TextStyle = {
   fontSize: 24,
-  marginBottom: spacing.medium,
+  marginBottom: spacing.md,
 }
 
 const $demoItemDescription: TextStyle = {
-  marginBottom: spacing.huge,
+  marginBottom: spacing.xxl,
 }
 
 const $demoUseCasesSpacer: ViewStyle = {
-  paddingBottom: spacing.huge,
+  paddingBottom: spacing.xxl,
 }
 
 // @demo remove-file

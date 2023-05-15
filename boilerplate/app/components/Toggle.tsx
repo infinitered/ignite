@@ -615,7 +615,7 @@ const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
 }
 
 const $helper: TextStyle = {
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
 }
 
 const $label: TextStyle = {
@@ -623,11 +623,11 @@ const $label: TextStyle = {
 }
 
 const $labelRight: TextStyle = {
-  marginStart: spacing.medium,
+  marginStart: spacing.md,
 }
 
 const $labelLeft: TextStyle = {
-  marginEnd: spacing.medium,
+  marginEnd: spacing.md,
 }
 
 const $switchAccessibility: TextStyle = {

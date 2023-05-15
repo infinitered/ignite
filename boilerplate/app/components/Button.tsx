@@ -129,8 +129,8 @@ const $baseViewStyle: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "row",
-  paddingVertical: spacing.small,
-  paddingHorizontal: spacing.small,
+  paddingVertical: spacing.sm,
+  paddingHorizontal: spacing.sm,
   overflow: "hidden",
 }
 
@@ -144,8 +144,8 @@ const $baseTextStyle: TextStyle = {
   zIndex: 2,
 }
 
-const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.extraSmall, zIndex: 1 }
-const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.extraSmall, zIndex: 1 }
+const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
+const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
 
 const $viewPresets = {
   default: [

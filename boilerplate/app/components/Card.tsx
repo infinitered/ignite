@@ -160,28 +160,28 @@ export function Card(props: CardProps) {
   const $containerStyle = [$containerPresets[preset], $containerStyleOverride]
   const $headingStyle = [
     $headingPresets[preset],
-    (isFooterPresent || isContentPresent) && { marginBottom: spacing.micro },
+    (isFooterPresent || isContentPresent) && { marginBottom: spacing.xxxs },
     $headingStyleOverride,
     HeadingTextProps?.style,
   ]
   const $contentStyle = [
     $contentPresets[preset],
-    isHeadingPresent && { marginTop: spacing.micro },
-    isFooterPresent && { marginBottom: spacing.micro },
+    isHeadingPresent && { marginTop: spacing.xxxs },
+    isFooterPresent && { marginBottom: spacing.xxxs },
     $contentStyleOverride,
     ContentTextProps?.style,
   ]
   const $footerStyle = [
     $footerPresets[preset],
-    (isHeadingPresent || isContentPresent) && { marginTop: spacing.micro },
+    (isHeadingPresent || isContentPresent) && { marginTop: spacing.xxxs },
     $footerStyleOverride,
     FooterTextProps?.style,
   ]
   const $alignmentWrapperStyle = [
     $alignmentWrapper,
     { justifyContent: $alignmentWrapperFlexOptions[verticalAlignment] },
-    LeftComponent && { marginStart: spacing.medium },
-    RightComponent && { marginEnd: spacing.medium },
+    LeftComponent && { marginStart: spacing.md },
+    RightComponent && { marginEnd: spacing.md },
   ]
 
   return (
@@ -240,8 +240,8 @@ export function Card(props: CardProps) {
 }
 
 const $containerBase: ViewStyle = {
-  borderRadius: spacing.medium,
-  padding: spacing.extraSmall,
+  borderRadius: spacing.md,
+  padding: spacing.xs,
   borderWidth: 1,
   shadowColor: colors.palette.neutral800,
   shadowOffset: { width: 0, height: 12 },

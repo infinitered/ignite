@@ -119,29 +119,29 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 })
 
 const $screenContentContainer: ViewStyle = {
-  paddingVertical: spacing.huge,
-  paddingHorizontal: spacing.large,
+  paddingVertical: spacing.xxl,
+  paddingHorizontal: spacing.lg,
 }
 
 const $signIn: TextStyle = {
-  marginBottom: spacing.small,
+  marginBottom: spacing.sm,
 }
 
 const $enterDetails: TextStyle = {
-  marginBottom: spacing.large,
+  marginBottom: spacing.lg,
 }
 
 const $hint: TextStyle = {
   color: colors.tint,
-  marginBottom: spacing.medium,
+  marginBottom: spacing.md,
 }
 
 const $textField: ViewStyle = {
-  marginBottom: spacing.large,
+  marginBottom: spacing.lg,
 }
 
 const $tapButton: ViewStyle = {
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
 }
 
 // @demo remove-file

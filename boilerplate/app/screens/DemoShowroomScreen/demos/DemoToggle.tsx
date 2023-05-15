@@ -20,7 +20,7 @@ const $centeredOneThirdCol: ViewStyle = {
 const $centeredText: TextStyle = {
   textAlign: "center",
   width: "100%",
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
 }
 
 export const DemoToggle: Demo = {

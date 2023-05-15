@@ -101,28 +101,28 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   }
 
 const $container: ViewStyle = {
-  paddingTop: spacing.large + spacing.extraLarge,
-  paddingHorizontal: spacing.large,
+  paddingTop: spacing.lg + spacing.xl,
+  paddingHorizontal: spacing.lg,
 }
 
 const $title: TextStyle = {
-  marginBottom: spacing.small,
+  marginBottom: spacing.sm,
 }
 
 const $tagline: TextStyle = {
-  marginBottom: spacing.huge,
+  marginBottom: spacing.xxl,
 }
 
 const $description: TextStyle = {
-  marginBottom: spacing.large,
+  marginBottom: spacing.lg,
 }
 
 const $sectionTitle: TextStyle = {
-  marginTop: spacing.huge,
+  marginTop: spacing.xxl,
 }
 
 const $logoContainer: ViewStyle = {
-  marginEnd: spacing.medium,
+  marginEnd: spacing.md,
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",

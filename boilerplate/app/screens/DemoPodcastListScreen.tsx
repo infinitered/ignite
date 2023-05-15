@@ -297,29 +297,29 @@ const $screenContentContainer: ViewStyle = {
 }
 
 const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: spacing.large,
-  paddingTop: spacing.large + spacing.extraLarge,
-  paddingBottom: spacing.large,
+  paddingHorizontal: spacing.lg,
+  paddingTop: spacing.lg + spacing.xl,
+  paddingBottom: spacing.lg,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: spacing.medium,
+  marginBottom: spacing.md,
 }
 
 const $item: ViewStyle = {
-  padding: spacing.medium,
-  marginTop: spacing.medium,
+  padding: spacing.md,
+  marginTop: spacing.md,
   minHeight: 120,
 }
 
 const $itemThumbnail: ImageStyle = {
-  marginTop: spacing.small,
+  marginTop: spacing.sm,
   borderRadius: 50,
   alignSelf: "flex-start",
 }
 
 const $toggle: ViewStyle = {
-  marginTop: spacing.medium,
+  marginTop: spacing.md,
 }
 
 const $labelStyle: TextStyle = {
@@ -330,29 +330,29 @@ const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
   flexDirection: "row",
-  marginEnd: spacing.small,
+  marginEnd: spacing.sm,
 }
 
 const $metadata: TextStyle = {
   color: colors.textDim,
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
   flexDirection: "row",
 }
 
 const $metadataText: TextStyle = {
   color: colors.textDim,
-  marginEnd: spacing.medium,
-  marginBottom: spacing.extraSmall,
+  marginEnd: spacing.md,
+  marginBottom: spacing.xs,
 }
 
 const $favoriteButton: ViewStyle = {
   borderRadius: 17,
-  marginTop: spacing.medium,
+  marginTop: spacing.md,
   justifyContent: "flex-start",
   backgroundColor: colors.palette.neutral300,
   borderColor: colors.palette.neutral300,
-  paddingHorizontal: spacing.medium,
-  paddingTop: spacing.micro,
+  paddingHorizontal: spacing.md,
+  paddingTop: spacing.xxxs,
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
@@ -364,7 +364,7 @@ const $unFavoriteButton: ViewStyle = {
 }
 
 const $emptyState: ViewStyle = {
-  marginTop: spacing.huge,
+  marginTop: spacing.xxl,
 }
 
 const $emptyStateImage: ImageStyle = {

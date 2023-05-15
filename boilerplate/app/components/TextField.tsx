@@ -230,7 +230,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 })
 
 const $labelStyle: TextStyle = {
-  marginBottom: spacing.extraSmall,
+  marginBottom: spacing.xs,
 }
 
 const $inputWrapperStyle: ViewStyle = {
@@ -253,22 +253,22 @@ const $inputStyle: TextStyle = {
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
   paddingVertical: 0,
   paddingHorizontal: 0,
-  marginVertical: spacing.extraSmall,
-  marginHorizontal: spacing.small,
+  marginVertical: spacing.xs,
+  marginHorizontal: spacing.sm,
 }
 
 const $helperStyle: TextStyle = {
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
 }
 
 const $rightAccessoryStyle: ViewStyle = {
-  marginEnd: spacing.extraSmall,
+  marginEnd: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
 }
 const $leftAccessoryStyle: ViewStyle = {
-  marginStart: spacing.extraSmall,
+  marginStart: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",

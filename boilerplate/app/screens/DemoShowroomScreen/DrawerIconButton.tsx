@@ -100,7 +100,7 @@ const $topBar: ViewStyle = {
 
 const $middleBar: ViewStyle = {
   height: barHeight,
-  marginTop: spacing.tiny,
+  marginTop: spacing.xxs,
 }
 
 const $bottomBar: ViewStyle = {

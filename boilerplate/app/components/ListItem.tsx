@@ -197,7 +197,7 @@ const $separatorBottom: ViewStyle = {
 }
 
 const $textStyle: TextStyle = {
-  paddingVertical: spacing.extraSmall,
+  paddingVertical: spacing.xs,
   alignSelf: "center",
   flexGrow: 1,
   flexShrink: 1,
@@ -214,9 +214,9 @@ const $iconContainer: ViewStyle = {
   flexGrow: 0,
 }
 const $iconContainerLeft: ViewStyle = {
-  marginEnd: spacing.medium,
+  marginEnd: spacing.md,
 }
 
 const $iconContainerRight: ViewStyle = {
-  marginStart: spacing.medium,
+  marginStart: spacing.md,
 }

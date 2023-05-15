@@ -43,8 +43,8 @@ export function ErrorDetails(props: ErrorDetailsProps) {
 
 const $contentContainer: ViewStyle = {
   alignItems: "center",
-  paddingHorizontal: spacing.large,
-  paddingTop: spacing.extraLarge,
+  paddingHorizontal: spacing.lg,
+  paddingTop: spacing.xl,
   flex: 1,
 }
 
@@ -55,18 +55,18 @@ const $topSection: ViewStyle = {
 
 const $heading: TextStyle = {
   color: colors.error,
-  marginBottom: spacing.medium,
+  marginBottom: spacing.md,
 }
 
 const $errorSection: ViewStyle = {
   flex: 2,
   backgroundColor: colors.separator,
-  marginVertical: spacing.medium,
+  marginVertical: spacing.md,
   borderRadius: 6,
 }
 
 const $errorSectionContentContainer: ViewStyle = {
-  padding: spacing.medium,
+  padding: spacing.md,
 }
 
 const $errorContent: TextStyle = {
@@ -74,11 +74,11 @@ const $errorContent: TextStyle = {
 }
 
 const $errorBacktrace: TextStyle = {
-  marginTop: spacing.medium,
+  marginTop: spacing.md,
   color: colors.textDim,
 }
 
 const $resetButton: ViewStyle = {
   backgroundColor: colors.error,
-  paddingHorizontal: spacing.huge,
+  paddingHorizontal: spacing.xxl,
 }
