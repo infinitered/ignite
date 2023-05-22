@@ -40,7 +40,7 @@ const subcommands = {
   path,
   clear,
 } as const
-type SubCommand = typeof subcommands[keyof typeof subcommands]
+type SubCommand = (typeof subcommands)[keyof typeof subcommands]
 
 module.exports = {
   alias: ["c"],
