@@ -68,6 +68,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^7.0.1",
     "jest": "^27.0.6",
     "prettier": "2.8.8",
@@ -82,7 +83,8 @@
     "extends": [
       "prettier",
       "plugin:@typescript-eslint/recommended",
-      "standard"
+      "standard",
+      "plugin:react-hooks/recommended"
     ],
     "plugins": [
       "@typescript-eslint"
