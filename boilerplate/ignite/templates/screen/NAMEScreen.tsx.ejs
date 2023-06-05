@@ -20,7 +20,7 @@ import { Screen, Text } from "app/components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
 
-interface <%= props.pascalCaseName %>ScreenProps extends NativeStackScreenProps<AppStackScreenProps<"<%= props.pascalCaseName %>">> {}
+interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
 
 export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>ScreenProps> = observer(function <%= props.pascalCaseName %>Screen() {
   // Pull in one of our MST stores
