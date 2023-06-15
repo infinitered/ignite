@@ -2,7 +2,7 @@
 
 [Back to all components](./Components.md)
 
-The `Button` component is a wrapper around the [`Pressable`](https://reactnative.dev/docs/pressable) component. Any prop that can be passed to `Pressable` can be passed to `Button` and it will be forwarded. `Button` renders a button with given text in a [`Text`](./Components-Text.md) component or children. It allows you to specify the preset style of the button, you can override both the `Pressable` and `Text` style.
+The `Button` component is a wrapper around the [`Pressable`](https://reactnative.dev/docs/pressable) component. Any prop that can be passed to `Pressable` can be passed to `Button` and it will be forwarded. `Button` renders a button with given text in a [`Text`](./Components-Text.md) component or children. It allows you to specify the preset style of the button, you can override both the `Pressable` and `Text` styles.
 
 ```tsx
 <Button
@@ -39,7 +39,7 @@ The `tx` prop is required if `text` or `children` are not provided. This is the 
 
 ### `children`
 
-The `children` prop is required if no `tx` or `text` prop is passed. This is the content to be rendered in the button in the place of the default `Text` component.
+The `children` prop is required if no `tx` or `text` prop is passed. This is the content to be rendered in the button in place of the default `Text` component.
 
 ```tsx
 <Button>
@@ -49,7 +49,7 @@ The `children` prop is required if no `tx` or `text` prop is passed. This is the
 
 ### `preset`
 
-The `preset` prop is optional. This is the preset style of the button. It can be one of the following built in options: `default`, `filled`, `reversed`
+The `preset` prop is optional. This is the preset style of the button. It can be one of the following built-in options: `default`, `filled`, `reversed`
 
 ```tsx
 <Button preset="default" tx="button.clickMe" />
@@ -116,7 +116,7 @@ The `pressedStyle` prop is optional. This can be used to style the `Pressable` c
 
 ### `LeftAccessory` and `RightAccessory`
 
-The `LeftAccessory` and `RightAccessory` props are optional. They can be used to render an accessory on the left or right side of the button. It can be a React component or a function that returns a React component. The accessory component will receive the pressed state of the `Pressable` via the the `pressableState` prop, so you can make a custom accessory component render differently when pressed. Additionally, you can utilize the default accessory styles via the `style` prop.
+The `LeftAccessory` and `RightAccessory` props are optional. They can be used to render an accessory on the left or right side of the button. It can be a React component or a function that returns a React component. The accessory component will receive the pressed state of the `Pressable` via the `pressableState` prop, so you can make a custom accessory component render differently when pressed. Additionally, you can utilize the default accessory styles via the `style` prop.
 
 ```tsx
 <Button
