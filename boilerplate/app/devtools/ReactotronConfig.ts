@@ -4,15 +4,18 @@
  * @see https://github.com/infinitered/reactotron
  */
 import { Platform } from "react-native"
-import { Reactotron } from "./reactotronClient"
-import { ArgType } from "reactotron-core-client"
+
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
-import { clear } from "../../utils/storage"
-import { goBack, resetRoot, navigate } from "../../navigators/navigationUtilities"
+
+import { clear } from "app/utils/storage"
+import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
+
+import { Reactotron } from "./ReactotronClient"
 
 Reactotron.configure({
-  name: require("../../../package.json").name,
+  name: require("../../package.json").name,
   host: "localhost",
   onConnect: () => {
     /** since this file gets hot reloaded, let's clear the past logs every time we connect */
