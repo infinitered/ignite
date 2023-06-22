@@ -25,6 +25,10 @@ export class ErrorBoundary extends Component<Props, State> {
 
   // If an error in a child is encountered, this will run
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // Only set errors if enabled
+    if (!this.isEnabled()) {
+      return
+    }
     // Catch errors in any components below and re-render with error message
     this.setState({
       error,
