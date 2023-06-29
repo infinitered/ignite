@@ -119,6 +119,9 @@
     "@types/react": "^18",
     "@types/react-dom": "^18"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "prettier": {
     "printWidth": 100,
     "semi": false,

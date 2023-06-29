@@ -42,9 +42,8 @@
     "ignite-cli:dev": "node bin/ignite",
     "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x"
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
