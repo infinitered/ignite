@@ -33,7 +33,6 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/metro-config": "^0.7.1",
-    "@expo/webpack-config": "^18.0.1",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.2",
@@ -112,7 +111,7 @@
     "react-test-renderer": "18.2.0",
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
-    "ts-jest": "29",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.0.4"
   },
   "resolutions": {
@@ -120,7 +119,7 @@
     "@types/react-dom": "^18"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
   "prettier": {
     "printWidth": 100,
@@ -199,8 +198,5 @@
       "react/prop-types": 0,
       "space-before-function-paren": 0
     }
-  },
-  "engines": {
-    "node": ">=16"
   }
 }
