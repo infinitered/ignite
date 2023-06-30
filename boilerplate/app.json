@@ -50,7 +50,8 @@
         "image": "./assets/images/splash-logo-web.png",
         "resizeMode": "contain",
         "backgroundColor": "#191015"
-      }
+      },
+      "bundler": "metro"
     },
     "plugins": [
       "expo-localization"

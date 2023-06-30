@@ -22,10 +22,12 @@
     "release:android": "cd android && rm -rf app/src/main/res/drawable-* && ./gradlew assembleRelease && cd - && echo 'APK generated in ./android/app/build/outputs/apk/release/app-release.apk'",
     "clean": "npx react-native-clean-project",
     "clean-all": "npx react-native clean-project-auto",
-    "expo:start": "expo start",
-    "expo:android": "expo start --android",
-    "expo:ios": "expo start --ios",
-    "expo:web": "expo start --web"
+    "expo:start": "npx expo start",
+    "expo:android": "npx expo start --android",
+    "expo:ios": "npx expo start --ios",
+    "expo:web": "npx expo start --web",
+    "bundle:web": "npx expo export --platform web",
+    "serve:web": "npx server dist"
   },
   "overrides": {
     "react-error-overlay": "6.0.9"
