@@ -155,16 +155,6 @@ console.warn = (...args: Parameters<typeof console.warn>) => {
   Reactotron.warn(args[0])
 }
 
-const ogConsoleError = console.error
-console.error = (...args: Parameters<typeof console.error>) => {
-  ogConsoleError(...args)
-  if (args[0] instanceof Error) {
-    Reactotron.error(args[0].message, args[0].stack)
-  } else {
-    Reactotron.error(args[0], args[1])
-  }
-}
-
 const ogConsoleDebug = console.debug
 console.debug = (...args: Parameters<typeof console.debug>) => {
   ogConsoleDebug(...args)
