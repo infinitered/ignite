@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">HelloWorld</string>
+  <string name="app_name">HelloWorld</string>
+  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+  <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+  <string name="ExpoLocalization_supportsRTL" translatable="false">undefined</string>
 </resources>
