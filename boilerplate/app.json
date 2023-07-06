@@ -54,7 +54,18 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "newArchEnabled": false
+          },
+          "android": {
+            "newArchEnabled": false
+          }
+        }
+      ]
     ]
   }
 }

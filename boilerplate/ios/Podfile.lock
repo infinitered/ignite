@@ -9,7 +9,7 @@ PODS:
     - ExpoModulesCore
   - EXFont (11.4.0):
     - ExpoModulesCore
-  - Expo (49.0.0-beta.5):
+  - Expo (49.0.0):
     - ExpoModulesCore
   - ExpoDevice (5.4.0):
     - ExpoModulesCore
@@ -23,7 +23,7 @@ PODS:
     - React-NativeModulesApple
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
-  - EXSplashScreen (0.20.3):
+  - EXSplashScreen (0.20.4):
     - ExpoModulesCore
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -677,12 +677,12 @@ SPEC CHECKSUMS:
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
   EXFileSystem: d7f59869885cfeab3ac771e2a8d0f5ed98cd3fdb
   EXFont: 738c44c390953ebcbab075a4848bfbef025fd9ee
-  Expo: 7a7c1c30048752bfa8e74732fc9471226598bbbd
+  Expo: dc993e0d66e657a31dc45574543ca1ed3d68c617
   ExpoDevice: 1c1b0c9cad96c292c1de73948649cfd654b2b3c0
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoLocalization: be37fdd0b5930c6a49cd307b4542f4b426d6134c
   ExpoModulesCore: cfc52053496bae101b7ce6cd20a0ebaefbf977c0
-  EXSplashScreen: ce0312ff1d08dc319a3ba991f705decb81574c73
+  EXSplashScreen: 89586b0961acd173b04713b7457949b063a659da
   FBLazyVector: 55cd4593d570bd9e5e227488d637ce6a9581ce51
   FBReactNativeSpec: 799b0e1a1561699cd0e424e24fe5624da38402f0
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
