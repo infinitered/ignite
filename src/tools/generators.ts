@@ -670,7 +670,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
         const updatedConfig = merge(require(outputAppConfig), iconConfig)
 
-        write(path(cwd, "app.json"), updatedConfig)
+        write(path(cwd, "app.json"), JSON.stringify(updatedConfig, null, 2) + "\n")
         direction(`✅ app.json`)
       },
     }[o]
@@ -885,7 +885,7 @@ export async function generateSplashScreen(options: {
 
     const updatedConfig = merge(require(outputAppConfig), splashConfig)
 
-    write(path(cwd, "app.json"), updatedConfig)
+    write(path(cwd, "app.json"), JSON.stringify(updatedConfig, null, 2) + "\n")
     direction(`✅ app.json`)
   } else {
     warning(`⚠️  No output directory found for "Expo" at "${expoOutputDirPath}". Skipping...`)
