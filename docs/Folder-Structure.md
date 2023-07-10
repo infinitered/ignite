@@ -4,8 +4,9 @@ A new Ignite boilerplate project's structure looks similar to this:
 
 ```
 ignite-project
-├── android (if not Expo)
-├── ios (if not Expo)
+├── .maestro
+├── android
+├── ios
 ├── app
 │   ├── components
 │   ├── i18n
@@ -22,11 +23,9 @@ ignite-project
 │   ├── mock-i18n.ts
 │   ├── mock-reactotron.ts
 │   ├── setup.ts
-├── e2e
-│   └── config.json
 ├── ignite
 │   └── templates
-├── index.js
+├── App.tsx
 ├── package.json
 └── README.md
 ```
