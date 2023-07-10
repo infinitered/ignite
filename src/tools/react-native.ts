@@ -130,7 +130,6 @@ export async function renameReactNativeApp(
   const filesToPatch = [
     `app.json`,
     `package.json`,
-    `index.js`,
     `android/settings.gradle`,
     `android/app/_BUCK`,
     `android/app/BUCK`,

@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
     "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
-    "lint": "eslint index.js App.js app test --fix --ext .js,.ts,.tsx && npm run format",
+    "lint": "eslint App.tsx app test --fix --ext .js,.ts,.tsx && npm run format",
     "patch": "patch-package",
     "test": "jest",
     "test:watch": "jest --watch",
