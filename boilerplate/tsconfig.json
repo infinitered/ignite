@@ -6,10 +6,11 @@
     "jsx": "react-native",
     "module": "es2015",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "strict": true,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "sourceMap": true,
     "target": "esnext",
     "lib": ["esnext", "dom"],
@@ -17,7 +18,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./"
   },
-  "exclude": ["node_modules"],
-  "include": ["index.js", "App.tsx", "app", "test", "*.js"],
+  "exclude": ["node_modules", "test"],
+  "include": ["index.js", "App.tsx", "app"],
   "extends": "expo/tsconfig.base"
 }

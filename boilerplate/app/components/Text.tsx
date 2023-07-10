@@ -56,12 +56,12 @@ export function Text(props: TextProps) {
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
 
-  const preset: Presets = $presets[props.preset] ? props.preset : "default"
-  const $styles = [
+  const preset: Presets = props.preset ?? "default"
+  const $styles: StyleProp<TextStyle> = [
     $rtlStyle,
     $presets[preset],
-    $fontWeightStyles[weight],
-    $sizeStyles[size],
+    weight && $fontWeightStyles[weight],
+    size && $sizeStyles[size],
     $styleOverride,
   ]
 
