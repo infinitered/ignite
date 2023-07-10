@@ -101,13 +101,20 @@ interface EmptyStateProps {
   ButtonProps?: ButtonProps
 }
 
+interface EmptyStatePresetItem {
+  imageSource: ImageProps["source"]
+  heading: TextProps["text"]
+  content: TextProps["text"]
+  button: TextProps["text"]
+}
+
 const EmptyStatePresets = {
   generic: {
     imageSource: sadFace,
     heading: translate("emptyStateComponent.generic.heading"),
     content: translate("emptyStateComponent.generic.content"),
     button: translate("emptyStateComponent.generic.button"),
-  },
+  } as EmptyStatePresetItem,
 } as const
 
 /**
@@ -116,20 +123,20 @@ const EmptyStatePresets = {
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-EmptyState.md)
  */
 export function EmptyState(props: EmptyStateProps) {
-  const preset = EmptyStatePresets[props.preset] ? EmptyStatePresets[props.preset] : undefined
+  const preset = EmptyStatePresets[props.preset ?? "generic"]
 
   const {
-    button = preset?.button,
+    button = preset.button,
     buttonTx,
     buttonOnPress,
     buttonTxOptions,
-    content = preset?.content,
+    content = preset.content,
     contentTx,
     contentTxOptions,
-    heading = preset?.heading,
+    heading = preset.heading,
     headingTx,
     headingTxOptions,
-    imageSource = preset?.imageSource,
+    imageSource = preset.imageSource,
     style: $containerStyleOverride,
     buttonStyle: $buttonStyleOverride,
     buttonTextStyle: $buttonTextStyleOverride,

@@ -67,8 +67,8 @@ export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProb
           return { kind: "rejected" }
       }
     case "CANCEL_ERROR":
-      return null
+      return { kind: "unknown", temporary: true }
   }
 
-  return null
+  return { kind: "unknown", temporary: true }
 }

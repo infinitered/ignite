@@ -27,8 +27,8 @@ export const navigationRef = createNavigationContainerRef()
 /**
  * Gets the current screen from any navigation state.
  */
-export function getActiveRouteName(state: NavigationState | PartialState<NavigationState>) {
-  const route = state.routes[state.index]
+export function getActiveRouteName(state: NavigationState | PartialState<NavigationState>): string {
+  const route = state.routes[state.index ?? 0]
 
   // Found the active route -- return the name
   if (!route.state) return route.name
@@ -112,22 +112,24 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
 
   const routeNameRef = useRef<string | undefined>()
 
-  const onNavigationStateChange = (state) => {
+  const onNavigationStateChange = (state: NavigationState | undefined) => {
     const previousRouteName = routeNameRef.current
-    const currentRouteName = getActiveRouteName(state)
+    if (state !== undefined) {
+      const currentRouteName = getActiveRouteName(state)
 
-    if (previousRouteName !== currentRouteName) {
-      // track screens.
-      if (__DEV__) {
-        console.tron.log(currentRouteName)
+      if (previousRouteName !== currentRouteName) {
+        // track screens.
+        if (__DEV__) {
+          console.tron.log?.(currentRouteName)
+        }
       }
+
+      // Save the current route name for later comparison
+      routeNameRef.current = currentRouteName
+
+      // Persist state to storage
+      storage.save(persistenceKey, state)
     }
-
-    // Save the current route name for later comparison
-    routeNameRef.current = currentRouteName
-
-    // Persist state to storage
-    storage.save(persistenceKey, state)
   }
 
   const restoreState = async () => {

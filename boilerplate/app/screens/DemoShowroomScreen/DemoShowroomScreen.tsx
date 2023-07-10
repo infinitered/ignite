@@ -35,7 +35,7 @@ interface DemoListItem {
   handleScroll?: (sectionIndex: number, itemIndex?: number) => void
 }
 
-const slugify = (str) =>
+const slugify = (str: string) =>
   str
     .toLowerCase()
     .trim()
@@ -64,23 +64,21 @@ const WebListItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
   )
 }
 
-const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) => {
-  return (
-    <View>
-      <Text onPress={() => handleScroll(sectionIndex)} preset="bold" style={$menuContainer}>
-        {item.name}
-      </Text>
-      {item.useCases.map((u, index) => (
-        <ListItem
-          key={`section${sectionIndex}-${u}`}
-          onPress={() => handleScroll(sectionIndex, index + 1)}
-          text={u}
-          rightIcon={isRTL ? "caretLeft" : "caretRight"}
-        />
-      ))}
-    </View>
-  )
-}
+const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) => (
+  <View>
+    <Text onPress={() => handleScroll?.(sectionIndex)} preset="bold" style={$menuContainer}>
+      {item.name}
+    </Text>
+    {item.useCases.map((u, index) => (
+      <ListItem
+        key={`section${sectionIndex}-${u}`}
+        onPress={() => handleScroll?.(sectionIndex, index + 1)}
+        text={u}
+        rightIcon={isRTL ? "caretLeft" : "caretRight"}
+      />
+    ))}
+  </View>
+)
 
 const ShowroomListItem = Platform.select({ web: WebListItem, default: NativeListItem })
 
@@ -88,9 +86,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
     const [open, setOpen] = useState(false)
     const timeout = useRef<ReturnType<typeof setTimeout>>()
-    const drawerRef = useRef<DrawerLayout>()
-    const listRef = useRef<SectionList>()
-    const menuRef = useRef<FlatList>()
+    const drawerRef = useRef<DrawerLayout>(null)
+    const listRef = useRef<SectionList>(null)
+    const menuRef = useRef<FlatList>(null)
     const progress = useSharedValue(0)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
@@ -128,7 +126,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     }
 
     const handleScroll = (sectionIndex: number, itemIndex = 0) => {
-      listRef.current.scrollToLocation({
+      listRef.current?.scrollToLocation({
         animated: true,
         itemIndex,
         sectionIndex,

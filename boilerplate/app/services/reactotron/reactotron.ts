@@ -77,7 +77,9 @@ export function setReactotronRootStore(rootStore: RootStore, initialData: any) {
     }
 
     // tracks the current MobX-State-Tree tree in Reactotron's "State" tab
-    Reactotron.trackMstNode(rootStore)
+    if (Reactotron.trackMstNode !== undefined) {
+      Reactotron.trackMstNode(rootStore)
+    }
   }
 }
 
@@ -104,7 +106,7 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
 
     // hookup middleware
     if (Platform.OS !== "web") {
-      if (config.useAsyncStorage) {
+      if (config.useAsyncStorage && Reactotron.setAsyncStorageHandler !== undefined) {
         Reactotron.setAsyncStorageHandler(AsyncStorage)
       }
       Reactotron.useReactNative({
@@ -138,7 +140,7 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
       description: "Resets the MST store",
       command: "resetStore",
       handler: () => {
-        Reactotron.log("resetting store")
+        Reactotron.log?.("resetting store")
         clear()
       },
     })
@@ -148,7 +150,7 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
       description: "Resets the navigation state",
       command: "resetNavigation",
       handler: () => {
-        Reactotron.log("resetting navigation state")
+        Reactotron.log?.("resetting navigation state")
         resetRoot({ index: 0, routes: [] })
       },
     })
@@ -179,14 +181,14 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
       description: "Goes back",
       command: "goBack",
       handler: () => {
-        Reactotron.log("Going back")
+        Reactotron.log?.("Going back")
         goBack()
       },
     })
 
     // clear if we should
     if (config.clearOnLoad) {
-      Reactotron.clear()
+      Reactotron.clear?.()
     }
 
     _reactotronIsSetUp = true

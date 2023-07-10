@@ -65,21 +65,20 @@ export function Icon(props: IconProps) {
     ? TouchableOpacity
     : View
 
+  const $imageStyle: StyleProp<ImageStyle> = [
+    $imageStyleBase,
+    color !== undefined && { tintColor: color },
+    size !== undefined && { width: size, height: size },
+    $imageStyleOverride,
+  ]
+
   return (
     <Wrapper
       accessibilityRole={isPressable ? "imagebutton" : undefined}
       {...WrapperProps}
       style={$containerStyleOverride}
     >
-      <Image
-        style={[
-          $imageStyle,
-          color && { tintColor: color },
-          size && { width: size, height: size },
-          $imageStyleOverride,
-        ]}
-        source={iconRegistry[icon]}
-      />
+      <Image style={$imageStyle} source={iconRegistry[icon]} />
     </Wrapper>
   )
 }
@@ -109,6 +108,6 @@ export const iconRegistry = {
   x: require("../../assets/icons/x.png"),
 }
 
-const $imageStyle: ImageStyle = {
+const $imageStyleBase: ImageStyle = {
   resizeMode: "contain",
 }

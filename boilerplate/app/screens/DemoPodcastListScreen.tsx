@@ -67,7 +67,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         contentContainerStyle={$screenContentContainer}
       >
         <FlatList<Episode>
-          data={episodeStore.episodesForList}
+          data={[]} // episodeStore.episodesForList}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           contentContainerStyle={$flatListContentContainer}
           refreshing={refreshing}
@@ -89,7 +89,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
                     ? "demoPodcastListScreen.noFavoritesEmptyState.content"
                     : undefined
                 }
-                button={episodeStore.favoritesOnly ? null : undefined}
+                button={episodeStore.favoritesOnly ? "" : undefined}
                 buttonOnPress={manualRefresh}
                 imageStyle={$emptyStateImage}
                 ImageProps={{ resizeMode: "contain" }}
