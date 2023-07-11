@@ -78,12 +78,6 @@ export interface Options {
    */
   overwrite?: boolean
   /**
-   * Input Source: `parameter.option`
-   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
-   * @default undefined
-   */
-  expo?: boolean
-  /**
    * Package manager to install dependencies with
    *
    * Input Source: `prompt.ask`| `parameter.option`
@@ -347,17 +341,6 @@ export default {
     }
     // #endregion
 
-    // #region Expo
-    // show warning about --expo going away
-    const expo = boolFlag(options.expo)
-    if (expo) {
-      warning(
-        " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
-      )
-      p()
-    }
-    // #endregion
-
     // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
@@ -608,7 +591,6 @@ export default {
         git,
         installDeps,
         overwrite,
-        expo,
         packager: packagerName,
         targetPath,
         removeDemo,
@@ -662,12 +644,6 @@ export default {
     } else {
       command(`${packager.runCmd("android", packagerOptions)}`)
     }
-
-    p2()
-    p2("With Expo:")
-    command(`cd ${projectName}`)
-    if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packager.runCmd("expo:start", packagerOptions)}`)
     p2()
     p2()
     // #endregion
@@ -692,7 +668,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "expo", "useCache", "y", "yes"]
+  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>
