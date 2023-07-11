@@ -563,11 +563,8 @@ export default {
       startSpinner(" Enabling New Architecture")
       try {
         let appJsonRaw = read("app.json")
-        log(appJsonRaw)
         appJsonRaw = appJsonRaw.replace(/"newArchEnabled": false/g, '"newArchEnabled": true')
-        log(appJsonRaw)
         const appJson = JSON.parse(appJsonRaw)
-
         write("./app.json", appJson)
       } catch (e) {
         log(e)
