@@ -118,6 +118,11 @@ export interface Options {
    * @default false
    */
   yes?: boolean
+  /**
+   * Whether or not to opt into React Native's New Architecture
+   * @default false
+   */
+  experimentalNewArch?: boolean
 }
 
 export default {
@@ -341,6 +346,24 @@ export default {
     }
     // #endregion
 
+    // #region Prompt to enable New Architecture
+    const defaultNewArch = false
+    let experimentalNewArch = useDefault(options.experimentalNewArch)
+      ? defaultNewArch
+      : boolFlag(options.experimentalNewArch)
+    if (experimentalNewArch === undefined) {
+      const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalNewArch",
+        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        initial: defaultNewArch,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalNewArch = newArchResponse.experimentalNewArch
+    }
+    // #endregion
+
     // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
@@ -535,6 +558,24 @@ export default {
     }
     // #endregion
 
+    // #region Enable New Architecture if requested
+    if (experimentalNewArch === true) {
+      startSpinner(" Enabling New Architecture")
+      try {
+        let appJsonRaw = read("app.json")
+        log(appJsonRaw)
+        appJsonRaw = appJsonRaw.replace(/"newArchEnabled": false/g, '"newArchEnabled": true')
+        log(appJsonRaw)
+        const appJson = JSON.parse(appJsonRaw)
+
+        write("./app.json", appJson)
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to enable New Architecture."))
+      }
+      stopSpinner(" Enabling New Architecture", "🆕")
+    }
+
     // #region Create Git Repository and Initial Commit
     // commit any changes
     if (git === true) {
@@ -594,6 +635,7 @@ export default {
         packager: packagerName,
         targetPath,
         removeDemo,
+        experimentalNewArch,
         useCache,
         y: yname,
         yes: yname,
