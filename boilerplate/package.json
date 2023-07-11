@@ -60,10 +60,7 @@
     "react-native-reanimated": "~3.3.0",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
-    "react-native-web": "~0.19.6",
-    "reactotron-mst": "3.1.4",
-    "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.3"
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -99,7 +96,10 @@
     "postinstall-prepare": "1.0.1",
     "prettier": "2.8.8",
     "react-test-renderer": "18.2.0",
-    "reactotron-core-client": "^2.8.10",
+    "reactotron-core-client": "2.8.11-beta.4",
+    "reactotron-mst": "3.1.4",
+    "reactotron-react-js": "^3.3.7",
+    "reactotron-react-native": "5.0.4-beta.4",
     "regenerator-runtime": "^0.13.4",
     "ts-jest": "^29.1.1",
     "typescript": "^5.1.3"
