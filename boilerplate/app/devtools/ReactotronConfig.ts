@@ -72,6 +72,7 @@ Reactotron.onCustomCommand({
     const { route } = args
     if (route) {
       Reactotron.log(`Navigating to: ${route}`)
+      // @ts-expect-error
       navigate(route)
     } else {
       Reactotron.log("Could not navigate. No route provided.")
