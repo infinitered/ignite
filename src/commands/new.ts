@@ -78,12 +78,6 @@ export interface Options {
    */
   overwrite?: boolean
   /**
-   * Input Source: `parameter.option`
-   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
-   * @default undefined
-   */
-  expo?: boolean
-  /**
    * Package manager to install dependencies with
    *
    * Input Source: `prompt.ask`| `parameter.option`
@@ -124,6 +118,11 @@ export interface Options {
    * @default false
    */
   yes?: boolean
+  /**
+   * Whether or not to opt into React Native's New Architecture
+   * @default false
+   */
+  experimentalNewArch?: boolean
 }
 
 export default {
@@ -347,14 +346,21 @@ export default {
     }
     // #endregion
 
-    // #region Expo
-    // show warning about --expo going away
-    const expo = boolFlag(options.expo)
-    if (expo) {
-      warning(
-        " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
-      )
-      p()
+    // #region Prompt to enable New Architecture
+    const defaultNewArch = false
+    let experimentalNewArch = useDefault(options.experimentalNewArch)
+      ? defaultNewArch
+      : boolFlag(options.experimentalNewArch)
+    if (experimentalNewArch === undefined) {
+      const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalNewArch",
+        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        initial: defaultNewArch,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalNewArch = newArchResponse.experimentalNewArch
     }
     // #endregion
 
@@ -552,6 +558,21 @@ export default {
     }
     // #endregion
 
+    // #region Enable New Architecture if requested
+    if (experimentalNewArch === true) {
+      startSpinner(" Enabling New Architecture")
+      try {
+        let appJsonRaw = read("app.json")
+        appJsonRaw = appJsonRaw.replace(/"newArchEnabled": false/g, '"newArchEnabled": true')
+        const appJson = JSON.parse(appJsonRaw)
+        write("./app.json", appJson)
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to enable New Architecture."))
+      }
+      stopSpinner(" Enabling New Architecture", "🆕")
+    }
+
     // #region Create Git Repository and Initial Commit
     // commit any changes
     if (git === true) {
@@ -608,10 +629,10 @@ export default {
         git,
         installDeps,
         overwrite,
-        expo,
         packager: packagerName,
         targetPath,
         removeDemo,
+        experimentalNewArch,
         useCache,
         y: yname,
         yes: yname,
@@ -662,12 +683,6 @@ export default {
     } else {
       command(`${packager.runCmd("android", packagerOptions)}`)
     }
-
-    p2()
-    p2("With Expo:")
-    command(`cd ${projectName}`)
-    if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packager.runCmd("expo:start", packagerOptions)}`)
     p2()
     p2()
     // #endregion
@@ -692,7 +707,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "expo", "useCache", "y", "yes"]
+  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>

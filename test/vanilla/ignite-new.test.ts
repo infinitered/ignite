@@ -145,31 +145,14 @@ describe("ignite new", () => {
       )
 
       // app-icons
-      const allAppIcons = ["android", "ios", "expo"].reduce((acc: string[], type) => {
-        const searchPath = {
-          android: "android/app/src/main/res",
-          ios: "ios",
-          expo: "assets/images",
-        }[type] as string
+      const iconSearchPath = "assets/images"
+      const iconMatchString = "app-icon*.png"
 
-        const matchString = {
-          android: "ic_launch*.png",
-          ios: `Icon-*.png`,
-          expo: "app-icon*.png",
-        }[type]
-
-        try {
-          const iconsMatches = filesystem.find(filesystem.path(appPath, searchPath), {
-            directories: false,
-            files: true,
-            matching: matchString,
-          })
-
-          return [...acc, ...iconsMatches]
-        } catch (error) {
-          return acc
-        }
-      }, [])
+      const allAppIcons = filesystem.find(filesystem.path(appPath, iconSearchPath), {
+        directories: false,
+        files: true,
+        matching: iconMatchString,
+      })
 
       allAppIcons.forEach((i) => {
         expect(filesystem.exists(i) === "file").toBe(true)
@@ -178,26 +161,11 @@ describe("ignite new", () => {
       })
 
       const appIconGen = await runIgnite(
-        `generate app-icon all --skip-source-equality-validation`,
+        `generate app-icon --skip-source-equality-validation`,
         runOpts,
       )
 
       expect(appIconGen).toContain(`Generating Expo app icons...`)
-
-      const iosProjectExists = filesystem.exists(filesystem.path(appPath, "ios"))
-      const androidProjectExists = filesystem.exists(filesystem.path(appPath, "android"))
-
-      if (androidProjectExists) {
-        expect(appIconGen).toContain(`Generating Android app icons...`)
-      } else {
-        expect(appIconGen).toContain(`No output directory found for "Android"`)
-      }
-
-      if (iosProjectExists) {
-        expect(appIconGen).toContain(`Generating iOS app icons...`)
-      } else {
-        expect(appIconGen).toContain(`No output directory found for "iOS"`)
-      }
 
       allAppIcons.forEach((i) => {
         expect(filesystem.exists(i) === "file").toBe(true)
@@ -222,31 +190,14 @@ describe("ignite new", () => {
       })
 
       // splash-screen
-      const splashScreenAssets = ["android", "ios", "expo"].reduce((acc: string[], type) => {
-        const searchPath = {
-          android: "android/app/src/main/res",
-          ios: "ios",
-          expo: "assets/images",
-        }[type] as string
+      const splashSearchPath = "assets/images"
+      const splashMatchString = "splash-logo*.png"
 
-        const matchString = {
-          android: "bootsplash*.png",
-          ios: `bootsplash*.png`,
-          expo: "splash-logo*.png",
-        }[type]
-
-        try {
-          const splashMatches = filesystem.find(filesystem.path(appPath, searchPath), {
-            directories: false,
-            files: true,
-            matching: matchString,
-          })
-
-          return [...acc, ...splashMatches]
-        } catch (error) {
-          return acc
-        }
-      }, [])
+      const splashScreenAssets = filesystem.find(filesystem.path(appPath, splashSearchPath), {
+        directories: false,
+        files: true,
+        matching: splashMatchString,
+      })
 
       splashScreenAssets.forEach((i) => {
         expect(filesystem.exists(i) === "file").toBe(true)
@@ -284,28 +235,11 @@ describe("ignite new", () => {
 
       expect(splashScreenGen).toContain(`Generating Expo splash screens`)
 
-      if (androidProjectExists) {
-        expect(splashScreenGen).toContain(`Generating Android splash screen...`)
-      } else {
-        expect(splashScreenGen).toContain(`No output directory found for "Android"`)
-      }
-
-      if (iosProjectExists) {
-        expect(splashScreenGen).toContain(`Generating iOS splash screen...`)
-      } else {
-        expect(splashScreenGen).toContain(`No output directory found for "iOS"`)
-      }
-
       splashScreenAssets.forEach((i) => {
         expect(filesystem.exists(i) === "file").toBe(true)
       })
 
-      verifySplashScreenColor("android", `#000000`)
       verifySplashScreenColor("expo", `#000000`)
-      verifySplashScreenColor(
-        "ios",
-        `red="0.00000000000000" green="0.00000000000000" blue="0.00000000000000"`,
-      )
 
       const inputFile = filesystem.path(appPath, "ignite/templates/splash-screen/logo.png")
       expect(filesystem.exists(inputFile) === "file").toBe(true)
@@ -318,14 +252,6 @@ describe("ignite new", () => {
       // #region Assert Changes Can Be Commit To Git
       // commit the change
       await run(`git add ./app/models ./app/components ./app.json ./assets/images`, runOpts)
-      if (iosProjectExists) {
-        await run(`git add ./ios/Foo/Images.xcassets/AppIcon.appiconset`, runOpts)
-        await run(`git add ./ios/Foo/Images.xcassets/BootSplashLogo.imageset`, runOpts)
-        await run(`git add ./ios/Foo/BootSplash.storyboard`, runOpts)
-      }
-      if (androidProjectExists) {
-        await run(`git add ./android/app/src/main/res`, runOpts)
-      }
       await run(`git commit -m "generated test components & assets"`, runOpts)
       // #endregion
 
@@ -343,7 +269,7 @@ describe("ignite new", () => {
 })
 
 async function checkForLeftoverHelloWorld(filePath: string) {
-  const ignoreFolders = ["/xcuserdata", ".git", "node_modules", "Pods", "/build"]
+  const ignoreFolders = ["/xcuserdata", ".git", "node_modules", "Pods", "/build", ".expo"]
   // ignore some folders
   if (!ignoreFolders.every((f) => !filePath.includes(f))) return
 

@@ -93,8 +93,6 @@ By default, the generator will exit if the input-files in your templates folder 
 
 Similar to app/launcher icons, the splash-screen is somewhat tricky to configure and manage due to platform (and OS version) differences. Therefore, splash-screens come preconfigured in the latest versions of Ignite boilerplate and a handy generator is provided to aid with customization.
 
-Note, on latest vanilla-flavored Ignite projects, the awesome library [`react-native-bootsplash`](https://github.com/zoontek/react-native-bootsplash) is used for both generation and integration within the app. Using this generator with older Ignite boilerplates will result in a warning to install and configure that library. On Expo, the splash-screen is configured via `app.json`.
-
 Unlike the app/launcher generator however, only a single input file is needed. This file, called `logo.png`, can be found and customized in the following templates folder: `ignite/templates/splash-screen`.
 
 The generator requires a single parameter for the splash-screen's background color (in hex format).
@@ -107,22 +105,7 @@ npx ignite-cli generate splash-screen "#FF0000"
 npx ignite-cli generate splash-screen fff
 ```
 
-The generator will modify the following folders/files:
-
-- iOS
-
-  - (vanilla) Updates `./ios/**/Images.xcassets/BootSplashLogo.imageset/`.
-  - (vanilla) Updates `./ios/**/BootSplash.storyboard`.
-  - (expo) Updates `./assets/images/` including the root file `./app.json`.
-
-- Android
-
-  - (vanilla) Updates `./android/app/src/main/res/`.
-  - (vanilla) Updates `./android/app/src/main/res/values/colors.xml`.
-  - (expo) Updates `./assets/images/` including the root file `./app.json`.
-
-- Web
-  - (expo) Updates `./assets/images/` including the root file `./app.json`.
+The generator will modify the `./assets/images/` and attempt to update `./app.json`. However, if your project is configured to use `app.config.js` or `app.config.ts`, the config changes will be output in the console for you to make them manually. You can read more about Expo's dynamic configuration [here](https://docs.expo.dev/workflow/configuration/#dynamic-configuration-with-appconfigjs).
 
 Logo size transformations are predetermined based on platform. The defaults are meant to work in _most_ cases. However, you can adjust the logo transformation size according to your needs by using flags:
 

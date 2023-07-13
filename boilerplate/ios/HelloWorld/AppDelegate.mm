@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import "RNBootSplash.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
@@ -8,25 +7,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"HelloWorld";
+  self.moduleName = @"main";
 
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  [super application:application didFinishLaunchingWithOptions:launchOptions];
-
-  // RN BootSplash
-  UIView *rootView = self.window.rootViewController.view; // react-native >= 0.71 specific
-  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
-
-  return YES;
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@".expo/.virtual-metro-entry"];
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif

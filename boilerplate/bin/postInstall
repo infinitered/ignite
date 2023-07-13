@@ -14,14 +14,6 @@ if (["darwin", "linux"].includes(process.platform)) {
   run('pkill -f "cli.js start" || set exit 0')
 }
 
-/**
- * On darwin machine:
- *   1. Check if CocoaPods CLI is installed (and if not, install it)
- *   2. Find an Xcode project dir
- *   3. Run `pod install`, if fails run `pod repo update` and try again
- */
-run('npx pod-install')
-
 // Run baby run
 function run(command) {
   console.log(`./bin/postInstall script running: ${command}`)
