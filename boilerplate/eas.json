@@ -5,7 +5,6 @@
   "build": {
     "development": {
       "extends": "production",
-      "developmentClient": true,
       "distribution": "internal",
       "android": {
         "gradleCommand": ":app:assembleDebug"
@@ -17,7 +16,6 @@
     },
     "development:device": {
       "extends": "development",
-      "developmentClient": true,
       "distribution": "internal",
       "ios": {
         "buildConfiguration": "Debug",
