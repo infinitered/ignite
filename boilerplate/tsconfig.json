@@ -16,7 +16,11 @@
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "baseUrl": "./"
+    "baseUrl": ".",
+    "paths": {
+      "app/*": ["./app/*"],
+      "assets/*": ["./assets/*"]
+    }
   },
   "extends": "expo/tsconfig.base",
   "include": ["index.js", "App.tsx", "app"],

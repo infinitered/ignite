@@ -4,7 +4,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line
   Text,
-} from "../components"
+} from "app/components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
