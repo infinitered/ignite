@@ -24,6 +24,7 @@ Reactotron.configure({
 })
 
 Reactotron.use(
+  // @ts-expect-error
   mst({
     /** ignore some chatty `mobx-state-tree` actions  */
     filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
@@ -31,7 +32,7 @@ Reactotron.use(
 )
 
 if (Platform.OS !== "web") {
-  Reactotron.setAsyncStorageHandler(AsyncStorage)
+  Reactotron.setAsyncStorageHandler?.(AsyncStorage)
   Reactotron.useReactNative()
 }
 
@@ -69,10 +70,9 @@ Reactotron.onCustomCommand({
 Reactotron.onCustomCommand({
   command: "navigateTo",
   handler: (args) => {
-    const { route } = args
+    const { route } = args ?? {}
     if (route) {
       Reactotron.log(`Navigating to: ${route}`)
-      // @ts-expect-error
       navigate(route)
     } else {
       Reactotron.log("Could not navigate. No route provided.")

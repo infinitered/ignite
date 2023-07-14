@@ -1,4 +1,5 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
@@ -6,19 +7,15 @@
     "jsx": "react-native",
     "module": "es2015",
     "moduleResolution": "node",
-    "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "sourceMap": true,
     "target": "esnext",
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "baseUrl": "./"
+    "resolveJsonModule": true
   },
-  "extends": "expo/tsconfig.base",
-  "include": ["index.js", "App.tsx", "app"],
-  "exclude": ["node_modules", "test/**/*"]
+  "include": ["**/*.test.ts", "**/*.test.tsx"]
 }

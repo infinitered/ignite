@@ -3,14 +3,14 @@ import { exec } from "child_process"
 
 // Use this array for keys that for whatever reason aren't greppable so they
 // don't hold your test suite hostage by always failing.
-const EXCEPTIONS = [
+const EXCEPTIONS: string[] = [
   // "welcomeScreen.readyForLaunch",
 ]
 
 function iterate(obj, stack, array) {
   for (const property in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, property)) {
-      if (typeof obj[property] === "object") {
+      if (typeof (obj as object)[property] === "object") {
         iterate(obj[property], `${stack}.${property}`, array)
       } else {
         array.push(`${stack.slice(1)}.${property}`)

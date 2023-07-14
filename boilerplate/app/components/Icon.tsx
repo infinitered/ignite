@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
   View,
+  ViewProps,
   ViewStyle,
 } from "react-native"
 
@@ -61,9 +62,9 @@ export function Icon(props: IconProps) {
   } = props
 
   const isPressable = !!WrapperProps.onPress
-  const Wrapper: ComponentType<TouchableOpacityProps> = WrapperProps?.onPress
-    ? TouchableOpacity
-    : View
+  const Wrapper = (WrapperProps?.onPress ? TouchableOpacity : View) as ComponentType<
+    TouchableOpacityProps | ViewProps
+  >
 
   const $imageStyle: StyleProp<ImageStyle> = [
     $imageStyleBase,

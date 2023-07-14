@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
   View,
+  ViewProps,
   ViewStyle,
 } from "react-native"
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
@@ -180,8 +181,8 @@ export function Toggle(props: ToggleProps) {
 
   const disabled = editable === false || status === "disabled" || props.disabled
 
-  const Wrapper = useMemo<ComponentType<TouchableOpacityProps>>(
-    () => (disabled ? View : TouchableOpacity),
+  const Wrapper = useMemo(
+    () => (disabled ? View : TouchableOpacity) as ComponentType<TouchableOpacityProps | ViewProps>,
     [disabled],
   )
   const ToggleInput = useMemo(() => ToggleInputs[variant] || (() => null), [variant])
@@ -213,12 +214,12 @@ export function Toggle(props: ToggleProps) {
         {labelPosition === "left" && <FieldLabel {...props} labelPosition={labelPosition} />}
 
         <ToggleInput
-          on={value}
-          disabled={disabled}
+          on={!!value}
+          disabled={!!disabled}
           status={status}
-          outerStyle={props.inputOuterStyle}
-          innerStyle={props.inputInnerStyle}
-          detailStyle={props.inputDetailStyle}
+          outerStyle={props.inputOuterStyle ?? {}}
+          innerStyle={props.inputInnerStyle ?? {}}
+          detailStyle={props.inputDetailStyle ?? {}}
           switchAccessibilityMode={switchAccessibilityMode}
           checkboxIcon={checkboxIcon}
         />
@@ -261,26 +262,26 @@ function Checkbox(props: ToggleInputProps) {
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
     colors.palette.neutral200,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const outerBorderColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.error,
     !on && colors.palette.neutral800,
     colors.palette.secondary500,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
     colors.palette.secondary500,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const iconTintColor = [
     disabled && colors.palette.neutral600,
     status === "error" && colors.error,
     colors.palette.accent100,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   return (
     <View
@@ -299,8 +300,12 @@ function Checkbox(props: ToggleInputProps) {
         ]}
       >
         <Image
-          source={iconRegistry[checkboxIcon] || iconRegistry.check}
-          style={[$checkboxDetail, { tintColor: iconTintColor }, $detailStyleOverride]}
+          source={checkboxIcon ? iconRegistry[checkboxIcon] : iconRegistry.check}
+          style={[
+            $checkboxDetail,
+            !!iconTintColor && { tintColor: iconTintColor },
+            $detailStyleOverride,
+          ]}
         />
       </Animated.View>
     </View>
@@ -321,26 +326,26 @@ function Radio(props: ToggleInputProps) {
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
     colors.palette.neutral200,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const outerBorderColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.error,
     !on && colors.palette.neutral800,
     colors.palette.secondary500,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
     colors.palette.neutral100,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const dotBackgroundColor = [
     disabled && colors.palette.neutral600,
     status === "error" && colors.error,
     colors.palette.secondary500,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   return (
     <View
@@ -390,13 +395,13 @@ function Switch(props: ToggleInputProps) {
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
     colors.palette.neutral300,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
     colors.palette.secondary500,
-  ].filter(Boolean)[0]
+  ].filter((item): item is string => Boolean(item))[0]
 
   const knobBackgroundColor = (function () {
     if (on) {
@@ -405,14 +410,14 @@ function Switch(props: ToggleInputProps) {
         status === "error" && colors.error,
         disabled && colors.palette.neutral600,
         colors.palette.neutral100,
-      ].filter(Boolean)[0]
+      ].filter((item): item is string => Boolean(item))[0]
     } else {
       return [
         $innerStyleOverride?.backgroundColor,
         disabled && colors.palette.neutral600,
         status === "error" && colors.error,
         colors.palette.neutral200,
-      ].filter(Boolean)[0]
+      ].filter((item): item is string => Boolean(item))[0]
     }
   })()
 
