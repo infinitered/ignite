@@ -119,10 +119,9 @@ export interface Options {
    */
   yes?: boolean
   /**
-   * Whether or not to opt into React Native's New Architecture
-   * @default false
+   * Whether or not to opt into specific experimental features
    */
-  experimentalNewArch?: boolean
+  experimental?: string
 }
 
 export default {
@@ -346,11 +345,20 @@ export default {
     }
     // #endregion
 
+    // #region Experimental Features parsing
+    let newArch
+    const experimentalFlags = options.experimental?.split(",") ?? []
+
+    experimentalFlags.forEach((flag) => {
+      if (flag === "newArch") {
+        newArch = true
+      }
+    })
+    // #endregion
+
     // #region Prompt to enable New Architecture
     const defaultNewArch = false
-    let experimentalNewArch = useDefault(options.experimentalNewArch)
-      ? defaultNewArch
-      : boolFlag(options.experimentalNewArch)
+    let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
     if (experimentalNewArch === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
@@ -559,7 +567,7 @@ export default {
     // #endregion
 
     // #region Enable New Architecture if requested
-    if (experimentalNewArch === true) {
+    if (newArch === true) {
       startSpinner(" Enabling New Architecture")
       try {
         let appJsonRaw = read("app.json")
@@ -632,7 +640,7 @@ export default {
         packager: packagerName,
         targetPath,
         removeDemo,
-        experimentalNewArch,
+        experimental: experimentalFlags.join(","),
         useCache,
         y: yname,
         yes: yname,
