@@ -19,3 +19,6 @@ coverage
 # Ignite's source repo.
 boilerplate/yarn.lock
 boilerplate/.gitignore.template
+
+# flame CLI
+.config
