@@ -350,7 +350,7 @@ export default {
     const experimentalFlags = options.experimental?.split(",") ?? []
 
     experimentalFlags.forEach((flag) => {
-      if (flag === "newArch") {
+      if (flag === "new-arch") {
         newArch = true
       }
     })
