@@ -260,25 +260,30 @@ export default {
         message: "Choose a workflow:",
         choices: [
           {
-            // TODO: if we use name for nice cli display, it gets used as value? gluegun issue?
-            // name: "Expo Go",
+            name: "Expo Go",
             message:
               "Expo Go         Choose this if: the only native modules you need are included in the Expo SDK",
             value: "expo",
           },
           {
-            // name: "Expo Prebuild",
+            name: "Expo Prebuild",
             message:
               "Expo Prebuild   Choose this if: you need to add native modules or configuration using Expo config plugins",
             value: "prebuild",
           },
           {
-            // name: "DIY",
+            name: "DIY",
             message:
               "DIY             Choose this if: you want to manage native configuration/modules directly, without Expo config plugins",
             value: "manual",
           },
         ],
+        result(name) {
+          // Some magical enquirer map function here that returns an object of { [name]: value]}
+          // and we only need the value underneath (using name for the cli display to the user)
+          // @ts-expect-error
+          return this.map(name)[name]
+        },
         initial: "expo",
         prefix,
       }))
@@ -696,7 +701,7 @@ export default {
         packager: packagerName,
         targetPath,
         removeDemo,
-        experimental: experimentalFlags.join(","),
+        experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
         workflow,
         useCache,
         y: yname,
