@@ -50,8 +50,8 @@ describe("ignite new", () => {
     it("should have created expected directories", () => {
       // now let's examine the spun-up app
       const dirs = filesystem.list(appPath)
-      expect(dirs).toContain("ios")
-      expect(dirs).toContain("android")
+      expect(dirs).not.toContain("ios")
+      expect(dirs).not.toContain("android")
       expect(dirs).toContain("app")
 
       // check the contents of ignite/templates
@@ -60,18 +60,6 @@ describe("ignite new", () => {
       expect(templates).toContain("model")
       expect(templates).toContain("screen")
       expect(templates).toContain("app-icon")
-    })
-
-    it("should have changed the android bundle id", () => {
-      const androidPackageName = APP_NAME.toLowerCase()
-      const mainAppJava = filesystem.read(
-        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
-      )
-      expect(mainAppJava).toContain(`package com.${androidPackageName};`)
-      const mainActivityJava = filesystem.read(
-        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
-      )
-      expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
     })
 
     it(`should have renamed all permutations of hello-world to ${APP_NAME}`, async () => {
@@ -84,6 +72,8 @@ describe("ignite new", () => {
       const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
       expect(igniteJSON).toHaveProperty("scripts")
       expect(igniteJSON).toHaveProperty("dependencies")
+      expect(igniteJSON.scripts.android).toBe("npx expo start --android")
+      expect(igniteJSON.scripts.ios).toBe("npx expo start --ios")
     })
 
     it("should have created app.tsx with default export and RootStore", () => {
@@ -264,6 +254,67 @@ describe("ignite new", () => {
       // #endregion
 
       // we're done!
+    })
+  })
+
+  describe(`ignite new ${APP_NAME} --debug --packager=npm --workflow=prebuild --yes --use-cache`, () => {
+    let tempDir: string
+    let result: string
+    let appPath: string
+
+    beforeAll(async () => {
+      tempDir = tempy.directory({ prefix: "ignite-" })
+      result = await runIgnite(
+        `new ${APP_NAME} --debug --packager=npm --workflow=prebuild --yes --use-cache`,
+        {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+        },
+      )
+      appPath = filesystem.path(tempDir, APP_NAME)
+    })
+
+    afterAll(() => {
+      // console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
+      filesystem.remove(tempDir) // clean up our mess
+    })
+
+    it("should print success message", () => {
+      // at some point this should probably be a snapshot?
+      expect(result).toContain("Now get cooking! 🍽")
+    })
+
+    it("should have created expected directories", () => {
+      // now let's examine the spun-up app
+      const dirs = filesystem.list(appPath)
+      expect(dirs).toContain("ios")
+      expect(dirs).toContain("android")
+      expect(dirs).toContain("app")
+
+      // check the contents of ignite/templates
+      const templates = filesystem.list(`${appPath}/ignite/templates`)
+      expect(templates).toContain("component")
+      expect(templates).toContain("model")
+      expect(templates).toContain("screen")
+      expect(templates).toContain("app-icon")
+    })
+
+    it("should have changed the android bundle id", () => {
+      const androidPackageName = APP_NAME.toLowerCase()
+      const mainAppJava = filesystem.read(
+        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
+      )
+      expect(mainAppJava).toContain(`package com.${androidPackageName};`)
+      const mainActivityJava = filesystem.read(
+        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
+      )
+      expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
+    })
+
+    it("should have modified package.json for proper run scripts", () => {
+      const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
+      expect(igniteJSON.scripts.android).toBe("npx expo run:android")
+      expect(igniteJSON.scripts.ios).toBe("npx expo run:ios")
     })
   })
 })

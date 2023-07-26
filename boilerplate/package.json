@@ -20,11 +20,13 @@
     "clean": "npx react-native-clean-project",
     "clean-all": "npx react-native clean-project-auto",
     "start": "npx expo start",
-    "android": "npx expo run:android",
-    "ios": "npx expo run:ios",
+    "android": "npx expo start --android",
+    "ios": "npx expo start --ios",
     "web": "npx expo start --web",
     "bundle:web": "npx expo export --platform web",
-    "serve:web": "npx server dist"
+    "serve:web": "npx server dist",
+    "prebuild:clean": "npx expo prebuild --clean",
+    "prebuild": "npx expo prebuild"
   },
   "overrides": {
     "react-error-overlay": "6.0.9"

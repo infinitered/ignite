@@ -26,6 +26,8 @@ import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { EOL } from "os"
 
+type Workflow = "expo" | "prebuild" | "manual"
+
 export interface Options {
   /**
    * alias for `boilerplate`
@@ -122,6 +124,13 @@ export interface Options {
    * Whether or not to opt into specific experimental features
    */
   experimental?: string
+  /**
+   * Expo workflow to determine if we need to generate native directories
+   * and include them in .gitignore or not
+   *
+   * Input Source: `prompt.ask`| `parameter.option`
+   */
+  workflow?: Workflow
 }
 
 export default {
@@ -238,6 +247,46 @@ export default {
       p(yellow(alreadyExists))
       process.exit(1)
     }
+    // #endregion
+
+    // #region Prompt for Workflow type
+    const defaultWorkflow = "expo"
+    let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
+
+    if (workflow === undefined) {
+      const workflowResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
+        type: "select",
+        name: "workflow",
+        message: "Choose a workflow:",
+        choices: [
+          {
+            // TODO: if we use name for nice cli display, it gets used as value? gluegun issue?
+            // name: "Expo Go",
+            message:
+              "Expo Go         Choose this if: the only native modules you need are included in the Expo SDK",
+            value: "expo",
+          },
+          {
+            // name: "Expo Prebuild",
+            message:
+              "Expo Prebuild   Choose this if: you need to add native modules or configuration using Expo config plugins",
+            value: "prebuild",
+          },
+          {
+            // name: "DIY",
+            message:
+              "DIY             Choose this if: you want to manage native configuration/modules directly, without Expo config plugins",
+            value: "manual",
+          },
+        ],
+        initial: "expo",
+        prefix,
+      }))
+      workflow = workflowResponse.workflow
+    }
+    const needsPrebuild = workflow === "prebuild" || workflow === "manual"
+    log(`worflow: ${workflow}`)
+    log(`needs prebuild: ${needsPrebuild}`)
     // #endregion
 
     // #region Prompt Git Option
@@ -408,19 +457,6 @@ export default {
     }
     // #endregion
 
-    // #region Local build folder clean
-    // Remove some folders that we don't want to copy over
-    // This mostly only applies when you're developing locally
-    await Promise.all([
-      removeAsync(path(boilerplatePath, "node_modules")),
-      removeAsync(path(boilerplatePath, "ios", "Pods")),
-      removeAsync(path(boilerplatePath, "ios", "build")),
-      removeAsync(path(boilerplatePath, "android", ".idea")),
-      removeAsync(path(boilerplatePath, "android", ".gradle")),
-      removeAsync(path(boilerplatePath, "android", "build")),
-    ])
-    // #endregion
-
     // #region Copy Boilerplate Files
     startSpinner(" 3D-printing a new React Native app")
     await copyBoilerplate(toolbox, {
@@ -442,6 +478,15 @@ export default {
 
     if (exists(targetIgnorePath) === false) {
       warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
+    } else if (workflow === "expo" || workflow === "prebuild") {
+      // check if we need to add the android and ios directories to the .gitignore
+      // for Expo Go or Prebuild workflows
+      let gitIgnoreContents = read(targetIgnorePath)
+      gitIgnoreContents = gitIgnoreContents
+        .replace(/# android\//g, "android/")
+        .replace(/# ios\//g, "ios/")
+
+      write(targetIgnorePath, gitIgnoreContents)
     }
 
     // note the original directory
@@ -456,12 +501,19 @@ export default {
     // - Replacing app name: We do it on the unparsed file content
     //   since that's easier than updating individual values
     //   in the parsed structure, then we parse that as JSON.
-    // - If Expo, we also merge in our extra expo stuff.
-    // - Then write it back out.
     let packageJsonRaw = read("package.json")
     packageJsonRaw = packageJsonRaw
       .replace(/HelloWorld/g, projectName)
       .replace(/hello-world/g, projectNameKebab)
+
+    // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
+    if (needsPrebuild) {
+      packageJsonRaw = packageJsonRaw
+        .replace(/start --android/g, "run:android")
+        .replace(/start --ios/g, "run:ios")
+    }
+
+    // - Then write it back out.
     const packageJson = JSON.parse(packageJsonRaw)
 
     write("./package.json", packageJson)
@@ -543,6 +595,10 @@ export default {
     // #region Run Format
     // we can't run this option if we didn't install deps
     if (installDeps === true) {
+      // Check if we need to run prebuild to generate native dirs based on workflow
+      if (needsPrebuild) {
+        await packager.run("prebuild:clean", { ...packagerOptions, silent: !debug })
+      }
       // Make sure all our modifications are formatted nicely
       await packager.run("format", { ...packagerOptions, silent: !debug })
     }
@@ -641,6 +697,7 @@ export default {
         targetPath,
         removeDemo,
         experimental: experimentalFlags.join(","),
+        workflow,
         useCache,
         y: yname,
         yes: yname,
