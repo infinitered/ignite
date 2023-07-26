@@ -488,8 +488,8 @@ export default {
       // for Expo Go or Prebuild workflows
       let gitIgnoreContents = read(targetIgnorePath)
       gitIgnoreContents = gitIgnoreContents
-        .replace(/# android\//g, "android/")
-        .replace(/# ios\//g, "ios/")
+        .replace(/# android/g, "android")
+        .replace(/# ios/g, "ios")
 
       write(targetIgnorePath, gitIgnoreContents)
     }
