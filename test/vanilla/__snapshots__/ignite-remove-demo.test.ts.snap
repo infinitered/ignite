@@ -39,6 +39,7 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/api.ts
    Removed empty directory '/user/home/ignite/.maestro'
    Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen/demos'
+   Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen'
    Done removing demo code from '/user/home/ignite'
 "
 `;
