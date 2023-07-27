@@ -79,11 +79,28 @@ module.exports = {
       })
     }
 
+    function removeDemoAssets() {
+      const demoPaths = filesystem
+        .cwd(TARGET_DIR)
+        .find({
+          matching: [...MATCHING_GLOBS, "**/demo"],
+          recursive: true,
+          files: false,
+          directories: true,
+        })
+        .map((path) => pathlib.join(TARGET_DIR, path))
+      demoPaths.forEach((path) => {
+        if (!dryRun) filesystem.remove(path)
+        p(`Removed demo directory '${path}'`)
+      })
+    }
+
     // first pass
     removeEmptyDirs()
     // second pass, for nested directories that are now empty after the first pass
     // https://github.com/infinitered/ignite/issues/2225
     removeEmptyDirs()
+    removeDemoAssets()
 
     p(`Done removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },
