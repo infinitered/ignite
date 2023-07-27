@@ -77,14 +77,17 @@ yarn build
 
 ### 3. Update the version manually
 
-Update the version to what you want. Note that you will NOT be checking this into git. Just set it before we release and then reset back to where it was afterward.
+Update the version to what you want in the root `package.json`. Note that you will NOT be checking this into git. Just set it before we release and then reset back to where it was afterward.
 
 ```json
 {
-  "name": "hello-world",
+  "name": "ignite-cli",
   "version": "9.5.0-beta.1",
-  "private": true,
-  "main": "node_modules/expo/AppEntry.js"
+  "description": "Infinite Red's hottest boilerplate for React Native.",
+  "bin": {
+    "ignite": "bin/ignite",
+    "ignite-cli": "bin/ignite"
+  }
   // ...
 }
 ```
