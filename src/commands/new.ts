@@ -597,6 +597,22 @@ export default {
     }
     // #endregion
 
+    // #region Enable New Architecture if requested (must happen before prebuild)
+    if (newArch === true) {
+      startSpinner(" Enabling New Architecture")
+      try {
+        let appJsonRaw = read("app.json")
+        appJsonRaw = appJsonRaw.replace(/"newArchEnabled": false/g, '"newArchEnabled": true')
+        const appJson = JSON.parse(appJsonRaw)
+        write("./app.json", appJson)
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to enable New Architecture."))
+      }
+      stopSpinner(" Enabling New Architecture", "🆕")
+    }
+    // #endregion
+
     // #region Run Format
     // we can't run this option if we didn't install deps
     if (installDeps === true) {
@@ -629,21 +645,6 @@ export default {
       stopSpinner(" Removing fancy demo code", "🛠️")
     }
     // #endregion
-
-    // #region Enable New Architecture if requested
-    if (newArch === true) {
-      startSpinner(" Enabling New Architecture")
-      try {
-        let appJsonRaw = read("app.json")
-        appJsonRaw = appJsonRaw.replace(/"newArchEnabled": false/g, '"newArchEnabled": true')
-        const appJson = JSON.parse(appJsonRaw)
-        write("./app.json", appJson)
-      } catch (e) {
-        log(e)
-        p(yellow("Unable to enable New Architecture."))
-      }
-      stopSpinner(" Enabling New Architecture", "🆕")
-    }
 
     // #region Create Git Repository and Initial Commit
     // commit any changes
@@ -748,11 +749,12 @@ export default {
     p2("Now get cooking! 🍽")
     command(`cd ${projectName}`)
     if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packagerName} start`)
 
     const isMac = process.platform === "darwin"
     if (isMac) {
       command(`${packager.runCmd("ios", packagerOptions)}`)
+      p2("Or Android via")
+      command(`${packager.runCmd("android", packagerOptions)}`)
     } else {
       command(`${packager.runCmd("android", packagerOptions)}`)
     }
