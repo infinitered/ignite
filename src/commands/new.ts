@@ -602,7 +602,7 @@ export default {
     if (installDeps === true) {
       // Check if we need to run prebuild to generate native dirs based on workflow
       if (needsPrebuild) {
-        await packager.run("prebuild:clean", { ...packagerOptions, silent: !debug })
+        await packager.run("prebuild:clean", { ...packagerOptions })
       }
       // Make sure all our modifications are formatted nicely
       await packager.run("format", { ...packagerOptions, silent: !debug })
