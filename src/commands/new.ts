@@ -602,7 +602,10 @@ export default {
     if (installDeps === true) {
       // Check if we need to run prebuild to generate native dirs based on workflow
       if (needsPrebuild) {
-        await packager.run("prebuild:clean", { ...packagerOptions })
+        const prebuildMessage = ` Generating native template via Expo Prebuild`
+        startSpinner(prebuildMessage)
+        await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
+        stopSpinner(prebuildMessage, "🛠️")
       }
       // Make sure all our modifications are formatted nicely
       await packager.run("format", { ...packagerOptions, silent: !debug })
