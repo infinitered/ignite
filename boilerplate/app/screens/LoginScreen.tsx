@@ -24,6 +24,12 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
     setAuthPassword("ign1teIsAwes0m3")
+
+    // Return a "cleanup" function that React will run when the component unmounts
+    return () => {
+      setAuthPassword("")
+      setAuthEmail("")
+    }
   }, [])
 
   const error = isSubmitted ? validationError : ""
@@ -59,13 +65,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       },
     [isAuthPasswordHidden],
   )
-
-  useEffect(() => {
-    return () => {
-      setAuthPassword("")
-      setAuthEmail("")
-    }
-  }, [])
 
   return (
     <Screen
