@@ -25,6 +25,10 @@ ignite-project
 │   ├── setup.ts
 ├── ignite
 │   └── templates
+├── plugins
+│   └── withSplashScreen.ts
+├── app.config.ts
+├── app.json
 ├── App.tsx
 ├── package.json
 └── README.md
@@ -96,13 +100,21 @@ Here lives the theme for your application, including spacing, colors, and typogr
 
 This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
-**app.tsx**
+**app.json/app.config.ts**
+
+These are the configuration files for your application. `app.json` contains the static configuration which will be fed into the dynamic configuration in `app.config.ts`, where Expo builds it's final configuration for the app.
+
+**App.tsx**
 
 This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
 ### ./ignite directory
 
 The `ignite` directory stores all things Ignite, including generator templates.
+
+### ./plugins directory
+
+The `plugins` directory stores any custom Expo Config Plugins you want to be applied during the prebuild process when generating the native code for the project.
 
 ### ./test directory
 
