@@ -402,6 +402,7 @@ export default {
     // #region Experimental Features parsing
     let newArch
     const experimentalFlags = options.experimental?.split(",") ?? []
+    log(`experimentalFlags: ${experimentalFlags}`)
 
     experimentalFlags.forEach((flag) => {
       if (flag === "new-arch") {
@@ -413,7 +414,7 @@ export default {
     // #region Prompt to enable New Architecture
     const defaultNewArch = false
     let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
-    if (experimentalNewArch === undefined) {
+    if (experimentalNewArch === undefined && workflow !== "expo") {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
@@ -423,6 +424,9 @@ export default {
         prefix,
       }))
       experimentalNewArch = newArchResponse.experimentalNewArch
+    } else {
+      // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
+      experimentalNewArch = false
     }
     // #endregion
 
@@ -598,7 +602,7 @@ export default {
     // #endregion
 
     // #region Enable New Architecture if requested (must happen before prebuild)
-    if (newArch === true) {
+    if (experimentalNewArch === true) {
       startSpinner(" Enabling New Architecture")
       try {
         let appJsonRaw = read("app.json")
