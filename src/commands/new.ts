@@ -751,7 +751,7 @@ export default {
     hr()
     p2()
     p2("Now get cooking! 🍽")
-    command(`cd ${projectName}`)
+    command(`cd ${targetPath}`)
     if (!installDeps) command(packager.installCmd({ packagerName }))
 
     const isMac = process.platform === "darwin"

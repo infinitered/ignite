@@ -27,7 +27,7 @@ export async function setupRootStore(rootStore: RootStore) {
 
   try {
     // load the last known state from AsyncStorage
-    restoredState = (await storage.load(ROOT_STATE_STORAGE_KEY)) as RootStoreSnapshot | null
+    restoredState = ((await storage.load(ROOT_STATE_STORAGE_KEY)) ?? {}) as RootStoreSnapshot
     applySnapshot(rootStore, restoredState)
   } catch (e) {
     // if there's any problems loading, then inform the dev what happened
