@@ -20,13 +20,13 @@ module.exports = {
       return
     }
 
-    // then, get the package name from Android
-    const manifest = await filesystem.readAsync(
-      `${process.cwd()}/android/app/src/main/AndroidManifest.xml`,
+    // then, get the package name from app/build.gradle
+    const buildGradle = await filesystem.readAsync(
+      `${process.cwd()}/android/app/build.gradle`,
     )
 
-    // match <manifest package="name" to get the bundle id
-    const oldBundleIdentifier = manifest.match(/package="([^"]+)"/)[1]
+    // match namespace "name" to get the bundle id
+    const oldBundleIdentifier = buildGradle.match(/namespace "([^"]+)"/)[1]
 
     // do some validations here
 
