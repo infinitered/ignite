@@ -25,14 +25,14 @@ const packageListOptions: PackageOptions = {
   global: false,
 }
 
-let isYarn
+let isYarn: boolean
 function yarnAvailable() {
   if (isYarn !== undefined) return isYarn
   isYarn = Boolean(system.which("yarn"))
   return isYarn
 }
 
-let isPnpm
+let isPnpm: boolean
 function pnpmAvailable() {
   if (isPnpm !== undefined) return isPnpm
   isPnpm = Boolean(system.which("pnpm"))
@@ -72,7 +72,7 @@ function availablePackagers(): PackagerName[] {
 function addCmd(pkg: string, options: PackageRunOptions = packageInstallOptions) {
   const silent = options.silent ? " --silent" : ""
 
-  let cmd
+  let cmd: string
 
   if (options.packagerName === "pnpm") {
     cmd = `pnpm install`
@@ -98,7 +98,7 @@ function addCmd(pkg: string, options: PackageRunOptions = packageInstallOptions)
 function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions) {
   const silent = options.silent ? " --silent" : ""
 
-  let cmd
+  let cmd: string
 
   if (options.packagerName === "pnpm") {
     cmd = "pnpm uninstall"
