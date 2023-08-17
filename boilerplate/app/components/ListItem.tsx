@@ -86,6 +86,11 @@ export interface ListItemProps extends TouchableOpacityProps {
    * Overrides `leftIcon`.
    */
   LeftComponent?: ReactElement
+
+  /**
+   * onPress handler for the ListItem
+   */
+  onPress?: () => void
 }
 
 interface ListItemActionProps {
@@ -118,6 +123,7 @@ export function ListItem(props: ListItemProps) {
     topSeparator,
     tx,
     txOptions,
+    onPress,
     textStyle: $textStyleOverride,
     containerStyle: $containerStyleOverride,
     ...TouchableOpacityProps
@@ -135,7 +141,7 @@ export function ListItem(props: ListItemProps) {
 
   return (
     <View style={$containerStyles}>
-      <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
+      <TouchableOpacity onPress={onPress} {...TouchableOpacityProps} style={$touchableStyles}>
         <ListItemAction
           side="left"
           size={height}
