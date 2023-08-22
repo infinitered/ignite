@@ -28,9 +28,6 @@
     "prebuild:clean": "npx expo prebuild --clean",
     "prebuild": "npx expo prebuild"
   },
-  "overrides": {
-    "react-error-overlay": "6.0.9"
-  },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@react-native-async-storage/async-storage": "1.18.2",
