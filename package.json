@@ -71,7 +71,6 @@
     "jest": "^27.0.6",
     "prettier": "2.8.8",
     "semantic-release": "^17.4.2",
-    "strip-ansi": "^6.0.0",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",
     "typescript": "^5.0.4"

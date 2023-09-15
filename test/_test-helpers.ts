@@ -1,5 +1,5 @@
 import { system, filesystem } from "gluegun"
-const stripANSI = require("strip-ansi") // why...
+import { stripANSI } from "../src/tools/strip-ansi"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }
