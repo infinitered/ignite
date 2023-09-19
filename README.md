@@ -11,6 +11,10 @@ The culmination of over six years of constant React Native development, Ignite i
 
 This is the React Native boilerplate that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
 
+## Intro Video
+
+Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
+
 ## Tech Stack
 
 Nothing makes it into Ignite unless it's been proven on projects that Infinite Red works on. Ignite apps include the following rock-solid technical decisions out of the box:
@@ -100,14 +104,14 @@ If you need battle-tested solutions from Infinite Red experts on everything from
 
 ## No time to learn React Native? Hire Infinite Red for your next project
 
-We get it – sometimes there just isn’t enough time on a project to learn the ins and outs of a new framework. Infinite Red’s here to help! Our experienced team of React Native engineers have worked with companies like GasBuddy, Zoom, and Mercari to bring even some of the most complex projects to life.
+We get it – sometimes there just isn’t enough time on a project to learn the ins and outs of a new framework. Infinite Red’s here to help! Our experienced team of React Native engineers have worked with companies like Microsoft, GasBuddy, Zoom, and Mercari to bring some of the most complex React Native projects to life.
 
 Whether it’s running a full project or training a team on React Native, we can help you solve your company’s toughest engineering challenges – and make it a great experience at the same time.
 
-Ready to see how we can work together? [Send us a message](mailto:hello@infinite.red)
+Ready to see how we can work together? [Send us a message](https://infinite.red/contact)
 
 ## Further Reading
 
-- Watch Jamon Holmgren's talk at React Live Amsterdam where he uses Ignite to build an app in less than 30 minutes: [https://www.youtube.com/watch?v=OgiFKMd_TeY](https://www.youtube.com/watch?v=OgiFKMd_TeY)
+- Watch Jamon Holmgren's talk at React Live Amsterdam 2019 where he uses Ignite to build an app in less than 30 minutes: [https://www.youtube.com/watch?v=OgiFKMd_TeY](https://www.youtube.com/watch?v=OgiFKMd_TeY)
 - Prior art includes [Ignite Andross](https://github.com/infinitered/ignite-andross) and [Ignite Bowser](https://github.com/infinitered/ignite-bowser) (which is very similar to the current version of Ignite).
 - [Who are We?](https://infinite.red) - Learn More About Infinite Red
