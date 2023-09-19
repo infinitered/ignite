@@ -33,7 +33,7 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/metro-config": "^0.7.1",
-    "@expo/webpack-config": "^18.0.1",
+    "@expo/webpack-config": "18.1.2",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.2",
