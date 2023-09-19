@@ -72,7 +72,6 @@ module.exports = {
 
       // 4. Remove packages that are not required
       const removePackages = [
-        "@expo/webpack-config",
         "reactotron-react-native",
         "detox",
         "detox-expo-helpers",
