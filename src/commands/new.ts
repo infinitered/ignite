@@ -133,7 +133,7 @@ export interface Options {
   workflow?: Workflow
 }
 
-export default {
+module.exports = {
   run: async (toolbox: GluegunToolbox) => {
     // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
@@ -476,7 +476,7 @@ export default {
     await copyBoilerplate(toolbox, {
       boilerplatePath,
       targetPath,
-      excluded: [".vscode", "node_modules", "yarn.lock"],
+      excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
       overwrite,
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")

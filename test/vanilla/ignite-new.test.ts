@@ -23,17 +23,19 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --yes --use-cache`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
 
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes --use-cache`, {
+
+      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
       })
+
       appPath = filesystem.path(tempDir, APP_NAME)
     })
 
@@ -53,6 +55,7 @@ describe("ignite new", () => {
       expect(dirs).not.toContain("ios")
       expect(dirs).not.toContain("android")
       expect(dirs).toContain("app")
+      expect(dirs).toContain("bun.lockb")
 
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
@@ -257,20 +260,17 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes --use-cache`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
 
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(
-        `new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes --use-cache`,
-        {
-          pre: `cd ${tempDir}`,
-          post: `cd ${originalDir}`,
-        },
-      )
+      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes`, {
+        pre: `cd ${tempDir}`,
+        post: `cd ${originalDir}`,
+      })
       appPath = filesystem.path(tempDir, APP_NAME)
     })
 
