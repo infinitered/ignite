@@ -32,7 +32,7 @@
     "format:write": "yarn format --write",
     "format:check": "yarn format --check",
     "lint": "eslint 'src/**' 'test/**'",
-    "test": "jest",
+    "test": "TS_JEST_DISABLE_VER_CHECKER=true jest",
     "watch": "jest --watch",
     "watch:debug": "yarn watch --runInBand --verbose",
     "coverage": "jest --coverage",

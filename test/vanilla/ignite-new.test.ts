@@ -23,14 +23,14 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=npm --yes --use-cache`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --yes --use-cache`, () => {
     let tempDir: string
     let result: string
     let appPath: string
 
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=npm --yes --use-cache`, {
+      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes --use-cache`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
       })
@@ -82,7 +82,7 @@ describe("ignite new", () => {
       expect(appJS).toContain("RootStore")
     })
 
-    it("should be able to use `generate` command and have pass output pass npm run test, npm run lint, and npm run compile scripts", async () => {
+    it("should be able to use `generate` command and have pass output pass bun run test, bun run lint, and bun run compile scripts", async () => {
       // other common test operations
       const runOpts = {
         pre: `cd ${appPath}`,
@@ -92,7 +92,7 @@ describe("ignite new", () => {
       // #region Assert Typescript Compiles With No Errors
       let resultTS: string
       try {
-        resultTS = await run(`npm run compile`, runOpts)
+        resultTS = await run(`bun run compile`, runOpts)
       } catch (e) {
         resultTS = e.stdout
         console.error(resultTS) // This will only show if you run in --verbose mode.
@@ -247,9 +247,9 @@ describe("ignite new", () => {
 
       // #region Assert package.json Scripts Can Be Run
       // run the tests; if they fail, run will raise and this test will fail
-      await run(`npm run test`, runOpts)
-      await run(`npm run lint`, runOpts)
-      await run(`npm run compile`, runOpts)
+      await run(`bun run test`, runOpts)
+      await run(`bun run lint`, runOpts)
+      await run(`bun run compile`, runOpts)
       expect(await run("git diff HEAD", runOpts)).toContain("+  Bowser: undefined")
       // #endregion
 
@@ -257,7 +257,7 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=npm --workflow=prebuild --yes --use-cache`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes --use-cache`, () => {
     let tempDir: string
     let result: string
     let appPath: string
@@ -265,7 +265,7 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await runIgnite(
-        `new ${APP_NAME} --debug --packager=npm --workflow=prebuild --yes --use-cache`,
+        `new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes --use-cache`,
         {
           pre: `cd ${tempDir}`,
           post: `cd ${originalDir}`,
@@ -320,7 +320,15 @@ describe("ignite new", () => {
 })
 
 async function checkForLeftoverHelloWorld(filePath: string) {
-  const ignoreFolders = ["/xcuserdata", ".git", "node_modules", "Pods", "/build", ".expo"]
+  const ignoreFolders = [
+    "/xcuserdata",
+    "bun.lockb",
+    ".git",
+    "node_modules",
+    "Pods",
+    "/build",
+    ".expo",
+  ]
   // ignore some folders
   if (!ignoreFolders.every((f) => !filePath.includes(f))) return
 
