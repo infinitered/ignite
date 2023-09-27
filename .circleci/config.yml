@@ -12,7 +12,7 @@ defaults: &defaults
 version: 2.1
 orbs:
   # https://circleci.com/developer/orbs/orb/cmgriffing/bun-orb
-  bun-orb: cmgriffing/bun-orb@0.0.25
+  bun-orb: cmgriffing/bun-orb@0.0.26
 jobs:
   tests:
     <<: *defaults
