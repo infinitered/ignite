@@ -214,6 +214,8 @@ function runCmd(command: string, options: PackageOptions) {
     return `pnpm run ${command}${silent}`
   } else if (options.packagerName === "yarn") {
     return `yarn ${command}${silent}`
+  } else if (options.packagerName === "bun") {
+    return `bun run ${command}`
   } else {
     // defaults to npm run
     return `npm run ${command}${silent}`
