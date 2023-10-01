@@ -525,6 +525,21 @@ module.exports = {
       packageJsonRaw = packageJsonRaw
         .replace(/start --android/g, "run:android")
         .replace(/start --ios/g, "run:ios")
+    } else {
+      // Expo Go workflow, swap back to compatible Expo Go versions of modules
+      const expoGoCompat = {
+        "@react-native-async-storage/async-storage": "1.18.2",
+        "expo-application": "~5.3.0",
+        "expo-device": "~5.4.0",
+        "expo-file-system": "~15.4.4",
+        "expo-font": "~11.4.0",
+        "expo-localization": "~14.3.0",
+      }
+
+      log("Changing some dependencies for Expo Go compatibility...")
+      log(JSON.stringify(expoGoCompat))
+
+      packageJsonRaw = findAndUpdateDependencyVersions(packageJsonRaw, expoGoCompat)
     }
 
     // - Then write it back out.
@@ -534,7 +549,7 @@ module.exports = {
     // #endregion
 
     // #region Run Packager Install
-    // pnpm/yarn/npm install it
+    // pnpm/yarn/npm/bun install it
 
     // check if there is a dependency cache using a hash of the package.json
     const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
@@ -806,4 +821,19 @@ function buildCliCommand(args: {
     .join(" ")}`
 
   return cliCommand
+}
+
+function findAndUpdateDependencyVersions(
+  packageJsonRaw: string,
+  dependencies: Record<string, string>,
+): string {
+  let updatedPackageJson = packageJsonRaw
+
+  Object.keys(dependencies).forEach((depName) => {
+    const desiredVersion = dependencies[depName]
+    const regex = new RegExp(`"${depName}"\\s*:\\s*"[^"]+"`, "g")
+    updatedPackageJson = updatedPackageJson.replace(regex, `"${depName}": "${desiredVersion}"`)
+  })
+
+  return updatedPackageJson
 }
