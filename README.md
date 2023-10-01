@@ -13,13 +13,13 @@ The culmination of over seven years of constant React Native development, Ignite
 
 This is the React Native boilerplate that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
 
-## [Full Documentation](https://github.com/infinitered/ignite/blob/master/docs)
-
-We've put great effort into the documentation as a team, please [read through it here](https://github.com/infinitered/ignite/blob/master/docs). If you're unsure why a certain decision was made related to this boilerplate or how to proceed with a particular feature, it's likely documented. If it still isn't clear, go through the proper [help channels](#reporting-bugs--getting-help) and we always welcome PRs to improve the docs!
-
 ## Intro Video
 
 Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
+
+## [Full Documentation](https://github.com/infinitered/ignite/blob/master/docs)
+
+We've put great effort into the documentation as a team, please [read through it here](https://github.com/infinitered/ignite/blob/master/docs). If you're unsure why a certain decision was made related to this boilerplate or how to proceed with a particular feature, it's likely documented. If it still isn't clear, go through the proper [help channels](#reporting-bugs--getting-help) and we always welcome PRs to improve the docs!
 
 ## Tech Stack
 

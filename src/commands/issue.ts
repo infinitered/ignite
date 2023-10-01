@@ -12,7 +12,7 @@ import {
   prettyPrompt,
   prefix,
 } from "../tools/pretty"
-const stripANSI = require("strip-ansi")
+import { stripANSI } from "../tools/strip-ansi"
 
 const isMac = process.platform === "darwin"
 
