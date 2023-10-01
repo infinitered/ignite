@@ -84,7 +84,7 @@ export interface Options {
    *
    * Input Source: `prompt.ask`| `parameter.option`
    */
-  packager?: "npm" | "yarn" | "pnpm"
+  packager?: "npm" | "yarn" | "pnpm" | "bun"
   /**
    * The target directory where the project will be created.
    *
@@ -133,7 +133,7 @@ export interface Options {
   workflow?: Workflow
 }
 
-export default {
+module.exports = {
   run: async (toolbox: GluegunToolbox) => {
     // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
@@ -335,15 +335,20 @@ export default {
     // we pass in expo because we can't use pnpm if we're using expo
 
     const availablePackagers = packager.availablePackagers()
+    log(`availablePackagers: ${availablePackagers}`)
     const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
     let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
 
     const validatePackagerName = (input: unknown): input is PackagerName =>
-      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
+      typeof input === "string" && ["npm", "yarn", "pnpm", "bun"].includes(input)
 
     if (packagerName !== undefined && validatePackagerName(packagerName) === false) {
       p()
-      p(yellow(`Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`))
+      p(
+        yellow(
+          `Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm, bun.`,
+        ),
+      )
       process.exit(1)
     }
 
@@ -471,7 +476,7 @@ export default {
     await copyBoilerplate(toolbox, {
       boilerplatePath,
       targetPath,
-      excluded: [".vscode", "node_modules", "yarn.lock"],
+      excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
       overwrite,
     })
     stopSpinner(" 3D-printing a new React Native app", "🖨")

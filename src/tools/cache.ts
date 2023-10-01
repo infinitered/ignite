@@ -6,6 +6,7 @@ const lockFile = {
   yarn: "yarn.lock",
   pnpm: "pnpm-lock.yaml",
   npm: "package-lock.json",
+  bun: "bun.lockb",
 } as const
 
 const MAC: NodeJS.Platform = "darwin"

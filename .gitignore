@@ -18,6 +18,7 @@ coverage
 # newly spun-up apps, but we do want to ignore it in
 # Ignite's source repo.
 boilerplate/yarn.lock
+boilerplate/bun.lockb
 boilerplate/.gitignore.template
 
 # flame CLI
