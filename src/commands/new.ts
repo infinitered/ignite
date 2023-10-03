@@ -1,3 +1,4 @@
+import { EOL } from "os"
 import { GluegunToolbox } from "../types"
 import {
   isAndroidInstalled,
@@ -24,7 +25,10 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import { EOL } from "os"
+import {
+  expoGoCompatExpectedVersions,
+  findAndUpdateDependencyVersions,
+} from "../tools/expoGoCompatibility"
 
 type Workflow = "expo" | "prebuild" | "manual"
 
@@ -525,6 +529,12 @@ module.exports = {
       packageJsonRaw = packageJsonRaw
         .replace(/start --android/g, "run:android")
         .replace(/start --ios/g, "run:ios")
+    } else {
+      // Expo Go workflow, swap back to compatible Expo Go versions of modules
+      log("Changing some dependencies for Expo Go compatibility...")
+      log(JSON.stringify(expoGoCompatExpectedVersions))
+
+      packageJsonRaw = findAndUpdateDependencyVersions(packageJsonRaw, expoGoCompatExpectedVersions)
     }
 
     // - Then write it back out.
@@ -534,7 +544,7 @@ module.exports = {
     // #endregion
 
     // #region Run Packager Install
-    // pnpm/yarn/npm install it
+    // pnpm/yarn/npm/bun install it
 
     // check if there is a dependency cache using a hash of the package.json
     const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
