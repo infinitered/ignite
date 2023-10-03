@@ -1,3 +1,4 @@
+import { EOL } from "os"
 import { GluegunToolbox } from "../types"
 import {
   isAndroidInstalled,
@@ -24,7 +25,10 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import { EOL } from "os"
+import {
+  expoGoCompatExpectedVersions,
+  findAndUpdateDependencyVersions,
+} from "../tools/expoGoCompatibility"
 
 type Workflow = "expo" | "prebuild" | "manual"
 
@@ -527,19 +531,10 @@ module.exports = {
         .replace(/start --ios/g, "run:ios")
     } else {
       // Expo Go workflow, swap back to compatible Expo Go versions of modules
-      const expoGoCompat = {
-        "@react-native-async-storage/async-storage": "1.18.2",
-        "expo-application": "~5.3.0",
-        "expo-device": "~5.4.0",
-        "expo-file-system": "~15.4.4",
-        "expo-font": "~11.4.0",
-        "expo-localization": "~14.3.0",
-      }
-
       log("Changing some dependencies for Expo Go compatibility...")
-      log(JSON.stringify(expoGoCompat))
+      log(JSON.stringify(expoGoCompatExpectedVersions))
 
-      packageJsonRaw = findAndUpdateDependencyVersions(packageJsonRaw, expoGoCompat)
+      packageJsonRaw = findAndUpdateDependencyVersions(packageJsonRaw, expoGoCompatExpectedVersions)
     }
 
     // - Then write it back out.
@@ -821,19 +816,4 @@ function buildCliCommand(args: {
     .join(" ")}`
 
   return cliCommand
-}
-
-function findAndUpdateDependencyVersions(
-  packageJsonRaw: string,
-  dependencies: Record<string, string>,
-): string {
-  let updatedPackageJson = packageJsonRaw
-
-  Object.keys(dependencies).forEach((depName) => {
-    const desiredVersion = dependencies[depName]
-    const regex = new RegExp(`"${depName}"\\s*:\\s*"[^"]+"`, "g")
-    updatedPackageJson = updatedPackageJson.replace(regex, `"${depName}": "${desiredVersion}"`)
-  })
-
-  return updatedPackageJson
 }

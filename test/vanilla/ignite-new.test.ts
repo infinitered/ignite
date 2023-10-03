@@ -1,6 +1,7 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
 import { runIgnite, runError, run } from "../_test-helpers"
+import { expoGoCompatExpectedVersions } from "../../src/tools/expoGoCompatibility"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -77,6 +78,14 @@ describe("ignite new", () => {
       expect(igniteJSON).toHaveProperty("dependencies")
       expect(igniteJSON.scripts.android).toBe("npx expo start --android")
       expect(igniteJSON.scripts.ios).toBe("npx expo start --ios")
+    })
+
+    it("should have modified the package.json to have versions that work with expo go", () => {
+      const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
+      expect(igniteJSON).toHaveProperty("dependencies")
+      Object.keys(expoGoCompatExpectedVersions).forEach((key) => {
+        expect(igniteJSON.dependencies[key]).toBe(expoGoCompatExpectedVersions[key])
+      })
     })
 
     it("should have created app.tsx with default export and RootStore", () => {
@@ -315,6 +324,14 @@ describe("ignite new", () => {
       const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
       expect(igniteJSON.scripts.android).toBe("npx expo run:android")
       expect(igniteJSON.scripts.ios).toBe("npx expo run:ios")
+    })
+
+    it("should NOT have modified the package.json to have versions that work with expo go", () => {
+      const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
+      expect(igniteJSON).toHaveProperty("dependencies")
+      Object.keys(expoGoCompatExpectedVersions).forEach((key) => {
+        expect(igniteJSON.dependencies[key]).not.toBe(expoGoCompatExpectedVersions[key])
+      })
     })
   })
 })
