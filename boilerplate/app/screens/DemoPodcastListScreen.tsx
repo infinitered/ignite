@@ -1,11 +1,8 @@
-// Interested in migrating from FlatList to FlashList? Check out the recipe in our Ignite Cookbook
-// https://ignitecookbook.com/docs/recipes/MigratingToFlashList
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
-  FlatList,
   Image,
   ImageStyle,
   Platform,
@@ -14,6 +11,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import { FlashList, type ContentStyle } from "@shopify/flash-list"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -66,11 +64,12 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
       >
-        <FlatList<Episode>
-          data={episodeStore.episodesForList}
+        <FlashList<Episode>
+          contentContainerStyle={$listContentContainer}
+          data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
-          contentContainerStyle={$flatListContentContainer}
           refreshing={refreshing}
+          estimatedItemSize={177}
           onRefresh={manualRefresh}
           ListEmptyComponent={
             isLoading ? (
@@ -118,7 +117,6 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           }
           renderItem={({ item }) => (
             <EpisodeCard
-              key={item.guid}
               episode={item}
               isFavorite={episodeStore.hasFavorite(item)}
               onPressFavorite={() => episodeStore.toggleFavorite(item)}
@@ -296,7 +294,7 @@ const $screenContentContainer: ViewStyle = {
   flex: 1,
 }
 
-const $flatListContentContainer: ViewStyle = {
+const $listContentContainer: ContentStyle = {
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,

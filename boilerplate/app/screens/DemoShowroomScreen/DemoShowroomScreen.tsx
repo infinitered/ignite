@@ -2,7 +2,6 @@ import { Link, RouteProp, useRoute } from "@react-navigation/native"
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react"
 import {
   Dimensions,
-  FlatList,
   Image,
   ImageStyle,
   Platform,
@@ -11,6 +10,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import { FlashList, type ContentStyle } from "@shopify/flash-list"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
 import { ListItem, Screen, Text } from "../../components"
@@ -88,7 +88,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const timeout = useRef<ReturnType<typeof setTimeout>>()
     const drawerRef = useRef<DrawerLayout>(null)
     const listRef = useRef<SectionList>(null)
-    const menuRef = useRef<FlatList>(null)
+    const menuRef = useRef<FlashList<{ name: string; useCases: string[] }>>(null)
     const progress = useSharedValue(0)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
@@ -181,9 +181,10 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               <Image source={logo} style={$logoImage} />
             </View>
 
-            <FlatList<{ name: string; useCases: string[] }>
+            <FlashList<{ name: string; useCases: string[] }>
               ref={menuRef}
-              contentContainerStyle={$flatListContentContainer}
+              contentContainerStyle={$listContentContainer}
+              estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
                 useCases: d.data.map((u) => u.props.name),
@@ -237,7 +238,7 @@ const $drawer: ViewStyle = {
   flex: 1,
 }
 
-const $flatListContentContainer: ViewStyle = {
+const $listContentContainer: ContentStyle = {
   paddingHorizontal: spacing.lg,
 }
 

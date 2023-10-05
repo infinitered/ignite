@@ -45,6 +45,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | Jest              | Test Runner          | v26     | Standard test runner for JS apps               |
 | Maestro           | Testing Framework    |         | Automate end-to-end UI testing                 |
 | date-fns          | Date library         | v2      | Excellent date library                         |
+| FlashList         | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
 
 Ignite also comes with a [component library](https://github.com/infinitered/ignite/blob/master/docs/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
 
