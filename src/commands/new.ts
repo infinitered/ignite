@@ -621,7 +621,6 @@ module.exports = {
       startSpinner(" Enabling New Architecture")
       try {
         const appJsonRaw = read("app.json")
-
         const appJson = JSON.parse(appJsonRaw)
         appJson.expo.plugins[1][1].ios.newArchEnabled = true
         appJson.expo.plugins[1][1].android.newArchEnabled = true
