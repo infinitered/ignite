@@ -131,6 +131,8 @@ Ignite comes with a built-in `Icon` component. You can find detailed usage instr
 **images**
 This is where your images will live, such as background images, logos, or any other graphics. You can use various formats such as PNG, JPEG, or GIF for your images.
 
+Another valuable built-in component within Ignite is the `AutoImage` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/Components-AutoImage.md).
+
 How to use your `icon` or `image` assets:
 
 ```
