@@ -13,30 +13,32 @@ module.exports = {
     let newName = parameters.first
     let newBundleIdentifier = parameters.options.bundle
 
-    // first, get the current name
-    const oldName = require(`${process.cwd()}/app.json`).name
-    if (!oldName) {
-      warning("Couldn't find the current name in app.json.")
-      return
-    }
-
-    // then, get the package name from Android
-    const manifest = await filesystem.readAsync(
-      `${process.cwd()}/android/app/src/main/AndroidManifest.xml`,
-    )
-
-    // match <manifest package="name" to get the bundle id
-    const oldBundleIdentifier = manifest.match(/package="([^"]+)"/)[1]
-
-    // do some validations here
-
-    // check if we are in the folder with the package.json file
-    if (!filesystem.exists(`${process.cwd()}/app.json`)) {
+    const appJsonPath = `${process.cwd()}/app.json`
+    // first check if we are in the folder with the app.json file
+    if (!filesystem.exists(appJsonPath)) {
       warning("You must be in the root of a React Native project to rename it.")
       warning("(We look for an app.json file to verify this.)")
       return
     }
 
+    // next, get the current name
+    const appJson = require(appJsonPath)
+    const oldName = appJson.name
+    if (!oldName) {
+      warning("Couldn't find the current name in app.json.")
+      return
+    }
+
+    // then, get the package name from Android or ios if it DNE
+    // we do this via app.json now as android/ios dirs may not exist to find AndroidManifest/gradle files
+    // in the case of a managed or custom workflow setup, so ignite v9+ compatible
+    const oldBundleIdentifier = appJson.expo.android.package ?? appJson.expo.ios.bundleIdentifier
+    if (!oldBundleIdentifier) {
+      warning("Couldn't find the current name in app.json.")
+      return
+    }
+
+    // name and bundle validations
     // check the name
     if (!newName) {
       // ask for a name
