@@ -620,9 +620,16 @@ module.exports = {
     if (experimentalNewArch === true) {
       startSpinner(" Enabling New Architecture")
       try {
-        let appJsonRaw = read("app.json")
-        appJsonRaw = appJsonRaw.replace(/"newArchEnabled": false/g, '"newArchEnabled": true')
+        const appJsonRaw = read("app.json")
+
         const appJson = JSON.parse(appJsonRaw)
+        appJson.expo.plugins[1][1].ios.newArchEnabled = true
+        appJson.expo.plugins[1][1].android.newArchEnabled = true
+
+        // Adding the "deploymentTarget" key is required for
+        // @react-native-async-storage/async-storage to work in the new architecture
+        appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
+
         write("./app.json", appJson)
       } catch (e) {
         log(e)
