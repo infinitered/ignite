@@ -11,7 +11,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { FlashList, type ContentStyle } from "@shopify/flash-list"
+import { type ContentStyle } from "@shopify/flash-list"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -19,7 +19,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Button, Card, EmptyState, Icon, Screen, Text, Toggle } from "../components"
+import { Button, Card, EmptyState, Icon, ListView, Screen, Text, Toggle } from "../components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -64,7 +64,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
       >
-        <FlashList<Episode>
+        <ListView<Episode>
           contentContainerStyle={$listContentContainer}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}

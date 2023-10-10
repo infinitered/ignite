@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
-import { FlashList } from "@shopify/flash-list"
-import { Icon, ListItem, Text } from "../../../components"
+import { Icon, ListItem, ListView, Text } from "../../../components"
 import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
@@ -148,7 +147,7 @@ export const DemoListItem: Demo = {
       description="The component can be easily integrated with your favorite list interface."
     >
       <View style={$listStyle}>
-        <FlashList<string>
+        <ListView<string>
           data={listData}
           renderItem={({ item, index }) => (
             <ListItem

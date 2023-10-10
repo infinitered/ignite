@@ -10,10 +10,10 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { FlashList, type ContentStyle } from "@shopify/flash-list"
+import { type ContentStyle } from "@shopify/flash-list"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
-import { ListItem, Screen, Text } from "../../components"
+import { ListItem, ListView, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors, spacing } from "../../theme"
@@ -88,7 +88,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const timeout = useRef<ReturnType<typeof setTimeout>>()
     const drawerRef = useRef<DrawerLayout>(null)
     const listRef = useRef<SectionList>(null)
-    const menuRef = useRef<FlashList<{ name: string; useCases: string[] }>>(null)
+    const menuRef = useRef<typeof ListView<{ name: string; useCases: string[] }>>(null)
     const progress = useSharedValue(0)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
@@ -181,7 +181,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               <Image source={logo} style={$logoImage} />
             </View>
 
-            <FlashList<{ name: string; useCases: string[] }>
+            <ListView<{ name: string; useCases: string[] }>
               ref={menuRef}
               contentContainerStyle={$listContentContainer}
               estimatedItemSize={250}
