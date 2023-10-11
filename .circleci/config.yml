@@ -19,7 +19,8 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - bun-orb/setup
+      - bun-orb/setup:
+          version: 1.0.3
       - restore_cache:
           name: Restore node modules
           keys:

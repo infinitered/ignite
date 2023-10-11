@@ -38,6 +38,7 @@
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.0.2",
+    "@shopify/flash-list": "^1.6.1",
     "apisauce": "3.0.1",
     "date-fns": "^2.30.0",
     "expo": "^49.0.13",
