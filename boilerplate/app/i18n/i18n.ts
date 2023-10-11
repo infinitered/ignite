@@ -16,10 +16,18 @@ i18n.fallbacks = true
  */
 i18n.translations = { ar, en, "en-US": en, ko, fr }
 
-i18n.locale = Localization.locale
+const locales = Localization.getLocales() // This method is guaranteed to return at least one array item.
+// The preferred language is the first element in the array, however, we fallback to en-US, especially for tests.
+const preferredLanguage:
+  | Localization.Locale
+  | { languageTag: string; textDirection: "ltr" | "rtl" } = locales[0] || {
+  languageTag: "en-US",
+  textDirection: "ltr",
+}
+i18n.locale = preferredLanguage.languageTag
 
 // handle RTL languages
-export const isRTL = Localization.isRTL
+export const isRTL = preferredLanguage.textDirection === "rtl"
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 
