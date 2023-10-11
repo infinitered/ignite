@@ -18,16 +18,11 @@ i18n.translations = { ar, en, "en-US": en, ko, fr }
 
 const locales = Localization.getLocales() // This method is guaranteed to return at least one array item.
 // The preferred language is the first element in the array, however, we fallback to en-US, especially for tests.
-const preferredLanguage: Localization.Locale = locales[0] || {
+const preferredLanguage:
+  | Localization.Locale
+  | { languageTag: string; textDirection: "ltr" | "rtl" } = locales[0] || {
   languageTag: "en-US",
-  languageCode: "en",
   textDirection: "ltr",
-  digitGroupingSeparator: ",",
-  decimalSeparator: ".",
-  measurementSystem: "us",
-  currencyCode: "USD",
-  currencySymbol: "$",
-  regionCode: "US",
 }
 i18n.locale = preferredLanguage.languageTag
 
