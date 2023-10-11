@@ -13,7 +13,7 @@ import {
 import { type ContentStyle } from "@shopify/flash-list"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
-import { ListItem, ListView, Screen, Text } from "../../components"
+import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors, spacing } from "../../theme"
@@ -88,7 +88,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const timeout = useRef<ReturnType<typeof setTimeout>>()
     const drawerRef = useRef<DrawerLayout>(null)
     const listRef = useRef<SectionList>(null)
-    const menuRef = useRef<typeof ListView<{ name: string; useCases: string[] }>>(null)
+    const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
     const progress = useSharedValue(0)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
@@ -181,13 +181,13 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               <Image source={logo} style={$logoImage} />
             </View>
 
-            <ListView<{ name: string; useCases: string[] }>
+            <ListView<DemoListItem["item"]>
               ref={menuRef}
               contentContainerStyle={$listContentContainer}
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data.map((u) => u.props.name),
+                useCases: d.data.map((u) => u.props.name as string),
               }))}
               keyExtractor={(item) => item.name}
               renderItem={({ item, index: sectionIndex }) => (
