@@ -48,7 +48,7 @@ Creates a React Navigation navigator in the `app/navigators` folder.
 npx ignite-cli generate navigator OrderPizza
 ```
 
-You can learn more about navigators [in the Navigation docs](./Navigation.md).
+You can learn more about navigators [in the Navigation docs](../Navigation).
 
 ### App Icon generator
 
@@ -119,13 +119,13 @@ Lastly, the splash-screen generator will exit if your input file has not been mo
 
 ## Customizing generators
 
-You should feel free to make the provided templates your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files. Read more in the [Generator Templates](./Generator-Templates.md) documentation.
+You should feel free to make the provided templates your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files. Read more in the [Generator Templates](./Generator-Templates) documentation.
 
 ## Making your own generators
 
 Your generators live in your app, in `./ignite/templates/*`. To make a new generator, go look at the ones that are there when you start your app. You'll see that they have `*.ejs` files (which get interpreted when you generate them).
 
-Read more about making your own generators in the [Generator Templates](./Generator-Templates.md) documentation.
+Read more about making your own generators in the [Generator Templates](./Generator-Templates) documentation.
 
 ## Updating generators
 

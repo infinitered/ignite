@@ -1,3 +1,6 @@
+---
+sidebar_position: 4
+---
 # Expo and Ignite
 
 ![ignite+expo](https://miro.medium.com/max/1400/1*Ii4JuTWmVLeVBcqFyX3v5g.jpeg)

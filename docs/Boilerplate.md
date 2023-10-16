@@ -1,3 +1,8 @@
+---
+sidebar_position: 4
+title: The Boilerplate
+---
+
 # Explanation of folder structure
 
 A new Ignite boilerplate project's structure looks similar to this:
@@ -57,19 +62,19 @@ app
 
 This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
 
-- [Component Overview](./Components.md)
-- [AutoImage](./Components-AutoImage.md)
-- [Button](./Components-Button.md)
-- [Card](./Components-Card.md)
-- [EmptyState](./Components-EmptyState.md)
-- [Header](./Components-Header.md)
-- [Icon](./Components-Icon.md)
-- [ListItem](./Components-ListItem.md)
-- [ListView](./Components-ListView.md)
-- [Screen](./Components-Screen.md)
-- [Text](./Components-Text.md)
-- [TextField](./Components-TextField.md)
-- [Toggle](./Components-Toggle.md)
+- [Component Overview](../Components)
+- [AutoImage](../Components/AutoImage)
+- [Button](../Components/Button)
+- [Card](../Components/Card)
+- [EmptyState](../Components/EmptyState)
+- [Header](../Components/Header)
+- [Icon](../Components/Icon)
+- [ListItem](../Components/ListItem)
+- [ListView](../Components/ListView)
+- [Screen](../Components/Screen)
+- [Text](../Components/Text)
+- [TextField](../Components/TextField)
+- [Toggle](../Components/Toggle)
 
 **i18n**
 
@@ -95,7 +100,7 @@ Any services that interface with the outside world will live here (think REST AP
 
 **theme**
 
-Here lives the theme for your application, including spacing, colors, and typography. For help with adding custom fonts to your application, [check out the readme in ./assets/fonts/](./boilerplate/assets/fonts/custom-fonts.md).
+Here lives the theme for your application, including spacing, colors, and typography.
 
 **utils**
 

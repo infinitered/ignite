@@ -1,7 +1,5 @@
 # AutoImage Component
 
-[Back to all components](./Components.md)
-
 Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit a max width or height constraint
 
 ```tsx
@@ -39,7 +37,7 @@ As `AutoImage` is a wrapper around React Native's `Image` component, it also acc
 
 ### `source`
 
-As with React Native's built in Image component, the `source` prop is always required. This can be _almost_ anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type. (See [Notes](#Notes) below for caveats.)
+As with React Native's built in Image component, the `source` prop is always required. This can be _almost_ anything that conforms to ReactNative's [ImageSource](https://reactnative.dev/docs/image#imagesource) type. (See [Notes](#notes) below for caveats.)
 
 ```tsx
 <AutoImage source={logoIgnite} />

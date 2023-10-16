@@ -1,7 +1,5 @@
 # useSafeAreaInsetsStyle
 
-[Back to all utils](./Utils.md)
-
 The `useSafeAreaInsetsStyle()` hook can be used to create a safe-area-aware style object that can be passed directly to a View.
 
 ```tsx

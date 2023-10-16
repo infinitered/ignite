@@ -1,3 +1,7 @@
+---
+title: Handling Errors
+---
+
 # Error Boundary
 
 Sometimes, things go wrong in an app. A request comes back with an unexpected status, users find ways to make invalid inputs, a whole host of other issues that we can't imagine when we are first writing code.

@@ -1,7 +1,5 @@
 # Toggle Component
 
-[Back to all components](./Components.md)
-
 This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button, and exposes style props for every element.
 
 ## Props
@@ -127,7 +125,7 @@ The `labelStyle` prop is a `StyleProp<TextStyle>` object that is applied to the 
 
 ### `LabelTextProps`
 
-The `LabelTextProps` prop is a `TextProps` object (from the [`Text`](./Components-Text.md)) component that is applied to the label.
+The `LabelTextProps` prop is a `TextProps` object (from the [`Text`](../Text)) component that is applied to the label.
 
 ```tsx
 <Toggle value={value} onValueChange={setValue} LabelTextProps={{ size: "lg" }} />
@@ -164,7 +162,7 @@ The `helperTxOptions` prop is an object that is passed to the `i18n` translation
 
 ### `HelperTextProps`
 
-The `HelperTextProps` prop is a `TextProps` object (from the [`Text`](./Components-Text.md)) component that is applied to the helper.
+The `HelperTextProps` prop is a `TextProps` object (from the [`Text`](../Text)) component that is applied to the helper.
 
 ```tsx
 <Toggle value={value} onValueChange={setValue} HelperTextProps={{ size: "lg" }} />

@@ -1,8 +1,6 @@
 # Button Component
 
-[Back to all components](./Components.md)
-
-The `Button` component is a wrapper around the [`Pressable`](https://reactnative.dev/docs/pressable) component. Any prop that can be passed to `Pressable` can be passed to `Button` and it will be forwarded. `Button` renders a button with given text in a [`Text`](./Components-Text.md) component or children. It allows you to specify the preset style of the button, you can override both the `Pressable` and `Text` styles.
+The `Button` component is a wrapper around the [`Pressable`](https://reactnative.dev/docs/pressable) component. Any prop that can be passed to `Pressable` can be passed to `Button` and it will be forwarded. `Button` renders a button with given text in a [`Text`](../Text) component or children. It allows you to specify the preset style of the button, you can override both the `Pressable` and `Text` styles.
 
 ```tsx
 <Button

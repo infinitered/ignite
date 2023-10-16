@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # A Tour of the Ignite CLI Code Base
 
 If you're interested in contributing to Ignite and want to know more about how the code base is set up, this is a great place to start!
@@ -29,10 +33,6 @@ There are a couple folders at the root, `.circleci` and `.github`. These contain
 ## Automatic Releases
 
 We use `semantic-release`, an excellent package that allows for automatically releasing new versions of Ignite based on commit messages. You can read more about how Infinite Red uses semantic-release in [this document](https://github.com/infinitered/open-source/blob/master/Continuous-Deployment-Setup-NPM.md).
-
-## Manual Beta Releases
-
-If you need to manually release a beta version, [the steps are documented here]().
 
 ## Gluegun
 
@@ -84,6 +84,6 @@ Inside the boilerplate is a functioning React Native app! That's right, you can 
 
 This is one of the best changes from the previous system, as you can now work on the boilerplate in realtime and not have to make changes, spin up a new app, test, repeat, which was such a slowwww process before.
 
-We won't go into the boilerplate itself, here. You can instead check out the [Folder Structure](https://github.com/infinitered/ignite/blob/master/docs/Folder-Structure.md) documentation.
+We won't go into the boilerplate itself, here. You can instead check out the [Folder Structure](../../Folder-Structure) documentation.
 
 Happy contributing!

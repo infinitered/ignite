@@ -1,7 +1,5 @@
 # EmptyState Component
 
-[Back to all components](./Components.md)
-
 The `EmptyState` component is to be used when there is no data to display, usually after attempting to load some content from an external API. It is a container that can hold a heading and content. It can also display an image and provide a button to interact with.
 
 ## Props
@@ -130,7 +128,7 @@ The `headingStyle` prop is used to set the style of the heading text.
 
 ### `HeadingTextProps`
 
-The `HeadingTextProps` prop is used to pass any additional props to the heading `Text` component. It will accept any prop that the [`Text`](./Components-Text.md) component accepts.
+The `HeadingTextProps` prop is used to pass any additional props to the heading `Text` component. It will accept any prop that the [`Text`](../Text) component accepts.
 
 ```tsx
 <EmptyState
@@ -189,7 +187,7 @@ The `contentStyle` prop is used to set the style of the content text.
 
 ### `ContentTextProps`
 
-The `ContentTextProps` prop is used to pass any additional props to the content `Text` component. It will accept any prop that the [`Text`](./Components-Text.md) component accepts.
+The `ContentTextProps` prop is used to pass any additional props to the content `Text` component. It will accept any prop that the [`Text`](../Text) component accepts.
 
 ```tsx
 <EmptyState
@@ -261,7 +259,7 @@ The `buttonTextStyle` prop is used to set the style of the button text.
 
 ### `ButtonProps`
 
-The `ButtonProps` prop is used to pass any additional props to the `Button` component. It will accept any prop that the [`Button`](./Components-Button.md) component accepts.
+The `ButtonProps` prop is used to pass any additional props to the `Button` component. It will accept any prop that the [`Button`](../Button) component accepts.
 
 ```tsx
 <EmptyState

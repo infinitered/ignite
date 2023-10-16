@@ -14,8 +14,6 @@ const $insetStyle = useSafeAreaInsetsStyle(["top"], "padding")
 <View style={$insetStyle} />
 ```
 
-[Full `useSafeAreaInsetsStyle`](./Utils-useSafeAreaInsetsStyle.md)
-
 ### useHeader
 
 A hook that can be used to easily set the Header of a react-navigation screen from within the screen's component.
@@ -30,5 +28,3 @@ function AccountScreen() {
   return <Screen />
 }
 ```
-
-[Full `useHeader`](./Utils-useHeader.md)

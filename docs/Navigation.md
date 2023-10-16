@@ -4,7 +4,7 @@ We use [React Navigation v6](https://reactnavigation.org/docs/getting-started/) 
 
 There's also a `navigationUtilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-There's a provided Ignite CLI generator for creating new navigators. Learn more in the [Generator docs](./Generators.md#navigator-generator).
+There's a provided Ignite CLI generator for creating new navigators. Learn more in the [Generator docs](../Generators#navigator-generator).
 
 ## General Structure
 

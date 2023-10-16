@@ -1,7 +1,5 @@
 # Screen Component
 
-[Back to all components](./Components.md)
-
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas insets](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
 
 ```tsx

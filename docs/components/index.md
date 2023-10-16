@@ -18,8 +18,6 @@ This is a wrapper around React Native's [Image](https://reactnative.dev/docs/ima
 />
 ```
 
-[Full AutoImage Component Documentation](./Components-AutoImage.md)
-
 ### Button
 
 This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) with given text or children.
@@ -40,8 +38,6 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
   <Text>Click It</Text>
 </Button>
 ```
-
-[Full Button Component Documentation](./Components-Button.md)
 
 ### Card
 
@@ -65,8 +61,6 @@ The `Card` component is useful for displaying related information in a contained
 />
 ```
 
-[Full Card Component Documentation](./Components-Card.md)
-
 ### EmptyState
 
 The `EmptyState` component can be used when there is no data to display and direct the user on how to proceed.
@@ -89,8 +83,6 @@ The `EmptyState` component can be used when there is no data to display and dire
 />
 ```
 
-[Full EmptyState Component Documentation](./Components-EmptyState.md)
-
 ### Header
 
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.
@@ -108,8 +100,6 @@ The `Header` component is a component that will appear at the top of your screen
 />
 ```
 
-[Full Header Component Documentation](./Components-Header.md)
-
 ### Icon
 
 This is a component that renders an icon.
@@ -125,8 +115,6 @@ This is a component that renders an icon.
 />
 ```
 
-[Full Icon Component Documentation](./Components-Icon.md)
-
 ### Screen
 
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
@@ -137,8 +125,6 @@ This is a component that renders a screen. It is used to wrap your entire screen
   // ... content here ...
 </Screen>
 ```
-
-[Full Screen Component Documentation](./Components-Screen.md)
 
 ### Text
 
@@ -154,8 +140,6 @@ This is an enhanced version of the built-in React Native Text component. It adds
   style={$header}
 />
 ```
-
-[Full Text Component Documentation](./Components-Text.md)
 
 ### TextField
 
@@ -176,8 +160,6 @@ const inputRef = useRef()
 />
 ```
 
-[Full Text Component Documentation](./Components-TextField.md)
-
 ### Toggle
 
 This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button.
@@ -192,8 +174,6 @@ This component is a flexible component that can be used to toggle a boolean valu
   containerStyle={{ backgroundColor: "#fff" }}
 />
 ```
-
-[Full Toggle Component Documentation](./Components-Toggle.md)
 
 ## Custom Components
 

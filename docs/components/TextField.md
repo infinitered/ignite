@@ -1,8 +1,6 @@
 # TextField Component
 
-[Back to all components](./Components.md)
-
-Ignite's `TextField` Component is an enhanced version of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component. It consists of TextInput and a Text(./Components-Text.md) label.
+Ignite's `TextField` Component is an enhanced version of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component. It consists of TextInput and a Text(./Text) label.
 
 With this component you will be able to standardise TextInput component across your app.
 
@@ -77,7 +75,7 @@ The `labelTxOptions` is an optional prop that is used to pass props to the trans
 
 ### `LabelTextProps`
 
-The `LabelTextProps` is an optional prop that is used to pass props to the [`Text`](./Components-Text.md) component that renders the label.
+The `LabelTextProps` is an optional prop that is used to pass props to the [`Text`](../Text) component that renders the label.
 
 ```tsx
 <TextField
@@ -90,7 +88,7 @@ The `LabelTextProps` is an optional prop that is used to pass props to the [`Tex
 
 ### `helper`
 
-The `helper` optional prop is a string that is used to set the helper text. If this is not set, the `helperTx` prop must be present to set the helper text. If both are set, the `helper` value will be used. The helper text is rendered with a [`Text`](./Components-Text.md) component.
+The `helper` optional prop is a string that is used to set the helper text. If this is not set, the `helperTx` prop must be present to set the helper text. If both are set, the `helper` value will be used. The helper text is rendered with a [`Text`](../Text) component.
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} helper="This is a helper text" />
@@ -119,7 +117,7 @@ The `helperTxOptions` is an optional prop that is used to pass props to the tran
 
 ### `HelperTextProps`
 
-The `HelperTextProps` is an optional prop that is used to pass props to the [`Text`](./Components-Text.md) component that renders the helper text.
+The `HelperTextProps` is an optional prop that is used to pass props to the [`Text`](../Text) component that renders the helper text.
 
 ```tsx
 <TextField

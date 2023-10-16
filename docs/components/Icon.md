@@ -1,7 +1,5 @@
 # Icon Component
 
-[Back to all components](./Components.md)
-
 Ignite's `Icon` Component renders an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. If `onPress` is passed, it will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, otherwise it will use a [`View`](https://reactnative.dev/docs/view) component.
 
 ```tsx

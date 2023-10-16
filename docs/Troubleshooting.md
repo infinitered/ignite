@@ -1,3 +1,7 @@
+---
+title: Troubleshooting
+---
+
 # Upgrading Ignite
 
 If you run into problems, first search the issues in this repository. If you don't find anything, you can come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).

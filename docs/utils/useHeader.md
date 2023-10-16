@@ -1,7 +1,5 @@
 # useHeader
 
-[Back to all utils](./Utils.md)
-
 The `useHeader()` hook that can be used to easily set the Header of a react-navigation screen from within the screen's component.
 
 ```tsx
@@ -19,7 +17,7 @@ function AccountScreen() {
 
 ### `headerProps: HeaderProps`
 
-The first parameter is an object representing the props that will be passed directly to the [Header](./Components-Header.md) component.
+The first parameter is an object representing the props that will be passed directly to the [Header](../Components/Header) component.
 
 ```tsx
 useHeader({

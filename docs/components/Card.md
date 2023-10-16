@@ -1,7 +1,5 @@
 # Card Component
 
-[Back to all components](./Components.md)
-
 The `Card` component is intended to be used for vertically aligned related content. It is a container that can hold a heading, content, and footer. It can also hold a left and right component that will be aligned to the left and right of the card body.
 
 ## Props
@@ -114,7 +112,7 @@ The `headingStyle` prop is used to set the style of the heading text.
 
 ### `HeadingTextProps`
 
-The `HeadingTextProps` prop is used to pass any additional props to the heading `Text` component. It will accept any prop that the [`Text`](./Components-Text.md) component accepts.
+The `HeadingTextProps` prop is used to pass any additional props to the heading `Text` component. It will accept any prop that the [`Text`](../Text) component accepts.
 
 ```tsx
 <Card
@@ -181,7 +179,7 @@ The `contentStyle` prop is used to set the style of the content text.
 
 ### `ContentTextProps`
 
-The `ContentTextProps` prop is used to pass any additional props to the content `Text` component. It will accept any prop that the [`Text`](./Components-Text.md) component accepts.
+The `ContentTextProps` prop is used to pass any additional props to the content `Text` component. It will accept any prop that the [`Text`](../Text) component accepts.
 
 ```tsx
 <Card
@@ -248,7 +246,7 @@ The `footerStyle` prop is used to set the style of the footer text.
 
 ### `FooterTextProps`
 
-The `FooterTextProps` prop is used to pass any additional props to the footer `Text` component. It will accept any prop that the [`Text`](./Components-Text.md) component accepts.
+The `FooterTextProps` prop is used to pass any additional props to the footer `Text` component. It will accept any prop that the [`Text`](../Text) component accepts.
 
 ```tsx
 <Card

@@ -44,7 +44,7 @@ The `tx` prop is used to display a simple piece of text inside the `ListItem` co
 
 ### `children`
 
-The `children` prop is used to display components inside the `ListItem` component. Note that these will be nested inside a [`Text`](./Components-Text.md) component.
+The `children` prop is used to display components inside the `ListItem` component. Note that these will be nested inside a [`Text`](../Text) component.
 
 ```tsx
 <ListItem height={100}>
@@ -70,7 +70,7 @@ The `textStyle` prop is used to pass a style to the `Text` component that is use
 
 ### `TextProps`
 
-The `TextProps` prop is used to pass any additional props directly to the [`Text`](./Components-Text.md) component.
+The `TextProps` prop is used to pass any additional props directly to the [`Text`](../Text) component.
 
 ```tsx
 <ListItem text="Hello World" TextProps={{ weight: "bold" }} />

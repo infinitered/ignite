@@ -1,7 +1,5 @@
 # Header Component
 
-[Back to all components](./Components.md)
-
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.
 
 ```tsx
@@ -98,7 +96,7 @@ The `titleTxOptions` is an optional prop that is used to pass props to the trans
 
 ### `leftIcon`
 
-The `leftIcon` is an optional prop that is used to set the icon for the left navigation button. Options are 'back', 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `leftIcon` prop.
+The `leftIcon` is an optional prop that is used to set the icon for the left navigation button. Options are 'back', 'bullet', and 'bug'. Custom icons can be created by using the [`Icon` component](../Icon#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `leftIcon` prop.
 
 ```tsx
 <Header titleTx="header.title" leftIcon="back" onLeftPress={() => navigation.goBack()} />
@@ -164,7 +162,7 @@ The `onLeftPress` is an optional prop that is used to set the function to be cal
 
 ### `rightIcon`
 
-The `rightIcon` is an optional prop that is used to set the icon for the right navigation button. Custom icons can be created by using the [`Icon` component](./Components-Icon.md#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `rightIcon` prop.
+The `rightIcon` is an optional prop that is used to set the icon for the right navigation button. Custom icons can be created by using the [`Icon` component](../Icon#custom-icons). Once you create a custom icon, just pass the string name of the icon to the `rightIcon` prop.
 
 ```tsx
 <Header titleTx="header.title" rightIcon="back" onRightPress={() => navigation.goBack()} />
@@ -259,7 +257,7 @@ function AccountScreen(props) {
 }
 ```
 
-A convenience [`useHeader`](./Utils-useHeader.md) hook is provided that abstracts and cleans up some of this logic.
+A convenience [`useHeader`](../../Utils/useHeader) hook is provided that abstracts and cleans up some of this logic.
 
 ```tsx
 function AccountScreen(props) {

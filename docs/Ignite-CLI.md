@@ -1,3 +1,8 @@
+---
+sidebar_position: 3
+title: The Ignite CLI
+---
+
 # Ignite CLI
 
 Ignite comes with a dynamic CLI that does more than just get you started with developing a new react-native mobile application! Check out the command list below for additional documentation on each.
@@ -86,7 +91,7 @@ Tools
 
 Provides generators to keep your code consistent while saving you time to scaffold new models, components and screens in an automated fashion.
 
-For full documentation on this, head on over to the [Generators documentation](./Generators.md).
+For full documentation on this, head on over to the [Generators documentation](../Generators).
 
 ### Help
 
