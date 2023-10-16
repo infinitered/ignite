@@ -2,7 +2,7 @@
 
 Ignite's approach to styling individual components is, like many other things in Ignite, straightforward and direct.
 
-If you're looking to set app-wide styles such as fonts/typography or colors, check out the [Theming](../theming) documentation.
+If you're looking to set app-wide styles such as fonts/typography or colors, check out the [Theming](../../theming) documentation.
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
@@ -22,7 +22,7 @@ const $container: ViewStyle = {
 }
 ```
 
-Very often, we use [components with presets](../Components) to share styles across our whole app.
+Very often, we use [components with presets](../../Components) to share styles across our whole app.
 
 With this strategy, you can tell a variable is a style if it has the $ prefix. You can also spread in other styles to compose styles:
 

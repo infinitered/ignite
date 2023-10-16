@@ -2,7 +2,7 @@
 
 Theming involves creating a consistent look & feel across your application. It's a collection of style attributes and building blocks that are used everywhere.
 
-If you're looking for customizing the look of an individual component, look at the [Styling](../styling) documentation.
+If you're looking for customizing the look of an individual component, look at the [Styling](../opinions/styling) documentation.
 
 Theming involves a few different things: palettes, colors, animation timings, fonts, typography, and spacing. You can find everything that we use for theming in the `app/theme` folder. When we at Infinite Red receive a custom design, one of the first places we start is in this directory matching the values to the design. It's a great idea to match the design language used by the designers with the semantic names you will be providing in these files.
 

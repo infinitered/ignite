@@ -30,7 +30,7 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 
 - React Native
 - React Navigation
-- MobX-State-Tree [(Why not Redux?)](https://github.com/infinitered/ignite/blob/master/docs/MobX-State-Tree.md)
+- MobX-State-Tree [(Why not Redux?)](../opinions/MobX-State-Tree)
 - MobX-React-Lite
 - TypeScript
 - AsyncStorage (integrated with MST for restoring state)
@@ -52,7 +52,7 @@ We use React Navigation v6 in the current version of Ignite. You'll find any nav
 
 There's also a `navigationUtilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-Learn more in our [Navigation](../Navigation) documentation.
+Learn more in our [Navigation](../opinions/Navigation) documentation.
 
 ### Components
 
@@ -94,4 +94,4 @@ const MyComponent = () => {
 
 Very often, we use [components with presets](../Components) to share styles across our whole app.
 
-Read more about styling in the [Styling](../Styling) docs.
+Read more about styling in the [Styling](../opinions/Styling) docs.
