@@ -1,18 +1,8 @@
 import { Link, RouteProp, useRoute } from "@react-navigation/native"
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react"
-import {
-  Dimensions,
-  Image,
-  ImageStyle,
-  Platform,
-  SectionList,
-  TextStyle,
-  View,
-  ViewStyle,
-} from "react-native"
+import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
+import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
-import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
-import { useSharedValue, withTiming } from "react-native-reanimated"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
@@ -86,10 +76,8 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
     const [open, setOpen] = useState(false)
     const timeout = useRef<ReturnType<typeof setTimeout>>()
-    const drawerRef = useRef<DrawerLayout>(null)
     const listRef = useRef<SectionList>(null)
     const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
-    const progress = useSharedValue(0)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
 
@@ -118,10 +106,8 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const toggleDrawer = () => {
       if (!open) {
         setOpen(true)
-        drawerRef.current?.openDrawer({ speed: 2 })
       } else {
         setOpen(false)
-        drawerRef.current?.closeDrawer({ speed: 2 })
       }
     }
 
@@ -158,24 +144,13 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const $drawerInsets = useSafeAreaInsetsStyle(["top"])
 
     return (
-      <DrawerLayout
-        ref={drawerRef}
-        drawerWidth={Platform.select({ default: 326, web: Dimensions.get("window").width * 0.3 })}
+      <Drawer
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
         drawerType={"slide"}
         drawerPosition={isRTL ? "right" : "left"}
-        overlayColor={open ? colors.palette.overlay20 : "transparent"}
-        onDrawerSlide={(drawerProgress) => {
-          progress.value = open ? 1 - drawerProgress : drawerProgress
-        }}
-        onDrawerStateChanged={(newState: DrawerState, drawerWillShow: boolean) => {
-          if (newState === "Settling") {
-            progress.value = withTiming(drawerWillShow ? 1 : 0, {
-              duration: 250,
-            })
-            setOpen(drawerWillShow)
-          }
-        }}
-        renderNavigationView={() => (
+        renderDrawerContent={() => (
           <View style={[$drawer, $drawerInsets]}>
             <View style={$logoContainer}>
               <Image source={logo} style={$logoImage} />
@@ -198,7 +173,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         )}
       >
         <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-          <DrawerIconButton onPress={toggleDrawer} {...{ open, progress }} />
+          <DrawerIconButton onPress={toggleDrawer} {...{ open }} />
 
           <SectionList
             ref={listRef}
@@ -225,7 +200,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             }}
           />
         </Screen>
-      </DrawerLayout>
+      </Drawer>
     )
   }
 
