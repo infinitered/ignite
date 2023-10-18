@@ -11,4 +11,5 @@ module.exports = {
   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.maestro/", "@react-native"],
   testEnvironment: "jsdom",
   setupFiles: ["<rootDir>/test/setup.ts"],
+  moduleNameMapper: { "^app/(.*)$": "<rootDir>/app/$1", "^assets/(.*)$": "<rootDir>/assets/$1" },
 }
