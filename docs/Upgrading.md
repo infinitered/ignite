@@ -1,3 +1,7 @@
+---
+sidebar_position: 140
+---
+
 ## Upgrading React Native
 
 It's important to stay up-to-date with React Native updates. To keep your React Native app updated, check out these tools:

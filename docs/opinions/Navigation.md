@@ -1,4 +1,4 @@
-# Navigation in Ignite
+# Navigation
 
 We use [React Navigation v6](https://reactnavigation.org/docs/getting-started/) in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `AppNavigator.tsx` being the primary one.
 

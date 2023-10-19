@@ -62,20 +62,6 @@ app
 
 This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
 
-- [Component Overview](../Components)
-- [AutoImage](../Components/AutoImage)
-- [Button](../Components/Button)
-- [Card](../Components/Card)
-- [EmptyState](../Components/EmptyState)
-- [Header](../Components/Header)
-- [Icon](../Components/Icon)
-- [ListItem](../Components/ListItem)
-- [ListView](../Components/ListView)
-- [Screen](../Components/Screen)
-- [Text](../Components/Text)
-- [TextField](../Components/TextField)
-- [Toggle](../Components/Toggle)
-
 **i18n**
 
 This is where your translations will live if you are using the included `react-native-i18n`.

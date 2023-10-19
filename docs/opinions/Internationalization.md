@@ -1,4 +1,4 @@
-# Internationalization in Ignite Apps
+# Internationalization
 
 Ignite currently setup to have Internationalization setup in English, Arabic, and Korean! This is detected on app load and will set your app to that language.
 

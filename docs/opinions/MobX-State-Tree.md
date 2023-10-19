@@ -1,3 +1,7 @@
+---
+title: State Management with MobX-State-Tree
+---
+
 # Why MobX-State-Tree?
 
 If you've used Ignite Andross (the first Ignite stack), you know we formerly used Redux for state management, as does much of the community. However, we encountered some pain points with Redux so went in search of a different solution to meet our needs and landed on `mobx-state-tree` (also known as "MST"). We find that it’s a great middle-ground between completely structured (like `redux`) and completely freestyle (like `mobx`). It brings more than just state-management to the table as well (such as dependency injection, serialization, and lifecycle events).

@@ -1,4 +1,4 @@
-# AutoImage Component
+# AutoImage
 
 Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit a max width or height constraint
 

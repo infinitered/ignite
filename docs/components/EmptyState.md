@@ -1,4 +1,4 @@
-# EmptyState Component
+# EmptyState
 
 The `EmptyState` component is to be used when there is no data to display, usually after attempting to load some content from an external API. It is a container that can hold a heading and content. It can also display an image and provide a button to interact with.
 

@@ -1,5 +1,6 @@
 ---
 title: Troubleshooting
+sidebar_position: 130
 ---
 
 # Upgrading Ignite

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: The Ignite CLI
+title: Ignite CLI
 ---
 
 # Ignite CLI
@@ -8,18 +8,6 @@ title: The Ignite CLI
 Ignite comes with a dynamic CLI that does more than just get you started with developing a new react-native mobile application! Check out the command list below for additional documentation on each.
 
 ## Commands
-
-- [cache](#cache)
-- [doctor](#doctor)
-- [generate](#generate)
-- [help](#help)
-- [new](#new)
-- [issue](#issue)
-- [remove-demo-markup](#remove-demo-markup)
-- [remove-demo](#remove-demo)
-- [rename](#rename)
-- [snackify](#snackify)
-- [update](#update)
 
 ### Cache
 

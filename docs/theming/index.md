@@ -1,4 +1,4 @@
-# Theming Ignite Apps
+# Theming
 
 Theming involves creating a consistent look & feel across your application. It's a collection of style attributes and building blocks that are used everywhere.
 

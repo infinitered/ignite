@@ -1,4 +1,4 @@
-# Styling Ignite apps
+# Styling
 
 Ignite's approach to styling individual components is, like many other things in Ignite, straightforward and direct.
 

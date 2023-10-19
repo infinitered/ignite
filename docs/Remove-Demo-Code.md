@@ -1,3 +1,7 @@
+---
+sidebar_position: 110
+---
+
 # Remove Demo Code
 
 Whenever users use command line boilerplate tool like `ignite` or `create-react-app`, the first thing that many users do is delete all the demo code to start their project.

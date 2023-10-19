@@ -1,4 +1,8 @@
-# Testing Ignite Apps
+---
+sidebar_position: 120
+---
+
+# Testing
 
 At Infinite Red, we want confidence that the code we are shipping isn't breaking the experience for our clients' users.
 

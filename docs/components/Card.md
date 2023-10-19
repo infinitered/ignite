@@ -1,4 +1,4 @@
-# Card Component
+# Card
 
 The `Card` component is intended to be used for vertically aligned related content. It is a container that can hold a heading, content, and footer. It can also hold a left and right component that will be aligned to the left and right of the card body.
 

@@ -1,4 +1,4 @@
-# Toggle Component
+# Toggle
 
 This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button, and exposes style props for every element.
 

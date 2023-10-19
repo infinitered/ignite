@@ -1,6 +1,6 @@
 {
-  "label": "Utilities",
-  "position": 81,
+  "label": "Theming",
+  "position": 100,
   "link": {
     "type": "doc",
     "id": "index"

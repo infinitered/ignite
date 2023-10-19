@@ -1,4 +1,4 @@
-# Ignite Built-in Components
+# Built-in Components
 
 Ignite comes with a number of customizable built-in React Native components -- sort of a lightweight design system, in a way. It's the system we (at Infinite Red) tend to use the most often with our own custom mobile designs, and is designed to emphasize flexibility and customizability _over_ out-of-the-box power.
 

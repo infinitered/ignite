@@ -1,4 +1,4 @@
-# Text Component
+# Text
 
 Ignite's `Text` Component is an enhanced version of the built-in React Native [`Text`](https://reactnative.dev/docs/text) component. It adds internationalization and several useful (and customizable) property presets. You shouldn't need the built-in React Native Text component if you use this. It does everything the built-in one does and more.
 
