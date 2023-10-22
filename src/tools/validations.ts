@@ -1,6 +1,5 @@
-import { GluegunToolbox, strings } from "gluegun"
+import { GluegunToolbox } from "gluegun"
 import { prefix } from "./pretty"
-const { pascalCase } = strings
 
 // #region Error Guards
 type IsError = (str: string) => boolean
@@ -15,18 +14,13 @@ const isOnlyNumbers: ErrorGuard = [
   (str) => /^\d+$/.test(str),
   () => `Please use at least one non-numeric character for your project name`,
 ]
-const isKebabCase: ErrorGuard = [
-  (str) => str.includes("-"),
-  (str) =>
-    `Please use 'PascalCase', not 'kebab-case' for your project name. Ex: ${pascalCase(str)}`,
-]
 const isNotAlphaNumeric: ErrorGuard = [
-  (str) => !/^[a-z_][a-z0-9_]+$/i.test(str),
+  (str) => !/^[a-z_][a-z0-9_-]+$/i.test(str),
   () =>
     `The project name can only contain alphanumeric characters and underscore, but must not begin with a number.`,
 ]
 
-const guards: ErrorGuard[] = [isIgnite, isOnlyNumbers, isKebabCase, isNotAlphaNumeric]
+const guards: ErrorGuard[] = [isIgnite, isOnlyNumbers, isNotAlphaNumeric]
 
 /**
  * check if the value matches any of the error guards
