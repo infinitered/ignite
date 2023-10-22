@@ -1,6 +1,19 @@
 ## Upgrading
 
-It's important to stay up-to-date with React Native updates. To keep your React Native app updated, check out these tools:
+It's important to stay up-to-date with React Native updates. Luckily, we can bank on Expo having done this work for us. If you're letting Expo manage your native code for you, just run the following:
+
+```bash
+npx expo install expo@49.0.0
+npx expo install --fix
+```
+
+And that's it! If you've added native dependencies outside the Expo ecosystem, you'll want to run prebuild again:
+
+```bash
+npx expo prebuild --clean --no-install
+```
+
+And finally, if you're managing native code yourself, check out these tools:
 
 - [React Native Upgrade Helper](https://react-native-community.github.io/upgrade-helper/) great web based tool
 - [rn-diff-purge](https://github.com/react-native-community/rn-diff-purge)
