@@ -533,8 +533,9 @@ export default {
         await packager.install({ ...packagerOptions, onProgress: log })
         stopSpinner(unboxingMessage, "🧶")
       } catch (e) {
+        p(yellow("Unable to install dependencies."))
         log(e)
-        stopSpinner(`${unboxingMessage}   ${yellow("Unable to install dependencies.")}`, "🧶")
+        stopSpinner(unboxingMessage, "🧶")
         !doctorHasRun && await runDoctor()
       }
     }
@@ -562,8 +563,9 @@ export default {
         })
         stopSpinner(msg, "📦")
       } catch (e) {
+        p(yellow("Unable to cache dependencies."))
         log(e)
-        stopSpinner(`${msg}   ${yellow("Unable to cache dependencies.")}`, "📦")
+        stopSpinner(msg, "📦")
         !doctorHasRun && await runDoctor()
       }
     }
@@ -625,8 +627,9 @@ export default {
         }
         stopSpinner(initGitMessage, "🗄")
       } catch (e) {
+        p(yellow("Unable to commit the initial changes. Please check your git username and email."))
         log(e)
-        stopSpinner(`${initGitMessage}   ${yellow("Unable to commit the initial changes. Please check your git username and email.")}`, "🗄")
+        stopSpinner(initGitMessage, "🗄")
         !doctorHasRun && await runDoctor()
       }
     }
