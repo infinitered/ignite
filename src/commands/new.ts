@@ -133,7 +133,7 @@ export default {
     const { kebabCase } = strings
     const { exists, path, removeAsync, copy, read, write, homedir } = filesystem
     const { info, colors, warning } = print
-    const { gray, cyan, yellow, underline, white } = colors
+    const { gray, cyan, yellow, white, underline, bold } = colors
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
@@ -385,6 +385,25 @@ export default {
     p()
     // #endregion
 
+    // #region run doctor
+    let doctorHasRun = false
+    const runDoctor = async () => {
+      startSpinner(" Gathering system and project details")
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const doctorResults = await system.run(`${IGNITE} doctor`)
+        p(`\n\n${doctorResults}`)
+        doctorHasRun = true
+      } catch (e) {
+        p(yellow("Unable to gather system and project details."))
+      }
+      stopSpinner(" Gathering system and project details", "🛠️")
+      p()
+      p(white(` Note: For additional information try re-running the command with the ${bold("`--debug`")} flag.`))
+      p()
+    }
+    // #endregion
+
     // #region Overwrite
     if (exists(targetPath) === "dir" && overwrite === true) {
       const msg = ` Tossing that old app like it's hot`
@@ -473,11 +492,16 @@ export default {
     if (shouldUseCache) {
       const msg = `Grabbing those ${packagerName} dependencies from the back`
       startSpinner(msg)
-      await cache.copy({
-        fromRootDir: cachePath,
-        toRootDir: targetPath,
-        packagerName,
-      })
+      try {
+        await cache.copy({
+          fromRootDir: cachePath,
+          toRootDir: targetPath,
+          packagerName,
+        })
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to copy dependecies from cache."))
+      }
       stopSpinner(msg, "📦")
     }
 
@@ -500,29 +524,48 @@ export default {
     stopSpinner(renameSpinnerMsg, "🎨")
     // #endregion
 
+    // #region fresh install dependencies
     const shouldFreshInstallDeps = installDeps && shouldUseCache === false
     if (shouldFreshInstallDeps) {
       const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
       startSpinner(unboxingMessage)
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner(unboxingMessage, "🧶")
+      try {
+        await packager.install({ ...packagerOptions, onProgress: log })
+        stopSpinner(unboxingMessage, "🧶")
+      } catch (e) {
+        log(e)
+        stopSpinner(`${unboxingMessage}   ${yellow("Unable to install dependencies.")}`, "🧶")
+        !doctorHasRun && await runDoctor()
+      }
     }
+    // #endregion
 
-    // remove the gitignore template
-    await removeAsync(".gitignore.template")
+    // #region remove the gitignore template
+    try {
+      await removeAsync(".gitignore.template")
+    } catch (e) {
+      log(e)
+      p(yellow("Unable to remove gitignore template."))
+    }
     // #endregion
 
     // #region Cache dependencies
     if (shouldFreshInstallDeps && cacheExists === false && useCache) {
       const msg = `Saving ${packagerName} dependencies for next time`
       startSpinner(msg)
-      log(targetPath)
-      await cache.copy({
-        fromRootDir: targetPath,
-        toRootDir: cachePath,
-        packagerName,
-      })
-      stopSpinner(msg, "📦")
+      try {
+        log(targetPath)
+        await cache.copy({
+          fromRootDir: targetPath,
+          toRootDir: cachePath,
+          packagerName,
+        })
+        stopSpinner(msg, "📦")
+      } catch (e) {
+        log(e)
+        stopSpinner(`${msg}   ${yellow("Unable to cache dependencies.")}`, "📦")
+        !doctorHasRun && await runDoctor()
+      }
     }
     // #endregion
 
@@ -530,7 +573,12 @@ export default {
     // we can't run this option if we didn't install deps
     if (installDeps === true) {
       // Make sure all our modifications are formatted nicely
-      await packager.run("format", { ...packagerOptions, silent: !debug })
+      try {
+        await packager.run("format", { ...packagerOptions, silent: !debug })
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to verify if modifications were formatted."))
+      }
     }
     // #endregion
 
@@ -555,7 +603,8 @@ export default {
     // #region Create Git Repository and Initial Commit
     // commit any changes
     if (git === true) {
-      startSpinner(" Backing everything up in source control")
+      const initGitMessage = " Backing everything up in source control"
+      startSpinner(initGitMessage)
       try {
         const isWindows = process.platform === "win32"
 
@@ -574,10 +623,12 @@ export default {
             `),
           )
         }
+        stopSpinner(initGitMessage, "🗄")
       } catch (e) {
-        p(yellow("Unable to commit the initial changes. Please check your git username and email."))
+        log(e)
+        stopSpinner(`${initGitMessage}   ${yellow("Unable to commit the initial changes. Please check your git username and email.")}`, "🗄")
+        !doctorHasRun && await runDoctor()
       }
-      stopSpinner(" Backing everything up in source control", "🗄")
     }
 
     // back to the original directory
