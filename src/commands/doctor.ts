@@ -97,7 +97,11 @@ module.exports = {
     const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
 
     info("")
-    info(colors.cyan(`${INDENT} JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
+    info(
+      colors.cyan(
+        `${INDENT} JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`,
+      ),
+    )
     table([
       nodeInfo,
       npmInfo,

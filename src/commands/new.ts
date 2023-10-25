@@ -399,7 +399,13 @@ export default {
       }
       stopSpinner(" Gathering system and project details", "🛠️")
       p()
-      p(white(` Note: For additional information try re-running the command with the ${bold("`--debug`")} flag.`))
+      p(
+        white(
+          ` Note: For additional information try re-running the command with the ${bold(
+            "`--debug`",
+          )} flag.`,
+        ),
+      )
       p()
     }
     // #endregion
@@ -536,7 +542,7 @@ export default {
         p(yellow("Unable to install dependencies."))
         log(e)
         stopSpinner(unboxingMessage, "🧶")
-        !doctorHasRun && await runDoctor()
+        !doctorHasRun && (await runDoctor())
       }
     }
     // #endregion
@@ -566,7 +572,7 @@ export default {
         p(yellow("Unable to cache dependencies."))
         log(e)
         stopSpinner(msg, "📦")
-        !doctorHasRun && await runDoctor()
+        !doctorHasRun && (await runDoctor())
       }
     }
     // #endregion
@@ -630,7 +636,7 @@ export default {
         p(yellow("Unable to commit the initial changes. Please check your git username and email."))
         log(e)
         stopSpinner(initGitMessage, "🗄")
-        !doctorHasRun && await runDoctor()
+        !doctorHasRun && (await runDoctor())
       }
     }
 
