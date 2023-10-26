@@ -6,7 +6,6 @@
 import { GluegunToolbox } from "gluegun"
 import * as os from "os"
 import { packager } from "../tools/packager"
-import { INDENT } from "../tools/pretty"
 
 const isWindows = process.platform === "win32"
 const isMac = process.platform === "darwin"
@@ -24,7 +23,7 @@ module.exports = {
     } = toolbox
 
     // display helpers
-    const column1 = (label, length = 16) => padEnd(`${INDENT} ${label}` || "", length)
+    const column1 = (label, length = 16) => padEnd(label || "", length)
     const column2 = (label) => colors.yellow(padEnd(label || "-", 10))
     const column3 = (label) => colors.muted(label)
 
@@ -37,7 +36,7 @@ module.exports = {
     const cores = `${cpus.length} cores`
     const directory = `${process.cwd()}`
 
-    info(colors.cyan(`${INDENT} System`))
+    info(colors.cyan("System"))
     table([
       [column1("platform"), column2(platform), column3("")],
       [column1("arch"), column2(arch), column3("")],
@@ -97,11 +96,7 @@ module.exports = {
     const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
 
     info("")
-    info(
-      colors.cyan(
-        `${INDENT} JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`,
-      ),
-    )
+    info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
     table([
       nodeInfo,
       npmInfo,
@@ -119,7 +114,7 @@ module.exports = {
     const igniteVersion = meta.version()
 
     info("")
-    info(colors.cyan(`${INDENT} Ignite`))
+    info(colors.cyan("Ignite"))
     const igniteTable = []
     igniteTable.push([column1("ignite-cli"), column2(igniteVersion), column3(ignitePath)])
     igniteTable.push([
@@ -143,7 +138,7 @@ module.exports = {
     }
 
     info("")
-    info(colors.cyan(`${INDENT} Android`))
+    info(colors.cyan("Android"))
     table([
       [column1("java"), column2(javaVersion), column3(javaPath)],
       [column1("android home"), column2("-"), column3(androidPath)],
@@ -156,7 +151,7 @@ module.exports = {
         xcodePath && (await run("xcodebuild -version", { trim: true })).split(/\s/)[1]
 
       info("")
-      info(colors.cyan(`${INDENT} iOS`))
+      info(colors.cyan("iOS"))
       table([[column1("xcode"), column2(xcodeVersion)]])
 
       const cocoaPodsPath = which("pod") || ""
@@ -176,7 +171,7 @@ module.exports = {
 
     // -=-=-=- tools -=-=-=-
     info("")
-    info(colors.cyan(`${INDENT} Tools`))
+    info(colors.cyan("Tools"))
     const gitPath = which("git")
     const gitVersion = gitPath && (await run("git --version", { trim: true }))
     const gitInfo = [column1("git"), column2(gitVersion), column3(gitPath || "not installed")]
