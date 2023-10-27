@@ -97,7 +97,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
 
     // handle Web links
     React.useEffect(() => {
-      if (Object.keys(route.params).length > 0) {
+      if (Object.keys(params).length > 0) {
         const demoValues = Object.values(Demos)
         const findSectionIndex = demoValues.findIndex(
           (x) => x.name.toLowerCase() === params.queryIndex,
