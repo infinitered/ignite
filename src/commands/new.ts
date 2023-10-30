@@ -187,7 +187,7 @@ module.exports = {
     // #endregion
 
     // #region Bundle Identifier
-    const defaultBundleIdentifier = `com.${projectName.toLowerCase()}`
+    const defaultBundleIdentifier = `com.${strings.pascalCase(projectName).toLowerCase()}`
     let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
@@ -600,6 +600,10 @@ module.exports = {
 
     // remove the gitignore template
     await removeAsync(".gitignore.template")
+    // remove bunfig.toml if not using bun
+    if (packagerName !== "bun") {
+      await removeAsync("bunfig.toml")
+    }
     // #endregion
 
     // #region Cache dependencies
