@@ -115,7 +115,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         }
         handleScroll(findSectionIndex, findItemIndex)
       }
-    }, [route, params])
+    }, [params])
 
     const toggleDrawer = () => {
       if (!open) {
