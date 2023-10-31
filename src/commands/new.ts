@@ -684,7 +684,7 @@ export default {
       process.exit(0)
     } catch (e) {
       stopLastSpinner("❌")
-      p2(red(`\nThe following error occured:\n${e}`))
+      p2(red(`\nThe following error occurred:\n${e}`))
       startSpinner(" Gathering system and project details")
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
