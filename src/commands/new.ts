@@ -683,7 +683,7 @@ export default {
       p2()
       p2(yellow(`Generator templates could not be converted to Windows EOL.`))
       p2(yellow(`You may want to update these manually with your code editor, more info at:`))
-      p2(`${link("https://docs.infinite.red/ignite/concept/generators#windows")}`)
+      p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md#windows")}`)
       p2()
     }
 
