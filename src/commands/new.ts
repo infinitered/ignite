@@ -562,7 +562,7 @@ export default {
       const templates = filesystem.find(`${targetPath}/ignite/templates`, {
         directories: false,
         files: true,
-        matching: "*.ts*.ejs",
+        matching: "*.ejs",
       })
 
       log(`unix2dos path: ${unixToDosPath}`)
