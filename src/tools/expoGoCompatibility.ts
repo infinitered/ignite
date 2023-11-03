@@ -6,10 +6,10 @@ export const expoGoCompatExpectedVersions = {
   "@react-native-async-storage/async-storage": "1.18.2",
   "expo-application": "~5.3.0",
   "expo-device": "~5.4.0",
-  "expo-file-system": "~15.4.4",
   "expo-font": "~11.4.0",
   "expo-localization": "~14.3.0",
   "@shopify/flash-list": "1.4.3",
+  "react-native": "0.72.5",
 }
 
 // This function takes a package.json file as a string and updates the versions of the
