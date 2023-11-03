@@ -5,7 +5,6 @@
 export const expoGoCompatExpectedVersions = {
   "@react-native-async-storage/async-storage": "1.18.2",
   "expo-application": "~5.3.0",
-  "expo-device": "~5.4.0",
   "expo-font": "~11.4.0",
   "expo-localization": "~14.3.0",
   "@shopify/flash-list": "1.4.3",
