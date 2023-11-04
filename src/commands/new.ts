@@ -26,7 +26,6 @@ import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { EOL } from "os"
-import { blue } from "colors"
 
 export interface Options {
   /**
@@ -735,13 +734,11 @@ export default {
       process.exit(0)
     } catch (e) {
       stopLastSpinner("❌")
-      p("\nConsider opening an issue with the following information at:\n")
-      p(
-        underline(
-          blue(
-            "https://github.com/infinitered/ignite/issues/new?template=bug_report.yml&labels=bug",
-          ),
-        ),
+      p2("\nConsider opening an issue with the following information at:")
+      p2(
+        `${link(
+          "https://github.com/infinitered/ignite/issues/new?template=bug_report.yml&labels=bug",
+        )}`,
       )
       p2(red(`\nThe following error occurred:\n${e}`))
       startSpinner(" Gathering system and project details")
