@@ -26,6 +26,7 @@ import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { EOL } from "os"
+import { blue } from "colors"
 
 export interface Options {
   /**
@@ -327,6 +328,7 @@ export default {
 
     const packagerOptions = { packagerName }
 
+    const isWindows = process.platform === "win32"
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     const boilerplate = (...pathParts: string[]) => path(boilerplatePath, ...pathParts)
@@ -556,13 +558,48 @@ export default {
       }
       // #endregion
 
+      // #region Format generator templates EOL for Windows
+      let warnAboutEOL = false
+      if (isWindows) {
+        // find unix2dos to help convert EOL, usually installed with git, ie:  C:\Program Files\Git\usr\bin\unix2dos.EXE
+        const unixToDosPath = await system.exec("which unix2dos")
+        // find all templates Ignite provides by default
+        const templates = filesystem.find(`${targetPath}/ignite/templates`, {
+          directories: false,
+          files: true,
+          matching: "*.ejs",
+        })
+
+        log(`unix2dos path: ${unixToDosPath}`)
+        log(`templates to change EOL: ${templates}`)
+        if (unixToDosPath) {
+          // running the output from `which` result above seems to not work, so just pop the binary name
+          const unixToDosCmd = unixToDosPath.split("/").pop()
+          const results = await Promise.allSettled(
+            templates.map(async (file) => {
+              log(`Converting EOL for ${file}`)
+              await system.run(`${unixToDosCmd} ${file}`)
+            }),
+          )
+
+          // inspect the results of conversion and log
+          results.forEach((result) => {
+            if (result.status === "rejected") {
+              warnAboutEOL = true
+              log(`Error converting EOL: ${JSON.stringify(result.reason)}`)
+            }
+          })
+        } else {
+          warnAboutEOL = true
+        }
+      }
+      // #endregion
+
       // #region Create Git Repository and Initial Commit
       // commit any changes
       if (git === true) {
         startSpinner(" Backing everything up in source control")
         try {
-          const isWindows = process.platform === "win32"
-
           // The separate commands works on Windows, but not Mac OS
           if (isWindows) {
             await system.run(log("git init"))
@@ -601,6 +638,9 @@ export default {
 
       // we're done! round performance stats to .xx digits
       const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
+
+      /** Add just a _little_ more spacing to match with spinners and heading */
+      const p2 = (m = "") => p(` ${m}`)
 
       p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
       p2()
@@ -647,6 +687,17 @@ export default {
         p2()
       }
 
+      if (warnAboutEOL) {
+        hr()
+        p2()
+        p2(yellow(`Generator templates could not be converted to Windows EOL.`))
+        p2(yellow(`You may want to update these manually with your code editor, more info at:`))
+        p2(
+          `${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md#windows")}`,
+        )
+        p2()
+      }
+
       hr()
       p2()
       p2("Need additional help?")
@@ -684,6 +735,14 @@ export default {
       process.exit(0)
     } catch (e) {
       stopLastSpinner("❌")
+      p("\nConsider opening an issue with the following information at:\n")
+      p(
+        underline(
+          blue(
+            "https://github.com/infinitered/ignite/issues/new?template=bug_report.yml&labels=bug",
+          ),
+        ),
+      )
       p2(red(`\nThe following error occurred:\n${e}`))
       startSpinner(" Gathering system and project details")
       try {
@@ -693,8 +752,8 @@ export default {
       } catch (e) {
         p(yellow("Unable to gather system and project details."))
       }
-      stopSpinner(" Gathering system and project details", "🛠️")
-      process.exit(0)
+      clearSpinners()
+      process.exit(1)
     }
   },
 }
