@@ -151,3 +151,9 @@ You may want to update your generators to the latest version of Ignite.
 Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from the root folder of your project to copy over the latest generators from Ignite to your project.
 
 ⚠️ Note that this will remove any customizations you've made, so make sure to make a commit first so you can roll it back!
+
+## A Note About Windows
+
+If you are noticing upon using the generator for a source file (such as a screen or model) that frontmatter is not removed from the newly created file, it could be that the End of Line Sequence is misconfigured. Ignite tries to take care of this on its own, but sometimes your machine will not have a proper CLI utility such as `unix2dos` installed (this usually comes with Git).
+
+In this case, you can open VS Code (or another IDE) and convert the EOL characters for all `ejs` files in the `ignite/templates` directory. Then run the generator command again and it should create the new files properly.

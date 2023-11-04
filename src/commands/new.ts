@@ -399,6 +399,7 @@ export default {
       }
       // #endregion
 
+<<<<<<< HEAD
       // #region Local build folder clean
       // Remove some folders that we don't want to copy over
       // This mostly only applies when you're developing locally
@@ -588,6 +589,55 @@ export default {
               log(`Error converting EOL: ${JSON.stringify(result.reason)}`)
             }
           })
+=======
+    // #region Format generator templates EOL for Windows
+    let warnAboutEOL = false
+    if (isWindows) {
+      // find unix2dos to help convert EOL, usually installed with git, ie:  C:\Program Files\Git\usr\bin\unix2dos.EXE
+      const unixToDosPath = await system.exec("which unix2dos")
+      // find all templates Ignite provides by default
+      const templates = filesystem.find(`${targetPath}/ignite/templates`, {
+        directories: false,
+        files: true,
+        matching: "*.ejs",
+      })
+
+      log(`unix2dos path: ${unixToDosPath}`)
+      log(`templates to change EOL: ${templates}`)
+      if (unixToDosPath) {
+        // running the output from `which` result above seems to not work, so just pop the binary name
+        const unixToDosCmd = unixToDosPath.split("/").pop()
+        const results = await Promise.allSettled(
+          templates.map(async (file) => {
+            log(`Converting EOL for ${file}`)
+            await system.run(`${unixToDosCmd} ${file}`)
+          }),
+        )
+
+        // inspect the results of conversion and log
+        results.forEach((result) => {
+          if (result.status === "rejected") {
+            warnAboutEOL = true
+            log(`Error converting EOL: ${JSON.stringify(result.reason)}`)
+          }
+        })
+      } else {
+        warnAboutEOL = true
+      }
+    }
+    // #endregion
+
+    // #region Create Git Repository and Initial Commit
+    // commit any changes
+    if (git === true) {
+      startSpinner(" Backing everything up in source control")
+      try {
+        // The separate commands works on Windows, but not Mac OS
+        if (isWindows) {
+          await system.run(log("git init"))
+          await system.run(log("git add -A"))
+          await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
+>>>>>>> master
         } else {
           warnAboutEOL = true
         }
@@ -752,6 +802,54 @@ export default {
       clearSpinners()
       process.exit(1)
     }
+<<<<<<< HEAD
+=======
+
+    if (warnAboutEOL) {
+      hr()
+      p2()
+      p2(yellow(`Generator templates could not be converted to Windows EOL.`))
+      p2(yellow(`You may want to update these manually with your code editor, more info at:`))
+      p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md#windows")}`)
+      p2()
+    }
+
+    hr()
+    p2()
+    p2("Need additional help?")
+    p2()
+    p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
+    p2()
+
+    hr()
+    p2()
+    p2("Now get cooking! 🍽")
+    command(`cd ${targetPath}`)
+    if (!installDeps) command(packager.installCmd({ packagerName }))
+    command(`${packagerName} start`)
+
+    const isMac = process.platform === "darwin"
+    if (isMac) {
+      command(`${packager.runCmd("ios", packagerOptions)}`)
+    } else {
+      command(`${packager.runCmd("android", packagerOptions)}`)
+    }
+
+    p2()
+    p2("With Expo:")
+    command(`cd ${projectName}`)
+    if (!installDeps) command(packager.installCmd({ packagerName }))
+    command(`${packager.runCmd("expo:start", packagerOptions)}`)
+    p2()
+    p2()
+    // #endregion
+
+    // this is a hack to prevent the process from hanging
+    // if there are any tasks left in the event loop
+    // like I/O operations to process.stdout and process.stderr
+    // see https://github.com/infinitered/ignite/issues/2084
+    process.exit(0)
+>>>>>>> master
   },
 }
 
