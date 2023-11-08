@@ -154,8 +154,8 @@ module.exports = {
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
 
     // Absolute maximum that an app can take after inputs
-    // is 5 minutes ... otherwise we've hung up somewhere and need to exit.
-    const MAX_APP_CREATION_TIME = 5 * 60 * 1000
+    // is 10 minutes ... otherwise we've hung up somewhere and need to exit.
+    const MAX_APP_CREATION_TIME = 10 * 60 * 1000
     const timeoutExit = () => {
       p()
       p(yellow("Error: App creation timed out."))
