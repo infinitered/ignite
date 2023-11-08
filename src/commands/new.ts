@@ -153,6 +153,16 @@ module.exports = {
     const CMD_INDENT = "  "
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
 
+    // Absolute maximum that an app can take after inputs
+    // is 5 minutes ... otherwise we've hung up somewhere and need to exit.
+    const MAX_APP_CREATION_TIME = 5 * 60 * 1000
+    const timeoutExit = () => {
+      p()
+      p(yellow("Error: App creation timed out."))
+      if (!debug) p(gray("Run again with --debug to see what's going on."))
+      process.exit(1)
+    }
+
     // #endregion
 
     // debug?
@@ -443,6 +453,9 @@ module.exports = {
     // start tracking performance
     const perfStart = new Date().getTime()
 
+    // add a timeout to make sure we don't hang on any errors
+    const timeout = setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
+
     // #region Print Welcome
     // welcome everybody!
     const terminalWidth = process.stdout.columns ?? 80
@@ -716,6 +729,9 @@ module.exports = {
 
     // we're done! round performance stats to .xx digits
     const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
+
+    // no need to timeout, we're done!
+    clearTimeout(timeout)
 
     /** Add just a _little_ more spacing to match with spinners and heading */
     const p2 = (m = "") => p(` ${m}`)
