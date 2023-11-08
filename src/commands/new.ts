@@ -734,13 +734,19 @@ export default {
       process.exit(0)
     } catch (e) {
       stopLastSpinner("❌")
-      p2("\nConsider opening an issue with the following information at:")
+      p2(red(`\nThe following error occurred:`))
+      p2()
+      p2(red(e.toString()))
+
+      p2()
+      p2("Consider opening an issue with the following information at:")
       p2(
         `${link(
           "https://github.com/infinitered/ignite/issues/new?template=bug_report.yml&labels=bug",
         )}`,
       )
-      p2(red(`\nThe following error occurred:\n${e}`))
+      p2()
+
       startSpinner(" Gathering system and project details")
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
