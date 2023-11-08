@@ -11,6 +11,7 @@ import {
   startSpinner,
   stopSpinner,
   clearSpinners,
+  stopLastSpinner,
   ascii,
   em,
   link,
@@ -133,13 +134,15 @@ export default {
     const { kebabCase } = strings
     const { exists, path, removeAsync, copy, read, write, homedir } = filesystem
     const { info, colors, warning } = print
-    const { gray, cyan, yellow, underline, white } = colors
+    const { gray, cyan, yellow, white, red, underline } = colors
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
+    /** Add just a _little_ more spacing to match with spinners and heading */
+    const p2 = (m = "") => p(` ${m}`)
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
 
     // #endregion
@@ -365,363 +368,396 @@ export default {
 
     // #region Print Welcome
     // welcome everybody!
-    const terminalWidth = process.stdout.columns ?? 80
-    const logo =
-      terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
-    p()
-    p()
-    p()
-    p()
-    logo()
-    p()
-    p()
+    try {
+      const terminalWidth = process.stdout.columns ?? 80
+      const logo =
+        terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
+      p()
+      p()
+      p()
+      p()
+      logo()
+      p()
+      p()
 
-    const pkg = pkgColor(packagerName)
-    p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
-    p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
-    p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
-    p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
-    p(` █ Path: ${underline(targetPath)}`)
-    hr()
-    p()
-    // #endregion
+      const pkg = pkgColor(packagerName)
+      p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
+      p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
+      p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
+      p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
+      p(` █ Path: ${underline(targetPath)}`)
+      hr()
+      p()
+      // #endregion
 
-    // #region Overwrite
-    if (exists(targetPath) === "dir" && overwrite === true) {
-      const msg = ` Tossing that old app like it's hot`
-      startSpinner(msg)
-      await removeAsync(targetPath)
-      stopSpinner(msg, "🗑️")
-    }
-    // #endregion
-
-    // #region Local build folder clean
-    // Remove some folders that we don't want to copy over
-    // This mostly only applies when you're developing locally
-    await Promise.all([
-      removeAsync(path(boilerplatePath, "node_modules")),
-      removeAsync(path(boilerplatePath, "ios", "Pods")),
-      removeAsync(path(boilerplatePath, "ios", "build")),
-      removeAsync(path(boilerplatePath, "android", ".idea")),
-      removeAsync(path(boilerplatePath, "android", ".gradle")),
-      removeAsync(path(boilerplatePath, "android", "build")),
-    ])
-    // #endregion
-
-    // #region Copy Boilerplate Files
-    startSpinner(" 3D-printing a new React Native app")
-    await copyBoilerplate(toolbox, {
-      boilerplatePath,
-      targetPath,
-      excluded: [".vscode", "node_modules", "yarn.lock"],
-      overwrite,
-    })
-    stopSpinner(" 3D-printing a new React Native app", "🖨")
-    // copy the .gitignore if it wasn't copied over
-    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
-    // (see https://github.com/npm/npm/issues/3763); development Ignite still
-    // has it in .gitignore. Copy it from one or the other.
-    const boilerplateIgnorePath = exists(boilerplate(".gitignore.template"))
-      ? boilerplate(".gitignore.template")
-      : boilerplate(".gitignore")
-    const targetIgnorePath = log(path(targetPath, ".gitignore"))
-    copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
-
-    if (exists(targetIgnorePath) === false) {
-      warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
-    }
-
-    // note the original directory
-    const cwd = log(process.cwd())
-
-    // jump into the project to do additional tasks
-    process.chdir(targetPath)
-    // #endregion
-
-    // #region Handle package.json
-    // Update package.json:
-    // - Replacing app name: We do it on the unparsed file content
-    //   since that's easier than updating individual values
-    //   in the parsed structure, then we parse that as JSON.
-    // - If Expo, we also merge in our extra expo stuff.
-    // - Then write it back out.
-    let packageJsonRaw = read("package.json")
-    packageJsonRaw = packageJsonRaw
-      .replace(/HelloWorld/g, projectName)
-      .replace(/hello-world/g, projectNameKebab)
-    const packageJson = JSON.parse(packageJsonRaw)
-
-    write("./package.json", packageJson)
-    // #endregion
-
-    // #region Run Packager Install
-    // pnpm/yarn/npm install it
-
-    // check if there is a dependency cache using a hash of the package.json
-    const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
-    const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
-    const cacheExists = exists(cachePath) === "dir"
-
-    log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
-    log(`cacheExists: ${cacheExists}`)
-
-    // use-cache defaults to `false` for now; if we make it robust enough,
-    // we can enable it by default in the future.
-    const defaultUseCache = false
-    const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
-
-    const shouldUseCache = installDeps && cacheExists && useCache
-    if (shouldUseCache) {
-      const msg = `Grabbing those ${packagerName} dependencies from the back`
-      startSpinner(msg)
-      await cache.copy({
-        fromRootDir: cachePath,
-        toRootDir: targetPath,
-        packagerName,
-      })
-      stopSpinner(msg, "📦")
-    }
-
-    // #region Rename App
-    // rename the app using Ignite
-    const renameSpinnerMsg = `Getting those last few details perfect`
-    startSpinner(renameSpinnerMsg)
-
-    const boilerplateBundleIdentifier = "com.helloworld"
-    await renameReactNativeApp(
-      toolbox,
-      "HelloWorld",
-      projectName,
-      boilerplateBundleIdentifier,
-      bundleIdentifier,
-    )
-
-    await replaceMaestroBundleIds(toolbox, boilerplateBundleIdentifier, bundleIdentifier)
-
-    stopSpinner(renameSpinnerMsg, "🎨")
-    // #endregion
-
-    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
-    if (shouldFreshInstallDeps) {
-      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
-      startSpinner(unboxingMessage)
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner(unboxingMessage, "🧶")
-    }
-
-    // remove the gitignore template
-    await removeAsync(".gitignore.template")
-    // #endregion
-
-    // #region Cache dependencies
-    if (shouldFreshInstallDeps && cacheExists === false && useCache) {
-      const msg = `Saving ${packagerName} dependencies for next time`
-      startSpinner(msg)
-      log(targetPath)
-      await cache.copy({
-        fromRootDir: targetPath,
-        toRootDir: cachePath,
-        packagerName,
-      })
-      stopSpinner(msg, "📦")
-    }
-    // #endregion
-
-    // #region Run Format
-    // we can't run this option if we didn't install deps
-    if (installDeps === true) {
-      // Make sure all our modifications are formatted nicely
-      await packager.run("format", { ...packagerOptions, silent: !debug })
-    }
-    // #endregion
-
-    // #region Remove Demo code
-    if (removeDemo === true) {
-      startSpinner(" Removing fancy demo code")
-      try {
-        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-
-        log(`Ignite bin path: ${IGNITE}`)
-        await system.run(`${IGNITE} remove-demo ${targetPath}`, {
-          onProgress: log,
-        })
-      } catch (e) {
-        log(e)
-        p(yellow("Unable to remove demo code."))
+      // #region Overwrite
+      if (exists(targetPath) === "dir" && overwrite === true) {
+        const msg = ` Tossing that old app like it's hot`
+        startSpinner(msg)
+        await removeAsync(targetPath)
+        stopSpinner(msg, "🗑️")
       }
-      stopSpinner(" Removing fancy demo code", "🛠️")
-    }
-    // #endregion
+      // #endregion
 
-    // #region Format generator templates EOL for Windows
-    let warnAboutEOL = false
-    if (isWindows) {
-      // find unix2dos to help convert EOL, usually installed with git, ie:  C:\Program Files\Git\usr\bin\unix2dos.EXE
-      const unixToDosPath = await system.exec("which unix2dos")
-      // find all templates Ignite provides by default
-      const templates = filesystem.find(`${targetPath}/ignite/templates`, {
-        directories: false,
-        files: true,
-        matching: "*.ejs",
+      // #region Local build folder clean
+      // Remove some folders that we don't want to copy over
+      // This mostly only applies when you're developing locally
+      await Promise.all([
+        removeAsync(path(boilerplatePath, "node_modules")),
+        removeAsync(path(boilerplatePath, "ios", "Pods")),
+        removeAsync(path(boilerplatePath, "ios", "build")),
+        removeAsync(path(boilerplatePath, "android", ".idea")),
+        removeAsync(path(boilerplatePath, "android", ".gradle")),
+        removeAsync(path(boilerplatePath, "android", "build")),
+      ])
+      // #endregion
+
+      // #region Copy Boilerplate Files
+      startSpinner(" 3D-printing a new React Native app")
+      await copyBoilerplate(toolbox, {
+        boilerplatePath,
+        targetPath,
+        excluded: [".vscode", "node_modules", "yarn.lock"],
+        overwrite,
       })
+      stopSpinner(" 3D-printing a new React Native app", "🖨")
+      // copy the .gitignore if it wasn't copied over
+      // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
+      // (see https://github.com/npm/npm/issues/3763); development Ignite still
+      // has it in .gitignore. Copy it from one or the other.
+      const boilerplateIgnorePath = exists(boilerplate(".gitignore.template"))
+        ? boilerplate(".gitignore.template")
+        : boilerplate(".gitignore")
+      const targetIgnorePath = log(path(targetPath, ".gitignore"))
+      copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
 
-      log(`unix2dos path: ${unixToDosPath}`)
-      log(`templates to change EOL: ${templates}`)
-      if (unixToDosPath) {
-        // running the output from `which` result above seems to not work, so just pop the binary name
-        const unixToDosCmd = unixToDosPath.split("/").pop()
-        const results = await Promise.allSettled(
-          templates.map(async (file) => {
-            log(`Converting EOL for ${file}`)
-            await system.run(`${unixToDosCmd} ${file}`)
-          }),
-        )
-
-        // inspect the results of conversion and log
-        results.forEach((result) => {
-          if (result.status === "rejected") {
-            warnAboutEOL = true
-            log(`Error converting EOL: ${JSON.stringify(result.reason)}`)
-          }
-        })
-      } else {
-        warnAboutEOL = true
+      if (exists(targetIgnorePath) === false) {
+        warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
       }
-    }
-    // #endregion
 
-    // #region Create Git Repository and Initial Commit
-    // commit any changes
-    if (git === true) {
-      startSpinner(" Backing everything up in source control")
-      try {
-        // The separate commands works on Windows, but not Mac OS
-        if (isWindows) {
-          await system.run(log("git init"))
-          await system.run(log("git add -A"))
-          await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
+      // note the original directory
+      const cwd = log(process.cwd())
+
+      // jump into the project to do additional tasks
+      process.chdir(targetPath)
+      // #endregion
+
+      // #region Handle package.json
+      // Update package.json:
+      // - Replacing app name: We do it on the unparsed file content
+      //   since that's easier than updating individual values
+      //   in the parsed structure, then we parse that as JSON.
+      // - If Expo, we also merge in our extra expo stuff.
+      // - Then write it back out.
+      let packageJsonRaw = read("package.json")
+      packageJsonRaw = packageJsonRaw
+        .replace(/HelloWorld/g, projectName)
+        .replace(/hello-world/g, projectNameKebab)
+      const packageJson = JSON.parse(packageJsonRaw)
+
+      write("./package.json", packageJson)
+      // #endregion
+
+      // #region Run Packager Install
+      // pnpm/yarn/npm install it
+
+      // check if there is a dependency cache using a hash of the package.json
+      const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
+      const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
+      const cacheExists = exists(cachePath) === "dir"
+
+      log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
+      log(`cacheExists: ${cacheExists}`)
+
+      // use-cache defaults to `false` for now; if we make it robust enough,
+      // we can enable it by default in the future.
+      const defaultUseCache = false
+      const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
+
+      const shouldUseCache = installDeps && cacheExists && useCache
+      if (shouldUseCache) {
+        const msg = `Grabbing those ${packagerName} dependencies from the back`
+        startSpinner(msg)
+        await cache.copy({
+          fromRootDir: cachePath,
+          toRootDir: targetPath,
+          packagerName,
+        })
+        stopSpinner(msg, "📦")
+      }
+
+      // #region Rename App
+      // rename the app using Ignite
+      const renameSpinnerMsg = `Getting those last few details perfect`
+      startSpinner(renameSpinnerMsg)
+
+      const boilerplateBundleIdentifier = "com.helloworld"
+      await renameReactNativeApp(
+        toolbox,
+        "HelloWorld",
+        projectName,
+        boilerplateBundleIdentifier,
+        bundleIdentifier,
+      )
+
+      await replaceMaestroBundleIds(toolbox, boilerplateBundleIdentifier, bundleIdentifier)
+
+      stopSpinner(renameSpinnerMsg, "🎨")
+      // #endregion
+
+      const shouldFreshInstallDeps = installDeps && shouldUseCache === false
+      if (shouldFreshInstallDeps) {
+        const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
+        startSpinner(unboxingMessage)
+        await packager.install({ ...packagerOptions, onProgress: log })
+        stopSpinner(unboxingMessage, "🧶")
+      }
+
+      // remove the gitignore template
+      await removeAsync(".gitignore.template")
+      // #endregion
+
+      // #region Cache dependencies
+      if (shouldFreshInstallDeps && cacheExists === false && useCache) {
+        const msg = `Saving ${packagerName} dependencies for next time`
+        startSpinner(msg)
+        log(targetPath)
+        await cache.copy({
+          fromRootDir: targetPath,
+          toRootDir: cachePath,
+          packagerName,
+        })
+        stopSpinner(msg, "📦")
+      }
+      // #endregion
+
+      // #region Run Format
+      // we can't run this option if we didn't install deps
+      if (installDeps === true) {
+        // Make sure all our modifications are formatted nicely
+        await packager.run("format", { ...packagerOptions, silent: !debug })
+      }
+      // #endregion
+
+      // #region Remove Demo code
+      if (removeDemo === true) {
+        startSpinner(" Removing fancy demo code")
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(`${IGNITE} remove-demo ${targetPath}`, {
+            onProgress: log,
+          })
+        } catch (e) {
+          log(e)
+          p(yellow("Unable to remove demo code."))
+        }
+        stopSpinner(" Removing fancy demo code", "🛠️")
+      }
+      // #endregion
+
+      // #region Format generator templates EOL for Windows
+      let warnAboutEOL = false
+      if (isWindows) {
+        // find unix2dos to help convert EOL, usually installed with git, ie:  C:\Program Files\Git\usr\bin\unix2dos.EXE
+        const unixToDosPath = await system.exec("which unix2dos")
+        // find all templates Ignite provides by default
+        const templates = filesystem.find(`${targetPath}/ignite/templates`, {
+          directories: false,
+          files: true,
+          matching: "*.ejs",
+        })
+
+        log(`unix2dos path: ${unixToDosPath}`)
+        log(`templates to change EOL: ${templates}`)
+        if (unixToDosPath) {
+          // running the output from `which` result above seems to not work, so just pop the binary name
+          const unixToDosCmd = unixToDosPath.split("/").pop()
+          const results = await Promise.allSettled(
+            templates.map(async (file) => {
+              log(`Converting EOL for ${file}`)
+              await system.run(`${unixToDosCmd} ${file}`)
+            }),
+          )
+
+          // inspect the results of conversion and log
+          results.forEach((result) => {
+            if (result.status === "rejected") {
+              warnAboutEOL = true
+              log(`Error converting EOL: ${JSON.stringify(result.reason)}`)
+            }
+          })
         } else {
-          await system.run(
-            log(`
+          warnAboutEOL = true
+        }
+      }
+      // #endregion
+
+      // #region Create Git Repository and Initial Commit
+      // commit any changes
+      if (git === true) {
+        startSpinner(" Backing everything up in source control")
+        try {
+          // The separate commands works on Windows, but not Mac OS
+          if (isWindows) {
+            await system.run(log("git init"))
+            await system.run(log("git add -A"))
+            await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
+          } else {
+            await system.run(
+              log(`
               \\rm -rf ./.git
               git init;
               git add -A;
               git commit -m "New Ignite ${meta.version()} app";
             `),
+            )
+          }
+        } catch (e) {
+          p(
+            yellow(
+              "Unable to commit the initial changes. Please check your git username and email.",
+            ),
           )
         }
-      } catch (e) {
-        p(yellow("Unable to commit the initial changes. Please check your git username and email."))
+        stopSpinner(" Backing everything up in source control", "🗄")
       }
-      stopSpinner(" Backing everything up in source control", "🗄")
-    }
 
-    // back to the original directory
-    process.chdir(log(cwd))
-    // #endregion
+      // back to the original directory
+      process.chdir(log(cwd))
+      // #endregion
 
-    // #region Print Finish
-    // clean up any spinners we forgot to clear
-    p()
-    hr()
-    p()
-    clearSpinners()
+      // #region Print Finish
+      // clean up any spinners we forgot to clear
+      p()
+      hr()
+      p()
+      clearSpinners()
 
-    // we're done! round performance stats to .xx digits
-    const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
+      // we're done! round performance stats to .xx digits
+      const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
-    /** Add just a _little_ more spacing to match with spinners and heading */
-    const p2 = (m = "") => p(` ${m}`)
+      /** Add just a _little_ more spacing to match with spinners and heading */
+      const p2 = (m = "") => p(` ${m}`)
 
-    p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
-    p2()
-    const cliCommand = buildCliCommand({
-      flags: {
-        b: bname,
-        boilerplate: bname,
-        bundle: bundleIdentifier,
-        debug,
-        git,
-        installDeps,
-        overwrite,
-        expo,
-        packager: packagerName,
-        targetPath,
-        removeDemo,
-        useCache,
-        y: yname,
-        yes: yname,
-      },
-      projectName,
-      toolbox,
-    })
+      p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
+      p2()
+      const cliCommand = buildCliCommand({
+        flags: {
+          b: bname,
+          boilerplate: bname,
+          bundle: bundleIdentifier,
+          debug,
+          git,
+          installDeps,
+          overwrite,
+          expo,
+          packager: packagerName,
+          targetPath,
+          removeDemo,
+          useCache,
+          y: yname,
+          yes: yname,
+        },
+        projectName,
+        toolbox,
+      })
 
-    p2(`For next time: here are the Ignite options you picked!`)
+      p2(`For next time: here are the Ignite options you picked!`)
 
-    // create a multi-line string of the command, where each --flag is on it's own line
-    const prettyCliCommand = cliCommand
-      .split(" ")
-      .map((c) => (c === projectName || c?.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
-      .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
-      .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
-      .join(" ")
+      // create a multi-line string of the command, where each --flag is on it's own line
+      const prettyCliCommand = cliCommand
+        .split(" ")
+        .map((c) => (c === projectName || c?.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
+        .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
+        .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
+        .join(" ")
 
-    command(`${prettyCliCommand}`)
-    p2()
+      command(`${prettyCliCommand}`)
+      p2()
 
-    if (!isAndroidInstalled(toolbox)) {
+      if (!isAndroidInstalled(toolbox)) {
+        hr()
+        p2()
+        p2("To run in Android, make sure you've followed the latest")
+        p2(`react-native setup instructions. You reference them at:`)
+        p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
+        p2()
+      }
+
+      if (warnAboutEOL) {
+        hr()
+        p2()
+        p2(yellow(`Generator templates could not be converted to Windows EOL.`))
+        p2(yellow(`You may want to update these manually with your code editor, more info at:`))
+        p2(
+          `${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md#windows")}`,
+        )
+        p2()
+      }
+
       hr()
       p2()
-      p2("To run in Android, make sure you've followed the latest")
-      p2(`react-native setup instructions. You reference them at:`)
-      p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
+      p2("Need additional help?")
       p2()
-    }
+      p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
+      p2()
 
-    if (warnAboutEOL) {
       hr()
       p2()
-      p2(yellow(`Generator templates could not be converted to Windows EOL.`))
-      p2(yellow(`You may want to update these manually with your code editor, more info at:`))
-      p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md#windows")}`)
+      p2("Now get cooking! 🍽")
+      command(`cd ${targetPath}`)
+      if (!installDeps) command(packager.installCmd({ packagerName }))
+      command(`${packagerName} start`)
+
+      const isMac = process.platform === "darwin"
+      if (isMac) {
+        command(`${packager.runCmd("ios", packagerOptions)}`)
+      } else {
+        command(`${packager.runCmd("android", packagerOptions)}`)
+      }
+
       p2()
+      p2("With Expo:")
+      command(`cd ${projectName}`)
+      if (!installDeps) command(packager.installCmd({ packagerName }))
+      command(`${packager.runCmd("expo:start", packagerOptions)}`)
+      p2()
+      p2()
+      // #endregion
+
+      // this is a hack to prevent the process from hanging
+      // if there are any tasks left in the event loop
+      // like I/O operations to process.stdout and process.stderr
+      // see https://github.com/infinitered/ignite/issues/2084
+      process.exit(0)
+    } catch (e) {
+      stopLastSpinner("❌")
+      p2(red(`\nThe following error occurred:`))
+      p2()
+      p2(red(e.toString()))
+
+      p2()
+      p2("Consider opening an issue with the following information at:")
+      p2(
+        `${link(
+          "https://github.com/infinitered/ignite/issues/new?template=bug_report.yml&labels=bug",
+        )}`,
+      )
+      p2()
+
+      startSpinner(" Gathering system and project details")
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const doctorResults = await system.run(`${IGNITE} doctor`)
+        p(`\n\n${doctorResults}`)
+      } catch (e) {
+        p(yellow("Unable to gather system and project details."))
+      }
+      clearSpinners()
+      process.exit(1)
     }
-
-    hr()
-    p2()
-    p2("Need additional help?")
-    p2()
-    p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
-    p2()
-
-    hr()
-    p2()
-    p2("Now get cooking! 🍽")
-    command(`cd ${targetPath}`)
-    if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packagerName} start`)
-
-    const isMac = process.platform === "darwin"
-    if (isMac) {
-      command(`${packager.runCmd("ios", packagerOptions)}`)
-    } else {
-      command(`${packager.runCmd("android", packagerOptions)}`)
-    }
-
-    p2()
-    p2("With Expo:")
-    command(`cd ${projectName}`)
-    if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packager.runCmd("expo:start", packagerOptions)}`)
-    p2()
-    p2()
-    // #endregion
-
-    // this is a hack to prevent the process from hanging
-    // if there are any tasks left in the event loop
-    // like I/O operations to process.stdout and process.stderr
-    // see https://github.com/infinitered/ignite/issues/2084
-    process.exit(0)
   },
 }
 
