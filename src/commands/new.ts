@@ -135,6 +135,11 @@ export interface Options {
    * Input Source: `prompt.ask`| `parameter.option`
    */
   workflow?: Workflow
+  /**
+   * Whether or not to timeout if the app creation takes too long
+   * Input Source: `parameter.option`
+   */
+  timeout?: boolean
 }
 
 module.exports = {
@@ -148,6 +153,7 @@ module.exports = {
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
+    const noTimeout = options.timeout === false
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
@@ -455,7 +461,7 @@ module.exports = {
     const perfStart = new Date().getTime()
 
     // add a timeout to make sure we don't hang on any errors
-    const timeout = setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
+    const timeout = noTimeout ? undefined : setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
 
     // #region Print Welcome
     // welcome everybody!
@@ -791,6 +797,7 @@ module.exports = {
         useCache,
         y: yname,
         yes: yname,
+        timeout: !noTimeout,
       },
       projectName,
       toolbox,

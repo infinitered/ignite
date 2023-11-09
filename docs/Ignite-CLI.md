@@ -111,6 +111,7 @@ Starts the interactive prompt for generating a new Ignite project. Any options n
 - `--targetPath` string, specify a target directory where the project should be created
 - `--removeDemo` will remove the boilerplate demo code after project creation
 - `--useCache` flag specifying to use dependency cache for quicker installs
+- `--no-timeout` flag to disable the timeout protection (useful for slow internet connections)
 - `--yes` accept all prompt defaults
 
 ### Issue
