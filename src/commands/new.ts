@@ -138,8 +138,9 @@ export interface Options {
   /**
    * Whether or not to timeout if the app creation takes too long
    * Input Source: `parameter.option`
+   * @default false
    */
-  timeout?: boolean
+  noTimeout?: boolean
 }
 
 module.exports = {
@@ -153,7 +154,7 @@ module.exports = {
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
-    const noTimeout = options.timeout === false
+    const noTimeout = options.noTimeout ?? false
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
@@ -797,7 +798,7 @@ module.exports = {
         useCache,
         y: yname,
         yes: yname,
-        timeout: !noTimeout,
+        noTimeout,
       },
       projectName,
       toolbox,
