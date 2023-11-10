@@ -135,6 +135,12 @@ export interface Options {
    * Input Source: `prompt.ask`| `parameter.option`
    */
   workflow?: Workflow
+  /**
+   * Whether or not to timeout if the app creation takes too long
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  noTimeout?: boolean
 }
 
 module.exports = {
@@ -148,10 +154,21 @@ module.exports = {
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
+    const noTimeout = options.noTimeout ?? false
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
+
+    // Absolute maximum that an app can take after inputs
+    // is 10 minutes ... otherwise we've hung up somewhere and need to exit.
+    const MAX_APP_CREATION_TIME = 10 * 60 * 1000
+    const timeoutExit = () => {
+      p()
+      p(yellow("Error: App creation timed out."))
+      if (!debug) p(gray("Run again with --debug to see what's going on."))
+      process.exit(1)
+    }
 
     // #endregion
 
@@ -443,6 +460,9 @@ module.exports = {
     // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
+
+    // add a timeout to make sure we don't hang on any errors
+    const timeout = noTimeout ? undefined : setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
 
     // #region Print Welcome
     // welcome everybody!
@@ -753,6 +773,9 @@ module.exports = {
     // we're done! round performance stats to .xx digits
     const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
+    // no need to timeout, we're done!
+    clearTimeout(timeout)
+
     /** Add just a _little_ more spacing to match with spinners and heading */
     const p2 = (m = "") => p(` ${m}`)
 
@@ -775,6 +798,7 @@ module.exports = {
         useCache,
         y: yname,
         yes: yname,
+        noTimeout,
       },
       projectName,
       toolbox,

@@ -10,17 +10,18 @@ defaults: &defaults
   working_directory: /mnt/ramdisk/repo
 
 version: 2.1
-orbs:
-  # https://circleci.com/developer/orbs/orb/cmgriffing/bun-orb
-  bun-orb: cmgriffing/bun-orb@0.0.26
 jobs:
   tests:
     <<: *defaults
     resource_class: large
     steps:
       - checkout
-      - bun-orb/setup:
-          version: 1.0.3
+      - run:
+          name: Install bun
+          command: curl -fsSL https://bun.sh/install | bash -s -- bun-v1.0.10
+      - run:
+          name: Link bun
+          command: sudo ln -s ~/.bun/bin/bun /usr/local/bin/
       - restore_cache:
           name: Restore node modules
           keys:
