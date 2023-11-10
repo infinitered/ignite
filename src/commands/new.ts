@@ -621,10 +621,6 @@ module.exports = {
 
     // remove the gitignore template
     await removeAsync(".gitignore.template")
-    // remove bunfig.toml if not using bun
-    if (packagerName !== "bun") {
-      await removeAsync("bunfig.toml")
-    }
     // #endregion
 
     // #region Cache dependencies
