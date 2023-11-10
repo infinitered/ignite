@@ -220,7 +220,7 @@ export default {
     targetPath = path(handleHomePrefix(targetPath))
 
     if (isMac && targetPath.indexOf(" ") !== -1) {
-      p(targetPath)
+      p()
       p(yellow("Error: The project path cannot contain spaces."))
       process.exit(1)
     }
