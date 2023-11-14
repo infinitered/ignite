@@ -137,6 +137,7 @@ export default {
     const { gray, cyan, yellow, white, red, underline } = colors
     const options: Options = parameters.options
 
+    const isMac = process.platform === "darwin"
     const yname = boolFlag(options.y) || boolFlag(options.yes)
     const useDefault = (option: unknown) => yname && option === undefined
 
@@ -218,6 +219,11 @@ export default {
       p?.startsWith("~") ? p.replace("~", homedir()) : p
     targetPath = path(handleHomePrefix(targetPath))
 
+    if (isMac && targetPath.indexOf(" ") !== -1) {
+      p()
+      p(yellow("Error: The project path cannot contain spaces."))
+      process.exit(1)
+    }
     // #endregion
 
     // #region Prompt Overwrite
@@ -711,7 +717,6 @@ export default {
       if (!installDeps) command(packager.installCmd({ packagerName }))
       command(`${packagerName} start`)
 
-      const isMac = process.platform === "darwin"
       if (isMac) {
         command(`${packager.runCmd("ios", packagerOptions)}`)
       } else {
