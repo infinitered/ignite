@@ -31,8 +31,8 @@ export async function setupRootStore(rootStore: RootStore) {
     applySnapshot(rootStore, restoredState)
   } catch (e) {
     // if there's any problems loading, then inform the dev what happened
-    if (__DEV__ && e instanceof Error) {
-      console.tron.error?.(e.message, null)
+    if (__DEV__) {
+      if (e instanceof Error) console.tron.error?.(e.message, null)
     }
   }
 
