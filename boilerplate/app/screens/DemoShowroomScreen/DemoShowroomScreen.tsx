@@ -173,7 +173,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         )}
       >
         <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-          <DrawerIconButton onPress={toggleDrawer} {...{ open }} />
+          <DrawerIconButton onPress={toggleDrawer} />
 
           <SectionList
             ref={listRef}
