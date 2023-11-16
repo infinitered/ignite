@@ -89,7 +89,8 @@ export async function renameReactNativeApp(
   await Promise.allSettled([
     rename(`ios/${oldName}.xcodeproj/xcshareddata/xcschemes/${oldName}.xcscheme`, `${newName}.xcscheme`),
     rename(`ios/${oldName}Tests/${oldName}Tests.m`, `${newName}Tests.m`),
-    rename(`ios/${oldName}-Bridging-Header.h`, `${newName}-Bridging-Header.h`),
+    rename(`ios/${oldName}/${oldName}-Bridging-Header.h`, `${newName}-Bridging-Header.h`),
+    rename(`ios/${oldName}/${oldName}.entitlements`, `${newName}.entitlements`),
     rename(`ios/${oldName}.xcworkspace`, `${newName}.xcworkspace`),
     rename(`ios/${oldName}`, `${newName}`),
   ])
@@ -129,7 +130,6 @@ export async function renameReactNativeApp(
   const filesToPatch = [
     `app.json`,
     `package.json`,
-    `index.js`,
     `android/settings.gradle`,
     `android/app/_BUCK`,
     `android/app/BUCK`,

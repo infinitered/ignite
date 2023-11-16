@@ -1,3 +1,4 @@
+import { EOL } from "os"
 import { GluegunToolbox } from "../types"
 import {
   isAndroidInstalled,
@@ -11,7 +12,6 @@ import {
   startSpinner,
   stopSpinner,
   clearSpinners,
-  stopLastSpinner,
   ascii,
   em,
   link,
@@ -21,11 +21,17 @@ import {
   pkgColor,
   hr,
   INDENT,
+  stopLastSpinner,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import { EOL } from "os"
+import {
+  expoGoCompatExpectedVersions,
+  findAndUpdateDependencyVersions,
+} from "../tools/expoGoCompatibility"
+
+type Workflow = "expo" | "prebuild" | "manual"
 
 export interface Options {
   /**
@@ -79,17 +85,11 @@ export interface Options {
    */
   overwrite?: boolean
   /**
-   * Input Source: `parameter.option`
-   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
-   * @default undefined
-   */
-  expo?: boolean
-  /**
    * Package manager to install dependencies with
    *
    * Input Source: `prompt.ask`| `parameter.option`
    */
-  packager?: "npm" | "yarn" | "pnpm"
+  packager?: "npm" | "yarn" | "pnpm" | "bun"
   /**
    * The target directory where the project will be created.
    *
@@ -125,9 +125,26 @@ export interface Options {
    * @default false
    */
   yes?: boolean
+  /**
+   * Whether or not to opt into specific experimental features
+   */
+  experimental?: string
+  /**
+   * Expo workflow to determine if we need to generate native directories
+   * and include them in .gitignore or not
+   *
+   * Input Source: `prompt.ask`| `parameter.option`
+   */
+  workflow?: Workflow
+  /**
+   * Whether or not to timeout if the app creation takes too long
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  noTimeout?: boolean
 }
 
-export default {
+module.exports = {
   run: async (toolbox: GluegunToolbox) => {
     // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
@@ -137,14 +154,24 @@ export default {
     const { gray, cyan, yellow, white, red, underline } = colors
     const options: Options = parameters.options
 
-    const isMac = process.platform === "darwin"
     const yname = boolFlag(options.y) || boolFlag(options.yes)
+    const noTimeout = options.noTimeout ?? false
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
     /** Add just a _little_ more spacing to match with spinners and heading */
     const p2 = (m = "") => p(` ${m}`)
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
+
+    // Absolute maximum that an app can take after inputs
+    // is 10 minutes ... otherwise we've hung up somewhere and need to exit.
+    const MAX_APP_CREATION_TIME = 10 * 60 * 1000
+    const timeoutExit = () => {
+      p()
+      p(yellow("Error: App creation timed out."))
+      if (!debug) p(gray("Run again with --debug to see what's going on."))
+      process.exit(1)
+    }
 
     // #endregion
 
@@ -180,7 +207,7 @@ export default {
     // #endregion
 
     // #region Bundle Identifier
-    const defaultBundleIdentifier = `com.${projectName.toLowerCase()}`
+    const defaultBundleIdentifier = `com.${strings.pascalCase(projectName).toLowerCase()}`
     let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
@@ -219,11 +246,6 @@ export default {
       p?.startsWith("~") ? p.replace("~", homedir()) : p
     targetPath = path(handleHomePrefix(targetPath))
 
-    if (isMac && targetPath.indexOf(" ") !== -1) {
-      p()
-      p(yellow("Error: The project path cannot contain spaces."))
-      process.exit(1)
-    }
     // #endregion
 
     // #region Prompt Overwrite
@@ -249,6 +271,51 @@ export default {
       p(yellow(alreadyExists))
       process.exit(1)
     }
+    // #endregion
+
+    // #region Prompt for Workflow type
+    const defaultWorkflow = "expo"
+    let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
+
+    if (workflow === undefined) {
+      const workflowResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
+        type: "select",
+        name: "workflow",
+        message: "Choose a workflow:",
+        choices: [
+          {
+            name: "Expo Go",
+            message:
+              "Expo Go         Choose this if: the only native modules you need are included in the Expo SDK",
+            value: "expo",
+          },
+          {
+            name: "Expo Prebuild",
+            message:
+              "Expo Prebuild   Choose this if: you need to add native modules or configuration using Expo config plugins",
+            value: "prebuild",
+          },
+          {
+            name: "DIY",
+            message:
+              "DIY             Choose this if: you want to manage native configuration/modules directly, without Expo config plugins",
+            value: "manual",
+          },
+        ],
+        result(name) {
+          // Some magical enquirer map function here that returns an object of { [name]: value]}
+          // and we only need the value underneath (using name for the cli display to the user)
+          // @ts-expect-error
+          return this.map(name)[name]
+        },
+        initial: "expo",
+        prefix,
+      }))
+      workflow = workflowResponse.workflow
+    }
+    const needsPrebuild = workflow === "prebuild" || workflow === "manual"
+    log(`worflow: ${workflow}`)
+    log(`needs prebuild: ${needsPrebuild}`)
     // #endregion
 
     // #region Prompt Git Option
@@ -292,15 +359,20 @@ export default {
     // we pass in expo because we can't use pnpm if we're using expo
 
     const availablePackagers = packager.availablePackagers()
+    log(`availablePackagers: ${availablePackagers}`)
     const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
     let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
 
     const validatePackagerName = (input: unknown): input is PackagerName =>
-      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
+      typeof input === "string" && ["npm", "yarn", "pnpm", "bun"].includes(input)
 
     if (packagerName !== undefined && validatePackagerName(packagerName) === false) {
       p()
-      p(yellow(`Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`))
+      p(
+        yellow(
+          `Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm, bun.`,
+        ),
+      )
       process.exit(1)
     }
 
@@ -357,20 +429,43 @@ export default {
     }
     // #endregion
 
-    // #region Expo
-    // show warning about --expo going away
-    const expo = boolFlag(options.expo)
-    if (expo) {
-      warning(
-        " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
-      )
-      p()
+    // #region Experimental Features parsing
+    let newArch
+    const experimentalFlags = options.experimental?.split(",") ?? []
+    log(`experimentalFlags: ${experimentalFlags}`)
+
+    experimentalFlags.forEach((flag) => {
+      if (flag === "new-arch") {
+        newArch = true
+      }
+    })
+    // #endregion
+
+    // #region Prompt to enable New Architecture
+    const defaultNewArch = false
+    let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
+    if (experimentalNewArch === undefined && workflow !== "expo") {
+      const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalNewArch",
+        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        initial: defaultNewArch,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalNewArch = newArchResponse.experimentalNewArch
+    } else {
+      // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
+      experimentalNewArch = false
     }
     // #endregion
 
     // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
+
+    // add a timeout to make sure we don't hang on any errors
+    const timeout = noTimeout ? undefined : setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
 
     // #region Print Welcome
     // welcome everybody!
@@ -387,7 +482,8 @@ export default {
       p()
 
       const pkg = pkgColor(packagerName)
-      p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
+      const igniteVersion = meta.version()
+      p(` █ Creating ${em(projectName)} using ${em(`Ignite ${igniteVersion}`)}`)
       p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
       p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
       p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
@@ -405,25 +501,12 @@ export default {
       }
       // #endregion
 
-      // #region Local build folder clean
-      // Remove some folders that we don't want to copy over
-      // This mostly only applies when you're developing locally
-      await Promise.all([
-        removeAsync(path(boilerplatePath, "node_modules")),
-        removeAsync(path(boilerplatePath, "ios", "Pods")),
-        removeAsync(path(boilerplatePath, "ios", "build")),
-        removeAsync(path(boilerplatePath, "android", ".idea")),
-        removeAsync(path(boilerplatePath, "android", ".gradle")),
-        removeAsync(path(boilerplatePath, "android", "build")),
-      ])
-      // #endregion
-
       // #region Copy Boilerplate Files
       startSpinner(" 3D-printing a new React Native app")
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         targetPath,
-        excluded: [".vscode", "node_modules", "yarn.lock"],
+        excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
         overwrite,
       })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -439,6 +522,15 @@ export default {
 
       if (exists(targetIgnorePath) === false) {
         warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
+      } else if (workflow === "expo" || workflow === "prebuild") {
+        // check if we need to add the android and ios directories to the .gitignore
+        // for Expo Go or Prebuild workflows
+        let gitIgnoreContents = read(targetIgnorePath)
+        gitIgnoreContents = gitIgnoreContents
+          .replace(/# android/g, "android")
+          .replace(/# ios/g, "ios")
+
+        write(targetIgnorePath, gitIgnoreContents)
       }
 
       // note the original directory
@@ -453,19 +545,35 @@ export default {
       // - Replacing app name: We do it on the unparsed file content
       //   since that's easier than updating individual values
       //   in the parsed structure, then we parse that as JSON.
-      // - If Expo, we also merge in our extra expo stuff.
-      // - Then write it back out.
       let packageJsonRaw = read("package.json")
       packageJsonRaw = packageJsonRaw
         .replace(/HelloWorld/g, projectName)
         .replace(/hello-world/g, projectNameKebab)
+
+      // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
+      if (needsPrebuild) {
+        packageJsonRaw = packageJsonRaw
+          .replace(/start --android/g, "run:android")
+          .replace(/start --ios/g, "run:ios")
+      } else {
+        // Expo Go workflow, swap back to compatible Expo Go versions of modules
+        log("Changing some dependencies for Expo Go compatibility...")
+        log(JSON.stringify(expoGoCompatExpectedVersions))
+
+        packageJsonRaw = findAndUpdateDependencyVersions(
+          packageJsonRaw,
+          expoGoCompatExpectedVersions,
+        )
+      }
+
+      // - Then write it back out.
       const packageJson = JSON.parse(packageJsonRaw)
 
       write("./package.json", packageJson)
       // #endregion
 
       // #region Run Packager Install
-      // pnpm/yarn/npm install it
+      // pnpm/yarn/npm/bun install it
 
       // check if there is a dependency cache using a hash of the package.json
       const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
@@ -537,30 +645,64 @@ export default {
       }
       // #endregion
 
+      // #region Configure app.json
+      // Enable New Architecture if requested (must happen before prebuild)
+      startSpinner(" Configuring app.json")
+      try {
+        const appJsonRaw = read("app.json")
+        const appJson = JSON.parse(appJsonRaw)
+
+        // Inject ignite version to app.json
+        appJson.ignite.version = igniteVersion
+
+        if (experimentalNewArch === true) {
+          appJson.expo.plugins[1][1].ios.newArchEnabled = true
+          appJson.expo.plugins[1][1].android.newArchEnabled = true
+
+          // Adding the "deploymentTarget" key is required for
+          // @react-native-async-storage/async-storage to work in the new architecture
+          appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
+        }
+
+        write("./app.json", appJson)
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to configure app.json."))
+      }
+      stopSpinner(" Configuring app.json", "")
+      // #endregion
+
       // #region Run Format
       // we can't run this option if we didn't install deps
       if (installDeps === true) {
+        // Check if we need to run prebuild to generate native dirs based on workflow
+        if (needsPrebuild) {
+          const prebuildMessage = ` Generating native template via Expo Prebuild`
+          startSpinner(prebuildMessage)
+          await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
+          stopSpinner(prebuildMessage, "🛠️")
+        }
         // Make sure all our modifications are formatted nicely
         await packager.run("format", { ...packagerOptions, silent: !debug })
       }
       // #endregion
 
       // #region Remove Demo code
-      if (removeDemo === true) {
-        startSpinner(" Removing fancy demo code")
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+      const removeDemoPart = removeDemo === true ? "code" : "markup"
+      startSpinner(` Removing fancy demo ${removeDemoPart}`)
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-demo ${targetPath}`, {
-            onProgress: log,
-          })
-        } catch (e) {
-          log(e)
-          p(yellow("Unable to remove demo code."))
-        }
-        stopSpinner(" Removing fancy demo code", "🛠️")
+        log(`Ignite bin path: ${IGNITE}`)
+        await system.run(`${IGNITE} ${CMD} ${targetPath}`, {
+          onProgress: log,
+        })
+      } catch (e) {
+        log(e)
+        p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
+      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
       // #region Format generator templates EOL for Windows
@@ -630,8 +772,8 @@ export default {
       // we're done! round performance stats to .xx digits
       const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
-      /** Add just a _little_ more spacing to match with spinners and heading */
-      const p2 = (m = "") => p(` ${m}`)
+      // no need to timeout, we're done!
+      clearTimeout(timeout)
 
       p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
       p2()
@@ -644,13 +786,15 @@ export default {
           git,
           installDeps,
           overwrite,
-          expo,
           packager: packagerName,
           targetPath,
           removeDemo,
+          experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
+          workflow,
           useCache,
           y: yname,
           yes: yname,
+          noTimeout,
         },
         projectName,
         toolbox,
@@ -683,9 +827,7 @@ export default {
         p2()
         p2(yellow(`Generator templates could not be converted to Windows EOL.`))
         p2(yellow(`You may want to update these manually with your code editor, more info at:`))
-        p2(
-          `${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md#windows")}`,
-        )
+        p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md")}`)
         p2()
       }
 
@@ -701,19 +843,15 @@ export default {
       p2("Now get cooking! 🍽")
       command(`cd ${targetPath}`)
       if (!installDeps) command(packager.installCmd({ packagerName }))
-      command(`${packagerName} start`)
 
+      const isMac = process.platform === "darwin"
       if (isMac) {
         command(`${packager.runCmd("ios", packagerOptions)}`)
+        p2("Or Android via")
+        command(`${packager.runCmd("android", packagerOptions)}`)
       } else {
         command(`${packager.runCmd("android", packagerOptions)}`)
       }
-
-      p2()
-      p2("With Expo:")
-      command(`cd ${projectName}`)
-      if (!installDeps) command(packager.installCmd({ packagerName }))
-      command(`${packager.runCmd("expo:start", packagerOptions)}`)
       p2()
       p2()
       // #endregion
@@ -764,7 +902,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "expo", "useCache", "y", "yes"]
+  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>

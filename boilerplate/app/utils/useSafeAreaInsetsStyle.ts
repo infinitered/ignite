@@ -12,7 +12,7 @@ const propertySuffixMap = {
   end: "End",
 }
 
-const edgeInsetMap = {
+const edgeInsetMap: Record<string, Edge> = {
   start: "left",
   end: "right",
 }
@@ -39,6 +39,7 @@ export function useSafeAreaInsetsStyle(
   const insets = useSafeAreaInsets()
 
   return safeAreaEdges.reduce((acc, e) => {
-    return { ...acc, [`${property}${propertySuffixMap[e]}`]: insets[edgeInsetMap[e] ?? e] }
+    const value = edgeInsetMap[e] ?? e
+    return { ...acc, [`${property}${propertySuffixMap[e]}`]: insets[value] }
   }, {})
 }

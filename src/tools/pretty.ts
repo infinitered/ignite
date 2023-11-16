@@ -140,6 +140,7 @@ export const pkgColor = (packagerName: PackagerName) => {
     npm: "red",
     yarn: "blue",
     pnpm: "yellow",
+    bun: "cyan",
   }
   return print.colors[packagerColors[packagerName]] as (text: string) => string
 }

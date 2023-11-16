@@ -69,14 +69,15 @@ export class Api {
       const rawData = response.data
 
       // This is where we transform the data into the shape we expect for our MST model.
-      const episodes: EpisodeSnapshotIn[] = rawData.items.map((raw) => ({
-        ...raw,
-      }))
+      const episodes: EpisodeSnapshotIn[] =
+        rawData?.items.map((raw) => ({
+          ...raw,
+        })) ?? []
 
       return { kind: "ok", episodes }
     } catch (e) {
-      if (__DEV__) {
-        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      if (__DEV__ && e instanceof Error) {
+        console.tron.error?.(`Bad data: ${e.message}\n${response.data}`, e.stack)
       }
       return { kind: "bad-data" }
     }

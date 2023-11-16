@@ -3,11 +3,13 @@
 # Ignite - the battle-tested React Native boilerplate
 
 <a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
+![GitHub Repo stars](https://img.shields.io/github/stars/infinitered/ignite)
+![Twitter Follow](https://img.shields.io/twitter/follow/ir_ignite)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/infinitered/ignite/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/infinitered/ignite/tree/master)
 
-## Battle-tested React Native boilerplate
+## Proven React Native boilerplate
 
-The culmination of over six years of constant React Native development, Ignite is the most popular React Native app boilerplate for both Expo and bare React Native.
+The culmination of over seven years of constant React Native development, Ignite is the most popular React Native app boilerplate for both Expo and bare React Native.
 
 This is the React Native boilerplate that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
 
@@ -15,35 +17,37 @@ This is the React Native boilerplate that the [Infinite Red](https://infinite.re
 
 Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
 
+## [Full Documentation](https://github.com/infinitered/ignite/blob/master/docs)
+
+We've put great effort into the documentation as a team, please [read through it here](https://github.com/infinitered/ignite/blob/master/docs). If you're unsure why a certain decision was made related to this boilerplate or how to proceed with a particular feature, it's likely documented. If it still isn't clear, go through the proper [help channels](#reporting-bugs--getting-help) and we always welcome PRs to improve the docs!
+
 ## Tech Stack
 
 Nothing makes it into Ignite unless it's been proven on projects that Infinite Red works on. Ignite apps include the following rock-solid technical decisions out of the box:
 
 | Library           | Category             | Version | Description                                    |
 | ----------------- | -------------------- | ------- | ---------------------------------------------- |
-| React Native      | Mobile Framework     | v0.71   | The best cross-platform mobile framework       |
+| React Native      | Mobile Framework     | v0.72   | The best cross-platform mobile framework       |
 | React             | UI Framework         | v18     | The most popular UI framework in the world     |
-| TypeScript        | Language             | v4      | Static typechecking                            |
+| TypeScript        | Language             | v5      | Static typechecking                            |
 | React Navigation  | Navigation           | v6      | Performant and consistent navigation framework |
 | MobX-State-Tree   | State Management     | v5      | Observable state tree                          |
 | MobX-React-Lite   | React Integration    | v3      | Re-render React performantly                   |
-| Expo              | SDK                  | v48     | Allows (optional) Expo modules                 |
-| Expo Font         | Custom Fonts         | v10     | Import custom fonts                            |
-| Expo Localization | Internationalization | v13     | i18n support (including RTL!)                  |
+| Expo              | SDK                  | v49     | Allows (optional) Expo modules                 |
+| Expo Font         | Custom Fonts         | v11     | Import custom fonts                            |
+| Expo Localization | Internationalization | v14     | i18n support (including RTL!)                  |
 | Expo Status Bar   | Status Bar Library   | v1      | Status bar support                             |
-| RN Reanimated     | Animations           | v2      | Beautiful and performant animations            |
+| RN Reanimated     | Animations           | v3      | Beautiful and performant animations            |
 | AsyncStorage      | Persistence          | v1      | State persistence                              |
 | apisauce          | REST client          | v2      | Communicate with back-end                      |
-| Flipper           | Debugger             |         | Native debugging                               |
-| Reactotron RN     | Inspector/Debugger   | v2      | JS debugging                                   |
+| Reactotron RN     | Inspector/Debugger   | v3      | JS debugging                                   |
 | Hermes            | JS engine            |         | Fine-tuned JS engine for RN                    |
 | Jest              | Test Runner          | v26     | Standard test runner for JS apps               |
 | Maestro           | Testing Framework    |         | Automate end-to-end UI testing                 |
 | date-fns          | Date library         | v2      | Excellent date library                         |
+| FlashList         | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
 
 Ignite also comes with a [component library](https://github.com/infinitered/ignite/blob/master/docs/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
-
-[Check out the documentation!](https://github.com/infinitered/ignite/blob/master/docs)
 
 ## Quick Start
 

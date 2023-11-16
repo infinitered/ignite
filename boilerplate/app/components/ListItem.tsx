@@ -89,7 +89,7 @@ export interface ListItemProps extends TouchableOpacityProps {
 }
 
 interface ListItemActionProps {
-  icon: IconTypes
+  icon?: IconTypes
   iconColor?: string
   Component?: ReactElement
   size: number
@@ -167,7 +167,7 @@ function ListItemAction(props: ListItemActionProps) {
 
   if (Component) return Component
 
-  if (icon) {
+  if (icon !== undefined) {
     return (
       <Icon
         size={24}

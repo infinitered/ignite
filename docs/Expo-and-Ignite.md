@@ -13,19 +13,19 @@ If you're not familiar with [Expo](https://expo.dev), it's an open-source platfo
 
 ## Overview
 
-In previous versions of Ignite (versions 6 and 7), you could pass in a `--expo` flag to make the resulting generated app "Expo-ready". In version 8 (code-named "Maverick") we made the boilerplate "Expo-ready" by default -- but without locking you into using Expo Go or Expo's services if you don't want to. Every new Ignited app is ready to run with Expo CLI or with "vanilla" React Native CLI right out of the box.
+In previous versions of Ignite (versions 6 and 7), you could pass in a `--expo` flag to make the resulting generated app "Expo-ready". In version 8 (code-named "Maverick") we made the boilerplate "Expo-ready" by default -- but without locking you into using Expo Go or Expo's services if you don't want to.
+
+Now in version 9 (code-named "Exp[ress]o") we let Expo drive the native template initially. If you want to take over the native template and maintain all native code yourself, you are free to do so! However, if you want to opt-in to [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/) you can modify/extend the native template via Expo's [Config Plugins](https://docs.expo.dev/guides/config-plugins/). The Ignite template includes a Config Plugin that adds in a bug fix for `expo-splash-screen` when on Android 12.
 
 ```
 # Spin up a new app
 npx ignite-cli new PizzaApp
 cd PizzaApp
 
-# Expo CLI / Expo Go
-yarn expo:start
-yarn expo:ios
-yarn expo:android
+# Expo Go
+yarn start
 
-# React Native CLI
+# Expo Prebuild and DIY
 yarn ios
 yarn android
 ```

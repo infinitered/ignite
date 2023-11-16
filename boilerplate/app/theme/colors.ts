@@ -1,6 +1,6 @@
 // TODO: write documentation for colors and palette in own markdown file and add links from here
 
-const palette = {
+const palette: Record<string, string> = {
   neutral100: "#FFFFFF",
   neutral200: "#F4F2F1",
   neutral300: "#D7CEC9",

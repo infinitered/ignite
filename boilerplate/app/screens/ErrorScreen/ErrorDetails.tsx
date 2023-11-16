@@ -5,7 +5,7 @@ import { colors, spacing } from "../../theme"
 
 export interface ErrorDetailsProps {
   error: Error
-  errorInfo: ErrorInfo
+  errorInfo: ErrorInfo | null
   onReset(): void
 }
 
@@ -27,7 +27,7 @@ export function ErrorDetails(props: ErrorDetailsProps) {
         <Text
           selectable
           style={$errorBacktrace}
-          text={`${props.errorInfo.componentStack}`.trim()}
+          text={`${props.errorInfo?.componentStack ?? ""}`.trim()}
         />
       </ScrollView>
 

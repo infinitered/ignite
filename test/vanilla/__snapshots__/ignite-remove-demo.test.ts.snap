@@ -5,6 +5,7 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Removing demo code from '/user/home/ignite'
    Found '@demo remove-file' in /user/home/ignite/.maestro/FavoritePodcast.yaml
    Found '@demo remove-file' in /user/home/ignite/.maestro/Login.yaml
+   Found '@demo remove-current-line' in /user/home/ignite/app/components/Icon.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ar.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/en.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/fr.ts
@@ -40,6 +41,9 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/api.ts
    Removed empty directory '/user/home/ignite/.maestro'
    Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen/demos'
+   Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen'
+   Removed demo directory '/user/home/ignite/assets/icons/demo'
+   Removed demo directory '/user/home/ignite/assets/images/demo'
    Done removing demo code from '/user/home/ignite'
 "
 `;

@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: cimg/node:18.15.0
+    - image: cimg/node:18.17.1
   working_directory: /mnt/ramdisk/repo
 
 version: 2.1
@@ -16,6 +16,12 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - run:
+          name: Install bun
+          command: curl -fsSL https://bun.sh/install | bash -s -- bun-v1.0.10
+      - run:
+          name: Link bun
+          command: sudo ln -s ~/.bun/bin/bun /usr/local/bin/
       - restore_cache:
           name: Restore node modules
           keys:

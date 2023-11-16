@@ -61,21 +61,46 @@ module.exports = {
         }
       })
 
-    const emptyDirPaths = filesystem
-      .cwd(TARGET_DIR)
-      .find({
-        matching: MATCHING_GLOBS,
-        recursive: true,
-        files: false,
-        directories: true,
-      })
-      .map((path) => pathlib.join(TARGET_DIR, path))
-      .filter((path) => !filesystem.list(path)?.length)
+    function removeEmptyDirs() {
+      const emptyDirPaths = filesystem
+        .cwd(TARGET_DIR)
+        .find({
+          matching: MATCHING_GLOBS,
+          recursive: true,
+          files: false,
+          directories: true,
+        })
+        .map((path) => pathlib.join(TARGET_DIR, path))
+        .filter((path) => !filesystem.list(path)?.length)
 
-    emptyDirPaths.forEach((path) => {
-      if (!dryRun) filesystem.remove(path)
-      p(`Removed empty directory '${path}'`)
-    })
+      emptyDirPaths.forEach((path) => {
+        if (!dryRun) filesystem.remove(path)
+        p(`Removed empty directory '${path}'`)
+      })
+    }
+
+    function removeDemoAssets() {
+      const demoPaths = filesystem
+        .cwd(TARGET_DIR)
+        .find({
+          matching: [...MATCHING_GLOBS, "**/demo"],
+          recursive: true,
+          files: false,
+          directories: true,
+        })
+        .map((path) => pathlib.join(TARGET_DIR, path))
+      demoPaths.forEach((path) => {
+        if (!dryRun) filesystem.remove(path)
+        p(`Removed demo directory '${path}'`)
+      })
+    }
+
+    // first pass
+    removeEmptyDirs()
+    // second pass, for nested directories that are now empty after the first pass
+    // https://github.com/infinitered/ignite/issues/2225
+    removeEmptyDirs()
+    removeDemoAssets()
 
     p(`Done removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },

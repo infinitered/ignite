@@ -25,7 +25,7 @@ export interface AutoImageProps extends ImageProps {
  */
 export function useAutoImage(
   remoteUri: string,
-  dimensions?: [maxWidth: number, maxHeight: number],
+  dimensions?: [maxWidth?: number, maxHeight?: number],
 ): [width: number, height: number] {
   const [[remoteWidth, remoteHeight], setRemoteImageDimensions] = useState([0, 0])
   const remoteAspectRatio = remoteWidth / remoteHeight

@@ -3,7 +3,7 @@ import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, stri
 import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
 import * as YAML from "yaml"
-import { command, direction, heading, igniteHeading, p, warning } from "./pretty"
+import { command, direction, heading, igniteHeading, link, p, warning } from "./pretty"
 
 const NEW_LINE = filesystem.eol
 
@@ -504,7 +504,7 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
   // start the generation process for each platform
   // looping instead of mapping allows us to await for each platform sequentially
   for (const o of options) {
-    const optionProjectName = { ios: "iOS", android: "Android", expo: "Expo" }[o]
+    const optionProjectName = { expo: "Expo" }[o]
 
     // find the output path for platform and check if it exists
     // iOS is a bit weird since it's named differently for each project
@@ -633,9 +633,9 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
       expo: () => {
         const merge = require("deepmerge-json")
         const sourceExpoConfig = require(path(boilerplateDirPath, "app.json"))?.expo
-        const outputAppConfig = require(path(cwd, "app.json"))
+        const outputAppConfig = path(cwd, "app.json")
 
-        const updatedConfig = merge(outputAppConfig, {
+        const iconConfig = {
           expo: {
             icon: sourceExpoConfig?.icon,
             android: {
@@ -645,9 +645,32 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
             ios: { icon: sourceExpoConfig?.ios?.icon },
             web: { favicon: sourceExpoConfig?.web?.favicon },
           },
-        })
+        }
 
-        write(path(cwd, "app.json"), updatedConfig)
+        // Check if app.json exists - however, could also be `app.config.js` or `app.config.ts` in
+        // which case we should output a warning of what files to update
+        if (!exists(outputAppConfig)) {
+          const appConfigFiles = find(cwd, { matching: "app.config.*" })
+          if (appConfigFiles.length > 0) {
+            warning(
+              `⚠️  No "app.json" found at "${outputAppConfig}". It looks like you are using a dynamic configuration! Learn more at ${link(
+                "https://docs.expo.dev/workflow/configuration/#dynamic-configuration-with-appconfigjs",
+              )}`,
+            )
+            warning(`⚠️  Please add the following to your app.config.js manually:`)
+            JSON.stringify(iconConfig, null, 2)
+              .split("\n")
+              .map((line) => p(`  ${line}`))
+          } else {
+            warning(`⚠️  No "app.json" found at "${outputAppConfig}". Skipping...`)
+          }
+
+          return
+        }
+
+        const updatedConfig = merge(require(outputAppConfig), iconConfig)
+
+        write(path(cwd, "app.json"), JSON.stringify(updatedConfig, null, 2) + "\n")
         direction(`✅ app.json`)
       },
     }[o]
@@ -755,92 +778,8 @@ export async function generateSplashScreen(options: {
   const inputFilePath = path(templatesDir(), "splash-screen", "logo.png")
   const expoOutputDirPath = path(cwd, "assets/images")
   const isExpoOutputDirExists = exists(expoOutputDirPath) === "dir"
-  const bootsplashCliPath = path(
-    cwd,
-    "node_modules/react-native-bootsplash/dist/commonjs/generate.js",
-  )
-  const isBootsplashCliInstalled = exists(bootsplashCliPath) === "file"
+
   const optionGenerationSuccesses = []
-
-  async function generateForVanilla(type: "ios" | "android", size: number) {
-    const typeName = { ios: "iOS", android: "Android" }[type]
-
-    const bootsplashOutputPath = {
-      android: path(cwd, "android/app"),
-      ios: (function () {
-        const searchPath = path(cwd, "ios")
-
-        if (!exists(searchPath)) return searchPath
-
-        const xcodeprojPath = find(searchPath, {
-          directories: true,
-          files: false,
-          matching: "*.xcodeproj",
-          recursive: false,
-        })?.[0]
-
-        if (!xcodeprojPath) return searchPath
-
-        return xcodeprojPath.replace(/.xcodeproj$/, "")
-      })(),
-    }[type]
-
-    const isBootsplashOutputPathExists = exists(bootsplashOutputPath) === "dir"
-
-    heading(`Generating ${typeName} splash screen...`)
-
-    if (!isBootsplashOutputPathExists) {
-      warning(
-        `⚠️  No output directory found for "${typeName}" at "${bootsplashOutputPath}". Skipping...`,
-      )
-      return
-    }
-
-    if (!isBootsplashCliInstalled) {
-      warning(
-        `⚠️  If you are attempting to generate a splash screen for bare/vanilla ${typeName} react-native project, please install and configure the "react-native-bootsplash" package. Skipping...`,
-      )
-      return
-    }
-
-    const { generate } = require(bootsplashCliPath) || {}
-    const logFn = console.log
-    const outputFileNames: string[] = []
-
-    console.log = function (log: string) {
-      if (typeof log !== "string") return
-
-      const filePathMatch = log.match(/(?:android|ios)\/.*\.(?:png|storyboard|xml)/)
-
-      if (!filePathMatch) return
-
-      outputFileNames.push(`✅ ${filePathMatch[0]}`)
-    }
-
-    try {
-      await generate({
-        android: type === "android" && { sourceDir: bootsplashOutputPath },
-        ios: type === "ios" && { projectPath: bootsplashOutputPath },
-        workingPath: cwd,
-        logoPath: inputFilePath,
-        assetsPath: null,
-        backgroundColor,
-        flavor: "main",
-        logoWidth: size,
-      })
-
-      console.log = logFn
-
-      outputFileNames.forEach(direction)
-      optionGenerationSuccesses.push(true)
-    } catch (error) {
-      console.log = logFn
-
-      warning(
-        `⚠️  Something went wrong generating splash screen for ${typeName}, please file an issue on GitHub. Skipping...`,
-      )
-    }
-  }
 
   async function generateForExpo(
     type: "ios" | "android" | "web" | "all",
@@ -874,9 +813,6 @@ export async function generateSplashScreen(options: {
     }
   }
 
-  await generateForVanilla("ios", iosSize)
-  await generateForVanilla("android", androidSize)
-
   heading(`Generating Expo splash screens (Android, iOS, and Web)...`)
   if (isExpoOutputDirExists) {
     await generateForExpo("ios", iosSize, [
@@ -893,9 +829,9 @@ export async function generateSplashScreen(options: {
     const boilerplateDirPath = path(igniteCliRootDir(), "boilerplate")
     const merge = require("deepmerge-json")
     const sourceExpoConfig = require(path(boilerplateDirPath, "app.json"))?.expo
-    const outputAppConfig = require(path(cwd, "app.json"))
+    const outputAppConfig = path(cwd, "app.json")
 
-    const updatedConfig = merge(outputAppConfig, {
+    const splashConfig = {
       expo: {
         splash: {
           backgroundColor,
@@ -924,9 +860,32 @@ export async function generateSplashScreen(options: {
           },
         },
       },
-    })
+    }
 
-    write(path(cwd, "app.json"), updatedConfig)
+    // Check if app.json exists - however, could also be `app.config.js` or `app.config.ts` in
+    // which case we should output a warning of what files to update
+    if (!exists(outputAppConfig)) {
+      const appConfigFiles = find(cwd, { matching: "app.config.*" })
+      if (appConfigFiles.length > 0) {
+        warning(
+          `⚠️  No "app.json" found at "${outputAppConfig}". It looks like you are using a dynamic configuration! Learn more at ${link(
+            "https://docs.expo.dev/workflow/configuration/#dynamic-configuration-with-appconfigjs",
+          )}`,
+        )
+        warning(`⚠️  Please add the following to your app.config.js manually:`)
+        JSON.stringify(splashConfig, null, 2)
+          .split("\n")
+          .map((line) => p(`  ${line}`))
+      } else {
+        warning(`⚠️  No "app.json" found at "${outputAppConfig}". Skipping...`)
+      }
+
+      return
+    }
+
+    const updatedConfig = merge(require(outputAppConfig), splashConfig)
+
+    write(path(cwd, "app.json"), JSON.stringify(updatedConfig, null, 2) + "\n")
     direction(`✅ app.json`)
   } else {
     warning(`⚠️  No output directory found for "Expo" at "${expoOutputDirPath}". Skipping...`)

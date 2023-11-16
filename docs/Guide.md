@@ -31,7 +31,6 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 - TypeScript
 - AsyncStorage (integrated with MST for restoring state)
 - apisauce (to talk to REST servers)
-- Flipper-ready
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
 - About a dozen prebuilt [components](./Components.md) to build out your UI with
