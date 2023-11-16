@@ -47,7 +47,7 @@ module.exports = {
 
     // Run prettier at the end to clean up any spacing issues
     if (!dryRun) {
-      await system.run(`npx prettier@2.6.2 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
+      await system.run(`npx prettier@2.8.1 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
         trim: true,
       })
     }
