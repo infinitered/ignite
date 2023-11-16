@@ -70,5 +70,8 @@
     "experiments": {
       "tsconfigPaths": true
     }
+  },
+  "ignite": {
+    "version": "UNKNOWN"
   }
 }
