@@ -8,7 +8,6 @@ export const expoGoCompatExpectedVersions = {
   "expo-font": "~11.4.0",
   "expo-localization": "~14.3.0",
   "@shopify/flash-list": "1.4.3",
-  "react-native": "0.72.5",
 }
 
 // This function takes a package.json file as a string and updates the versions of the
