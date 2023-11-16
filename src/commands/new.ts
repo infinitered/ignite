@@ -482,7 +482,8 @@ module.exports = {
       p()
 
       const pkg = pkgColor(packagerName)
-      p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
+      const igniteVersion = meta.version()
+      p(` █ Creating ${em(projectName)} using ${em(`Ignite ${igniteVersion}`)}`)
       p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
       p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
       p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
@@ -644,26 +645,31 @@ module.exports = {
       }
       // #endregion
 
-      // #region Enable New Architecture if requested (must happen before prebuild)
-      if (experimentalNewArch === true) {
-        startSpinner(" Enabling New Architecture")
-        try {
-          const appJsonRaw = read("app.json")
-          const appJson = JSON.parse(appJsonRaw)
+      // #region Configure app.json
+      // Enable New Architecture if requested (must happen before prebuild)
+      startSpinner(" Configuring app.json")
+      try {
+        const appJsonRaw = read("app.json")
+        const appJson = JSON.parse(appJsonRaw)
+
+        // Inject ignite version to app.json
+        appJson.ignite.version = igniteVersion
+
+        if (experimentalNewArch === true) {
           appJson.expo.plugins[1][1].ios.newArchEnabled = true
           appJson.expo.plugins[1][1].android.newArchEnabled = true
 
           // Adding the "deploymentTarget" key is required for
           // @react-native-async-storage/async-storage to work in the new architecture
           appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
-
-          write("./app.json", appJson)
-        } catch (e) {
-          log(e)
-          p(yellow("Unable to enable New Architecture."))
         }
-        stopSpinner(" Enabling New Architecture", "🆕")
+
+        write("./app.json", appJson)
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to configure app.json."))
       }
+      stopSpinner(" Configuring app.json", "")
       // #endregion
 
       // #region Run Format
