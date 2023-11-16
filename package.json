@@ -46,9 +46,9 @@
     "node": ">=18"
   },
   "dependencies": {
+    "buffer-image-size": "^0.6.4",
     "deepmerge-json": "^1.1.0",
     "gluegun": "5.1.2",
-    "sharp": "^0.30.4",
     "yaml": "^1.10.0"
   },
   "devDependencies": {

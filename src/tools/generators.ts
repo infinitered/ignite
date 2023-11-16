@@ -1,9 +1,16 @@
 import * as ejs from "ejs"
-import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
+import {
+  filesystem,
+  GluegunToolbox,
+  GluegunPatchingPatchOptions,
+  patching,
+  strings,
+  system,
+} from "gluegun"
 import { Options } from "gluegun/build/types/domain/options"
-import * as sharp from "sharp"
 import * as YAML from "yaml"
 import { command, direction, heading, igniteHeading, link, p, warning } from "./pretty"
+const sizeOf = require("buffer-image-size")
 
 const NEW_LINE = filesystem.eol
 
@@ -450,7 +457,8 @@ export async function validateAppIconGenerator(option: `${Platforms}` | "all", f
     const isInvalidSize = await (async function () {
       if (isMissing) return false
 
-      const metadata = await sharp(inputFilePath).metadata()
+      const imageBuffer = Buffer.from(inputFilePath)
+      const metadata = sizeOf(imageBuffer)
       return metadata.width !== 1024 || metadata.height !== 1024
     })()
     const isSameAsSource = await (async function () {
@@ -552,17 +560,19 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
           const cutoutMask = Buffer.from(
             `<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${radius}" ry="${radius}"/></svg>`,
           )
-          return await sharp(inputFilePath)
-            .resize(size, size, { fit: "fill" })
-            .composite([{ input: cutoutMask, blend: "dest-in" }])
-            .extend({
-              top: padding,
-              bottom: padding,
-              left: padding,
-              right: padding,
-              background: { r: 0, g: 0, b: 0, alpha: 0 },
-            })
-            .toBuffer()
+          // TODO clean this up afterwards?
+          const cutoutMaskPath = path(cwd, "temp.svg")
+          filesystem.write(cutoutMaskPath, cutoutMask)
+
+          // temp transform has to go out to a file somewhere
+          const initialOutputFilePath = path(cwd, "temp.svg")
+          const resizeArgs = `resize ${size} ${size} --fit fill`
+          const compositeArgs = `composite ${cutoutMaskPath} --blend dest-in`
+          const extendArgs = `extend ${padding} ${padding} ${padding} ${padding} --background "rgba(0,0,0,0)"`
+          const sharpCmd = `npx sharp-cli -i ${inputFilePath} -o ${initialOutputFilePath} ${resizeArgs} -- ${compositeArgs} -- ${extendArgs}`
+          await system.run(sharpCmd)
+
+          // TODO clean up cutoutMaskPath
         } catch (error) {}
       })()
 
@@ -590,15 +600,16 @@ export async function generateAppIcons(option: `${Platforms}` | "all") {
 
         // finally, resize and save
         try {
-          await sharp(inputFile)
-            .resize(outputSize, outputSize, { fit: "fill" })
-            .toFile(outputFilePath)
+          const platformSharpCmd = `npx sharp-cli -i ${inputFile} -o ${outputFilePath} resize ${outputSize} ${outputSize} --fit fill`
+          await system.run(platformSharpCmd)
 
           direction(`✅ ${outputFileName}`)
         } catch (error) {
           warning(`⚠️  ${outputFileName}: saving failed, check if the directory exists`)
         }
       }
+
+      // TODO clean up temp transform file for this icon
     }
 
     const boilerplateDirPath = path(igniteCliRootDir(), "boilerplate")
@@ -733,7 +744,8 @@ export async function validateSplashScreenGenerator(
   const isInvalidSize = await (async function () {
     if (isMissing) return false
 
-    const metadata = await sharp(inputFilePath).metadata()
+    const imageBuffer = Buffer.from(inputFilePath)
+    const metadata = sizeOf(imageBuffer)
     return metadata.width !== 1024 || metadata.height !== 1024
   })()
   const isSameAsSource = await (async function () {
@@ -796,16 +808,10 @@ export async function generateSplashScreen(options: {
       const horizontalPadding = Math.ceil((width - logoSize) / 2)
 
       try {
-        await sharp(inputFilePath)
-          .resize(logoSize, logoSize, { fit: "fill" })
-          .extend({
-            top: verticalPadding,
-            bottom: verticalPadding,
-            left: horizontalPadding,
-            right: horizontalPadding,
-            background: { r: 0, g: 0, b: 0, alpha: 0 },
-          })
-          .toFile(outputFilePath)
+        const resizeArgs = `resize ${logoSize} ${logoSize} --fit fill`
+        const extendArgs = `extend ${verticalPadding} ${verticalPadding} ${horizontalPadding} ${horizontalPadding} --background "rgba(0,0,0,0)"`
+        const sharpCmd = `npx sharp-cli -i ${inputFilePath} -o ${outputFilePath} ${resizeArgs} -- ${extendArgs}`
+        await system.run(sharpCmd)
 
         direction(`✅ assets/images/${outputFileName}`)
         optionGenerationSuccesses.push(true)
