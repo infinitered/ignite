@@ -566,35 +566,21 @@ export default {
       // #region Format generator templates EOL for Windows
       let warnAboutEOL = false
       if (isWindows) {
-        // find unix2dos to help convert EOL, usually installed with git, ie:  C:\Program Files\Git\usr\bin\unix2dos.EXE
-        const unixToDosPath = await system.exec("which unix2dos")
-        // find all templates Ignite provides by default
-        const templates = filesystem.find(`${targetPath}/ignite/templates`, {
-          directories: false,
-          files: true,
-          matching: "*.ejs",
-        })
-
-        log(`unix2dos path: ${unixToDosPath}`)
-        log(`templates to change EOL: ${templates}`)
-        if (unixToDosPath) {
-          // running the output from `which` result above seems to not work, so just pop the binary name
-          const unixToDosCmd = unixToDosPath.split("/").pop()
-          const results = await Promise.allSettled(
-            templates.map(async (file) => {
-              log(`Converting EOL for ${file}`)
-              await system.run(`${unixToDosCmd} ${file}`)
-            }),
-          )
-
-          // inspect the results of conversion and log
-          results.forEach((result) => {
-            if (result.status === "rejected") {
-              warnAboutEOL = true
-              log(`Error converting EOL: ${JSON.stringify(result.reason)}`)
-            }
+        try {
+          const templates = filesystem.find(`${targetPath}/ignite/templates`, {
+            directories: false,
+            files: true,
+            matching: "*.ejs",
           })
-        } else {
+
+          log(`templates to change EOL: ${templates}`)
+          templates.map(async (file) => {
+            log(`Converting EOL for ${file}`)
+            let template = read(file)
+            template = template.replace(/\n/g, "\r\n")
+            write(file, template)
+          })
+        } catch {
           warnAboutEOL = true
         }
       }
