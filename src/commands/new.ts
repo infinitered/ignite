@@ -682,21 +682,21 @@ module.exports = {
       // #endregion
 
       // #region Remove Demo code
-      if (removeDemo === true) {
-        startSpinner(" Removing fancy demo code")
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+      const removeDemoPart = removeDemo === true ? "code" : "markup"
+      startSpinner(` Removing fancy demo ${removeDemoPart}`)
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-demo ${targetPath}`, {
-            onProgress: log,
-          })
-        } catch (e) {
-          log(e)
-          p(yellow("Unable to remove demo code."))
-        }
-        stopSpinner(" Removing fancy demo code", "🛠️")
+        log(`Ignite bin path: ${IGNITE}`)
+        await system.run(`${IGNITE} ${CMD} ${targetPath}`, {
+          onProgress: log,
+        })
+      } catch (e) {
+        log(e)
+        p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
+      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
       // #region Format generator templates EOL for Windows
