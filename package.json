@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
