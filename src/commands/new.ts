@@ -575,6 +575,14 @@ module.exports = {
       // #region Run Packager Install
       // pnpm/yarn/npm/bun install it
 
+      // fix .npmrc if using pnpm
+      if (packagerName === "pnpm") {
+        // append `node-linker=hoisted` to .npmrc
+        const npmrcPath = path(targetPath, ".npmrc")
+        const npmrcContents = read(npmrcPath)
+        write(npmrcPath, `${npmrcContents}${EOL}node-linker=hoisted${EOL}`)
+      }
+
       // check if there is a dependency cache using a hash of the package.json
       const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
       const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
