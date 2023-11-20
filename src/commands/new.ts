@@ -695,7 +695,7 @@ module.exports = {
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
         log(`Ignite bin path: ${IGNITE}`)
-        await system.run(`${IGNITE} ${CMD} ${targetPath}`, {
+        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, {
           onProgress: log,
         })
       } catch (e) {
