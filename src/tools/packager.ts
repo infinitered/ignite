@@ -148,7 +148,7 @@ function installCmd(options: PackageRunOptions) {
   } else if (options.packagerName === "npm") {
     return `npm install${silent}`
   } else if (options.packagerName === "bun") {
-    return `bun install`
+    return `bun install${silent}`
   } else {
     return installCmd({ ...options, packagerName: detectPackager() })
   }

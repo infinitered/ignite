@@ -1,9 +1,10 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useEffect, useMemo } from "react"
+import React, { ComponentType, FC, useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
   Image,
+  ImageSourcePropType,
   ImageStyle,
   Platform,
   StyleSheet,
@@ -19,7 +20,17 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Button, Card, EmptyState, Icon, ListView, Screen, Text, Toggle } from "../components"
+import {
+  Button,
+  ButtonAccessoryProps,
+  Card,
+  EmptyState,
+  Icon,
+  ListView,
+  Screen,
+  Text,
+  Toggle,
+} from "../components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -139,7 +150,7 @@ const EpisodeCard = observer(function EpisodeCard({
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
 
-  const imageUri = useMemo(() => {
+  const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
 
@@ -207,7 +218,7 @@ const EpisodeCard = observer(function EpisodeCard({
     openLinkInBrowser(episode.enclosure.link)
   }
 
-  const ButtonLeftAccessory = useMemo(
+  const ButtonLeftAccessory: ComponentType<ButtonAccessoryProps> = useMemo(
     () =>
       function ButtonLeftAccessory() {
         return (

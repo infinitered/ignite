@@ -83,7 +83,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
 
     // handle Web links
     React.useEffect(() => {
-      if (route.params) {
+      if (params !== undefined && Object.keys(params).length > 0) {
         const demoValues = Object.values(Demos)
         const findSectionIndex = demoValues.findIndex(
           (x) => x.name.toLowerCase() === params.queryIndex,
@@ -101,7 +101,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         }
         handleScroll(findSectionIndex, findItemIndex)
       }
-    }, [route])
+    }, [params])
 
     const toggleDrawer = () => {
       if (!open) {
@@ -173,7 +173,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         )}
       >
         <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-          <DrawerIconButton onPress={toggleDrawer} {...{ open }} />
+          <DrawerIconButton onPress={toggleDrawer} />
 
           <SectionList
             ref={listRef}

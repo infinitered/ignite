@@ -149,6 +149,7 @@ export const DemoListItem: Demo = {
       <View style={$listStyle}>
         <ListView<string>
           data={listData}
+          estimatedItemSize={59}
           renderItem={({ item, index }) => (
             <ListItem
               text={item}

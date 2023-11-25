@@ -104,6 +104,15 @@ export const stopSpinner = (m: string, symbol: string) => {
   }
 }
 
+export const stopLastSpinner = (symbol: string) => {
+  const lastKey = Object.keys(spinners).pop()
+  if (lastKey) {
+    const lastSpinner = spinners[lastKey]
+    lastSpinner.stopAndPersist({ symbol })
+    delete spinners[lastKey]
+  }
+}
+
 export const clearSpinners = () => {
   Object.keys(spinners).forEach((m) => {
     spinners[m].stop()
@@ -114,6 +123,7 @@ export const clearSpinners = () => {
 export const spinner = {
   start: startSpinner,
   stop: stopSpinner,
+  stopLast: stopLastSpinner,
   clear: clearSpinners,
 } as const
 

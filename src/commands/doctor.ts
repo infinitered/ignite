@@ -53,13 +53,16 @@ module.exports = {
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
     const pnpmPath = which("pnpm")
     const pnpmVersion = pnpmPath && (await run("pnpm --version", { trim: true }))
+    const bunPath = which("bun")
+    const bunVersion = bunPath && (await run("bun --version", { trim: true }))
 
     const nodeInfo = [column1("node"), column2(nodeVersion), column3(nodePath)]
     const npmInfo = [column1("npm"), column2(npmVersion), column3(npmPath || "not installed")]
     const yarnInfo = [column1("yarn"), column2(yarnVersion), column3(yarnPath || "not installed")]
     const pnpmInfo = [column1("pnpm"), column2(pnpmVersion), column3(pnpmPath || "not installed")]
+    const bunInfo = [column1("bun"), column2(bunVersion), column3(bunPath || "not installed")]
 
-    async function packageInfo(packagerName: "npm" | "yarn" | "pnpm") {
+    async function packageInfo(packagerName: "npm" | "yarn" | "pnpm" | "bun") {
       return (await packager.list({ packagerName, global: true })).map((nameAndVersion) => [
         column1("  " + nameAndVersion[0]),
         column2(nameAndVersion[1]),
@@ -105,6 +108,7 @@ module.exports = {
       ...yarnPackages,
       pnpmInfo,
       ...pnpmPackages,
+      bunInfo,
       expoInfo,
     ])
 
