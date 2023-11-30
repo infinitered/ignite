@@ -16,7 +16,6 @@ import { Reactotron } from "./ReactotronClient"
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,
-  host: "localhost",
   onConnect: () => {
     /** since this file gets hot reloaded, let's clear the past logs every time we connect */
     Reactotron.clear()
