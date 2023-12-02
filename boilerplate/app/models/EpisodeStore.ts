@@ -17,7 +17,7 @@ export const EpisodeStoreModel = types
       if (response.kind === "ok") {
         store.setProp("episodes", response.episodes)
       } else {
-        console.tron.error?.(`Error fetching episodes: ${JSON.stringify(response)}`, [])
+        console.error(`Error fetching episodes: ${JSON.stringify(response)}`)
       }
     },
     addFavorite(episode: Episode) {
