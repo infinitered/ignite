@@ -77,7 +77,7 @@ export class Api {
       return { kind: "ok", episodes }
     } catch (e) {
       if (__DEV__ && e instanceof Error) {
-        console.tron.error?.(`Bad data: ${e.message}\n${response.data}`, e.stack)
+        console.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
       }
       return { kind: "bad-data" }
     }
