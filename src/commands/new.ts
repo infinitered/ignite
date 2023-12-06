@@ -30,6 +30,7 @@ import {
   expoGoCompatExpectedVersions,
   findAndUpdateDependencyVersions,
 } from "../tools/expoGoCompatibility"
+import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
 
 type Workflow = "expo" | "prebuild" | "manual"
 
@@ -564,6 +565,12 @@ module.exports = {
           packageJsonRaw,
           expoGoCompatExpectedVersions,
         )
+      }
+
+      // - If we're removing the demo code, clean up some dependencies that are no longer needed
+      if (removeDemo) {
+        log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
+        packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
       }
 
       // - Then write it back out.
