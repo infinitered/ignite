@@ -582,7 +582,6 @@ module.exports = {
         // If using canary build, update the expo dependency to the canary version
         if (experimentalExpoCanary) {
           const expoDistTagOutput = await system.run("npm view expo versions --json")
-          log(`npm view expo versions --json: ${expoDistTagOutput}`)
           // filter for canary and get last item in array
           const expoCanaryVersion = JSON.parse(expoDistTagOutput)
             .filter((v: string) => v.includes("canary"))
@@ -590,7 +589,6 @@ module.exports = {
           log(`expoCanaryVersion: ${expoCanaryVersion}`)
           // find line with "expo": and replace entire line with expoCanaryVersion
           packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${expoCanaryVersion}"`)
-          log(`packageJsonRaw: ${packageJsonRaw}`)
         }
       } else {
         // Expo Go workflow, swap back to compatible Expo Go versions of modules
@@ -675,6 +673,8 @@ module.exports = {
         const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
         startSpinner(unboxingMessage)
         await packager.install({ ...packagerOptions, onProgress: log })
+
+        // if we're using the canary build, we need to install the canary versions of supporting Expo packages
         if (experimentalExpoCanary === true) {
           await system.run("npx expo install --fix", { onProgress: log })
         }
