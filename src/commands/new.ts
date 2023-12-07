@@ -432,17 +432,22 @@ module.exports = {
 
     // #region Experimental Features parsing
     let newArch
+    let expoCanary
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
     experimentalFlags.forEach((flag) => {
       if (flag === "new-arch") {
         newArch = true
+      } else if (flag === "expo-canary") {
+        expoCanary = true
       }
     })
     // #endregion
 
-    // #region Prompt to enable New Architecture
+    // #region Prompt to enable experimental features
+
+    // New Architecture
     const defaultNewArch = false
     let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
     if (experimentalNewArch === undefined && workflow !== "expo") {
@@ -455,9 +460,26 @@ module.exports = {
         prefix,
       }))
       experimentalNewArch = newArchResponse.experimentalNewArch
-    } else {
+    } else if (workflow === "expo") {
       // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
       experimentalNewArch = false
+    }
+
+    const defaultExpoCanary = false
+    let experimentalExpoCanary = useDefault(expoCanary) ? defaultExpoCanary : boolFlag(expoCanary)
+    if (experimentalExpoCanary === undefined && workflow !== "expo") {
+      const expoCanaryResponse = await prompt.ask<{ experimentalExpoCanary: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalExpoCanary",
+        message: "❗EXPERIMENTAL❗Would you like to install the latest Expo Canary build?",
+        initial: defaultExpoCanary,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalExpoCanary = expoCanaryResponse.experimentalExpoCanary
+    } else if (workflow === "expo") {
+      // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
+      experimentalExpoCanary = false
     }
     // #endregion
 
@@ -556,6 +578,20 @@ module.exports = {
         packageJsonRaw = packageJsonRaw
           .replace(/start --android/g, "run:android")
           .replace(/start --ios/g, "run:ios")
+
+        // If using canary build, update the expo dependency to the canary version
+        if (experimentalExpoCanary) {
+          const expoDistTagOutput = await system.run("npm view expo versions --json")
+          log(`npm view expo versions --json: ${expoDistTagOutput}`)
+          // filter for canary and get last item in array
+          const expoCanaryVersion = JSON.parse(expoDistTagOutput)
+            .filter((v: string) => v.includes("canary"))
+            .pop()
+          log(`expoCanaryVersion: ${expoCanaryVersion}`)
+          // find line with "expo": and replace entire line with expoCanaryVersion
+          packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${expoCanaryVersion}"`)
+          log(`packageJsonRaw: ${packageJsonRaw}`)
+        }
       } else {
         // Expo Go workflow, swap back to compatible Expo Go versions of modules
         log("Changing some dependencies for Expo Go compatibility...")
@@ -639,6 +675,9 @@ module.exports = {
         const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
         startSpinner(unboxingMessage)
         await packager.install({ ...packagerOptions, onProgress: log })
+        if (experimentalExpoCanary === true) {
+          await system.run("npx expo install --fix", { onProgress: log })
+        }
         stopSpinner(unboxingMessage, "🧶")
       }
 
@@ -679,6 +718,11 @@ module.exports = {
           appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
         }
 
+        // this can go away once we're at SDK 50 since expo-font needs to be added here
+        if (experimentalExpoCanary === true) {
+          appJson.expo.plugins.push("expo-font")
+        }
+
         write("./app.json", appJson)
       } catch (e) {
         log(e)
@@ -691,6 +735,7 @@ module.exports = {
       // we can't run this option if we didn't install deps
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
+        // Prebuild also handles the packager install
         if (needsPrebuild) {
           const prebuildMessage = ` Generating native template via Expo Prebuild`
           startSpinner(prebuildMessage)
