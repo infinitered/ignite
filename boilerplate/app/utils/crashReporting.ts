@@ -55,7 +55,6 @@ export const reportCrash = (error: Error, type: ErrorType = ErrorType.FATAL) => 
     const message = error.message || "Unknown"
     console.error(error)
     console.log(message, type)
-    console.tron.log(error)
   } else {
     // In production, utilize crash reporting service of choice below:
     // RN
