@@ -1,4 +1,5 @@
 import { useScrollToTop } from "@react-navigation/native"
+import { useHeaderHeight } from "@react-navigation/elements"
 import { StatusBar, StatusBarProps } from "expo-status-bar"
 import React, { useRef, useState } from "react"
 import {
@@ -199,13 +200,15 @@ export function Screen(props: ScreenProps) {
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
+  const headerHeight = useHeaderHeight()
+
   return (
     <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
       <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
         behavior={isIos ? "padding" : "height"}
-        keyboardVerticalOffset={keyboardOffset}
+        keyboardVerticalOffset={keyboardOffset + headerHeight}
         {...KeyboardAvoidingViewProps}
         style={[$keyboardAvoidingViewStyle, KeyboardAvoidingViewProps?.style]}
       >
