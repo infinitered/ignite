@@ -4,11 +4,30 @@ sidebar_position: 1
 
 # Welcome to Ignite documentation!
 
-> The battle-tested React Native boilerplate
+## Getting Started
+
+### Quick Start
+
+```terminal
+npx ignite-cli@latest new pizza-app --yes
+```
+
+### Full Guide
+
+If you're new to Ignite, start by reading our [Getting Started Guide](./Guide.md)!
+
+### Intro Video
+
+Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
+
+## Proven React Native boilerplate
+
+The culmination of over seven years of constant React Native development, Ignite is the most popular React Native app boilerplate for both Expo and bare React Native.
+
+This is the React Native boilerplate that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
 
 ## Usage
 
-- [Getting Started Guide](./Guide.md) - If you're new to Ignite, start here
 - [Command-line Interface (CLI)](./cli/Ignite-CLI.md)
   - [Remove Demo Code](./cli/Remove-Demo-Code.md) - A quick guide on how to remove Ignite's demo code via command line
   - [Troubleshooting](./cli/Troubleshooting.md)
