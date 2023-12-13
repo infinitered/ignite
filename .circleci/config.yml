@@ -10,6 +10,14 @@ defaults: &defaults
   working_directory: /mnt/ramdisk/repo
 
 version: 2.1
+
+parameters:
+  "force-release-docs":
+    type: boolean
+    default: false
+
+orbs:
+  publish-docs: infinitered/publish-docs@0.4.9
 jobs:
   tests:
     <<: *defaults
@@ -81,6 +89,19 @@ jobs:
           name: Publish to npm
           command: yarn ci:publish # this will be added to your package.json scripts
 
+# Publishing docs details
+publish-details: &publish-details
+  description: "Infinite Red's hottest boilerplate for React Native."
+  git_email: "ci@infinite.red"
+  git_username: "Infinite Red CI"
+  label: "Ignite"
+  project_name: "ignite-cli"
+  source_docs_dir: docs
+  source_repo_directory: "source"
+  target_docs_dir: "docs"
+  target_repo: "git@github.com:infinitered/ir-docs.git"
+  target_repo_directory: "target"
+
 workflows:
   version: 2
   test_and_release:
@@ -93,3 +114,23 @@ workflows:
           filters:
             branches:
               only: master
+  release-docs:
+    when:
+      and:
+        - not: << pipeline.parameters.force-release-docs >>
+        - true # Placeholder for correct YAML structure
+    jobs:
+      - publish-docs/publish_docs:
+          <<: *publish-details
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only:
+                - '*v[0-9]+\.[0-9]+\.[0-9]+'
+  force-release-docs:
+    when: << pipeline.parameters.force-release-docs >>
+    jobs:
+      - publish-docs/publish_docs:
+          <<: *publish-details
