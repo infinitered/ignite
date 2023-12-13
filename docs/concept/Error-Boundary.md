@@ -41,7 +41,7 @@ Ignite provides utilities in [`/app/utils/crash-reporting.ts`](../boilerplate/ap
 
 ## Examples
 
-- See our [`ErrorBoundary` component](../boilerplate/app/screens/ErrorScreen/ErrorBoundary.tsx) for error catching logic
-- See our [`ErrorScreen` component](../boilerplate/app/screens/ErrorScreen/ErrorDetails.tsx) for error fallback UI
+- See our [`ErrorBoundary` component](https://github.com/infinitered/ignite/blob/master/boilerplate/app/screens/ErrorScreen/ErrorBoundary.tsx) for error catching logic
+- See our [`ErrorScreen` component](https://github.com/infinitered/ignite/blob/master/boilerplate/app/screens/ErrorScreen/ErrorDetails.tsx) for error fallback UI
 - [reactjs.org docs on Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)
 - [codepen example of Error Boundary usage](https://codepen.io/gaearon/pen/wqvxGa?editors=0010)
