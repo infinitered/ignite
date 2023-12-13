@@ -1,4 +1,4 @@
-# Explanation of the Ignite folder structure
+# Explanation of folder structure
 
 A new Ignite boilerplate project's structure looks similar to this:
 
@@ -8,25 +8,25 @@ ignite-project
 ├── android
 ├── ios
 ├── app
-│   ├── components
-│   ├── i18n
-│   ├── models
-│   ├── navigators
-│   ├── screens
-│   ├── services
-│   ├── theme
-│   ├── utils
-│   ├── app.tsx
+│   ├── components
+│   ├── i18n
+│   ├── models
+│   ├── navigators
+│   ├── screens
+│   ├── services
+│   ├── theme
+│   ├── utils
+│   ├── app.tsx
 |   ├── assets/fonts/
 ├── test
-│   ├── __snapshots__
-│   ├── mock-i18n.ts
-│   ├── mock-reactotron.ts
-│   ├── setup.ts
+│   ├── __snapshots__
+│   ├── mock-i18n.ts
+│   ├── mock-reactotron.ts
+│   ├── setup.ts
 ├── ignite
-│   └── templates
+│   └── templates
 ├── plugins
-│   └── withSplashScreen.ts
+│   └── withSplashScreen.ts
 ├── app.config.ts
 ├── app.json
 ├── App.tsx
@@ -57,7 +57,7 @@ app
 
 This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
 
-- [Component Overview](../)
+- [Component Overview](../boilerplate/components/Components.md)
 - [AutoImage](../boilerplate/components/AutoImage.md)
 - [Button](../boilerplate/components/Button.md)
 - [Card](../boilerplate/components/Card.md)
@@ -95,7 +95,7 @@ Any services that interface with the outside world will live here (think REST AP
 
 **theme**
 
-Here lives the theme for your application, including spacing, colors, and typography. For help with adding custom fonts to your application, [check out the readme in Fonts & Typography/](../boilerplate/theming/Fonts-And-Typography.md).
+Here lives the theme for your application, including spacing, colors, and typography. For help with adding custom fonts to your application, [check out the readme in ./assets/fonts/](https://github.com/infinitered/ignite/blob/master/boilerplate/assets/fonts/custom-fonts.md).
 
 **utils**
 
