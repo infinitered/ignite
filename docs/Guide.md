@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Getting Started Guide
 
 ## What is Ignite?
@@ -16,9 +20,9 @@ npx ignite-cli@latest new PizzaApp
 
 It'll walk you through several questions.
 
-Once it's up and running, you can use the Ignite CLI to [generate](./Generators.md) components, screens, MST models, and more.
+Once it's up and running, you can use the Ignite CLI to [generate](./concept/Generators.md) components, screens, MST models, and more.
 
-Running into errors? have a look at [upgrading Ignite CLI](./Upgrading-Ignite.md)
+Running into errors? have a look at [upgrading Ignite CLI](./cli/Upgrading-Ignite.md)
 
 ### Ignite Boilerplate
 
@@ -26,14 +30,14 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 
 - React Native
 - React Navigation
-- MobX-State-Tree [(Why not Redux?)](https://github.com/infinitered/ignite/blob/master/docs/MobX-State-Tree.md)
+- MobX-State-Tree [(Why not Redux?)](./concept/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
 - AsyncStorage (integrated with MST for restoring state)
 - apisauce (to talk to REST servers)
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
-- About a dozen prebuilt [components](./Components.md) to build out your UI with
+- About a dozen prebuilt [components](./boilerplate/components/Components.md) to build out your UI with
 - And more!
 
 ## Where do I start?
@@ -48,7 +52,7 @@ We use React Navigation v6 in the current version of Ignite. You'll find any nav
 
 There's also a `navigationUtilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-Learn more in our [Navigation](./Navigation.md) documentation.
+Learn more in our [Navigation](./concept/Navigation.md) documentation.
 
 ### Components
 
@@ -56,7 +60,7 @@ Ignite comes with some prebuilt, flexible, and customizable components. Unlike m
 
 Ignite works fine with other component libraries, but the built-in component system works the best for custom-designed apps.
 
-Check out the [Components](./Components.md) documentation.
+Check out the [Components](./boilerplate/components/Components.md) documentation.
 
 ### Testing
 
@@ -64,7 +68,7 @@ Ignite is pre-configured to use Jest for unit tests.
 
 Ignite includes samples of UI end-to-end tests using [Maestro](https://maestro.mobile.dev/). See our [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/MaestroSetup) for setup and walkthrough of the test samples or check out Maestro's docs on [Installing Maestro](https://maestro.mobile.dev/getting-started/installing-maestro) to run the flows.
 
-You can learn more about why we chose these tests and how to use them in the [Testing](./Testing.md) docs.
+You can learn more about why we chose these tests and how to use them in the [Testing](./concept/Testing.md) docs.
 
 ### Styling
 
@@ -88,6 +92,6 @@ const MyComponent = () => {
 }
 ```
 
-Very often, we use [components with presets](./Components.md) to share styles across our whole app.
+Very often, we use [components with presets](./boilerplate/components/Components.md) to share styles across our whole app.
 
-Read more about styling in the [Styling](./Styling.md) docs.
+Read more about styling in the [Styling](./concept/Styling.md) docs.
