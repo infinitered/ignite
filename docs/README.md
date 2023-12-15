@@ -18,7 +18,8 @@ If you're new to Ignite, start by reading our [Getting Started Guide](./Guide.md
 
 ### Intro Video
 
-Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
+- Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
+- Jamon's Code Quest on [Ignite 9](https://www.youtube.com/watch?v=QmkMsUYrTlk)
 
 ## Proven React Native boilerplate
 
