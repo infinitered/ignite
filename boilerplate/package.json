@@ -55,7 +55,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.7",
-    "react-native-drawer-layout": "^4.0.0-alpha.1",
+    "react-native-drawer-layout": "4.0.0-alpha.1",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-reanimated": "~3.3.0",
     "react-native-safe-area-context": "4.6.3",
@@ -100,8 +100,8 @@
     "reactotron-react-js": "3.3.9",
     "reactotron-react-native": "5.0.4",
     "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1",
-    "typescript": "5.2.2"
+    "ts-node": "^10.9.2",
+    "typescript": "5.3.2"
   },
   "expo": {
     "install": {
