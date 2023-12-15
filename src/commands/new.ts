@@ -432,17 +432,22 @@ module.exports = {
 
     // #region Experimental Features parsing
     let newArch
+    let expoVersion
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
     experimentalFlags.forEach((flag) => {
       if (flag === "new-arch") {
         newArch = true
+      } else if (flag.indexOf("expo-") > -1) {
+        expoVersion = flag.substring(5)
       }
     })
     // #endregion
 
-    // #region Prompt to enable New Architecture
+    // #region Prompt to enable experimental features
+
+    // New Architecture
     const defaultNewArch = false
     let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
     if (experimentalNewArch === undefined && workflow !== "expo") {
@@ -455,10 +460,11 @@ module.exports = {
         prefix,
       }))
       experimentalNewArch = newArchResponse.experimentalNewArch
-    } else {
+    } else if (workflow === "expo") {
       // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
       experimentalNewArch = false
     }
+
     // #endregion
 
     // #region Debug
@@ -556,6 +562,16 @@ module.exports = {
         packageJsonRaw = packageJsonRaw
           .replace(/start --android/g, "run:android")
           .replace(/start --ios/g, "run:ios")
+
+        // If using canary build, update the expo dependency to the canary version
+        if (expoVersion) {
+          const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
+          // filter for canary/beta and get last item in array
+          const tagVersion = JSON.parse(expoDistTagOutput)[expoVersion]
+          log(`overriding expo version to: ${tagVersion}`)
+          // find line with "expo": and replace entire line with tagVersion
+          packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
+        }
       } else {
         // Expo Go workflow, swap back to compatible Expo Go versions of modules
         log("Changing some dependencies for Expo Go compatibility...")
@@ -639,6 +655,11 @@ module.exports = {
         const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
         startSpinner(unboxingMessage)
         await packager.install({ ...packagerOptions, onProgress: log })
+
+        // if we're using the canary build, we need to install the canary versions of supporting Expo packages
+        if (expoVersion) {
+          await system.run("npx expo install --fix", { onProgress: log })
+        }
         stopSpinner(unboxingMessage, "🧶")
       }
 
@@ -679,6 +700,11 @@ module.exports = {
           appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
         }
 
+        // this can go away once we're at SDK 50 since expo-font needs to be added here
+        if (expoVersion) {
+          appJson.expo.plugins.push("expo-font")
+        }
+
         write("./app.json", appJson)
       } catch (e) {
         log(e)
@@ -691,6 +717,7 @@ module.exports = {
       // we can't run this option if we didn't install deps
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
+        // Prebuild also handles the packager install
         if (needsPrebuild) {
           const prebuildMessage = ` Generating native template via Expo Prebuild`
           startSpinner(prebuildMessage)
