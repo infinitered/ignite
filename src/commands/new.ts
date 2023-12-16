@@ -529,13 +529,10 @@ module.exports = {
 
       if (exists(targetIgnorePath) === false) {
         warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
-      } else if (workflow === "expo" || workflow === "prebuild") {
-        // check if we need to add the android and ios directories to the .gitignore
-        // for Expo Go or Prebuild workflows
+      } else if (workflow === "manual") {
+        // if we're using the manual workflow, we need to remove the android and ios lines from the gitignore
         let gitIgnoreContents = read(targetIgnorePath)
-        gitIgnoreContents = gitIgnoreContents
-          .replace(/# android/g, "android")
-          .replace(/# ios/g, "ios")
+        gitIgnoreContents = gitIgnoreContents.replace("/android", "").replace("/ios", "")
 
         write(targetIgnorePath, gitIgnoreContents)
       }
