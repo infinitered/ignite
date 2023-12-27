@@ -66,7 +66,8 @@ export interface ButtonProps extends PressableProps {
    */
   children?: React.ReactNode
   /**
-   * disabled prop, accessed directly for styling reasons.
+   * disabled prop, accessed directly for declarative styling reasons.
+   * https://reactnative.dev/docs/pressable#disabled
    */
   disabled?: boolean
 }
