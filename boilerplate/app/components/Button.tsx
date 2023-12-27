@@ -70,6 +70,10 @@ export interface ButtonProps extends PressableProps {
    * https://reactnative.dev/docs/pressable#disabled
    */
   disabled?: boolean
+  /**
+   * An optional style override for the disabled state
+   */
+  disabledStyle?: StyleProp<ViewStyle>
 }
 
 /**
@@ -91,6 +95,7 @@ export function Button(props: ButtonProps) {
     RightAccessory,
     LeftAccessory,
     disabled,
+    disabledStyle,
     ...rest
   } = props
 
@@ -100,7 +105,7 @@ export function Button(props: ButtonProps) {
       $viewPresets[preset],
       $viewStyleOverride,
       !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
-      disabled && { opacity: 0.5 },
+      disabled && disabledStyle,
     ]
   }
   function $textStyle({ pressed }: PressableStateCallbackType) {
