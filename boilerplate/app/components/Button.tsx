@@ -100,7 +100,7 @@ export function Button(props: ButtonProps) {
     RightAccessory,
     LeftAccessory,
     disabled,
-    disabledStyle,
+    disabledStyle: $disabledViewStyleOverride,
     ...rest
   } = props
 
@@ -110,7 +110,7 @@ export function Button(props: ButtonProps) {
       $viewPresets[preset],
       $viewStyleOverride,
       !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
-      disabled && disabledStyle,
+      !!disabled && $disabledViewStyleOverride,
     ]
   }
   function $textStyle({ pressed }: PressableStateCallbackType) {
@@ -118,7 +118,7 @@ export function Button(props: ButtonProps) {
       $textPresets[preset],
       $textStyleOverride,
       !!pressed && [$pressedTextPresets[preset], $pressedTextStyleOverride],
-      disabled && $disabledTextStyleOverride,
+      !!disabled && $disabledTextStyleOverride,
     ]
   }
 
