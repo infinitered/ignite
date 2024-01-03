@@ -48,6 +48,10 @@ export interface ButtonProps extends PressableProps {
    */
   pressedTextStyle?: StyleProp<TextStyle>
   /**
+   * An optional style override for the button text when in the "disabled" state.
+   */
+  disabledTextStyle?: StyleProp<TextStyle>
+  /**
    * One of the different types of button presets.
    */
   preset?: Presets
@@ -91,6 +95,7 @@ export function Button(props: ButtonProps) {
     pressedStyle: $pressedViewStyleOverride,
     textStyle: $textStyleOverride,
     pressedTextStyle: $pressedTextStyleOverride,
+    disabledTextStyle: $disabledTextStyleOverride,
     children,
     RightAccessory,
     LeftAccessory,
@@ -113,6 +118,7 @@ export function Button(props: ButtonProps) {
       $textPresets[preset],
       $textStyleOverride,
       !!pressed && [$pressedTextPresets[preset], $pressedTextStyleOverride],
+      disabled && $disabledTextStyleOverride,
     ]
   }
 
