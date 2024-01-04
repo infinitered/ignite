@@ -100,6 +100,14 @@ The `pressedTextStyle` prop is optional. This can be used to style text in the b
 <Button pressedTextStyle={{ fontSize: 20, color: "#a51111" }} />
 ```
 
+### `disabledTextStyle`
+
+The `disabledTextStyle` prop is optional. It can be used to style text in the button when the `disabled` prop is set. Values here will override anything set in the preset.
+
+```tsx
+<Button disabled disabledTextStyle={{ fontSize: 20, color: "#000000" }} />
+```
+
 ### `style`
 
 The `style` prop is optional. This can be used to style the `Pressable` component of the `Button`. Values passed here will override anything set in the preset.
@@ -114,6 +122,14 @@ The `pressedStyle` prop is optional. This can be used to style the `Pressable` c
 
 ```tsx
 <Button pressedStyle={{ backgroundColor: "red" }} />
+```
+
+### `disabledStyle`
+
+The `disabledStyle` prop is optional. This can be used to style the `Pressable` component of the `Button` when the `disabled` prop is truthy. Values passed here will override anything set in the preset.
+
+```tsx
+<Button disabledStyle={{ opacity: 0.5 }} />
 ```
 
 ### `LeftAccessory` and `RightAccessory`
@@ -149,3 +165,9 @@ If the accessories flicker when some prop or state changes, you can memoize the 
   )}
 />
 ```
+
+### `disabled`
+
+The `disabled` prop is optional. It gets passed to the underlying `Pressable` component. When truthy, it will [disable the press behavior on the pressable](https://reactnative.dev/docs/pressable#disabled). It will also update the [`accessibilityState`](https://reactnative.dev/docs/0.72/touchablewithoutfeedback#accessibilitystate) of the `Pressable` when set.
+
+This prop will be passed down to the `LeftAccessory` and `RightAccessory` components, if they exist, and will cause the `disabledStyle` and `disabledTextStyle` props to be used, if they have been set.
