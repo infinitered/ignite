@@ -15,6 +15,7 @@ type Presets = keyof typeof $viewPresets
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
   pressableState: PressableStateCallbackType
+  disabled?: boolean
 }
 
 export interface ButtonProps extends PressableProps {
