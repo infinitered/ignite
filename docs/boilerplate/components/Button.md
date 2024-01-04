@@ -126,7 +126,7 @@ The `pressedStyle` prop is optional. This can be used to style the `Pressable` c
 
 ### `disabledStyle`
 
-The `disabledStyle` prop is optional. This can be used to style the `Pressable` component of the `Button` when the `disabled` prop is truthy. Values passed here will voerride anything set in the preset.
+The `disabledStyle` prop is optional. This can be used to style the `Pressable` component of the `Button` when the `disabled` prop is truthy. Values passed here will override anything set in the preset.
 
 ```tsx
 <Button disabledStyle={{ opacity: 0.5 }} />
