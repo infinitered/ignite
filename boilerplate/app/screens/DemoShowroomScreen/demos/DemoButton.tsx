@@ -27,6 +27,12 @@ const $customButtonRightAccessoryStyle: ViewStyle = {
 }
 const $customButtonPressedRightAccessoryStyle: ImageStyle = { tintColor: colors.palette.neutral100 }
 
+const $disabledOpacity: ViewStyle = { opacity: 0.5 }
+const $disabledButtonTextStyle: TextStyle = {
+  color: colors.palette.neutral100,
+  textDecorationColor: colors.palette.neutral100,
+}
+
 export const DemoButton: Demo = {
   name: "Button",
   description:
@@ -134,6 +140,71 @@ export const DemoButton: Demo = {
         )}
       >
         Style Pressed State - fugiat anim
+      </Button>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="Disabling"
+      description="The component can be disabled, and styled based on that. Press behavior will be disabled."
+    >
+      <Button
+        disabled
+        disabledStyle={$disabledOpacity}
+        pressedStyle={$customButtonPressedStyle}
+        pressedTextStyle={$customButtonPressedTextStyle}
+      >
+        Disabled - standard
+      </Button>
+      <DemoDivider />
+
+      <Button
+        disabled
+        preset="filled"
+        disabledStyle={$disabledOpacity}
+        pressedStyle={$customButtonPressedStyle}
+        pressedTextStyle={$customButtonPressedTextStyle}
+      >
+        Disabled - filled
+      </Button>
+      <DemoDivider />
+
+      <Button
+        disabled
+        preset="reversed"
+        disabledStyle={$disabledOpacity}
+        pressedStyle={$customButtonPressedStyle}
+        pressedTextStyle={$customButtonPressedTextStyle}
+      >
+        Disabled - reversed
+      </Button>
+      <DemoDivider />
+
+      <Button
+        disabled
+        pressedStyle={$customButtonPressedStyle}
+        pressedTextStyle={$customButtonPressedTextStyle}
+        RightAccessory={(props) => (
+          <View
+            style={
+              props.disabled
+                ? [$customButtonRightAccessoryStyle, $disabledOpacity]
+                : $customButtonPressedRightAccessoryStyle
+            }
+          />
+        )}
+      >
+        Disabled accessory style
+      </Button>
+      <DemoDivider />
+
+      <Button
+        disabled
+        preset="filled"
+        disabledTextStyle={[$customButtonTextStyle, $disabledButtonTextStyle]}
+        pressedStyle={$customButtonPressedStyle}
+        pressedTextStyle={$customButtonPressedTextStyle}
+      >
+        Disabled text style
       </Button>
     </DemoUseCase>,
   ],
