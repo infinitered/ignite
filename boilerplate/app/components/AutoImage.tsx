@@ -54,7 +54,7 @@ export function useAutoImage(
 /**
  * An Image component that automatically sizes a remote or data-uri image.
  *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-AutoImage.md)
+ * - [Documentation and Examples](https://docs.infinite.red/ignite-cli/boilerplate/components/AutoImage/)
  */
 export function AutoImage(props: AutoImageProps) {
   const { maxWidth, maxHeight, ...ImageProps } = props
