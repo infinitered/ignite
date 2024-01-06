@@ -27,5 +27,8 @@ export function findAndUpdateDependencyVersions(
     updatedPackageJson = updatedPackageJson.replace(regex, `"${depName}": "${desiredVersion}"`)
   })
 
+  // Make sure `expo-dev-client` is removed
+  updatedPackageJson = updatedPackageJson.replace(/"expo-dev-client"\s*:\s*"[^"]+",?/g, "")
+
   return updatedPackageJson
 }
