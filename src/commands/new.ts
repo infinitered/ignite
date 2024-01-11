@@ -32,7 +32,8 @@ import {
 } from "../tools/expoGoCompatibility"
 import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
 
-type Workflow = "expo" | "prebuild" | "manual"
+// deprecated: 'prebuild'. in favor of 'cng' instead.
+type Workflow = "expo" | "cng" | "prebuild" | "manual"
 
 export interface Options {
   /**
@@ -277,45 +278,61 @@ module.exports = {
     // #region Prompt for Workflow type
     const defaultWorkflow = "expo"
     let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
-
     if (workflow === undefined) {
-      const workflowResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
+      // Ask for Expo vs Bare first, to make the choice tree easier for users
+      const useExpoResponse = await prompt.ask<{ useExpo: "Expo" | "Bare" }>(() => ({
         type: "select",
-        name: "workflow",
-        message: "Choose a workflow:",
+        name: "useExpo",
+        message: "Do you want to use Expo?",
         choices: [
           {
-            name: "Expo Go",
-            message:
-              "Expo Go         Choose this if: the only native modules you need are included in the Expo SDK",
-            value: "expo",
+            name: "Expo",
+            message: "Expo - Recommended for almost all apps [Default]",
           },
           {
-            name: "Expo Prebuild",
-            message:
-              "Expo Prebuild   Choose this if: you need to add native modules or configuration using Expo config plugins",
-            value: "prebuild",
-          },
-          {
-            name: "DIY",
-            message:
-              "DIY             Choose this if: you want to manage native configuration/modules directly, without Expo config plugins",
-            value: "manual",
+            name: "Bare",
+            message: "Bare - For advanced usage (still contains some Expo libraries)",
           },
         ],
-        result(name) {
-          // Some magical enquirer map function here that returns an object of { [name]: value]}
-          // and we only need the value underneath (using name for the cli display to the user)
-          // @ts-expect-error
-          return this.map(name)[name]
-        },
-        initial: "expo",
+        initial: "Expo",
         prefix,
       }))
-      workflow = workflowResponse.workflow
+      const useExpo = useExpoResponse.useExpo === "Expo"
+      if (useExpo) {
+        const expoWorkflowTypeResponse = await prompt.ask<{ workflow: "expo" | "cng" }>(() => ({
+          type: "select",
+          name: "workflow",
+          message:
+            "Which Expo workflow? (You can switch between them later with a little work -- here's how: https://ignitecookbook.com/docs/recipes/SwitchBetweenExpoGoCNG)",
+          choices: [
+            {
+              name: "Expo Go",
+              message: "Expo Go - For simple apps that don't need custom native code [Default]",
+              value: "expo",
+            },
+            {
+              name: "Expo CNG",
+              message:
+                "Expo CNG - For more involved apps -- allows you to integrate custom native code via config plugins",
+              value: "cng",
+            },
+          ],
+          result(name) {
+            // Some magical enquirer map function here that returns an object of { [name]: value]}
+            // and we only need the value underneath (using name for the cli display to the user)
+            // @ts-expect-error
+            return this.map(name)[name]
+          },
+          initial: "expo",
+          prefix,
+        }))
+        workflow = expoWorkflowTypeResponse.workflow
+      } else {
+        workflow = "manual"
+      }
     }
-    const needsPrebuild = workflow === "prebuild" || workflow === "manual"
-    log(`worflow: ${workflow}`)
+    const needsPrebuild = workflow === "prebuild" || workflow === "cng" || workflow === "manual"
+    log(`workflow: ${workflow}`)
     log(`needs prebuild: ${needsPrebuild}`)
     // #endregion
 
