@@ -269,14 +269,14 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --workflow=cng --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
 
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --workflow=prebuild --yes`, {
+      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --workflow=cng --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
       })
