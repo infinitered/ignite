@@ -65,7 +65,8 @@
             "newArchEnabled": false
           }
         }
-      ]
+      ], 
+      "expo-font"
     ],
     "experiments": {
       "tsconfigPaths": true
