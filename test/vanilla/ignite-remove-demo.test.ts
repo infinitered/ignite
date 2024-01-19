@@ -8,7 +8,12 @@ const setup = (): { TEMP_DIR: string } => {
   const TEMP_DIR = tempy.directory({ prefix: "ignite-" })
 
   beforeEach(() => {
-    filesystem.copy(BOILERPLATE_PATH, TEMP_DIR, { overwrite: true })
+    // create the destination directory
+    filesystem.dir(TEMP_DIR)
+    // copy the relevant folders
+    filesystem.copy(BOILERPLATE_PATH + "/app", TEMP_DIR + "/app", { overwrite: true })
+    filesystem.copy(BOILERPLATE_PATH + "/.maestro", TEMP_DIR + "/.maestro", { overwrite: true })
+    filesystem.copy(BOILERPLATE_PATH + "/assets", TEMP_DIR + "/assets", { overwrite: true })
   })
 
   afterEach(() => {

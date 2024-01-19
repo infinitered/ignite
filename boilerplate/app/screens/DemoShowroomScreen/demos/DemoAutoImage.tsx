@@ -14,7 +14,7 @@ const $imageContainer: ViewStyle = {
 const $aspectRatioDescription: TextStyle = {
   textAlign: "center",
   width: "100%",
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
 }
 
 const $aspectRatioWidthExampleContainer: ViewStyle = {
@@ -133,7 +133,7 @@ export const DemoAutoImage: Demo = {
           />
         </View>
 
-        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: spacing.small }]}>
+        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: spacing.sm }]}>
           <View style={[$aspectRatioBox, { height: 32 }]} />
           <Image
             source={{

@@ -1,0 +1,38 @@
+# flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+
+appId: com.helloworld
+env:
+  TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+  FAVORITES_TEXT: "Switch on to only show favorites"
+
+---
+- runFlow: Login.yaml
+- tapOn: "Podcast"
+- assertVisible: "React Native Radio episodes"
+- tapOn:
+    text: ${FAVORITES_TEXT}
+- assertVisible: "This looks a bit empty"
+- tapOn:
+    text: ${FAVORITES_TEXT}
+    # https://maestro.mobile.dev/troubleshooting/known-issues#android-accidental-double-tap
+    retryTapIfNoChange: false
+- scrollUntilVisible:
+    element:
+      text: ${TITLE}
+    direction: DOWN
+    timeout: 50000
+    speed: 40
+    visibilityPercentage: 100
+- longPressOn: ${TITLE}
+- scrollUntilVisible:
+    element:
+      text: ${FAVORITES_TEXT}
+    direction: UP
+    timeout: 50000
+    speed: 40
+    visibilityPercentage: 100
+- tapOn:
+    text: ${FAVORITES_TEXT}
+- assertVisible: ${TITLE}
+
+# @demo remove-file

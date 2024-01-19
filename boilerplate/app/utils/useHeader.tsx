@@ -7,13 +7,16 @@ import { Header, HeaderProps } from "../components"
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Utils-useHeader.md)
  */
-export function useHeader(headerProps: HeaderProps, deps: any[] = []) {
+export function useHeader(
+  headerProps: HeaderProps,
+  deps: Parameters<typeof useLayoutEffect>[1] = [],
+) {
   const navigation = useNavigation()
 
-  useLayoutEffect(() => {
+  React.useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       header: () => <Header {...headerProps} />,
     })
-  }, deps)
+  }, [...deps, navigation])
 }

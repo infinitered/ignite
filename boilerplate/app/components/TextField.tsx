@@ -123,7 +123,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     inputWrapperStyle: $inputWrapperStyleOverride,
     ...TextInputProps
   } = props
-  const input = useRef<TextInput>()
+  const input = useRef<TextInput>(null)
 
   const disabled = TextInputProps.editable === false || status === "disabled"
 
@@ -144,7 +144,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyleOverride,
   ]
 
-  const $inputStyles = [
+  const $inputStyles: StyleProp<TextStyle> = [
     $inputStyle,
     disabled && { color: colors.textDim },
     isRTL && { textAlign: "right" as TextStyle["textAlign"] },
@@ -164,7 +164,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     input.current?.focus()
   }
 
-  useImperativeHandle(ref, () => input.current)
+  useImperativeHandle(ref, () => input.current as TextInput)
 
   return (
     <TouchableOpacity
@@ -190,7 +190,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
             style={$leftAccessoryStyle}
             status={status}
             editable={!disabled}
-            multiline={TextInputProps.multiline}
+            multiline={TextInputProps.multiline ?? false}
           />
         )}
 
@@ -210,7 +210,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
             style={$rightAccessoryStyle}
             status={status}
             editable={!disabled}
-            multiline={TextInputProps.multiline}
+            multiline={TextInputProps.multiline ?? false}
           />
         )}
       </View>
@@ -230,7 +230,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 })
 
 const $labelStyle: TextStyle = {
-  marginBottom: spacing.extraSmall,
+  marginBottom: spacing.xs,
 }
 
 const $inputWrapperStyle: ViewStyle = {
@@ -253,22 +253,22 @@ const $inputStyle: TextStyle = {
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
   paddingVertical: 0,
   paddingHorizontal: 0,
-  marginVertical: spacing.extraSmall,
-  marginHorizontal: spacing.small,
+  marginVertical: spacing.xs,
+  marginHorizontal: spacing.sm,
 }
 
 const $helperStyle: TextStyle = {
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
 }
 
 const $rightAccessoryStyle: ViewStyle = {
-  marginEnd: spacing.extraSmall,
+  marginEnd: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
 }
 const $leftAccessoryStyle: ViewStyle = {
-  marginStart: spacing.extraSmall,
+  marginStart: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",

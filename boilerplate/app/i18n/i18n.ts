@@ -6,6 +6,7 @@ import { I18nManager } from "react-native"
 import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
+import fr from "./fr"
 
 i18n.fallbacks = true
 // to use regional locales use { "en-US": enUS } etc
@@ -29,7 +30,7 @@ if (i18n.translations.hasOwnProperty(systemLocale)) {
 }
 
 // handle RTL languages
-export const isRTL = Localization.isRTL
+export const isRTL = preferredLanguage.textDirection === "rtl"
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 

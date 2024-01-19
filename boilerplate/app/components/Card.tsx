@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
   View,
+  ViewProps,
   ViewStyle,
 } from "react-native"
 import { colors, spacing } from "../theme"
@@ -148,40 +149,42 @@ export function Card(props: CardProps) {
     ...WrapperProps
   } = props
 
-  const preset: Presets = $containerPresets[props.preset] ? props.preset : "default"
+  const preset: Presets = props.preset ?? "default"
   const isPressable = !!WrapperProps.onPress
   const isHeadingPresent = !!(HeadingComponent || heading || headingTx)
   const isContentPresent = !!(ContentComponent || content || contentTx)
   const isFooterPresent = !!(FooterComponent || footer || footerTx)
 
-  const Wrapper: ComponentType<TouchableOpacityProps> = isPressable ? TouchableOpacity : View
+  const Wrapper = (isPressable ? TouchableOpacity : View) as ComponentType<
+    TouchableOpacityProps | ViewProps
+  >
   const HeaderContentWrapper = verticalAlignment === "force-footer-bottom" ? View : Fragment
 
   const $containerStyle = [$containerPresets[preset], $containerStyleOverride]
   const $headingStyle = [
     $headingPresets[preset],
-    (isFooterPresent || isContentPresent) && { marginBottom: spacing.micro },
+    (isFooterPresent || isContentPresent) && { marginBottom: spacing.xxxs },
     $headingStyleOverride,
     HeadingTextProps?.style,
   ]
   const $contentStyle = [
     $contentPresets[preset],
-    isHeadingPresent && { marginTop: spacing.micro },
-    isFooterPresent && { marginBottom: spacing.micro },
+    isHeadingPresent && { marginTop: spacing.xxxs },
+    isFooterPresent && { marginBottom: spacing.xxxs },
     $contentStyleOverride,
     ContentTextProps?.style,
   ]
   const $footerStyle = [
     $footerPresets[preset],
-    (isHeadingPresent || isContentPresent) && { marginTop: spacing.micro },
+    (isHeadingPresent || isContentPresent) && { marginTop: spacing.xxxs },
     $footerStyleOverride,
     FooterTextProps?.style,
   ]
   const $alignmentWrapperStyle = [
     $alignmentWrapper,
     { justifyContent: $alignmentWrapperFlexOptions[verticalAlignment] },
-    LeftComponent && { marginStart: spacing.medium },
-    RightComponent && { marginEnd: spacing.medium },
+    LeftComponent && { marginStart: spacing.md },
+    RightComponent && { marginEnd: spacing.md },
   ]
 
   return (
@@ -240,8 +243,8 @@ export function Card(props: CardProps) {
 }
 
 const $containerBase: ViewStyle = {
-  borderRadius: spacing.medium,
-  padding: spacing.extraSmall,
+  borderRadius: spacing.md,
+  padding: spacing.xs,
   borderWidth: 1,
   shadowColor: colors.palette.neutral800,
   shadowOffset: { width: 0, height: 12 },

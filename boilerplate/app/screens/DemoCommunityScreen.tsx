@@ -6,10 +6,10 @@ import { spacing } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
 
-const chainReactLogo = require("../../assets/images/cr-logo.png")
-const reactNativeLiveLogo = require("../../assets/images/rnl-logo.png")
-const reactNativeRadioLogo = require("../../assets/images/rnr-logo.png")
-const reactNativeNewsletterLogo = require("../../assets/images/rnn-logo.png")
+const chainReactLogo = require("../../assets/images/demo/cr-logo.png")
+const reactNativeLiveLogo = require("../../assets/images/demo/rnl-logo.png")
+const reactNativeRadioLogo = require("../../assets/images/demo/rnr-logo.png")
+const reactNativeNewsletterLogo = require("../../assets/images/demo/rnn-logo.png")
 
 export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   function DemoCommunityScreen(_props) {
@@ -101,28 +101,28 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   }
 
 const $container: ViewStyle = {
-  paddingTop: spacing.large + spacing.extraLarge,
-  paddingHorizontal: spacing.large,
+  paddingTop: spacing.lg + spacing.xl,
+  paddingHorizontal: spacing.lg,
 }
 
 const $title: TextStyle = {
-  marginBottom: spacing.small,
+  marginBottom: spacing.sm,
 }
 
 const $tagline: TextStyle = {
-  marginBottom: spacing.huge,
+  marginBottom: spacing.xxl,
 }
 
 const $description: TextStyle = {
-  marginBottom: spacing.large,
+  marginBottom: spacing.lg,
 }
 
 const $sectionTitle: TextStyle = {
-  marginTop: spacing.huge,
+  marginTop: spacing.xxl,
 }
 
 const $logoContainer: ViewStyle = {
-  marginEnd: spacing.medium,
+  marginEnd: spacing.md,
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",

@@ -1,40 +1,42 @@
 import { useState, useEffect, useRef } from "react"
 import { BackHandler, Platform } from "react-native"
 import {
-  PartialState,
   NavigationState,
-  NavigationAction,
+  PartialState,
   createNavigationContainerRef,
 } from "@react-navigation/native"
 import Config from "../config"
 import type { PersistNavigationConfig } from "../config/config.base"
 import { useIsMounted } from "../utils/useIsMounted"
+import type { AppStackParamList, NavigationProps } from "./AppNavigator"
 
-/* eslint-disable */
-export const RootNavigation = {
-  navigate(_name: string, _params?: any) {},
-  goBack() {},
-  resetRoot(_state?: PartialState<NavigationState> | NavigationState) {},
-  getRootState(): NavigationState {
-    return {} as any
-  },
-  dispatch(_action: NavigationAction) {},
-}
-/* eslint-enable */
+import * as storage from "../utils/storage"
 
-export const navigationRef = createNavigationContainerRef()
+type Storage = typeof storage
+
+/**
+ * Reference to the root App Navigator.
+ *
+ * If needed, you can use this to access the navigation object outside of a
+ * `NavigationContainer` context. However, it's recommended to use the `useNavigation` hook whenever possible.
+ * @see https://reactnavigation.org/docs/navigating-without-navigation-prop/
+ *
+ * The types on this reference will only let you reference top level navigators. If you have
+ * nested navigators, you'll need to use the `useNavigation` with the stack navigator's ParamList type.
+ */
+export const navigationRef = createNavigationContainerRef<AppStackParamList>()
 
 /**
  * Gets the current screen from any navigation state.
  */
-export function getActiveRouteName(state: NavigationState | PartialState<NavigationState>) {
-  const route = state.routes[state.index]
+export function getActiveRouteName(state: NavigationState | PartialState<NavigationState>): string {
+  const route = state.routes[state.index ?? 0]
 
   // Found the active route -- return the name
-  if (!route.state) return route.name
+  if (!route.state) return route.name as keyof AppStackParamList
 
   // Recursive call to deal with nested routers
-  return getActiveRouteName(route.state)
+  return getActiveRouteName(route.state as NavigationState<AppStackParamList>)
 }
 
 /**
@@ -42,8 +44,8 @@ export function getActiveRouteName(state: NavigationState | PartialState<Navigat
  * the navigation or allows exiting the app.
  */
 export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
-  // ignore if iOS ... no back button!
-  if (Platform.OS === "ios") return
+  // ignore unless android... no back button!
+  if (Platform.OS !== "android") return
 
   // The reason we're using a ref here is because we need to be able
   // to update the canExit function without re-setting up all the listeners
@@ -103,36 +105,39 @@ function navigationRestoredDefaultState(persistNavigation: PersistNavigationConf
 /**
  * Custom hook for persisting navigation state.
  */
-export function useNavigationPersistence(storage: any, persistenceKey: string) {
-  const [initialNavigationState, setInitialNavigationState] = useState()
+export function useNavigationPersistence(storage: Storage, persistenceKey: string) {
+  const [initialNavigationState, setInitialNavigationState] =
+    useState<NavigationProps["initialState"]>()
   const isMounted = useIsMounted()
 
   const initNavState = navigationRestoredDefaultState(Config.persistNavigation)
   const [isRestored, setIsRestored] = useState(initNavState)
 
-  const routeNameRef = useRef<string | undefined>()
+  const routeNameRef = useRef<keyof AppStackParamList | undefined>()
 
-  const onNavigationStateChange = (state) => {
+  const onNavigationStateChange = (state: NavigationState | undefined) => {
     const previousRouteName = routeNameRef.current
-    const currentRouteName = getActiveRouteName(state)
+    if (state !== undefined) {
+      const currentRouteName = getActiveRouteName(state)
 
-    if (previousRouteName !== currentRouteName) {
-      // track screens.
-      if (__DEV__) {
-        console.tron.log(currentRouteName)
+      if (previousRouteName !== currentRouteName) {
+        // track screens.
+        if (__DEV__) {
+          console.log(currentRouteName)
+        }
       }
+
+      // Save the current route name for later comparison
+      routeNameRef.current = currentRouteName as keyof AppStackParamList
+
+      // Persist state to storage
+      storage.save(persistenceKey, state)
     }
-
-    // Save the current route name for later comparison
-    routeNameRef.current = currentRouteName
-
-    // Persist state to storage
-    storage.save(persistenceKey, state)
   }
 
   const restoreState = async () => {
     try {
-      const state = await storage.load(persistenceKey)
+      const state = (await storage.load(persistenceKey)) as NavigationProps["initialState"] | null
       if (state) setInitialNavigationState(state)
     } finally {
       if (isMounted()) setIsRestored(true)
@@ -149,22 +154,34 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
 /**
  * use this to navigate without the navigation
  * prop. If you have access to the navigation prop, do not use this.
- * More info: https://reactnavigation.org/docs/navigating-without-navigation-prop/
+ * @see https://reactnavigation.org/docs/navigating-without-navigation-prop/
  */
-export function navigate(name: any, params?: any) {
+export function navigate(name: unknown, params?: unknown) {
   if (navigationRef.isReady()) {
+    // @ts-expect-error
     navigationRef.navigate(name as never, params as never)
   }
 }
 
+/**
+ * This function is used to go back in a navigation stack, if it's possible to go back.
+ * If the navigation stack can't go back, nothing happens.
+ * The navigationRef variable is a React ref that references a navigation object.
+ * The navigationRef variable is set in the App component.
+ */
 export function goBack() {
   if (navigationRef.isReady() && navigationRef.canGoBack()) {
     navigationRef.goBack()
   }
 }
 
-export function resetRoot(params = { index: 0, routes: [] }) {
+/**
+ * resetRoot will reset the root navigation state to the given params.
+ */
+export function resetRoot(
+  state: Parameters<typeof navigationRef.resetRoot>[0] = { index: 0, routes: [] },
+) {
   if (navigationRef.isReady()) {
-    navigationRef.resetRoot(params)
+    navigationRef.resetRoot(state)
   }
 }

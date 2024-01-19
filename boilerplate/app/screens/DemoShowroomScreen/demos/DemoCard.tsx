@@ -95,7 +95,7 @@ export const DemoCard: Demo = {
         }
         ContentComponent={
           <Button
-            style={{ marginVertical: spacing.small }}
+            style={{ marginVertical: spacing.sm }}
             text="ContentComponent"
             LeftAccessory={(props) => <Icon style={props.style} icon="ladybug" />}
           />

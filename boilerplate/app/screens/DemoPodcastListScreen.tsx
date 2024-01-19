@@ -1,12 +1,10 @@
-// Interested in migrating from FlatList to FlashList? Check out the recipe in our Ignite Cookbook
-// https://ignitecookbook.com/docs/recipes/MigratingToFlashList
 import { observer } from "mobx-react-lite"
-import React, { FC, useEffect, useMemo } from "react"
+import React, { ComponentType, FC, useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
-  FlatList,
   Image,
+  ImageSourcePropType,
   ImageStyle,
   Platform,
   StyleSheet,
@@ -14,6 +12,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import { type ContentStyle } from "@shopify/flash-list"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -21,7 +20,17 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Button, Card, EmptyState, Icon, Screen, Text, Toggle } from "../components"
+import {
+  Button,
+  ButtonAccessoryProps,
+  Card,
+  EmptyState,
+  Icon,
+  ListView,
+  Screen,
+  Text,
+  Toggle,
+} from "../components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -32,9 +41,9 @@ import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 
 const ICON_SIZE = 14
 
-const rnrImage1 = require("../../assets/images/rnr-image-1.png")
-const rnrImage2 = require("../../assets/images/rnr-image-2.png")
-const rnrImage3 = require("../../assets/images/rnr-image-3.png")
+const rnrImage1 = require("../../assets/images/demo/rnr-image-1.png")
+const rnrImage2 = require("../../assets/images/demo/rnr-image-2.png")
+const rnrImage3 = require("../../assets/images/demo/rnr-image-3.png")
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
@@ -66,11 +75,12 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
       >
-        <FlatList<Episode>
-          data={episodeStore.episodesForList}
+        <ListView<Episode>
+          contentContainerStyle={$listContentContainer}
+          data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
-          contentContainerStyle={$flatListContentContainer}
           refreshing={refreshing}
+          estimatedItemSize={177}
           onRefresh={manualRefresh}
           ListEmptyComponent={
             isLoading ? (
@@ -89,7 +99,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
                     ? "demoPodcastListScreen.noFavoritesEmptyState.content"
                     : undefined
                 }
-                button={episodeStore.favoritesOnly ? null : undefined}
+                button={episodeStore.favoritesOnly ? "" : undefined}
                 buttonOnPress={manualRefresh}
                 imageStyle={$emptyStateImage}
                 ImageProps={{ resizeMode: "contain" }}
@@ -118,7 +128,6 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           }
           renderItem={({ item }) => (
             <EpisodeCard
-              key={item.guid}
               episode={item}
               isFavorite={episodeStore.hasFavorite(item)}
               onPressFavorite={() => episodeStore.toggleFavorite(item)}
@@ -141,7 +150,7 @@ const EpisodeCard = observer(function EpisodeCard({
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
 
-  const imageUri = useMemo(() => {
+  const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
 
@@ -209,7 +218,7 @@ const EpisodeCard = observer(function EpisodeCard({
     openLinkInBrowser(episode.enclosure.link)
   }
 
-  const ButtonLeftAccessory = useMemo(
+  const ButtonLeftAccessory: ComponentType<ButtonAccessoryProps> = useMemo(
     () =>
       function ButtonLeftAccessory() {
         return (
@@ -296,30 +305,30 @@ const $screenContentContainer: ViewStyle = {
   flex: 1,
 }
 
-const $flatListContentContainer: ViewStyle = {
-  paddingHorizontal: spacing.large,
-  paddingTop: spacing.large + spacing.extraLarge,
-  paddingBottom: spacing.large,
+const $listContentContainer: ContentStyle = {
+  paddingHorizontal: spacing.lg,
+  paddingTop: spacing.lg + spacing.xl,
+  paddingBottom: spacing.lg,
 }
 
 const $heading: ViewStyle = {
-  marginBottom: spacing.medium,
+  marginBottom: spacing.md,
 }
 
 const $item: ViewStyle = {
-  padding: spacing.medium,
-  marginTop: spacing.medium,
+  padding: spacing.md,
+  marginTop: spacing.md,
   minHeight: 120,
 }
 
 const $itemThumbnail: ImageStyle = {
-  marginTop: spacing.small,
+  marginTop: spacing.sm,
   borderRadius: 50,
   alignSelf: "flex-start",
 }
 
 const $toggle: ViewStyle = {
-  marginTop: spacing.medium,
+  marginTop: spacing.md,
 }
 
 const $labelStyle: TextStyle = {
@@ -330,29 +339,29 @@ const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
   flexDirection: "row",
-  marginEnd: spacing.small,
+  marginEnd: spacing.sm,
 }
 
 const $metadata: TextStyle = {
   color: colors.textDim,
-  marginTop: spacing.extraSmall,
+  marginTop: spacing.xs,
   flexDirection: "row",
 }
 
 const $metadataText: TextStyle = {
   color: colors.textDim,
-  marginEnd: spacing.medium,
-  marginBottom: spacing.extraSmall,
+  marginEnd: spacing.md,
+  marginBottom: spacing.xs,
 }
 
 const $favoriteButton: ViewStyle = {
   borderRadius: 17,
-  marginTop: spacing.medium,
+  marginTop: spacing.md,
   justifyContent: "flex-start",
   backgroundColor: colors.palette.neutral300,
   borderColor: colors.palette.neutral300,
-  paddingHorizontal: spacing.medium,
-  paddingTop: spacing.micro,
+  paddingHorizontal: spacing.md,
+  paddingTop: spacing.xxxs,
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
@@ -364,7 +373,7 @@ const $unFavoriteButton: ViewStyle = {
 }
 
 const $emptyState: ViewStyle = {
-  marginTop: spacing.huge,
+  marginTop: spacing.xxl,
 }
 
 const $emptyStateImage: ImageStyle = {

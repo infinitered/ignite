@@ -5,7 +5,7 @@ import { spawnProgress } from "./spawn"
 // in the meantime, we'll use this hacked together version
 
 // Expo doesn't support pnpm, so we'll use yarn or npm
-export type PackagerName = "npm" | "yarn" | "pnpm"
+export type PackagerName = "npm" | "yarn" | "pnpm" | "bun"
 type PackageOptions = {
   packagerName?: PackagerName
   dev?: boolean
@@ -39,11 +39,20 @@ function pnpmAvailable() {
   return isPnpm
 }
 
+let isBun
+function bunAvailable() {
+  if (isBun !== undefined) return isBun
+  isBun = Boolean(system.which("bun"))
+  return isBun
+}
+
 function detectPackager(): PackagerName {
   if (yarnAvailable()) {
     return "yarn"
   } else if (pnpmAvailable()) {
     return "pnpm"
+  } else if (bunAvailable()) {
+    return "bun"
   } else {
     return "npm"
   }
@@ -57,6 +66,10 @@ function availablePackagers(): PackagerName[] {
   }
   if (pnpmAvailable()) {
     packagers.push("pnpm")
+  }
+
+  if (bunAvailable()) {
+    packagers.push("bun")
   }
 
   return packagers
@@ -80,6 +93,8 @@ function addCmd(pkg: string, options: PackageRunOptions = packageInstallOptions)
     cmd = `yarn add`
   } else if (options.packagerName === "npm") {
     cmd = `npm install`
+  } else if (options.packagerName === "bun") {
+    cmd = `bun add`
   } else {
     // neither expo nor a packagerName was provided, so let's detect one
     return addCmd(pkg, { ...options, packagerName: detectPackager() })
@@ -106,6 +121,8 @@ function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions)
     cmd = `yarn remove`
   } else if (options.packagerName === "npm") {
     cmd = `npm uninstall`
+  } else if (options.packagerName === "bun") {
+    cmd = `bun remove`
   } else {
     // neither expo nor a packagerName was provided, so let's detect one
     return removeCmd(pkg, { ...options, packagerName: detectPackager() })
@@ -130,6 +147,8 @@ function installCmd(options: PackageRunOptions) {
     return `yarn install${silent}`
   } else if (options.packagerName === "npm") {
     return `npm install${silent}`
+  } else if (options.packagerName === "bun") {
+    return `bun install${silent}`
   } else {
     return installCmd({ ...options, packagerName: detectPackager() })
   }
@@ -140,6 +159,20 @@ export function list(options: PackageOptions = packageListOptions): PackageListO
   if (options.packagerName === "pnpm") {
     // TODO: pnpm list?
     throw new Error("pnpm list is not supported yet")
+  } else if (options.packagerName === "bun") {
+    return [
+      // TODO do we need to add --global here?
+      `bun pm ls`,
+      (output: string): [string, string][] => {
+        // Parse yarn's human-readable output
+        return output
+          .split("\n")
+          .reduce((acc: [string, string][], line: string): [string, string][] => {
+            const match = line.match(/info "([^@]+)@([^"]+)" has binaries/)
+            return match ? [...acc, [match[1], match[2]]] : acc
+          }, [])
+      },
+    ]
   } else if (
     options.packagerName === "yarn" ||
     (options.packagerName === undefined && yarnAvailable())
@@ -181,6 +214,8 @@ function runCmd(command: string, options: PackageOptions) {
     return `pnpm run ${command}${silent}`
   } else if (options.packagerName === "yarn") {
     return `yarn ${command}${silent}`
+  } else if (options.packagerName === "bun") {
+    return `bun run ${command}`
   } else {
     // defaults to npm run
     return `npm run ${command}${silent}`
@@ -209,9 +244,10 @@ export const packager = {
     const [cmd, parseFn] = list(options)
     return parseFn(await spawnProgress(cmd, {}))
   },
-  has: (packageManager: "yarn" | "npm" | "pnpm"): boolean => {
+  has: (packageManager: "yarn" | "npm" | "pnpm" | "bun"): boolean => {
     if (packageManager === "yarn") return yarnAvailable()
     if (packageManager === "pnpm") return pnpmAvailable()
+    if (packageManager === "bun") return bunAvailable()
     return true
   },
   detectPackager,

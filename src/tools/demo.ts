@@ -11,10 +11,11 @@ export enum CommentType {
 
 /**
  * Regex pattern to find the various types of // @demo remove-x comments
+ * Also finds # @demo remove-file for maestro files
  *
  * NOTE: This currently will _NOT_ remove a multiline comment
  */
-export const demoMarkupRegex = /\s*\/\/\s*@demo.*|{?\/.*@demo.*\/}?/gm
+export const demoMarkupRegex = /(\/\/|#)\s*@demo.*|{?\/.*@demo.*\/}?/gm
 
 /**
  * Take the file content as a string and remove any
@@ -156,7 +157,15 @@ async function update({
       const comments: CommentType[] = []
 
       if (await exists(path, REMOVE_FILE)) {
-        if (!dryRun && !onlyMarkup) filesystem.remove(path)
+        if (!dryRun) {
+          if (onlyMarkup) {
+            const contents = read(path)
+            const sanitized = demo.sanitize(contents)
+            filesystem.write(path, sanitized)
+          } else {
+            filesystem.remove(path)
+          }
+        }
         comments.push(REMOVE_FILE)
         return { path, comments }
       }
@@ -167,9 +176,8 @@ async function update({
         REMOVE_BLOCK_START,
         REMOVE_BLOCK_END,
       ]
-      const shouldUpdate = onlyMarkup
-        ? RegExp(demoMarkupRegex, "gm")
-        : RegExp(operations.join("|"), "g")
+
+      const shouldUpdate = onlyMarkup ? demoMarkupRegex : RegExp(operations.join("|"), "g")
 
       if (await exists(path, shouldUpdate)) {
         const before = read(path)
@@ -200,3 +208,22 @@ export const demo = {
   find,
   update,
 } as const
+
+export const demoDependenciesToRemove = [
+  "@react-navigation/bottom-tabs",
+  "expo-application",
+  "react-native-drawer-layout",
+]
+
+// This function takes a package.json file as a string and removes the dependencies
+// specified in demoDependenciesToRemove and returns the updated package.json as a string.
+export function findAndRemoveDemoDependencies(packageJsonRaw: string): string {
+  let updatedPackageJson = packageJsonRaw
+
+  demoDependenciesToRemove.forEach((depName) => {
+    const regex = new RegExp(`"${depName}"\\s*:\\s*"[^"]+",?`, "g")
+    updatedPackageJson = updatedPackageJson.replace(regex, "")
+  })
+
+  return updatedPackageJson
+}

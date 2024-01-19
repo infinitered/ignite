@@ -1,5 +1,6 @@
 import { GluegunToolbox } from "gluegun"
 import { children } from "./filesystem-ext"
+import { boolFlag } from "./flag"
 
 export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
   const androidHome = process.env.ANDROID_HOME
@@ -59,7 +60,7 @@ export async function renameReactNativeApp(
   const { path } = filesystem
 
   // debug?
-  const debug = Boolean(parameters.options.debug)
+  const debug = boolFlag(parameters.options.debug)
   const log = <T = unknown>(m: T): T => {
     debug && print.info(` ${m}`)
     return m
@@ -88,7 +89,8 @@ export async function renameReactNativeApp(
   await Promise.allSettled([
     rename(`ios/${oldName}.xcodeproj/xcshareddata/xcschemes/${oldName}.xcscheme`, `${newName}.xcscheme`),
     rename(`ios/${oldName}Tests/${oldName}Tests.m`, `${newName}Tests.m`),
-    rename(`ios/${oldName}-Bridging-Header.h`, `${newName}-Bridging-Header.h`),
+    rename(`ios/${oldName}/${oldName}-Bridging-Header.h`, `${newName}-Bridging-Header.h`),
+    rename(`ios/${oldName}/${oldName}.entitlements`, `${newName}.entitlements`),
     rename(`ios/${oldName}.xcworkspace`, `${newName}.xcworkspace`),
     rename(`ios/${oldName}`, `${newName}`),
   ])
@@ -117,6 +119,10 @@ export async function renameReactNativeApp(
         `android/app/src/debug/java/${oldPath}`,
         `android/app/src/debug/java/${newPath}`,
       ),
+      filesystem.moveAsync(
+        `android/app/src/release/java/${oldPath}`,
+        `android/app/src/release/java/${newPath}`,
+      ),
     ])
   }
 
@@ -124,12 +130,12 @@ export async function renameReactNativeApp(
   const filesToPatch = [
     `app.json`,
     `package.json`,
-    `index.js`,
     `android/settings.gradle`,
     `android/app/_BUCK`,
     `android/app/BUCK`,
     `android/app/build.gradle`,
     `android/app/src/debug/java/${newPath}/ReactNativeFlipper.java`,
+    `android/app/src/release/java/${newPath}/ReactNativeFlipper.java`,
     `android/app/src/main/AndroidManifest.xml`,
     `android/app/src/main/java/${newPath}/MainActivity.java`,
     `android/app/src/main/java/${newPath}/MainApplication.java`,
@@ -170,6 +176,49 @@ export async function renameReactNativeApp(
         .replace(new RegExp(oldnamesnake, "g"), newnamesnake)
         .replace(new RegExp(oldName, "g"), newName)
         .replace(new RegExp(oldnamelower, "g"), newnamelower)
+
+      // write the new content back to the file
+      await filesystem.writeAsync(file, newContent, { atomic: true })
+    }),
+  )
+}
+
+export async function replaceMaestroBundleIds(
+  toolbox: GluegunToolbox,
+  oldBundleIdentifier: string,
+  newBundleIdentifier: string,
+) {
+  const { parameters, filesystem, print } = toolbox
+  const { path } = filesystem
+
+  // debug?
+  const debug = boolFlag(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  // here's a list of all the maestro test files to fix the bundle id
+  const TARGET_DIR = path(process.cwd())
+  const filesToPatch = filesystem.cwd(TARGET_DIR).find({
+    matching: `.maestro/**.yaml`,
+    files: true,
+    directories: false,
+  })
+
+  // patch the files
+  await Promise.allSettled(
+    filesToPatch.map(async (file) => {
+      // no need to patch files that don't exist
+      const exists = await filesystem.existsAsync(path(file))
+      if (!exists) return
+
+      const content = await filesystem.readAsync(path(process.cwd(), file), "utf8")
+
+      log(`Patching ${file} - ${oldBundleIdentifier} to ${newBundleIdentifier} and variants`)
+
+      // replace all instances of the placeholder bundle id with the new one
+      const newContent = content.replace(new RegExp(oldBundleIdentifier, "g"), newBundleIdentifier)
 
       // write the new content back to the file
       await filesystem.writeAsync(file, newContent, { atomic: true })
