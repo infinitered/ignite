@@ -17,13 +17,13 @@ const fallbackLocale = "en"
 const systemLocale = Localization.getLocales()[0]
 const systemLocaleTag = systemLocale.languageTag
 
-if (i18n.translations.hasOwnProperty(systemLocaleTag)) {
+if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
   // if specific locales like en-FI or en-US is available, set it
   i18n.locale = systemLocaleTag
 } else {
   // otherwise try to fallback to the general locale (dropping the -XX suffix)
   const generalLocale = systemLocaleTag.split("-")[0]
-  if (i18n.translations.hasOwnProperty(generalLocale)) {
+  if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
     i18n.locale = generalLocale
   } else {
     i18n.locale = fallbackLocale
