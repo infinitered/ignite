@@ -9,25 +9,29 @@ import ko from "./ko"
 import fr from "./fr"
 
 i18n.fallbacks = true
-/**
- * we need always include "*-US" for some valid language codes because when you change the system language,
- * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
- * if you change to another language and then return to English language code is now "en-US".
- */
-i18n.translations = { ar, en, "en-US": en, ko, fr }
 
-const locales = Localization.getLocales() // This method is guaranteed to return at least one array item.
-// The preferred language is the first element in the array, however, we fallback to en-US, especially for tests.
-const preferredLanguage:
-  | Localization.Locale
-  | { languageTag: string; textDirection: "ltr" | "rtl" } = locales[0] || {
-  languageTag: "en-US",
-  textDirection: "ltr",
+// to use regional locales use { "en-US": enUS } etc
+i18n.translations = { ar, "en-US": en, ko, fr }
+
+const fallbackLocale = "en"
+const systemLocale = Localization.getLocales()[0]
+const systemLocaleTag = systemLocale.languageTag
+
+if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
+  // if specific locales like en-FI or en-US is available, set it
+  i18n.locale = systemLocaleTag
+} else {
+  // otherwise try to fallback to the general locale (dropping the -XX suffix)
+  const generalLocale = systemLocaleTag.split("-")[0]
+  if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
+    i18n.locale = generalLocale
+  } else {
+    i18n.locale = fallbackLocale
+  }
 }
-i18n.locale = preferredLanguage.languageTag
 
 // handle RTL languages
-export const isRTL = preferredLanguage.textDirection === "rtl"
+export const isRTL = systemLocale.textDirection === "rtl"
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 
