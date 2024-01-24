@@ -17,6 +17,8 @@ export const withFlipperDisabled: ConfigPlugin = (config) => {
 const FLIPPER_DEPENDENCY = 'implementation("com.facebook.react:flipper-integration")'
 const FLIPPER_INITIALIZATION_REGEX =
   /^\s+if \(BuildConfig.DEBUG\) {\s+ReactNativeFlipper\.initializeFlipper.*\s+}$/gm
+const FIND_FLIPPER_INITIALIZATION = 'ReactNativeFlipper.initializeFlipper'
+const FIND_FLIPPER_IMPORT = 'import com.facebook.react.flipper.ReactNativeFlipper'
 
 /**
  * Modifies the `android/app/build.gradle` file to remove the following line:
@@ -39,7 +41,13 @@ const withAppBuildGradleMod: ConfigPlugin = (config) =>
  */
 const withMainApplicationKtMod: ConfigPlugin = (config) =>
   withMainApplication(config, (modConfig) => {
-    if (modConfig.modResults.contents.includes("ReactNativeFlipper.initializeFlipper")) {
+    if (modConfig.modResults.contents.includes(FIND_FLIPPER_IMPORT)) { 
+      modConfig.modResults.contents = modConfig.modResults.contents.replace(
+        FIND_FLIPPER_IMPORT,
+        "",
+      )
+    }
+    if (modConfig.modResults.contents.includes(FIND_FLIPPER_INITIALIZATION)) {
       modConfig.modResults.contents = modConfig.modResults.contents.replace(
         FLIPPER_INITIALIZATION_REGEX,
         "",
