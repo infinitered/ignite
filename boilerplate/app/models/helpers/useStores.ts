@@ -47,7 +47,7 @@ export const useStores = () => useContext(RootStoreContext)
  * and then rehydrates it. It connects everything with Reactotron
  * and then lets the app know that everything is ready to go.
  */
-export const useInitialRootStore = (callback: () => void | Promise<void>) => {
+export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
   const rootStore = useStores()
   const [rehydrated, setRehydrated] = useState(false)
 
