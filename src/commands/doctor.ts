@@ -77,27 +77,28 @@ module.exports = {
       : []
     const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
 
+    const expoPath = which("expo")
     const expoVersionCmd = "npm list --depth 0 expo 2>&1"
     let expoVersion
     let expoWorkflow
 
-    function expoWorkflowInfo() {
-      const iosFound = isFile(`${directory}\\ios\\.xcodeproj`)
-      const androidFound = isFile(`${directory}\\android\\.gradle`)
+    if (expoPath) {
+      try {
+        expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
+        expoWorkflow = expoWorkflowInfo() ? "bare" : "managed"
+      } catch (_) {
+        expoVersion = "-"
+        expoWorkflow = "not installed"
+      }
 
-      return iosFound || androidFound
+      info("")
+      warning("Warning: Global Expo CLI is deprecated and should be removed.");
+      info(colors.cyan("Expo"));
+      table([[column1("expo"), column2(expoVersion), column3(expoWorkflow)]]);
+    } else {
+      info("");
+      info("Expo CLI is not installed.");
     }
-
-    try {
-      expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
-      expoWorkflow = expoWorkflowInfo() ? "bare" : "managed"
-    } catch (_) {
-      expoVersion = "-"
-      expoWorkflow = "not installed"
-    }
-
-    const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
-
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
     table([
@@ -109,7 +110,6 @@ module.exports = {
       pnpmInfo,
       ...pnpmPackages,
       bunInfo,
-      expoInfo,
     ])
 
     // -=-=-=- ignite -=-=-=-
