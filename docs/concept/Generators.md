@@ -52,7 +52,7 @@ Creates a React Navigation navigator in the `app/navigators` folder.
 npx ignite-cli generate navigator OrderPizza
 ```
 
-You can learn more about navigators [in the Navigation docs](./Navigation.md).
+You can learn more about navigators [in the Navigation docs](../boilerplate/app/navigators/Navigation.md).
 
 ### App Icon generator
 

@@ -52,7 +52,7 @@ We use React Navigation v6 in the current version of Ignite. You'll find any nav
 
 There's also a `navigationUtilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-Learn more in our [Navigation](./concept/Navigation.md) documentation.
+Learn more in our [Navigation](./boilerplate/app/navigators/Navigation.md) documentation.
 
 ### Components
 

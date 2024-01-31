@@ -57,7 +57,6 @@ With Ignite, you get proven patterns, best practices, and a robust, seasoned com
 
 - [Command-line Interface (CLI)](./cli/Ignite-CLI.md) - How to spin up a new Ignite app
   - [CLI Generators](./concept/Generators.md) - Generate components, screens, and more
-  - [Remove Demo Code](./cli/Remove-Demo-Code.md) - How to remove Ignite's demo code via command line
   - [Troubleshooting](./cli/Troubleshooting.md)
 - [Components](./boilerplate/app/components/Components.md) - Ignite's built-in UI components
   - [AutoImage](./boilerplate/app/components/AutoImage.md)
@@ -73,14 +72,13 @@ With Ignite, you get proven patterns, best practices, and a robust, seasoned com
   - [TextField](./boilerplate/app/components/TextField.md)
 - [Concepts](./concept/Concepts.md) - An overview of the concepts behind developing with Ignite
 
-  - [Backend API Integration](./concept/Backend-API-Integration.md) - An explanation of Ignite's basic API setup
   - [Expo and Ignite](./expo/Expo-and-Ignite.md) - How Expo fits in with Ignite, and whether you should use it
   - [Folder-Structure](./concept/Folder-Structure.md) - An explanation of the Ignite folder structure
   - [Generators](./concept/Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./concept/Generator-Templates.md) - Writing your own generator templates
-  - [Internationalization](./concept/Internationalization.md) — How to Internationalize your app
+  - [Internationalization](./boilerplate/app/i18n/) — How to Internationalize your app
   - [Why MobX-State-Tree?](./concept/MobX-State-Tree.md) - All about MobX-State-Tree, and why we use it instead of Redux
-  - [Navigation](./concept/Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
+  - [Navigation](./boilerplate/app/navigators/Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
   - [Styling](./concept/Styling.md) - How we approach styling components in Ignite
   - [Testing](./concept/Testing.md) - How to test your Ignite app
   - [TypeScript](./concept/TypeScript.md) - An explanation of TypeScript in Ignite and lots of resources
