@@ -1,6 +1,6 @@
 {
-  "label": "Utilities",
-  "position": 6,
+  "label": "utils",
+  "position": 50,
   "link": {
     "type": "doc",
     "id": "Utils"

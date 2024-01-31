@@ -18,7 +18,7 @@ const $insetStyle = useSafeAreaInsetsStyle(["top"], "padding")
 <View style={$insetStyle} />
 ```
 
-[Full `useSafeAreaInsetsStyle`](./useSafeAreaInsetsStyle.md)
+[Full `useSafeAreaInsetsStyle`](./useSafeAreaInsetsStyle.ts.md)
 
 ### useHeader
 
@@ -35,4 +35,4 @@ function AccountScreen() {
 }
 ```
 
-[Full `useHeader`](./useHeader.md)
+[Full `useHeader`](./useHeader.tsx.md)

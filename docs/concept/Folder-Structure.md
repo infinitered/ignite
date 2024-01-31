@@ -57,19 +57,19 @@ app
 
 This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
 
-- [Component Overview](../boilerplate/components/Components.md)
-- [AutoImage](../boilerplate/components/AutoImage.md)
-- [Button](../boilerplate/components/Button.md)
-- [Card](../boilerplate/components/Card.md)
-- [EmptyState](../boilerplate/components/EmptyState.md)
-- [Header](../boilerplate/components/Header.md)
-- [Icon](../boilerplate/components/Icon.md)
-- [ListItem](../boilerplate/components/ListItem.md)
-- [ListView](../boilerplate/components/ListView.md)
-- [Screen](../boilerplate/components/Screen.md)
-- [Text](../boilerplate/components/Text.md)
-- [TextField](../boilerplate/components/TextField.md)
-- [Toggle](../boilerplate/components/Toggle.md)
+- [Component Overview](../boilerplate/app/components/Components.md)
+- [AutoImage](../boilerplate/app/components/AutoImage.md)
+- [Button](../boilerplate/app/components/Button.md)
+- [Card](../boilerplate/app/components/Card.md)
+- [EmptyState](../boilerplate/app/components/EmptyState.md)
+- [Header](../boilerplate/app/components/Header.md)
+- [Icon](../boilerplate/app/components/Icon.md)
+- [ListItem](../boilerplate/app/components/ListItem.md)
+- [ListView](../boilerplate/app/components/ListView.md)
+- [Screen](../boilerplate/app/components/Screen.md)
+- [Text](../boilerplate/app/components/Text.md)
+- [TextField](../boilerplate/app/components/TextField.md)
+- [Toggle](../boilerplate/app/components/Toggle.md)
 
 **i18n**
 

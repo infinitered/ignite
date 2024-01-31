@@ -37,7 +37,7 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 - apisauce (to talk to REST servers)
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
-- About a dozen prebuilt [components](./boilerplate/components/Components.md) to build out your UI with
+- About a dozen prebuilt [components](./boilerplate/app/components/Components.md) to build out your UI with
 - And more!
 
 ## Where do I start?
@@ -60,7 +60,7 @@ Ignite comes with some prebuilt, flexible, and customizable components. Unlike m
 
 Ignite works fine with other component libraries, but the built-in component system works the best for custom-designed apps.
 
-Check out the [Components](./boilerplate/components/Components.md) documentation.
+Check out the [Components](./boilerplate/app/components/Components.md) documentation.
 
 ### Testing
 
@@ -92,6 +92,6 @@ const MyComponent = () => {
 }
 ```
 
-Very often, we use [components with presets](./boilerplate/components/Components.md) to share styles across our whole app.
+Very often, we use [components with presets](./boilerplate/app/components/Components.md) to share styles across our whole app.
 
 Read more about styling in the [Styling](./concept/Styling.md) docs.
