@@ -13,7 +13,7 @@ i18n.fallbacks = true
 // to use regional locales use { "en-US": enUS } etc
 i18n.translations = { ar, "en-US": en, ko, fr }
 
-const fallbackLocale = "en"
+const fallbackLocale = "en-US"
 const systemLocale = Localization.getLocales()[0]
 const systemLocaleTag = systemLocale.languageTag
 
