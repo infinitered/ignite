@@ -27,41 +27,41 @@ module.exports = {
     heading("Commands")
     p()
     command("new             ", "Creates a new React Native app", [
-      "ignite new MyApp",
-      "ignite new MyApp --bundle com.mycompany.myapp",
+      "npx ignite-cli new MyApp",
+      "npx ignite-cli new MyApp --bundle com.mycompany.myapp",
     ])
     p()
     command("generate (g)    ", "Generates components and other app features", [
-      "ignite generate --hello",
-      "ignite generate component Hello",
-      "ignite generate model User",
-      "ignite generate screen Login",
+      "npx ignite-cli generate --hello",
+      "npx ignite-cli generate component Hello",
+      "npx ignite-cli generate model User",
+      "npx ignite-cli generate screen Login",
     ])
     p()
     command(
       "doctor          ",
       "Checks your environment & displays versions of installed dependencies",
-      ["ignite doctor"],
+      ["npx ignite-cli doctor"],
     )
     p()
     command("rename          ", "Renames your React Native project (experimental)", [
-      "ignite rename NewName com.mycompany.newname",
+      "npx ignite-cli rename NewName com.mycompany.newname",
     ])
     p()
     command(
       "remove-demo (rd)",
       "Removes demo code from the project (add --dry-run to list changes but not execute)",
-      ["ignite remove-demo", "ignite remove-demo --dry-run"],
+      ["npx ignite-cli remove-demo", "npx ignite-cli remove-demo --dry-run"],
     )
     p()
     command(
       "remove-demo-markup (rdm)",
       "Removes @demo markup from the project (add --dry-run to list changes but not execute)",
-      ["ignite remove-demo-markup", "ignite remove-demo-markup --dry-run"],
+      ["npx ignite-cli remove-demo-markup", "npx ignite-cli remove-demo-markup --dry-run"],
     )
     p()
     command("snackify        ", "Creates a new branch which can be imported as an Expo snack", [
-      "ignite snackify",
+      "npx ignite-cli snackify",
     ])
     p()
     direction(
