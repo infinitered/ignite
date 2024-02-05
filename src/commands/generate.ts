@@ -26,7 +26,7 @@ async function generate(toolbox: GluegunToolbox) {
   if (!name) {
     warning(`⚠️  Please specify a name for your ${generator}:`)
     p()
-    command(`ignite g ${generator} MyName`)
+    command(`npx ignite-cli g ${generator} MyName`)
     return
   }
 
@@ -47,7 +47,7 @@ async function generate(toolbox: GluegunToolbox) {
       `Note that you don't need to add ${pascalGenerator} to the end of the name -- we'll do it for you!`,
     )
     pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
-    command(`ignite generate ${generator} ${pascalName}`)
+    command(`npx ignite-cli generate ${generator} ${pascalName}`)
   }
 
   // okay, let's do it!
