@@ -18,7 +18,7 @@ const edgeInsetMap: Record<string, Edge> = {
 
 export type SafeAreaInsetsStyle<
   Property extends "padding" | "margin" = "padding",
-  Edges extends Array<ExtendedEdge> = Array<ExtendedEdge>
+  Edges extends Array<ExtendedEdge> = Array<ExtendedEdge>,
 > = {
   [K in Edges[number] as `${Property}${Capitalize<K>}`]: number
 }
@@ -34,8 +34,7 @@ export function useSafeAreaInsetsStyle<
 >(
   safeAreaEdges: Edges = [] as unknown as Edges,
   property: Property = "padding" as Property,
-): SafeAreaInsetsStyle<Property, Edges>
-{
+): SafeAreaInsetsStyle<Property, Edges> {
   const insets = useSafeAreaInsets()
 
   return safeAreaEdges.reduce((acc, e) => {
