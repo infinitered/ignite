@@ -3,7 +3,7 @@
 It's important to stay up-to-date with React Native updates. Luckily, we can bank on Expo having done this work for us. If you're letting Expo manage your native code for you, just run the following:
 
 ```bash
-npx expo install expo@49.0.0
+npx expo install expo@latest
 npx expo install --fix
 ```
 
