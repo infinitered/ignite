@@ -133,8 +133,7 @@
       "@typescript-eslint",
       "react",
       "react-native",
-      "reactotron",
-      "jsdoc"
+      "reactotron"
     ],
     "parserOptions": {
       "ecmaFeatures": {
