@@ -1,4 +1,3 @@
-import { FlexStyle } from "react-native"
 import { Edge, useSafeAreaInsets } from "react-native-safe-area-context"
 
 export type ExtendedEdge = Edge | "start" | "end"
@@ -17,29 +16,29 @@ const edgeInsetMap: Record<string, Edge> = {
   end: "right",
 }
 
+export type SafeAreaInsetsStyle<
+  Property extends "padding" | "margin" = "padding",
+  Edges extends Array<ExtendedEdge> = Array<ExtendedEdge>,
+> = {
+  [K in Edges[number] as `${Property}${Capitalize<K>}`]: number
+}
+
 /**
  * A hook that can be used to create a safe-area-aware style object that can be passed directly to a View.
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/utility/useSafeAreaInsetsStyle.md)
  */
-export function useSafeAreaInsetsStyle(
-  safeAreaEdges: ExtendedEdge[] = [],
-  property: "padding" | "margin" = "padding",
-): Pick<
-  FlexStyle,
-  | "marginBottom"
-  | "marginEnd"
-  | "marginStart"
-  | "marginTop"
-  | "paddingBottom"
-  | "paddingEnd"
-  | "paddingStart"
-  | "paddingTop"
-> {
+export function useSafeAreaInsetsStyle<
+  Property extends "padding" | "margin" = "padding",
+  Edges extends Array<ExtendedEdge> = [],
+>(
+  safeAreaEdges: Edges = [] as unknown as Edges,
+  property: Property = "padding" as Property,
+): SafeAreaInsetsStyle<Property, Edges> {
   const insets = useSafeAreaInsets()
 
   return safeAreaEdges.reduce((acc, e) => {
     const value = edgeInsetMap[e] ?? e
     return { ...acc, [`${property}${propertySuffixMap[e]}`]: insets[value] }
-  }, {})
+  }, {}) as SafeAreaInsetsStyle<Property, Edges>
 }
