@@ -10,6 +10,10 @@ interface DemoUseCaseProps {
   children: ReactNode
 }
 
+/**
+ * @param {DemoUseCaseProps} props - The props for the `DemoUseCase` component.
+ * @returns {JSX.Element} The rendered `DemoUseCase` component.
+ */
 export function DemoUseCase(props: DemoUseCaseProps) {
   const { name, description, children, layout = "column" } = props
 
