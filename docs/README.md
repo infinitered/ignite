@@ -76,7 +76,7 @@ With Ignite, you get proven patterns, best practices, and a robust, seasoned com
   - [Folder Structure](./boilerplate/Boilerplate.md) - An overview of the Ignite folder structure
   - [Generators](./concept/Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./concept/Generator-Templates.md) - Writing your own generator templates
-  - [Internationalization](./boilerplate/app/i18n/) — How to Internationalize your app
+  - [Internationalization](./boilerplate/app/i18n/Internationalization.md) — How to Internationalize your app
   - [Why MobX-State-Tree?](./concept/MobX-State-Tree.md) - All about MobX-State-Tree, and why we use it instead of Redux
   - [Navigation](./boilerplate/app/navigators/Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
   - [Styling](./concept/Styling.md) - How we approach styling components in Ignite
