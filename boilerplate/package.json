@@ -190,32 +190,7 @@
       "react/no-unescaped-entities": 0,
       "react/prop-types": 0,
       "space-before-function-paren": 0,
-      "reactotron/no-tron-in-production": "error",
-
-      "jsdoc/check-access": 1,
-      "jsdoc/check-alignment": 1,
-      "jsdoc/check-param-names": 1,
-      "jsdoc/check-property-names": 1,
-      "jsdoc/check-tag-names": 1,
-      "jsdoc/check-types": 1,
-      "jsdoc/check-values": 1,
-      "jsdoc/empty-tags": 1,
-      "jsdoc/implements-on-classes": 1,
-      "jsdoc/multiline-blocks": 1,
-      "jsdoc/no-multi-asterisks": 1,
-      "jsdoc/require-param": 1,
-      "jsdoc/require-param-name": 1,
-      "jsdoc/require-param-type": 1,
-      "jsdoc/require-property": 1,
-      "jsdoc/require-property-name": 1,
-      "jsdoc/require-property-type": 1,
-      "jsdoc/require-returns": 1,
-      "jsdoc/require-returns-check": 1,
-      "jsdoc/require-returns-type": 1,
-      "jsdoc/require-yields": 1,
-      "jsdoc/require-yields-check": 1,
-      "jsdoc/tag-lines": 1,
-      "jsdoc/valid-types": 1
+      "reactotron/no-tron-in-production": "error"
     }
   }
 }
