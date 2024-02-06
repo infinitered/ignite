@@ -8,7 +8,7 @@ If you run into problems, first search the issues in the [GitHub repository](htt
 
 ## Troubleshooting setup
 
-We recommend using `npx ignite-cli [command]` to ensure you're using the latest & greatest Ignite.
+We recommend using `npx ignite-cli@latest [command]` to ensure you're using the latest & greatest Ignite.
 
 ### Remove a previous global install
 
