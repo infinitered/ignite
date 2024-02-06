@@ -6,6 +6,7 @@ const lockFile = {
   yarn: "yarn.lock",
   pnpm: "pnpm-lock.yaml",
   npm: "package-lock.json",
+  bun: "bun.lockb",
 } as const
 
 const MAC: NodeJS.Platform = "darwin"
@@ -29,12 +30,13 @@ interface TargetsOptions {
   platform: NodeJS.Platform | undefined
 }
 const targets = ({ rootDir, packagerName, platform }: TargetsOptions) => {
-  return [
+  const cachePaths = [
     { type: "dir", path: path(rootDir, "node_modules") },
     { type: "file", path: path(rootDir, lockFile[packagerName]) },
-    { type: "dir", path: path(rootDir, "ios", "Pods"), platform: ["darwin"] },
-    { type: "dir", path: path(rootDir, "ios", "build"), platform: ["darwin"] },
-  ].filter((target) => (target?.platform ? target.platform.includes(platform) : true))
+  ] as { type: string; path: string; platform?: NodeJS.Platform[] }[]
+  return cachePaths.filter((target) =>
+    target?.platform ? target.platform.includes(platform) : true,
+  )
 }
 
 interface CopyOptions {

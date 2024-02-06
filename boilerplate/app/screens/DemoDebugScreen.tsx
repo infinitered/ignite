@@ -19,20 +19,24 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   } = useStores()
 
   const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
+  // @ts-expect-error
+  const usingFabric = global.nativeFabricUIManager != null
 
   const demoReactotron = React.useMemo(
     () => async () => {
-      console.tron.display({
-        name: "DISPLAY",
-        value: {
-          appId: Application.applicationId,
-          appName: Application.applicationName,
-          appVersion: Application.nativeApplicationVersion,
-          appBuildVersion: Application.nativeBuildVersion,
-          hermesEnabled: usingHermes,
-        },
-        important: true,
-      })
+      if (__DEV__) {
+        console.tron.display({
+          name: "DISPLAY",
+          value: {
+            appId: Application.applicationId,
+            appName: Application.applicationName,
+            appVersion: Application.nativeApplicationVersion,
+            appBuildVersion: Application.nativeBuildVersion,
+            hermesEnabled: usingHermes,
+          },
+          important: true,
+        })
+      }
     },
     [],
   )
@@ -83,6 +87,14 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
             <View style={$item}>
               <Text preset="bold">Hermes Enabled</Text>
               <Text>{String(usingHermes)}</Text>
+            </View>
+          }
+        />
+        <ListItem
+          LeftComponent={
+            <View style={$item}>
+              <Text preset="bold">Fabric Enabled</Text>
+              <Text>{String(usingFabric)}</Text>
             </View>
           }
         />

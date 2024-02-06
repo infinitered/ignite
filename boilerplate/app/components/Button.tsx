@@ -15,6 +15,7 @@ type Presets = keyof typeof $viewPresets
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
   pressableState: PressableStateCallbackType
+  disabled?: boolean
 }
 
 export interface ButtonProps extends PressableProps {
@@ -48,6 +49,10 @@ export interface ButtonProps extends PressableProps {
    */
   pressedTextStyle?: StyleProp<TextStyle>
   /**
+   * An optional style override for the button text when in the "disabled" state.
+   */
+  disabledTextStyle?: StyleProp<TextStyle>
+  /**
    * One of the different types of button presets.
    */
   preset?: Presets
@@ -65,6 +70,15 @@ export interface ButtonProps extends PressableProps {
    * Children components.
    */
   children?: React.ReactNode
+  /**
+   * disabled prop, accessed directly for declarative styling reasons.
+   * https://reactnative.dev/docs/pressable#disabled
+   */
+  disabled?: boolean
+  /**
+   * An optional style override for the disabled state
+   */
+  disabledStyle?: StyleProp<ViewStyle>
 }
 
 /**
@@ -82,40 +96,57 @@ export function Button(props: ButtonProps) {
     pressedStyle: $pressedViewStyleOverride,
     textStyle: $textStyleOverride,
     pressedTextStyle: $pressedTextStyleOverride,
+    disabledTextStyle: $disabledTextStyleOverride,
     children,
     RightAccessory,
     LeftAccessory,
+    disabled,
+    disabledStyle: $disabledViewStyleOverride,
     ...rest
   } = props
 
-  const preset: Presets = $viewPresets[props.preset] ? props.preset : "default"
-  function $viewStyle({ pressed }) {
+  const preset: Presets = props.preset ?? "default"
+  function $viewStyle({ pressed }: PressableStateCallbackType) {
     return [
       $viewPresets[preset],
       $viewStyleOverride,
       !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
+      !!disabled && $disabledViewStyleOverride,
     ]
   }
-  function $textStyle({ pressed }) {
+  function $textStyle({ pressed }: PressableStateCallbackType) {
     return [
       $textPresets[preset],
       $textStyleOverride,
       !!pressed && [$pressedTextPresets[preset], $pressedTextStyleOverride],
+      !!disabled && $disabledTextStyleOverride,
     ]
   }
 
   return (
-    <Pressable style={$viewStyle} accessibilityRole="button" {...rest}>
+    <Pressable
+      style={$viewStyle}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
+      {...rest}
+      disabled={disabled}
+    >
       {(state) => (
         <>
-          {!!LeftAccessory && <LeftAccessory style={$leftAccessoryStyle} pressableState={state} />}
+          {!!LeftAccessory && (
+            <LeftAccessory style={$leftAccessoryStyle} pressableState={state} disabled={disabled} />
+          )}
 
           <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
             {children}
           </Text>
 
           {!!RightAccessory && (
-            <RightAccessory style={$rightAccessoryStyle} pressableState={state} />
+            <RightAccessory
+              style={$rightAccessoryStyle}
+              pressableState={state}
+              disabled={disabled}
+            />
           )}
         </>
       )}

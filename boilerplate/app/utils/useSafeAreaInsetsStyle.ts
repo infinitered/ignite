@@ -11,7 +11,7 @@ const propertySuffixMap = {
   end: "End",
 }
 
-const edgeInsetMap = {
+const edgeInsetMap: Record<string, Edge> = {
   start: "left",
   end: "right",
 }
@@ -26,19 +26,20 @@ export type SafeAreaInsetsStyle<
 /**
  * A hook that can be used to create a safe-area-aware style object that can be passed directly to a View.
  *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Utils-useSafeAreaInsetsStyle.md)
+ * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/utility/useSafeAreaInsetsStyle.md)
  */
 export function useSafeAreaInsetsStyle<
   Property extends "padding" | "margin" = "padding",
   Edges extends Array<ExtendedEdge> = [],
 >(
-  safeAreaEdges: Edges = [] as Edges,
+  safeAreaEdges: Edges = [] as unknown as Edges,
   property: Property = "padding" as Property,
 ): SafeAreaInsetsStyle<Property, Edges>
 {
   const insets = useSafeAreaInsets()
 
   return safeAreaEdges.reduce((acc, e) => {
-    return { ...acc, [`${property}${propertySuffixMap[e]}`]: insets[edgeInsetMap[e] ?? e] }
-  }, {}) as SafeAreaInsetsStyle<Property, Edges>
+    const value = edgeInsetMap[e] ?? e
+    return { ...acc, [`${property}${propertySuffixMap[e]}`]: insets[value] }
+  }, {})
 }

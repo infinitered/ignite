@@ -123,7 +123,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     inputWrapperStyle: $inputWrapperStyleOverride,
     ...TextInputProps
   } = props
-  const input = useRef<TextInput>()
+  const input = useRef<TextInput>(null)
 
   const disabled = TextInputProps.editable === false || status === "disabled"
 
@@ -144,7 +144,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyleOverride,
   ]
 
-  const $inputStyles = [
+  const $inputStyles: StyleProp<TextStyle> = [
     $inputStyle,
     disabled && { color: colors.textDim },
     isRTL && { textAlign: "right" as TextStyle["textAlign"] },
@@ -164,7 +164,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     input.current?.focus()
   }
 
-  useImperativeHandle(ref, () => input.current)
+  useImperativeHandle(ref, () => input.current as TextInput)
 
   return (
     <TouchableOpacity
@@ -190,7 +190,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
             style={$leftAccessoryStyle}
             status={status}
             editable={!disabled}
-            multiline={TextInputProps.multiline}
+            multiline={TextInputProps.multiline ?? false}
           />
         )}
 
@@ -210,7 +210,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
             style={$rightAccessoryStyle}
             status={status}
             editable={!disabled}
-            multiline={TextInputProps.multiline}
+            multiline={TextInputProps.multiline ?? false}
           />
         )}
       </View>

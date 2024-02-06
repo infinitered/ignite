@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "8.8.2",
+  "version": "9.4.3",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
@@ -32,7 +32,7 @@
     "format:write": "yarn format --write",
     "format:check": "yarn format --check",
     "lint": "eslint 'src/**' 'test/**'",
-    "test": "jest",
+    "test": "TS_JEST_DISABLE_VER_CHECKER=true jest",
     "watch": "jest --watch",
     "watch:debug": "yarn watch --runInBand --verbose",
     "coverage": "jest --coverage",
@@ -42,9 +42,8 @@
     "ignite-cli:dev": "node bin/ignite",
     "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x"
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
@@ -72,7 +71,6 @@
     "jest": "^27.0.6",
     "prettier": "2.8.8",
     "semantic-release": "^17.4.2",
-    "strip-ansi": "^6.0.0",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",
     "typescript": "^5.0.4"

@@ -34,9 +34,14 @@ jest.mock("i18n-js", () => ({
   },
 }))
 
+jest.mock("expo-localization", () => ({
+  ...jest.requireActual("expo-localization"),
+  getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
+}))
+
 declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
 
 jest.useFakeTimers()
 declare global {
-  let __TEST__
+  let __TEST__: boolean
 }

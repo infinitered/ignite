@@ -6,18 +6,31 @@
     "jsx": "react-native",
     "module": "es2015",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "strict": true,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "sourceMap": true,
     "target": "esnext",
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "baseUrl": "./"
+    "baseUrl": ".",
+    "paths": {
+      "app/*": ["./app/*"],
+      "assets/*": ["./assets/*"]
+    }
   },
-  "exclude": ["node_modules"],
-  "include": ["index.js", "App.js", "app", "test", "*.js"],
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "ts-node": {
+    "compilerOptions": {
+      // compilerOptions specified here will override those declared above,
+      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
+      // different options with a single tsconfig.json.
+      "module": "commonjs"
+    }
+  },
+  "include": ["index.js", "App.tsx", "app", "types", "plugins", "app.config.ts"],
+  "exclude": ["node_modules", "test/**/*"]
 }

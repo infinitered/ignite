@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import { setReactotronRootStore } from "../../services/reactotron"
 import { RootStore, RootStoreModel } from "../RootStore"
 import { setupRootStore } from "./setupRootStore"
 
@@ -48,20 +47,22 @@ export const useStores = () => useContext(RootStoreContext)
  * and then rehydrates it. It connects everything with Reactotron
  * and then lets the app know that everything is ready to go.
  */
-export const useInitialRootStore = (callback: () => void | Promise<void>) => {
+export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
   const rootStore = useStores()
   const [rehydrated, setRehydrated] = useState(false)
 
   // Kick off initial async loading actions, like loading fonts and rehydrating RootStore
   useEffect(() => {
-    let _unsubscribe
+    let _unsubscribe: () => void | undefined
     ;(async () => {
       // set up the RootStore (returns the state restored from AsyncStorage)
-      const { restoredState, unsubscribe } = await setupRootStore(rootStore)
+      const { unsubscribe } = await setupRootStore(rootStore)
       _unsubscribe = unsubscribe
 
       // reactotron integration with the MST root store (DEV only)
-      setReactotronRootStore(rootStore, restoredState)
+      if (__DEV__) {
+        console.tron.trackMstNode(rootStore)
+      }
 
       // let the app know we've finished rehydrating
       setRehydrated(true)
@@ -72,7 +73,7 @@ export const useInitialRootStore = (callback: () => void | Promise<void>) => {
 
     return () => {
       // cleanup
-      if (_unsubscribe) _unsubscribe()
+      if (_unsubscribe !== undefined) _unsubscribe()
     }
   }, [])
 

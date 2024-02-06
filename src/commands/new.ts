@@ -1,3 +1,4 @@
+import { EOL } from "os"
 import { GluegunToolbox } from "../types"
 import {
   isAndroidInstalled,
@@ -20,11 +21,19 @@ import {
   pkgColor,
   hr,
   INDENT,
+  stopLastSpinner,
 } from "../tools/pretty"
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import { EOL } from "os"
+import {
+  expoGoCompatExpectedVersions,
+  findAndUpdateDependencyVersions,
+} from "../tools/expoGoCompatibility"
+import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
+
+// deprecated: 'prebuild'. in favor of 'cng' instead.
+type Workflow = "expo" | "cng" | "prebuild" | "manual"
 
 export interface Options {
   /**
@@ -78,17 +87,11 @@ export interface Options {
    */
   overwrite?: boolean
   /**
-   * Input Source: `parameter.option`
-   * @deprecated this option is deprecated. Ignite sets you up to run native or Expo
-   * @default undefined
-   */
-  expo?: boolean
-  /**
    * Package manager to install dependencies with
    *
    * Input Source: `prompt.ask`| `parameter.option`
    */
-  packager?: "npm" | "yarn" | "pnpm"
+  packager?: "npm" | "yarn" | "pnpm" | "bun"
   /**
    * The target directory where the project will be created.
    *
@@ -124,23 +127,53 @@ export interface Options {
    * @default false
    */
   yes?: boolean
+  /**
+   * Whether or not to opt into specific experimental features
+   */
+  experimental?: string
+  /**
+   * Expo workflow to determine if we need to generate native directories
+   * and include them in .gitignore or not
+   *
+   * Input Source: `prompt.ask`| `parameter.option`
+   */
+  workflow?: Workflow
+  /**
+   * Whether or not to timeout if the app creation takes too long
+   * Input Source: `parameter.option`
+   * @default false
+   */
+  noTimeout?: boolean
 }
 
-export default {
+module.exports = {
   run: async (toolbox: GluegunToolbox) => {
     // #region Toolbox
     const { print, filesystem, system, meta, parameters, strings, prompt } = toolbox
     const { kebabCase } = strings
     const { exists, path, removeAsync, copy, read, write, homedir } = filesystem
     const { info, colors, warning } = print
-    const { gray, cyan, yellow, underline, white } = colors
+    const { gray, cyan, yellow, white, red, underline } = colors
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
+    const noTimeout = options.noTimeout ?? false
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
+    /** Add just a _little_ more spacing to match with spinners and heading */
+    const p2 = (m = "") => p(` ${m}`)
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
+
+    // Absolute maximum that an app can take after inputs
+    // is 10 minutes ... otherwise we've hung up somewhere and need to exit.
+    const MAX_APP_CREATION_TIME = 10 * 60 * 1000
+    const timeoutExit = () => {
+      p()
+      p(yellow("Error: App creation timed out."))
+      if (!debug) p(gray("Run again with --debug to see what's going on."))
+      process.exit(1)
+    }
 
     // #endregion
 
@@ -176,7 +209,7 @@ export default {
     // #endregion
 
     // #region Bundle Identifier
-    const defaultBundleIdentifier = `com.${projectName.toLowerCase()}`
+    const defaultBundleIdentifier = `com.${strings.pascalCase(projectName).toLowerCase()}`
     let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
@@ -242,6 +275,67 @@ export default {
     }
     // #endregion
 
+    // #region Prompt for Workflow type
+    const defaultWorkflow = "expo"
+    let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
+    if (workflow === undefined) {
+      // Ask for Expo vs Bare first, to make the choice tree easier for users
+      const useExpoResponse = await prompt.ask<{ useExpo: "Expo" | "Bare" }>(() => ({
+        type: "select",
+        name: "useExpo",
+        message: "Do you want to use Expo?",
+        choices: [
+          {
+            name: "Expo",
+            message: "Expo - Recommended for almost all apps [Default]",
+          },
+          {
+            name: "Bare",
+            message: "Bare - For advanced usage (still contains some Expo libraries)",
+          },
+        ],
+        initial: "Expo",
+        prefix,
+      }))
+      const useExpo = useExpoResponse.useExpo === "Expo"
+      if (useExpo) {
+        const expoWorkflowTypeResponse = await prompt.ask<{ workflow: "expo" | "cng" }>(() => ({
+          type: "select",
+          name: "workflow",
+          message:
+            "Which Expo workflow? (You can switch between them later with a little work -- here's how: https://ignitecookbook.com/docs/recipes/SwitchBetweenExpoGoCNG)",
+          choices: [
+            {
+              name: "Expo Go",
+              message: "Expo Go - For simple apps that don't need custom native code [Default]",
+              value: "expo",
+            },
+            {
+              name: "Expo CNG",
+              message:
+                "Expo CNG - For more involved apps -- allows you to integrate custom native code via config plugins",
+              value: "cng",
+            },
+          ],
+          result(name) {
+            // Some magical enquirer map function here that returns an object of { [name]: value]}
+            // and we only need the value underneath (using name for the cli display to the user)
+            // @ts-expect-error
+            return this.map(name)[name]
+          },
+          initial: "expo",
+          prefix,
+        }))
+        workflow = expoWorkflowTypeResponse.workflow
+      } else {
+        workflow = "manual"
+      }
+    }
+    const needsPrebuild = workflow === "prebuild" || workflow === "cng" || workflow === "manual"
+    log(`workflow: ${workflow}`)
+    log(`needs prebuild: ${needsPrebuild}`)
+    // #endregion
+
     // #region Prompt Git Option
     const defaultGit = true
     let git = useDefault(options.git) ? defaultGit : boolFlag(options.git)
@@ -283,15 +377,20 @@ export default {
     // we pass in expo because we can't use pnpm if we're using expo
 
     const availablePackagers = packager.availablePackagers()
+    log(`availablePackagers: ${availablePackagers}`)
     const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
     let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
 
     const validatePackagerName = (input: unknown): input is PackagerName =>
-      typeof input === "string" && ["npm", "yarn", "pnpm"].includes(input)
+      typeof input === "string" && ["npm", "yarn", "pnpm", "bun"].includes(input)
 
     if (packagerName !== undefined && validatePackagerName(packagerName) === false) {
       p()
-      p(yellow(`Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm.`))
+      p(
+        yellow(
+          `Error: Invalid packager: "${packagerName}". Valid packagers are npm, yarn, pnpm, bun.`,
+        ),
+      )
       process.exit(1)
     }
 
@@ -324,6 +423,7 @@ export default {
 
     const packagerOptions = { packagerName }
 
+    const isWindows = process.platform === "win32"
     const ignitePath = path(`${meta.src}`, "..")
     const boilerplatePath = path(ignitePath, "boilerplate")
     const boilerplate = (...pathParts: string[]) => path(boilerplatePath, ...pathParts)
@@ -347,336 +447,502 @@ export default {
     }
     // #endregion
 
-    // #region Expo
-    // show warning about --expo going away
-    const expo = boolFlag(options.expo)
-    if (expo) {
-      warning(
-        " Detected --expo, this option is deprecated. Ignite sets you up to run native or Expo!",
-      )
-      p()
+    // #region Experimental Features parsing
+    let newArch
+    let expoVersion
+    const experimentalFlags = options.experimental?.split(",") ?? []
+    log(`experimentalFlags: ${experimentalFlags}`)
+
+    experimentalFlags.forEach((flag) => {
+      if (flag === "new-arch") {
+        newArch = true
+      } else if (flag.indexOf("expo-") > -1) {
+        expoVersion = flag.substring(5)
+      }
+    })
+    // #endregion
+
+    // #region Prompt to enable experimental features
+
+    // New Architecture
+    const defaultNewArch = false
+    let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
+    if (experimentalNewArch === undefined && workflow !== "expo") {
+      const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalNewArch",
+        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        initial: defaultNewArch,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalNewArch = newArchResponse.experimentalNewArch
+    } else if (workflow === "expo") {
+      // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
+      experimentalNewArch = false
     }
+
     // #endregion
 
     // #region Debug
     // start tracking performance
     const perfStart = new Date().getTime()
 
+    // add a timeout to make sure we don't hang on any errors
+    const timeout = noTimeout ? undefined : setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
+
     // #region Print Welcome
     // welcome everybody!
-    const terminalWidth = process.stdout.columns ?? 80
-    const logo =
-      terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
-    p()
-    p()
-    p()
-    p()
-    logo()
-    p()
-    p()
+    try {
+      const terminalWidth = process.stdout.columns ?? 80
+      const logo =
+        terminalWidth > 80 ? () => ascii("logo.ascii.txt") : () => ascii("logo-sm.ascii.txt")
+      p()
+      p()
+      p()
+      p()
+      logo()
+      p()
+      p()
 
-    const pkg = pkgColor(packagerName)
-    p(` █ Creating ${em(projectName)} using ${em(`Ignite ${meta.version()}`)}`)
-    p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
-    p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
-    p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
-    p(` █ Path: ${underline(targetPath)}`)
-    hr()
-    p()
-    // #endregion
+      const pkg = pkgColor(packagerName)
+      const igniteVersion = meta.version()
+      p(` █ Creating ${em(projectName)} using ${em(`Ignite ${igniteVersion}`)}`)
+      p(` █ Powered by ${ir(" ∞ Infinite Red ")} (${link("https://infinite.red")})`)
+      p(` █ Package Manager: ${pkg(print.colors.bold(packagerName))}`)
+      p(` █ Bundle identifier: ${em(bundleIdentifier)}`)
+      p(` █ Path: ${underline(targetPath)}`)
+      hr()
+      p()
+      // #endregion
 
-    // #region Overwrite
-    if (exists(targetPath) === "dir" && overwrite === true) {
-      const msg = ` Tossing that old app like it's hot`
-      startSpinner(msg)
-      await removeAsync(targetPath)
-      stopSpinner(msg, "🗑️")
-    }
-    // #endregion
+      // #region Overwrite
+      if (exists(targetPath) === "dir" && overwrite === true) {
+        const msg = ` Tossing that old app like it's hot`
+        startSpinner(msg)
+        await removeAsync(targetPath)
+        stopSpinner(msg, "🗑️")
+      }
+      // #endregion
 
-    // #region Local build folder clean
-    // Remove some folders that we don't want to copy over
-    // This mostly only applies when you're developing locally
-    await Promise.all([
-      removeAsync(path(boilerplatePath, "node_modules")),
-      removeAsync(path(boilerplatePath, "ios", "Pods")),
-      removeAsync(path(boilerplatePath, "ios", "build")),
-      removeAsync(path(boilerplatePath, "android", ".idea")),
-      removeAsync(path(boilerplatePath, "android", ".gradle")),
-      removeAsync(path(boilerplatePath, "android", "build")),
-    ])
-    // #endregion
-
-    // #region Copy Boilerplate Files
-    startSpinner(" 3D-printing a new React Native app")
-    await copyBoilerplate(toolbox, {
-      boilerplatePath,
-      targetPath,
-      excluded: [".vscode", "node_modules", "yarn.lock"],
-      overwrite,
-    })
-    stopSpinner(" 3D-printing a new React Native app", "🖨")
-    // copy the .gitignore if it wasn't copied over
-    // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
-    // (see https://github.com/npm/npm/issues/3763); development Ignite still
-    // has it in .gitignore. Copy it from one or the other.
-    const boilerplateIgnorePath = exists(boilerplate(".gitignore.template"))
-      ? boilerplate(".gitignore.template")
-      : boilerplate(".gitignore")
-    const targetIgnorePath = log(path(targetPath, ".gitignore"))
-    copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
-
-    if (exists(targetIgnorePath) === false) {
-      warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
-    }
-
-    // note the original directory
-    const cwd = log(process.cwd())
-
-    // jump into the project to do additional tasks
-    process.chdir(targetPath)
-    // #endregion
-
-    // #region Handle package.json
-    // Update package.json:
-    // - Replacing app name: We do it on the unparsed file content
-    //   since that's easier than updating individual values
-    //   in the parsed structure, then we parse that as JSON.
-    // - If Expo, we also merge in our extra expo stuff.
-    // - Then write it back out.
-    let packageJsonRaw = read("package.json")
-    packageJsonRaw = packageJsonRaw
-      .replace(/HelloWorld/g, projectName)
-      .replace(/hello-world/g, projectNameKebab)
-    const packageJson = JSON.parse(packageJsonRaw)
-
-    write("./package.json", packageJson)
-    // #endregion
-
-    // #region Run Packager Install
-    // pnpm/yarn/npm install it
-
-    // check if there is a dependency cache using a hash of the package.json
-    const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
-    const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
-    const cacheExists = exists(cachePath) === "dir"
-
-    log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
-    log(`cacheExists: ${cacheExists}`)
-
-    // use-cache defaults to `false` for now; if we make it robust enough,
-    // we can enable it by default in the future.
-    const defaultUseCache = false
-    const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
-
-    const shouldUseCache = installDeps && cacheExists && useCache
-    if (shouldUseCache) {
-      const msg = `Grabbing those ${packagerName} dependencies from the back`
-      startSpinner(msg)
-      await cache.copy({
-        fromRootDir: cachePath,
-        toRootDir: targetPath,
-        packagerName,
+      // #region Copy Boilerplate Files
+      startSpinner(" 3D-printing a new React Native app")
+      await copyBoilerplate(toolbox, {
+        boilerplatePath,
+        targetPath,
+        excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
+        overwrite,
       })
-      stopSpinner(msg, "📦")
-    }
+      stopSpinner(" 3D-printing a new React Native app", "🖨")
+      // copy the .gitignore if it wasn't copied over
+      // Release Ignite installs have the boilerplate's .gitignore in .gitignore.template
+      // (see https://github.com/npm/npm/issues/3763); development Ignite still
+      // has it in .gitignore. Copy it from one or the other.
+      const boilerplateIgnorePath = exists(boilerplate(".gitignore.template"))
+        ? boilerplate(".gitignore.template")
+        : boilerplate(".gitignore")
+      const targetIgnorePath = log(path(targetPath, ".gitignore"))
+      copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
 
-    // #region Rename App
-    // rename the app using Ignite
-    const renameSpinnerMsg = `Getting those last few details perfect`
-    startSpinner(renameSpinnerMsg)
+      if (exists(targetIgnorePath) === false) {
+        warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
+      } else if (workflow === "manual") {
+        // if we're using the manual workflow, we need to remove the android and ios lines from the gitignore
+        let gitIgnoreContents = read(targetIgnorePath)
+        gitIgnoreContents = gitIgnoreContents.replace("/android", "").replace("/ios", "")
 
-    const boilerplateBundleIdentifier = "com.helloworld"
-    await renameReactNativeApp(
-      toolbox,
-      "HelloWorld",
-      projectName,
-      boilerplateBundleIdentifier,
-      bundleIdentifier,
-    )
+        write(targetIgnorePath, gitIgnoreContents)
+      }
 
-    await replaceMaestroBundleIds(toolbox, boilerplateBundleIdentifier, bundleIdentifier)
+      // note the original directory
+      const cwd = log(process.cwd())
 
-    stopSpinner(renameSpinnerMsg, "🎨")
-    // #endregion
+      // jump into the project to do additional tasks
+      process.chdir(targetPath)
+      // #endregion
 
-    const shouldFreshInstallDeps = installDeps && shouldUseCache === false
-    if (shouldFreshInstallDeps) {
-      const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
-      startSpinner(unboxingMessage)
-      await packager.install({ ...packagerOptions, onProgress: log })
-      stopSpinner(unboxingMessage, "🧶")
-    }
+      // #region Handle package.json
+      // Update package.json:
+      // - Replacing app name: We do it on the unparsed file content
+      //   since that's easier than updating individual values
+      //   in the parsed structure, then we parse that as JSON.
+      let packageJsonRaw = read("package.json")
+      packageJsonRaw = packageJsonRaw
+        .replace(/HelloWorld/g, projectName)
+        .replace(/hello-world/g, projectNameKebab)
 
-    // remove the gitignore template
-    await removeAsync(".gitignore.template")
-    // #endregion
+      // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
+      if (needsPrebuild) {
+        packageJsonRaw = packageJsonRaw
+          .replace(/start --android/g, "run:android")
+          .replace(/start --ios/g, "run:ios")
 
-    // #region Cache dependencies
-    if (shouldFreshInstallDeps && cacheExists === false && useCache) {
-      const msg = `Saving ${packagerName} dependencies for next time`
-      startSpinner(msg)
-      log(targetPath)
-      await cache.copy({
-        fromRootDir: targetPath,
-        toRootDir: cachePath,
-        packagerName,
-      })
-      stopSpinner(msg, "📦")
-    }
-    // #endregion
+        // If using canary build, update the expo dependency to the canary version
+        if (expoVersion) {
+          const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
+          // filter for canary/beta and get last item in array
+          const tagVersion = JSON.parse(expoDistTagOutput)[expoVersion]
+          log(`overriding expo version to: ${tagVersion}`)
+          // find line with "expo": and replace entire line with tagVersion
+          packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
+        }
+      } else {
+        // Expo Go workflow, swap back to compatible Expo Go versions of modules
+        log("Changing some dependencies for Expo Go compatibility...")
+        log(JSON.stringify(expoGoCompatExpectedVersions))
 
-    // #region Run Format
-    // we can't run this option if we didn't install deps
-    if (installDeps === true) {
-      // Make sure all our modifications are formatted nicely
-      await packager.run("format", { ...packagerOptions, silent: !debug })
-    }
-    // #endregion
+        packageJsonRaw = findAndUpdateDependencyVersions(
+          packageJsonRaw,
+          expoGoCompatExpectedVersions,
+        )
+      }
 
-    // #region Remove Demo code
-    if (removeDemo === true) {
-      startSpinner(" Removing fancy demo code")
+      // - If we're removing the demo code, clean up some dependencies that are no longer needed
+      if (removeDemo) {
+        log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
+        packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
+      }
+
+      // - Then write it back out.
+      const packageJson = JSON.parse(packageJsonRaw)
+
+      write("./package.json", packageJson)
+      // #endregion
+
+      // #region Run Packager Install
+      // pnpm/yarn/npm/bun install it
+
+      // fix .npmrc if using pnpm
+      if (packagerName === "pnpm") {
+        // append `node-linker=hoisted` to .npmrc
+        const npmrcPath = path(targetPath, ".npmrc")
+        const npmrcContents = read(npmrcPath)
+        write(npmrcPath, `${npmrcContents}${EOL}node-linker=hoisted${EOL}`)
+      }
+
+      // check if there is a dependency cache using a hash of the package.json
+      const boilerplatePackageJsonHash = cache.hash(read(path(boilerplatePath, "package.json")))
+      const cachePath = path(cache.rootdir(), boilerplatePackageJsonHash, packagerName)
+      const cacheExists = exists(cachePath) === "dir"
+
+      log(`${!cacheExists ? "expected " : ""}cachePath: ${cachePath}`)
+      log(`cacheExists: ${cacheExists}`)
+
+      // use-cache defaults to `false` for now; if we make it robust enough,
+      // we can enable it by default in the future.
+      const defaultUseCache = false
+      const useCache = options.useCache === undefined ? defaultUseCache : boolFlag(options.useCache)
+
+      const shouldUseCache = installDeps && cacheExists && useCache
+      if (shouldUseCache) {
+        const msg = `Grabbing those ${packagerName} dependencies from the back`
+        startSpinner(msg)
+        await cache.copy({
+          fromRootDir: cachePath,
+          toRootDir: targetPath,
+          packagerName,
+        })
+        stopSpinner(msg, "📦")
+      }
+
+      // #region Rename App
+      // rename the app using Ignite
+      const renameSpinnerMsg = `Getting those last few details perfect`
+      startSpinner(renameSpinnerMsg)
+
+      const boilerplateBundleIdentifier = "com.helloworld"
+      await renameReactNativeApp(
+        toolbox,
+        "HelloWorld",
+        projectName,
+        boilerplateBundleIdentifier,
+        bundleIdentifier,
+      )
+
+      await replaceMaestroBundleIds(toolbox, boilerplateBundleIdentifier, bundleIdentifier)
+
+      stopSpinner(renameSpinnerMsg, "🎨")
+      // #endregion
+
+      const shouldFreshInstallDeps = installDeps && shouldUseCache === false
+      if (shouldFreshInstallDeps) {
+        const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
+        startSpinner(unboxingMessage)
+        await packager.install({ ...packagerOptions, onProgress: log })
+
+        // if we're using the canary build, we need to install the canary versions of supporting Expo packages
+        if (expoVersion) {
+          await system.run("npx expo install --fix", { onProgress: log })
+        }
+        stopSpinner(unboxingMessage, "🧶")
+      }
+
+      // remove the gitignore template
+      await removeAsync(".gitignore.template")
+      // #endregion
+
+      // #region Cache dependencies
+      if (shouldFreshInstallDeps && cacheExists === false && useCache) {
+        const msg = `Saving ${packagerName} dependencies for next time`
+        startSpinner(msg)
+        log(targetPath)
+        await cache.copy({
+          fromRootDir: targetPath,
+          toRootDir: cachePath,
+          packagerName,
+        })
+        stopSpinner(msg, "📦")
+      }
+      // #endregion
+
+      // #region Configure app.json
+      // Enable New Architecture if requested (must happen before prebuild)
+      startSpinner(" Configuring app.json")
+      try {
+        const appJsonRaw = read("app.json")
+        const appJson = JSON.parse(appJsonRaw)
+
+        // Inject ignite version to app.json
+        appJson.ignite.version = igniteVersion
+
+        if (experimentalNewArch === true) {
+          appJson.expo.plugins[1][1].ios.newArchEnabled = true
+          appJson.expo.plugins[1][1].android.newArchEnabled = true
+
+          // Adding the "deploymentTarget" key is required for
+          // @react-native-async-storage/async-storage to work in the new architecture
+          appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
+        }
+
+        // this can go away once we're at SDK 50 since expo-font needs to be added here
+        if (expoVersion) {
+          appJson.expo.plugins.push("expo-font")
+        }
+
+        write("./app.json", appJson)
+      } catch (e) {
+        log(e)
+        p(yellow("Unable to configure app.json."))
+      }
+      stopSpinner(" Configuring app.json", "")
+      // #endregion
+
+      // #region Run Format
+      // we can't run this option if we didn't install deps
+      if (installDeps === true) {
+        // Check if we need to run prebuild to generate native dirs based on workflow
+        // Prebuild also handles the packager install
+        if (needsPrebuild) {
+          const prebuildMessage = ` Generating native template via Expo Prebuild`
+          startSpinner(prebuildMessage)
+          await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
+          stopSpinner(prebuildMessage, "🛠️")
+        }
+        // Make sure all our modifications are formatted nicely
+        await packager.run("format", { ...packagerOptions, silent: !debug })
+      }
+      // #endregion
+
+      // #region Remove Demo code
+      const removeDemoPart = removeDemo === true ? "code" : "markup"
+      startSpinner(` Removing fancy demo ${removeDemoPart}`)
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
         log(`Ignite bin path: ${IGNITE}`)
-        await system.run(`${IGNITE} remove-demo ${targetPath}`, {
+        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, {
           onProgress: log,
         })
       } catch (e) {
         log(e)
-        p(yellow("Unable to remove demo code."))
+        p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
-      stopSpinner(" Removing fancy demo code", "🛠️")
-    }
-    // #endregion
+      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
+      // #endregion
 
-    // #region Create Git Repository and Initial Commit
-    // commit any changes
-    if (git === true) {
-      startSpinner(" Backing everything up in source control")
-      try {
-        const isWindows = process.platform === "win32"
+      // #region Format generator templates EOL for Windows
+      let warnAboutEOL = false
+      if (isWindows) {
+        try {
+          const templates = filesystem.find(`${targetPath}/ignite/templates`, {
+            directories: false,
+            files: true,
+            matching: "*.ejs",
+          })
 
-        // The separate commands works on Windows, but not Mac OS
-        if (isWindows) {
-          await system.run(log("git init"))
-          await system.run(log("git add -A"))
-          await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
-        } else {
-          await system.run(
-            log(`
+          log(`templates to change EOL: ${templates}`)
+          templates.map(async (file) => {
+            log(`Converting EOL for ${file}`)
+            let template = read(file)
+            template = template.replace(/\n/g, "\r\n")
+            write(file, template)
+          })
+        } catch {
+          warnAboutEOL = true
+        }
+      }
+      // #endregion
+
+      // #region Create Git Repository and Initial Commit
+      // commit any changes
+      if (git === true) {
+        startSpinner(" Backing everything up in source control")
+        try {
+          // The separate commands works on Windows, but not Mac OS
+          if (isWindows) {
+            await system.run(log("git init"))
+            await system.run(log("git add -A"))
+            await system.run(log(`git commit -m "New Ignite ${meta.version()} app`))
+          } else {
+            await system.run(
+              log(`
               \\rm -rf ./.git
               git init;
               git add -A;
               git commit -m "New Ignite ${meta.version()} app";
             `),
+            )
+          }
+        } catch (e) {
+          p(
+            yellow(
+              "Unable to commit the initial changes. Please check your git username and email.",
+            ),
           )
         }
-      } catch (e) {
-        p(yellow("Unable to commit the initial changes. Please check your git username and email."))
+        stopSpinner(" Backing everything up in source control", "🗄")
       }
-      stopSpinner(" Backing everything up in source control", "🗄")
-    }
 
-    // back to the original directory
-    process.chdir(log(cwd))
-    // #endregion
+      // back to the original directory
+      process.chdir(log(cwd))
+      // #endregion
 
-    // #region Print Finish
-    // clean up any spinners we forgot to clear
-    p()
-    hr()
-    p()
-    clearSpinners()
+      // #region Print Finish
+      // clean up any spinners we forgot to clear
+      p()
+      hr()
+      p()
+      clearSpinners()
 
-    // we're done! round performance stats to .xx digits
-    const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
+      // we're done! round performance stats to .xx digits
+      const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
-    /** Add just a _little_ more spacing to match with spinners and heading */
-    const p2 = (m = "") => p(` ${m}`)
+      // no need to timeout, we're done!
+      clearTimeout(timeout)
 
-    p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
-    p2()
-    const cliCommand = buildCliCommand({
-      flags: {
-        b: bname,
-        boilerplate: bname,
-        bundle: bundleIdentifier,
-        debug,
-        git,
-        installDeps,
-        overwrite,
-        expo,
-        packager: packagerName,
-        targetPath,
-        removeDemo,
-        useCache,
-        y: yname,
-        yes: yname,
-      },
-      projectName,
-      toolbox,
-    })
+      p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
+      p2()
+      const cliCommand = buildCliCommand({
+        flags: {
+          b: bname,
+          boilerplate: bname,
+          bundle: bundleIdentifier,
+          debug,
+          git,
+          installDeps,
+          overwrite,
+          packager: packagerName,
+          targetPath,
+          removeDemo,
+          experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
+          workflow,
+          useCache,
+          y: yname,
+          yes: yname,
+          noTimeout,
+        },
+        projectName,
+        toolbox,
+      })
 
-    p2(`For next time: here are the Ignite options you picked!`)
+      p2(`For next time: here are the Ignite options you picked!`)
 
-    // create a multi-line string of the command, where each --flag is on it's own line
-    const prettyCliCommand = cliCommand
-      .split(" ")
-      .map((c) => (c === projectName || c?.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
-      .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
-      .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
-      .join(" ")
+      // create a multi-line string of the command, where each --flag is on it's own line
+      const prettyCliCommand = cliCommand
+        .split(" ")
+        .map((c) => (c === projectName || c?.startsWith("--") ? `${c} \\${EOL}` : c)) // add a line break after the project name and each flag
+        .map((c, i, a) => (i === a.length - 1 ? c.replace(`\\${EOL}`, "") : c)) // remove the line break after the last flag
+        .map((c) => (c.startsWith("--") ? INDENT + CMD_INDENT + CMD_INDENT + c : c)) // add whitespace to the flags so it looks nice
+        .join(" ")
 
-    command(`${prettyCliCommand}`)
-    p2()
+      command(`${prettyCliCommand}`)
+      p2()
 
-    if (!isAndroidInstalled(toolbox)) {
+      if (!isAndroidInstalled(toolbox)) {
+        hr()
+        p2()
+        p2("To run in Android, make sure you've followed the latest")
+        p2(`react-native setup instructions. You reference them at:`)
+        p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
+        p2()
+      }
+
+      if (warnAboutEOL) {
+        hr()
+        p2()
+        p2(yellow(`Generator templates could not be converted to Windows EOL.`))
+        p2(yellow(`You may want to update these manually with your code editor, more info at:`))
+        p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md")}`)
+        p2()
+      }
+
       hr()
       p2()
-      p2("To run in Android, make sure you've followed the latest")
-      p2(`react-native setup instructions. You reference them at:`)
-      p2(`${link("https://reactnative.dev/docs/environment-setup")}`)
+      p2("Need additional help?")
       p2()
+      p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
+      p2()
+
+      hr()
+      p2()
+      p2("Now get cooking! 🍽")
+      command(`cd ${targetPath}`)
+      if (!installDeps) command(packager.installCmd({ packagerName }))
+
+      const isMac = process.platform === "darwin"
+      if (isMac) {
+        command(`${packager.runCmd("ios", packagerOptions)}`)
+        p2("Or Android via")
+        command(`${packager.runCmd("android", packagerOptions)}`)
+      } else {
+        command(`${packager.runCmd("android", packagerOptions)}`)
+      }
+      p2()
+      p2()
+      // #endregion
+
+      // this is a hack to prevent the process from hanging
+      // if there are any tasks left in the event loop
+      // like I/O operations to process.stdout and process.stderr
+      // see https://github.com/infinitered/ignite/issues/2084
+      process.exit(0)
+    } catch (e) {
+      stopLastSpinner("❌")
+      p2(red(`\nThe following error occurred:`))
+      p2()
+      p2(red(e.toString()))
+
+      p2()
+      p2("Consider opening an issue with the following information at:")
+      p2(
+        `${link(
+          "https://github.com/infinitered/ignite/issues/new?template=bug_report.yml&labels=bug",
+        )}`,
+      )
+      p2()
+
+      startSpinner(" Gathering system and project details")
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const doctorResults = await system.run(`${IGNITE} doctor`)
+        p(`\n\n${doctorResults}`)
+      } catch (e) {
+        p(yellow("Unable to gather system and project details."))
+      }
+      clearSpinners()
+      process.exit(1)
     }
-
-    hr()
-    p2()
-    p2("Need additional help?")
-    p2()
-    p2(`Join our Slack community at ${link("http://community.infinite.red.")}`)
-    p2()
-
-    hr()
-    p2()
-    p2("Now get cooking! 🍽")
-    command(`cd ${projectName}`)
-    if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packagerName} start`)
-
-    const isMac = process.platform === "darwin"
-    if (isMac) {
-      command(`${packager.runCmd("ios", packagerOptions)}`)
-    } else {
-      command(`${packager.runCmd("android", packagerOptions)}`)
-    }
-
-    p2()
-    p2("With Expo:")
-    command(`cd ${projectName}`)
-    if (!installDeps) command(packager.installCmd({ packagerName }))
-    command(`${packager.runCmd("expo:start", packagerOptions)}`)
-    p2()
-    p2()
-    // #endregion
-
-    // this is a hack to prevent the process from hanging
-    // if there are any tasks left in the event loop
-    // like I/O operations to process.stdout and process.stderr
-    // see https://github.com/infinitered/ignite/issues/2084
-    process.exit(0)
   },
 }
 
@@ -692,7 +958,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "expo", "useCache", "y", "yes"]
+  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>

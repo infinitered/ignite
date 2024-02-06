@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 /**
  * Welcome to the main entry point of the app. In this file, we'll
  * be kicking off our app.
@@ -9,6 +10,12 @@
  * The app navigation resides in ./app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
+if (__DEV__) {
+  // Load Reactotron configuration in development. We don't want to
+  // include this in our production bundle, so we are using `if (__DEV__)`
+  // to only execute this in development.
+  require("./devtools/ReactotronConfig.ts")
+}
 import "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
@@ -20,23 +27,9 @@ import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
-import { setupReactotron } from "./services/reactotron"
 import Config from "./config"
-
-// Set up Reactotron, which is a free desktop app for inspecting and debugging
-// React Native apps. Learn more here: https://github.com/infinitered/reactotron
-setupReactotron({
-  // clear the Reactotron window when the app loads/reloads
-  clearOnLoad: true,
-  // generally going to be localhost
-  host: "localhost",
-  // Reactotron can monitor AsyncStorage for you
-  useAsyncStorage: true,
-  // log the initial restored state from AsyncStorage
-  logInitialState: true,
-  // log out any snapshots as they happen (this is useful for debugging but slow)
-  logSnapshots: false,
-})
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { ViewStyle } from "react-native"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -62,7 +55,7 @@ const config = {
 }
 
 interface AppProps {
-  hideSplashScreen: () => Promise<void>
+  hideSplashScreen: () => Promise<boolean>
 }
 
 /**
@@ -105,14 +98,20 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <AppNavigator
-          linking={linking}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
+        <GestureHandlerRootView style={$container}>
+          <AppNavigator
+            linking={linking}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </GestureHandlerRootView>
       </ErrorBoundary>
     </SafeAreaProvider>
   )
 }
 
 export default App
+
+const $container: ViewStyle = {
+  flex: 1,
+}

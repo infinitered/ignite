@@ -21,18 +21,18 @@ const ROOT_STATE_STORAGE_KEY = "root-v1"
 /**
  * Setup the root state.
  */
-let _disposer: IDisposer
+let _disposer: IDisposer | undefined
 export async function setupRootStore(rootStore: RootStore) {
   let restoredState: RootStoreSnapshot | undefined | null
 
   try {
     // load the last known state from AsyncStorage
-    restoredState = (await storage.load(ROOT_STATE_STORAGE_KEY)) as RootStoreSnapshot | null
+    restoredState = ((await storage.load(ROOT_STATE_STORAGE_KEY)) ?? {}) as RootStoreSnapshot
     applySnapshot(rootStore, restoredState)
   } catch (e) {
     // if there's any problems loading, then inform the dev what happened
     if (__DEV__) {
-      console.tron.error(e.message, null)
+      if (e instanceof Error) console.error(e.message)
     }
   }
 
@@ -43,7 +43,7 @@ export async function setupRootStore(rootStore: RootStore) {
   _disposer = onSnapshot(rootStore, (snapshot) => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
 
   const unsubscribe = () => {
-    _disposer()
+    _disposer?.()
     _disposer = undefined
   }
 

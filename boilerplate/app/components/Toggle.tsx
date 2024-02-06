@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
   View,
+  ViewProps,
   ViewStyle,
 } from "react-native"
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
@@ -180,8 +181,8 @@ export function Toggle(props: ToggleProps) {
 
   const disabled = editable === false || status === "disabled" || props.disabled
 
-  const Wrapper = useMemo<ComponentType<TouchableOpacityProps>>(
-    () => (disabled ? View : TouchableOpacity),
+  const Wrapper = useMemo(
+    () => (disabled ? View : TouchableOpacity) as ComponentType<TouchableOpacityProps | ViewProps>,
     [disabled],
   )
   const ToggleInput = useMemo(() => ToggleInputs[variant] || (() => null), [variant])
@@ -213,12 +214,12 @@ export function Toggle(props: ToggleProps) {
         {labelPosition === "left" && <FieldLabel {...props} labelPosition={labelPosition} />}
 
         <ToggleInput
-          on={value}
-          disabled={disabled}
+          on={!!value}
+          disabled={!!disabled}
           status={status}
-          outerStyle={props.inputOuterStyle}
-          innerStyle={props.inputInnerStyle}
-          detailStyle={props.inputDetailStyle}
+          outerStyle={props.inputOuterStyle ?? {}}
+          innerStyle={props.inputInnerStyle ?? {}}
+          detailStyle={props.inputDetailStyle ?? {}}
           switchAccessibilityMode={switchAccessibilityMode}
           checkboxIcon={checkboxIcon}
         />
@@ -299,8 +300,12 @@ function Checkbox(props: ToggleInputProps) {
         ]}
       >
         <Image
-          source={iconRegistry[checkboxIcon] || iconRegistry.check}
-          style={[$checkboxDetail, { tintColor: iconTintColor }, $detailStyleOverride]}
+          source={checkboxIcon ? iconRegistry[checkboxIcon] : iconRegistry.check}
+          style={[
+            $checkboxDetail,
+            !!iconTintColor && { tintColor: iconTintColor },
+            $detailStyleOverride,
+          ]}
         />
       </Animated.View>
     </View>
@@ -475,7 +480,7 @@ function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off"
 
   const shouldLabelBeVisible = (on && role === "on") || (!on && role === "off")
 
-  const $switchAccessibilityStyle = [
+  const $switchAccessibilityStyle: StyleProp<ViewStyle> = [
     $switchAccessibility,
     role === "off" && { end: "5%" },
     role === "on" && { left: "5%" },
