@@ -29,6 +29,13 @@ export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScre
 
 const Tab = createBottomTabNavigator<DemoTabParamList>()
 
+/**
+ * This is the main navigator for the demo screens with a bottom tab bar.
+ * Each tab is a stack navigator with its own set of screens.
+ *
+ * More info: https://reactnavigation.org/docs/bottom-tab-navigator/
+ * @returns {JSX.Element} The rendered `DemoNavigator`.
+ */
 export function DemoNavigator() {
   const { bottom } = useSafeAreaInsets()
 

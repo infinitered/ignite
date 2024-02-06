@@ -119,8 +119,9 @@ const EmptyStatePresets = {
 
 /**
  * A component to use when there is no data to display. It can be utilized to direct the user what to do next.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-EmptyState.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/EmptyState/}
+ * @param {EmptyStateProps} props - The props for the `EmptyState` component.
+ * @returns {JSX.Element} The rendered `EmptyState` component.
  */
 export function EmptyState(props: EmptyStateProps) {
   const preset = EmptyStatePresets[props.preset ?? "generic"]

@@ -25,8 +25,10 @@ export type SafeAreaInsetsStyle<
 
 /**
  * A hook that can be used to create a safe-area-aware style object that can be passed directly to a View.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/utility/useSafeAreaInsetsStyle.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/utility/useSafeAreaInsetsStyle/}
+ * @param {ExtendedEdge[]} safeAreaEdges - The edges to apply the safe area insets to.
+ * @param {"padding" | "margin"} property - The property to apply the safe area insets to.
+ * @returns {SafeAreaInsetsStyle<Property, Edges>} - The style object with the safe area insets applied.
  */
 export function useSafeAreaInsetsStyle<
   Property extends "padding" | "margin" = "padding",

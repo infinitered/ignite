@@ -84,8 +84,16 @@ export interface ButtonProps extends PressableProps {
 /**
  * A component that allows users to take actions and make choices.
  * Wraps the Text component with a Pressable component.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Button.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Button/}
+ * @param {ButtonProps} props - The props for the `Button` component.
+ * @returns {JSX.Element} The rendered `Button` component.
+ * @example
+ * <Button
+ *   tx="common.ok"
+ *   style={styles.button}
+ *   textStyle={styles.buttonText}
+ *   onPress={handleButtonPress}
+ * />
  */
 export function Button(props: ButtonProps) {
   const {
@@ -106,7 +114,12 @@ export function Button(props: ButtonProps) {
   } = props
 
   const preset: Presets = props.preset ?? "default"
-  function $viewStyle({ pressed }: PressableStateCallbackType) {
+  /**
+   * @param {PressableStateCallbackType} root0 - The root object containing the pressed state.
+   * @param {boolean} root0.pressed - The pressed state.
+   * @returns {StyleProp<ViewStyle>} The view style based on the pressed state.
+   */
+  function $viewStyle({ pressed }: PressableStateCallbackType): StyleProp<ViewStyle> {
     return [
       $viewPresets[preset],
       $viewStyleOverride,
@@ -114,7 +127,12 @@ export function Button(props: ButtonProps) {
       !!disabled && $disabledViewStyleOverride,
     ]
   }
-  function $textStyle({ pressed }: PressableStateCallbackType) {
+  /**
+   * @param {PressableStateCallbackType} root0 - The root object containing the pressed state.
+   * @param {boolean} root0.pressed - The pressed state.
+   * @returns {StyleProp<TextStyle>} The text style based on the pressed state.
+   */
+  function $textStyle({ pressed }: PressableStateCallbackType): StyleProp<TextStyle> {
     return [
       $textPresets[preset],
       $textStyleOverride,

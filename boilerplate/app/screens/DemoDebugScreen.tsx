@@ -7,6 +7,10 @@ import { colors, spacing } from "../theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
 
+/**
+ * @param {string} url - The URL to open in the browser.
+ * @returns {void} - No return value.
+ */
 function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }

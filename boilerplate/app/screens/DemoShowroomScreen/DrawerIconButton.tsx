@@ -9,6 +9,10 @@ interface DrawerIconButtonProps extends PressableProps {}
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
+/**
+ * @param {DrawerIconButtonProps} props - The props for the `DrawerIconButton` component.
+ * @returns {JSX.Element} The rendered `DrawerIconButton` component.
+ */
 export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { ...PressableProps } = props
   const progress = useDrawerProgress()
