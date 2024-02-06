@@ -10,10 +10,6 @@ Ignite currently set up to have Internationalization setup in English, Arabic, a
 
 Since Ignite already comes with an RTL language, Arabic, adding any new ones would work by default.
 
-:::note
-if you move between a RTL and non-RTL language, you'll have to relaunch your app twice to get the correct localization logic. This is an iOS only issue. An [issue](https://github.com/infinitered/ignite/issues/2025) has been logged with Ignite to find a potential solution.
-:::
-
 ### Removing RTL Support
 
 To remove RTL support, follow the following steps:

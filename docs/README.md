@@ -73,7 +73,7 @@ With Ignite, you get proven patterns, best practices, and a robust, seasoned com
 - [Concepts](./concept/Concepts.md) - An overview of the concepts behind developing with Ignite
 
   - [Expo and Ignite](./expo/Expo-and-Ignite.md) - How Expo fits in with Ignite, and whether you should use it
-  - [Folder-Structure](./concept/Folder-Structure.md) - An explanation of the Ignite folder structure
+  - [Folder Structure](./boilerplate/Boilerplate.md) - An overview of the Ignite folder structure
   - [Generators](./concept/Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./concept/Generator-Templates.md) - Writing your own generator templates
   - [Internationalization](./boilerplate/app/i18n/) — How to Internationalize your app
