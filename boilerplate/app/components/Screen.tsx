@@ -110,9 +110,6 @@ function useAutoPreset(props: AutoScreenProps): {
   const scrollViewContentHeight = useRef<null | number>(null)
   const [scrollEnabled, setScrollEnabled] = useState(true)
 
-  /**
-   *
-   */
   function updateScrollState() {
     if (scrollViewHeight.current === null || scrollViewContentHeight.current === null) return
 
