@@ -22,7 +22,7 @@ It'll walk you through several questions.
 
 Once it's up and running, you can use the Ignite CLI to [generate](./concept/Generators.md) components, screens, MST models, and more.
 
-Running into errors? have a look at [upgrading Ignite CLI](./cli/Upgrading-Ignite.md)
+Running into errors? have a look at [Troubleshooting](./cli/Troubleshooting.md)
 
 ### Ignite Boilerplate
 
@@ -79,17 +79,17 @@ We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any 
 We instead use a strategy of constants, colocated with our components, camelCase and prefixed with `$`, and typed with TypeScript:
 
 ```tsx
-import { View, ViewStyle } from "react-native"
-import { palette } from "../theme"
+import { View, ViewStyle } from "react-native";
+import { palette } from "../theme";
 
 const $container: ViewStyle = {
   flex: 1,
   backgroundColor: palette.bgColor,
-}
+};
 
 const MyComponent = () => {
-  return <View style={$container}>...</View>
-}
+  return <View style={$container}>...</View>;
+};
 ```
 
 Very often, we use [components with presets](./boilerplate/app/components/Components.md) to share styles across our whole app.
