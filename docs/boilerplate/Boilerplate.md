@@ -1,9 +1,23 @@
-# Explanation of the Ignite folder structure
+---
+sidebar_position: 1
+---
+
+# Ignite's Boilerplate
+
+:::tip
+A "boilerplate" project is one that you can use as a starting point for your own project.
+:::
+
+At its heart, Ignite is a boilerplate. Rather than using a basic template from something like react-native-cli or Expo, Ignite is more full-featured and opinionated. However, it still really customizable -- after all, we have many different types of projects we work on and don't want to be painted into a corner either.
+
+When you [spin up a new Ignite project](../Guide.md), you'll get a project with several folders. Feel free to explore each one and see what's inside.
+
+## Explanation of the Ignite folder structure
 
 A new Ignite boilerplate project's structure looks similar to this:
 
 ```
-ignite-project
+your-project
 ├── .maestro
 ├── android
 ├── ios
@@ -30,6 +44,7 @@ ignite-project
 ├── app.config.ts
 ├── app.json
 ├── App.tsx
+├── eas.json
 ├── package.json
 └── README.md
 ```
@@ -58,18 +73,18 @@ app
 This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
 
 - [Component Overview](../)
-- [AutoImage](../boilerplate/components/AutoImage.md)
-- [Button](../boilerplate/components/Button.md)
-- [Card](../boilerplate/components/Card.md)
-- [EmptyState](../boilerplate/components/EmptyState.md)
-- [Header](../boilerplate/components/Header.md)
-- [Icon](../boilerplate/components/Icon.md)
-- [ListItem](../boilerplate/components/ListItem.md)
-- [ListView](../boilerplate/components/ListView.md)
-- [Screen](../boilerplate/components/Screen.md)
-- [Text](../boilerplate/components/Text.md)
-- [TextField](../boilerplate/components/TextField.md)
-- [Toggle](../boilerplate/components/Toggle.md)
+- [AutoImage](../boilerplate/app/components/AutoImage.md)
+- [Button](../boilerplate/app/components/Button.md)
+- [Card](../boilerplate/app/components/Card.md)
+- [EmptyState](../boilerplate/app/components/EmptyState.md)
+- [Header](../boilerplate/app/components/Header.md)
+- [Icon](../boilerplate/app/components/Icon.md)
+- [ListItem](../boilerplate/app/components/ListItem.md)
+- [ListView](../boilerplate/app/components/ListView.md)
+- [Screen](../boilerplate/app/components/Screen.md)
+- [Text](../boilerplate/app/components/Text.md)
+- [TextField](../boilerplate/app/components/TextField.md)
+- [Toggle](../boilerplate/app/components/Toggle.md)
 
 **i18n**
 
@@ -83,8 +98,6 @@ This is where your app's models will live. Each model has a directory which will
 
 This is where your `react-navigation` navigators will live.
 
-For a walkthrough about how React Navigation v5 works, check out Harris Robin's post: [Getting Started with the New React Navigation v5 and Ignite Bowser v5](https://shift.infinite.red/getting-started-with-the-new-react-navigation-v5-and-ignite-bowser-v5-31fb4a57f2b9).
-
 **screens**
 
 This is where your screen components will live. A screen is a React component which will take up the entire screen and be part of the navigation hierarchy. Each screen will have a directory containing the `.tsx` file, along with any assets or other helper files.
@@ -95,7 +108,7 @@ Any services that interface with the outside world will live here (think REST AP
 
 **theme**
 
-Here lives the theme for your application, including spacing, colors, and typography. For help with adding custom fonts to your application, [check out the readme in Fonts & Typography/](../boilerplate/theming/Fonts-And-Typography.md).
+Here lives the theme for your application, including spacing, colors, and typography. For help with adding custom fonts to your application, [check out the readme in Fonts & Typography/](../boilerplate/app/theme/typography.ts.md).
 
 **utils**
 

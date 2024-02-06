@@ -8,9 +8,12 @@ If you run into problems, first search the issues in the [GitHub repository](htt
 
 ## Troubleshooting setup
 
+We recommend using `npx ignite-cli@latest [command]` to ensure you're using the latest & greatest Ignite.
+
 ### Remove a previous global install
 
-Double check if the greatest Ignite is installed on your machine with:
+You might run into version conflicts or environment differences if you have Ignite installed globally.
+Check if Ignite is installed globally on your machine with:
 
 ```bash
 ignite --info          # Should output cli information

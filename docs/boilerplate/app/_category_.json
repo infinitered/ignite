@@ -1,0 +1,9 @@
+{
+  "label": "app",
+  "position": 5,
+  "link": {
+    "type": "doc",
+    "id": "app"
+  },
+  "collapsed": true
+}

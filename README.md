@@ -48,7 +48,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | date-fns          | Date library         | v2      | Excellent date library                         |
 | FlashList         | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
 
-Ignite also comes with a [component library](./docs/boilerplate/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
+Ignite also comes with a [component library](./docs/boilerplate/app/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
 
 ## Quick Start
 

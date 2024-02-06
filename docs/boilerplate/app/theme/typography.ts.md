@@ -1,10 +1,10 @@
 ---
-sidebar_position: 72
+title: typeography.ts
 ---
 
 # Fonts & Typography
 
-Fonts are defined in `app/theme/typography.ts`. We use a similar approach to [colors](./Colors-And-Palettes.md), defining a set of fonts and then using those fonts to define semantic font names to be used throughout the app. This allows us to have a consistent font usage across the app, and also allows us to change the fonts easily.
+Fonts are defined in `app/theme/typography.ts`. We use a similar approach to [colors](./colors.ts.md), defining a set of fonts and then using those fonts to define semantic font names to be used throughout the app. This allows us to have a consistent font usage across the app, and also allows us to change the fonts easily.
 
 ## Fonts
 

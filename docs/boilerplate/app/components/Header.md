@@ -261,7 +261,7 @@ function AccountScreen(props) {
 }
 ```
 
-A convenience [`useHeader`](../utility/useHeader.md) hook is provided that abstracts and cleans up some of this logic.
+A convenience [`useHeader`](../utils/useHeader.tsx.md) hook is provided that abstracts and cleans up some of this logic.
 
 ```tsx
 function AccountScreen(props) {

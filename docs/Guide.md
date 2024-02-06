@@ -22,7 +22,7 @@ It'll walk you through several questions.
 
 Once it's up and running, you can use the Ignite CLI to [generate](./concept/Generators.md) components, screens, MST models, and more.
 
-Running into errors? have a look at [upgrading Ignite CLI](./cli/Upgrading-Ignite.md)
+Running into errors? have a look at [Troubleshooting](./cli/Troubleshooting.md)
 
 ### Ignite Boilerplate
 
@@ -37,7 +37,7 @@ Your new Ignite project (whether you start with Expo or not) comes with a full s
 - apisauce (to talk to REST servers)
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
-- About a dozen prebuilt [components](./boilerplate/components/Components.md) to build out your UI with
+- About a dozen prebuilt [components](./boilerplate/app/components/Components.md) to build out your UI with
 - And more!
 
 ## Where do I start?
@@ -52,7 +52,7 @@ We use React Navigation v6 in the current version of Ignite. You'll find any nav
 
 There's also a `navigationUtilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-Learn more in our [Navigation](./concept/Navigation.md) documentation.
+Learn more in our [Navigation](./boilerplate/app/navigators/Navigation.md) documentation.
 
 ### Components
 
@@ -60,7 +60,7 @@ Ignite comes with some prebuilt, flexible, and customizable components. Unlike m
 
 Ignite works fine with other component libraries, but the built-in component system works the best for custom-designed apps.
 
-Check out the [Components](./boilerplate/components/Components.md) documentation.
+Check out the [Components](./boilerplate/app/components/Components.md) documentation.
 
 ### Testing
 
@@ -92,6 +92,6 @@ const MyComponent = () => {
 }
 ```
 
-Very often, we use [components with presets](./boilerplate/components/Components.md) to share styles across our whole app.
+Very often, we use [components with presets](./boilerplate/app/components/Components.md) to share styles across our whole app.
 
 Read more about styling in the [Styling](./concept/Styling.md) docs.

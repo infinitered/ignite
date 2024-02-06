@@ -1,12 +1,12 @@
 ---
-sidebar_position: 130
+sidebar_position: 10
 ---
 
 # Expo and Ignite
 
 ![ignite+expo](https://miro.medium.com/max/1400/1*Ii4JuTWmVLeVBcqFyX3v5g.jpeg)
 
-> Expo is the easiest, nicest experience for Ignite apps. And I am convinced Ignite (especially the upcoming version 8, Maverick) is the nicest boilerplate for Expo apps you can possibly get. - Jamon Holmgren
+> Expo is the easiest, nicest experience for Ignite apps. And I am convinced Ignite (especially version 9) is the nicest boilerplate for Expo apps you can possibly get. - Jamon Holmgren
 
 If you're not familiar with [Expo](https://expo.dev), it's an open-source platform for making universal native apps for Android, iOS, and the web with [React Native](https://reactnative.dev). It's essentially a series of layers built around React Native. Here's a partial list of what Expo is:
 
@@ -46,7 +46,7 @@ As a general rule of thumb, it's not a bad idea to start with Expo CLI. You'll a
 
 Where you generally will need to start considering diverging from standard Expo is when you need custom native functionality. Note that you can do a lot of custom native code with Expo's new [Config Plugins](https://docs.expo.dev/guides/config-plugins/) feature, too, so even native code is no longer much of a barrier.
 
-If you still would rather not use Expo Go / CLI, then Ignite is already ready for you -- no "ejecting" necessary. Expo refers to this as the "bare workflow" (they're better at engineering than naming things). Just run `yarn ios` / `yarn android` and it'll build using the React Native CLI.
+If you still would rather not use Expo Go / CLI, then Ignite is already ready for you -- no "ejecting" necessary. Expo refers to this as the "bare workflow." Just run `yarn ios` / `yarn android` and it'll build using the React Native CLI.
 
 ## Expo Snacks
 

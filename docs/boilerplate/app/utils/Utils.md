@@ -1,12 +1,17 @@
 ---
+title: utils
 sidebar_position: 60
 ---
 
-# Collection of helpful utilities
+# `utils` folder
 
-Here you can find a library of utilities that are used often within your application. This includes hooks, helper functions, and various tools.
+Every app needs a junk drawer. Here you can find a library of utilities that are used often within your application. This could includes hooks, helper functions, and various tools.
 
 ## Hooks
+
+:::tip
+We sometimes create a separate `app/hooks` folder just for hooks. This is a matter of preference.
+:::
 
 ### useSafeAreaInsetsStyle
 
@@ -18,7 +23,7 @@ const $insetStyle = useSafeAreaInsetsStyle(["top"], "padding")
 <View style={$insetStyle} />
 ```
 
-[Full `useSafeAreaInsetsStyle`](./useSafeAreaInsetsStyle.md)
+[Full `useSafeAreaInsetsStyle`](./useSafeAreaInsetsStyle.ts.md)
 
 ### useHeader
 
@@ -35,4 +40,4 @@ function AccountScreen() {
 }
 ```
 
-[Full `useHeader`](./useHeader.md)
+[Full `useHeader`](./useHeader.tsx.md)
