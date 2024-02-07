@@ -2,7 +2,7 @@
 
 appId: com.helloworld
 env:
-  TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+  TITLE: "RNR 286 - What's New in React Native 0.73"
   FAVORITES_TEXT: "Switch on to only show favorites"
 
 ---
