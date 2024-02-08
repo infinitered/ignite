@@ -2,7 +2,6 @@
 
 appId: com.helloworld
 env:
-  TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
   FAVORITES_TEXT: "Switch on to only show favorites"
 
 ---
@@ -16,14 +15,14 @@ env:
     text: ${FAVORITES_TEXT}
     # https://maestro.mobile.dev/troubleshooting/known-issues#android-accidental-double-tap
     retryTapIfNoChange: false
-- scrollUntilVisible:
-    element:
-      text: ${TITLE}
-    direction: DOWN
-    timeout: 50000
-    speed: 40
-    visibilityPercentage: 100
-- longPressOn: ${TITLE}
+- repeat:
+    times: 2
+    commands:
+      - scroll
+- copyTextFrom:
+    text: "^RNR.*" # assumes all podcast titles start with RNR
+    index: 1 # grab the second one, the first one might not be fully visible
+- longPressOn: ${maestro.copiedText}
 - scrollUntilVisible:
     element:
       text: ${FAVORITES_TEXT}
@@ -33,6 +32,5 @@ env:
     visibilityPercentage: 100
 - tapOn:
     text: ${FAVORITES_TEXT}
-- assertVisible: ${TITLE}
-
+- assertVisible: ${maestro.copiedText}
 # @demo remove-file
