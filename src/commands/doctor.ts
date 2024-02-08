@@ -84,11 +84,10 @@ module.exports = {
 
     function expoWorkflowInfo() {
       // Define the logic for expoWorkflowInfo
-      const iosFound = isFile(`${directory}\\ios\\.xcodeproj`);
-      const androidFound = isFile(`${directory}\\android\\.gradle`);
-      return iosFound || androidFound;
+      const iosFound = isFile(`${directory}\\ios\\.xcodeproj`)
+      const androidFound = isFile(`${directory}\\android\\.gradle`)
+      return iosFound || androidFound
     }
-
 
     if (expoPath) {
       try {
@@ -99,9 +98,9 @@ module.exports = {
         expoWorkflow = "not installed"
       }
       info("")
-      info("Warning: Global Expo CLI is deprecated and should be removed.");
-      info(colors.cyan("Expo"));
-      table([[column1("expo"), column2(expoVersion), column3(expoWorkflow)]]);
+      info("Warning: Global Expo CLI is deprecated and should be removed.")
+      info(colors.cyan("Expo"))
+      table([[column1("expo"), column2(expoVersion), column3(expoWorkflow)]])
     }
 
     info("")
