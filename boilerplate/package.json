@@ -111,7 +111,7 @@
     }
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "prettier": {
     "printWidth": 100,
