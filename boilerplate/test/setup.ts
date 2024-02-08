@@ -41,7 +41,6 @@ jest.mock("expo-localization", () => ({
 
 declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
 
-jest.useFakeTimers()
 declare global {
   let __TEST__: boolean
 }

@@ -18,15 +18,12 @@ export type ListViewProps<T> = PropsWithoutRef<FlashListProps<T>>
  *
  * This is a temporary workaround until the FlashList component supports RTL at
  * which point this component can be removed and we will default to using FlashList everywhere.
- *
  * @see {@link https://github.com/Shopify/flash-list/issues/544|RTL Bug Android}
  * @see {@link https://github.com/Shopify/flash-list/issues/840|Flashlist Not Support RTL}
- *
- * @param props - FlashListProps | FlatListProps
- * @param forwardRef - React.Ref<ListProps<T>>
- * @returns JSX.Element
+ * @param {FlashListProps | FlatListProps} props - The props for the `ListView` component.
+ * @param {React.RefObject<ListViewRef>} forwardRef - An optional forwarded ref.
+ * @returns {JSX.Element} The rendered `ListView` component.
  */
-
 const ListViewComponent = forwardRef(
   <T,>(props: ListViewProps<T>, ref: React.ForwardedRef<ListViewRef<T>>) => {
     const ListComponentWrapper = isRTL ? FlatList : FlashList

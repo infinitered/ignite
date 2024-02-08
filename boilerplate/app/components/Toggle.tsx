@@ -155,8 +155,9 @@ interface ToggleInputProps {
 /**
  * Renders a boolean input.
  * This is a controlled component that requires an onValueChange callback that updates the value prop in order for the component to reflect user actions. If the value prop is not updated, the component will continue to render the supplied value prop instead of the expected result of any user actions.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Toggle.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Toggle/}
+ * @param {ToggleProps} props - The props for the `Toggle` component.
+ * @returns {JSX.Element} The rendered `Toggle` component.
  */
 export function Toggle(props: ToggleProps) {
   const {
@@ -195,6 +196,9 @@ export function Toggle(props: ToggleProps) {
     HelperTextProps?.style,
   ]
 
+  /**
+   * @param {GestureResponderEvent} e - The event object.
+   */
   function handlePress(e: GestureResponderEvent) {
     if (disabled) return
     onValueChange?.(!value)
@@ -247,6 +251,10 @@ const ToggleInputs: Record<Variants, FC<ToggleInputProps>> = {
   radio: Radio,
 }
 
+/**
+ * @param {ToggleInputProps} props - The props for the `Checkbox` component.
+ * @returns {JSX.Element} The rendered `Checkbox` component.
+ */
 function Checkbox(props: ToggleInputProps) {
   const {
     on,
@@ -312,6 +320,10 @@ function Checkbox(props: ToggleInputProps) {
   )
 }
 
+/**
+ * @param {ToggleInputProps} props - The props for the `Radio` component.
+ * @returns {JSX.Element} The rendered `Radio` component.
+ */
 function Radio(props: ToggleInputProps) {
   const {
     on,
@@ -371,6 +383,10 @@ function Radio(props: ToggleInputProps) {
   )
 }
 
+/**
+ * @param {ToggleInputProps} props - The props for the `Switch` component.
+ * @returns {JSX.Element} The rendered `Switch` component.
+ */
 function Switch(props: ToggleInputProps) {
   const {
     on,
@@ -473,6 +489,10 @@ function Switch(props: ToggleInputProps) {
   )
 }
 
+/**
+ * @param {ToggleInputProps & { role: "on" | "off" }} props - The props for the `SwitchAccessibilityLabel` component.
+ * @returns {JSX.Element} The rendered `SwitchAccessibilityLabel` component.
+ */
 function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off" }) {
   const { on, disabled, status, switchAccessibilityMode, role, innerStyle, detailStyle } = props
 
@@ -516,6 +536,10 @@ function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off"
   )
 }
 
+/**
+ * @param {BaseToggleProps} props - The props for the `FieldLabel` component.
+ * @returns {JSX.Element} The rendered `FieldLabel` component.
+ */
 function FieldLabel(props: BaseToggleProps) {
   const {
     status,

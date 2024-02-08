@@ -45,7 +45,7 @@ function validateGenerator(generator?: string) {
     if (availableGenerators().includes(generator)) {
       direction("Install the generator with:")
       p()
-      command(`ignite generate ${generator} --update`)
+      command(`npx ignite-cli generate ${generator} --update`)
       p()
       direction("... and then try again!")
     } else {
@@ -68,11 +68,16 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   p()
   heading("Commands")
   p()
-  command("--list  ", "List installed generators", ["ignite g --list"])
+  command("--list  ", "List installed generators", ["npx ignite-cli --list"])
   command(
     "--update",
-    "Update installed generators. You can also use the 'ignite update X' format",
-    ["ignite g --update", `ignite g model --update`, `ignite update model`, `ignite update --all`],
+    "Update installed generators. You can also use the 'npx ignite-cli update X' format",
+    [
+      "npx ignite-cli --update",
+      `npx ignite-cli model --update`,
+      `npx ignite-cli update model`,
+      `npx ignite-cli update --all`,
+    ],
   )
   warning("          ⚠️  this erases any customizations you've made!")
   p()
@@ -92,15 +97,17 @@ function showGenerators() {
   generators.forEach((g) => {
     if (g === "app-icon") {
       // specialty app-icon generator
-      command(g.padEnd(longestGen), `generates app-icons`, [`ignite g ${g} all|ios|android|expo`])
+      command(g.padEnd(longestGen), `generates app-icons`, [
+        `npx ignite-cli ${g} all|ios|android|expo`,
+      ])
     } else if (g === "splash-screen") {
       // specialty splash-screen generator
       command(g.padEnd(longestGen), `generates splash-screen`, [
-        `ignite g ${g} "#191015" [--android-size=180 --ios-size=212]`,
+        `npx ignite-cli ${g} "#191015" [--android-size=180 --ios-size=212]`,
       ])
     } else {
       // standard generators
-      command(g.padEnd(longestGen), `generates a ${g}`, [`ignite g ${g} Demo`])
+      command(g.padEnd(longestGen), `generates a ${g}`, [`npx ignite-cli ${g} Demo`])
     }
   })
 }

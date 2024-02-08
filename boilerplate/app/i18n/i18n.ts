@@ -11,7 +11,7 @@ import fr from "./fr"
 i18n.fallbacks = true
 
 // to use regional locales use { "en-US": enUS } etc
-i18n.translations = { ar, "en-US": en, ko, fr }
+i18n.translations = { ar, en, "en-US": en, ko, fr }
 
 const fallbackLocale = "en"
 const systemLocale = Localization.getLocales()[0]

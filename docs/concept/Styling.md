@@ -6,14 +6,14 @@ sidebar_position: 80
 
 Ignite's approach to styling individual components is, like many other things in Ignite, straightforward and direct.
 
-If you're looking to set app-wide styles such as fonts/typography or colors, check out the [Theming](../boilerplate/theming/Theming.md) documentation.
+If you're looking to set app-wide styles such as fonts/typography or colors, check out the [Theming](../boilerplate/app/theme/Theming.md) documentation.
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
 We instead use a strategy of bare JS objects, colocated with our components (usually below the component in the file), prefixed with `$`, and typed with TypeScript:
 
 ```tsx
-import { View, ViewStyle } from "react-native"
+import type { View, ViewStyle } from "react-native"
 import { colors } from "../theme"
 
 const MyComponent = () => {
@@ -26,9 +26,9 @@ const $container: ViewStyle = {
 }
 ```
 
-Very often, we use [components with presets](../boilerplate/components/Components.md) to share styles across our whole app.
+We use [components with presets](../boilerplate/app/components/Components.md) to share styles across our whole app.
 
-With this strategy, you can tell a variable is a style if it has the $ prefix. You can also spread in other styles to compose styles:
+With this strategy, you can tell if a variable is a style when it has the `$` prefix. You can also spread in other styles to compose styles:
 
 ```tsx
 const $bold: TextStyle = {
@@ -45,7 +45,7 @@ const $title: TextStyle = {
 
 ## Sharing Styles via Presets
 
-Most of the components we include with Ignite include a `preset` property:
+Most of the [components](../boilerplate/app/components/Components.md) we include with Ignite include a `preset` property:
 
 ```tsx
 <View preset="heading" text="My Header" />
@@ -89,7 +89,3 @@ You can then use it with your Button like this:
   onPress={() => thisItem.destroy()}
 />
 ```
-
-## Styling Workflow
-
-TODO: Finish this section?

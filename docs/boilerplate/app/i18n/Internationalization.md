@@ -4,13 +4,11 @@ sidebar_position: 160
 
 # Internationalization in Ignite Apps
 
-Ignite currently setup to have Internationalization setup in English, Arabic, and Korean! This is detected on app load and will set your app to that language.
+Ignite currently set up to have Internationalization setup in English, Arabic, and Korean! This is detected on app load and will set your app to that language.
 
 ## Right to Left languages (RTL)
 
 Since Ignite already comes with an RTL language, Arabic, adding any new ones would work by default.
-
-NOTE: if you move between a RTL and non-RTL language, you'll have to relaunch your app twice to get the correct localization logic. This is an iOS only issue. An [issue](https://github.com/infinitered/ignite/issues/2025) has been logged with Ignite to find a potential solution.
 
 ### Removing RTL Support
 
@@ -22,6 +20,8 @@ To remove RTL support, follow the following steps:
 - remove lines 19-21 where we allow and force RTL on the native layer
 
 2. remove all other associated logic that uses the exported `isRTL` variable
+3. remove any `tx="some.i18n.key"` from your components and use `text="Some Text"` instead
+   (e.g. `<Text text="Some Text" />`
 
 ## Adding more languages
 

@@ -33,7 +33,7 @@ async function generate(toolbox: GluegunToolbox) {
     )
 
     p()
-    command(`ignite g ${generator} "#191015" [--android-size=180 --ios-size=212]`)
+    command(`npx ignite-cli g ${generator} "#191015" [--android-size=180 --ios-size=212]`)
     return
   }
 

@@ -1,8 +1,6 @@
 import { build } from "gluegun"
 
-/**
- * Create the cli and kick it off
- */
+// Create the cli and kick it off
 async function run(argv) {
   // create a CLI runtime
   const cli = build()

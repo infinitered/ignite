@@ -60,6 +60,8 @@ interface AppProps {
 
 /**
  * This is the root component of our app.
+ * @param {AppProps} props - The props for the `App` component.
+ * @returns {JSX.Element} The rendered `App` component.
  */
 function App(props: AppProps) {
   const { hideSplashScreen } = props

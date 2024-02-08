@@ -9,7 +9,7 @@ module.exports = {
     } = toolbox
 
     if (first !== undefined) {
-      error(`ignite '${first}' is not a command`)
+      error(`ignite-cli '${first}' is not a command`)
     } else {
       return require("./help").run(toolbox)
     }

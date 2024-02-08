@@ -1,5 +1,5 @@
 ---
-sidebar_position: 71
+title: colors.ts
 ---
 
 # Colors & Palettes

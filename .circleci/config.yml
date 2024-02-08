@@ -25,8 +25,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install bun
-          command: curl -fsSL https://bun.sh/install | bash -s -- bun-v1.0.10
+          name: Install the latest version of bun
+          command: curl -fsSL https://bun.sh/install | bash
       - run:
           name: Link bun
           command: sudo ln -s ~/.bun/bin/bun /usr/local/bin/

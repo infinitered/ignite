@@ -139,8 +139,9 @@ interface HeaderActionProps {
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
  * The Header is meant to be used with the `screenOptions.header` option on navigators, routes, or screen components via `navigation.setOptions({ header })`.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Header.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Header/}
+ * @param {HeaderProps} props - The props for the `Header` component.
+ * @returns {JSX.Element} The rendered `Header` component.
  */
 export function Header(props: HeaderProps) {
   const {
@@ -221,6 +222,10 @@ export function Header(props: HeaderProps) {
   )
 }
 
+/**
+ * @param {HeaderActionProps} props - The props for the `HeaderAction` component.
+ * @returns {JSX.Element} The rendered `HeaderAction` component.
+ */
 function HeaderAction(props: HeaderActionProps) {
   const { backgroundColor, icon, text, tx, txOptions, onPress, ActionComponent, iconColor } = props
 
