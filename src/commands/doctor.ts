@@ -98,15 +98,12 @@ module.exports = {
         expoVersion = "-"
         expoWorkflow = "not installed"
       }
-
       info("")
       info("Warning: Global Expo CLI is deprecated and should be removed.");
       info(colors.cyan("Expo"));
       table([[column1("expo"), column2(expoVersion), column3(expoWorkflow)]]);
-    } else {
-      info("");
-      info("Expo CLI is not installed.");
     }
+
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
     table([
