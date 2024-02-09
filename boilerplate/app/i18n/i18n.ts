@@ -13,9 +13,9 @@ i18n.fallbacks = true
 // to use regional locales use { "en-US": enUS } etc
 i18n.translations = { ar, en, "en-US": en, ko, fr }
 
-const fallbackLocale = "en"
+const fallbackLocale = "en-US"
 const systemLocale = Localization.getLocales()[0]
-const systemLocaleTag = systemLocale.languageTag
+const systemLocaleTag = systemLocale?.languageTag ?? "en-US"
 
 if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
   // if specific locales like en-FI or en-US is available, set it
@@ -31,7 +31,7 @@ if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
 }
 
 // handle RTL languages
-export const isRTL = systemLocale.textDirection === "rtl"
+export const isRTL = systemLocale?.textDirection === "rtl"
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 
