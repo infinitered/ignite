@@ -97,15 +97,15 @@ module.exports = {
     }
     const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
 
-    let depExpoCLIInfo = null
+    let depExpoCliInfo = null
 
     try {
-      const expoCLIVersionOutput = await run("expo-cli --version", { trim: true })
-      if (expoCLIVersionOutput) {
-        const expoCLIVersion = expoCLIVersionOutput.replace("v", "")
-        depExpoCLIInfo = [
+      const expoCliVersionOutput = await run("expo-cli --version", { trim: true })
+      if (expoCliVersionOutput) {
+        const expoCliVersion = expoCliVersionOutput.replace("v", "")
+        depExpoCliInfo = [
           column1("expo global cli"),
-          column2(expoCLIVersion),
+          column2(expoCliVersion),
           column3("Deprecated: Found 'expo-cli' installed. Please remove it."),
         ]
       }
@@ -125,7 +125,7 @@ module.exports = {
       ...pnpmPackages,
       bunInfo,
       expoInfo,
-      ...(depExpoCLIInfo ? [depExpoCLIInfo] : []),
+      ...(depExpoCliInfo ? [depExpoCliInfo] : []),
     ])
 
     // -=-=-=- ignite -=-=-=-
