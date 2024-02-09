@@ -63,9 +63,7 @@ function copy(options: CopyOptions) {
   )
 }
 
-/**
- * Root directory path of ignite dependency cache
- */
+// Root directory path of ignite dependency cache
 function rootdir(platform: NodeJS.Platform = process.platform) {
   const folder = cachePath[platform] ?? cachePath[LINUX]
   return path(homedir(), folder, "ignite")

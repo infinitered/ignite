@@ -161,7 +161,7 @@ module.exports = {
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
-    /** Add just a _little_ more spacing to match with spinners and heading */
+    // Add just a _little_ more spacing to match with spinners and heading
     const p2 = (m = "") => p(` ${m}`)
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
 

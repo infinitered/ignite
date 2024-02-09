@@ -22,7 +22,7 @@ const reactotron = Reactotron.configure({
   },
 }).use(
   mst({
-    /** ignore some chatty `mobx-state-tree` actions  */
+    /* ignore some chatty `mobx-state-tree` actions */
     filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
   }),
 )
@@ -133,7 +133,6 @@ declare global {
     /**
      * Reactotron client for logging, displaying, measuring performance, and more.
      * @see https://github.com/infinitered/reactotron
-     *
      * @example
      * if (__DEV__) {
      *  console.tron.display({
@@ -143,7 +142,6 @@ declare global {
      *    important: true
      *  })
      * }
-     *
      */
     tron: typeof reactotron
   }

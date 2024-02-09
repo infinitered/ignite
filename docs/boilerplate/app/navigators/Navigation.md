@@ -8,7 +8,7 @@ We use [React Navigation v6](https://reactnavigation.org/docs/getting-started/) 
 
 There's also a `navigationUtilities.tsx` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-There's a provided Ignite CLI generator for creating new navigators. Learn more in the [Generator docs](./Generators.md#navigator-generator).
+There's a provided Ignite CLI generator for creating new navigators. Learn more in the [Generator docs](../../../concept/Generators.md#navigator-generator).
 
 ## General Structure
 
@@ -16,13 +16,7 @@ There's a provided Ignite CLI generator for creating new navigators. Learn more 
 <AppNavigator initialState={initialNavigationState} onStateChange={onNavigationStateChange} />
 ```
 
-If you open the file `app/navigators/AppNavigator.tsx` up, you'll find the AppNavigator and the AppStack.
-
-The AppNavigator is the root navigator for your whole app. It will have the navigation container and wrap the AppStack.
-
-The AppStack is a native stack navigator (via [React Navigation](https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator)) and contains all the screens and subnavigators of your app.
-
-In the case of Ignite's demo code, it is prepared with an example flow for an app requiring authentication. The screens included within the AppStack are dependent on value of `isAuthenticated` from `authenticationStore`. If in an unauthenticated state, the only screen to be shown will be the `LoginScreen`. Otherwise, that screen is left out of the navigator and the user is presented with the `WelcomeScreen` and screens that fall under the `DemoNavigator`
+See the [AppNavigator.tsx](./AppNavigator.tsx.md) docs for more info on how the app navigator is set up.
 
 ## Useful Patterns
 
@@ -104,84 +98,8 @@ The view passed via `renderNavigationView` prop is the content rendered to the s
 
 `DrawerLayout` also allows you to customize the behavior (open/close speed, overlay position), style and even has events to track the progress and states of the drawer transitioning. See more info at the [documentation](https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout/).
 
-## Utility Functions
+Ignite's navigation setup also comes with some very useful [navigation utilities](./navigationUtilities.ts.md) to help you with common tasks such as getting the current route name, handling the back button, and persisting navigation state.
 
-### `getActiveRouteName`
+## A note about Expo Router
 
-This helper allows you to fetch the active route name from your navigator. It will recursively dive into nested routers. It takes the current navigation state (via `navigation.getState()`) and returns a string.
-
-Example:
-
-```tsx
-// nested navigators, 2-deep
-const NestedStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="myScreen" component={MyScreen} />
-    </Stack.Navigator>
-  )
-}
-
-const AppStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="nestedNav" component={NestedStack} />
-    </Stack.Navigator>
-  )
-}
-
-// getActiveRouteName usage
-function MyScreen({ navigation }) {
-  const routeName = getActiveRouteName(navigation.getState())
-  // => "myScreen"
-}
-```
-
-### `useBackButtonHandler`
-
-This helper custom hook allows you to easily specify what routes you want to exit the app from, when the "back" button is pressed on Android. It has no effect on iOS.
-
-We recommend using this in your root AppNavigator.
-
-Example:
-
-```tsx
-export const AppNavigator = (props) => {
-  // What route names do we allow the back button to exit the app from?
-  const exitRoutes = ["welcome"]
-  useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
-
-  // ...
-}
-```
-
-### `useNavigationPersistence`
-
-This helper custom hook persists app navigation state between app loads. This is only enabled in dev by default, but can be enabled in production as well by editing the hook in `navigationUtilities.tsx`.
-
-```tsx
-import * as storage from "./utils/storage"
-
-function App(props: AppProps) {
-  const persistence = useNavigationPersistence(storage, "my-persistence-key")
-  const { initialNavigationState, onNavigationStateChange, isRestored } = persistence
-
-  // wait for the navigation state to restore
-  // `null` will show the background color
-  // can replace with <LoadingScreen /> or similar if you want
-  if (!isRestored) return null
-
-  return (
-    <AppNavigator
-      // initial navigation state is fetched from storage
-      initialState={initialNavigationState}
-      // persist changes to storage
-      onStateChange={onNavigationStateChange}
-    />
-  )
-}
-```
-
-## More Examples
-
-TODO: Ignite cookbook examples coming soon!
+We are currently evaluating [Expo Router](https://docs.expo.dev/router/introduction/) to power Ignite's navigation system. It's a very promising project (built on React Navigation), but our philosophy is that nothing makes it into Ignite unless we've proven it in a full project (or two...or three...) first. We'll update this section when we have more information.

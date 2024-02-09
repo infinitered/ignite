@@ -1,12 +1,16 @@
----
-sidebar_position: 165
----
+# Services folder
 
-# Backend API Integration
+The `services` folder contains services, such as API clients.
+
+"Services" is a somewhat broad term, but we use it to refer to code that is responsible for a specific task, such as making API calls, interacting with the file system, or handling push notifications and so on.
+
+Ignite's boilerplate only comes with one service, the API client. However, you can add as many services as you like in this folder.
+
+## Backend API Integration
 
 Most apps need to communicate with a backend service of some sort. Some may have a REST API, some a GraphQL API, others might use Firebase/Firestore, Hasura, tRPC, Supabase, AWS/Amplify, or any number of different back end solutions.
 
-Ignite purposely does not make any major decisions about what backend system we expect you to use. As a consultancy, we've integrated apps with all kinds of backends (ask us about the Coldfusion backend we integrated with a few years ago!), and can't be locked into one solution.
+Ignite purposely does not make any major decisions about what backend system we expect you to use. As a consultancy, we've integrated apps with all kinds of back ends (ask us about the _Coldfusion_ backend we integrated with a few years ago!), and can't be locked into one solution.
 
 Ignite does come with a basic API setup which we'll describe here. Feel free to rip it out and use your own solution if this doesn't fit.
 
@@ -22,7 +26,7 @@ Ignite comes with [apisauce](https://github.com/infinitered/apisauce), which is 
 
 ### The Api class
 
-In `./app/services/api`, you'll find the Api class. This class is the place to add methods to call when you want to fetch data from your backend. Check out the file for examples of fetching data.
+In `./app/services/api`, you'll find the [Api class](./api.ts.md). This class is the place to add methods to call when you want to fetch data from your backend. Check out the file for examples of fetching data.
 
 ### A note about React Query (aka TanStack Query)
 
