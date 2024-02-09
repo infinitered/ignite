@@ -714,11 +714,6 @@ module.exports = {
           appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
         }
 
-        // this can go away once we're at SDK 50 since expo-font needs to be added here
-        if (expoVersion) {
-          appJson.expo.plugins.push("expo-font")
-        }
-
         write("./app.json", appJson)
       } catch (e) {
         log(e)

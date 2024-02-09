@@ -311,13 +311,13 @@ describe("ignite new", () => {
     it("should have changed the android bundle id", () => {
       const androidPackageName = APP_NAME.toLowerCase()
       const mainAppJava = filesystem.read(
-        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.java`,
+        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.kt`,
       )
-      expect(mainAppJava).toContain(`package com.${androidPackageName};`)
+      expect(mainAppJava).toContain(`package com.${androidPackageName}`)
       const mainActivityJava = filesystem.read(
-        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.java`,
+        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.kt`,
       )
-      expect(mainActivityJava).toContain(`package com.${androidPackageName};`)
+      expect(mainActivityJava).toContain(`package com.${androidPackageName}`)
     })
 
     it("should have modified package.json for proper run scripts", () => {
