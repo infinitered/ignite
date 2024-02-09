@@ -106,26 +106,26 @@ The main entry point for your app!
 
 #### Directories
 
-**[.maestro](./maestro.md)** - This includes e2e specs for any Maestro tests in your project.
+**[.maestro](./maestro.md)** - test specs for any Maestro e2e flows
 
 **[assets](./assets.md)** - icons and images
 
-**[ignite](./ignite/Ignite.md)** - stores all things Ignite, including generator templates.
+**[ignite](./ignite/Ignite.md)** - all things Ignite, including generator templates.
 
-**[plugins](./plugins/Plugins.md)** - stores any custom Expo Config Plugins you want to be applied during the prebuild process when generating the native code for the project.
+**[plugins](./plugins/Plugins.md)** - any custom Expo Config Plugins to be applied during the prebuild process when generating the native code for the project.
 
-**[test](./test/Test.md)** - will hold your Jest configs and mocks.
+**[test](./test/Test.md)** - Jest configs and mocks
 
-**[android](./android.md)** - native android project files
+**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
 
-**[ios](./ios.md)** - native ios project files
+**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
 
 #### Files
 
-**[app.json/app.config.ts](./app.json.md)**
+**[app.json/app.config.ts](./app.json.md)** - configuration files for your app. `app.json` contains the static configuration which will be fed into the dynamic configuration in `app.config.ts`, where Expo builds it's final configuration for the app.
 
-These are the configuration files for your application. `app.json` contains the static configuration which will be fed into the dynamic configuration in `app.config.ts`, where Expo builds it's final configuration for the app.
+**[App.tsx](./App.tsx.md)** - entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
-**[App.tsx](./App.tsx.md)**
+**[eas.json](./eas.json.md)** - build configurations for Expo EAS builds
 
-This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
+**[package.json](./package.json.md)** - main project dependencies and configuration
