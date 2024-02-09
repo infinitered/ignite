@@ -1,8 +1,7 @@
 const { defaults: tsjPreset } = require("ts-jest/presets")
 
 const thirdPartyIgnorePatterns = [
-  "(jest-)?react-native",
-  "@react-native(-community)?)",
+  "((jest-)?react-native|@react-native(-community)?)",
   "expo(nent)?",
   "@expo(nent)?/.*",
   "@expo-google-fonts/.*",
@@ -22,7 +21,7 @@ module.exports = {
   ...tsjPreset,
   preset: "jest-expo",
   transformIgnorePatterns: [
-    `<rootDir>/node_modules/(?!(${thirdPartyIgnorePatterns.join('|')}))`,
+    `<rootDir>/node_modules/(?!${thirdPartyIgnorePatterns.join("|")})`,
     "jest-runner",
   ],
   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.maestro/", "@react-native"],
