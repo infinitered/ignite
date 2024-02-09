@@ -11,7 +11,7 @@ In this folder, there's only one file ([app.tsx](./app.tsx.md)). The rest are fo
 - [app.tsx](./app.tsx.md) - The main entry point for your app
 - [components](./components/Components.md) - Reusable components
 - [config](./config/Config.md) - Configuration files
-- devtools - Configuration/setup for Reactotron and other dev tools
+- [devtools](./devtools/Devtools.md) - Configuration/setup for Reactotron and other dev tools
 - [i18n](./i18n/Internationalization.md) - Internationalization setup
 - [models](./models/Models.md) - MobX-State-Tree models
 - [navigators](./navigators/Navigation.md) - React Navigation navigators
