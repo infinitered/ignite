@@ -77,30 +77,40 @@ module.exports = {
       : []
     const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
 
-    const expoPath = which("expo")
     const expoVersionCmd = "npm list --depth 0 expo 2>&1"
     let expoVersion
     let expoWorkflow
 
     function expoWorkflowInfo() {
-      // Define the logic for expoWorkflowInfo
       const iosFound = isFile(`${directory}\\ios\\.xcodeproj`)
       const androidFound = isFile(`${directory}\\android\\.gradle`)
+
       return iosFound || androidFound
     }
 
-    if (expoPath) {
-      try {
-        expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
-        expoWorkflow = expoWorkflowInfo() ? "bare" : "managed"
-      } catch (_) {
-        expoVersion = "-"
-        expoWorkflow = "not installed"
+    try {
+      expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
+      expoWorkflow = expoWorkflowInfo() ? "bare" : "managed"
+    } catch (_) {
+      expoVersion = "-"
+      expoWorkflow = "not installed"
+    }
+    const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
+
+    let depExpoCLIInfo = null
+
+    try {
+      const expoCLIVersionOutput = await run("expo-cli --version", { trim: true })
+      if (expoCLIVersionOutput) {
+        const expoCLIVersion = expoCLIVersionOutput.replace("v", "")
+        depExpoCLIInfo = [
+          column1("expo global cli"),
+          column2(expoCLIVersion),
+          column3("Deprecated: Found 'expo-cli' installed. Please remove it."),
+        ]
       }
-      info("")
-      info("Warning: Global Expo CLI is deprecated and should be removed.")
-      info(colors.cyan("Expo"))
-      table([[column1("expo"), column2(expoVersion), column3(expoWorkflow)]])
+    } catch (_) {
+      // No action needed if 'expo-cli' is not installed or there's an error checking its version.
     }
 
     info("")
@@ -114,6 +124,8 @@ module.exports = {
       pnpmInfo,
       ...pnpmPackages,
       bunInfo,
+      expoInfo,
+      ...(depExpoCLIInfo ? [depExpoCLIInfo] : []),
     ])
 
     // -=-=-=- ignite -=-=-=-
