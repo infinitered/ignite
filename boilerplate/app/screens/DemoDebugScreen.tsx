@@ -3,9 +3,10 @@ import * as Application from "expo-application"
 import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import { ThemedStyle, spacing } from "../theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 /**
  * @param {string} url - The URL to open in the browser.
@@ -18,6 +19,7 @@ function openLinkInBrowser(url: string) {
 export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
   _props,
 ) {
+  const { setThemeOverride, theme, themed } = useAppTheme()
   const {
     authenticationStore: { logout },
   } = useStores()
@@ -48,11 +50,22 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
       <Text
-        style={$reportBugsLink}
+        style={themed($reportBugsLink)}
         tx="demoDebugScreen.reportBugs"
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
       />
       <Text style={$title} preset="heading" tx="demoDebugScreen.title" />
+
+      <Button
+        onPress={() => {
+          if (theme === "dark") {
+            setThemeOverride("light")
+          } else {
+            setThemeOverride("dark")
+          }
+        }}
+        text={`Switch Theme: ${theme}`}
+      />
       <View style={$itemsContainer}>
         <ListItem
           LeftComponent={
@@ -105,7 +118,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
       </View>
       <View style={$buttonContainer}>
         <Button style={$button} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
-        <Text style={$hint} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
+        <Text style={themed($hint)} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
       </View>
       <View style={$buttonContainer}>
         <Button style={$button} tx="common.logOut" onPress={logout} />
@@ -124,18 +137,18 @@ const $title: TextStyle = {
   marginBottom: spacing.xxl,
 }
 
-const $reportBugsLink: TextStyle = {
+const $reportBugsLink: ThemedStyle<TextStyle> = (colors) => ({
   color: colors.tint,
   marginBottom: spacing.lg,
   alignSelf: isRTL ? "flex-start" : "flex-end",
-}
+})
 
 const $item: ViewStyle = {
   marginBottom: spacing.md,
 }
 
 const $itemsContainer: ViewStyle = {
-  marginBottom: spacing.xl,
+  marginVertical: spacing.xl,
 }
 
 const $button: ViewStyle = {
@@ -146,11 +159,11 @@ const $buttonContainer: ViewStyle = {
   marginBottom: spacing.md,
 }
 
-const $hint: TextStyle = {
+const $hint: ThemedStyle<TextStyle> = (colors) => ({
   color: colors.palette.neutral600,
   fontSize: 12,
   lineHeight: 15,
   paddingBottom: spacing.lg,
-}
+})
 
 // @demo remove-file

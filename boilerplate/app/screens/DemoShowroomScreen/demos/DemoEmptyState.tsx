@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { EmptyState } from "../../../components"
-import { colors } from "../../../theme"
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
@@ -10,7 +9,7 @@ export const DemoEmptyState: Demo = {
   name: "EmptyState",
   description:
     "A component to use when there is no data to display. It can be utilized to direct the user what to do next",
-  data: [
+  data: ({ colors }) => [
     <DemoUseCase
       name="Presets"
       description="You can create different text/image sets. One is predefined called `generic`. Note, there's no default in case you want to have a completely custom EmptyState."

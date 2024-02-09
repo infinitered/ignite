@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React from "react"
 import { Text } from "../../../components"
-import { colors } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -10,7 +9,7 @@ export const DemoText: Demo = {
   name: "Text",
   description:
     "For your text displaying needs. This component is a HOC over the built-in React Native one.",
-  data: [
+  data: ({ colors }) => [
     <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
       <Text>
         default preset - Cillum eu laboris in labore. Excepteur mollit tempor reprehenderit fugiat

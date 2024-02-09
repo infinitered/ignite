@@ -35,9 +35,10 @@ import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import { ThemedStyle, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 const ICON_SIZE = 14
 
@@ -148,7 +149,7 @@ const EpisodeCard = observer(function EpisodeCard({
   isFavorite: boolean
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
-
+  const { colors, themed } = useAppTheme()
   const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
@@ -246,21 +247,21 @@ const EpisodeCard = observer(function EpisodeCard({
 
   return (
     <Card
-      style={$item}
+      style={themed($item)}
       verticalAlignment="force-footer-bottom"
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
       HeadingComponent={
-        <View style={$metadata}>
+        <View style={themed($metadata)}>
           <Text
-            style={$metadataText}
+            style={themed($metadataText)}
             size="xxs"
             accessibilityLabel={episode.datePublished.accessibilityLabel}
           >
             {episode.datePublished.textLabel}
           </Text>
           <Text
-            style={$metadataText}
+            style={themed($metadataText)}
             size="xxs"
             accessibilityLabel={episode.duration.accessibilityLabel}
           >
@@ -275,7 +276,7 @@ const EpisodeCard = observer(function EpisodeCard({
         <Button
           onPress={handlePressFavorite}
           onLongPress={handlePressFavorite}
-          style={[$favoriteButton, isFavorite && $unFavoriteButton]}
+          style={themed([$favoriteButton, isFavorite && $unFavoriteButton])}
           accessibilityLabel={
             isFavorite
               ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
@@ -314,11 +315,12 @@ const $heading: ViewStyle = {
   marginBottom: spacing.md,
 }
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = (colors) => ({
   padding: spacing.md,
   marginTop: spacing.md,
   minHeight: 120,
-}
+  backgroundColor: colors.palette.neutral100,
+})
 
 const $itemThumbnail: ImageStyle = {
   marginTop: spacing.sm,
@@ -341,19 +343,19 @@ const $iconContainer: ViewStyle = {
   marginEnd: spacing.sm,
 }
 
-const $metadata: TextStyle = {
+const $metadata: ThemedStyle<TextStyle> = (colors) => ({
   color: colors.textDim,
   marginTop: spacing.xs,
   flexDirection: "row",
-}
+})
 
-const $metadataText: TextStyle = {
+const $metadataText: ThemedStyle<TextStyle> = (colors) => ({
   color: colors.textDim,
   marginEnd: spacing.md,
   marginBottom: spacing.xs,
-}
+})
 
-const $favoriteButton: ViewStyle = {
+const $favoriteButton: ThemedStyle<ViewStyle> = (colors) => ({
   borderRadius: 17,
   marginTop: spacing.md,
   justifyContent: "flex-start",
@@ -364,12 +366,12 @@ const $favoriteButton: ViewStyle = {
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
-}
+})
 
-const $unFavoriteButton: ViewStyle = {
+const $unFavoriteButton: ThemedStyle<ViewStyle> = (colors) => ({
   borderColor: colors.palette.primary100,
   backgroundColor: colors.palette.primary100,
-}
+})
 
 const $emptyState: ViewStyle = {
   marginTop: spacing.xxl,

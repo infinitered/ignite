@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
-import { colors, spacing, typography } from "../../theme"
+import { ThemedStyle, spacing, typography } from "../../theme"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 interface DemoUseCaseProps {
   name: string
@@ -16,6 +17,7 @@ interface DemoUseCaseProps {
  */
 export function DemoUseCase(props: DemoUseCaseProps) {
   const { name, description, children, layout = "column" } = props
+  const { themed } = useAppTheme()
 
   return (
     <View>
@@ -23,7 +25,7 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
       {description && <Text style={$description}>{description}</Text>}
 
-      <View style={[layout === "row" && $rowLayout, $item]}>{children}</View>
+      <View style={[layout === "row" && $rowLayout, themed($item)]}>{children}</View>
     </View>
   )
 }
@@ -32,12 +34,12 @@ const $description: TextStyle = {
   marginTop: spacing.md,
 }
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = (colors) => ({
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
   padding: spacing.lg,
   marginVertical: spacing.md,
-}
+})
 
 const $name: TextStyle = {
   fontFamily: typography.primary.bold,

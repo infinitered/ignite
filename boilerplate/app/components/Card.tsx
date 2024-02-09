@@ -8,10 +8,10 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import { colors, spacing } from "../theme"
+import { ThemedStyle, colors, spacing } from "../theme"
 import { Text, TextProps } from "./Text"
 
-type Presets = keyof typeof $containerPresets
+type Presets = "default" | "reversed"
 
 interface CardProps extends TouchableOpacityProps {
   /**
@@ -243,7 +243,7 @@ export function Card(props: CardProps) {
   )
 }
 
-const $containerBase: ViewStyle = {
+const $containerBase: ThemedStyle<ViewStyle> = (colors) => ({
   borderRadius: spacing.md,
   padding: spacing.xs,
   borderWidth: 1,
@@ -254,7 +254,7 @@ const $containerBase: ViewStyle = {
   elevation: 16,
   minHeight: 96,
   flexDirection: "row",
-}
+})
 
 const $alignmentWrapper: ViewStyle = {
   flex: 1,
@@ -268,32 +268,30 @@ const $alignmentWrapperFlexOptions = {
   "force-footer-bottom": "space-between",
 } as const
 
-const $containerPresets = {
-  default: [
-    $containerBase,
-    {
-      backgroundColor: colors.palette.neutral100,
-      borderColor: colors.palette.neutral300,
-    },
-  ] as StyleProp<ViewStyle>,
-
-  reversed: [
-    $containerBase,
-    { backgroundColor: colors.palette.neutral800, borderColor: colors.palette.neutral500 },
-  ] as StyleProp<ViewStyle>,
+const $containerPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
+  default: (colors) => ({
+    ...$containerBase(colors),
+    backgroundColor: colors.palette.neutral100,
+    borderColor: colors.palette.neutral300,
+  }),
+  reversed: (colors) => ({
+    ...$containerBase(colors),
+    backgroundColor: colors.palette.neutral800,
+    borderColor: colors.palette.neutral500,
+  }),
 }
 
-const $headingPresets: Record<Presets, TextStyle> = {
-  default: {},
-  reversed: { color: colors.palette.neutral100 },
+const $headingPresets: Record<Presets, ThemedStyle<TextStyle>> = {
+  default: () => {},
+  reversed: (colors) => ({ color: colors.palette.neutral100 }),
 }
 
-const $contentPresets: Record<Presets, TextStyle> = {
-  default: {},
-  reversed: { color: colors.palette.neutral100 },
+const $contentPresets: Record<Presets, ThemedStyle<TextStyle>> = {
+  default: () => {},
+  reversed: (colors) => ({ color: colors.palette.neutral100 }),
 }
 
-const $footerPresets: Record<Presets, TextStyle> = {
-  default: {},
-  reversed: { color: colors.palette.neutral100 },
+const $footerPresets: Record<Presets, ThemedStyle<TextStyle>> = {
+  default: () => {},
+  reversed: (colors) => ({ color: colors.palette.neutral100 }),
 }

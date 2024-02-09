@@ -4,14 +4,16 @@ import { translate } from "../i18n"
 import { spacing } from "../theme"
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 const sadFace = require("../../assets/images/sad-face.png")
+const sadFaceDark = require("../../assets/images/sad-face-dark.png")
 
 interface EmptyStateProps {
   /**
    * An optional prop that specifies the text/image set to use for the empty state.
    */
-  preset?: keyof typeof EmptyStatePresets
+  preset?: "generic"
   /**
    * Style override for the container.
    */
@@ -108,15 +110,6 @@ interface EmptyStatePresetItem {
   button: TextProps["text"]
 }
 
-const EmptyStatePresets = {
-  generic: {
-    imageSource: sadFace,
-    heading: translate("emptyStateComponent.generic.heading"),
-    content: translate("emptyStateComponent.generic.content"),
-    button: translate("emptyStateComponent.generic.button"),
-  } as EmptyStatePresetItem,
-} as const
-
 /**
  * A component to use when there is no data to display. It can be utilized to direct the user what to do next.
  * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/EmptyState/}
@@ -124,6 +117,16 @@ const EmptyStatePresets = {
  * @returns {JSX.Element} The rendered `EmptyState` component.
  */
 export function EmptyState(props: EmptyStateProps) {
+  const { theme } = useAppTheme()
+  const EmptyStatePresets = {
+    generic: {
+      imageSource: theme === "dark" ? sadFaceDark : sadFace,
+      heading: translate("emptyStateComponent.generic.heading"),
+      content: translate("emptyStateComponent.generic.content"),
+      button: translate("emptyStateComponent.generic.button"),
+    } as EmptyStatePresetItem,
+  } as const
+
   const preset = EmptyStatePresets[props.preset ?? "generic"]
 
   const {

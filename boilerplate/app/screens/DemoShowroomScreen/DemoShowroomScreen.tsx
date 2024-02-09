@@ -6,17 +6,18 @@ import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import { colors, spacing } from "../../theme"
+import { DefaultThemeColors, ThemedStyle, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 const logo = require("../../../assets/images/logo.png")
 
 export interface Demo {
   name: string
   description: string
-  data: ReactElement[]
+  data: ({ themed, colors }: { themed: any; colors: DefaultThemeColors }) => ReactElement[]
 }
 
 interface DemoListItem {
@@ -81,6 +82,8 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
 
+    const { themed, colors } = useAppTheme()
+
     // handle Web links
     React.useEffect(() => {
       if (params !== undefined && Object.keys(params).length > 0) {
@@ -92,9 +95,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         if (params.itemIndex) {
           try {
             findItemIndex =
-              demoValues[findSectionIndex].data.findIndex(
-                (u) => slugify(u.props.name) === params.itemIndex,
-              ) + 1
+              demoValues[findSectionIndex]
+                .data({ themed, colors })
+                .findIndex((u) => slugify(u.props.name) === params.itemIndex) + 1
           } catch (err) {
             console.error(err)
           }
@@ -151,7 +154,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         drawerType={"slide"}
         drawerPosition={isRTL ? "right" : "left"}
         renderDrawerContent={() => (
-          <View style={[$drawer, $drawerInsets]}>
+          <View style={[themed($drawer), $drawerInsets]}>
             <View style={$logoContainer}>
               <Image source={logo} style={$logoImage} />
             </View>
@@ -162,7 +165,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data.map((u) => u.props.name as string),
+                useCases: d.data({ colors, themed }).map((u) => u.props.name as string),
               }))}
               keyExtractor={(item) => item.name}
               renderItem={({ item, index: sectionIndex }) => (
@@ -208,10 +211,10 @@ const $screenContainer: ViewStyle = {
   flex: 1,
 }
 
-const $drawer: ViewStyle = {
+const $drawer: ThemedStyle<ViewStyle> = (colors) => ({
   backgroundColor: colors.background,
   flex: 1,
-}
+})
 
 const $listContentContainer: ContentStyle = {
   paddingHorizontal: spacing.lg,

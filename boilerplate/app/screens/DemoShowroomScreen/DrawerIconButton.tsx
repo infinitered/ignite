@@ -3,7 +3,8 @@ import { Pressable, PressableProps, ViewStyle } from "react-native"
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 import { useDrawerProgress } from "react-native-drawer-layout"
 import { isRTL } from "../../i18n"
-import { colors, spacing } from "../../theme"
+import { spacing } from "../../theme"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 interface DrawerIconButtonProps extends PressableProps {}
 
@@ -16,6 +17,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { ...PressableProps } = props
   const progress = useDrawerProgress()
+  const { colors } = useAppTheme()
 
   const animatedContainerStyles = useAnimatedStyle(() => {
     const translateX = interpolate(progress.value, [0, 1], [0, isRTL ? 60 : -60])

@@ -8,9 +8,10 @@ import {
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { ThemedStyle, spacing } from "../theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -21,6 +22,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   _props, // @demo remove-current-line
 ) {
   // @demo remove-block-start
+  const { themed } = useAppTheme()
   const { navigation } = _props
   const {
     authenticationStore: { logout },
@@ -42,7 +44,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
   return (
-    <View style={$container}>
+    <View style={themed($container)}>
       <View style={$topContainer}>
         <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
         <Text
@@ -55,7 +57,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
+      <View style={[themed($bottomContainer), $bottomContainerInsets]}>
         <Text tx="welcomeScreen.postscript" size="md" />
         {/* @demo remove-block-start */}
         <Button
@@ -70,10 +72,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   )
 })
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = (colors) => ({
   flex: 1,
   backgroundColor: colors.background,
-}
+})
 
 const $topContainer: ViewStyle = {
   flexShrink: 1,
@@ -83,7 +85,7 @@ const $topContainer: ViewStyle = {
   paddingHorizontal: spacing.lg,
 }
 
-const $bottomContainer: ViewStyle = {
+const $bottomContainer: ThemedStyle<ViewStyle> = (colors) => ({
   flexShrink: 1,
   flexGrow: 0,
   flexBasis: "43%",
@@ -92,7 +94,8 @@ const $bottomContainer: ViewStyle = {
   borderTopRightRadius: 16,
   paddingHorizontal: spacing.lg,
   justifyContent: "space-around",
-}
+})
+
 const $welcomeLogo: ImageStyle = {
   height: 88,
   width: "100%",

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { AutoImage, Button, Card, Icon } from "../../../components"
-import { colors, spacing } from "../../../theme"
+import { spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -10,7 +10,7 @@ export const DemoCard: Demo = {
   name: "Card",
   description:
     "Cards are useful for displaying related information in a contained way. If a ListItem displays content horizontally, a Card can be used to display content vertically.",
-  data: [
+  data: ({ colors }) => [
     <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
       <Card
         heading="Default Preset (default)"

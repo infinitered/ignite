@@ -4,7 +4,8 @@ import { TextInput, TextStyle, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { ThemedStyle, spacing } from "../theme"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -18,6 +19,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const {
     authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
   } = useStores()
+
+  const { themed, colors } = useAppTheme()
 
   useEffect(() => {
     // Here is where you could fetch credentials from keychain or storage
@@ -74,7 +77,9 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     >
       <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
       <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+      {attemptsCount > 2 && (
+        <Text tx="loginScreen.hint" size="sm" weight="light" style={themed($hint)} />
+      )}
 
       <TextField
         value={authEmail}
@@ -130,10 +135,10 @@ const $enterDetails: TextStyle = {
   marginBottom: spacing.lg,
 }
 
-const $hint: TextStyle = {
+const $hint: ThemedStyle<TextStyle> = (colors) => ({
   color: colors.tint,
   marginBottom: spacing.md,
-}
+})
 
 const $textField: ViewStyle = {
   marginBottom: spacing.lg,

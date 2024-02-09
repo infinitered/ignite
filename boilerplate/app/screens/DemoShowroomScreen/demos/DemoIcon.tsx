@@ -2,9 +2,9 @@
 import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
+import { ThemedStyle, spacing } from "app/theme"
 
 const $demoIconContainer: ViewStyle = {
   padding: spacing.xs,
@@ -16,25 +16,25 @@ const $iconTile: ViewStyle = {
   paddingVertical: spacing.xs,
 }
 
-const $iconTileLabel: TextStyle = {
+const $iconTileLabel: ThemedStyle<TextStyle> = (colors) => ({
   marginTop: spacing.xxs,
   color: colors.textDim,
-}
+})
 
-const $customIconContainer: ViewStyle = {
+const $customIconContainer: ThemedStyle<ViewStyle> = (colors) => ({
   padding: spacing.md,
   backgroundColor: colors.palette.angry500,
-}
+})
 
-const $customIcon: ImageStyle = {
+const $customIcon: ThemedStyle<ImageStyle> = (colors) => ({
   tintColor: colors.palette.neutral100,
-}
+})
 
 export const DemoIcon: Demo = {
   name: "Icon",
   description:
     "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.",
-  data: [
+  data: ({ colors, themed }) => [
     <DemoUseCase
       name="Icons"
       description="List of icons registered inside the component."
@@ -44,7 +44,7 @@ export const DemoIcon: Demo = {
         <View key={icon} style={$iconTile}>
           <Icon icon={icon as IconTypes} color={colors.tint} size={35} />
 
-          <Text size="xs" style={$iconTileLabel}>
+          <Text size="xs" style={themed($iconTileLabel)}>
             {icon}
           </Text>
         </View>
@@ -71,7 +71,12 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase name="Styling" description="The component can be styled easily." layout="row">
-      <Icon icon="ladybug" style={$customIcon} size={40} containerStyle={$customIconContainer} />
+      <Icon
+        icon="ladybug"
+        style={themed($customIcon)}
+        size={40}
+        containerStyle={themed($customIconContainer)}
+      />
     </DemoUseCase>,
   ],
 }
