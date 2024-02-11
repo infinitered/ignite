@@ -25,7 +25,6 @@ module.exports = {
     "jest-runner",
   ],
   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.maestro/", "@react-native"],
-  testEnvironment: "jsdom",
   setupFiles: ["<rootDir>/test/setup.ts"],
   transform:{
     '^.+\\.test.tsx?$': ['ts-jest', {
