@@ -18,7 +18,6 @@ A new Ignite boilerplate project's structure looks similar to this:
 
 ```
 your-project
-├── .maestro
 ├── android
 ├── ios
 ├── app
@@ -106,8 +105,6 @@ The main entry point for your app!
 
 #### Directories
 
-**[.maestro](./maestro.md)** - test specs for any Maestro e2e flows
-
 **[assets](./assets.md)** - icons and images
 
 **[ignite](./ignite/Ignite.md)** - all things Ignite, including generator templates.
@@ -127,5 +124,3 @@ The main entry point for your app!
 **[App.tsx](./App.tsx.md)** - entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
 **[eas.json](./eas.json.md)** - build configurations for Expo EAS builds
-
-**[package.json](./package.json.md)** - main project dependencies and configuration

@@ -21,7 +21,7 @@ const reactotron = Reactotron.configure({
 )
 ```
 
-There are also a few custom commands included. This is a great way to add your own custom debugging tools to Reactotron!
+There are also a few custom commands included. You can use `reactotron.onCustomCommand` to add your own own custom debugging tools to Reactotron. Here is an example:
 
 ```typescript
 reactotron.onCustomCommand({
