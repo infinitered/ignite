@@ -1,3 +1,8 @@
+---
+title: eas.json
+sidebar_position: 30
+---
+
 # eas.json
 
 `eas.json` is the configuration file for [Expo Application Service (EAS)](https://docs.expo.dev/eas/). It allows you to create profiles for building and distributing your app.

@@ -1,0 +1,8 @@
+{
+  "label": "test",
+  "position": 50,
+  "link": {
+    "type": "doc",
+    "id": "Test"
+  }
+}

@@ -1,3 +1,8 @@
+---
+title: .maestro
+sidebar_position: 21
+---
+
 # Maestro
 
 Ignite's demo project includes a `.maestro` directory with a few example test flows. [Maestro](https://maestro.mobile.dev/) is Ignite's default end-to-end testing solution.

@@ -1,3 +1,8 @@
+---
+title: assets
+sidebar_position: 21
+---
+
 # Assets Folder
 
 The `assets` folder is for icons and images used in your app.

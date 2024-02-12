@@ -48,8 +48,7 @@ your-project
 ├── App.tsx
 ├── eas.json
 ├── package.json
-├── README.md
-└── tsconfig.json
+└── README.md
 ```
 
 ### ./app directory
@@ -106,17 +105,19 @@ The main entry point for your app!
 
 #### Directories
 
+**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
+
+**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
+
+**[.maestro](./maestro.md)** - Maestro e2e tests
+
 **[assets](./assets.md)** - icons and images
 
-**[ignite](./ignite/Ignite.md)** - all things Ignite, including generator templates.
+**[ignite](./ignite.md)** - all things Ignite, including generator templates.
 
 **[plugins](./plugins/Plugins.md)** - any custom Expo Config Plugins to be applied during the prebuild process when generating the native code for the project.
 
 **[test](./test/Test.md)** - Jest configs and mocks
-
-**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
-
-**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
 
 #### Files
 
