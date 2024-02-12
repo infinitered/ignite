@@ -18,6 +18,7 @@ A new Ignite boilerplate project's structure looks similar to this:
 
 ```
 your-project
+├── .maestro
 ├── android
 ├── ios
 ├── app
