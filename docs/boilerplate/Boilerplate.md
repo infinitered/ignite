@@ -20,7 +20,6 @@ A new Ignite boilerplate project's structure looks similar to this:
 your-project
 ├── .maestro
 ├── android
-├── ios
 ├── app
 │   ├── components
 │   ├── config
@@ -36,6 +35,7 @@ your-project
 ├── assets
 ├── ignite
 │   └── templates
+├── ios
 ├── plugins
 │   └── withSplashScreen.ts
 ├── test
@@ -105,15 +105,15 @@ The main entry point for your app!
 
 #### Directories
 
-**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
-
-**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
-
 **[.maestro](./maestro.md)** - Maestro e2e tests
+
+**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
 
 **[assets](./assets.md)** - icons and images
 
 **[ignite](./ignite.md)** - all things Ignite, including generator templates.
+
+**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
 
 **[plugins](./plugins/Plugins.md)** - any custom Expo Config Plugins to be applied during the prebuild process when generating the native code for the project.
 

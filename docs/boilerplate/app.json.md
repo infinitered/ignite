@@ -1,11 +1,16 @@
+---
+title: app.json / app.config.js
+sidebar_position: 60
+---
+
 # app.json / app.config.js
 
-The app config (app.json & app.config.js) is used to configure your React Native project.
+The app.json & app.config.js files are used to configure your React Native / Expo project.
 
-Ignite pre-fills a lot of details for you!
+Ignite has already configured several things for us:
 
-- app icon - configuration for ios, android, and web
-- splash screen - config for ios, android, and web
-- default expo plugins for things like localization and splash screen
+- App Icons - configured for iOS, Android, and Web. Check out [App Icon Generators](http://localhost:3000/ignite-cli/concept/Generators/#app-icon-generator) to update your App Icon.
+- Splash Screen colors and images - configured for iOS, Android, and Web. Check out [Splash Screen Generators](http://localhost:3000/ignite-cli/concept/Generators/#splash-screen-generator) to update your Splash Screen.
+- Expo plugins for things like localization and splash screen
 
 See [Expo's Documentation on App.json Configuration](https://docs.expo.dev/workflow/configuration/) for more details.

@@ -1,3 +1,8 @@
+---
+title: App.tsx
+sidebar_position: 65
+---
+
 # App.tsx
 
 `App.tsx` is the entry point for Expo / React Native itself. It is minimal on purpose - its only responsibiliy is to:
