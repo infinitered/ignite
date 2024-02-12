@@ -1,10 +1,10 @@
 import React from "react"
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { translate } from "../i18n"
-import { spacing } from "../theme"
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
+import { ThemedStyle } from "app/theme"
 
 const sadFace = require("../../assets/images/sad-face.png")
 const sadFaceDark = require("../../assets/images/sad-face-dark.png")
@@ -117,10 +117,10 @@ interface EmptyStatePresetItem {
  * @returns {JSX.Element} The rendered `EmptyState` component.
  */
 export function EmptyState(props: EmptyStateProps) {
-  const { theme } = useAppTheme()
+  const { themeContext, themed, spacing } = useAppTheme()
   const EmptyStatePresets = {
     generic: {
-      imageSource: theme === "dark" ? sadFaceDark : sadFace,
+      imageSource: themeContext === "dark" ? sadFaceDark : sadFace,
       heading: translate("emptyStateComponent.generic.heading"),
       content: translate("emptyStateComponent.generic.content"),
       button: translate("emptyStateComponent.generic.button"),
@@ -166,14 +166,14 @@ export function EmptyState(props: EmptyStateProps) {
     ImageProps?.style,
   ]
   const $headingStyles = [
-    $heading,
+    themed($heading),
     isImagePresent && { marginTop: spacing.xxxs },
     (isContentPresent || isButtonPresent) && { marginBottom: spacing.xxxs },
     $headingStyleOverride,
     HeadingTextProps?.style,
   ]
   const $contentStyles = [
-    $content,
+    themed($content),
     (isImagePresent || isHeadingPresent) && { marginTop: spacing.xxxs },
     isButtonPresent && { marginBottom: spacing.xxxs },
     $contentStyleOverride,
@@ -226,5 +226,11 @@ export function EmptyState(props: EmptyStateProps) {
 }
 
 const $image: ImageStyle = { alignSelf: "center" }
-const $heading: TextStyle = { textAlign: "center", paddingHorizontal: spacing.lg }
-const $content: TextStyle = { textAlign: "center", paddingHorizontal: spacing.lg }
+const $heading: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  textAlign: "center",
+  paddingHorizontal: spacing.lg,
+})
+const $content: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  textAlign: "center",
+  paddingHorizontal: spacing.lg,
+})

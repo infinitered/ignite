@@ -7,7 +7,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native"
-import { ThemedStyle, spacing, typography } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -175,7 +175,7 @@ export function Button(props: ButtonProps) {
   )
 }
 
-const $baseViewStyle: ViewStyle = {
+const $baseViewStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   minHeight: 56,
   borderRadius: 4,
   justifyContent: "center",
@@ -184,9 +184,9 @@ const $baseViewStyle: ViewStyle = {
   paddingVertical: spacing.sm,
   paddingHorizontal: spacing.sm,
   overflow: "hidden",
-}
+})
 
-const $baseTextStyle: TextStyle = {
+const $baseTextStyle: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontSize: 16,
   lineHeight: 20,
   fontFamily: typography.primary.medium,
@@ -194,32 +194,41 @@ const $baseTextStyle: TextStyle = {
   flexShrink: 1,
   flexGrow: 0,
   zIndex: 2,
-}
+})
 
-const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
-const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
+const $rightAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginStart: spacing.xs,
+  zIndex: 1,
+})
+const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginEnd: spacing.xs,
+  zIndex: 1,
+})
 
 const $viewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
-  default: (colors) => ({
-    ...$baseViewStyle,
+  default: (theme) => ({
+    ...$baseViewStyle(theme),
     borderWidth: 1,
-    borderColor: colors.palette.neutral400,
-    backgroundColor: colors.palette.neutral100,
+    borderColor: theme.colors.palette.neutral400,
+    backgroundColor: theme.colors.palette.neutral100,
   }),
-  filled: (colors) => ({ ...$baseViewStyle, backgroundColor: colors.palette.neutral300 }),
-  reversed: (colors) => ({ ...$baseViewStyle, backgroundColor: colors.palette.neutral800 }),
+  filled: (theme) => ({
+    ...$baseViewStyle(theme),
+    backgroundColor: theme.colors.palette.neutral300,
+  }),
+  reversed: (theme) => ({ ...$baseViewStyle, backgroundColor: theme.colors.palette.neutral800 }),
 }
 
 const $textPresets: Record<Presets, ThemedStyle<TextStyle>> = {
-  default: () => $baseTextStyle,
-  filled: () => $baseTextStyle,
-  reversed: (colors) => ({ ...$baseTextStyle, color: colors.palette.neutral100 }),
+  default: (theme) => $baseTextStyle(theme),
+  filled: (theme) => $baseTextStyle(theme),
+  reversed: (theme) => ({ ...$baseTextStyle(theme), color: theme.colors.palette.neutral100 }),
 }
 
 const $pressedViewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
-  default: (colors) => ({ backgroundColor: colors.palette.neutral200 }),
-  filled: (colors) => ({ backgroundColor: colors.palette.neutral400 }),
-  reversed: (colors) => ({ backgroundColor: colors.palette.neutral700 }),
+  default: ({ colors }) => ({ backgroundColor: colors.palette.neutral200 }),
+  filled: ({ colors }) => ({ backgroundColor: colors.palette.neutral400 }),
+  reversed: ({ colors }) => ({ backgroundColor: colors.palette.neutral700 }),
 }
 
 const $pressedTextPresets: Record<Presets, ThemedStyle<ViewStyle>> = {

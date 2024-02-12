@@ -3,7 +3,7 @@ import * as Application from "expo-application"
 import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { ThemedStyle, spacing } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
 import { useAppTheme } from "app/utils/useAppTheme"
@@ -19,7 +19,7 @@ function openLinkInBrowser(url: string) {
 export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
   _props,
 ) {
-  const { setThemeOverride, theme, themed } = useAppTheme()
+  const { setThemeContextOverride, themeContext, themed } = useAppTheme()
   const {
     authenticationStore: { logout },
   } = useStores()
@@ -48,28 +48,28 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   )
 
   return (
-    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={themed($container)}>
       <Text
         style={themed($reportBugsLink)}
         tx="demoDebugScreen.reportBugs"
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
       />
-      <Text style={$title} preset="heading" tx="demoDebugScreen.title" />
+      <Text style={themed($title)} preset="heading" tx="demoDebugScreen.title" />
 
       <Button
         onPress={() => {
-          if (theme === "dark") {
-            setThemeOverride("light")
+          if (themeContext === "dark") {
+            setThemeContextOverride("light")
           } else {
-            setThemeOverride("dark")
+            setThemeContextOverride("dark")
           }
         }}
-        text={`Switch Theme: ${theme}`}
+        text={`Switch Theme: ${themeContext}`}
       />
-      <View style={$itemsContainer}>
+      <View style={themed($itemsContainer)}>
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Id</Text>
               <Text>{Application.applicationId}</Text>
             </View>
@@ -77,7 +77,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Name</Text>
               <Text>{Application.applicationName}</Text>
             </View>
@@ -85,7 +85,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Version</Text>
               <Text>{Application.nativeApplicationVersion}</Text>
             </View>
@@ -93,7 +93,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Build Version</Text>
               <Text>{Application.nativeBuildVersion}</Text>
             </View>
@@ -101,7 +101,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">Hermes Enabled</Text>
               <Text>{String(usingHermes)}</Text>
             </View>
@@ -109,57 +109,57 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">Fabric Enabled</Text>
               <Text>{String(usingFabric)}</Text>
             </View>
           }
         />
       </View>
-      <View style={$buttonContainer}>
-        <Button style={$button} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
+      <View style={themed($buttonContainer)}>
+        <Button style={themed($button)} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
         <Text style={themed($hint)} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
       </View>
-      <View style={$buttonContainer}>
-        <Button style={$button} tx="common.logOut" onPress={logout} />
+      <View style={themed($buttonContainer)}>
+        <Button style={themed($button)} tx="common.logOut" onPress={logout} />
       </View>
     </Screen>
   )
 }
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.xxl,
   paddingHorizontal: spacing.lg,
-}
+})
 
-const $title: TextStyle = {
+const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xxl,
-}
+})
 
-const $reportBugsLink: ThemedStyle<TextStyle> = (colors) => ({
+const $reportBugsLink: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.tint,
   marginBottom: spacing.lg,
   alignSelf: isRTL ? "flex-start" : "flex-end",
 })
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $itemsContainer: ViewStyle = {
+const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginVertical: spacing.xl,
-}
+})
 
-const $button: ViewStyle = {
+const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
-}
+})
 
-const $buttonContainer: ViewStyle = {
+const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $hint: ThemedStyle<TextStyle> = (colors) => ({
+const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.palette.neutral600,
   fontSize: 12,
   lineHeight: 15,

@@ -2,29 +2,29 @@
 import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Text } from "../../../components"
-import { ThemedStyle, typography } from "../../../theme"
+import { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
-const $customButtonStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customButtonStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   height: 100,
 })
-const $customButtonPressedStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customButtonPressedStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
 })
-const $customButtonTextStyle: ThemedStyle<TextStyle> = (colors) => ({
+const $customButtonTextStyle: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   color: colors.error,
   fontFamily: typography.primary.bold,
   textDecorationLine: "underline",
   textDecorationColor: colors.error,
 })
-const $customButtonPressedTextStyle: ThemedStyle<TextStyle> = (colors) => ({
+const $customButtonPressedTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.palette.neutral100,
 })
-const $customButtonRightAccessoryStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customButtonRightAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   width: "53%",
   height: "200%",
   backgroundColor: colors.error,
@@ -32,12 +32,12 @@ const $customButtonRightAccessoryStyle: ThemedStyle<ViewStyle> = (colors) => ({
   top: 0,
   right: 0,
 })
-const $customButtonPressedRightAccessoryStyle: ThemedStyle<ImageStyle> = (colors) => ({
+const $customButtonPressedRightAccessoryStyle: ThemedStyle<ImageStyle> = ({ colors }) => ({
   tintColor: colors.palette.neutral100,
 })
 
 const $disabledOpacity: ViewStyle = { opacity: 0.5 }
-const $disabledButtonTextStyle: ThemedStyle<TextStyle> = (colors) => ({
+const $disabledButtonTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.palette.neutral100,
   textDecorationColor: colors.palette.neutral100,
 })

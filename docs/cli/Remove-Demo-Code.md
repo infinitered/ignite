@@ -35,7 +35,7 @@ Remove the current line from the source code.
 #### Example:
 
 ```tsx
-const $style: ThemedStyle<ViewStyle> = (colors) => ({ padding: 10 } // @demo remove-current-line
+const $style: ViewStyle = { padding: 10 } // @demo remove-current-line
 ```
 
 ### `// @demo remove-next-line`

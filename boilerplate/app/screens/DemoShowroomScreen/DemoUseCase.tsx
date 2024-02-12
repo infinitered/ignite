@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
-import { ThemedStyle, spacing, typography } from "../../theme"
+import { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 interface DemoUseCaseProps {
@@ -21,29 +21,29 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
   return (
     <View>
-      <Text style={$name}>{name}</Text>
+      <Text style={themed($name)}>{name}</Text>
 
-      {description && <Text style={$description}>{description}</Text>}
+      {description && <Text style={themed($description)}>{description}</Text>}
 
       <View style={[layout === "row" && $rowLayout, themed($item)]}>{children}</View>
     </View>
   )
 }
 
-const $description: TextStyle = {
+const $description: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.md,
-}
+})
 
-const $item: ThemedStyle<ViewStyle> = (colors) => ({
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
   padding: spacing.lg,
   marginVertical: spacing.md,
 })
 
-const $name: TextStyle = {
+const $name: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontFamily: typography.primary.bold,
-}
+})
 
 const $rowLayout: ViewStyle = {
   flexDirection: "row",

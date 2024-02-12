@@ -35,7 +35,7 @@ import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { ThemedStyle, spacing } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { useAppTheme } from "app/utils/useAppTheme"
@@ -50,6 +50,7 @@ const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
     const { episodeStore } = useStores()
+    const { themed } = useAppTheme()
 
     const [refreshing, setRefreshing] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
@@ -77,7 +78,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         contentContainerStyle={$screenContentContainer}
       >
         <ListView<Episode>
-          contentContainerStyle={$listContentContainer}
+          contentContainerStyle={themed($listContentContainer) as ViewStyle}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}
@@ -89,7 +90,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             ) : (
               <EmptyState
                 preset="generic"
-                style={$emptyState}
+                style={themed($emptyState)}
                 headingTx={
                   episodeStore.favoritesOnly
                     ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
@@ -108,10 +109,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             )
           }
           ListHeaderComponent={
-            <View style={$heading}>
+            <View style={themed($heading)}>
               <Text preset="heading" tx="demoPodcastListScreen.title" />
               {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
-                <View style={$toggle}>
+                <View style={themed($toggle)}>
                   <Switch
                     value={episodeStore.favoritesOnly}
                     onValueChange={() =>
@@ -224,7 +225,7 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              style={[themed($iconContainer), StyleSheet.absoluteFill, animatedLikeButtonStyles]}
             >
               <Icon
                 icon="heart"
@@ -232,7 +233,7 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+            <Animated.View style={[themed($iconContainer), animatedUnlikeButtonStyles]}>
               <Icon
                 icon="heart"
                 size={ICON_SIZE}
@@ -271,7 +272,7 @@ const EpisodeCard = observer(function EpisodeCard({
       }
       content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
       {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      RightComponent={<Image source={imageUri} style={themed($itemThumbnail)} />}
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
@@ -305,57 +306,57 @@ const $screenContentContainer: ViewStyle = {
   flex: 1,
 }
 
-const $listContentContainer: ContentStyle = {
+const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,
-}
+})
 
-const $heading: ViewStyle = {
+const $heading: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $item: ThemedStyle<ViewStyle> = (colors) => ({
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   padding: spacing.md,
   marginTop: spacing.md,
   minHeight: 120,
   backgroundColor: colors.palette.neutral100,
 })
 
-const $itemThumbnail: ImageStyle = {
+const $itemThumbnail: ThemedStyle<ImageStyle> = ({ spacing }) => ({
   marginTop: spacing.sm,
   borderRadius: 50,
   alignSelf: "flex-start",
-}
+})
 
-const $toggle: ViewStyle = {
+const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.md,
-}
+})
 
 const $labelStyle: TextStyle = {
   textAlign: "left",
 }
 
-const $iconContainer: ViewStyle = {
+const $iconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   height: ICON_SIZE,
   width: ICON_SIZE,
   flexDirection: "row",
   marginEnd: spacing.sm,
-}
+})
 
-const $metadata: ThemedStyle<TextStyle> = (colors) => ({
+const $metadata: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.textDim,
   marginTop: spacing.xs,
   flexDirection: "row",
 })
 
-const $metadataText: ThemedStyle<TextStyle> = (colors) => ({
+const $metadataText: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.textDim,
   marginEnd: spacing.md,
   marginBottom: spacing.xs,
 })
 
-const $favoriteButton: ThemedStyle<ViewStyle> = (colors) => ({
+const $favoriteButton: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   borderRadius: 17,
   marginTop: spacing.md,
   justifyContent: "flex-start",
@@ -368,14 +369,14 @@ const $favoriteButton: ThemedStyle<ViewStyle> = (colors) => ({
   alignSelf: "flex-start",
 })
 
-const $unFavoriteButton: ThemedStyle<ViewStyle> = (colors) => ({
+const $unFavoriteButton: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderColor: colors.palette.primary100,
   backgroundColor: colors.palette.primary100,
 })
 
-const $emptyState: ViewStyle = {
+const $emptyState: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.xxl,
-}
+})
 
 const $emptyStateImage: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],

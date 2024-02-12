@@ -14,13 +14,15 @@ We instead use a strategy of bare JS objects, colocated with our components (usu
 
 ```tsx
 import type { View, ViewStyle } from "react-native"
-import { colors } from "../theme"
+import { useAppTheme } from "app/utils/useAppTheme"
+import { colors } from "app/theme"
 
 const MyComponent = () => {
-  return <View style={$container}>...</View>
+  const { themed } = useAppTheme();
+  return <View style={themed($container)}>...</View>
 }
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = ({colors}) => ({
   flex: 1,
   backgroundColor: colors.background,
 }

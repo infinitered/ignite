@@ -9,7 +9,7 @@ export const DemoEmptyState: Demo = {
   name: "EmptyState",
   description:
     "A component to use when there is no data to display. It can be utilized to direct the user what to do next",
-  data: ({ colors }) => [
+  data: ({ theme }) => [
     <DemoUseCase
       name="Presets"
       description="You can create different text/image sets. One is predefined called `generic`. Note, there's no default in case you want to have a completely custom EmptyState."
@@ -50,21 +50,21 @@ export const DemoEmptyState: Demo = {
     <DemoUseCase name="Styling" description="The component can be styled easily.">
       <EmptyState
         preset="generic"
-        style={{ backgroundColor: colors.error, paddingVertical: 20 }}
-        imageStyle={{ height: 75, tintColor: colors.palette.neutral100 }}
+        style={{ backgroundColor: theme.colors.error, paddingVertical: 20 }}
+        imageStyle={{ height: 75, tintColor: theme.colors.palette.neutral100 }}
         ImageProps={{ resizeMode: "contain" }}
         headingStyle={{
-          color: colors.palette.neutral100,
+          color: theme.colors.palette.neutral100,
           textDecorationLine: "underline",
-          textDecorationColor: colors.palette.neutral100,
+          textDecorationColor: theme.colors.palette.neutral100,
         }}
         contentStyle={{
-          color: colors.palette.neutral100,
+          color: theme.colors.palette.neutral100,
           textDecorationLine: "underline",
-          textDecorationColor: colors.palette.neutral100,
+          textDecorationColor: theme.colors.palette.neutral100,
         }}
-        buttonStyle={{ alignSelf: "center", backgroundColor: colors.palette.neutral100 }}
-        buttonTextStyle={{ color: colors.error }}
+        buttonStyle={{ alignSelf: "center", backgroundColor: theme.colors.palette.neutral100 }}
+        buttonTextStyle={{ color: theme.colors.error }}
         ButtonProps={{
           preset: "reversed",
         }}

@@ -7,8 +7,8 @@ patch:
 import * as React from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { typography } from "app/theme"
 import { useAppTheme } from "app/theme/useAppTheme"
+import type { ThemedStyleFn } from "app/theme"
 import { Text } from "app/components/Text"
 
 export interface <%= props.pascalCaseName %>Props {
@@ -37,7 +37,7 @@ const $container: ViewStyle = {
   justifyContent: "center",
 }
 
-const $text: ThemedStyle<TextStyle> = (colors) => ({
+const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   fontFamily: typography.primary.normal,
   fontSize: 14,
   color: colors.palette.primary500,

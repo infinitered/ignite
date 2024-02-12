@@ -2,8 +2,9 @@ import i18n from "i18n-js"
 import React from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
-import { ThemedStyle, typography } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
+import { typography } from "app/theme/typography"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
@@ -89,24 +90,28 @@ const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weigh
   return { ...acc, [weight]: { fontFamily } }
 }, {}) as Record<Weights, TextStyle>
 
-const $baseStyle: ThemedStyle<TextStyle> = (colors) => ({
+const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
   ...$sizeStyles.sm,
   ...$fontWeightStyles.normal,
-  color: colors.text,
+  color: theme.colors.text,
 })
 
 const $presets: Record<Presets, ThemedStyle<TextStyle>> = {
   default: $baseStyle,
-  bold: (colors) => ({ ...$baseStyle(colors), ...$fontWeightStyles.bold }),
-  heading: (colors) => ({ ...$baseStyle(colors), ...$sizeStyles.xxl, ...$fontWeightStyles.bold }),
-  subheading: (colors) => ({
-    ...$baseStyle(colors),
+  bold: (theme) => ({ ...$baseStyle(theme), ...$fontWeightStyles.bold }),
+  heading: (theme) => ({
+    ...$baseStyle(theme),
+    ...$sizeStyles.xxl,
+    ...$fontWeightStyles.bold,
+  }),
+  subheading: (theme) => ({
+    ...$baseStyle(theme),
     ...$sizeStyles.lg,
     ...$fontWeightStyles.medium,
   }),
-  formLabel: (colors) => ({ ...$baseStyle(colors), ...$fontWeightStyles.medium }),
-  formHelper: (colors) => ({
-    ...$baseStyle(colors),
+  formLabel: (theme) => ({ ...$baseStyle(theme), ...$fontWeightStyles.medium }),
+  formHelper: (theme) => ({
+    ...$baseStyle(theme),
     ...$sizeStyles.sm,
     ...$fontWeightStyles.normal,
   }),

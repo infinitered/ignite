@@ -2,40 +2,40 @@
 import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { Icon, TextField } from "../../../components"
-import { ThemedStyle, spacing } from "../../../theme"
+import { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
-const $customInputStyle: ThemedStyle<TextStyle> = (colors) => ({
+const $customInputStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   color: colors.palette.neutral100,
 })
 
-const $customInputWrapperStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customInputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   borderColor: colors.palette.neutral800,
 })
 
-const $customContainerStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customContainerStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
 })
 
-const $customLabelAndHelperStyle: ThemedStyle<TextStyle> = (colors) => ({
+const $customLabelAndHelperStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.palette.neutral100,
 })
 
-const $customInputWithAbsoluteAccessoriesStyle: ViewStyle = {
+const $customInputWithAbsoluteAccessoriesStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginHorizontal: spacing.xxl,
-}
+})
 
-const $customLeftAccessoryStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customLeftAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   position: "absolute",
   left: 0,
 })
 
-const $customRightAccessoryStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $customRightAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   position: "absolute",
   right: 0,
@@ -175,7 +175,7 @@ export const DemoTextField: Demo = {
         label="Style Accessories"
         helper="Via `RightAccessory` & `LeftAccessory` style prop"
         value="Aute nisi dolore fugiat anim mollit nulla ex minim ipsum ex elit."
-        style={$customInputWithAbsoluteAccessoriesStyle}
+        style={themed($customInputWithAbsoluteAccessoriesStyle)}
         LeftAccessory={() => (
           <Icon
             icon="ladybug"

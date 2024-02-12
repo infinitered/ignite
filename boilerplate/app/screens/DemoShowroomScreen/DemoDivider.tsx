@@ -1,7 +1,7 @@
 /* eslint-disable  react-native/no-inline-styles */
 import React from "react"
 import { StyleProp, View, ViewStyle } from "react-native"
-import { ThemedStyle } from "../../theme"
+import { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 interface DemoDividerProps {
@@ -56,7 +56,7 @@ const $divider: ViewStyle = {
   flexShrink: 0,
 }
 
-const $line: ThemedStyle<ViewStyle> = (colors) => ({
+const $line: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.border,
   position: "absolute",
   left: "50%",

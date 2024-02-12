@@ -7,7 +7,7 @@ import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
-import { ThemedStyle, spacing, typography } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -50,7 +50,7 @@ export function DemoNavigator() {
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.text,
         tabBarLabelStyle: themed($tabBarLabel),
-        tabBarItemStyle: $tabBarItem,
+        tabBarItemStyle: themed($tabBarItem),
       }}
     >
       <Tab.Screen
@@ -101,16 +101,16 @@ export function DemoNavigator() {
   )
 }
 
-const $tabBar: ThemedStyle<ViewStyle> = (colors) => ({
+const $tabBar: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.background,
   borderTopColor: colors.transparent,
 })
 
-const $tabBarItem: ViewStyle = {
+const $tabBarItem: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingTop: spacing.md,
-}
+})
 
-const $tabBarLabel: ThemedStyle<TextStyle> = (colors) => ({
+const $tabBarLabel: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   fontSize: 12,
   fontFamily: typography.primary.medium,
   lineHeight: 16,

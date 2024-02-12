@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { spacing, ThemedStyle, typography } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -137,7 +137,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
   const $containerStyles = [$containerStyleOverride]
 
-  const $labelStyles = [$labelStyle, LabelTextProps?.style]
+  const $labelStyles = [themed($labelStyle), LabelTextProps?.style]
 
   const $inputWrapperStyles = [
     themed($inputWrapperStyle),
@@ -157,7 +157,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   ]
 
   const $helperStyles = [
-    $helperStyle,
+    themed($helperStyle),
     status === "error" && { color: colors.error },
     HelperTextProps?.style,
   ]
@@ -236,11 +236,11 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   )
 })
 
-const $labelStyle: TextStyle = {
+const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
-}
+})
 
-const $inputWrapperStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flexDirection: "row",
   alignItems: "flex-start",
   borderWidth: 1,
@@ -250,7 +250,7 @@ const $inputWrapperStyle: ThemedStyle<ViewStyle> = (colors) => ({
   overflow: "hidden",
 })
 
-const $inputStyle: ThemedStyle<ViewStyle> = (colors) => ({
+const $inputStyle: ThemedStyle<ViewStyle> = ({ colors, typography, spacing }) => ({
   flex: 1,
   alignSelf: "stretch",
   fontFamily: typography.primary.normal,
@@ -264,19 +264,20 @@ const $inputStyle: ThemedStyle<ViewStyle> = (colors) => ({
   marginHorizontal: spacing.sm,
 })
 
-const $helperStyle: TextStyle = {
+const $helperStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.xs,
-}
+})
 
-const $rightAccessoryStyle: ViewStyle = {
+const $rightAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginEnd: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
-}
-const $leftAccessoryStyle: ViewStyle = {
+})
+
+const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginStart: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
-}
+})

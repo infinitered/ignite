@@ -8,7 +8,7 @@ import {
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import { ThemedStyle, spacing } from "../theme"
+import { ThemedStyle } from "app/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
@@ -45,11 +45,11 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
   return (
     <View style={themed($container)}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
+      <View style={themed($topContainer)}>
+        <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
         <Text
           testID="welcome-heading"
-          style={$welcomeHeading}
+          style={themed($welcomeHeading)}
           tx="welcomeScreen.readyForLaunch"
           preset="heading"
         />
@@ -72,20 +72,20 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   )
 })
 
-const $container: ThemedStyle<ViewStyle> = (colors) => ({
+const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
   backgroundColor: colors.background,
 })
 
-const $topContainer: ViewStyle = {
+const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,
   flexGrow: 1,
   flexBasis: "57%",
   justifyContent: "center",
   paddingHorizontal: spacing.lg,
-}
+})
 
-const $bottomContainer: ThemedStyle<ViewStyle> = (colors) => ({
+const $bottomContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flexShrink: 1,
   flexGrow: 0,
   flexBasis: "43%",
@@ -96,11 +96,11 @@ const $bottomContainer: ThemedStyle<ViewStyle> = (colors) => ({
   justifyContent: "space-around",
 })
 
-const $welcomeLogo: ImageStyle = {
+const $welcomeLogo: ThemedStyle<ImageStyle> = ({ spacing }) => ({
   height: 88,
   width: "100%",
   marginBottom: spacing.xxl,
-}
+})
 
 const $welcomeFace: ImageStyle = {
   height: 169,
@@ -111,6 +111,6 @@ const $welcomeFace: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],
 }
 
-const $welcomeHeading: TextStyle = {
+const $welcomeHeading: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})

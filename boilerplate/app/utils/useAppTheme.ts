@@ -1,38 +1,45 @@
 import { DarkTheme, DefaultTheme, useTheme as useNavTheme } from "@react-navigation/native"
-import { spacing, timing, typography } from "app/theme"
-import { DefaultThemeColors, Theme, ThemedStyleFn, Themes } from "app/theme/colors"
-import { createContext, useCallback, useContext, useState } from "react"
-import { Alert, StyleProp, useColorScheme } from "react-native"
-import { colors as lightColors } from "app/theme/colorsLight"
+import { Colors, Theme, ThemedStyleFn, ThemeContexts } from "app/theme"
+import { createContext, useCallback, useContext, useMemo, useState } from "react"
+import { Alert, useColorScheme } from "react-native"
+import { colors as lightColors } from "app/theme/colors"
 import { colors as darkColors } from "app/theme/colorsDark"
+import { spacing } from "app/theme/spacing"
+import { typography } from "app/theme/typography"
+import { timing } from "app/theme/timing"
 
 type ThemeContextType = {
-  theme: Themes
-  setThemeOverride: (newTheme: Themes) => void
+  theme: ThemeContexts
+  setThemeContextOverride: (newTheme: ThemeContexts) => void
 }
 
 // create a React context and provider for the current theme
 export const ThemeContext = createContext<ThemeContextType>({
   theme: undefined, // default to the system theme
-  setThemeOverride: (newTheme: Themes) => {
-    Alert.alert("setThemeOverride not implemented")
+  setThemeContextOverride: (_newTheme: ThemeContexts) => {
+    Alert.alert("setThemeContextOverride not implemented")
   },
 })
 
-export const useThemeProvider = (initialTheme: Themes = undefined) => {
+export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
   const colorScheme = useColorScheme()
-  const [overridetheme, setTheme] = useState<Themes>(initialTheme)
+  const [overrideTheme, setTheme] = useState<ThemeContexts>(initialTheme)
 
-  const setThemeOverride = useCallback((newTheme: Themes) => {
+  const setThemeContextOverride = useCallback((newTheme: ThemeContexts) => {
     setTheme(newTheme)
   }, [])
 
-  console.log("useThemeProvider", { colorScheme, initialTheme, overridetheme })
+  console.log("useThemeProvider", { colorScheme, initialTheme, overrideTheme })
 
-  const theme = overridetheme || colorScheme || "light"
-  const navigationTheme = theme === "dark" ? DarkTheme : DefaultTheme
+  const themeScheme = overrideTheme || colorScheme || "light"
+  const navigationTheme = themeScheme === "dark" ? DarkTheme : DefaultTheme
 
-  return { theme, navigationTheme, setThemeOverride, ThemeProvider: ThemeContext.Provider }
+  return {
+    theme: themeScheme,
+    navigationTheme,
+    setThemeContextOverride,
+    ThemeProvider: ThemeContext.Provider,
+  }
 }
 
 export const useAppTheme = () => {
@@ -42,19 +49,46 @@ export const useAppTheme = () => {
     throw new Error("useTheme must be used within a ThemeProvider")
   }
 
-  const { theme: overridetheme, setThemeOverride } = context
+  const { theme: overrideTheme, setThemeContextOverride } = context
 
-  const theme: Themes = overridetheme || (navTheme.dark ? "dark" : "light")
-  const themeColorVariant: DefaultThemeColors = theme === "dark" ? darkColors : lightColors
+  const themeContext: ThemeContexts = useMemo(
+    () => overrideTheme || (navTheme.dark ? "dark" : "light"),
+    [overrideTheme, navTheme],
+  )
+  const themeColorVariant: Colors = useMemo(
+    () => (themeContext === "dark" ? darkColors : lightColors),
+    [themeContext],
+  )
+
+  // This is where we build our theme object
+  const themeVariant: Theme = useMemo(
+    () => ({
+      colors: themeColorVariant,
+      spacing,
+      typography,
+      timing,
+    }),
+    [themeColorVariant],
+  )
 
   const themed = useCallback(
     <T>(styleFunction: ThemedStyleFn<T> | (ThemedStyleFn<T> | false)[]) => {
       return Array.isArray(styleFunction)
-        ? styleFunction.map((f: ThemedStyleFn<T> | false) => f && f(themeColorVariant))
-        : styleFunction(themeColorVariant)
+        ? styleFunction.map((f: ThemedStyleFn<T> | false) => f && f(themeVariant))
+        : styleFunction(themeVariant)
     },
-    [themeColorVariant],
+    [themeVariant],
   )
 
-  return { colors: themeColorVariant, theme, themed, navTheme, setThemeOverride }
+  return {
+    colors: themeColorVariant,
+    navTheme,
+    setThemeContextOverride,
+    spacing,
+    theme: themeVariant,
+    themeContext,
+    themed,
+    timing,
+    typography,
+  }
 }

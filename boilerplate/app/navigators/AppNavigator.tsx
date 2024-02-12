@@ -16,7 +16,6 @@ import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { colors } from "app/theme"
 import { useAppTheme, useThemeProvider } from "app/utils/useAppTheme"
 
 /**
@@ -97,12 +96,12 @@ export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const { theme, navigationTheme, setThemeOverride, ThemeProvider } = useThemeProvider()
+  const { theme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <ThemeProvider value={{ theme, setThemeOverride }}>
+    <ThemeProvider value={{ theme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
         <AppStack />
       </NavigationContainer>
