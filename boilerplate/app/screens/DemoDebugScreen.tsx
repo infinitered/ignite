@@ -1,9 +1,9 @@
 import React, { FC } from "react"
 import * as Application from "expo-application"
-import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
+import { LayoutAnimation, Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
 import { useAppTheme } from "app/utils/useAppTheme"
@@ -47,6 +47,15 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     [],
   )
 
+  const toggleTheme = React.useCallback(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut) // Animate the transition
+    if (themeContext === "dark") {
+      setThemeContextOverride("light")
+    } else {
+      setThemeContextOverride("dark")
+    }
+  }, [themeContext, setThemeContextOverride])
+
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={themed($container)}>
       <Text
@@ -56,16 +65,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
       />
       <Text style={themed($title)} preset="heading" tx="demoDebugScreen.title" />
 
-      <Button
-        onPress={() => {
-          if (themeContext === "dark") {
-            setThemeContextOverride("light")
-          } else {
-            setThemeContextOverride("dark")
-          }
-        }}
-        text={`Switch Theme: ${themeContext}`}
-      />
+      <Button onPress={toggleTheme} text={`Switch Theme: ${themeContext}`} />
       <View style={themed($itemsContainer)}>
         <ListItem
           LeftComponent={

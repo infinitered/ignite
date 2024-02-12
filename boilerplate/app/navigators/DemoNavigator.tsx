@@ -7,7 +7,7 @@ import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -39,14 +39,17 @@ const Tab = createBottomTabNavigator<DemoTabParamList>()
  */
 export function DemoNavigator() {
   const { bottom } = useSafeAreaInsets()
-  const { themed, colors } = useAppTheme()
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: [themed($tabBar), { height: bottom + 70 }],
+        tabBarStyle: themed([$tabBar, { height: bottom + 70 }]),
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.text,
         tabBarLabelStyle: themed($tabBarLabel),

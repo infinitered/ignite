@@ -310,7 +310,7 @@ import {
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line

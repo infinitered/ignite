@@ -161,14 +161,14 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         drawerType={"slide"}
         drawerPosition={isRTL ? "right" : "left"}
         renderDrawerContent={() => (
-          <View style={[themed($drawer), $drawerInsets]}>
+          <View style={themed([$drawer, $drawerInsets])}>
             <View style={themed($logoContainer)}>
               <Image source={logo} style={$logoImage} />
             </View>
 
             <ListView<DemoListItem["item"]>
               ref={menuRef}
-              contentContainerStyle={themed($listContentContainer) as ViewStyle}
+              contentContainerStyle={themed($listContentContainer)}
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,

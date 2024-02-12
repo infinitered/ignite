@@ -4,7 +4,7 @@ import { translate } from "../i18n"
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 
 const sadFace = require("../../assets/images/sad-face.png")
 const sadFaceDark = require("../../assets/images/sad-face-dark.png")

@@ -58,7 +58,9 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
-  const { colors } = useAppTheme()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   // @demo remove-block-end
   return (

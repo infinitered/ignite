@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text } from "../../components"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface ErrorDetailsProps {

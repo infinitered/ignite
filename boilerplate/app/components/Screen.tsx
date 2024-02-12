@@ -1,5 +1,5 @@
 import { useScrollToTop } from "@react-navigation/native"
-import { StatusBar, StatusBarProps } from "expo-status-bar"
+import { StatusBar, StatusBarProps, StatusBarStyle } from "expo-status-bar"
 import React, { useRef, useState } from "react"
 import {
   KeyboardAvoidingView,
@@ -39,7 +39,7 @@ interface BaseScreenProps {
   /**
    * Status bar setting. Defaults to dark.
    */
-  statusBarStyle?: "light" | "dark"
+  statusBarStyle?: StatusBarStyle
   /**
    * By how much should we offset the keyboard? Defaults to 0.
    */
@@ -226,21 +226,33 @@ function ScreenWithScrolling(props: ScreenProps) {
  * @returns {JSX.Element} The rendered `Screen` component.
  */
 export function Screen(props: ScreenProps) {
-  const { colors } = useAppTheme()
   const {
-    backgroundColor = colors.background,
+    theme: { colors },
+    themeContext,
+  } = useAppTheme()
+  const {
+    backgroundColor,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
     safeAreaEdges,
     StatusBarProps,
-    statusBarStyle = "dark",
+    statusBarStyle,
   } = props
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
   return (
-    <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
-      <StatusBar style={statusBarStyle} {...StatusBarProps} />
+    <View
+      style={[
+        $containerStyle,
+        { backgroundColor: backgroundColor || colors.background },
+        $containerInsets,
+      ]}
+    >
+      <StatusBar
+        style={statusBarStyle || (themeContext === "dark" ? "light" : "dark")}
+        {...StatusBarProps}
+      />
 
       <KeyboardAvoidingView
         behavior={isIos ? "padding" : "height"}

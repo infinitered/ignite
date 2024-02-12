@@ -32,7 +32,12 @@ export interface Theme {
  * @param theme The theme object.
  * @returns The styled component.
  */
-export type ThemedStyle<T> = (theme: Theme) => StyleProp<T>
+export type ThemedStyle<T> = (theme: Theme) => T
+export type ThemedStyleArray<T> = (
+  | ThemedStyle<T>
+  | StyleProp<T>
+  | (StyleProp<T> | ThemedStyle<T>)[]
+)[]
 
 export { colorsLight, colorsDark }
 

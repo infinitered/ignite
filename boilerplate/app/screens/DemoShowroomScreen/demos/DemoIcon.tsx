@@ -4,7 +4,7 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 
 const $demoIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   padding: spacing.xs,

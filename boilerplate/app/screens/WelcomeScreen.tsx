@@ -8,7 +8,7 @@ import {
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
@@ -57,7 +57,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
-      <View style={[themed($bottomContainer), $bottomContainerInsets]}>
+      <View style={themed([$bottomContainer, $bottomContainerInsets])}>
         <Text tx="welcomeScreen.postscript" size="md" />
         {/* @demo remove-block-start */}
         <Button

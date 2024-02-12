@@ -13,7 +13,7 @@ import {
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
   const [value, setValue] = React.useState(props.value || false)

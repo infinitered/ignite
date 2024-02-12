@@ -2,7 +2,7 @@ import i18n from "i18n-js"
 import React from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle, ThemedStyleArray } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 import { typography } from "app/theme/typography"
 
@@ -63,7 +63,7 @@ export function Text(props: TextProps) {
   const preset: Presets = props.preset ?? "default"
   const $styles: StyleProp<TextStyle> = [
     $rtlStyle,
-    themed($presets[preset]) as TextStyle,
+    themed($presets[preset]),
     weight && $fontWeightStyles[weight],
     size && $sizeStyles[size],
     $styleOverride,
@@ -96,18 +96,18 @@ const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
   color: theme.colors.text,
 })
 
-const $presets: Record<Presets, ThemedStyle<TextStyle>> = {
-  default: (theme) => $baseStyle(theme),
-  bold: (theme) => [$baseStyle(theme), { ...$fontWeightStyles.bold }],
-  heading: (theme) => [
-    $baseStyle(theme),
+const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [$baseStyle],
+  bold: [$baseStyle, { ...$fontWeightStyles.bold }],
+  heading: [
+    $baseStyle,
     {
       ...$sizeStyles.xxl,
       ...$fontWeightStyles.bold,
     },
   ],
-  subheading: (theme) => [$baseStyle(theme), { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
-  formLabel: (theme) => [$baseStyle(theme), { ...$fontWeightStyles.medium }],
-  formHelper: (theme) => [$baseStyle(theme), { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
+  subheading: [$baseStyle, { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
+  formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
+  formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
 }
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

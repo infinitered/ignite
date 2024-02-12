@@ -2,7 +2,7 @@
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Icon, ListItem, ListView, Text } from "../../../components"
-import { ThemedStyle } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -99,7 +99,7 @@ export const DemoListItem: Demo = {
       <ListItem
         topSeparator
         LeftComponent={
-          <View style={[themed($customLeft), { marginEnd: theme.spacing.md }]}>
+          <View style={themed([$customLeft, { marginEnd: theme.spacing.md }])}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}
@@ -113,7 +113,7 @@ export const DemoListItem: Demo = {
         topSeparator
         bottomSeparator
         RightComponent={
-          <View style={[themed($customLeft), { marginStart: theme.spacing.md }]}>
+          <View style={themed([$customLeft, { marginStart: theme.spacing.md }])}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}

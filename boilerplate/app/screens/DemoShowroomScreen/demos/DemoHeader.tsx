@@ -5,7 +5,7 @@ import { Header, Icon } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 
 const $rightAlignTitle: TextStyle = {
   textAlign: "right",

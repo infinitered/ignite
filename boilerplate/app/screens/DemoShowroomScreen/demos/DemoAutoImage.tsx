@@ -2,7 +2,7 @@
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { AutoImage, Text } from "../../../components"
-import { ThemedStyle } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -96,12 +96,12 @@ export const DemoAutoImage: Demo = {
       <DemoDivider size={5} />
 
       <View style={[$aspectRatioWidthExampleContainer, { height: 80 }]}>
-        <View style={[themed($aspectRatioBox), { width: 60 }]} />
+        <View style={themed([$aspectRatioBox, { width: 60 }])} />
         <Image
           source={{
             uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
           }}
-          style={[themed($aspectRatioBox), { width: 60 }]}
+          style={themed([$aspectRatioBox, { width: 60 }])}
           resizeMode="contain"
         />
         <AutoImage
@@ -144,17 +144,17 @@ export const DemoAutoImage: Demo = {
         <View
           style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: theme.spacing.sm }]}
         >
-          <View style={[themed($aspectRatioBox), { height: 32 }]} />
+          <View style={themed([$aspectRatioBox, { height: 32 }])} />
           <Image
             source={{
               uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
             }}
-            style={[themed($aspectRatioBox), { height: 32 }]}
+            style={themed([$aspectRatioBox, { height: 32 }])}
             resizeMode="contain"
           />
           <AutoImage
             maxHeight={32}
-            style={[themed($aspectRatioBox), { alignSelf: "center" }]}
+            style={themed([$aspectRatioBox, { alignSelf: "center" }])}
             source={{
               uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
             }}
@@ -200,12 +200,12 @@ export const DemoAutoImage: Demo = {
       <DemoDivider size={5} />
 
       <View style={$aspectRatioWidthExampleContainer}>
-        <View style={[themed($aspectRatioBox), { width: 60, height: 60 }]} />
+        <View style={themed([$aspectRatioBox, { width: 60, height: 60 }])} />
         <Image
           source={{
             uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
           }}
-          style={[themed($aspectRatioBox), { width: 60, height: 60 }]}
+          style={themed([$aspectRatioBox, { width: 60, height: 60 }])}
           resizeMode="contain"
         />
         <AutoImage

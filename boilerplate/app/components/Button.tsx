@@ -7,7 +7,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle, ThemedStyleArray } from "app/theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -126,7 +126,7 @@ export function Button(props: ButtonProps) {
     return [
       themed($viewPresets[preset]),
       $viewStyleOverride,
-      !!pressed && [themed($pressedViewPresets[preset]), $pressedViewStyleOverride],
+      !!pressed && themed([$pressedViewPresets[preset], $pressedViewStyleOverride]),
       !!disabled && $disabledViewStyleOverride,
     ]
   }
@@ -139,7 +139,7 @@ export function Button(props: ButtonProps) {
     return [
       themed($textPresets[preset]),
       $textStyleOverride,
-      !!pressed && [themed($pressedTextPresets[preset]), $pressedTextStyleOverride],
+      !!pressed && themed([$pressedTextPresets[preset], $pressedTextStyleOverride]),
       !!disabled && $disabledTextStyleOverride,
     ]
   }
@@ -205,26 +205,23 @@ const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   zIndex: 1,
 })
 
-const $viewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
-  default: (theme) => [
-    $baseViewStyle(theme),
-    {
+const $viewPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
+  default: [
+    $baseViewStyle,
+    ({ colors }) => ({
       borderWidth: 1,
-      borderColor: theme.colors.palette.neutral400,
-      backgroundColor: theme.colors.palette.neutral100,
-    },
+      borderColor: colors.palette.neutral400,
+      backgroundColor: colors.palette.neutral100,
+    }),
   ],
-  filled: (theme) => [$baseViewStyle(theme), { backgroundColor: theme.colors.palette.neutral300 }],
-  reversed: (theme) => [
-    $baseViewStyle(theme),
-    { backgroundColor: theme.colors.palette.neutral800 },
-  ],
+  filled: [$baseViewStyle, ({ colors }) => ({ backgroundColor: colors.palette.neutral300 })],
+  reversed: [$baseViewStyle, ({ colors }) => ({ backgroundColor: colors.palette.neutral800 })],
 }
 
-const $textPresets: Record<Presets, ThemedStyle<TextStyle>> = {
-  default: (theme) => $baseTextStyle(theme),
-  filled: (theme) => $baseTextStyle(theme),
-  reversed: (theme) => [$baseTextStyle(theme), { color: theme.colors.palette.neutral100 }],
+const $textPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [$baseTextStyle],
+  filled: [$baseTextStyle],
+  reversed: [$baseViewStyle, ({ colors }) => ({ color: colors.palette.neutral100 })],
 }
 
 const $pressedViewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {

@@ -1,7 +1,14 @@
-import { DarkTheme, DefaultTheme, useTheme as useNavTheme } from "@react-navigation/native"
-import { Colors, Theme, ThemeContexts, ThemedStyle, Spacing } from "app/theme"
 import { createContext, useCallback, useContext, useMemo, useState } from "react"
-import { Alert, useColorScheme } from "react-native"
+import { Alert, StyleProp, useColorScheme } from "react-native"
+import { DarkTheme, DefaultTheme, useTheme as useNavTheme } from "@react-navigation/native"
+import type {
+  Colors,
+  Theme,
+  ThemeContexts,
+  ThemedStyle,
+  Spacing,
+  ThemedStyleArray,
+} from "app/theme"
 import { colors as lightColors } from "app/theme/colors"
 import { colors as darkColors } from "app/theme/colorsDark"
 import { spacing as spacingLight } from "app/theme/spacing"
@@ -74,27 +81,31 @@ export const useAppTheme = () => {
       typography,
       timing,
     }),
-    [themeColorVariant],
+    [themeColorVariant, themeSpacingVariant],
   )
 
   const themed = useCallback(
-    <T>(styleFunction: ThemedStyle<T> | (ThemedStyle<T> | false)[]) => {
-      return Array.isArray(styleFunction)
-        ? styleFunction.map((f: ThemedStyle<T> | Falsy) => f && f(themeVariant))
-        : styleFunction(themeVariant)
+    <T>(styleOrStyleFn: ThemedStyle<T> | StyleProp<T> | ThemedStyleArray<T>) => {
+      const flatStyles = [styleOrStyleFn].flat(3) as (ThemedStyle<T> | StyleProp<T>)[]
+      const stylesArray = flatStyles.map((f) => {
+        if (typeof f === "function") {
+          return (f as ThemedStyle<T>)(themeVariant)
+        } else {
+          return f
+        }
+      })
+
+      // Flatten the array of styles into a single object
+      return Object.assign({}, ...stylesArray) as T
     },
     [themeVariant],
   )
 
   return {
-    colors: themeColorVariant,
     navTheme,
     setThemeContextOverride,
-    spacing: themeSpacingVariant,
     theme: themeVariant,
     themeContext,
     themed,
-    timing,
-    typography,
   }
 }

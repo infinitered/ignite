@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 interface DemoUseCaseProps {
@@ -25,7 +25,7 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
       {description && <Text style={themed($description)}>{description}</Text>}
 
-      <View style={[layout === "row" && $rowLayout, themed($item)]}>{children}</View>
+      <View style={themed([layout === "row" && $rowLayout, $item])}>{children}</View>
     </View>
   )
 }

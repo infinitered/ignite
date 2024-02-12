@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle, ThemedStyleArray } from "app/theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -137,10 +137,10 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
   const $containerStyles = [$containerStyleOverride]
 
-  const $labelStyles = [themed($labelStyle), LabelTextProps?.style]
+  const $labelStyles = [$labelStyle, LabelTextProps?.style]
 
   const $inputWrapperStyles = [
-    themed($inputWrapperStyle),
+    $inputWrapperStyle,
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
     LeftAccessory && { paddingStart: 0 },
@@ -148,8 +148,8 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyleOverride,
   ]
 
-  const $inputStyles: StyleProp<TextStyle> = [
-    themed($inputStyle),
+  const $inputStyles: ThemedStyleArray<TextStyle> = [
+    $inputStyle,
     disabled && { color: colors.textDim },
     isRTL && { textAlign: "right" as TextStyle["textAlign"] },
     TextInputProps.multiline && { height: "auto" },
@@ -157,7 +157,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   ]
 
   const $helperStyles = [
-    themed($helperStyle),
+    $helperStyle,
     status === "error" && { color: colors.error },
     HelperTextProps?.style,
   ]
@@ -187,11 +187,11 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           tx={labelTx}
           txOptions={labelTxOptions}
           {...LabelTextProps}
-          style={$labelStyles}
+          style={themed($labelStyles)}
         />
       )}
 
-      <View style={$inputWrapperStyles}>
+      <View style={themed($inputWrapperStyles)}>
         {!!LeftAccessory && (
           <LeftAccessory
             style={$leftAccessoryStyle}
@@ -209,7 +209,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           placeholderTextColor={colors.textDim}
           {...TextInputProps}
           editable={!disabled}
-          style={$inputStyles}
+          style={themed($inputStyles)}
         />
 
         {!!RightAccessory && (
@@ -229,7 +229,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           tx={helperTx}
           txOptions={helperTxOptions}
           {...HelperTextProps}
-          style={$helperStyles}
+          style={themed($helperStyles)}
         />
       )}
     </TouchableOpacity>

@@ -12,7 +12,7 @@ import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsets
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 
 export interface HeaderProps {
   /**
@@ -145,7 +145,10 @@ interface HeaderActionProps {
  * @returns {JSX.Element} The rendered `Header` component.
  */
 export function Header(props: HeaderProps) {
-  const { colors, themed } = useAppTheme()
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
   const {
     backgroundColor = colors.background,
     LeftActionComponent,
@@ -239,7 +242,7 @@ function HeaderAction(props: HeaderActionProps) {
   if (content) {
     return (
       <TouchableOpacity
-        style={[themed($actionTextContainer), { backgroundColor }]}
+        style={themed([$actionTextContainer, { backgroundColor }])}
         onPress={onPress}
         disabled={!onPress}
         activeOpacity={0.8}
@@ -256,7 +259,7 @@ function HeaderAction(props: HeaderActionProps) {
         icon={icon}
         color={iconColor}
         onPress={onPress}
-        containerStyle={[themed($actionIconContainer), { backgroundColor }]}
+        containerStyle={themed([$actionIconContainer, { backgroundColor }])}
         style={isRTL ? { transform: [{ rotate: "180deg" }] } : {}}
       />
     )

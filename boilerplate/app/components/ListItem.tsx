@@ -9,7 +9,7 @@ import {
 } from "react-native"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface ListItemProps extends TouchableOpacityProps {
@@ -126,18 +126,18 @@ export function ListItem(props: ListItemProps) {
   } = props
   const { themed } = useAppTheme()
 
-  const $textStyles = [themed($textStyle), $textStyleOverride, TextProps?.style]
+  const $textStyles = [$textStyle, $textStyleOverride, TextProps?.style]
 
   const $containerStyles = [
-    topSeparator && themed($separatorTop),
-    bottomSeparator && themed($separatorBottom),
+    topSeparator && $separatorTop,
+    bottomSeparator && $separatorBottom,
     $containerStyleOverride,
   ]
 
   const $touchableStyles = [$touchableStyle, { minHeight: height }, style]
 
   return (
-    <View style={$containerStyles}>
+    <View style={themed($containerStyles)}>
       <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
         <ListItemAction
           side="left"
@@ -147,7 +147,7 @@ export function ListItem(props: ListItemProps) {
           Component={LeftComponent}
         />
 
-        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={$textStyles}>
+        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={themed($textStyles)}>
           {children}
         </Text>
 
@@ -181,12 +181,12 @@ function ListItemAction(props: ListItemActionProps) {
         size={24}
         icon={icon}
         color={iconColor}
-        containerStyle={[
+        containerStyle={themed([
           $iconContainerStyles,
-          side === "left" && themed($iconContainerLeft),
-          side === "right" && themed($iconContainerRight),
+          side === "left" && $iconContainerLeft,
+          side === "right" && $iconContainerRight,
           { height: size },
-        ]}
+        ])}
       />
     )
   }

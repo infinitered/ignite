@@ -35,7 +35,7 @@ import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { useAppTheme } from "app/utils/useAppTheme"
@@ -78,7 +78,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         contentContainerStyle={$screenContentContainer}
       >
         <ListView<Episode>
-          contentContainerStyle={themed($listContentContainer) as ViewStyle}
+          contentContainerStyle={themed($listContentContainer)}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}
@@ -225,7 +225,7 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={[themed($iconContainer), StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              style={themed([$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles])}
             >
               <Icon
                 icon="heart"
@@ -233,7 +233,7 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={[themed($iconContainer), animatedUnlikeButtonStyles]}>
+            <Animated.View style={themed([$iconContainer, animatedUnlikeButtonStyles])}>
               <Icon
                 icon="heart"
                 size={ICON_SIZE}

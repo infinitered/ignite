@@ -99,7 +99,7 @@ import {
 } from \\"app/components\\"
 import { isRTL } from \\"../i18n\\"
 import { AppStackScreenProps } from \\"../navigators\\"
-import { ThemedStyle } from \\"app/theme\\"
+import type { ThemedStyle } from \\"app/theme\\"
 import { useSafeAreaInsetsStyle } from \\"../utils/useSafeAreaInsetsStyle\\"
 
 const welcomeLogo = require(\\"../../assets/images/logo.png\\")
