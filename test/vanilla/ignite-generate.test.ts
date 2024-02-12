@@ -235,7 +235,7 @@ describe("ignite-cli generate", () => {
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\"
         import { useAppTheme } from \\"app/theme/useAppTheme\\"
-        import type { ThemedStyleFn } from \\"app/theme\\"
+        import type { ThemedStyle } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
 
         export interface ToppingProps {
@@ -304,7 +304,7 @@ describe("ignite-cli generate", () => {
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\"
         import { useAppTheme } from \\"app/theme/useAppTheme\\"
-        import type { ThemedStyleFn } from \\"app/theme\\"
+        import type { ThemedStyle } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
 
         export interface ToppingProps {

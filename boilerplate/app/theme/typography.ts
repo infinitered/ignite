@@ -69,5 +69,3 @@ export const typography = {
    */
   code: Platform.select({ ios: fonts.courier, android: fonts.monospace }),
 }
-
-export type Typography = typeof typography

@@ -4,5 +4,3 @@ export const timing = {
    */
   quick: 300,
 }
-
-export type Timing = typeof timing

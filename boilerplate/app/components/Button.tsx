@@ -206,23 +206,25 @@ const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 })
 
 const $viewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
-  default: (theme) => ({
-    ...$baseViewStyle(theme),
-    borderWidth: 1,
-    borderColor: theme.colors.palette.neutral400,
-    backgroundColor: theme.colors.palette.neutral100,
-  }),
-  filled: (theme) => ({
-    ...$baseViewStyle(theme),
-    backgroundColor: theme.colors.palette.neutral300,
-  }),
-  reversed: (theme) => ({ ...$baseViewStyle, backgroundColor: theme.colors.palette.neutral800 }),
+  default: (theme) => [
+    $baseViewStyle(theme),
+    {
+      borderWidth: 1,
+      borderColor: theme.colors.palette.neutral400,
+      backgroundColor: theme.colors.palette.neutral100,
+    },
+  ],
+  filled: (theme) => [$baseViewStyle(theme), { backgroundColor: theme.colors.palette.neutral300 }],
+  reversed: (theme) => [
+    $baseViewStyle(theme),
+    { backgroundColor: theme.colors.palette.neutral800 },
+  ],
 }
 
 const $textPresets: Record<Presets, ThemedStyle<TextStyle>> = {
   default: (theme) => $baseTextStyle(theme),
   filled: (theme) => $baseTextStyle(theme),
-  reversed: (theme) => ({ ...$baseTextStyle(theme), color: theme.colors.palette.neutral100 }),
+  reversed: (theme) => [$baseTextStyle(theme), { color: theme.colors.palette.neutral100 }],
 }
 
 const $pressedViewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {

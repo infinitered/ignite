@@ -272,16 +272,20 @@ const $alignmentWrapperFlexOptions = {
 } as const
 
 const $containerPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
-  default: (theme) => ({
-    ...$containerBase(theme),
-    backgroundColor: theme.colors.palette.neutral100,
-    borderColor: theme.colors.palette.neutral300,
-  }),
-  reversed: (theme) => ({
-    ...$containerBase(theme),
-    backgroundColor: theme.colors.palette.neutral800,
-    borderColor: theme.colors.palette.neutral500,
-  }),
+  default: (theme) => [
+    $containerBase(theme),
+    {
+      backgroundColor: theme.colors.palette.neutral100,
+      borderColor: theme.colors.palette.neutral300,
+    },
+  ],
+  reversed: (theme) => [
+    $containerBase(theme),
+    {
+      backgroundColor: theme.colors.palette.neutral800,
+      borderColor: theme.colors.palette.neutral500,
+    },
+  ],
 }
 
 const $headingPresets: Record<Presets, ThemedStyle<TextStyle>> = {

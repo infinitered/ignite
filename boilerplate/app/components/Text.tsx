@@ -97,23 +97,17 @@ const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
 })
 
 const $presets: Record<Presets, ThemedStyle<TextStyle>> = {
-  default: $baseStyle,
-  bold: (theme) => ({ ...$baseStyle(theme), ...$fontWeightStyles.bold }),
-  heading: (theme) => ({
-    ...$baseStyle(theme),
-    ...$sizeStyles.xxl,
-    ...$fontWeightStyles.bold,
-  }),
-  subheading: (theme) => ({
-    ...$baseStyle(theme),
-    ...$sizeStyles.lg,
-    ...$fontWeightStyles.medium,
-  }),
-  formLabel: (theme) => ({ ...$baseStyle(theme), ...$fontWeightStyles.medium }),
-  formHelper: (theme) => ({
-    ...$baseStyle(theme),
-    ...$sizeStyles.sm,
-    ...$fontWeightStyles.normal,
-  }),
+  default: (theme) => $baseStyle(theme),
+  bold: (theme) => [$baseStyle(theme), { ...$fontWeightStyles.bold }],
+  heading: (theme) => [
+    $baseStyle(theme),
+    {
+      ...$sizeStyles.xxl,
+      ...$fontWeightStyles.bold,
+    },
+  ],
+  subheading: (theme) => [$baseStyle(theme), { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
+  formLabel: (theme) => [$baseStyle(theme), { ...$fontWeightStyles.medium }],
+  formHelper: (theme) => [$baseStyle(theme), { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
 }
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

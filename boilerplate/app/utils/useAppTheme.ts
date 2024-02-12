@@ -1,10 +1,11 @@
 import { DarkTheme, DefaultTheme, useTheme as useNavTheme } from "@react-navigation/native"
-import { Colors, Theme, ThemedStyleFn, ThemeContexts } from "app/theme"
+import { Colors, Theme, ThemeContexts, ThemedStyle, Spacing } from "app/theme"
 import { createContext, useCallback, useContext, useMemo, useState } from "react"
 import { Alert, useColorScheme } from "react-native"
 import { colors as lightColors } from "app/theme/colors"
 import { colors as darkColors } from "app/theme/colorsDark"
-import { spacing } from "app/theme/spacing"
+import { spacing as spacingLight } from "app/theme/spacing"
+import { spacing as spacingDark } from "app/theme/spacingDark"
 import { typography } from "app/theme/typography"
 import { timing } from "app/theme/timing"
 
@@ -60,11 +61,16 @@ export const useAppTheme = () => {
     [themeContext],
   )
 
+  const themeSpacingVariant: Spacing = useMemo(
+    () => (themeContext === "dark" ? spacingDark : spacingLight),
+    [themeContext],
+  )
+
   // This is where we build our theme object
   const themeVariant: Theme = useMemo(
     () => ({
       colors: themeColorVariant,
-      spacing,
+      spacing: themeSpacingVariant,
       typography,
       timing,
     }),
@@ -72,9 +78,9 @@ export const useAppTheme = () => {
   )
 
   const themed = useCallback(
-    <T>(styleFunction: ThemedStyleFn<T> | (ThemedStyleFn<T> | false)[]) => {
+    <T>(styleFunction: ThemedStyle<T> | (ThemedStyle<T> | false)[]) => {
       return Array.isArray(styleFunction)
-        ? styleFunction.map((f: ThemedStyleFn<T> | false) => f && f(themeVariant))
+        ? styleFunction.map((f: ThemedStyle<T> | Falsy) => f && f(themeVariant))
         : styleFunction(themeVariant)
     },
     [themeVariant],
@@ -84,7 +90,7 @@ export const useAppTheme = () => {
     colors: themeColorVariant,
     navTheme,
     setThemeContextOverride,
-    spacing,
+    spacing: themeSpacingVariant,
     theme: themeVariant,
     themeContext,
     themed,
