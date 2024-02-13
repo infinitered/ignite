@@ -106,7 +106,7 @@ module.exports = {
         depExpoCliInfo = [
           column1("expo global cli"),
           column2(expoCliVersion),
-          colors.yellow("Deprecated: Found 'expo-cli' installed. Please remove it."),
+          column3(colors.yellow("Deprecated: Found 'expo-cli' installed. Please remove it.")),
         ]
       }
     } catch (_) {
