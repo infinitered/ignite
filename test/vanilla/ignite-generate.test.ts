@@ -234,7 +234,7 @@ describe("ignite-cli generate", () => {
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\"
-        import { useAppTheme } from \\"app/theme/useAppTheme\\"
+        import { useAppTheme } from \\"app/utils/useAppTheme\\"
         import type { ThemedStyle } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
 
@@ -268,7 +268,7 @@ describe("ignite-cli generate", () => {
           fontFamily: typography.primary.normal,
           fontSize: 14,
           color: colors.palette.primary500,
-        }
+        })
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
@@ -303,7 +303,7 @@ describe("ignite-cli generate", () => {
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\"
-        import { useAppTheme } from \\"app/theme/useAppTheme\\"
+        import { useAppTheme } from \\"app/utils/useAppTheme\\"
         import type { ThemedStyle } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
 
@@ -337,7 +337,7 @@ describe("ignite-cli generate", () => {
           fontFamily: typography.primary.normal,
           fontSize: 14,
           color: colors.palette.primary500,
-        }
+        })
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
