@@ -59,6 +59,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         tx="demoDebugScreen.reportBugs"
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
       />
+
       <Text style={themed($title)} preset="heading" tx="demoDebugScreen.title" />
 
       <Button onPress={toggleTheme} text={`Switch Theme: ${themeContext}`} />
@@ -66,8 +67,8 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         label="Dark Mode"
         variant="switch"
         value={themeContext === "dark"}
-        onValueChange={() => {
-          setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
+        onValueChange={(value: boolean) => {
+          setThemeContextOverride(value ? "dark" : "light")
         }}
       />
       <View style={themed($itemsContainer)}>

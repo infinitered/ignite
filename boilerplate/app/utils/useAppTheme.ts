@@ -44,7 +44,28 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
   }
 }
 
-export const useAppTheme = () => {
+interface UseAppThemeValue {
+  // The theme object from react-navigation
+  navTheme: typeof DefaultTheme
+  // A function to set the theme context override (for switching modes)
+  setThemeContextOverride: (newTheme: ThemeContexts) => void
+  // The current theme object
+  theme: Theme
+  // The current theme context "light" | "dark"
+  themeContext: ThemeContexts
+  // A function to apply the theme to a style object.
+  // See examples in the components directory or read the docs here:
+  // https://docs.infinite.red/ignite-cli/boilerplate/app/utils/
+  themed: <T>(styleOrStyleFn: ThemedStyle<T> | StyleProp<T> | ThemedStyleArray<T>) => T
+}
+
+/**
+ * Custom hook that provides the app theme and utility functions for theming.
+ *
+ * @returns {UseAppThemeReturn} An object containing various theming values and utilities.
+ * @throws {Error} If used outside of a ThemeProvider.
+ */
+export const useAppTheme = (): UseAppThemeValue => {
   const navTheme = useNavTheme()
   const context = useContext(ThemeContext)
   if (!context) {

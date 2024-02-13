@@ -12,7 +12,7 @@ Theming involves a few different things: palettes, colors, animation timings, fo
 
 ## Colors & Palettes
 
-Colors are defined in `app/theme/colors.ts`. We use a palette-based approach to colors, which means that we define the set of colors used in the app. We then use these colors to define semantic color names to be used throughout the app. This allows us to have a consistent color palette across the app, and also allows us to change the palette easily.
+Colors are defined in `app/theme/colors.ts` (and `colorsDark.ts` for the dark theme). We use a palette-based approach to colors, which means that we define the set of colors used in the app. We then use these colors to define semantic color names to be used throughout the app. This allows us to have a consistent color palette across the app, and also allows us to change the palette easily.
 
 [Colors & Palettes](./colors.ts.md)
 
@@ -31,3 +31,86 @@ Timings are defined in `app/theme/timing.ts`. They can be used for consistent an
 Spacing is a first class citizen in Ignite. We use a spacing scale to define the spacing between elements in the app. This allows us to have a consistent spacing scale across the app, and also allows us to change the spacing easily. It is recommended to use the spacing scale for all spacing in the app if possible.
 
 [Spacing](./spacing.ts.md)
+
+# Taking Advantage of Multiple Themes (a.k.a "Dark Mode")
+
+The ignite boilerplate ships with color pallette definitions and support for multiple themes! By default we define two themes, but you can easily add more using our generic theming system.
+
+:::tip
+
+Head on over to the [Ignite Cookbook](https://ignitecookbook.com/) to find recipes for how to integrate Ignite's theming system with other popular styling and component libraries!
+
+:::
+
+Previously we relied on pure style objects typed as `ViewStyle`, `TextStyle`, `ImageStyle`, etc. This didn't quite fit circumstances where you wanted to dynamically change the overall app's theme during runtime. You could always reload the javascript bundle to see changes, but that was a less than ideal solution.
+
+Ignite now has the concept of `ThemedStyle`s. You can stick with the traditional pure style objects but if you want to take advantage of themed global colors, spacing, typography, and timings, you've got to add a little more code...
+
+Here's an example of how to use the new `useAppTheme()` hook to style your components and dynamically use the correct theme:
+
+```tsx
+import { type ViewStyle, View } from 'react-native'
+import { type ThemedStyle, useAppTheme } from 'app/theme'
+
+const $container: ThemedStyle<ViewStyle> = (theme) => ({
+  flex: 1,
+  backgroundColor: theme.colors.background,
+  justifyContent: "center",
+  alignItems: "center",
+})
+const $normalStyle: ViewStyle = {
+  width: 100,
+  height: 100,
+}
+
+// Then use in a component like so:
+const Component = () => {
+  const { themed } = useAppTheme()
+  return (
+    <View style={themed($container)}>
+      <View style={$normalStyle}>
+    </View>
+  )
+}
+```
+
+For more information on the `useAppTheme()`, [check out its documentation](../utils/useAppTheme.tsx.md).
+
+## Switching Between Themes
+
+Theme support would be useless if there wasn't a built-in way to switch the theme at will. Ignite's theming system will automatically pick the theme that matches the user's system configuration but you can override this using the `
+
+```tsx
+// In your component:
+const { 
+  setThemeContextOverride, // Function to set the theme
+  themeContext, // The current theme context ("light" | "darK")
+} = useAppTheme()
+
+// Then hook it up to a user interaction:
+const onThemeButtonPress = () =>{
+  // This will toggle between light and dark mode.
+  setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
+}
+```
+
+You could also hook it up to a switch if that's more your style:
+
+```tsx
+// In your component:
+const { 
+  setThemeContextOverride, // Function to set the theme
+  themeContext, // The current theme context ("light" | "darK")
+} = useAppTheme()
+
+// Then implement the switching button:
+<Toggle
+  label="Dark Mode"
+  variant="switch"
+  value={themeContext === "dark"}
+  onValueChange={(value: boolean) => {
+    setThemeContextOverride(value ? "dark" : "light")
+  }}
+/>
+
+```
