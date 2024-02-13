@@ -98,12 +98,13 @@ export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const { theme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
+  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
+    useThemeProvider()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <ThemeProvider value={{ theme, setThemeContextOverride }}>
+    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
         <AppStack />
       </NavigationContainer>

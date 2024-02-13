@@ -26,6 +26,19 @@ export interface Theme {
   timing: Timing
 }
 
+export const lightTheme: Theme = {
+  colors: colorsLight,
+  spacing: spacingLight,
+  typography,
+  timing,
+}
+export const darkTheme: Theme = {
+  colors: colorsDark,
+  spacing: spacingDark,
+  typography,
+  timing,
+}
+
 /**
  * Represents a function that returns a styled component based on the provided theme.
  * @template T The type of the style.

@@ -49,11 +49,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
 
   const toggleTheme = React.useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut) // Animate the transition
-    if (themeContext === "dark") {
-      setThemeContextOverride("light")
-    } else {
-      setThemeContextOverride("dark")
-    }
+    setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
   }, [themeContext, setThemeContextOverride])
 
   return (
