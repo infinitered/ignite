@@ -31,8 +31,6 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
     setTheme(newTheme)
   }, [])
 
-  console.log("useThemeProvider", { colorScheme, initialTheme, overrideTheme })
-
   const themeScheme = overrideTheme || colorScheme || "light"
   const navigationTheme = themeScheme === "dark" ? DarkTheme : DefaultTheme
 
