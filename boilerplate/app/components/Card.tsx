@@ -151,7 +151,10 @@ export function Card(props: CardProps) {
     ...WrapperProps
   } = props
 
-  const { themed, spacing } = useAppTheme()
+  const {
+    themed,
+    theme: { spacing },
+  } = useAppTheme()
 
   const preset: Presets = props.preset ?? "default"
   const isPressable = !!WrapperProps.onPress

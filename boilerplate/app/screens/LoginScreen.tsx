@@ -20,7 +20,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
   } = useStores()
 
-  const { themed, colors } = useAppTheme()
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
 
   useEffect(() => {
     // Here is where you could fetch credentials from keychain or storage

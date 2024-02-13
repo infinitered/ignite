@@ -117,7 +117,12 @@ interface EmptyStatePresetItem {
  * @returns {JSX.Element} The rendered `EmptyState` component.
  */
 export function EmptyState(props: EmptyStateProps) {
-  const { themeContext, themed, spacing } = useAppTheme()
+  const {
+    themeContext,
+    themed,
+    theme: { spacing },
+  } = useAppTheme()
+
   const EmptyStatePresets = {
     generic: {
       imageSource: themeContext === "dark" ? sadFaceDark : sadFace,

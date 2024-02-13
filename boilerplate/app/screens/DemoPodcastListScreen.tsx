@@ -150,7 +150,10 @@ const EpisodeCard = observer(function EpisodeCard({
   isFavorite: boolean
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
-  const { colors, themed } = useAppTheme()
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
   const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])

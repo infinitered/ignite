@@ -17,7 +17,10 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { ...PressableProps } = props
   const progress = useDrawerProgress()
-  const { colors, themed } = useAppTheme()
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
 
   const animatedContainerStyles = useAnimatedStyle(() => {
     const translateX = interpolate(progress.value, [0, 1], [0, isRTL ? 60 : -60])

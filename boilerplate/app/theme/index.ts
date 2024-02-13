@@ -15,6 +15,7 @@ export type Colors = typeof colorsLight | typeof colorsDark
 // The spacing type needs to take into account the different spacing values for light and dark themes.
 export type Spacing = typeof spacingLight | typeof spacingDark
 
+// These two are consistent across themes.
 export type Timing = typeof timing
 export type Typography = typeof typography
 
@@ -26,6 +27,7 @@ export interface Theme {
   timing: Timing
 }
 
+// Here we define our themes.
 export const lightTheme: Theme = {
   colors: colorsLight,
   spacing: spacingLight,
@@ -44,6 +46,19 @@ export const darkTheme: Theme = {
  * @template T The type of the style.
  * @param theme The theme object.
  * @returns The styled component.
+ *
+ * @example
+ * const $container: ThemedStyle<ViewStyle> = (theme) => ({
+ *   flex: 1,
+ *   backgroundColor: theme.colors.background,
+ *   justifyContent: "center",
+ *   alignItems: "center",
+ * })
+ * // Then use in a component like so:
+ * const Component = () => {
+ *   const { themed } = useAppTheme()
+ *   return <View style={themed($container)} />
+ * }
  */
 export type ThemedStyle<T> = (theme: Theme) => T
 export type ThemedStyleArray<T> = (
@@ -52,6 +67,7 @@ export type ThemedStyleArray<T> = (
   | (StyleProp<T> | ThemedStyle<T>)[]
 )[]
 
+// Export the two Theme objects:
 export { colorsLight, colorsDark }
 
 export { customFontsToLoad } from "./typography"

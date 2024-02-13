@@ -127,7 +127,10 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   } = props
   const input = useRef<TextInput>(null)
 
-  const { themed, colors } = useAppTheme()
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
 
   const disabled = TextInputProps.editable === false || status === "disabled"
 
