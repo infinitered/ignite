@@ -16,10 +16,10 @@ import { useAppTheme } from "app/utils/useAppTheme"
 import { colors } from "app/theme"
 
 const MyComponent = () => {
-  const { 
+  const {
     // Any styles you create with the type ThemedStyle<T> must be wrapped with
     // themed($styleName) before passing it along to the component's style property.
-    themed, 
+    themed,
     // This is the current theme object.
     theme,
     // themeContext is what theme you are actually using: "light" | "dark"
@@ -30,11 +30,13 @@ const MyComponent = () => {
     <View style={themed($container)}>
       <View style={$plainObjectStyle}>
         {/* An Example of direct theme color usage in a component: */}
-        <View style={{
-          backgroundColor: theme.colors.error,
-        }}>
-        {/* This will output "light" or "dark" */}
-        <Text>{themeContext}</Text>
+        <View
+          style={{
+            backgroundColor: theme.colors.error,
+          }}
+        >
+          {/* This will output "light" or "dark" */}
+          <Text>{themeContext}</Text>
         </View>
       </View>
     </View>
@@ -57,7 +59,6 @@ const $container: ThemedStyle<ViewStyle> = (theme) => ({
 const $plainObjectStyle: ViewStyle = {
   marginBottom: 20,
 }
-
 ```
 
 ## Properties:
@@ -76,9 +77,9 @@ In the example below, the last `<View>` would be yellow even though `$themedStyl
 
 ```tsx
 const $plainStyle: ViewStyle = {
-  padding: 10, 
-  backgroundColor: "black", 
-  width: 25, 
+  padding: 10,
+  backgroundColor: "black",
+  width: 25,
   height: 25,
 }
 
@@ -94,8 +95,8 @@ const $themedStyle: ThemedStyle<ViewStyle> = (theme) => ({
 // <View style={themed($plainStyle)} /> // You can, but why would you?
 <View style={themed([$themedStyle, $plainStyle])} />
 <View style={themed([
-  $themedStyle, 
-  $plainStyle, 
+  $themedStyle,
+  $plainStyle,
   // A plain style object
   { width: 7, backgroundColor: 'yellow'}
 ])} />

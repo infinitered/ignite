@@ -82,13 +82,13 @@ Theme support would be useless if there wasn't a built-in way to switch the them
 
 ```tsx
 // In your component:
-const { 
+const {
   setThemeContextOverride, // Function to set the theme
   themeContext, // The current theme context ("light" | "darK")
 } = useAppTheme()
 
 // Then hook it up to a user interaction:
-const onThemeButtonPress = () =>{
+const onThemeButtonPress = () => {
   // This will toggle between light and dark mode.
   setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
 }
@@ -98,7 +98,7 @@ You could also hook it up to a switch if that's more your style:
 
 ```tsx
 // In your component:
-const { 
+const {
   setThemeContextOverride, // Function to set the theme
   themeContext, // The current theme context ("light" | "darK")
 } = useAppTheme()

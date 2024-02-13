@@ -81,8 +81,8 @@ So, let's say we want a button that is a destructive action. We might add a "des
 The preset might look like this:
 
 ```tsx
-const $warning: ThemedStyle<ViewStyle> = (theme) => ({ 
-  backgroundColor: theme.colors.alert, 
+const $warning: ThemedStyle<ViewStyle> = (theme) => ({
+  backgroundColor: theme.colors.alert,
   color: "white",
   padding: theme.spacing.lg,
 })
