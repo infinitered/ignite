@@ -78,7 +78,7 @@ For more information on the `useAppTheme()`, [check out its documentation](../ut
 
 ## Switching Between Themes
 
-Theme support would be useless if there wasn't a built-in way to switch the theme at will. Ignite's theming system will automatically pick the theme that matches the user's system configuration but you can override this using the `
+Theme support would be useless if there wasn't a built-in way to switch the theme at will. Ignite's theming system will automatically pick the theme that matches the user's system configuration (light mode or dark mode) but you can override this using the `
 
 ```tsx
 // In your component:
