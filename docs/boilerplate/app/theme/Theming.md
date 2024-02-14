@@ -34,7 +34,7 @@ Spacing is a first class citizen in Ignite. We use a spacing scale to define the
 
 # Taking Advantage of Multiple Themes (a.k.a "Dark Mode")
 
-The ignite boilerplate ships with color pallette definitions and support for multiple themes! By default we define two themes, but you can easily add more using our generic theming system.
+The Ignite boilerplate ships with color palette definitions and support for multiple themes! By default we define two themes, but you can easily add more using our generic theming system.
 
 :::tip
 
