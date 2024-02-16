@@ -19,7 +19,7 @@ plugins: [...existingPlugins, require("./plugins/yourCustomPlugin").yourCustomPl
 ## Key Points
 
 - Config plugins extend app configuration, automating native module integration.
-- Create plugins in app/plugins and add them to app.config.ts.
+- Create plugins in `app/plugins` and add them to `app.config.ts`.
 - For complex setups, refer to mods but use them with caution.
 
 For detailed information on creating and using config plugins, refer to [Expo's Config Plugins documentation](https://docs.expo.dev/config-plugins/introduction/).

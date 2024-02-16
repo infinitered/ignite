@@ -7,7 +7,7 @@ By default, Reactotron is configured to work with web and mobile apps and is con
 
 ### ReactotronConfig.ts
 
-The `reactotron-mst` plugin is included for Mobx-State-Tree support.
+The `reactotron-mst` plugin is included for MobX-State-Tree support.
 
 ```typescript
 import { mst } from "reactotron-mst"
