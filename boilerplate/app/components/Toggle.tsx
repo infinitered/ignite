@@ -13,10 +13,16 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated"
 import { colors, spacing } from "../theme"
 import { iconRegistry, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { isRTL } from "app/i18n"
 
 type Variants = "checkbox" | "switch" | "radio"
 
@@ -450,10 +456,14 @@ function Switch(props: ToggleInputProps) {
       $switchInner?.paddingRight ||
       0) as number
 
-    const start = withTiming(on ? "100%" : "0%")
-    const marginStart = withTiming(on ? -(knobWidth || 0) - offsetRight : 0 + offsetLeft)
+    const translateX = interpolate(
+      on ? 1 : 0,
+      isRTL ? [1, 0] : [0, 1],
+      [0 + offsetLeft, +(knobWidth || 0) + offsetRight],
+      Extrapolation.CLAMP,
+    )
 
-    return { start, marginStart }
+    return { transform: [{ translateX: withTiming(translateX) }] }
   }, [on, knobWidth])
 
   return (
