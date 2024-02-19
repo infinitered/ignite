@@ -456,10 +456,12 @@ function Switch(props: ToggleInputProps) {
       $switchInner?.paddingRight ||
       0) as number
 
+    const rtlAdjustment = isRTL ? -1 : 1
+
     const translateX = interpolate(
       on ? 1 : 0,
-      isRTL ? [1, 0] : [0, 1],
-      [0 + offsetLeft, +(knobWidth || 0) + offsetRight],
+      [0, 1],
+      [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)],
       Extrapolation.CLAMP,
     )
 
