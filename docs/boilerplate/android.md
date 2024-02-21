@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # `android`
 
-If you choose the `DIY` option when spinning up a new app (or you run `yarn prebuild`) you'll get an `android` (and probably [`ios`](./ios.md)) folder in your project root. This folder contains your native Android / Android Studio project, which has been pre-configured to work with React Native.
+If you choose the `DIY` option when spinning up a new app (or you run `yarn prebuild:clean`) you'll get an `android` (and probably [`ios`](./ios.md)) folder in your project root. This folder contains your native Android / Android Studio project, which has been pre-configured to work with React Native.
 
 We generally recommend using the [Expo CNG (continuous native generation)](../expo/CNG.md) workflow, but if you need to customize your native code manually, you can do so here.
 
