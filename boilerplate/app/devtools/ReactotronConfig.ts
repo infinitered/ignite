@@ -7,10 +7,7 @@ import { Platform, NativeModules } from "react-native"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
-
-// @mst remove-block-start
 import { mst } from "reactotron-mst"
-// @mst remove-block-end
 
 import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
@@ -25,14 +22,12 @@ const reactotron = Reactotron.configure({
   },
 })
 
-// @mst remove-block-start
 reactotron.use(
   mst({
     /* ignore some chatty `mobx-state-tree` actions */
     filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
   }),
 )
-// @mst remove-block-end
 
 if (Platform.OS !== "web") {
   reactotron.setAsyncStorageHandler?.(AsyncStorage)

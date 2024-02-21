@@ -30,7 +30,9 @@ import {
   expoGoCompatExpectedVersions,
   findAndUpdateDependencyVersions,
 } from "../tools/expoGoCompatibility"
-import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
+import { demoDependenciesToRemove } from "../tools/demo"
+import { findAndRemoveDependencies } from "../tools/dependencies"
+import { mstDependenciesToRemove } from "./remove-mst"
 
 // deprecated: 'prebuild'. in favor of 'cng' instead.
 type Workflow = "expo" | "cng" | "prebuild" | "manual"
@@ -144,6 +146,13 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
+  /**
+   * Whether or not to remove MobX-State-Tree boilerplate code
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default false
+   */
+  removeMST?: boolean
 }
 
 module.exports = {
@@ -369,6 +378,23 @@ module.exports = {
         prefix,
       }))
       removeDemo = removeDemoResponse.removeDemo
+    }
+    // #endregion
+
+    // #region Prompt to Remove MobX-State-Tree code
+    // only ask if we're removing the demo code
+    const defaultRemoveMST = false
+    let removeMST = useDefault(options.removeMST) ? defaultRemoveMST : boolFlag(options.removeMST)
+    if (removeDemo && removeMST === undefined) {
+      const removeMSTResponse = await prompt.ask<{ removeMST: boolean }>(() => ({
+        type: "confirm",
+        name: "removeMST",
+        message: "Remove MobX-State-Tree code? We recommend leaving it in",
+        initial: defaultRemoveMST,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      removeMST = removeMSTResponse.removeMST
     }
     // #endregion
 
@@ -600,7 +626,12 @@ module.exports = {
       // - If we're removing the demo code, clean up some dependencies that are no longer needed
       if (removeDemo) {
         log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
-        packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
+        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
+      }
+
+      if (removeMST) {
+        log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
+        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
       // - Then write it back out.
@@ -756,6 +787,23 @@ module.exports = {
       stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
+      // #region Remove MST code
+      if (removeDemo && removeMST) {
+        startSpinner(`Removing MobX-State-Tree code`)
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(`${IGNITE} remove-mst "${targetPath}"`, {
+            onProgress: log,
+          })
+        } catch (e) {
+          log(e)
+          p(yellow(`Unable to remove MobX-State-Tree code`))
+        }
+        stopSpinner(`Removing MobX-State-Tree code`, "🛠️")
+      }
+      // #endregion
+
       // #region Format generator templates EOL for Windows
       let warnAboutEOL = false
       if (isWindows) {
@@ -846,6 +894,7 @@ module.exports = {
           y: yname,
           yes: yname,
           noTimeout,
+          removeMST,
         },
         projectName,
         toolbox,

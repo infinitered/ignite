@@ -1,15 +1,18 @@
-module.exports = function transformer(file, api) {
+module.exports = function transformer(file, api, options) {
   const j = api.jscodeshift
   const rootSource = j(file.source)
 
-  // remove mobx-react-lite imports
-  const importToRemove = rootSource.find(j.ImportDeclaration, {
-    source: {
-      value: "mobx-react-lite",
-    },
-  })
-  if (importToRemove.length > 0) {
-    importToRemove.remove()
+  const importsToRemove = options.importsToRemove || []
+
+  // remove imports
+  for (const importToRemove of importsToRemove) {
+    rootSource
+      .find(j.ImportDeclaration, {
+        source: {
+          value: importToRemove,
+        },
+      })
+      .remove()
   }
 
   // look for any observer() calls and replace them with the component function
@@ -26,48 +29,41 @@ module.exports = function transformer(file, api) {
       return j.arrowFunctionExpression(componentFn.params, componentFn.body, false)
     })
 
-  // remove any ./models imports
-  //   rootSource.find(j.ImportDeclaration, { source: { value: "./models" } }).remove()
+  // remove the 'useInitialRootStore' block found in app.tsx
+  rootSource
+    .find(j.FunctionDeclaration, {
+      id: {
+        name: "App",
+      },
+    })
+    .forEach((path) => {
+      path.value.body.body = path.value.body.body.filter((node) => {
+        if (
+          node.type === "VariableDeclaration" &&
+          node.declarations[0]?.init?.callee?.name === "useInitialRootStore"
+        ) {
+          return false
+        }
+        return true
+      })
+    })
 
-  // replace app.tsx hydration code
-  //   rootSource
-  //     .find(j.Identifier)
-  //     .filter((path) => path.node.name === "useInitialStore")
-  //     .closest(j.CallExpression)
-  //     .replaceWith((p) => {
-  //       console.log("replacing!")
-  //       return j.callExpression(j.identifier("useEffect"), [
-  //         j.arrowFunctionExpression([], p.node.arguments[0].body),
-  //         j.arrayExpression([]),
-  //       ])
-  //     })
-
-  //   rootSource
-  //     .find(j.FunctionDeclaration)
-  //     .filter((path) => path.node.id.name === "App")
-  //     .forEach((path) => {
-  //       path.node.body.body.forEach((stmt) => {
-  //         if (stmt.type === "VariableDeclaration") {
-  //           console.log("declarations", stmt.declarations[0])
-  //           j(stmt)
-  //             .find(j.Identifier)
-  //             .filter((p) => p.node.name === "useInitialRootStore")
-  //             .closest(j.CallExpression)
-  //             .replaceWith((p) => {
-  //               return j.callExpression(j.identifier("useEffect"), [
-  //                 j.arrowFunctionExpression([], p.node.arguments[0].body),
-  //                 j.arrayExpression([]),
-  //               ])
-  //             })
-
-  //           //   j(stmt)
-  //           //     .find(j.Identifier)
-  //           //     .filter((p) => p.node.name === "rehydrated")
-  //           //     .closest(j.VariableDeclarator)
-  //           //     .remove()
-  //         }
-  //       })
-  //     })
+  // remove the reactotron-mst middleware
+  // this assumes that reactotron-mst is the only spot where reactotron.use() is called
+  rootSource
+    .find(j.ExpressionStatement, {
+      expression: {
+        callee: {
+          object: {
+            name: "reactotron",
+          },
+          property: {
+            name: "use",
+          },
+        },
+      },
+    })
+    .remove()
 
   return rootSource.toSource()
 }
