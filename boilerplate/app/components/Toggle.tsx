@@ -3,6 +3,7 @@ import {
   GestureResponderEvent,
   Image,
   ImageStyle,
+  Platform,
   StyleProp,
   SwitchProps,
   TextInputProps,
@@ -456,14 +457,17 @@ function Switch(props: ToggleInputProps) {
       $switchInner?.paddingRight ||
       0) as number
 
+    // For RTL support:
+    // - web flip input range to [1,0]
+    // - outputRange doesn't want rtlAdjustment
     const rtlAdjustment = isRTL ? -1 : 1
+    const inputRange = Platform.OS === "web" ? (isRTL ? [1, 0] : [0, 1]) : [0, 1]
+    const outputRange =
+      Platform.OS === "web"
+        ? [offsetLeft, +(knobWidth || 0) + offsetRight]
+        : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
 
-    const translateX = interpolate(
-      on ? 1 : 0,
-      [0, 1],
-      [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)],
-      Extrapolation.CLAMP,
-    )
+    const translateX = interpolate(on ? 1 : 0, inputRange, outputRange, Extrapolation.CLAMP)
 
     return { transform: [{ translateX: withTiming(translateX) }] }
   }, [on, knobWidth])
