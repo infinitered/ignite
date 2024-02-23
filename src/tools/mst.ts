@@ -188,8 +188,8 @@ async function update({
         REMOVE_BLOCK_START,
         REMOVE_BLOCK_END,
         REMOVE_FILE,
-        // OBSERVER_BLOCK_START,
-        // OBSERVER_BLOCK_END,
+        OBSERVER_BLOCK_START,
+        OBSERVER_BLOCK_END,
       } = mst.CommentType
 
       const comments: CommentType[] = []
@@ -213,6 +213,8 @@ async function update({
         REMOVE_NEXT_LINE,
         REMOVE_BLOCK_START,
         REMOVE_BLOCK_END,
+        OBSERVER_BLOCK_START,
+        OBSERVER_BLOCK_END,
       ]
 
       const shouldUpdate = onlyMarkup ? mstMarkupRegex : RegExp(operations.join("|"), "g")

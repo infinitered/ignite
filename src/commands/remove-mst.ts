@@ -82,29 +82,6 @@ module.exports = {
     // https://github.com/infinitered/ignite/issues/2225
     removeEmptyDirs()
 
-    // delete entire app/models dir
-    // const modelsDir = pathlib.join(TARGET_DIR, "app/models")
-    // if (filesystem.exists(modelsDir) && !dryRun) {
-    //   filesystem.remove(modelsDir)
-    // }
-
-    // // patch observer() usage
-    // const filesToProcess = [
-    //   "app/navigators/AppNavigator.tsx",
-    //   "app/screens/WelcomeScreen.tsx",
-    //   "app/app.tsx",
-    //   "app/devtools/ReactotronConfig.ts",
-    // ]
-    // const transformPath = pathlib.join(__dirname, "../tools/remove-mst-transformer.ts")
-    // const paths = filesToProcess.map((file) => pathlib.join(TARGET_DIR, file))
-    // const options = {
-    //   dry: dryRun,
-    //   print: false,
-    //   importsToRemove: mstDependenciesToRemove,
-    // }
-    // const res = await jscodeshift(transformPath, paths, options)
-    // console.log(res)
-
     // patch app.tsx
     const appFile = pathlib.join(TARGET_DIR, "app/app.tsx")
     await toolbox.patching.patch(appFile, {
@@ -126,6 +103,7 @@ module.exports = {
     const templateDir = pathlib.join(TARGET_DIR, "ignite/templates")
     // update templates/screen
     const screenTemplate = pathlib.join(templateDir, "screen/NAMEScreen.tsx.ejs")
+    // TODO: show error if string not found in file (if template has been updated)
     await toolbox.patching.replace(
       screenTemplate,
       `observer(function <%= props.pascalCaseName %>Screen() {`,
@@ -135,6 +113,7 @@ module.exports = {
 
     // update templates/component
     const componentTemplate = pathlib.join(templateDir, "component/NAME.tsx.ejs")
+    // TODO: show error if string not found in file (if template has been updated)
     await toolbox.patching.replace(
       componentTemplate,
       `observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {`,
