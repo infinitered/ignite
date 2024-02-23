@@ -61,6 +61,7 @@ reactotron.onCustomCommand({
   },
 })
 
+// @mst remove-block-start
 reactotron.onCustomCommand({
   title: "Reset Root Store",
   description: "Resets the MST store",
@@ -70,6 +71,7 @@ reactotron.onCustomCommand({
     clear()
   },
 })
+// @mst remove-block-end
 
 reactotron.onCustomCommand({
   title: "Reset Navigation State",

@@ -5,15 +5,6 @@ import { p, warning } from "../tools/pretty"
 import { DEFAULT_MATCHING_GLOBS, mst } from "../tools/mst"
 // import { packager } from "../tools/packager"
 
-// const { run: jscodeshift } = require("jscodeshift/src/Runner")
-
-export const mstDependenciesToRemove = [
-  "mobx",
-  "mobx-react-lite",
-  "mobx-state-tree",
-  "reactotron-mst",
-]
-
 module.exports = {
   alias: ["rmst", "remove-mst"],
   description:

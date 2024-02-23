@@ -32,7 +32,7 @@ import {
 } from "../tools/expoGoCompatibility"
 import { demoDependenciesToRemove } from "../tools/demo"
 import { findAndRemoveDependencies } from "../tools/dependencies"
-import { mstDependenciesToRemove } from "./remove-mst"
+import { mstDependenciesToRemove } from "../tools/mst"
 
 // deprecated: 'prebuild'. in favor of 'cng' instead.
 type Workflow = "expo" | "cng" | "prebuild" | "manual"
