@@ -1,10 +1,11 @@
-import { GluegunToolbox, filesystem } from "gluegun"
+import { GluegunToolbox, filesystem, system } from "gluegun"
 import * as pathlib from "path"
 import { boolFlag } from "../tools/flag"
-import { p } from "../tools/pretty"
-import { packager } from "../tools/packager"
+import { p, warning } from "../tools/pretty"
+import { DEFAULT_MATCHING_GLOBS, mst } from "../tools/mst"
+// import { packager } from "../tools/packager"
 
-const { run: jscodeshift } = require("jscodeshift/src/Runner")
+// const { run: jscodeshift } = require("jscodeshift/src/Runner")
 
 export const mstDependenciesToRemove = [
   "mobx",
@@ -29,71 +30,102 @@ module.exports = {
     p()
     p(`Removing MobX-State-Tree code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
 
-    // delete entire app/models dir
-    const modelsDir = pathlib.join(TARGET_DIR, "app/models")
-    if (filesystem.exists(modelsDir) && !dryRun) {
-      filesystem.remove(modelsDir)
-    }
+    const filePaths = mst.find(TARGET_DIR)
 
-    // patch observer() usage
-    const filesToProcess = [
-      "app/navigators/AppNavigator.tsx",
-      "app/screens/WelcomeScreen.tsx",
-      "app/app.tsx",
-      "app/devtools/ReactotronConfig.ts",
-    ]
-    const transformPath = pathlib.join(__dirname, "../tools/remove-mst-transformer.ts")
-    const paths = filesToProcess.map((file) => pathlib.join(TARGET_DIR, file))
-    const options = {
-      dry: dryRun,
-      print: false,
-      importsToRemove: mstDependenciesToRemove,
-    }
-    const res = await jscodeshift(transformPath, paths, options)
-    console.log(res)
+    // Go through every file path and handle the operation for each mst comment
+    const mstCommentResults = await mst.update({ filePaths, dryRun })
 
-    // patch app.tsx
-    const appFile = pathlib.join(TARGET_DIR, "app/app.tsx")
-    await toolbox.patching.replace(
-      appFile,
-      `if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null`,
-      `if (!isNavigationStateRestored || !areFontsLoaded) return null`,
-    )
-    await toolbox.patching.replace(
-      appFile,
-      `import React from "react"`,
-      `import React, { useEffect } from "react"`,
-    )
-    await toolbox.patching.patch(appFile, {
-      delete: `import { useInitialRootStore } from "./models"`,
-    })
-    await toolbox.patching.patch(appFile, {
-      insert: `\n\nuseEffect(() => {\nsetTimeout(hideSplashScreen, 500)\n}, [])`,
-      after: `const [areFontsLoaded] = useFonts(customFontsToLoad)`,
-    })
+    // Handle the results of the mst comment operations
+    mstCommentResults
+      // Sort the results by the path in alphabetical order
+      .sort((a, b) => {
+        if (a.status === "fulfilled" && b.status === "fulfilled") {
+          return a.value.path.localeCompare(b.value.path)
+        }
+        return 0
+      })
+      .forEach((result) => {
+        // Log any rejected results as warnings
+        if (result.status === "rejected") {
+          warning(result.reason)
+          return
+        }
 
-    // templates
-    const templateDir = pathlib.join(TARGET_DIR, "ignite/templates")
-    // remove templates/models
-    const modelsTemplateDir = pathlib.join(templateDir, "model")
-    if (filesystem.exists(modelsTemplateDir) && !dryRun) {
-      filesystem.remove(modelsTemplateDir)
-    }
+        // Log any fulfilled results that have comments
+        const { path, comments } = result.value
+        if (comments.length > 0) {
+          p(`Found ${comments.map((c) => `'${c}'`).join(", ")} in ${path}`)
+        }
+      })
 
-    // update templates/screen
-    const screenTemplate = pathlib.join(templateDir, "screen/NAMEScreen.tsx.ejs")
-    const screenTemplateLinesToDelete = [
-      `import { observer } from "mobx-react-lite"`,
-      `// import { useStores } from "app/models"`,
-      `// Pull in one of our MST stores`,
-      `// const { someStore, anotherStore } = useStores()`,
-    ]
-    for (const line of screenTemplateLinesToDelete) {
-      await toolbox.patching.patch(screenTemplate, {
-        delete: line,
+    function removeEmptyDirs() {
+      const emptyDirPaths = filesystem
+        .cwd(TARGET_DIR)
+        .find({
+          matching: DEFAULT_MATCHING_GLOBS,
+          recursive: true,
+          files: false,
+          directories: true,
+        })
+        .map((path) => pathlib.join(TARGET_DIR, path))
+        .filter((path) => !filesystem.list(path)?.length)
+
+      emptyDirPaths.forEach((path) => {
+        if (!dryRun) filesystem.remove(path)
+        p(`Removed empty directory '${path}'`)
       })
     }
 
+    // first pass
+    removeEmptyDirs()
+    // second pass, for nested directories that are now empty after the first pass
+    // https://github.com/infinitered/ignite/issues/2225
+    removeEmptyDirs()
+
+    // delete entire app/models dir
+    // const modelsDir = pathlib.join(TARGET_DIR, "app/models")
+    // if (filesystem.exists(modelsDir) && !dryRun) {
+    //   filesystem.remove(modelsDir)
+    // }
+
+    // // patch observer() usage
+    // const filesToProcess = [
+    //   "app/navigators/AppNavigator.tsx",
+    //   "app/screens/WelcomeScreen.tsx",
+    //   "app/app.tsx",
+    //   "app/devtools/ReactotronConfig.ts",
+    // ]
+    // const transformPath = pathlib.join(__dirname, "../tools/remove-mst-transformer.ts")
+    // const paths = filesToProcess.map((file) => pathlib.join(TARGET_DIR, file))
+    // const options = {
+    //   dry: dryRun,
+    //   print: false,
+    //   importsToRemove: mstDependenciesToRemove,
+    // }
+    // const res = await jscodeshift(transformPath, paths, options)
+    // console.log(res)
+
+    // patch app.tsx
+    const appFile = pathlib.join(TARGET_DIR, "app/app.tsx")
+    await toolbox.patching.patch(appFile, {
+      after: `const [areFontsLoaded] = useFonts(customFontsToLoad)`,
+      insert: `
+        \n\n
+        React.useEffect(() => {
+          setTimeout(hideSplashScreen, 500)
+        }, [])
+        \n\n
+        if (!isNavigationStateRestored || !areFontsLoaded) return null
+        `,
+    })
+
+    // format
+    await system.run(`npx prettier ${appFile}`)
+
+    // templates
+    const templateDir = pathlib.join(TARGET_DIR, "ignite/templates")
+    // update templates/screen
+    const screenTemplate = pathlib.join(templateDir, "screen/NAMEScreen.tsx.ejs")
     await toolbox.patching.replace(
       screenTemplate,
       `observer(function <%= props.pascalCaseName %>Screen() {`,
@@ -103,17 +135,12 @@ module.exports = {
 
     // update templates/component
     const componentTemplate = pathlib.join(templateDir, "component/NAME.tsx.ejs")
-    await toolbox.patching.patch(componentTemplate, {
-      delete: `import { observer } from "mobx-react-lite"`,
-    })
     await toolbox.patching.replace(
       componentTemplate,
       `observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {`,
       `(props: <%= props.pascalCaseName %>Props) => {`,
     )
     await toolbox.patching.replace(componentTemplate, `})`, `}`) // assuming '})' only exists once in the file
-
-    await packager.run("format")
 
     p(`Done removing MobX-State-Tree code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },

@@ -11,6 +11,19 @@ export enum CommentType {
   OBSERVER_BLOCK_END = `@mst observer-block-end`,
 }
 
+export const DEFAULT_MATCHING_GLOBS = [
+  "!**/.DS_Store",
+  "!**/.expo{,/**}",
+  "!**/.git{,/**}",
+  "!**/.vscode{,/**}",
+  "!**/node_modules{,/**}",
+  "!**/ios/build{,/**}",
+  "!**/ios/Pods{,/**}",
+  "!**/ios/*.xcworkspace{,/**}",
+  "!**/android/build{,/**}",
+  "!**/android/app/build{,/**}",
+]
+
 /**
  * Regex pattern to find the various types of // @mst remove-x comments
  * Also finds # @mst remove-file for maestro files
@@ -109,23 +122,10 @@ function sanitize(contents: string): string {
 }
 
 function find(targetDir: string, matching?: string[]) {
-  const MATCHING_GLOBS = [
-    "!**/.DS_Store",
-    "!**/.expo{,/**}",
-    "!**/.git{,/**}",
-    "!**/.vscode{,/**}",
-    "!**/node_modules{,/**}",
-    "!**/ios/build{,/**}",
-    "!**/ios/Pods{,/**}",
-    "!**/ios/*.xcworkspace{,/**}",
-    "!**/android/build{,/**}",
-    "!**/android/app/build{,/**}",
-  ]
-
   const filePaths = filesystem
     .cwd(targetDir)
     .find({
-      matching: matching ?? MATCHING_GLOBS,
+      matching: matching ?? DEFAULT_MATCHING_GLOBS,
       recursive: true,
       files: true,
       directories: false,
