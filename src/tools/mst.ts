@@ -106,38 +106,25 @@ function removeBlock(
  * `// @mst remove-block-start` and `// @mst remove-block-end` comments
  */
 function patchMSTObserverBlock(contents: string): string {
+  const startBlockRegex = new RegExp(
+    `\/\/\\s*${CommentType.OBSERVER_BLOCK_START}\\n(export\\s+)?const\\s+(\\w+)(:\\s*[\\w<>,\\s]+)?\\s*=\\s*observer\\(function\\s+(\\w+)(\\([^)]*\\))`,
+    "g",
+  )
+  const startBlockReplacement = "$1const $2$3 = $5 =>"
+
+  const endBlockRegex = new RegExp(`\\}\\)\\s*\/\/\\s*${CommentType.OBSERVER_BLOCK_END}`, "g")
+  const endBlockReplacement = "}"
+
   const hasObserverBlock = (value: string) =>
-    value.includes(CommentType.OBSERVER_BLOCK_START) &&
-    value.includes(CommentType.OBSERVER_BLOCK_END)
+    value.match(startBlockRegex) && value.match(endBlockRegex)
 
   if (!hasObserverBlock(contents)) {
     return contents
   }
 
-  // Regular expressions for different patterns
-  // Pattern for functions without TypeScript type annotations
-  const regex1 = new RegExp(
-    `\/\/\\s*${CommentType.OBSERVER_BLOCK_START}\\s*\\n(export\\s+)?const (\\w+) = observer\\(function (\\w+)\\(\\)\\s*{`,
-    "g",
-  )
-
-  const replacement1 = "$1const $2 = $3() => {"
-
-  // Pattern for functions with TypeScript type annotations
-  const regex2 = new RegExp(
-    `\/\/\\s*${CommentType.OBSERVER_BLOCK_START}\\s*\\n(export\\s+)?const (\\w+): ([\\w<>\\[\\]]+) = observer\\(function \\2\\(([^)]*)\\)\\s*{`,
-    "g",
-  )
-
-  const replacement2 = "$1const $2: $3 = ($4) => {"
-
-  // Replace the content for both patterns
-  let updateContents = contents.replace(regex1, replacement1)
-  updateContents = updateContents.replace(regex2, replacement2)
-
-  const endRegex = /\)\}(?=\s*\/\/\s*@mst observer-block-end)/g
-  const endReplacement = "}"
-  updateContents = updateContents.replace(endRegex, endReplacement)
+  // replace via regex
+  let updateContents = contents.replace(startBlockRegex, startBlockReplacement)
+  updateContents = updateContents.replace(endBlockRegex, endBlockReplacement)
 
   // if more exist, keep processing file
   if (hasObserverBlock(updateContents)) {
