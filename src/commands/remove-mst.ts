@@ -6,7 +6,7 @@ import { DEFAULT_MATCHING_GLOBS, mst } from "../tools/mst"
 // import { packager } from "../tools/packager"
 
 module.exports = {
-  alias: ["rmst", "remove-mst"],
+  alias: ["rm-mst", "remove-mst"],
   description:
     "Remove MobX-State-Tree code from generated boilerplate. Add --dry-run to see what would be removed.",
   run: async (toolbox: GluegunToolbox) => {
