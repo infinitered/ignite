@@ -102,12 +102,59 @@ function removeBlock(
 }
 
 /**
+ * Take the file content as a string and remove the lines of code between
+ * `// @mst remove-block-start` and `// @mst remove-block-end` comments
+ */
+function patchMSTObserverBlock(contents: string): string {
+  const hasObserverBlock = (value: string) =>
+    value.includes(CommentType.OBSERVER_BLOCK_START) &&
+    value.includes(CommentType.OBSERVER_BLOCK_END)
+
+  if (!hasObserverBlock(contents)) {
+    return contents
+  }
+
+  // Regular expressions for different patterns
+  // Pattern for functions without TypeScript type annotations
+  const regex1 = new RegExp(
+    `\/\/\\s*${CommentType.OBSERVER_BLOCK_START}\\s*\\n(export\\s+)?const (\\w+) = observer\\(function (\\w+)\\(\\)\\s*{`,
+    "g",
+  )
+
+  const replacement1 = "$1const $2 = $3() => {"
+
+  // Pattern for functions with TypeScript type annotations
+  const regex2 = new RegExp(
+    `\/\/\\s*${CommentType.OBSERVER_BLOCK_START}\\s*\\n(export\\s+)?const (\\w+): ([\\w<>\\[\\]]+) = observer\\(function \\2\\(([^)]*)\\)\\s*{`,
+    "g",
+  )
+
+  const replacement2 = "$1const $2: $3 = ($4) => {"
+
+  // Replace the content for both patterns
+  let updateContents = contents.replace(regex1, replacement1)
+  updateContents = updateContents.replace(regex2, replacement2)
+
+  const endRegex = /\)\}(?=\s*\/\/\s*@mst observer-block-end)/g
+  const endReplacement = "}"
+  updateContents = updateContents.replace(endRegex, endReplacement)
+
+  // if more exist, keep processing file
+  if (hasObserverBlock(updateContents)) {
+    return patchMSTObserverBlock(updateContents)
+  }
+
+  return updateContents
+}
+
+/**
  * Perform all remove operations possible in a file
  * @param contents The file contents as a string
  * @return The file contents with all remove operations performed
  */
 function remove(contents: string): string {
-  const result = removeBlock(removeNextLine(removeCurrentLine(contents)))
+  let result = removeBlock(removeNextLine(removeCurrentLine(contents)))
+  result = patchMSTObserverBlock(result)
   return result
 }
 
@@ -154,8 +201,8 @@ async function update({
         REMOVE_BLOCK_START,
         REMOVE_BLOCK_END,
         REMOVE_FILE,
-        OBSERVER_BLOCK_START,
-        OBSERVER_BLOCK_END,
+        // OBSERVER_BLOCK_START,
+        // OBSERVER_BLOCK_END,
       } = mst.CommentType
 
       const comments: CommentType[] = []
