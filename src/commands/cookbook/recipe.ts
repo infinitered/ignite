@@ -68,84 +68,80 @@ module.exports = {
     }
 
     // loop until they're done
-    let done = false
-    while (!done) {
-      info(``)
-      info(`- ${recipe.name}`)
-      info(`- Title: ${recipe.title || ""}`)
-      info(`- Description: ${recipe.description || ""}`)
-      info(`- Tags: ${recipe.tags || ""}`)
-      info(`- Last Update: ${recipe.lastUpdate || ""}`)
-      info(`- Author: ${recipe.author || ""}`)
-      info(`- Publish Date: ${recipe.publishDate || ""}`)
-      info(``)
+    info(``)
+    info(`- ${recipe.name}`)
+    info(`- Title: ${recipe.title || ""}`)
+    info(`- Description: ${recipe.description || ""}`)
+    info(`- Tags: ${recipe.tags || ""}`)
+    info(`- Last Update: ${recipe.lastUpdate || ""}`)
+    info(`- Author: ${recipe.author || ""}`)
+    info(`- Publish Date: ${recipe.publishDate || ""}`)
+    info(``)
 
-      const { action } = await prompt.ask(actionMenu)
+    const { action } = await prompt.ask(actionMenu)
 
-      if (action === "Open in browser") {
-        info(`Opening ${recipe.name} in your browser...`)
+    if (action === "Open in browser") {
+      info(`Opening ${recipe.name} in your browser...`)
 
-        // if mac, use `open`
-        if (process.platform === "darwin") {
-          await toolbox.system.run(`open ${recipe.html_url}`)
-        } else if (process.platform === "win32") {
-          // if windows, use `start`
-          await toolbox.system.run(`start ${recipe.html_url}`)
-        } else if (process.platform === "linux") {
-          // if linux, use `xdg-open`
-          await toolbox.system.run(`xdg-open ${recipe.html_url}`)
-        } else {
-          // if none of the above, just log the URL
-          info(`URL: ${recipe.html_url}`)
-        }
-      } else if (action === "Apply recipe to current app with AI") {
-        // Check if we're in a clean git status ... if not, warn them and verify before proceeding
-        const gitStatus = await toolbox.system.run("git status --porcelain")
-        if (gitStatus !== "") {
-          error("You have uncommitted changes. Please commit or stash them before proceeding.")
-          info(
-            "It might be hard to undo the changes made by the AI if you don't have a clean git status.",
-          )
-          const shouldProceed = await prompt.confirm("Do you want to proceed anyway?")
-          if (!shouldProceed) return
-        }
+      // if mac, use `open`
+      if (process.platform === "darwin") {
+        await toolbox.system.run(`open ${recipe.html_url}`)
+      } else if (process.platform === "win32") {
+        // if windows, use `start`
+        await toolbox.system.run(`start ${recipe.html_url}`)
+      } else if (process.platform === "linux") {
+        // if linux, use `xdg-open`
+        await toolbox.system.run(`xdg-open ${recipe.html_url}`)
+      } else {
+        // if none of the above, just log the URL
+        info(`URL: ${recipe.html_url}`)
+      }
+    } else if (action === "Apply recipe to current app with AI") {
+      // Check if we're in a clean git status ... if not, warn them and verify before proceeding
+      const gitStatus = await toolbox.system.run("git status --porcelain")
+      if (gitStatus !== "") {
+        error("You have uncommitted changes. Please commit or stash them before proceeding.")
+        info(
+          "It might be hard to undo the changes made by the AI if you don't have a clean git status.",
+        )
+        const shouldProceed = await prompt.confirm("Do you want to proceed anyway?")
+        if (!shouldProceed) return
+      }
 
-        info(`Applying ${recipe.name} to your app via OpenAI...`)
+      info(`Applying ${recipe.name} to your app via OpenAI...`)
 
-        // Warn them that this will cost money and we aren't responsible for charges
-        info(`
+      // Warn them that this will cost money and we aren't responsible for charges
+      info(`
 This will cost money (typically a few cents per run) and we are not responsible for any charges incurred by using the OpenAI API.
 In particular, don't run this in CI or other automated environments without understanding the costs.
 It can get stuck in a loop and continue to charge you. We are adding safety features to prevent this, but it's not foolproof.\n`)
 
-        // look for an OPENAI_API_KEY in the environment or ask for it
-        const openaiApiKey = process.env.OPENAI_API_KEY
-          ? { key: process.env.OPENAI_API_KEY }
-          : await prompt.ask({
-              type: "input",
-              name: "key",
-              message:
-                "Enter your OpenAI API Key (https://platform.openai.com/api-keys) (we won't save it)",
-            })
-        if (!openaiApiKey) {
-          error("No OpenAI API key found.")
-        } else {
-          // Test the OpenAI API Key
-          const openaiTest = await toolbox.system.run(
-            `curl -X POST https://api.openai.com/v1/engines/davinci-codex/completions -H "Authorization: Bearer ${openaiApiKey.key}" -H "Content-Type: application/json" -d '{"prompt": "Hello, world - just return hi so I know you work.", "max_tokens": 100}'`,
-          )
-
-          if (openaiTest.includes("hi")) {
-            info("OpenAI API Key test successful.")
-
-            // kick off the recipe process
-            await applyRecipe(recipe, openaiApiKey.key)
-          } else {
-            error("OpenAI API Key test failed.")
-          }
-        }
+      // look for an OPENAI_API_KEY in the environment or ask for it
+      const openaiApiKey = process.env.OPENAI_API_KEY
+        ? { key: process.env.OPENAI_API_KEY }
+        : await prompt.ask({
+            type: "input",
+            name: "key",
+            message:
+              "Enter your OpenAI API Key (https://platform.openai.com/api-keys) (we won't save it)",
+          })
+      if (!openaiApiKey) {
+        error("No OpenAI API key found.")
       } else {
-        done = true
+        // Test the OpenAI API Key
+        const openaiTest = await toolbox.system.run(
+          `curl -X POST https://api.openai.com/v1/engines/gpt-3.5-turbo/completions -H "Authorization: Bearer ${openaiApiKey.key}" -H "Content-Type: application/json" -d '{"prompt": "Hello, world - just return hi so I know you work.", "max_tokens": 200}'`,
+        )
+
+        if (openaiTest.includes("hi")) {
+          info("OpenAI API Key test successful.")
+
+          // kick off the recipe process
+          await applyRecipe(recipe, openaiApiKey.key)
+        } else {
+          error("OpenAI API Key test failed.")
+          console.log(openaiTest)
+        }
       }
     }
   },

@@ -73,6 +73,18 @@ export async function fetchRecipeDetails(recipe: CookbookRecipe): Promise<Cookbo
   return recipe
 }
 
+function safePath(path: string): string {
+  // find the current path
+  const currentPath = filesystem.cwd()
+  // normalize the path
+  path = filesystem.path(path)
+  // ensure the path is safe
+  if (!path.startsWith(currentPath)) {
+    throw new Error(`Path ${path} is not safe to write to.`)
+  }
+  return path
+}
+
 export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Promise<void> {
   const { info, error, spin } = print
 
@@ -130,8 +142,13 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         Also communicate any questions you have to the user in multiple choice.
         We will report back their answers to you.
 
-        When done, just return the string "AI_IS_DONE" and we will automatically end
-        the session.
+        When completely done, just return the string "AI_IS_DONE" and we will
+        automatically end the session.
+
+        Before you finish, evaluate what went well and what went wrong with the
+        recipe. Generate a concise report for how we could improve the recipe
+        in the future to make it easier for the AI to apply it. Start with the
+        string "RECIPE_FEEDBACK" so we know to show it to the user.
       `,
     },
     {
@@ -178,16 +195,12 @@ ${recipe.contents}
         stream: false,
       })
 
-      // add to messages
+      // add the AI's response to messages
       const aiMessage = completion.choices[0].message
       messages.push(aiMessage)
 
-      // info(aiMessage.content)
-      // info(aiMessage.tool_calls)
-
       // now find the right function for the tool_calls, if any
-      // and execute it
-      // and then ask the AI for the next step
+      // and execute it.
       const tool_calls = aiMessage.tool_calls
       if (tool_calls) {
         for (const tool_call of tool_calls) {
@@ -196,32 +209,31 @@ ${recipe.contents}
           switch (tool_call.function.name) {
             case "createFile":
               // info(`Creating file ${args.path}`)
-              await filesystem.writeAsync(args.path, args.contents)
+              await filesystem.writeAsync(safePath(args.path), args.contents)
               results = `Created file ${args.path}`
               spinner.succeed(results)
               break
             case "deleteFile":
               // info(`Deleting file ${args.path}`)
-              await filesystem.removeAsync(args.path)
+              await filesystem.removeAsync(safePath(args.path))
               results = `Deleted file ${args.path}`
               spinner.succeed(results)
               break
             case "readFileAndReportBack":
               // info(`Reading file ${args.path}`)
-              const fileExists = await filesystem.existsAsync(args.path)
+              const fileExists = await filesystem.existsAsync(safePath(args.path))
               if (!fileExists) {
                 results = `File ${args.path} does not exist`
                 spinner.succeed(`Looked for file ${args.path} but it does not exist`)
               } else {
-                const contents = await filesystem.readAsync(args.path)
+                const contents = await filesystem.readAsync(safePath(args.path))
                 results = contents
                 spinner.succeed(`Read file ${args.path}`)
               }
 
               break
             case "patchFile":
-              // info(`Patching file ${args.path}`)
-              await patching.update(args.path, (contents) => {
+              await patching.update(safePath(args.path), (contents) => {
                 // loop through instructions with replace/insert
                 for (const instruction of args.instructions) {
                   contents = contents.replace(instruction.replace, instruction.insert)
@@ -240,13 +252,13 @@ ${recipe.contents}
               break
             case "listFiles":
               // info(`Listing files in ${args.path}`)
-              const files = await filesystem.listAsync(args.path)
+              const files = await filesystem.listAsync(safePath(args.path))
               results = files.join("\n")
               spinner.succeed(`Listed files in ${args.path}`)
               break
             case "askUser":
-              // info(`Asking user: ${args.question}`)
-              // info(`with choices ${args.choices}`)
+              info(`Asking user: ${args.question}`)
+              info(`with choices ${args.choices}`)
 
               // ask the user
               const response = await prompt.ask({
@@ -257,7 +269,6 @@ ${recipe.contents}
               })
 
               // delete the terminal lines for the question and answer
-              process.stdout.write("\x1B[2K\x1B[1G") // maybe?
 
               // report back to AI
               results = response.answer
@@ -290,8 +301,8 @@ ${recipe.contents}
           }
 
           if (results) {
-            // info(results)
-
+            // OpenAI requires that you send back the results of the tool call
+            // with the tool_call_id included so they can match them up.
             messages.push({
               role: "tool",
               tool_call_id: tool_call.id,
@@ -301,8 +312,15 @@ ${recipe.contents}
         }
       }
 
+      spinner.stop()
+
+      if (aiMessage.content?.includes("RECIPE_FEEDBACK")) {
+        info("The AI has some feedback on the recipe:\n")
+        info(aiMessage.content)
+      }
+
       // check if AI is self-reporting that it is done
-      if (completion.choices[0].message.content?.includes("AI_IS_DONE")) {
+      if (aiMessage.content?.includes("AI_IS_DONE")) {
         _aiIsDone = true
       }
     }
