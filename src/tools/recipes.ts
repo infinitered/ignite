@@ -74,11 +74,13 @@ export async function fetchRecipeDetails(recipe: CookbookRecipe): Promise<Cookbo
 }
 
 export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Promise<void> {
-  const openai = await getAI(api_key)
+  const { info, error, spin } = print
+
+  const openai = getAI(api_key)
 
   // ensure we are in the root folder of an Ignite project (check for package.json and an `app` folder I guess?)
   if (!filesystem.exists("package.json")) {
-    print.error("You must be in the root folder of an Ignite project to use the AI.")
+    error("You must be in the root folder of an Ignite project to use the AI.")
     process.exit(1)
   }
 
@@ -96,10 +98,15 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
     {
       role: "system",
       content: `
-        You are an AI helper for the Ignite CLI. We are currently editing a
-        React Native app and want to apply the Ignite Cookbook recipe called
-        "${recipe.title}" to this current app. You have a few functions to
-        help you accomplish this.
+        You are an AI helper for the Ignite CLI. This is part of a multi-part
+        conversation with the CLI and the user.
+
+        In your messages, keep the messages concise and to the point, and
+        suitable for display in a terminal environment.
+        
+        We are currently editing a React Native app and want to apply the
+        Ignite Cookbook recipe called "${recipe.title}" to this current app.
+        You have a few functions to help you accomplish this.
 
         If the recipe asks you to do things like creating a new Ignite app,
         assume those are already done and just move on to the next step.
@@ -109,13 +116,22 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         similar location and make the change there. But read it first to make
         sure it's what you expect.
 
-        The user will now give you the recipe, along with some other info about.
+        Infer as much as you can from the recipe and the current state of the
+        app. If you have any questions, ask the user. You can read files as
+        needed to understand the current state of the app.
+
+        For example, if you're replacing one dependency with another, you can
+        look through the code base in likely places to find the old dependency
+        and replace it with the new one.
+
+        Next, the user will give you the recipe, along with some other info about
         the app. Please proceed with applying this recipe to the code base.
 
         Also communicate any questions you have to the user in multiple choice.
         We will report back their answers to you.
 
-        When done, just return the string "AI_IS_DONE" and we will end the session.
+        When done, just return the string "AI_IS_DONE" and we will automatically end
+        the session.
       `,
     },
     {
@@ -142,8 +158,10 @@ ${recipe.contents}
 
   // start loop
   let _aiIsDone = false
+  let currentTask = "Review recipe"
   try {
     while (!_aiIsDone) {
+      const spinner = spin(currentTask)
       const completion = await openai.chat.completions.create({
         messages,
         tool_choice: "auto",
@@ -164,9 +182,8 @@ ${recipe.contents}
       const aiMessage = completion.choices[0].message
       messages.push(aiMessage)
 
-      print.info("AI response:")
-      print.info(aiMessage.content)
-      print.info(aiMessage.tool_calls)
+      // info(aiMessage.content)
+      // info(aiMessage.tool_calls)
 
       // now find the right function for the tool_calls, if any
       // and execute it
@@ -178,27 +195,32 @@ ${recipe.contents}
           let results = ""
           switch (tool_call.function.name) {
             case "createFile":
-              print.info(`Creating file ${args.path}`)
+              // info(`Creating file ${args.path}`)
               await filesystem.writeAsync(args.path, args.contents)
               results = `Created file ${args.path}`
+              spinner.succeed(results)
               break
             case "deleteFile":
-              print.info(`Deleting file ${args.path}`)
+              // info(`Deleting file ${args.path}`)
               await filesystem.removeAsync(args.path)
               results = `Deleted file ${args.path}`
+              spinner.succeed(results)
               break
             case "readFileAndReportBack":
-              print.info(`Reading file ${args.path}`)
+              // info(`Reading file ${args.path}`)
               const fileExists = await filesystem.existsAsync(args.path)
               if (!fileExists) {
                 results = `File ${args.path} does not exist`
+                spinner.succeed(`Looked for file ${args.path} but it does not exist`)
               } else {
                 const contents = await filesystem.readAsync(args.path)
                 results = contents
+                spinner.succeed(`Read file ${args.path}`)
               }
+
               break
             case "patchFile":
-              print.info(`Patching file ${args.path}`)
+              // info(`Patching file ${args.path}`)
               await patching.update(args.path, (contents) => {
                 // loop through instructions with replace/insert
                 for (const instruction of args.instructions) {
@@ -208,18 +230,23 @@ ${recipe.contents}
                 // we will return the contents to the AI
                 results = contents
 
+                spinner.succeed(
+                  `Patched file ${args.path} with ${args.instructions.length} patches`,
+                )
+
                 return contents
               })
 
               break
             case "listFiles":
-              print.info(`Listing files in ${args.path}`)
+              // info(`Listing files in ${args.path}`)
               const files = await filesystem.listAsync(args.path)
               results = files.join("\n")
+              spinner.succeed(`Listed files in ${args.path}`)
               break
             case "askUser":
-              print.info(`Asking user: ${args.question}`)
-              print.info(`with choices ${args.choices}`)
+              // info(`Asking user: ${args.question}`)
+              // info(`with choices ${args.choices}`)
 
               // ask the user
               const response = await prompt.ask({
@@ -229,31 +256,41 @@ ${recipe.contents}
                 choices: args.choices,
               })
 
+              // delete the terminal lines for the question and answer
+              process.stdout.write("\x1B[2K\x1B[1G") // maybe?
+
               // report back to AI
               results = response.answer
+              // spinner.succeed(`no need to succeed anything`)
+              spinner.stop()
 
               break
             case "dependency":
-              print.info(`${args.action} dependency ${args.name}`)
-              print.info(args)
+              // info(`${args.action} dependency ${args.name}`)
+              // info(args)
               if (args.action === "add") {
                 await packageManager.add(args.name, {
-                  dev: args.development === "true",
+                  dev: args.dev === "true",
                 })
-                results = `Added ${args.name} to the project`
+                results = `Added ${args.name} to the project${
+                  args.dev === "true" ? " as a dev dependency" : ""
+                }`
+                spinner.succeed(results)
               } else if (args.action === "remove") {
                 await packageManager.remove(args.name, {})
                 results = `Removed ${args.name} from the project`
+                spinner.succeed(results)
               }
               break
             default:
-              print.error(`Unknown tool call: ${tool_call.function.name}`)
-              print.info("Arguments:" + JSON.stringify(args))
+              // Shouldn't happen!
+              spinner.fail(`Unknown tool call: ${tool_call.function.name}`)
+              info("Arguments:" + JSON.stringify(args))
               process.exit(1)
           }
 
           if (results) {
-            print.info(results)
+            // info(results)
 
             messages.push({
               role: "tool",
@@ -270,7 +307,7 @@ ${recipe.contents}
       }
     }
   } catch (e) {
-    print.error(e)
+    error(e)
 
     // print out the current messages for debugging
     const printDebugInfo = await prompt.ask({
@@ -281,15 +318,15 @@ ${recipe.contents}
     })
 
     if (printDebugInfo.printDebugInfo) {
-      print.info("Current messages:")
+      info("Current messages:")
       console.log(JSON.stringify(messages, null, 2))
     }
 
-    print.info("Feel free to file an issue with the above information.")
-    print.info("Title the issue something like:")
-    print.info("ignite-cli cookbook AI error: <your error here>")
-    print.info("https://github.com/infinitered/ignite/issues/new")
-    print.info("Thanks for helping us improve the AI! 🙏")
+    info("Feel free to file an issue with the above information.")
+    info("Title the issue something like:")
+    info("ignite-cli cookbook AI error: <your error here>")
+    info("https://github.com/infinitered/ignite/issues/new")
+    info("Thanks for helping us improve the AI! 🙏")
 
     process.exit(1)
   }

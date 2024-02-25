@@ -7,7 +7,7 @@ import { applyRecipe, fetchAllRecipes, fetchRecipeDetails } from "../../tools/re
 import type { GluegunToolbox } from "gluegun"
 
 module.exports = {
-  description: "Allows finding cookbook recipes and opening them in a browser.",
+  description: "Allows finding and applying cookbook recipes.",
   run: async function (toolbox: GluegunToolbox) {
     const { print, parameters, prompt } = toolbox
     const { info, error } = print
@@ -58,11 +58,11 @@ module.exports = {
       name: "action",
       message: "What would you like to do?",
       choices: [
-        { name: "Open in browser", message: "Open in browser" },
         {
           name: "Apply recipe to current app with AI",
           message: "Apply recipe to current app with AI",
         },
+        { name: "Open in browser", message: "Open in browser" },
         { name: "Cancel", message: "Cancel" },
       ],
     }
@@ -112,19 +112,27 @@ module.exports = {
 
         info(`Applying ${recipe.name} to your app via OpenAI...`)
 
+        // Warn them that this will cost money and we aren't responsible for charges
+        info(`
+This will cost money (typically a few cents per run) and we are not responsible for any charges incurred by using the OpenAI API.
+In particular, don't run this in CI or other automated environments without understanding the costs.
+It can get stuck in a loop and continue to charge you. We are adding safety features to prevent this, but it's not foolproof.\n`)
+
         // look for an OPENAI_API_KEY in the environment or ask for it
-        const openaiApiKey = await prompt.ask({
-          type: "input",
-          name: "key",
-          message:
-            "Add your OpenAI API Key (https://platform.openai.com/api-keys) (we won't save it)",
-        })
+        const openaiApiKey = process.env.OPENAI_API_KEY
+          ? { key: process.env.OPENAI_API_KEY }
+          : await prompt.ask({
+              type: "input",
+              name: "key",
+              message:
+                "Enter your OpenAI API Key (https://platform.openai.com/api-keys) (we won't save it)",
+            })
         if (!openaiApiKey) {
           error("No OpenAI API key found.")
         } else {
           // Test the OpenAI API Key
           const openaiTest = await toolbox.system.run(
-            `curl -X POST https://api.openai.com/v1/engines/davinci-codex/completions -H "Authorization: Bearer ${openaiApiKey.key}" -H "Content-Type: application/json" -d '{"prompt": "Hello, world - just return hi so I know you work.", "max_tokens}'`,
+            `curl -X POST https://api.openai.com/v1/engines/davinci-codex/completions -H "Authorization: Bearer ${openaiApiKey.key}" -H "Content-Type: application/json" -d '{"prompt": "Hello, world - just return hi so I know you work.", "max_tokens": 100}'`,
           )
 
           if (openaiTest.includes("hi")) {
@@ -136,6 +144,8 @@ module.exports = {
             error("OpenAI API Key test failed.")
           }
         }
+      } else {
+        done = true
       }
     }
   },
