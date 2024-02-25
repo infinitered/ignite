@@ -67,7 +67,7 @@ export const readFileTool: ChatCompletionTool = {
   },
 }
 
-export const patchTool: ChatCompletionTool = {
+export const patchFileTool: ChatCompletionTool = {
   type: "function",
   function: {
     name: "patch",
