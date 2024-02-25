@@ -70,14 +70,14 @@ export const readFileTool: ChatCompletionTool = {
 export const patchFileTool: ChatCompletionTool = {
   type: "function",
   function: {
-    name: "patch",
+    name: "patchFile",
     description: `Allows replacing the first matching string in a given file. Make sure to match indentation exactly.`,
     parameters: {
       type: "object",
       properties: {
-        file: {
+        path: {
           type: "string",
-          description: "The file to patch",
+          description: "Path to the file to patch",
         },
         instructions: {
           type: "array",

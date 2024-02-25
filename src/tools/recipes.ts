@@ -189,8 +189,13 @@ ${recipe.contents}
               break
             case "readFileAndReportBack":
               print.info(`Reading file ${args.path}`)
-              const contents = await filesystem.readAsync(args.path)
-              results = contents
+              const fileExists = await filesystem.existsAsync(args.path)
+              if (!fileExists) {
+                results = `File ${args.path} does not exist`
+              } else {
+                const contents = await filesystem.readAsync(args.path)
+                results = contents
+              }
               break
             case "patchFile":
               print.info(`Patching file ${args.path}`)
@@ -268,8 +273,23 @@ ${recipe.contents}
     print.error(e)
 
     // print out the current messages for debugging
-    print.info("Current messages:")
-    console.log(JSON.stringify(messages, null, 2))
+    const printDebugInfo = await prompt.ask({
+      type: "confirm",
+      name: "printDebugInfo",
+      message: "Print the full conversation for debugging?",
+      initial: true,
+    })
+
+    if (printDebugInfo.printDebugInfo) {
+      print.info("Current messages:")
+      console.log(JSON.stringify(messages, null, 2))
+    }
+
+    print.info("Feel free to file an issue with the above information.")
+    print.info("Title the issue something like:")
+    print.info("ignite-cli cookbook AI error: <your error here>")
+    print.info("https://github.com/infinitered/ignite/issues/new")
+    print.info("Thanks for helping us improve the AI! 🙏")
 
     process.exit(1)
   }
