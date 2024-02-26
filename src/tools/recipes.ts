@@ -85,8 +85,27 @@ function safePath(path: string): string {
   return path
 }
 
+// replace the patching.update in gluegun, which does weird things with json files
+async function updateFile(
+  filename: string,
+  callback: (contents: string) => string | false,
+): Promise<string | false> {
+  const contents = await filesystem.readAsync(filename, "utf8")
+
+  // let the caller mutate the contents in memory
+  const mutatedContents = callback(contents)
+
+  // only write if they actually sent back something to write
+  if (typeof mutatedContents === "string" && mutatedContents !== contents) {
+    await filesystem.writeAsync(filename, mutatedContents, { atomic: true })
+  }
+
+  return mutatedContents
+}
+
 export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Promise<void> {
-  const { info, error, spin } = print
+  const { info, error, spin, colors } = print
+  const { cyan } = colors
 
   const openai = getAI(api_key)
 
@@ -123,6 +142,9 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         If the recipe asks you to do things like creating a new Ignite app,
         assume those are already done and just move on to the next step.
 
+        Match the code style of the current app, even if it differs from the
+        recipe, unless the recipe is specifically about changing that aspect.
+
         If the recipe asks you to make a change to a file but it doesn't exist,
         look and see if there's another file that's similar in a reasonably
         similar location and make the change there. But read it first to make
@@ -139,16 +161,26 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         Next, the user will give you the recipe, along with some other info about
         the app. Please proceed with applying this recipe to the code base.
 
-        Also communicate any questions you have to the user in multiple choice.
-        We will report back their answers to you.
+        Also communicate any questions you have to the user in multiple choice
+        or freeform. We will report back their answers to you. You cannot just
+        ask the user in a message (since we will not know how to ask the question),
+        you *must* trigger the "askUser" tool call to ask the user anything.
 
-        When completely done, just return the string "AI_IS_DONE" and we will
-        automatically end the session.
+        As you apply changes to the code base, check to make sure they properly
+        applied by reading the file back. If it didn't apply properly, try to
+        infer what went wrong and fix it. If you can't fix it, ask the user what
+        to do.
 
         Before you finish, evaluate what went well and what went wrong with the
         recipe. Generate a concise report for how we could improve the recipe
         in the future to make it easier for the AI to apply it. Start with the
         string "RECIPE_FEEDBACK" so we know to show it to the user.
+
+        When completely done, just return the string "AI_IS_DONE" and we will
+        automatically end the session.
+
+        First ask the user if they'd like to procede with the plan. In the details,
+        include details about what you intend to do (concisely).
       `,
     },
     {
@@ -177,7 +209,10 @@ ${recipe.contents}
   let _aiIsDone = false
   let currentTask = "Review recipe"
   try {
-    while (!_aiIsDone) {
+    let loops = 0
+    const maxLoops = 200 // so it doesn't go on forever
+    while (!_aiIsDone && loops <= maxLoops) {
+      loops++
       const spinner = spin(currentTask)
       const completion = await openai.chat.completions.create({
         messages,
@@ -233,21 +268,29 @@ ${recipe.contents}
 
               break
             case "patchFile":
-              await patching.update(safePath(args.path), (contents) => {
-                // loop through instructions with replace/insert
-                for (const instruction of args.instructions) {
-                  contents = contents.replace(instruction.replace, instruction.insert)
-                }
+              // check if the file exists first
+              const patchFileExists = await filesystem.existsAsync(safePath(args.path))
 
-                // we will return the contents to the AI
-                results = contents
+              if (!patchFileExists) {
+                results = `File ${args.path} does not exist`
+                spinner.fail(`Looked for file ${args.path} but it does not exist`)
+              } else {
+                await updateFile(safePath(args.path), (contents) => {
+                  // loop through instructions with replace/insert
+                  for (const instruction of args.instructions) {
+                    contents = contents.replace(instruction.replace, instruction.insert)
+                  }
 
-                spinner.succeed(
-                  `Patched file ${args.path} with ${args.instructions.length} patches`,
-                )
+                  // we will return the contents to the AI
+                  results = contents
 
-                return contents
-              })
+                  spinner.succeed(
+                    `Patched file ${args.path} with ${args.instructions.length} patches`,
+                  )
+
+                  return contents
+                })
+              }
 
               break
             case "listFiles":
@@ -257,23 +300,38 @@ ${recipe.contents}
               spinner.succeed(`Listed files in ${args.path}`)
               break
             case "askUser":
-              info(`Asking user: ${args.question}`)
-              info(`with choices ${args.choices}`)
+              // info(`Asking user: ${args.question}`)
+              // info(`with choices ${args.choices}`)
 
-              // ask the user
-              const response = await prompt.ask({
-                type: "select",
-                name: "answer",
-                message: args.question,
-                choices: args.choices,
-              })
-
-              // delete the terminal lines for the question and answer
-
-              // report back to AI
-              results = response.answer
-              // spinner.succeed(`no need to succeed anything`)
               spinner.stop()
+
+              if (args.details) {
+                info(cyan(`\n${args.details}\n`))
+              }
+
+              // ask the user if multiple choice
+              if (args.answerType === "multipleChoice") {
+                const response = await prompt.ask({
+                  type: "select",
+                  name: "answer",
+                  message: args.question,
+                  choices: args.choices,
+                })
+
+                // report back to AI
+                results = response.answer
+              } else if (args.answerType === "freeform") {
+                const response = await prompt.ask({
+                  type: "input",
+                  name: "answer",
+                  message: args.question,
+                })
+
+                // report back to AI
+                results = response.answer
+              } else {
+                throw new Error(`Unknown answer type: ${args.answerType}`)
+              }
 
               break
             case "dependency":
@@ -315,14 +373,18 @@ ${recipe.contents}
       spinner.stop()
 
       if (aiMessage.content?.includes("RECIPE_FEEDBACK")) {
-        info("The AI has some feedback on the recipe:\n")
-        info(aiMessage.content)
+        info("\nThe AI has some feedback on the recipe:")
+        info(`\n${cyan(aiMessage.content)}\n`)
       }
 
       // check if AI is self-reporting that it is done
       if (aiMessage.content?.includes("AI_IS_DONE")) {
         _aiIsDone = true
+        info("All done!")
       }
+    }
+    if (loops > maxLoops) {
+      throw new Error(`AI looped too many times (more than ${maxLoops}), exiting!`)
     }
   } catch (e) {
     error(e)
@@ -348,4 +410,19 @@ ${recipe.contents}
 
     process.exit(1)
   }
+
+  // print out the current messages for debugging
+  const printDebugInfo = await prompt.ask({
+    type: "confirm",
+    name: "printDebugInfo",
+    message: "Print the full conversation for debugging?",
+    initial: true,
+  })
+
+  if (printDebugInfo.printDebugInfo) {
+    info("Current messages:")
+    console.log(JSON.stringify(messages, null, 2))
+  }
+
+  process.exit(0)
 }

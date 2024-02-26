@@ -124,23 +124,32 @@ export const askUserTool: ChatCompletionTool = {
   type: "function",
   function: {
     name: "askUser",
-    description: "Ask the user a question",
+    description: "Ask the user a multiple choice OR freeform question",
     parameters: {
       type: "object",
       properties: {
+        details: {
+          type: "string",
+          description:
+            "Any longform details you want to present to the user before you ask the question.",
+        },
         question: {
           type: "string",
           description: "The question to ask the user.",
         },
-        options: {
+        answerType: {
+          type: "string",
+          description: "The type of answer to expect. Either 'multipleChoice' or 'freeform'.",
+        },
+        choices: {
           type: "array",
           items: {
             type: "string",
-            description: "The options to present to the user.",
+            description: "The choices to present to the user if multipleChoice.",
           },
         },
       },
-      required: ["question", "options"],
+      required: ["question", "answerType"],
     },
   },
 }

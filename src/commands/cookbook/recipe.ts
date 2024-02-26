@@ -10,7 +10,8 @@ module.exports = {
   description: "Allows finding and applying cookbook recipes.",
   run: async function (toolbox: GluegunToolbox) {
     const { print, parameters, prompt } = toolbox
-    const { info, error } = print
+    const { info, error, colors } = print
+    const { bold, gray } = colors
 
     const searchTerm = parameters.first
 
@@ -81,20 +82,21 @@ module.exports = {
     const { action } = await prompt.ask(actionMenu)
 
     if (action === "Open in browser") {
-      info(`Opening ${recipe.name} in your browser...`)
+      info(gray(`Opening ${recipe.name} in your browser...`))
 
-      // if mac, use `open`
+      const fileWithoutExt = recipe.name.replace(/\.[^/.]+$/, "")
+      const url = `https://ignitecookbook.com/docs/recipes/${fileWithoutExt}/`
       if (process.platform === "darwin") {
-        await toolbox.system.run(`open ${recipe.html_url}`)
+        await toolbox.system.run(`open ${url}`)
       } else if (process.platform === "win32") {
         // if windows, use `start`
-        await toolbox.system.run(`start ${recipe.html_url}`)
+        await toolbox.system.run(`start ${url}`)
       } else if (process.platform === "linux") {
         // if linux, use `xdg-open`
-        await toolbox.system.run(`xdg-open ${recipe.html_url}`)
+        await toolbox.system.run(`xdg-open ${url}`)
       } else {
         // if none of the above, just log the URL
-        info(`URL: ${recipe.html_url}`)
+        info(`URL: ${url}`)
       }
     } else if (action === "Apply recipe to current app with AI") {
       // Check if we're in a clean git status ... if not, warn them and verify before proceeding
@@ -108,13 +110,18 @@ module.exports = {
         if (!shouldProceed) return
       }
 
-      info(`Applying ${recipe.name} to your app via OpenAI...`)
+      info(bold(`\nApplying ${recipe.name} to your app via OpenAI...\n`))
 
       // Warn them that this will cost money and we aren't responsible for charges
-      info(`
-This will cost money (typically a few cents per run) and we are not responsible for any charges incurred by using the OpenAI API.
-In particular, don't run this in CI or other automated environments without understanding the costs.
-It can get stuck in a loop and continue to charge you. We are adding safety features to prevent this, but it's not foolproof.\n`)
+      info(
+        gray(`
+This will cost money (typically a few cents per run) and we are not
+responsible for any charges incurred by using the OpenAI API.
+In particular, don't run this in CI or other automated environments
+without understanding the costs.
+It can get stuck in a loop and continue to charge you. We are adding
+safety features to prevent this, but it's not foolproof.\n`),
+      )
 
       // look for an OPENAI_API_KEY in the environment or ask for it
       const openaiApiKey = process.env.OPENAI_API_KEY
@@ -134,7 +141,7 @@ It can get stuck in a loop and continue to charge you. We are adding safety feat
         )
 
         if (openaiTest.includes("hi")) {
-          info("OpenAI API Key test successful.")
+          info("\nOpenAI API Key test successful.\n")
 
           // kick off the recipe process
           await applyRecipe(recipe, openaiApiKey.key)
