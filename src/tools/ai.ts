@@ -49,6 +49,27 @@ export const deleteFileTool: ChatCompletionTool = {
   },
 }
 
+export const renameFileTool: ChatCompletionTool = {
+  type: "function",
+  function: {
+    name: "renameFile",
+    description: "Rename a file or directory",
+    parameters: {
+      type: "object",
+      properties: {
+        path: {
+          type: "string",
+          description: "The path of the file or directory to rename.",
+        },
+        newPath: {
+          type: "string",
+          description: "The new path of the file or directory.",
+        },
+      },
+    },
+  },
+}
+
 export const readFileTool: ChatCompletionTool = {
   type: "function",
   function: {
@@ -71,7 +92,7 @@ export const patchFileTool: ChatCompletionTool = {
   type: "function",
   function: {
     name: "patchFile",
-    description: `Allows replacing the first matching string in a given file. Make sure to match indentation exactly.`,
+    description: `Allows replacing the first matching string in a given file. Make sure to match indentation exactly. It's best to do one line at a time.`,
     parameters: {
       type: "object",
       properties: {
@@ -86,7 +107,8 @@ export const patchFileTool: ChatCompletionTool = {
             properties: {
               replace: {
                 type: "string",
-                description: "Search for and replace this string with the insert string",
+                description:
+                  "Search for and replace this string with the insert string. Best to do one line per instruction.",
               },
               insert: {
                 type: "string",

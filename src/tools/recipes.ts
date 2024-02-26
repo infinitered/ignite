@@ -1,5 +1,5 @@
 import type { CookbookRecipe } from "../types"
-import { print, http, packageManager, filesystem, prompt, patching } from "gluegun"
+import { print, http, packageManager, filesystem, prompt } from "gluegun"
 import {
   askUserTool,
   createFileTool,
@@ -9,6 +9,7 @@ import {
   listFilesTool,
   patchFileTool,
   readFileTool,
+  renameFileTool,
 } from "./ai"
 import { ChatCompletionMessageParam } from "openai/resources"
 
@@ -96,7 +97,7 @@ async function updateFile(
   const mutatedContents = callback(contents)
 
   // only write if they actually sent back something to write
-  if (typeof mutatedContents === "string" && mutatedContents !== contents) {
+  if (typeof mutatedContents === "string") {
     await filesystem.writeAsync(filename, mutatedContents, { atomic: true })
   }
 
@@ -145,10 +146,13 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         Match the code style of the current app, even if it differs from the
         recipe, unless the recipe is specifically about changing that aspect.
 
+        If you need to update a file, always read it first to ensure the instructions
+        really need to be done. In some cases, the file may already have changes
+        done to it and doing the same changes again would be incorrect.
+
         If the recipe asks you to make a change to a file but it doesn't exist,
         look and see if there's another file that's similar in a reasonably
-        similar location and make the change there. But read it first to make
-        sure it's what you expect.
+        similar location and make the change there.
 
         Infer as much as you can from the recipe and the current state of the
         app. If you have any questions, ask the user. You can read files as
@@ -171,6 +175,9 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         infer what went wrong and fix it. If you can't fix it, ask the user what
         to do.
 
+        If no changes are necessary, just move on to the next step. Report this
+        in your final summary.
+
         Before you finish, evaluate what went well and what went wrong with the
         recipe. Generate a concise report for how we could improve the recipe
         in the future to make it easier for the AI to apply it. Start with the
@@ -179,8 +186,11 @@ export async function applyRecipe(recipe: CookbookRecipe, api_key: string): Prom
         When completely done, just return the string "AI_IS_DONE" and we will
         automatically end the session.
 
-        First ask the user if they'd like to procede with the plan. In the details,
-        include details about what you intend to do (concisely).
+        But first, ask the user if they'd like to procede with the plan. In the
+        details, include concise details about what you intend to do.
+
+        *Note: avoid using parallel or multi_tool_use.parallel tools. We do not
+        support those in our script.*
       `,
     },
     {
@@ -191,12 +201,6 @@ The app's name is ${appName}.
 The files in the root and ./app folders are:
 ${rootFiles.join("\n")}
 ${appFiles.join("\n")}
-
-The package.json is as follows:
-
-\`\`\`json
-${packageJsonText}
-\`\`\`
 
 The recipe is as follows:
 
@@ -222,6 +226,7 @@ ${recipe.contents}
           readFileTool,
           createFileTool,
           deleteFileTool,
+          renameFileTool,
           patchFileTool,
           askUserTool,
           dependencyTool,
@@ -254,6 +259,12 @@ ${recipe.contents}
               results = `Deleted file ${args.path}`
               spinner.succeed(results)
               break
+            case "renameFile":
+              // info(`Renaming file ${args.path} to ${args.newPath}`)
+              await filesystem.moveAsync(safePath(args.path), safePath(args.newPath))
+              results = `Renamed file ${args.path} to ${args.newPath}`
+              spinner.succeed(results)
+              break
             case "readFileAndReportBack":
               // info(`Reading file ${args.path}`)
               const fileExists = await filesystem.existsAsync(safePath(args.path))
@@ -276,6 +287,10 @@ ${recipe.contents}
                 spinner.fail(`Looked for file ${args.path} but it does not exist`)
               } else {
                 await updateFile(safePath(args.path), (contents) => {
+                  // console.log(contents)
+
+                  // console.log(args.instructions)
+
                   // loop through instructions with replace/insert
                   for (const instruction of args.instructions) {
                     contents = contents.replace(instruction.replace, instruction.insert)
@@ -353,9 +368,8 @@ ${recipe.contents}
               break
             default:
               // Shouldn't happen!
+              results = `Unknown tool call: ${tool_call.function.name}`
               spinner.fail(`Unknown tool call: ${tool_call.function.name}`)
-              info("Arguments:" + JSON.stringify(args))
-              process.exit(1)
           }
 
           if (results) {
