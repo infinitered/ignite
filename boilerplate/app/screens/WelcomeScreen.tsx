@@ -11,7 +11,7 @@ import { AppStackScreenProps } from "../navigators"
 import type { ThemedStyle } from "app/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
+import { useAppTheme } from "app/utils/useAppTheme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -21,8 +21,8 @@ interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
   _props, // @demo remove-current-line
 ) {
-  // @demo remove-block-start
   const { themed } = useAppTheme()
+  // @demo remove-block-start
   const { navigation } = _props
   const {
     authenticationStore: { logout },

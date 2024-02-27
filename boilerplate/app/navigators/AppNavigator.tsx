@@ -58,11 +58,11 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
+  // @demo remove-block-end
   const {
     theme: { colors },
   } = useAppTheme()
 
-  // @demo remove-block-end
   return (
     <Stack.Navigator
       screenOptions={{
