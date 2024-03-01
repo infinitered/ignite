@@ -249,6 +249,12 @@ ${recipe.contents}
           switch (tool_call.function.name) {
             case "createFile":
               // info(`Creating file ${args.path}`)
+              // make sure args.contents is a string
+              if (typeof args.contents !== "string") {
+                results = `Contents for file ${args.path} is not a string`
+                spinner.fail(results)
+                break
+              }
               await filesystem.writeAsync(safePath(args.path), args.contents)
               results = `Created file ${args.path}`
               spinner.succeed(results)
