@@ -1,5 +1,6 @@
 import { filesystem, patching } from "gluegun"
 import * as pathlib from "path"
+import { updateFiles } from "./markup"
 
 export enum CommentType {
   REMOVE_FILE = `@mst remove-file`,
@@ -177,6 +178,23 @@ async function update({
   dryRun?: boolean
   onlyMarkup?: boolean
 }) {
+  // handle OBSERVER_BLOCK_START and OBSERVER_BLOCK_END
+  // since they're unique to mst, and not supported by generic updateFiles()
+
+  return updateFiles({
+    filePaths,
+    markupRegex: mstMarkupRegex,
+    commentTypes: {
+      REMOVE_CURRENT_LINE: CommentType.REMOVE_CURRENT_LINE,
+      REMOVE_NEXT_LINE: CommentType.REMOVE_NEXT_LINE,
+      REMOVE_BLOCK_START: CommentType.REMOVE_BLOCK_START,
+      REMOVE_BLOCK_END: CommentType.REMOVE_BLOCK_END,
+      REMOVE_FILE: CommentType.REMOVE_FILE,
+    },
+    dryRun,
+    onlyMarkup,
+  })
+
   // Go through every file path and handle the operation for each mst comment
   const mstCommentResults = await Promise.allSettled(
     filePaths.map(async (path) => {
