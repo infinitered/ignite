@@ -47,6 +47,7 @@
     "expo-localization": "~14.8.3",
     "expo-splash-screen": "~0.26.3",
     "expo-status-bar": "~1.11.1",
+    "expo-system-ui": "~2.9.3",
     "i18n-js": "3.9.2",
     "mobx": "6.10.2",
     "mobx-react-lite": "4.0.5",
