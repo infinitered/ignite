@@ -270,25 +270,23 @@ module.exports = {
     }
     // #endregion
 
-    // #region Prompt for Workflow type
+    // #region Prompt for Workflow type - CNG or manual
     const defaultWorkflow = "cng"
     let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
-      // Ask for Expo vs Bare first, to make the choice tree easier for users
       const useExpoResponse = await prompt.ask<{ workflow: "cng" | "manual" }>(() => ({
         type: "select",
         name: "workflow",
-        message: "Do you want to use Expo?",
+        message: "How do you want to manage Native code?",
         choices: [
           {
             name: "CNG",
-            message: "CNG - Recommended [Default]",
+            message: "Via Expo's Continuous Native Generation - Recommended [Default]",
             value: "cng",
           },
           {
             name: "Manual",
-            message:
-              "Manual - still contains some Expo libraries, but commits android/ios native files",
+            message: "Manual - commits android/ios directories",
             value: "manual",
           },
         ],
@@ -853,6 +851,17 @@ module.exports = {
       }
       p2()
       p2()
+
+      // Warn user about the missing android/ios dirs
+      if (workflow === "manual") {
+        p2(
+          yellow(
+            `You've chosen to manually manage Native code, the android/ios directories will be generated for you upon first run.`,
+          ),
+        )
+        p2()
+        p2()
+      }
       // #endregion
 
       // this is a hack to prevent the process from hanging
