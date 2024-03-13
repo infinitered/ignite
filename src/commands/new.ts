@@ -851,17 +851,6 @@ module.exports = {
       }
       p2()
       p2()
-
-      // Warn user about the missing android/ios dirs
-      if (workflow === "manual") {
-        p2(
-          yellow(
-            `You've chosen to manually manage Native code, the android/ios directories will be generated for you upon first run.`,
-          ),
-        )
-        p2()
-        p2()
-      }
       // #endregion
 
       // this is a hack to prevent the process from hanging
