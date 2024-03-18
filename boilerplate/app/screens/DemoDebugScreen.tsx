@@ -62,15 +62,18 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
 
       <Text style={themed($title)} preset="heading" tx="demoDebugScreen.title" />
 
-      <Button onPress={toggleTheme} text={`Switch Theme: ${themeContext}`} />
-      <Toggle
-        label="Dark Mode"
-        variant="switch"
-        value={themeContext === "dark"}
-        onValueChange={(value: boolean) => {
-          setThemeContextOverride(value ? "dark" : "light")
-        }}
-      />
+      <View style={themed($itemsContainer)}>
+        <Button onPress={toggleTheme} text={`Switch Theme: ${themeContext}`} />
+        <Toggle
+          label="Dark Mode"
+          variant="switch"
+          value={themeContext === "dark"}
+          onValueChange={(value: boolean) => {
+            setThemeContextOverride(value ? "dark" : "light")
+          }}
+          containerStyle={themed($toggle)}
+        />
+      </View>
       <View style={themed($itemsContainer)}>
         <ListItem
           LeftComponent={
@@ -158,6 +161,10 @@ const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 
 const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
+})
+
+const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginTop: spacing.md,
 })
 
 const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
