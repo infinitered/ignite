@@ -108,7 +108,6 @@ If you find yourself overriding styles with the `style` prop a lot, you probably
 
 `formHelper`: Form assistive information.
 
-
 ### Custom Presets
 
 Feel free to add your own presets by emulating the style you see with the provided presets. In a typical Infinite Red project, we will have a dozen or more presets that we use across the project. Simply add a new key to the `$presets` object in `app/components/Text.tsx` and then pass the name of the preset to the `preset` prop.
