@@ -1,5 +1,5 @@
 ---
-sidebar_position: 61
+sidebar_position: 20
 ---
 
 # useSafeAreaInsetsStyle

@@ -4,7 +4,8 @@ import { TextInput, TextStyle, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import type { ThemedStyle } from "app/theme"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -18,6 +19,11 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const {
     authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
   } = useStores()
+
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
 
   useEffect(() => {
     // Here is where you could fetch credentials from keychain or storage
@@ -69,17 +75,24 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   return (
     <Screen
       preset="auto"
-      contentContainerStyle={$screenContentContainer}
+      contentContainerStyle={themed($screenContentContainer)}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+      <Text
+        testID="login-heading"
+        tx="loginScreen.signIn"
+        preset="heading"
+        style={themed($signIn)}
+      />
+      <Text tx="loginScreen.enterDetails" preset="subheading" style={themed($enterDetails)} />
+      {attemptsCount > 2 && (
+        <Text tx="loginScreen.hint" size="sm" weight="light" style={themed($hint)} />
+      )}
 
       <TextField
         value={authEmail}
         onChangeText={setAuthEmail}
-        containerStyle={$textField}
+        containerStyle={themed($textField)}
         autoCapitalize="none"
         autoComplete="email"
         autoCorrect={false}
@@ -95,7 +108,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         ref={authPasswordInput}
         value={authPassword}
         onChangeText={setAuthPassword}
-        containerStyle={$textField}
+        containerStyle={themed($textField)}
         autoCapitalize="none"
         autoComplete="password"
         autoCorrect={false}
@@ -109,7 +122,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       <Button
         testID="login-button"
         tx="loginScreen.tapToSignIn"
-        style={$tapButton}
+        style={themed($tapButton)}
         preset="reversed"
         onPress={login}
       />
@@ -117,30 +130,30 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   )
 })
 
-const $screenContentContainer: ViewStyle = {
+const $screenContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingVertical: spacing.xxl,
   paddingHorizontal: spacing.lg,
-}
+})
 
-const $signIn: TextStyle = {
+const $signIn: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.sm,
-}
+})
 
-const $enterDetails: TextStyle = {
+const $enterDetails: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.lg,
-}
+})
 
-const $hint: TextStyle = {
+const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.tint,
   marginBottom: spacing.md,
-}
+})
 
-const $textField: ViewStyle = {
+const $textField: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.lg,
-}
+})
 
-const $tapButton: ViewStyle = {
+const $tapButton: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.xs,
-}
+})
 
 // @demo remove-file

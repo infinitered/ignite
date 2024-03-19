@@ -1,9 +1,9 @@
 {
   "label": "app",
-  "position": 5,
+  "position": 10,
   "link": {
     "type": "doc",
     "id": "app"
   },
-  "collapsed": true
+  "collapsed": false
 }

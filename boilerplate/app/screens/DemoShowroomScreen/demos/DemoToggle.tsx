@@ -2,10 +2,10 @@
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text, Toggle, ToggleProps } from "../../../components"
-import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import type { ThemedStyle } from "app/theme"
 
 function ControlledToggle(props: ToggleProps) {
   const [value, setValue] = React.useState(props.value || false)
@@ -17,17 +17,17 @@ const $centeredOneThirdCol: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
 }
-const $centeredText: TextStyle = {
+const $centeredText: ThemedStyle<TextStyle> = ({ spacing }) => ({
   textAlign: "center",
   width: "100%",
   marginTop: spacing.xs,
-}
+})
 
 export const DemoToggle: Demo = {
   name: "Toggle",
   description:
     "Renders a boolean input. This is a controlled component that requires an onValueChange callback that updates the value prop in order for the component to reflect user actions. If the value prop is not updated, the component will continue to render the supplied value prop instead of the expected result of any user actions.",
-  data: [
+  data: ({ theme, themed }) => [
     <DemoUseCase
       name="Variants"
       description="The component supports a few different variants. If heavy customization of a specific variant is needed, it can be easily refactored. The default is `checkbox`."
@@ -63,7 +63,7 @@ export const DemoToggle: Demo = {
       <ControlledToggle variant="checkbox" value containerStyle={$centeredOneThirdCol} />
       <ControlledToggle variant="radio" value containerStyle={$centeredOneThirdCol} />
       <ControlledToggle variant="switch" value containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={$centeredText}>
+      <Text preset="formHelper" style={themed($centeredText)}>
         No status - this is the default
       </Text>
 
@@ -91,7 +91,7 @@ export const DemoToggle: Demo = {
         status="error"
         containerStyle={$centeredOneThirdCol}
       />
-      <Text preset="formHelper" style={$centeredText}>
+      <Text preset="formHelper" style={themed($centeredText)}>
         Error status - use when there is an error
       </Text>
 
@@ -123,7 +123,7 @@ export const DemoToggle: Demo = {
         status="disabled"
         containerStyle={$centeredOneThirdCol}
       />
-      <Text preset="formHelper" style={$centeredText}>
+      <Text preset="formHelper" style={themed($centeredText)}>
         Disabled status - disables the editability and mutes input
       </Text>
     </DemoUseCase>,
@@ -195,8 +195,8 @@ export const DemoToggle: Demo = {
         inputOuterStyle={{
           width: 50,
           height: 50,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
       />
       <ControlledToggle
@@ -206,8 +206,8 @@ export const DemoToggle: Demo = {
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
       />
       <ControlledToggle
@@ -217,11 +217,11 @@ export const DemoToggle: Demo = {
           width: 70,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
       />
-      <Text preset="formHelper" style={$centeredText}>
+      <Text preset="formHelper" style={themed($centeredText)}>
         1 - style the input outer wrapper
       </Text>
 
@@ -234,11 +234,11 @@ export const DemoToggle: Demo = {
         inputOuterStyle={{
           width: 50,
           height: 50,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
       />
       <ControlledToggle
@@ -249,11 +249,11 @@ export const DemoToggle: Demo = {
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
       />
       <ControlledToggle
@@ -264,16 +264,16 @@ export const DemoToggle: Demo = {
           width: 70,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
           paddingLeft: 10,
           paddingRight: 10,
         }}
       />
-      <Text preset="formHelper" style={$centeredText}>
+      <Text preset="formHelper" style={themed($centeredText)}>
         2 - style the input inner wrapper
       </Text>
 
@@ -287,14 +287,14 @@ export const DemoToggle: Demo = {
         inputOuterStyle={{
           width: 50,
           height: 50,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
         inputDetailStyle={{
-          tintColor: colors.tint,
+          tintColor: theme.colors.tint,
           height: 35,
           width: 35,
         }}
@@ -307,14 +307,14 @@ export const DemoToggle: Demo = {
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
         inputDetailStyle={{
-          backgroundColor: colors.tint,
+          backgroundColor: theme.colors.tint,
           height: 36,
           width: 36,
           borderRadius: 18,
@@ -329,16 +329,16 @@ export const DemoToggle: Demo = {
           width: 70,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.tint,
+          backgroundColor: theme.colors.tint,
           paddingLeft: 10,
           paddingRight: 10,
         }}
         inputDetailStyle={{
-          backgroundColor: colors.palette.accent300,
+          backgroundColor: theme.colors.palette.accent300,
           height: 36,
           width: 18,
           borderRadius: 36,
@@ -346,7 +346,7 @@ export const DemoToggle: Demo = {
         switchAccessibilityMode="icon"
       />
 
-      <Text preset="formHelper" style={$centeredText}>
+      <Text preset="formHelper" style={themed($centeredText)}>
         3 - style the input detail
       </Text>
 
@@ -360,8 +360,8 @@ export const DemoToggle: Demo = {
           LabelTextProps={{ size: "xs", weight: "bold" }}
           status="error"
           labelStyle={{
-            backgroundColor: colors.error,
-            color: colors.palette.neutral100,
+            backgroundColor: theme.colors.error,
+            color: theme.colors.palette.neutral100,
             paddingHorizontal: 5,
           }}
         />
@@ -374,10 +374,10 @@ export const DemoToggle: Demo = {
           value
           variant="radio"
           labelPosition="left"
-          containerStyle={{ padding: 10, backgroundColor: colors.error }}
+          containerStyle={{ padding: 10, backgroundColor: theme.colors.error }}
           label="Or, style the entire container"
           status="error"
-          labelStyle={{ color: colors.palette.neutral100 }}
+          labelStyle={{ color: theme.colors.palette.neutral100 }}
         />
       </View>
     </DemoUseCase>,

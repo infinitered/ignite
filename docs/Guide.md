@@ -80,12 +80,12 @@ We instead use a strategy of constants, colocated with our components, camelCase
 
 ```tsx
 import { View, ViewStyle } from "react-native"
-import { palette } from "../theme"
+import { palette } from "app/theme"
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
   backgroundColor: palette.bgColor,
-}
+})
 
 const MyComponent = () => {
   return <View style={$container}>...</View>

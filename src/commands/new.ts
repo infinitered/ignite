@@ -730,7 +730,7 @@ module.exports = {
         if (needsPrebuild) {
           const prebuildMessage = ` Generating native template via Expo Prebuild`
           startSpinner(prebuildMessage)
-          await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
+          await system.run("npx expo prebuild --clean", { onProgress: log })
           stopSpinner(prebuildMessage, "🛠️")
         }
         // Make sure all our modifications are formatted nicely

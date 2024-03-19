@@ -1,11 +1,12 @@
 import React, { FC } from "react"
 import * as Application from "expo-application"
-import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
-import { Button, ListItem, Screen, Text } from "../components"
+import { LayoutAnimation, Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
+import { Button, ListItem, Screen, Text, Toggle } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import type { ThemedStyle } from "app/theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 /**
  * @param {string} url - The URL to open in the browser.
@@ -18,6 +19,7 @@ function openLinkInBrowser(url: string) {
 export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
   _props,
 ) {
+  const { setThemeContextOverride, themeContext, themed } = useAppTheme()
   const {
     authenticationStore: { logout },
   } = useStores()
@@ -45,18 +47,37 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     [],
   )
 
+  const toggleTheme = React.useCallback(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut) // Animate the transition
+    setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
+  }, [themeContext, setThemeContextOverride])
+
   return (
-    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={themed($container)}>
       <Text
-        style={$reportBugsLink}
+        style={themed($reportBugsLink)}
         tx="demoDebugScreen.reportBugs"
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
       />
-      <Text style={$title} preset="heading" tx="demoDebugScreen.title" />
-      <View style={$itemsContainer}>
+
+      <Text style={themed($title)} preset="heading" tx="demoDebugScreen.title" />
+
+      <View style={themed($itemsContainer)}>
+        <Button onPress={toggleTheme} text={`Switch Theme: ${themeContext}`} />
+        <Toggle
+          label="Dark Mode"
+          variant="switch"
+          value={themeContext === "dark"}
+          onValueChange={(value: boolean) => {
+            setThemeContextOverride(value ? "dark" : "light")
+          }}
+          containerStyle={themed($toggle)}
+        />
+      </View>
+      <View style={themed($itemsContainer)}>
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Id</Text>
               <Text>{Application.applicationId}</Text>
             </View>
@@ -64,7 +85,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Name</Text>
               <Text>{Application.applicationName}</Text>
             </View>
@@ -72,7 +93,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Version</Text>
               <Text>{Application.nativeApplicationVersion}</Text>
             </View>
@@ -80,7 +101,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">App Build Version</Text>
               <Text>{Application.nativeBuildVersion}</Text>
             </View>
@@ -88,7 +109,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">Hermes Enabled</Text>
               <Text>{String(usingHermes)}</Text>
             </View>
@@ -96,61 +117,65 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
         <ListItem
           LeftComponent={
-            <View style={$item}>
+            <View style={themed($item)}>
               <Text preset="bold">Fabric Enabled</Text>
               <Text>{String(usingFabric)}</Text>
             </View>
           }
         />
       </View>
-      <View style={$buttonContainer}>
-        <Button style={$button} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
-        <Text style={$hint} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
+      <View style={themed($buttonContainer)}>
+        <Button style={themed($button)} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
+        <Text style={themed($hint)} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
       </View>
-      <View style={$buttonContainer}>
-        <Button style={$button} tx="common.logOut" onPress={logout} />
+      <View style={themed($buttonContainer)}>
+        <Button style={themed($button)} tx="common.logOut" onPress={logout} />
       </View>
     </Screen>
   )
 }
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.xxl,
   paddingHorizontal: spacing.lg,
-}
+})
 
-const $title: TextStyle = {
+const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xxl,
-}
+})
 
-const $reportBugsLink: TextStyle = {
+const $reportBugsLink: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.tint,
   marginBottom: spacing.lg,
   alignSelf: isRTL ? "flex-start" : "flex-end",
-}
+})
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $itemsContainer: ViewStyle = {
-  marginBottom: spacing.xl,
-}
+const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginVertical: spacing.xl,
+})
 
-const $button: ViewStyle = {
+const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
-}
+})
 
-const $buttonContainer: ViewStyle = {
+const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginTop: spacing.md,
+})
+
+const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $hint: TextStyle = {
+const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.palette.neutral600,
   fontSize: 12,
   lineHeight: 15,
   paddingBottom: spacing.lg,
-}
+})
 
 // @demo remove-file

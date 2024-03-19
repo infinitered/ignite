@@ -95,8 +95,23 @@ module.exports = {
       expoVersion = "-"
       expoWorkflow = "not installed"
     }
-
     const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
+
+    let depExpoCliInfo = null
+
+    try {
+      const expoCliVersionOutput = await run("expo-cli --version", { trim: true })
+      if (expoCliVersionOutput) {
+        const expoCliVersion = expoCliVersionOutput.replace("v", "")
+        depExpoCliInfo = [
+          column1("expo global cli"),
+          column2(expoCliVersion),
+          column3(colors.yellow("Deprecated: Found 'expo-cli' installed. Please remove it.")),
+        ]
+      }
+    } catch (_) {
+      // No action needed if 'expo-cli' is not installed or there's an error checking its version.
+    }
 
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
@@ -110,6 +125,7 @@ module.exports = {
       ...pnpmPackages,
       bunInfo,
       expoInfo,
+      ...(depExpoCliInfo ? [depExpoCliInfo] : []),
     ])
 
     // -=-=-=- ignite -=-=-=-

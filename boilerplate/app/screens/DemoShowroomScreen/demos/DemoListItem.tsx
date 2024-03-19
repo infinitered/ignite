@@ -2,7 +2,7 @@
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Icon, ListItem, ListView, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -12,7 +12,7 @@ const listData =
     .split(".")
     .map((item) => item.trim())
 
-const $customLeft: ViewStyle = {
+const $customLeft: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   flexGrow: 0,
   flexBasis: 60,
@@ -20,31 +20,31 @@ const $customLeft: ViewStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   overflow: "hidden",
-}
+})
 
-const $customTextStyle: TextStyle = {
+const $customTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.error,
-}
+})
 
-const $customTouchableStyle: ViewStyle = {
+const $customTouchableStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
-}
+})
 
-const $customContainerStyle: ViewStyle = {
+const $customContainerStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderTopWidth: 5,
   borderTopColor: colors.palette.neutral100,
-}
+})
 
-const $listStyle: ViewStyle = {
+const $listStyle: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   height: 148,
   paddingHorizontal: spacing.xs,
   backgroundColor: colors.palette.neutral200,
-}
+})
 
 export const DemoListItem: Demo = {
   name: "ListItem",
   description: "A styled row component that can be used in FlatList, SectionList, or by itself.",
-  data: [
+  data: ({ theme, themed }) => [
     <DemoUseCase name="Height" description="The row can be different heights.">
       <ListItem topSeparator>Default height (56px)</ListItem>
 
@@ -99,9 +99,9 @@ export const DemoListItem: Demo = {
       <ListItem
         topSeparator
         LeftComponent={
-          <View style={[$customLeft, { marginEnd: spacing.md }]}>
+          <View style={themed([$customLeft, { marginEnd: theme.spacing.md }])}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}
           </View>
         }
@@ -113,9 +113,9 @@ export const DemoListItem: Demo = {
         topSeparator
         bottomSeparator
         RightComponent={
-          <View style={[$customLeft, { marginStart: spacing.md }]}>
+          <View style={themed([$customLeft, { marginStart: theme.spacing.md }])}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}
           </View>
         }
@@ -146,7 +146,7 @@ export const DemoListItem: Demo = {
       name="Integrating w/ FlatList & FlashList"
       description="The component can be easily integrated with your favorite list interface."
     >
-      <View style={$listStyle}>
+      <View style={themed($listStyle)}>
         <ListView<string>
           data={listData}
           estimatedItemSize={59}
@@ -163,35 +163,35 @@ export const DemoListItem: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase name="Styling" description="The component can be styled easily.">
-      <ListItem topSeparator textStyle={$customTextStyle}>
+      <ListItem topSeparator textStyle={themed($customTextStyle)}>
         Styled Text
       </ListItem>
 
       <ListItem
         topSeparator
-        textStyle={{ color: colors.palette.neutral100 }}
-        style={$customTouchableStyle}
+        textStyle={{ color: theme.colors.palette.neutral100 }}
+        style={themed($customTouchableStyle)}
       >
         Styled Text
       </ListItem>
 
       <ListItem
         topSeparator
-        textStyle={{ color: colors.palette.neutral100 }}
-        style={$customTouchableStyle}
-        containerStyle={$customContainerStyle}
+        textStyle={{ color: theme.colors.palette.neutral100 }}
+        style={themed($customTouchableStyle)}
+        containerStyle={themed($customContainerStyle)}
       >
         Styled Container (separators)
       </ListItem>
       <ListItem
         topSeparator
-        textStyle={{ color: colors.palette.neutral100 }}
-        style={$customTouchableStyle}
-        containerStyle={$customContainerStyle}
+        textStyle={{ color: theme.colors.palette.neutral100 }}
+        style={themed($customTouchableStyle)}
+        containerStyle={themed($customContainerStyle)}
         rightIcon="ladybug"
         leftIcon="ladybug"
-        rightIconColor={colors.palette.neutral100}
-        leftIconColor={colors.palette.neutral100}
+        rightIconColor={theme.colors.palette.neutral100}
+        leftIconColor={theme.colors.palette.neutral100}
       >
         Tinted Icons
       </ListItem>

@@ -3,6 +3,7 @@ import {
   GestureResponderEvent,
   Image,
   ImageStyle,
+  Platform,
   StyleProp,
   SwitchProps,
   TextInputProps,
@@ -13,10 +14,17 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
-import { colors, spacing } from "../theme"
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated"
 import { iconRegistry, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { isRTL } from "app/i18n"
+import { useAppTheme } from "app/utils/useAppTheme"
+import { ThemedStyle } from "app/theme"
 
 type Variants = "checkbox" | "switch" | "radio"
 
@@ -177,6 +185,11 @@ export function Toggle(props: ToggleProps) {
     ...WrapperProps
   } = props
 
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
+
   const { switchAccessibilityMode } = props as SwitchToggleProps
   const { checkboxIcon } = props as CheckboxToggleProps
 
@@ -191,7 +204,7 @@ export function Toggle(props: ToggleProps) {
   const $containerStyles = [$containerStyleOverride]
   const $inputWrapperStyles = [$inputWrapper, $inputWrapperStyleOverride]
   const $helperStyles = [
-    $helper,
+    themed($helper),
     status === "error" && { color: colors.error },
     HelperTextProps?.style,
   ]
@@ -266,6 +279,10 @@ function Checkbox(props: ToggleInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
+  const {
+    theme: { colors },
+  } = useAppTheme()
+
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
@@ -334,6 +351,10 @@ function Radio(props: ToggleInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
+  const {
+    theme: { colors },
+  } = useAppTheme()
+
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
@@ -397,6 +418,11 @@ function Switch(props: ToggleInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
+
   const knobSizeFallback = 2
 
   const knobWidth = [$detailStyleOverride?.width, $switchDetail?.width, knobSizeFallback].find(
@@ -437,23 +463,33 @@ function Switch(props: ToggleInputProps) {
     }
   })()
 
+  const $themedSwitchInner = themed($switchInner)
   const $animatedSwitchKnob = useAnimatedStyle(() => {
     const offsetLeft = ($innerStyleOverride?.paddingStart ||
       $innerStyleOverride?.paddingLeft ||
-      $switchInner?.paddingStart ||
-      $switchInner?.paddingLeft ||
+      $themedSwitchInner?.paddingStart ||
+      $themedSwitchInner?.paddingLeft ||
       0) as number
 
     const offsetRight = ($innerStyleOverride?.paddingEnd ||
       $innerStyleOverride?.paddingRight ||
-      $switchInner?.paddingEnd ||
-      $switchInner?.paddingRight ||
+      $themedSwitchInner?.paddingEnd ||
+      $themedSwitchInner?.paddingRight ||
       0) as number
 
-    const start = withTiming(on ? "100%" : "0%")
-    const marginStart = withTiming(on ? -(knobWidth || 0) - offsetRight : 0 + offsetLeft)
+    // For RTL support:
+    // - web flip input range to [1,0]
+    // - outputRange doesn't want rtlAdjustment
+    const rtlAdjustment = isRTL ? -1 : 1
+    const inputRange = Platform.OS === "web" ? (isRTL ? [1, 0] : [0, 1]) : [0, 1]
+    const outputRange =
+      Platform.OS === "web"
+        ? [offsetLeft, +(knobWidth || 0) + offsetRight]
+        : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
 
-    return { start, marginStart }
+    const translateX = interpolate(on ? 1 : 0, inputRange, outputRange, Extrapolation.CLAMP)
+
+    return { transform: [{ translateX: withTiming(translateX) }] }
   }, [on, knobWidth])
 
   return (
@@ -466,7 +502,7 @@ function Switch(props: ToggleInputProps) {
     >
       <Animated.View
         style={[
-          $switchInner,
+          themed($switchInner),
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
           useAnimatedStyle(() => ({ opacity: withTiming(on ? 1 : 0) }), [on]),
@@ -495,6 +531,10 @@ function Switch(props: ToggleInputProps) {
  */
 function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off" }) {
   const { on, disabled, status, switchAccessibilityMode, role, innerStyle, detailStyle } = props
+
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   if (!switchAccessibilityMode) return null
 
@@ -551,13 +591,18 @@ function FieldLabel(props: BaseToggleProps) {
     labelStyle: $labelStyleOverride,
   } = props
 
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
+
   if (!label && !labelTx && !LabelTextProps?.children) return null
 
   const $labelStyle = [
     $label,
     status === "error" && { color: colors.error },
-    labelPosition === "right" && $labelRight,
-    labelPosition === "left" && $labelLeft,
+    labelPosition === "right" && themed($labelRight),
+    labelPosition === "left" && themed($labelLeft),
     $labelStyleOverride,
     LabelTextProps?.style,
   ]
@@ -625,7 +670,7 @@ const $radioDetail: ViewStyle = {
   borderRadius: 6,
 }
 
-const $switchInner: ViewStyle = {
+const $switchInner: ThemedStyle<ViewStyle> = ({ colors }) => ({
   width: "100%",
   height: "100%",
   alignItems: "center",
@@ -634,7 +679,7 @@ const $switchInner: ViewStyle = {
   position: "absolute",
   paddingStart: 4,
   paddingEnd: 4,
-}
+})
 
 const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
   borderRadius: 12,
@@ -643,21 +688,21 @@ const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
   height: 24,
 }
 
-const $helper: TextStyle = {
+const $helper: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.xs,
-}
+})
 
 const $label: TextStyle = {
   flex: 1,
 }
 
-const $labelRight: TextStyle = {
+const $labelRight: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginStart: spacing.md,
-}
+})
 
-const $labelLeft: TextStyle = {
+const $labelLeft: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginEnd: spacing.md,
-}
+})
 
 const $switchAccessibility: TextStyle = {
   width: "40%",
