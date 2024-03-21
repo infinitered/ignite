@@ -26,14 +26,9 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import {
-  expoGoCompatExpectedVersions,
-  findAndUpdateDependencyVersions,
-} from "../tools/expoGoCompatibility"
 import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
 
-// deprecated: 'prebuild'. in favor of 'cng' instead.
-type Workflow = "expo" | "cng" | "prebuild" | "manual"
+type Workflow = "cng" | "manual"
 
 export interface Options {
   /**
@@ -275,65 +270,32 @@ module.exports = {
     }
     // #endregion
 
-    // #region Prompt for Workflow type
-    const defaultWorkflow = "expo"
+    // #region Prompt for Workflow type - CNG or manual
+    const defaultWorkflow = "cng"
     let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
-      // Ask for Expo vs Bare first, to make the choice tree easier for users
-      const useExpoResponse = await prompt.ask<{ useExpo: "Expo" | "Bare" }>(() => ({
+      const useExpoResponse = await prompt.ask<{ workflow: "cng" | "manual" }>(() => ({
         type: "select",
-        name: "useExpo",
-        message: "Do you want to use Expo?",
+        name: "workflow",
+        message: "How do you want to manage Native code?",
         choices: [
           {
-            name: "Expo",
-            message: "Expo - Recommended for almost all apps [Default]",
+            name: "CNG",
+            message: "Via Expo's Continuous Native Generation - Recommended [Default]",
+            value: "cng",
           },
           {
-            name: "Bare",
-            message: "Bare - For advanced usage (still contains some Expo libraries)",
+            name: "Manual",
+            message: "Manual - commits android/ios directories",
+            value: "manual",
           },
         ],
-        initial: "Expo",
+        initial: "cng",
         prefix,
       }))
-      const useExpo = useExpoResponse.useExpo === "Expo"
-      if (useExpo) {
-        const expoWorkflowTypeResponse = await prompt.ask<{ workflow: "expo" | "cng" }>(() => ({
-          type: "select",
-          name: "workflow",
-          message:
-            "Which Expo workflow? (You can switch between them later with a little work -- here's how: https://ignitecookbook.com/docs/recipes/SwitchBetweenExpoGoCNG)",
-          choices: [
-            {
-              name: "Expo Go",
-              message: "Expo Go - For simple apps that don't need custom native code [Default]",
-              value: "expo",
-            },
-            {
-              name: "Expo CNG",
-              message:
-                "Expo CNG - For more involved apps -- allows you to integrate custom native code via config plugins",
-              value: "cng",
-            },
-          ],
-          result(name) {
-            // Some magical enquirer map function here that returns an object of { [name]: value]}
-            // and we only need the value underneath (using name for the cli display to the user)
-            // @ts-expect-error
-            return this.map(name)[name]
-          },
-          initial: "expo",
-          prefix,
-        }))
-        workflow = expoWorkflowTypeResponse.workflow
-      } else {
-        workflow = "manual"
-      }
+      workflow = useExpoResponse.workflow
     }
-    const needsPrebuild = workflow === "prebuild" || workflow === "cng" || workflow === "manual"
     log(`workflow: ${workflow}`)
-    log(`needs prebuild: ${needsPrebuild}`)
     // #endregion
 
     // #region Prompt Git Option
@@ -467,7 +429,7 @@ module.exports = {
     // New Architecture
     const defaultNewArch = false
     let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
-    if (experimentalNewArch === undefined && workflow !== "expo") {
+    if (experimentalNewArch === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
@@ -477,11 +439,7 @@ module.exports = {
         prefix,
       }))
       experimentalNewArch = newArchResponse.experimentalNewArch
-    } else if (workflow === "expo") {
-      // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
-      experimentalNewArch = false
     }
-
     // #endregion
 
     // #region Debug
@@ -572,29 +530,18 @@ module.exports = {
         .replace(/hello-world/g, projectNameKebab)
 
       // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
-      if (needsPrebuild) {
-        packageJsonRaw = packageJsonRaw
-          .replace(/start --android/g, "run:android")
-          .replace(/start --ios/g, "run:ios")
+      packageJsonRaw = packageJsonRaw
+        .replace(/start --android/g, "run:android")
+        .replace(/start --ios/g, "run:ios")
 
-        // If using canary build, update the expo dependency to the canary version
-        if (expoVersion) {
-          const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
-          // filter for canary/beta and get last item in array
-          const tagVersion = JSON.parse(expoDistTagOutput)[expoVersion]
-          log(`overriding expo version to: ${tagVersion}`)
-          // find line with "expo": and replace entire line with tagVersion
-          packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
-        }
-      } else {
-        // Expo Go workflow, swap back to compatible Expo Go versions of modules
-        log("Changing some dependencies for Expo Go compatibility...")
-        log(JSON.stringify(expoGoCompatExpectedVersions))
-
-        packageJsonRaw = findAndUpdateDependencyVersions(
-          packageJsonRaw,
-          expoGoCompatExpectedVersions,
-        )
+      // If using canary build, update the expo dependency to the canary version
+      if (expoVersion) {
+        const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
+        // filter for canary/beta and get last item in array
+        const tagVersion = JSON.parse(expoDistTagOutput)[expoVersion]
+        log(`overriding expo version to: ${tagVersion}`)
+        // find line with "expo": and replace entire line with tagVersion
+        packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
       }
 
       // - If we're removing the demo code, clean up some dependencies that are no longer needed
@@ -739,12 +686,11 @@ module.exports = {
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
         // Prebuild also handles the packager install
-        if (needsPrebuild) {
-          const prebuildMessage = ` Generating native template via Expo Prebuild`
-          startSpinner(prebuildMessage)
-          await system.run("npx expo prebuild --clean", { onProgress: log })
-          stopSpinner(prebuildMessage, "🛠️")
-        }
+        const prebuildMessage = ` Generating native template via Expo Prebuild`
+        startSpinner(prebuildMessage)
+        await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
+        stopSpinner(prebuildMessage, "🛠️")
+
         // Make sure all our modifications are formatted nicely
         await packager.run("format", { ...packagerOptions, silent: !debug })
       }
