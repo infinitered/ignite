@@ -221,7 +221,7 @@ function ScreenWithScrolling(props: ScreenProps) {
  * Represents a screen component that provides a consistent layout and behavior for different screen presets.
  * The `Screen` component can be used with different presets such as "fixed", "scroll", or "auto".
  * It handles safe area insets, status bar settings, keyboard avoiding behavior, and scrollability based on the preset.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Screen/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Screen/}
  * @param {ScreenProps} props - The props for the `Screen` component.
  * @returns {JSX.Element} The rendered `Screen` component.
  */
