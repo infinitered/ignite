@@ -5,14 +5,15 @@
  */
 import { Platform, NativeModules } from "react-native"
 
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
+import mmkvPlugin from "reactotron-react-native-mmkv"
 
-import { clear } from "app/utils/storage"
+import { storage, clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
+import { ReactotronReactNative } from "reactotron-react-native"
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,
@@ -20,15 +21,16 @@ const reactotron = Reactotron.configure({
     /** since this file gets hot reloaded, let's clear the past logs every time we connect */
     Reactotron.clear()
   },
-}).use(
-  mst({
-    /* ignore some chatty `mobx-state-tree` actions */
-    filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
-  }),
-)
+})
+  .use(
+    mst({
+      /* ignore some chatty `mobx-state-tree` actions */
+      filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
+    }),
+  )
+  .use(mmkvPlugin<ReactotronReactNative>({ storage }))
 
 if (Platform.OS !== "web") {
-  reactotron.setAsyncStorageHandler?.(AsyncStorage)
   reactotron.useReactNative({
     networking: {
       ignoreUrls: /symbolicate/,
