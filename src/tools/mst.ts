@@ -2,24 +2,39 @@ import { filesystem, patching } from "gluegun"
 import * as pathlib from "path"
 
 export enum CommentType {
-  REMOVE_FILE = `@demo remove-file`,
-  REMOVE_CURRENT_LINE = `@demo remove-current-line`,
-  REMOVE_NEXT_LINE = `@demo remove-next-line`,
-  REMOVE_BLOCK_START = `@demo remove-block-start`,
-  REMOVE_BLOCK_END = `@demo remove-block-end`,
+  REMOVE_FILE = `@mst remove-file`,
+  REMOVE_CURRENT_LINE = `@mst remove-current-line`,
+  REMOVE_NEXT_LINE = `@mst remove-next-line`,
+  REMOVE_BLOCK_START = `@mst remove-block-start`,
+  REMOVE_BLOCK_END = `@mst remove-block-end`,
+  OBSERVER_BLOCK_START = `@mst observer-block-start`,
+  OBSERVER_BLOCK_END = `@mst observer-block-end`,
 }
 
+export const DEFAULT_MATCHING_GLOBS = [
+  "!**/.DS_Store",
+  "!**/.expo{,/**}",
+  "!**/.git{,/**}",
+  "!**/.vscode{,/**}",
+  "!**/node_modules{,/**}",
+  "!**/ios/build{,/**}",
+  "!**/ios/Pods{,/**}",
+  "!**/ios/*.xcworkspace{,/**}",
+  "!**/android/build{,/**}",
+  "!**/android/app/build{,/**}",
+]
+
 /**
- * Regex pattern to find the various types of // @demo remove-x comments
- * Also finds # @demo remove-file for maestro files
+ * Regex pattern to find the various types of // @mst remove-x comments
+ * Also finds # @mst remove-file for maestro files
  *
  * NOTE: This currently will _NOT_ remove a multiline comment
  */
-export const demoMarkupRegex = /(\/\/|#)\s*@demo.*|{?\/.*@demo.*\/}?/gm
+export const mstMarkupRegex = /(\/\/|#)\s*@mst.*|{?\/.*@mst.*\/}?/gm
 
 /**
  * Take the file content as a string and remove any
- * line of code with an `// @demo remove-current-line` comment
+ * line of code with an `// @mst remove-current-line` comment
  */
 function removeCurrentLine(contents: string, comment = CommentType.REMOVE_CURRENT_LINE): string {
   const lines = contents.split("\n")
@@ -29,7 +44,7 @@ function removeCurrentLine(contents: string, comment = CommentType.REMOVE_CURREN
 
 /**
  * Take the file content as a string and remove the next line
- * of code with an `// @demo remove-next-line` comment before it
+ * of code with an `// @mst remove-next-line` comment before it
  */
 function removeNextLine(contents: string, comment = CommentType.REMOVE_NEXT_LINE): string {
   const lines = contents.split("\n")
@@ -53,7 +68,7 @@ function removeNextLine(contents: string, comment = CommentType.REMOVE_NEXT_LINE
 
 /**
  * Take the file content as a string and remove the lines of code between
- * `// @demo remove-block-start` and `// @demo remove-block-end` comments
+ * `// @mst remove-block-start` and `// @mst remove-block-end` comments
  */
 function removeBlock(
   contents: string,
@@ -87,43 +102,64 @@ function removeBlock(
 }
 
 /**
+ * Take the file content as a string and remove the lines of code between
+ * `// @mst remove-block-start` and `// @mst remove-block-end` comments
+ */
+function patchMSTObserverBlock(contents: string): string {
+  const startBlockRegex = new RegExp(
+    `\/\/\\s*${CommentType.OBSERVER_BLOCK_START}\\n(export\\s+)?const\\s+(\\w+)(:\\s*[\\w<>,\\s]+)?\\s*=\\s*observer\\(function\\s+(\\w+)(\\([^)]*\\))`,
+    "g",
+  )
+  const startBlockReplacement = "$1const $2$3 = $5 =>"
+
+  const endBlockRegex = new RegExp(`\\}\\)\\s*\/\/\\s*${CommentType.OBSERVER_BLOCK_END}`, "g")
+  const endBlockReplacement = "}"
+
+  const hasObserverBlock = (value: string) =>
+    value.match(startBlockRegex) && value.match(endBlockRegex)
+
+  if (!hasObserverBlock(contents)) {
+    return contents
+  }
+
+  // replace via regex
+  let updateContents = contents.replace(startBlockRegex, startBlockReplacement)
+  updateContents = updateContents.replace(endBlockRegex, endBlockReplacement)
+
+  // if more exist, keep processing file
+  if (hasObserverBlock(updateContents)) {
+    return patchMSTObserverBlock(updateContents)
+  }
+
+  return updateContents
+}
+
+/**
  * Perform all remove operations possible in a file
  * @param contents The file contents as a string
  * @return The file contents with all remove operations performed
  */
 function remove(contents: string): string {
-  const result = removeBlock(removeNextLine(removeCurrentLine(contents)))
+  let result = removeBlock(removeNextLine(removeCurrentLine(contents)))
+  result = patchMSTObserverBlock(result)
   return result
 }
 
 /**
- * Perform replace on all types of @demo markup
+ * Perform replace on all types of @mst markup
  * @param contents The file contents as a string
- * @return The file contents with all @demo related CommentType removed
+ * @return The file contents with all @mst related CommentType removed
  */
 function sanitize(contents: string): string {
-  const result = contents.replace(demoMarkupRegex, "")
+  const result = contents.replace(mstMarkupRegex, "")
   return result
 }
 
 function find(targetDir: string, matching?: string[]) {
-  const MATCHING_GLOBS = [
-    "!**/.DS_Store",
-    "!**/.expo{,/**}",
-    "!**/.git{,/**}",
-    "!**/.vscode{,/**}",
-    "!**/node_modules{,/**}",
-    "!**/ios/build{,/**}",
-    "!**/ios/Pods{,/**}",
-    "!**/ios/*.xcworkspace{,/**}",
-    "!**/android/build{,/**}",
-    "!**/android/app/build{,/**}",
-  ]
-
   const filePaths = filesystem
     .cwd(targetDir)
     .find({
-      matching: matching ?? MATCHING_GLOBS,
+      matching: matching ?? DEFAULT_MATCHING_GLOBS,
       recursive: true,
       files: true,
       directories: false,
@@ -141,8 +177,8 @@ async function update({
   dryRun?: boolean
   onlyMarkup?: boolean
 }) {
-  // Go through every file path and handle the operation for each demo comment
-  const demoCommentResults = await Promise.allSettled(
+  // Go through every file path and handle the operation for each mst comment
+  const mstCommentResults = await Promise.allSettled(
     filePaths.map(async (path) => {
       const { exists, update } = patching
       const { read } = filesystem
@@ -152,7 +188,9 @@ async function update({
         REMOVE_BLOCK_START,
         REMOVE_BLOCK_END,
         REMOVE_FILE,
-      } = demo.CommentType
+        OBSERVER_BLOCK_START,
+        OBSERVER_BLOCK_END,
+      } = mst.CommentType
 
       const comments: CommentType[] = []
 
@@ -160,7 +198,7 @@ async function update({
         if (!dryRun) {
           if (onlyMarkup) {
             const contents = read(path)
-            const sanitized = demo.sanitize(contents)
+            const sanitized = mst.sanitize(contents)
             filesystem.write(path, sanitized)
           } else {
             filesystem.remove(path)
@@ -175,9 +213,11 @@ async function update({
         REMOVE_NEXT_LINE,
         REMOVE_BLOCK_START,
         REMOVE_BLOCK_END,
+        OBSERVER_BLOCK_START,
+        OBSERVER_BLOCK_END,
       ]
 
-      const shouldUpdate = onlyMarkup ? demoMarkupRegex : RegExp(operations.join("|"), "g")
+      const shouldUpdate = onlyMarkup ? mstMarkupRegex : RegExp(operations.join("|"), "g")
 
       if (await exists(path, shouldUpdate)) {
         const before = read(path)
@@ -188,17 +228,17 @@ async function update({
           }
         })
 
-        if (!dryRun) await update(path, onlyMarkup ? demo.sanitize : demo.remove)
+        if (!dryRun) await update(path, onlyMarkup ? mst.sanitize : mst.remove)
       }
 
       return { path, comments }
     }),
   )
 
-  return demoCommentResults
+  return mstCommentResults
 }
 
-export const demo = {
+export const mst = {
   CommentType,
   removeCurrentLine,
   removeNextLine,
@@ -209,8 +249,9 @@ export const demo = {
   update,
 } as const
 
-export const demoDependenciesToRemove = [
-  "@react-navigation/bottom-tabs",
-  "expo-application",
-  "react-native-drawer-layout",
+export const mstDependenciesToRemove = [
+  "mobx",
+  "mobx-react-lite",
+  "mobx-state-tree",
+  "reactotron-mst",
 ]

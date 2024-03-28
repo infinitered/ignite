@@ -81,3 +81,5 @@ export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
 
   return { rootStore, rehydrated }
 }
+
+// @mst remove-file
