@@ -37,7 +37,7 @@ export function saveString(key: string, value: string): boolean {
  */
 export function load(key: string): unknown | null {
   try {
-    const almostThere = storage.getString(key)
+    const almostThere = loadString(key)
     return JSON.parse(almostThere ?? "")
   } catch {
     return null

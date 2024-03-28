@@ -45,11 +45,11 @@ describe("MMKV Storage", () => {
 
   it("should remove data", () => {
     remove("object")
-    expect(load("object")).toBeUndefined()
+    expect(load("object")).toBeNull()
     expect(storage.getAllKeys()).toEqual(["string"])
 
     remove("string")
-    expect(load("string")).toBeUndefined()
+    expect(load("string")).toBeNull()
     expect(storage.getAllKeys()).toEqual([])
   })
 
