@@ -19,10 +19,10 @@ describe("MMKV Storage", () => {
   })
 
   it("should load data", () => {
-    expect(load("object")).toEqual(VALUE_OBJECT)
+    expect(load<object>("object")).toEqual(VALUE_OBJECT)
     expect(loadString("object")).toEqual(VALUE_STRING)
 
-    expect(load("string")).toEqual("string")
+    expect(load<string>("string")).toEqual("string")
     expect(loadString("string")).toEqual("string")
   })
 
@@ -33,9 +33,9 @@ describe("MMKV Storage", () => {
 
   it("should save objects", () => {
     save("object", { y: 2 })
-    expect(load("object")).toEqual({ y: 2 })
+    expect(load<object>("object")).toEqual({ y: 2 })
     save("object", { z: 3, also: true })
-    expect(load("object")).toEqual({ z: 3, also: true })
+    expect(load<object>("object")).toEqual({ z: 3, also: true })
   })
 
   it("should save strings and objects", () => {
@@ -45,11 +45,11 @@ describe("MMKV Storage", () => {
 
   it("should remove data", () => {
     remove("object")
-    expect(load("object")).toBeNull()
+    expect(load<object>("object")).toBeNull()
     expect(storage.getAllKeys()).toEqual(["string"])
 
     remove("string")
-    expect(load("string")).toBeNull()
+    expect(load<string>("string")).toBeNull()
     expect(storage.getAllKeys()).toEqual([])
   })
 
