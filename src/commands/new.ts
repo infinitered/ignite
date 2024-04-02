@@ -667,10 +667,6 @@ module.exports = {
         if (experimentalNewArch === true) {
           appJson.expo.plugins[1][1].ios.newArchEnabled = true
           appJson.expo.plugins[1][1].android.newArchEnabled = true
-
-          // Adding the "deploymentTarget" key is required for
-          // @react-native-async-storage/async-storage to work in the new architecture
-          appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
         }
 
         write("./app.json", appJson)
