@@ -55,10 +55,10 @@ Ignite also comes with a [component library](./docs/boilerplate/app/components/C
 
 Prerequisites:
 
-- For [Expo-powered React Native apps](https://expo.io/), no prerequisites are necessary ([why choose Expo?](https://medium.com/@adhithiravi/building-react-native-apps-expo-or-not-d49770d1f5b8))
-- For vanilla React Native, make sure you're set up for React Native by following [the official documentation](https://reactnative.dev/docs/environment-setup).
+- You'll need at least a recent version of [Node](https://nodejs.org/en) to run the CLI
+- For compiling/running in a simulator, make sure you're set up for React Native by following [the official documentation](https://reactnative.dev/docs/environment-setup).
 
-Run the CLI:
+The Ignite CLI will walk you through the steps to ignite a new React Native app:
 
 ```bash
 # Get walked through the prompts for the different options to start your new app
@@ -68,39 +68,24 @@ npx ignite-cli@latest new PizzaApp
 npx ignite-cli@latest new PizzaApp --yes
 ```
 
-Once you're up and running, check out our new [Getting Started Guide](/docs/Guide.md) guide or the rest of our [docs](https://github.com/infinitered/ignite/blob/master/docs).
+Once you're up and running, check out our [Getting Started Guide](https://docs.infinite.red/ignite-cli/Guide/).
 
-If you'd like to follow a tutorial, check out [this one from Robin Heinze](https://shift.infinite.red/creating-a-trivia-app-with-ignite-bowser-part-1-1987cc6e93a1). _Note that this was created for a previous version of Ignite -- we are working on updating it!_
-
-## Generators
-
-_The hidden gem of Ignite._ Generators help you scaffold your app very quickly, be it for a proof-of-concept, a demo, or a production app. Generators are there to save you time, keep your code consistent, and help you with the basic structure of your app.
-
-```
-npx ignite-cli generate --help
-```
-
-...will give you information on what generators are present. To learn more, check out our [Generators](/docs/concept//Generators.md) documentation.
+If you'd like to follow a tutorial, check out [this one from Robin Heinze](https://shift.infinite.red/creating-a-trivia-app-with-ignite-bowser-part-1-1987cc6e93a1).
 
 ### Troubleshooting
 
 The above commands may fail with various errors, depending on your operating system and dependency versions. Some troubleshooting steps to follow:
 
 - Uninstall global versions of the Ignite CLI via `npm uninstall -g ignite-cli` and use the CLI via `npx ignite-cli`
-- Make sure you are using a reasonably recent version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v16.x.x.
+- Make sure you are using a reasonably recent version of Node. This can be checked via the `node --version` command. If you require multiple Node versions on your system, install `nvm`, and then run `nvm install --lts`. At the time of writing, Node LTS is v20.x.x.
 - If the installation fails because of an Xcode error (missing Xcode command line tools), the easiest way to install them is to run `sudo xcode-select --install` in your terminal.
 - If Xcode and command line tools are already installed, but the installation complains about missing patch dependencies, you may need to switch the Xcode location to something else: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
 - Opening the project in Xcode can give you other insights into what's happening: `open ./ios/<yourapp>.xcworkspace`
 - Add the `--debug` switch to the Ignite CLI new command to provide additional output during project initialization
 
-Note:
-
-- Navigation persistence is OFF by default in production.
-- Error boundary is set to 'always' display by default.
-
 ## Reporting Bugs / Getting Help
 
-If you run into problems, first search the issues and discussions in this repository. If you don't find anything, you can come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](http://community.infinite.red)).
+If you run into problems, first search the issues and discussions in this repository. If you don't find anything, you can come talk to our friendly and active developers in the Infinite Red Community Slack ([community.infinite.red](https://community.infinite.red)).
 
 If you still need help after reaching out to the proper channels, feel free to open a new GitHub issue via `npx ignite-cli issue "Unable to Ignite new app"` (as an example). This will help start writing your issue with the correct diagnostic information included.
 
