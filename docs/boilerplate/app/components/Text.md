@@ -87,7 +87,7 @@ The `preset` optional prop specifies the string of the preset style you want to 
 Presets allow you to have a consistent look and feel across your app without having to redefine the styles all the time.
 
 ```tsx
-<View preset="header" text="My Header" />
+<View preset="heading" text="My Header" />
 ```
 
 You'll want to customize these presets and add more. You can do this in the `text.presets.ts` file.
@@ -100,9 +100,13 @@ If you find yourself overriding styles with the `style` prop a lot, you probably
 
 `bold`: A bold version of the default text.
 
-`header`: Large headers.
+`heading`: Large headers.
 
 `subheading`: A smaller piece of secondary information.
+
+`formLabel`: Form input label.
+
+`formHelper`: Form assistive information.
 
 ### Custom Presets
 

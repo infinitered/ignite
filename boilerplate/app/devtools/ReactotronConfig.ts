@@ -5,14 +5,14 @@
  */
 import { Platform, NativeModules } from "react-native"
 
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst" // @mst remove-current-line
 
-import { clear } from "app/utils/storage"
+import { storage, clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
+import { ReactotronReactNative } from "reactotron-react-native"
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,
@@ -32,7 +32,6 @@ reactotron.use(
 // @mst remove-block-end
 
 if (Platform.OS !== "web") {
-  reactotron.setAsyncStorageHandler?.(AsyncStorage)
   reactotron.useReactNative({
     networking: {
       ignoreUrls: /symbolicate/,

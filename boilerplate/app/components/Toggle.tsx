@@ -3,6 +3,7 @@ import {
   GestureResponderEvent,
   Image,
   ImageStyle,
+  Platform,
   StyleProp,
   SwitchProps,
   TextInputProps,
@@ -13,10 +14,16 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated"
 import { colors, spacing } from "../theme"
 import { iconRegistry, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { isRTL } from "app/i18n"
 
 type Variants = "checkbox" | "switch" | "radio"
 
@@ -450,10 +457,19 @@ function Switch(props: ToggleInputProps) {
       $switchInner?.paddingRight ||
       0) as number
 
-    const start = withTiming(on ? "100%" : "0%")
-    const marginStart = withTiming(on ? -(knobWidth || 0) - offsetRight : 0 + offsetLeft)
+    // For RTL support:
+    // - web flip input range to [1,0]
+    // - outputRange doesn't want rtlAdjustment
+    const rtlAdjustment = isRTL ? -1 : 1
+    const inputRange = Platform.OS === "web" ? (isRTL ? [1, 0] : [0, 1]) : [0, 1]
+    const outputRange =
+      Platform.OS === "web"
+        ? [offsetLeft, +(knobWidth || 0) + offsetRight]
+        : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
 
-    return { start, marginStart }
+    const translateX = interpolate(on ? 1 : 0, inputRange, outputRange, Extrapolation.CLAMP)
+
+    return { transform: [{ translateX: withTiming(translateX) }] }
   }, [on, knobWidth])
 
   return (
