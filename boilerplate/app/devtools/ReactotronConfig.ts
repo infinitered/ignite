@@ -7,6 +7,7 @@ import { Platform, NativeModules } from "react-native"
 
 import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst" // @mst remove-current-line
+import mmkvPlugin from "reactotron-react-native-mmkv"
 
 import { storage, clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
@@ -30,6 +31,8 @@ reactotron.use(
   }),
 )
 // @mst remove-block-end
+
+reactotron.use(mmkvPlugin<ReactotronReactNative>({ storage }))
 
 if (Platform.OS !== "web") {
   reactotron.useReactNative({
