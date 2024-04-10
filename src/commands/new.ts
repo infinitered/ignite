@@ -142,12 +142,12 @@ export interface Options {
    */
   noTimeout?: boolean
   /**
-   * Whether or not to remove MobX-State-Tree boilerplate code
+   * Whether or not to include MobX-State-Tree boilerplate code
    *
    * Input Source: `prompt.ask` | `parameter.option`
-   * @default false
+   * @default true
    */
-  removeMST?: boolean
+  mst?: boolean
 }
 
 module.exports = {
@@ -344,19 +344,20 @@ module.exports = {
     // #endregion
 
     // #region Prompt to Remove MobX-State-Tree code
+    const defaultMST = true
+    let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
+
     // only ask if we're removing the demo code
-    const defaultRemoveMST = false
-    let removeMST = useDefault(options.removeMST) ? defaultRemoveMST : boolFlag(options.removeMST)
-    if (removeDemo && removeMST === undefined) {
-      const removeMSTResponse = await prompt.ask<{ removeMST: boolean }>(() => ({
+    if (removeDemo && includeMST === false) {
+      const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
         type: "confirm",
-        name: "removeMST",
-        message: "Remove MobX-State-Tree code? We recommend leaving it in",
-        initial: defaultRemoveMST,
+        name: "includeMST",
+        message: "Include MobX-State-Tree code? (recommended)",
+        initial: defaultMST,
         format: prettyPrompt.format.boolean,
         prefix,
       }))
-      removeMST = removeMSTResponse.removeMST
+      includeMST = includeMSTResponse.includeMST
     }
     // #endregion
 
@@ -576,7 +577,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
       }
 
-      if (removeMST) {
+      if (!includeMST) {
         log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
@@ -730,7 +731,7 @@ module.exports = {
       // #endregion
 
       // #region Remove MST code
-      if (removeDemo && removeMST) {
+      if (removeDemo && !includeMST) {
         startSpinner(`Removing MobX-State-Tree code`)
         try {
           const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
@@ -836,7 +837,7 @@ module.exports = {
           y: yname,
           yes: yname,
           noTimeout,
-          removeMST,
+          mst: includeMST,
         },
         projectName,
         toolbox,
