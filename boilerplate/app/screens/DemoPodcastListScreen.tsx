@@ -28,8 +28,8 @@ import {
   Icon,
   ListView,
   Screen,
+  Switch,
   Text,
-  Toggle,
 } from "../components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
@@ -111,12 +111,11 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
               <Text preset="heading" tx="demoPodcastListScreen.title" />
               {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
                 <View style={$toggle}>
-                  <Toggle
+                  <Switch
                     value={episodeStore.favoritesOnly}
                     onValueChange={() =>
                       episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
                     }
-                    variant="switch"
                     labelTx="demoPodcastListScreen.onlyFavorites"
                     labelPosition="left"
                     labelStyle={$labelStyle}
