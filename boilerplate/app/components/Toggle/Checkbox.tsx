@@ -5,7 +5,7 @@ import { colors } from "../../theme"
 import { iconRegistry, IconTypes } from "../Icon"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
-export interface CheckboxToggleProps extends ToggleProps<CheckboxInputProps> {
+export interface CheckboxToggleProps extends Omit<ToggleProps<CheckboxInputProps>, "ToggleInput"> {
   /**
    * Optional style prop that affects the Image component.
    */
@@ -19,21 +19,20 @@ export interface CheckboxToggleProps extends ToggleProps<CheckboxInputProps> {
 interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
   checkboxIcon?: CheckboxToggleProps["checkboxIcon"]
 }
-
+/**
+ * @param {CheckboxToggleProps} props - The props for the `Checkbox` component.
+ * @returns {JSX.Element} The rendered `Checkbox` component.
+ */
 export function Checkbox(props: CheckboxToggleProps) {
   return <Toggle {...props} ToggleInput={CheckboxInput} />
 }
 
-/**
- * @param {ToggleInputProps} props - The props for the `Checkbox` component.
- * @returns {JSX.Element} The rendered `Checkbox` component.
- */
 function CheckboxInput(props: CheckboxInputProps) {
   const {
     on,
     status,
     disabled,
-    checkboxIcon,
+    checkboxIcon = "check",
     outerStyle: $outerStyleOverride,
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,

@@ -11,7 +11,7 @@ import { iconRegistry } from "../Icon"
 import { isRTL } from "app/i18n"
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 
-export interface SwitchToggleProps extends ToggleProps<SwitchInputProps> {
+export interface SwitchToggleProps extends Omit<ToggleProps<SwitchInputProps>, "ToggleInput"> {
   /**
    * Switch-only prop that adds a text/icon label for on/off states.
    */
@@ -23,18 +23,18 @@ export interface SwitchToggleProps extends ToggleProps<SwitchInputProps> {
   inputDetailStyle?: Omit<ViewStyle, "width" | "height"> & { width?: number; height?: number }
 }
 
-interface SwitchInputProps extends Omit<BaseToggleInputProps<SwitchToggleProps>, "ToggleInput"> {
+interface SwitchInputProps extends BaseToggleInputProps<SwitchToggleProps> {
   switchAccessibilityMode?: SwitchToggleProps["switchAccessibilityMode"]
 }
 
+/**
+ * @param {SwitchToggleProps} props - The props for the `Switch` component.
+ * @returns {JSX.Element} The rendered `Switch` component.
+ */
 export function Switch(props: SwitchToggleProps) {
   return <Toggle {...props} ToggleInput={SwitchInput} />
 }
 
-/**
- * @param {ToggleInputProps} props - The props for the `Switch` component.
- * @returns {JSX.Element} The rendered `Switch` component.
- */
 function SwitchInput(props: SwitchInputProps) {
   const {
     on,

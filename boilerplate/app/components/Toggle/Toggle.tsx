@@ -51,6 +51,11 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
    */
   inputInnerStyle?: ViewStyle
   /**
+   * Optional detail style override.
+   * See Checkbox, Radio, and Switch for more details
+   */
+  inputDetailStyle?: ViewStyle
+  /**
    * The position of the label relative to the action component.
    * Default: right
    */
@@ -96,7 +101,7 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**
    * The input control for the type of toggle component
    */
-  ToggleInput: FC<T>
+  ToggleInput: FC<BaseToggleInputProps<T>>
 }
 
 export interface BaseToggleInputProps<T> {
@@ -133,9 +138,6 @@ export function Toggle<T>(props: ToggleProps<T>) {
     ...WrapperProps
   } = props
 
-  // const { switchAccessibilityMode } = props as SwitchToggleProps
-  // const { checkboxIcon } = props as CheckboxToggleProps
-
   const disabled = editable === false || status === "disabled" || props.disabled
 
   const Wrapper = useMemo(
@@ -163,7 +165,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
   return (
     <Wrapper
       activeOpacity={1}
-      // accessibilityRole={variant}
+      // accessibilityRole={variant} // TODO: solve this since we no longer have variant
       accessibilityState={{ checked: value, disabled }}
       {...WrapperProps}
       style={$containerStyles}

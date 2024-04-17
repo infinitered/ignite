@@ -68,13 +68,13 @@ export const DemoToggle: Demo = {
       description="There is a status prop - similar to `preset` in other components, but affects component functionality as well."
       layout="row"
     >
-      <ControlledCheckbox variant="checkbox" containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio variant="radio" containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch variant="switch" containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch containerStyle={$centeredOneThirdCol} />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledCheckbox variant="checkbox" value containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio variant="radio" value containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch variant="switch" value containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox value containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio value containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch value containerStyle={$centeredOneThirdCol} />
       <Text preset="formHelper" style={$centeredText}>
         No status - this is the default
       </Text>
@@ -133,7 +133,6 @@ export const DemoToggle: Demo = {
       />
       <DemoDivider size={24} />
       <ControlledCheckbox
-        variant="checkbox"
         value
         status="error"
         checkboxIcon="ladybug"
@@ -177,7 +176,6 @@ export const DemoToggle: Demo = {
         }}
       />
       <ControlledSwitch
-        variant="switch"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 70,
@@ -195,7 +193,6 @@ export const DemoToggle: Demo = {
 
       <ControlledCheckbox
         value
-        variant="checkbox"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
@@ -209,7 +206,6 @@ export const DemoToggle: Demo = {
       />
       <ControlledRadio
         value
-        variant="radio"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
@@ -224,7 +220,6 @@ export const DemoToggle: Demo = {
       />
       <ControlledSwitch
         value
-        variant="switch"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 70,
@@ -247,7 +242,6 @@ export const DemoToggle: Demo = {
 
       <ControlledCheckbox
         value
-        variant="checkbox"
         checkboxIcon="ladybug"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
@@ -267,7 +261,6 @@ export const DemoToggle: Demo = {
       />
       <ControlledRadio
         value
-        variant="radio"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
@@ -289,7 +282,6 @@ export const DemoToggle: Demo = {
 
       <ControlledSwitch
         value
-        variant="switch"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 70,
@@ -321,7 +313,6 @@ export const DemoToggle: Demo = {
       <View style={{ width: "100%" }}>
         <ControlledRadio
           value
-          variant="radio"
           label="You can also style the label"
           LabelTextProps={{ size: "xs", weight: "bold" }}
           status="error"
@@ -338,7 +329,6 @@ export const DemoToggle: Demo = {
       <View style={{ width: "100%" }}>
         <ControlledRadio
           value
-          variant="radio"
           labelPosition="left"
           containerStyle={{ padding: 10, backgroundColor: colors.error }}
           label="Or, style the entire container"

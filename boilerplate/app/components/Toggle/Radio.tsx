@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { colors } from "../../theme"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
-export interface RadioToggleProps extends ToggleProps<RadioInputProps> {
+export interface RadioToggleProps extends Omit<ToggleProps<RadioInputProps>, "ToggleInput"> {
   /**
    * Optional style prop that affects the dot View.
    */
@@ -13,14 +13,14 @@ export interface RadioToggleProps extends ToggleProps<RadioInputProps> {
 
 interface RadioInputProps extends BaseToggleInputProps<RadioToggleProps> {}
 
+/**
+ * @param {RadioToggleProps} props - The props for the `Radio` component.
+ * @returns {JSX.Element} The rendered `Radio` component.
+ */
 export function Radio(props: RadioToggleProps) {
   return <Toggle {...props} ToggleInput={RadioInput} />
 }
 
-/**
- * @param {ToggleInputProps} props - The props for the `Radio` component.
- * @returns {JSX.Element} The rendered `Radio` component.
- */
 function RadioInput(props: RadioInputProps) {
   const {
     on,
