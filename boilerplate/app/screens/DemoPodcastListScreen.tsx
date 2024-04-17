@@ -14,7 +14,7 @@ import {
 } from "react-native"
 import { type ContentStyle } from "@shopify/flash-list"
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -158,10 +158,10 @@ const EpisodeCard = observer(function EpisodeCard({
     return {
       transform: [
         {
-          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.EXTEND),
+          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.EXTEND),
         },
       ],
-      opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+      opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.CLAMP),
     }
   })
 
