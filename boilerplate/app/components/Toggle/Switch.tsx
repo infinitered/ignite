@@ -1,11 +1,15 @@
-import React from "react"
-import { Image, ImageStyle, Platform, StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
-  withTiming,
-} from "react-native-reanimated"
+import React, { useEffect, useRef, useState } from "react"
+import {
+  Animated,
+  Image,
+  ImageStyle,
+  Platform,
+  StyleProp,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
+
 import { colors } from "../../theme"
 import { iconRegistry } from "../Icon"
 import { isRTL } from "app/i18n"
@@ -44,6 +48,24 @@ function SwitchInput(props: SwitchInputProps) {
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,
   } = props
+  const animate = useRef(new Animated.Value(on ? 1 : 0)).current // Initial value is set based on isActive
+  const [opacity] = useState(new Animated.Value(0))
+
+  useEffect(() => {
+    Animated.timing(animate, {
+      toValue: on ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true, // Enable native driver for smoother animations
+    }).start()
+  }, [on])
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: on ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start()
+  }, [on])
 
   const knobSizeFallback = 2
 
@@ -85,33 +107,31 @@ function SwitchInput(props: SwitchInputProps) {
     }
   })()
 
-  const $animatedSwitchKnob = useAnimatedStyle(() => {
-    const offsetLeft = ($innerStyleOverride?.paddingStart ||
-      $innerStyleOverride?.paddingLeft ||
-      $switchInner?.paddingStart ||
-      $switchInner?.paddingLeft ||
-      0) as number
+  const rtlAdjustment = isRTL ? -1 : 1
 
-    const offsetRight = ($innerStyleOverride?.paddingEnd ||
-      $innerStyleOverride?.paddingRight ||
-      $switchInner?.paddingEnd ||
-      $switchInner?.paddingRight ||
-      0) as number
+  const offsetLeft = ($innerStyleOverride?.paddingStart ||
+    $innerStyleOverride?.paddingLeft ||
+    $switchInner?.paddingStart ||
+    $switchInner?.paddingLeft ||
+    0) as number
 
-    // For RTL support:
-    // - web flip input range to [1,0]
-    // - outputRange doesn't want rtlAdjustment
-    const rtlAdjustment = isRTL ? -1 : 1
-    const inputRange = Platform.OS === "web" ? (isRTL ? [1, 0] : [0, 1]) : [0, 1]
-    const outputRange =
-      Platform.OS === "web"
-        ? [offsetLeft, +(knobWidth || 0) + offsetRight]
-        : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
+  const offsetRight = ($innerStyleOverride?.paddingEnd ||
+    $innerStyleOverride?.paddingRight ||
+    $switchInner?.paddingEnd ||
+    $switchInner?.paddingRight ||
+    0) as number
 
-    const translateX = interpolate(on ? 1 : 0, inputRange, outputRange, Extrapolation.CLAMP)
+  const outputRange =
+    Platform.OS === "web"
+      ? isRTL
+        ? [+(knobWidth || 0) + offsetRight, offsetLeft]
+        : [offsetLeft, +(knobWidth || 0) + offsetRight]
+      : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
 
-    return { transform: [{ translateX: withTiming(translateX) }] }
-  }, [on, knobWidth])
+  const $animatedSwitchKnob = animate.interpolate({
+    inputRange: [0, 1],
+    outputRange,
+  })
 
   return (
     <View style={[$inputOuter, { backgroundColor: offBackgroundColor }, $outerStyleOverride]}>
@@ -120,7 +140,7 @@ function SwitchInput(props: SwitchInputProps) {
           $switchInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          useAnimatedStyle(() => ({ opacity: withTiming(on ? 1 : 0) }), [on]),
+          { opacity },
         ]}
       />
 
@@ -131,7 +151,7 @@ function SwitchInput(props: SwitchInputProps) {
         style={[
           $switchDetail,
           $detailStyleOverride,
-          $animatedSwitchKnob,
+          { transform: [{ translateX: $animatedSwitchKnob }] },
           { width: knobWidth, height: knobHeight },
           { backgroundColor: knobBackgroundColor },
         ]}
