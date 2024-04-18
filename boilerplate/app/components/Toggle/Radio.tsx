@@ -35,7 +35,7 @@ function RadioInput(props: RadioInputProps) {
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: on ? 1 : 0,
-      duration: 200,
+      duration: 300,
       useNativeDriver: true,
     }).start()
   }, [on])
