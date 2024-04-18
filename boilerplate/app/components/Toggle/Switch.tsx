@@ -19,7 +19,7 @@ export interface SwitchToggleProps extends Omit<ToggleProps<SwitchInputProps>, "
   /**
    * Switch-only prop that adds a text/icon label for on/off states.
    */
-  switchAccessibilityMode?: "text" | "icon"
+  accessibilityMode?: "text" | "icon"
   /**
    * Optional style prop that affects the knob View.
    * Note: `width` and `height` rules should be points (numbers), not percentages.
@@ -28,7 +28,7 @@ export interface SwitchToggleProps extends Omit<ToggleProps<SwitchInputProps>, "
 }
 
 interface SwitchInputProps extends BaseToggleInputProps<SwitchToggleProps> {
-  switchAccessibilityMode?: SwitchToggleProps["switchAccessibilityMode"]
+  accessibilityMode?: SwitchToggleProps["accessibilityMode"]
 }
 
 /**
@@ -165,9 +165,9 @@ function SwitchInput(props: SwitchInputProps) {
  * @returns {JSX.Element} The rendered `SwitchAccessibilityLabel` component.
  */
 function SwitchAccessibilityLabel(props: SwitchInputProps & { role: "on" | "off" }) {
-  const { on, disabled, status, switchAccessibilityMode, role, innerStyle, detailStyle } = props
+  const { on, disabled, status, accessibilityMode, role, innerStyle, detailStyle } = props
 
-  if (!switchAccessibilityMode) return null
+  if (!accessibilityMode) return null
 
   const shouldLabelBeVisible = (on && role === "on") || (!on && role === "off")
 
@@ -186,7 +186,7 @@ function SwitchAccessibilityLabel(props: SwitchInputProps & { role: "on" | "off"
 
   return (
     <View style={$switchAccessibilityStyle}>
-      {switchAccessibilityMode === "text" && shouldLabelBeVisible && (
+      {accessibilityMode === "text" && shouldLabelBeVisible && (
         <View
           style={[
             role === "on" && $switchAccessibilityLine,
@@ -197,7 +197,7 @@ function SwitchAccessibilityLabel(props: SwitchInputProps & { role: "on" | "off"
         />
       )}
 
-      {switchAccessibilityMode === "icon" && shouldLabelBeVisible && (
+      {accessibilityMode === "icon" && shouldLabelBeVisible && (
         <Image
           style={[$switchAccessibilityIcon, { tintColor: color }]}
           source={role === "off" ? iconRegistry.hidden : iconRegistry.view}

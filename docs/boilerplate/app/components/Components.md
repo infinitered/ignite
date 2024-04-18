@@ -78,7 +78,7 @@ The `Checkbox` component is useful for displaying a user's choice for a boolean 
 ```tsx
 <Checkbox
   value={value}
-  checkboxIcon="check"
+  icon="check"
   onValueChange={setValue}
   labelTx="signup.rememberMe"
   labelStyle={{ color: "#a511dc" }}
@@ -184,7 +184,7 @@ The `Switch` component is useful for displaying a user's choice for a boolean va
 ```tsx
 <Switch
   value={value}
-  switchAccessibilityMode="icon"
+  accessibilityMode="icon"
   onValueChange={setValue}
   labelTx="signup.rememberMe"
   labelStyle={{ color: "#a511dc" }}

@@ -12,11 +12,11 @@ export interface CheckboxToggleProps extends Omit<ToggleProps<CheckboxInputProps
   /**
    * Checkbox-only prop that changes the icon used for the "on" state.
    */
-  checkboxIcon?: IconTypes
+  icon?: IconTypes
 }
 
 interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
-  checkboxIcon?: CheckboxToggleProps["checkboxIcon"]
+  icon?: CheckboxToggleProps["icon"]
 }
 /**
  * @param {CheckboxToggleProps} props - The props for the `Checkbox` component.
@@ -31,7 +31,7 @@ function CheckboxInput(props: CheckboxInputProps) {
     on,
     status,
     disabled,
-    checkboxIcon = "check",
+    icon = "check",
     outerStyle: $outerStyleOverride,
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,
@@ -89,7 +89,7 @@ function CheckboxInput(props: CheckboxInputProps) {
         ]}
       >
         <Image
-          source={checkboxIcon ? iconRegistry[checkboxIcon] : iconRegistry.check}
+          source={icon ? iconRegistry[icon] : iconRegistry.check}
           style={[
             $checkboxDetail,
             !!iconTintColor && { tintColor: iconTintColor },

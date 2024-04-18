@@ -10,12 +10,12 @@ The `Switch` component provides a simple way to collect user input for a boolean
 
 ## Switch Props
 
-### `switchAccessibilityMode`
+### `accessibilityMode`
 
-The `switchAccessibilityMode` is a special prop for the switch variant that adds a text/icon label for on/off states. Options are `text` and `icon`
+The `accessibilityMode` is a special prop for the switch variant that adds a text/icon label for on/off states. Options are `text` and `icon`
 
 ```tsx
-<Switch value={value} onValueChange={setValue} switchAccessibilityMode="icon" />
+<Switch value={value} onValueChange={setValue} accessibilityMode="icon" />
 ```
 
 <ToggleProps componentName="Switch" />

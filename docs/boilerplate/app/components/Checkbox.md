@@ -10,12 +10,12 @@ The `Checkbox` component provides a simple way to collect user input for a boole
 
 ## Checkbox Props
 
-### `checkboxIcon`
+### `icon`
 
-The `checkboxIcon` is a prop for the checkbox variant that allows you to customize the icon used for the "on" state.
+The `icon` is a prop for the checkbox variant that allows you to customize the icon used for the "on" state.
 
 ```tsx
-<Checkbox checkboxIcon="ladybug" />
+<Checkbox icon="ladybug" />
 ```
 
 <ToggleProps componentName="Checkbox" />
