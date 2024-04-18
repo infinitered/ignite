@@ -135,13 +135,13 @@ export const DemoToggle: Demo = {
       <ControlledCheckbox
         value
         status="error"
-        checkboxIcon="ladybug"
+        icon="ladybug"
         label="Pass in a custom checkbox icon."
       />
       <DemoDivider size={24} />
       <ControlledSwitch
         value
-        switchAccessibilityMode="text"
+        accessibilityMode="text"
         label="Switches can be read as text"
         status="error"
         helper="By default, this option doesn't use `Text` since depending on the font, the on/off characters might look weird. Customize as needed."
@@ -150,7 +150,7 @@ export const DemoToggle: Demo = {
       <ControlledSwitch
         value
         labelPosition="left"
-        switchAccessibilityMode="icon"
+        accessibilityMode="icon"
         label="Or aided with an icon"
       />
     </DemoUseCase>,
@@ -242,7 +242,7 @@ export const DemoToggle: Demo = {
 
       <ControlledCheckbox
         value
-        checkboxIcon="ladybug"
+        icon="ladybug"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
@@ -301,7 +301,7 @@ export const DemoToggle: Demo = {
           width: 18,
           borderRadius: 36,
         }}
-        switchAccessibilityMode="icon"
+        accessibilityMode="icon"
       />
 
       <Text preset="formHelper" style={$centeredText}>
