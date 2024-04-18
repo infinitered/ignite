@@ -1,6 +1,5 @@
-import React from "react"
-import { StyleProp, View, ViewStyle } from "react-native"
-import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
+import React, { useState, useEffect } from "react"
+import { StyleProp, View, ViewStyle, Animated } from "react-native"
 import { colors } from "../../theme"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
@@ -30,6 +29,16 @@ function RadioInput(props: RadioInputProps) {
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,
   } = props
+
+  const [opacity] = useState(new Animated.Value(0))
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: on ? 1 : 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start()
+  }, [on])
 
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
@@ -69,7 +78,7 @@ function RadioInput(props: RadioInputProps) {
           $radioInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          useAnimatedStyle(() => ({ opacity: withTiming(on ? 1 : 0) }), [on]),
+          { opacity },
         ]}
       >
         <View
