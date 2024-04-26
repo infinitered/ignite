@@ -231,7 +231,7 @@ ${recipe.contents}
           askUserTool,
           dependencyTool,
         ],
-        model: "gpt-4-turbo-preview",
+        model: "gpt-4-turbo",
         stream: false,
       })
 
