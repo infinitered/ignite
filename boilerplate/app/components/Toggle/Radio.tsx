@@ -17,7 +17,7 @@ interface RadioInputProps extends BaseToggleInputProps<RadioToggleProps> {}
  * @returns {JSX.Element} The rendered `Radio` component.
  */
 export function Radio(props: RadioToggleProps) {
-  return <Toggle {...props} ToggleInput={RadioInput} />
+  return <Toggle accessibilityRole="radio" {...props} ToggleInput={RadioInput} />
 }
 
 function RadioInput(props: RadioInputProps) {

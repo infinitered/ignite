@@ -23,7 +23,7 @@ interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
  * @returns {JSX.Element} The rendered `Checkbox` component.
  */
 export function Checkbox(props: CheckboxToggleProps) {
-  return <Toggle {...props} ToggleInput={CheckboxInput} />
+  return <Toggle accessibilityRole="checkbox" {...props} ToggleInput={CheckboxInput} />
 }
 
 function CheckboxInput(props: CheckboxInputProps) {

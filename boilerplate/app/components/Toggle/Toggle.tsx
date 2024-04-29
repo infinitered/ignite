@@ -135,6 +135,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
     containerStyle: $containerStyleOverride,
     inputWrapperStyle: $inputWrapperStyleOverride,
     ToggleInput,
+    accessibilityRole,
     ...WrapperProps
   } = props
 
@@ -165,7 +166,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
   return (
     <Wrapper
       activeOpacity={1}
-      // accessibilityRole={variant} // TODO: solve this since we no longer have variant
+      accessibilityRole={accessibilityRole}
       accessibilityState={{ checked: value, disabled }}
       {...WrapperProps}
       style={$containerStyles}

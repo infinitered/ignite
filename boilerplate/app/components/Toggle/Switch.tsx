@@ -36,7 +36,7 @@ interface SwitchInputProps extends BaseToggleInputProps<SwitchToggleProps> {
  * @returns {JSX.Element} The rendered `Switch` component.
  */
 export function Switch(props: SwitchToggleProps) {
-  return <Toggle {...props} ToggleInput={SwitchInput} />
+  return <Toggle accessibilityRole="switch" {...props} ToggleInput={SwitchInput} />
 }
 
 function SwitchInput(props: SwitchInputProps) {
