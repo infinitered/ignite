@@ -1,15 +1,22 @@
 import { observer } from "mobx-react-lite"
 import React, { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
+import { TextInput, TextStyle, TouchableOpacity, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
+import { useNavigation } from "@react-navigation/native"
 
-interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
+interface LoginScreenProps extends AppStackScreenProps<"Login"> { }
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
   const authPasswordInput = useRef<TextInput>(null)
+
+  const navigation = useNavigation()
+
+  const goSignUp = () => {
+    navigation.navigate("SignUp");
+  }
 
   const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
@@ -113,6 +120,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         preset="reversed"
         onPress={login}
       />
+
+      <TouchableOpacity style={$signUpButton} onPress={goSignUp}>
+        <Text>Don't Have accoount ? Sign Up</Text>
+      </TouchableOpacity>
     </Screen>
   )
 })
@@ -141,6 +152,12 @@ const $textField: ViewStyle = {
 
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
+}
+
+const $signUpButton: ViewStyle = {
+  marginTop: spacing.xs,
+  alignItems: 'center',
+  padding: 10,
 }
 
 // @demo remove-file

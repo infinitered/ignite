@@ -41,6 +41,19 @@ const en = {
     tapToSignIn: "Tap to sign in!",
     hint: "Hint: you can use any email address and your favorite password :)",
   },
+  signUpScreen: {
+    signUp: "Sign Up",
+    enterDetails:
+      "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
+    emailFieldLabel: "Email",
+    passwordFieldLabel: "Password",
+    nameFieldPlaceholder: "Name",
+    emailFieldPlaceholder: "Enter your email address",
+    nameFieldLabel: "Enter your name",
+    passwordFieldPlaceholder: "Super secret password here",
+    tapToSignUp: "Tap to sign Up!",
+    hint: "Hint: you can use any email address and your favorite password :)",
+  },
   demoNavigator: {
     componentsTab: "Components",
     debugTab: "Debug",
