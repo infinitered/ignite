@@ -1,52 +1,41 @@
-import { observer } from "mobx-react-lite"
-import React, { FC, useEffect, useState } from "react"
-import { TextStyle, TouchableOpacity, ViewStyle } from "react-native"
-import { Button, Screen, Text, TextField } from "../components"
-import { useStores } from "../models"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
-import { useNavigation } from "@react-navigation/native"
+import React, { FC, useState } from "react";
+import { TextStyle, TouchableOpacity, ViewStyle } from "react-native";
+import { Button, Icon, Screen, Text, TextField } from "../components";
+import { useNavigation } from "@react-navigation/native";
+import { AppStackScreenProps } from "../navigators";
+import { colors, spacing } from "../theme";
 
-interface SignUpScreenProps extends AppStackScreenProps<"SignUp"> { }
+interface SignUpScreenProps extends AppStackScreenProps<"SignUp"> {}
 
-export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScreen() {
+export const SignUpScreen: FC<SignUpScreenProps> = function SignUpScreen() {
+  const navigation = useNavigation();
 
-  const navigation = useNavigation()
-
-  const goToLogin = () => {
-    navigation.navigate("Login");
-  }
-
-  const onHandleSignUp = async () => {
-    __DEV__ && console.tron.log('sign up');
-  };
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const [isConfirmPasswordHidden, setIsConfirmPasswordHidden] = useState(true);
 
-  const [authPassword, setAuthPassword] = useState("")
-  const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [attemptsCount, setAttemptsCount] = useState(0)
-  const {
-    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
-  } = useStores()
+  const togglePasswordVisibility = () => setIsPasswordHidden(!isPasswordHidden);
+  const toggleConfirmPasswordVisibility = () => setIsConfirmPasswordHidden(!isConfirmPasswordHidden);
 
-  useEffect(() => {
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
-    setAuthEmail("ignite@infinite.red")
-    setAuthPassword("ign1teIsAwes0m3")
+  const PasswordRightAccessory = ({ hidden, onPress }) => (
+    <Icon
+      icon={hidden ? "view" : "hidden"}
+      color={colors.palette.neutral800}
+      size={20}
+      onPress={onPress}
+    />
+  );
 
-    // Return a "cleanup" function that React will run when the component unmounts
-    return () => {
-      setAuthPassword("")
-      setAuthEmail("")
-    }
-  }, [])
+  const onHandleSignUp = async () => {
+    // Implement your sign-up logic here
+  };
 
-
-
+  const goToLogin = () => {
+    navigation.navigate("Login");
+  };
 
   return (
     <Screen
@@ -54,11 +43,18 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="signUpScreen.signUp" preset="heading" style={$signIn} />
+      <Text testID="sign-up-heading" tx="signUpScreen.signUp" preset="heading" style={$signIn} />
       <Text tx="signUpScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="signUpScreen.hint" size="sm" weight="light" style={$hint} />}
 
-
+      <TextField
+        value={name}
+        onChangeText={setName}
+        containerStyle={$textField}
+        autoCapitalize="none"
+        autoCorrect={false}
+        labelTx="signUpScreen.nameFieldLabel"
+        placeholderTx="signUpScreen.nameFieldPlaceholder"
+      />
 
       <TextField
         value={email}
@@ -73,31 +69,33 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
       />
 
       <TextField
-        value={name}
-        onChangeText={setName}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoCorrect={false}
-        labelTx="signUpScreen.nameFieldLabel"
-        placeholderTx="signUpScreen.nameFieldPlaceholder"
-
-      />
-
-      <TextField
         value={password}
         onChangeText={setPassword}
         containerStyle={$textField}
         autoCapitalize="none"
         autoComplete="password"
         autoCorrect={false}
-        secureTextEntry={isAuthPasswordHidden}
+        secureTextEntry={isPasswordHidden}
         labelTx="signUpScreen.passwordFieldLabel"
         placeholderTx="signUpScreen.passwordFieldPlaceholder"
+        RightAccessory={() => <PasswordRightAccessory hidden={isPasswordHidden} onPress={togglePasswordVisibility} />}
+      />
 
+      <TextField
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        containerStyle={$textField}
+        autoCapitalize="none"
+        autoComplete="password"
+        autoCorrect={false}
+        secureTextEntry={isConfirmPasswordHidden}
+        labelTx="signUpScreen.confirmPasswordFieldLabel"
+        placeholderTx="signUpScreen.confirmPasswordFieldPlaceholder"
+        RightAccessory={() => <PasswordRightAccessory hidden={isConfirmPasswordHidden} onPress={toggleConfirmPasswordVisibility} />}
       />
 
       <Button
-        testID="login-button"
+        testID="sign-up-button"
         tx="signUpScreen.tapToSignUp"
         style={$tapButton}
         preset="reversed"
@@ -105,45 +103,40 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
       />
 
       <TouchableOpacity style={$loginButton} onPress={goToLogin}>
-        <Text>Have an accoount ? Login</Text>
+        <Text>Have an account? Login</Text>
       </TouchableOpacity>
-
-
     </Screen>
-  )
-})
+  );
+};
 
 const $screenContentContainer: ViewStyle = {
   paddingVertical: spacing.xxl,
   paddingHorizontal: spacing.lg,
-}
+};
 
 const $signIn: TextStyle = {
   marginBottom: spacing.sm,
-}
+};
 
 const $enterDetails: TextStyle = {
   marginBottom: spacing.lg,
-}
+};
 
 const $hint: TextStyle = {
   color: colors.tint,
   marginBottom: spacing.md,
-}
+};
 
 const $textField: ViewStyle = {
   marginBottom: spacing.lg,
-}
+};
 
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
-}
+};
 
 const $loginButton: ViewStyle = {
   marginTop: spacing.xs,
   alignItems: 'center',
   padding: 10,
-}
-
-// @demo remove-file
-
+};
