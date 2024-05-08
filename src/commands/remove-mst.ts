@@ -1,11 +1,10 @@
-import { GluegunToolbox, system } from "gluegun"
+import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 import { MST_MARKUP_PREFIX, mstCommentRegex, mstDependenciesToRemove } from "../tools/mst"
 import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
 import { removePackageJSONDependencies } from "../tools/dependencies"
-// import { packager } from "../tools/packager"
 
 module.exports = {
   alias: ["rm-mst", "remove-mst"],
@@ -71,45 +70,6 @@ module.exports = {
     emptyDirsRemoved.forEach((path) => {
       p(`Removed empty directory '${path}'`)
     })
-
-    // patch app.tsx manually
-    const appFile = pathlib.join(TARGET_DIR, "app/app.tsx")
-    await toolbox.patching.patch(appFile, {
-      after: `const [areFontsLoaded] = useFonts(customFontsToLoad)`,
-      insert: `
-        \n\n
-        React.useEffect(() => {
-          setTimeout(hideSplashScreen, 500)
-        }, [])
-        \n\n
-        if (!isNavigationStateRestored || !areFontsLoaded) return null
-        `,
-    })
-
-    // format
-    await system.run(`npx prettier ${appFile}`)
-
-    // templates
-    const templateDir = pathlib.join(TARGET_DIR, "ignite/templates")
-    // update templates/screen
-    const screenTemplate = pathlib.join(templateDir, "screen/NAMEScreen.tsx.ejs")
-    // TODO: show error if string not found in file (if template has been updated)
-    await toolbox.patching.replace(
-      screenTemplate,
-      `observer(function <%= props.pascalCaseName %>Screen() {`,
-      `() => {`,
-    )
-    await toolbox.patching.replace(screenTemplate, `})`, `}`) // currently '})' only exists once in the file
-
-    // update templates/component
-    const componentTemplate = pathlib.join(templateDir, "component/NAME.tsx.ejs")
-    // TODO: show error if string not found in file (if template has been updated)
-    await toolbox.patching.replace(
-      componentTemplate,
-      `observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {`,
-      `(props: <%= props.pascalCaseName %>Props) => {`,
-    )
-    await toolbox.patching.replace(componentTemplate, `})`, `}`) // assuming '})' only exists once in the file
 
     p(`Done removing MobX-State-Tree code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },

@@ -20,6 +20,7 @@ export interface <%= props.pascalCaseName %>Props {
 /**
  * Describe your component here
  */
+// @mst replace-next-line export const <%= props.pascalCaseName %> = (props: <%= props.pascalCaseName %>Props) => {
 export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
   const { style } = props
   const $styles = [$container, style]
@@ -29,6 +30,7 @@ export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCas
       <Text style={$text}>Hello</Text>
     </View>
   )
+// @mst replace-next-line }
 })
 
 const $container: ViewStyle = {
