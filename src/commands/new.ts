@@ -348,7 +348,7 @@ module.exports = {
     let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
 
     // only ask if we're removing the demo code
-    if (removeDemo && includeMST === false) {
+    if (removeDemo && includeMST === undefined) {
       const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
         type: "confirm",
         name: "includeMST",
