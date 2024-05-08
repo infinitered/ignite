@@ -161,7 +161,7 @@ export function removeEmptyDirs({
   dryRun: boolean
   matching?: string[]
 }) {
-  let removedDirs: string[] = []
+  const removedDirs: string[] = []
   const getEmptyDirPaths = () =>
     filesystem
       .cwd(targetDir)
@@ -274,7 +274,7 @@ export async function updateFiles({
           }
         })
 
-        if (!dryRun)
+        if (!dryRun) {
           await update(path, (contents: string) => {
             let result = contents
             if (removeMarkupOnly) {
@@ -285,6 +285,7 @@ export async function updateFiles({
             }
             return result
           })
+        }
       }
 
       return { path, comments }
