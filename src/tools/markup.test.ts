@@ -1,11 +1,11 @@
-import { demo } from "./demo"
+import { MarkupComments, markupComment, removeCurrentLine } from "./markup"
 
-const { REMOVE_BLOCK_START, REMOVE_BLOCK_END, REMOVE_CURRENT_LINE, REMOVE_NEXT_LINE } =
-  demo.CommentType
+const TEST_MARKUP_PREFIX = "@test"
 
-describe("demo", () => {
+describe("markup", () => {
   describe("removeCurrentLine", () => {
-    it(`should remove line with "// ${demo.CommentType.REMOVE_CURRENT_LINE}" comment`, () => {
+    it(`should remove line with "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveCurrentLine}" comment`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
         import React from "react"
         import { StyleProp, View, ViewStyle } from "react-native"
@@ -33,12 +33,12 @@ describe("demo", () => {
         
         const $divider: ViewStyle = {
             flexGrow: 0,
-            flexShrink: 0, // ${demo.CommentType.REMOVE_CURRENT_LINE}
+            flexShrink: 0, // ${comment}
         }
       `
-      const result = demo.removeCurrentLine(contents)
+      const result = removeCurrentLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_CURRENT_LINE)
+      expect(result).not.toContain(comment)
     })
 
     it(`should remove line with "/* ${demo.CommentType.REMOVE_CURRENT_LINE} */" comment`, () => {

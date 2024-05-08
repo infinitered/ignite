@@ -20,7 +20,7 @@ export const markupComment = (prefix: string, commentType: MarkupComments) =>
  * Take the file content as a string and remove any
  * line of code with an `// @x remove-current-line` comment
  */
-function removeCurrentLine(contents: string, comment: string): string {
+export function removeCurrentLine(contents: string, comment: string): string {
   const lines = contents.split("\n")
   const result = lines.filter((line) => !line.includes(comment))
   return result.join("\n")
@@ -30,7 +30,7 @@ function removeCurrentLine(contents: string, comment: string): string {
  * Take the file content as a string and remove the next line
  * of code with the REMOVE_NEXT_LINE comment before it
  */
-function removeNextLine(contents: string, comment: string): string {
+export function removeNextLine(contents: string, comment: string): string {
   const lines = contents.split("\n")
   const result = lines.filter((line, index) => {
     const prevLine = lines[index - 1]
@@ -53,17 +53,14 @@ function removeNextLine(contents: string, comment: string): string {
 /**
  * Take the file content as a string and replace the current line
  * of code with the contents of the REPLACE_NEXT_LINE comment before it
+ * example: // @prefix replace-next-line const newLine = "new line"
  */
-function replaceNextLine(contents: string, comment: string): string {
+export function replaceNextLine(contents: string, comment: string): string {
   const lines = contents.split("\n")
   const result = lines.map((line, index) => {
     const prevLine = lines[index - 1]
     if (prevLine?.includes(comment)) {
-      // @demo replace-next-line const foo = "bar"
-      // const foo = "baz"
-      // should replace the 'const foo = "baz"' line with `const foo = "bar"`
       const newLineContent = prevLine.replace("//", "").replace(comment, "").trim()
-      console.log("replacing next line", { line, prevLine, newLineContent })
       return newLineContent
     } else {
       return line
@@ -76,7 +73,7 @@ function replaceNextLine(contents: string, comment: string): string {
  * Take the file content as a string and remove the lines of code between
  * start and end block comments
  */
-function removeBlocks(contents: string, comment: { start: string; end: string }): string {
+export function removeBlocks(contents: string, comment: { start: string; end: string }): string {
   const { start, end } = comment
   const lines = contents.split("\n")
 
