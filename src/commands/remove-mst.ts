@@ -1,8 +1,10 @@
-import { GluegunToolbox, filesystem, system } from "gluegun"
+import { GluegunToolbox, system } from "gluegun"
 import * as pathlib from "path"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
-import { DEFAULT_MATCHING_GLOBS, mst } from "../tools/mst"
+import { MST_MARKUP_PREFIX, mstCommentRegex, mstDependenciesToRemove } from "../tools/mst"
+import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
+import { removePackageJSONDependencies } from "../tools/dependencies"
 // import { packager } from "../tools/packager"
 
 module.exports = {
@@ -21,10 +23,25 @@ module.exports = {
     p()
     p(`Removing MobX-State-Tree code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
 
-    const filePaths = mst.find(TARGET_DIR)
+    const filePaths = findFiles(TARGET_DIR)
 
-    // Go through every file path and handle the operation for each mst comment
-    const mstCommentResults = await mst.update({ filePaths, dryRun })
+    p(
+      `Removing dependencies from package.json: ${mstDependenciesToRemove.join(", ")} ${
+        dryRun ? "(dry run)" : ""
+      }`,
+    )
+    if (!dryRun) {
+      const packageJSONPath = pathlib.join(TARGET_DIR, "package.json")
+      removePackageJSONDependencies(packageJSONPath, mstDependenciesToRemove)
+    }
+
+    const mstCommentResults = await updateFiles({
+      filePaths,
+      markupPrefix: MST_MARKUP_PREFIX,
+      markupCommentRegex: mstCommentRegex,
+      removeMarkupOnly: false,
+      dryRun: dryRun,
+    })
 
     // Handle the results of the mst comment operations
     mstCommentResults
@@ -49,31 +66,13 @@ module.exports = {
         }
       })
 
-    function removeEmptyDirs() {
-      const emptyDirPaths = filesystem
-        .cwd(TARGET_DIR)
-        .find({
-          matching: DEFAULT_MATCHING_GLOBS,
-          recursive: true,
-          files: false,
-          directories: true,
-        })
-        .map((path) => pathlib.join(TARGET_DIR, path))
-        .filter((path) => !filesystem.list(path)?.length)
-
-      emptyDirPaths.forEach((path) => {
-        if (!dryRun) filesystem.remove(path)
-        p(`Removed empty directory '${path}'`)
-      })
-    }
-
     // first pass
-    removeEmptyDirs()
-    // second pass, for nested directories that are now empty after the first pass
-    // https://github.com/infinitered/ignite/issues/2225
-    removeEmptyDirs()
+    const emptyDirsRemoved = removeEmptyDirs({ targetDir: TARGET_DIR, dryRun })
+    emptyDirsRemoved.forEach((path) => {
+      p(`Removed empty directory '${path}'`)
+    })
 
-    // patch app.tsx
+    // patch app.tsx manually
     const appFile = pathlib.join(TARGET_DIR, "app/app.tsx")
     await toolbox.patching.patch(appFile, {
       after: `const [areFontsLoaded] = useFonts(customFontsToLoad)`,

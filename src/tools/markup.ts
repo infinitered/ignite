@@ -1,13 +1,20 @@
 import { filesystem, patching } from "gluegun"
 import * as pathlib from "path"
 
-export type CommentType = {
-  REMOVE_CURRENT_LINE?: string
-  REMOVE_NEXT_LINE?: string
-  REMOVE_BLOCK_START?: string
-  REMOVE_BLOCK_END?: string
-  REMOVE_FILE?: string
+// all possible comment types
+export enum MarkupComments {
+  RemoveCurrentLine = "remove-current-line",
+  RemoveNextLine = "remove-next-line",
+  RemoveBlockStart = "remove-block-start",
+  RemoveBlockEnd = "remove-block-end",
+  RemoveFile = "remove-file",
+  ReplaceNextLine = "replace-next-line",
 }
+
+// markup comments follow format:
+// // @prefix ActionName
+export const markupComment = (prefix: string, commentType: MarkupComments) =>
+  `${prefix} ${commentType}`
 
 /**
  * Take the file content as a string and remove any
@@ -44,10 +51,32 @@ function removeNextLine(contents: string, comment: string): string {
 }
 
 /**
+ * Take the file content as a string and replace the current line
+ * of code with the contents of the REPLACE_NEXT_LINE comment before it
+ */
+function replaceNextLine(contents: string, comment: string): string {
+  const lines = contents.split("\n")
+  const result = lines.map((line, index) => {
+    const prevLine = lines[index - 1]
+    if (prevLine?.includes(comment)) {
+      // @demo replace-next-line const foo = "bar"
+      // const foo = "baz"
+      // should replace the 'const foo = "baz"' line with `const foo = "bar"`
+      const newLineContent = prevLine.replace("//", "").replace(comment, "").trim()
+      console.log("replacing next line", { line, prevLine, newLineContent })
+      return newLineContent
+    } else {
+      return line
+    }
+  })
+  return result.join("\n")
+}
+
+/**
  * Take the file content as a string and remove the lines of code between
  * start and end block comments
  */
-function removeBlock(contents: string, comment: { start: string; end: string }): string {
+function removeBlocks(contents: string, comment: { start: string; end: string }): string {
   const { start, end } = comment
   const lines = contents.split("\n")
 
@@ -69,33 +98,43 @@ function removeBlock(contents: string, comment: { start: string; end: string }):
   const anotherBlockExists =
     findIndex(lines, start) !== NOT_FOUND && findIndex(lines, end) !== NOT_FOUND
   if (anotherBlockExists) {
-    return removeBlock(updateContents, comment)
+    return removeBlocks(updateContents, comment)
   }
 
   return updateContents
 }
 
 /**
- * Perform all remove operations possible in a file
+ * Perform all operations possible in a file
  * @param contents The file contents as a string
  * @return The file contents with all remove operations performed
  */
-function updateFile(contents: string, commentTypes: CommentType): string {
+export function updateFile(contents: string, markupPrefix: string): string {
   let result = contents
-  if (commentTypes.REMOVE_BLOCK_START && commentTypes.REMOVE_BLOCK_END) {
-    result = removeBlock(result, {
-      start: commentTypes.REMOVE_BLOCK_START,
-      end: commentTypes.REMOVE_BLOCK_END,
-    })
-  }
-  if (commentTypes.REMOVE_CURRENT_LINE) {
-    result = removeCurrentLine(contents, commentTypes.REMOVE_CURRENT_LINE)
-  }
-  if (commentTypes.REMOVE_NEXT_LINE) {
-    result = removeNextLine(contents, commentTypes.REMOVE_NEXT_LINE)
-  }
+  result = removeBlocks(result, {
+    start: markupComment(markupPrefix, MarkupComments.RemoveBlockStart),
+    end: markupComment(markupPrefix, MarkupComments.RemoveBlockEnd),
+  })
+  result = removeCurrentLine(result, markupComment(markupPrefix, MarkupComments.RemoveCurrentLine))
+  result = removeNextLine(result, markupComment(markupPrefix, MarkupComments.RemoveNextLine))
+  result = replaceNextLine(result, markupComment(markupPrefix, MarkupComments.ReplaceNextLine))
+
+  // todo add observer block handling
   return result
 }
+
+const DEFAULT_MATCHING_GLOBS = [
+  "!**/.DS_Store",
+  "!**/.expo{,/**}",
+  "!**/.git{,/**}",
+  "!**/.vscode{,/**}",
+  "!**/node_modules{,/**}",
+  "!**/ios/build{,/**}",
+  "!**/ios/Pods{,/**}",
+  "!**/ios/*.xcworkspace{,/**}",
+  "!**/android/build{,/**}",
+  "!**/android/app/build{,/**}",
+]
 
 /**
  * Perform replace on all types of markup
@@ -104,23 +143,10 @@ function updateFile(contents: string, commentTypes: CommentType): string {
  */
 
 export function findFiles(targetDir: string, matching?: string[]) {
-  const MATCHING_GLOBS = [
-    "!**/.DS_Store",
-    "!**/.expo{,/**}",
-    "!**/.git{,/**}",
-    "!**/.vscode{,/**}",
-    "!**/node_modules{,/**}",
-    "!**/ios/build{,/**}",
-    "!**/ios/Pods{,/**}",
-    "!**/ios/*.xcworkspace{,/**}",
-    "!**/android/build{,/**}",
-    "!**/android/app/build{,/**}",
-  ]
-
   const filePaths = filesystem
     .cwd(targetDir)
     .find({
-      matching: matching ?? MATCHING_GLOBS,
+      matching: matching ?? DEFAULT_MATCHING_GLOBS,
       recursive: true,
       files: true,
       directories: false,
@@ -129,28 +155,83 @@ export function findFiles(targetDir: string, matching?: string[]) {
   return filePaths
 }
 
-export async function updateFiles({
+export function removeEmptyDirs({
+  targetDir,
+  dryRun,
+  matching = DEFAULT_MATCHING_GLOBS,
+}: {
+  targetDir: string
+  dryRun: boolean
+  matching?: string[]
+}) {
+  let removedDirs: string[] = []
+  const getEmptyDirPaths = () =>
+    filesystem
+      .cwd(targetDir)
+      .find({
+        matching,
+        recursive: true,
+        files: false,
+        directories: true,
+      })
+      .map((path) => pathlib.join(targetDir, path))
+      .filter((path) => !filesystem.list(path)?.length)
+
+  let emptyDirPaths = getEmptyDirPaths()
+  while (emptyDirPaths.length > 0) {
+    emptyDirPaths.forEach((path) => {
+      if (!dryRun) filesystem.remove(path)
+      removedDirs.push(path)
+    })
+    emptyDirPaths = getEmptyDirPaths()
+  }
+
+  return removedDirs
+}
+
+export async function deleteFiles({
   filePaths,
-  markupRegex,
-  commentTypes,
+  comment,
   dryRun = true,
-  onlyMarkup = false,
 }: {
   filePaths: string[]
-  markupRegex: RegExp
-  commentTypes: {
-    REMOVE_CURRENT_LINE?: string
-    REMOVE_NEXT_LINE?: string
-    REMOVE_BLOCK_START?: string
-    REMOVE_BLOCK_END?: string
-    REMOVE_FILE?: string
-  }
+  comment: string
   dryRun?: boolean
-  onlyMarkup?: boolean
+}) {
+  const commentResults = await Promise.allSettled(
+    filePaths.map(async (path) => {
+      const { remove } = filesystem
+      const { exists } = patching
+      if (await exists(path, comment)) {
+        if (!dryRun) {
+          remove(path)
+        }
+        return { path }
+      }
+    }),
+  )
+
+  return commentResults
+}
+
+// remove file action
+// all other actions update the contents of the file
+
+export async function updateFiles({
+  filePaths,
+  markupPrefix,
+  markupCommentRegex,
+  dryRun = true,
+  removeMarkupOnly = false,
+}: {
+  filePaths: string[]
+  markupPrefix: string
+  markupCommentRegex: RegExp
+  dryRun?: boolean
+  removeMarkupOnly?: boolean
 }) {
   const sanitize = (contents: string) => {
-    const result = contents.replace(markupRegex, "")
-    return result
+    return contents.replace(markupCommentRegex, "")
   }
 
   // Go through every file path and handle the operation for each comment
@@ -158,19 +239,14 @@ export async function updateFiles({
     filePaths.map(async (path) => {
       const { exists, update } = patching
       const { read } = filesystem
-      const {
-        REMOVE_CURRENT_LINE,
-        REMOVE_NEXT_LINE,
-        REMOVE_BLOCK_START,
-        REMOVE_BLOCK_END,
-        REMOVE_FILE,
-      } = commentTypes
 
       const comments: string[] = []
 
-      if (REMOVE_FILE && (await exists(path, REMOVE_FILE))) {
+      // remove files first
+      if (await exists(path, markupComment(markupPrefix, MarkupComments.RemoveFile))) {
+        console.log("removing file", path)
         if (!dryRun) {
-          if (onlyMarkup) {
+          if (removeMarkupOnly) {
             const contents = read(path)
             const sanitized = sanitize(contents)
             filesystem.write(path, sanitized)
@@ -178,23 +254,24 @@ export async function updateFiles({
             filesystem.remove(path)
           }
         }
-        comments.push(REMOVE_FILE)
+        comments.push(MarkupComments.RemoveFile)
         return { path, comments }
       }
 
-      const operations = [
-        REMOVE_CURRENT_LINE,
-        REMOVE_NEXT_LINE,
-        REMOVE_BLOCK_START,
-        REMOVE_BLOCK_END,
-      ]
+      // filter out RemoveFile (weve already handled it above)
+      // and create a regex for the remaining comment types
+      const operationComments = Object.keys(MarkupComments)
+        .filter((key) => MarkupComments[key] !== MarkupComments.RemoveFile)
+        .map((key) => markupComment(markupPrefix, MarkupComments[key]))
 
-      const shouldUpdate = onlyMarkup ? markupRegex : RegExp(operations.join("|"), "g")
+      const shouldUpdate = removeMarkupOnly
+        ? markupCommentRegex
+        : RegExp(operationComments.join("|"), "g")
 
       if (await exists(path, shouldUpdate)) {
         const before = read(path)
 
-        operations.forEach((operation) => {
+        operationComments.forEach((operation) => {
           if (before.includes(operation)) {
             comments.push(operation)
           }
@@ -203,10 +280,11 @@ export async function updateFiles({
         if (!dryRun)
           await update(path, (contents: string) => {
             let result = contents
-            if (onlyMarkup) {
+            if (removeMarkupOnly) {
               result = sanitize(result)
             } else {
-              result = updateFile(result, commentTypes)
+              result = updateFile(result, markupPrefix)
+              result = sanitize(result)
             }
             return result
           })

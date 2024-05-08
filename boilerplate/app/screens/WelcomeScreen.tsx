@@ -17,9 +17,10 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-// @mst observer-block-start
+// @mst replace-next-line export const WelcomeScreen: FC<WelcomeScreenProps> = (
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
   _props, // @demo remove-current-line
+  // @mst replace-next-line ) => {
 ) {
   // @demo remove-block-start
   const { navigation } = _props
@@ -69,7 +70,8 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
       </View>
     </View>
   )
-}) // @mst observer-block-end
+  // @mst replace-next-line }
+})
 
 const $container: ViewStyle = {
   flex: 1,
