@@ -222,13 +222,11 @@ export async function deleteFiles({
 export async function updateFiles({
   filePaths,
   markupPrefix,
-  // markupCommentRegex,
   dryRun = true,
   removeMarkupOnly = false,
 }: {
   filePaths: string[]
   markupPrefix: string
-  markupCommentRegex: RegExp
   dryRun?: boolean
   removeMarkupOnly?: boolean
 }) {

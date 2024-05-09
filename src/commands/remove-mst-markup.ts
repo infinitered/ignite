@@ -2,7 +2,7 @@ import { GluegunToolbox } from "gluegun"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 import { findFiles, updateFiles } from "../tools/markup"
-import { MST_MARKUP_PREFIX, mstCommentRegex } from "../tools/mst"
+import { MST_MARKUP_PREFIX } from "../tools/mst"
 
 module.exports = {
   alias: ["rmstm", "remove-mst-markup"],
@@ -24,7 +24,6 @@ module.exports = {
     const mstCommentResults = await updateFiles({
       filePaths,
       markupPrefix: MST_MARKUP_PREFIX,
-      markupCommentRegex: mstCommentRegex,
       dryRun,
       removeMarkupOnly: true,
     })

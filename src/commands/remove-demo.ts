@@ -3,7 +3,7 @@ import * as pathlib from "path"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
-import { DEMO_MARKUP_PREFIX, demoCommentRegex } from "../tools/demo"
+import { DEMO_MARKUP_PREFIX } from "../tools/demo"
 
 const MATCHING_GLOBS = [
   "!**/.DS_Store",
@@ -40,7 +40,6 @@ module.exports = {
     const demoCommentResults = await updateFiles({
       filePaths,
       markupPrefix: DEMO_MARKUP_PREFIX,
-      markupCommentRegex: demoCommentRegex,
       dryRun,
     })
 

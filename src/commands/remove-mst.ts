@@ -2,7 +2,7 @@ import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
-import { MST_MARKUP_PREFIX, mstCommentRegex, mstDependenciesToRemove } from "../tools/mst"
+import { MST_MARKUP_PREFIX, mstDependenciesToRemove } from "../tools/mst"
 import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
 import { removePackageJSONDependencies } from "../tools/dependencies"
 
@@ -37,7 +37,6 @@ module.exports = {
     const mstCommentResults = await updateFiles({
       filePaths,
       markupPrefix: MST_MARKUP_PREFIX,
-      markupCommentRegex: mstCommentRegex,
       removeMarkupOnly: false,
       dryRun: dryRun,
     })

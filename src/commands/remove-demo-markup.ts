@@ -2,7 +2,7 @@ import { GluegunToolbox } from "gluegun"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 import { findFiles, updateFiles } from "../tools/markup"
-import { DEMO_MARKUP_PREFIX, demoCommentRegex } from "../tools/demo"
+import { DEMO_MARKUP_PREFIX } from "../tools/demo"
 
 module.exports = {
   alias: ["rdm"],
@@ -24,7 +24,6 @@ module.exports = {
     const demoCommentResults = await updateFiles({
       filePaths,
       markupPrefix: DEMO_MARKUP_PREFIX,
-      markupCommentRegex: demoCommentRegex,
       dryRun,
       removeMarkupOnly: true,
     })

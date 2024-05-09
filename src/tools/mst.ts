@@ -6,5 +6,3 @@ export const mstDependenciesToRemove = [
   "mobx-state-tree",
   "reactotron-mst",
 ]
-
-export const mstCommentRegex = /(\/\/|#)\s*@mst.*|{?\/.*@mst.*\/}?/gm

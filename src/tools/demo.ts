@@ -5,5 +5,3 @@ export const demoDependenciesToRemove = [
   "expo-application",
   "react-native-drawer-layout",
 ]
-
-export const demoCommentRegex = /(\/\/|#)\s*@demo.*|{?\/.*@demo.*\/}?/gm
