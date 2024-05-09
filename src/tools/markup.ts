@@ -121,7 +121,6 @@ export function updateFile(contents: string, markupPrefix: string): string {
   result = removeNextLine(result, markupComment(markupPrefix, MarkupComments.RemoveNextLine))
   result = replaceNextLine(result, markupComment(markupPrefix, MarkupComments.ReplaceNextLine))
 
-  // todo add observer block handling
   return result
 }
 
@@ -215,9 +214,6 @@ export async function deleteFiles({
 
   return commentResults
 }
-
-// remove file action
-// all other actions update the contents of the file
 
 export async function updateFiles({
   filePaths,
