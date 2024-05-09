@@ -347,6 +347,23 @@ module.exports = {
     const defaultMST = true
     let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
 
+    if (includeMST === undefined) {
+      if (!removeDemo) {
+        includeMST = true
+      } else {
+        // only ask if we're removing the demo code
+        const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
+          type: "confirm",
+          name: "includeMST",
+          message: "Include MobX-State-Tree code? (recommended)",
+          initial: defaultMST,
+          format: prettyPrompt.format.boolean,
+          prefix,
+        }))
+        includeMST = includeMSTResponse.includeMST
+      }
+    }
+
     if (!removeDemo && includeMST === false) {
       p()
       p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
@@ -354,18 +371,6 @@ module.exports = {
       includeMST = true
     }
 
-    // only ask if we're removing the demo code
-    if (removeDemo && includeMST === undefined) {
-      const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
-        type: "confirm",
-        name: "includeMST",
-        message: "Include MobX-State-Tree code? (recommended)",
-        initial: defaultMST,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      includeMST = includeMSTResponse.includeMST
-    }
     // #endregion
 
     // #region Packager
