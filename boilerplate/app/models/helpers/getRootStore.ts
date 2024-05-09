@@ -10,3 +10,5 @@ import { RootStore, RootStoreModel } from "../RootStore"
 export const getRootStore = (self: IStateTreeNode): RootStore => {
   return getRoot<typeof RootStoreModel>(self)
 }
+
+// @mst remove-file

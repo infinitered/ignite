@@ -1,11 +1,18 @@
-import { demo } from "./demo"
+import {
+  MarkupComments,
+  markupComment,
+  removeBlocks,
+  removeCurrentLine,
+  removeNextLine,
+  updateFile,
+} from "./markup"
 
-const { REMOVE_BLOCK_START, REMOVE_BLOCK_END, REMOVE_CURRENT_LINE, REMOVE_NEXT_LINE } =
-  demo.CommentType
+const TEST_MARKUP_PREFIX = "@test"
 
-describe("demo", () => {
+describe("markup", () => {
   describe("removeCurrentLine", () => {
-    it(`should remove line with "// ${demo.CommentType.REMOVE_CURRENT_LINE}" comment`, () => {
+    it(`should remove line with "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveCurrentLine}" comment`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
         import React from "react"
         import { StyleProp, View, ViewStyle } from "react-native"
@@ -33,15 +40,16 @@ describe("demo", () => {
         
         const $divider: ViewStyle = {
             flexGrow: 0,
-            flexShrink: 0, // ${demo.CommentType.REMOVE_CURRENT_LINE}
+            flexShrink: 0, // ${comment}
         }
       `
-      const result = demo.removeCurrentLine(contents)
+      const result = removeCurrentLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_CURRENT_LINE)
+      expect(result).not.toContain(comment)
     })
 
-    it(`should remove line with "/* ${demo.CommentType.REMOVE_CURRENT_LINE} */" comment`, () => {
+    it(`should remove line with "/* ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveCurrentLine} */" comment`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
         import React from "react"
         import { StyleProp, View, ViewStyle } from "react-native"
@@ -61,7 +69,7 @@ describe("demo", () => {
                     $divider,
                     type === "horizontal" && { height: size },
                     type === "vertical" && { width: size },
-                    $styleOverride, {/* ${demo.CommentType.REMOVE_CURRENT_LINE} */}
+                    $styleOverride, {/* ${comment} */}
                   ]}
               />
             )
@@ -69,18 +77,19 @@ describe("demo", () => {
         
         const $divider: ViewStyle = {
             flexGrow: 0,
-            flexShrink: 0,
+            flexShrink: 0, // ${comment}
         }
       `
-      const result = demo.removeCurrentLine(contents)
+      const result = removeCurrentLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_CURRENT_LINE)
+      expect(result).not.toContain(comment)
     })
 
-    it(`should remove line with "# ${REMOVE_CURRENT_LINE}" comment`, () => {
+    it(`should remove line with "# ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveCurrentLine}" comment`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
       # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
-      appId: com.helloworld # ${REMOVE_CURRENT_LINE}
+      appId: com.helloworld # ${comment}
       env:
         TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
         FAVORITES_TEXT: "Switch on to only show favorites"
@@ -90,59 +99,63 @@ describe("demo", () => {
       - tapOn: "Podcast, tab, 3 of 4"
       - assertVisible: "React Native Radio episodes"
       `
-      const result = demo.removeCurrentLine(contents)
+      const result = removeCurrentLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(REMOVE_CURRENT_LINE)
+      expect(result).not.toContain(comment)
     })
   })
-
   describe("removeNextLine", () => {
-    it(`should remove comment and next line after "// ${demo.CommentType.REMOVE_NEXT_LINE}"`, () => {
+    it(`should remove comment and next line after "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveNextLine}"`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveNextLine)
       const contents = `
-        export * from "./WelcomeScreen"
-        export * from "./LoginScreen"
-        // ${demo.CommentType.REMOVE_NEXT_LINE}
-        export * from "./DemoCommunityScreen"
-      `
-      const result = demo.removeNextLine(contents)
+          export * from "./WelcomeScreen"
+          export * from "./LoginScreen"
+          // ${comment}
+          export * from "./DemoCommunityScreen"
+        `
+      const result = removeNextLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
+      expect(result).not.toContain(comment)
       expect(result).not.toContain("DemoCommunityScreen")
     })
 
-    it(`should remove comment and next line after "/* ${demo.CommentType.REMOVE_NEXT_LINE} */"`, () => {
+    it(`should remove comment and next line after "/* ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveNextLine} */"`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveNextLine)
       const contents = `
-        export * from "./WelcomeScreen"
-        export * from "./LoginScreen"
-        /* ${demo.CommentType.REMOVE_NEXT_LINE} */
-        export * from "./DemoCommunityScreen"
-      `
-      const result = demo.removeNextLine(contents)
+          export * from "./WelcomeScreen"
+          export * from "./LoginScreen"
+          /* ${comment} */
+          export * from "./DemoCommunityScreen"
+        `
+      const result = removeNextLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
+      expect(result).not.toContain(comment)
       expect(result).not.toContain("DemoCommunityScreen")
     })
-    it(`should remove comment and next line after "# ${REMOVE_NEXT_LINE}"`, () => {
-      const contents = `
-      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
-      # ${REMOVE_NEXT_LINE}
-      appId: com.helloworld
-      env:
-        TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
-        FAVORITES_TEXT: "Switch on to only show favorites"
 
-      ---
-      - runFlow: Login.yaml
-      - tapOn: "Podcast, tab, 3 of 4"
-      - assertVisible: "React Native Radio episodes"
-      `
-      const result = demo.removeNextLine(contents)
+    it(`should remove comment and next line after "# ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveNextLine}"`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveNextLine)
+      const contents = `
+        # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+        # ${comment}
+        appId: com.helloworld
+        env:
+          TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+          FAVORITES_TEXT: "Switch on to only show favorites"
+  
+        ---
+        - runFlow: Login.yaml
+        - tapOn: "Podcast, tab, 3 of 4"
+        - assertVisible: "React Native Radio episodes"
+        `
+      const result = removeNextLine(contents, comment)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(REMOVE_NEXT_LINE)
+      expect(result).not.toContain(comment)
       expect(result).not.toContain("appId: com.helloworld")
     })
 
-    it(`should not modify other lines other than "// ${demo.CommentType.REMOVE_NEXT_LINE} and line after"`, () => {
+    it(`should not modify other lines other than "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveNextLine} and line after"`, () => {
+      const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveNextLine)
       // simulate whitespace and new lines of file after prettier format
       const contents = [
         `export * from "./DemoIcon"`,
@@ -150,14 +163,14 @@ describe("demo", () => {
         `export * from "./DemoButton"`,
         `export * from "./DemoListItem"`,
         `export * from "./DemoHeader"`,
-        `// ${demo.CommentType.REMOVE_NEXT_LINE}`,
+        `// ${comment}`,
         `export * from "./DemoAutoImage"`,
         `export * from "./DemoText"`,
       ].join("\n")
 
-      const result = demo.removeNextLine(contents)
-      expect(result).not.toContain(demo.CommentType.REMOVE_NEXT_LINE)
-      expect(result).not.toContain("DemoAutoImage")
+      const result = removeNextLine(contents, comment)
+      expect(result).toMatchSnapshot()
+      expect(result).not.toContain(comment)
       expect(result).toEqual(
         [
           `export * from "./DemoIcon"`,
@@ -170,69 +183,74 @@ describe("demo", () => {
       )
     })
   })
-
   describe("removeBlock", () => {
-    it(`should remove comments and lines between "// ${demo.CommentType.REMOVE_BLOCK_START}" and "// ${demo.CommentType.REMOVE_BLOCK_END}"`, () => {
+    it(`should remove comments and lines between "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockStart}" and "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockEnd}"`, () => {
+      const startComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockStart)
+      const endComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockEnd)
       const contents = `
-        export * from "./WelcomeScreen"
-        export * from "./LoginScreen"
-        // ${demo.CommentType.REMOVE_BLOCK_START}
-        export * from "./DemoCommunityScreen"
-        export * from "./DemoDebugScreen"
-        export * from "./DemoShowroomScreen/DemoShowroomScreen"
-        // ${demo.CommentType.REMOVE_BLOCK_END}
-        export * from "./ErrorScreen/ErrorBoundary"
-        // export other screens here
-      `
-      const result = demo.removeBlock(contents)
+          export * from "./WelcomeScreen"
+          export * from "./LoginScreen"
+          // ${startComment}
+          export * from "./DemoCommunityScreen"
+          export * from "./DemoDebugScreen"
+          export * from "./DemoShowroomScreen/DemoShowroomScreen"
+          // ${endComment}
+          export * from "./ErrorScreen/ErrorBoundary"
+          // export other screens here
+        `
+      const result = removeBlocks(contents, { start: startComment, end: endComment })
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_START)
-      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_END)
+      expect(result).not.toContain(startComment)
+      expect(result).not.toContain(endComment)
       expect(result).not.toContain("DemoCommunityScreen")
       expect(result).not.toContain("DemoDebugScreen")
       expect(result).not.toContain("DemoShowroomScreen")
     })
 
-    it(`should remove comments and lines between "/* ${demo.CommentType.REMOVE_BLOCK_START} */" and "/* ${demo.CommentType.REMOVE_BLOCK_END} */"`, () => {
+    it(`should remove comments and lines between "/* ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockStart} */" and "/* ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockEnd} */"`, () => {
+      const startComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockStart)
+      const endComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockEnd)
       const contents = `
-        export * from "./WelcomeScreen"
-        export * from "./LoginScreen"
-        /* ${demo.CommentType.REMOVE_BLOCK_START} */
-        export * from "./DemoCommunityScreen"
-        export * from "./DemoDebugScreen"
-        export * from "./DemoShowroomScreen/DemoShowroomScreen"
-        /* ${demo.CommentType.REMOVE_BLOCK_END} */
-        export * from "./ErrorScreen/ErrorBoundary"
-        // export other screens here
-      `
-      const result = demo.removeBlock(contents)
+          export * from "./WelcomeScreen"
+          export * from "./LoginScreen"
+          /* ${startComment} */
+          export * from "./DemoCommunityScreen"
+          export * from "./DemoDebugScreen"
+          export * from "./DemoShowroomScreen/DemoShowroomScreen"
+          /* ${endComment} */
+          export * from "./ErrorScreen/ErrorBoundary"
+          // export other screens here
+        `
+      const result = removeBlocks(contents, { start: startComment, end: endComment })
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_START)
-      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_END)
+      expect(result).not.toContain(startComment)
+      expect(result).not.toContain(endComment)
       expect(result).not.toContain("DemoCommunityScreen")
       expect(result).not.toContain("DemoDebugScreen")
       expect(result).not.toContain("DemoShowroomScreen")
     })
 
-    it(`should remove comments and lines between "# ${REMOVE_BLOCK_START}" and "# ${REMOVE_BLOCK_END}"`, () => {
+    it(`should remove comments and lines between "# ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockStart}" and "# ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockEnd}"`, () => {
+      const startComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockStart)
+      const endComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockEnd)
       const contents = `
-      # ${REMOVE_BLOCK_START}
-      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
-      appId: com.helloworld
-      env:
-      TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
-      FAVORITES_TEXT: "Switch on to only show favorites"
-      # ${REMOVE_BLOCK_END}
-
-      ---
-      - runFlow: Login.yaml
-      - tapOn: "Podcast, tab, 3 of 4"
-      - assertVisible: "React Native Radio episodes"
-      `
-      const result = demo.removeBlock(contents)
+        # ${startComment}
+        # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+        appId: com.helloworld
+        env:
+        TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
+        FAVORITES_TEXT: "Switch on to only show favorites"
+        # ${endComment}
+  
+        ---
+        - runFlow: Login.yaml
+        - tapOn: "Podcast, tab, 3 of 4"
+        - assertVisible: "React Native Radio episodes"
+        `
+      const result = removeBlocks(contents, { start: startComment, end: endComment })
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(REMOVE_BLOCK_START)
-      expect(result).not.toContain(REMOVE_BLOCK_END)
+      expect(result).not.toContain(startComment)
+      expect(result).not.toContain(endComment)
       expect(result).not.toContain("# flow")
       expect(result).not.toContain("appId: com.helloworld")
       expect(result).not.toContain("env:")
@@ -240,22 +258,24 @@ describe("demo", () => {
       expect(result).not.toContain("FAVORITES_TEXT:")
     })
 
-    it(`should remove multiple "// ${demo.CommentType.REMOVE_BLOCK_START}" and "// ${demo.CommentType.REMOVE_BLOCK_END}" sections in the same file string`, () => {
-      const contents: string = [
+    it(`should remove multiple "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockStart}" and "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveBlockEnd}" sections in the same file string`, () => {
+      const startComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockStart)
+      const endComment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveBlockEnd)
+      const contents = [
         `export * from "./WelcomeScreen"`,
-        `// ${REMOVE_BLOCK_START}`,
+        `// ${startComment}`,
         `export * from "./LoginScreen"`,
-        `// ${REMOVE_BLOCK_END}`,
-        `// ${REMOVE_BLOCK_START}`,
+        `// ${endComment}`,
+        `// ${startComment}`,
         `export * from "./DemoCommunityScreen"`,
         `export * from "./DemoDebugScreen"`,
         `export * from "./DemoShowroomScreen/DemoShowroomScreen"`,
-        `// ${REMOVE_BLOCK_END}`,
+        `// ${endComment}`,
         `export * from "./ErrorScreen/ErrorBoundary"`,
         `// export other screens here'`,
       ].join("\n")
 
-      const result = demo.removeBlock(contents)
+      const result = removeBlocks(contents, { start: startComment, end: endComment })
 
       expect(result).toEqual(
         [
@@ -264,18 +284,23 @@ describe("demo", () => {
           `// export other screens here'`,
         ].join("\n"),
       )
-      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_START)
-      expect(result).not.toContain(demo.CommentType.REMOVE_BLOCK_END)
+      expect(result).not.toContain(startComment)
+      expect(result).not.toContain(endComment)
     })
   })
 
   describe("remove", () => {
+    const removeMarkupPrefix = "@demo"
     it("should remove all comments in WelcomeScreen", () => {
-      const result = demo.remove(WelcomeScreen)
+      const blockStartComment = markupComment(removeMarkupPrefix, MarkupComments.RemoveBlockStart)
+      const blockEndComment = markupComment(removeMarkupPrefix, MarkupComments.RemoveBlockEnd)
+      const currentLineComment = markupComment(removeMarkupPrefix, MarkupComments.RemoveCurrentLine)
+
+      const result = updateFile(WelcomeScreen, removeMarkupPrefix)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(REMOVE_BLOCK_START)
-      expect(result).not.toContain(REMOVE_BLOCK_END)
-      expect(result).not.toContain(REMOVE_CURRENT_LINE)
+      expect(result).not.toContain(blockStartComment)
+      expect(result).not.toContain(blockEndComment)
+      expect(result).not.toContain(currentLineComment)
       expect(result).not.toContain(
         /* jsx */ `<Button preset="reversed" tx="welcomeScreen.letsGo" onPress={goNext} />`,
       )
@@ -284,11 +309,15 @@ describe("demo", () => {
     })
 
     it("should remove all comments in AppNavigator", () => {
-      const result = demo.remove(AppNavigator)
+      const blockStartComment = markupComment(removeMarkupPrefix, MarkupComments.RemoveBlockStart)
+      const blockEndComment = markupComment(removeMarkupPrefix, MarkupComments.RemoveBlockEnd)
+      const currentLineComment = markupComment(removeMarkupPrefix, MarkupComments.RemoveCurrentLine)
+
+      const result = updateFile(AppNavigator, removeMarkupPrefix)
       expect(result).toMatchSnapshot()
-      expect(result).not.toContain(REMOVE_BLOCK_START)
-      expect(result).not.toContain(REMOVE_BLOCK_END)
-      expect(result).not.toContain(REMOVE_CURRENT_LINE)
+      expect(result).not.toContain(blockStartComment)
+      expect(result).not.toContain(blockEndComment)
+      expect(result).not.toContain(currentLineComment)
       expect(result).not.toContain(`NavigatorScreenParams`)
       expect(result).not.toContain(`import { useStores } from "../models"`)
       expect(result).not.toContain(
