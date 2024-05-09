@@ -347,6 +347,13 @@ module.exports = {
     const defaultMST = true
     let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
 
+    if (!removeDemo && includeMST === false) {
+      p()
+      p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
+      p(yellow(`Setting includeMST to true.`))
+      includeMST = true
+    }
+
     // only ask if we're removing the demo code
     if (removeDemo && includeMST === undefined) {
       const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
@@ -731,7 +738,21 @@ module.exports = {
       // #endregion
 
       // #region Remove MST code
-      if (removeDemo && !includeMST) {
+      if (includeMST) {
+        // remove MST markup only
+        startSpinner(`Removing MobX-State-Tree markup`)
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(`${IGNITE} remove-mst-markup "${targetPath}"`, {
+            onProgress: log,
+          })
+        } catch (e) {
+          log(e)
+          p(yellow(`Unable to remove MobX-State-Tree markup`))
+        }
+        stopSpinner(`Removing MobX-State-Tree markup`, "🛠️")
+      } else {
         startSpinner(`Removing MobX-State-Tree code`)
         try {
           const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
@@ -745,6 +766,7 @@ module.exports = {
         }
         stopSpinner(`Removing MobX-State-Tree code`, "🛠️")
       }
+
       // #endregion
 
       // #region Format generator templates EOL for Windows

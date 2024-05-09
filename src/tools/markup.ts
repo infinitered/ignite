@@ -16,6 +16,11 @@ export enum MarkupComments {
 export const markupComment = (prefix: string, commentType: MarkupComments) =>
   `${prefix} ${commentType}`
 
+export const markupRegex = (prefix: string) => {
+  const pattern = `(\\/\\/|#)\\s*${prefix}.*|{?\\/.*${prefix}.*\\/}?`
+  return new RegExp(pattern, "gm")
+}
+
 /**
  * Take the file content as a string and remove any
  * line of code with an `// @x remove-current-line` comment
@@ -217,7 +222,7 @@ export async function deleteFiles({
 export async function updateFiles({
   filePaths,
   markupPrefix,
-  markupCommentRegex,
+  // markupCommentRegex,
   dryRun = true,
   removeMarkupOnly = false,
 }: {
@@ -228,7 +233,7 @@ export async function updateFiles({
   removeMarkupOnly?: boolean
 }) {
   const sanitize = (contents: string) => {
-    return contents.replace(markupCommentRegex, "")
+    return contents.replace(markupRegex(markupPrefix), "")
   }
 
   // Go through every file path and handle the operation for each comment
@@ -262,7 +267,7 @@ export async function updateFiles({
         .map((key) => markupComment(markupPrefix, MarkupComments[key]))
 
       const shouldUpdate = removeMarkupOnly
-        ? markupCommentRegex
+        ? markupRegex(markupPrefix)
         : RegExp(operationComments.join("|"), "g")
 
       if (await exists(path, shouldUpdate)) {
