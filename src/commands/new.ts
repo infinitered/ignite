@@ -618,6 +618,18 @@ module.exports = {
         const npmrcPath = path(targetPath, ".npmrc")
         const npmrcContents = read(npmrcPath)
         write(npmrcPath, `${npmrcContents}${EOL}node-linker=hoisted${EOL}`)
+      } else if (packagerName === "yarn") {
+        const yarnVersion = await packager.run("-v", { packagerName })
+        const yarnMajorVersion = parseInt(yarnVersion.split(".")[0], 10)
+
+        // if yarn version > 1 fix .yarnrc.yml
+        if (yarnMajorVersion > 1) {
+          log(`yarn v${yarnMajorVersion} found... fixing .yarnrc.yml...`)
+          // append `nodeLinker: node-modules` to .yarnrc.yml
+          const yarnrcPath = path(targetPath, ".yarnrc.yml")
+          const yarnrcContents = read(yarnrcPath)
+          write(yarnrcPath, `${yarnrcContents ?? ""}${EOL}nodeLinker: node-modules${EOL}`)
+        }
       }
 
       // check if there is a dependency cache using a hash of the package.json
