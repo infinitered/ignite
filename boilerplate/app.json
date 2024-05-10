@@ -59,8 +59,7 @@
         "expo-build-properties",
         {
           "ios": {
-            "newArchEnabled": false,
-            "flipper": false
+            "newArchEnabled": false
           },
           "android": {
             "newArchEnabled": false
