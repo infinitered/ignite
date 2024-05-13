@@ -28,7 +28,6 @@ import {
   Icon,
   ListView,
   Screen,
-  Switch,
   Text,
 } from "../components"
 import { isRTL, translate } from "../i18n"
@@ -39,6 +38,7 @@ import type { ThemedStyle } from "app/theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { useAppTheme } from "app/utils/useAppTheme"
+import { Switch } from "app/components/Toggle/Switch"
 
 const ICON_SIZE = 14
 
@@ -149,11 +149,12 @@ const EpisodeCard = observer(function EpisodeCard({
   onPressFavorite: () => void
   isFavorite: boolean
 }) {
-  const liked = useSharedValue(isFavorite ? 1 : 0)
   const {
     theme: { colors },
     themed,
   } = useAppTheme()
+
+  const liked = useSharedValue(isFavorite ? 1 : 0)
   const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
@@ -246,7 +247,7 @@ const EpisodeCard = observer(function EpisodeCard({
           </View>
         )
       },
-    [],
+    [themed],
   )
 
   return (

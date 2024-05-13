@@ -10,10 +10,11 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { colors } from "../../theme"
 import { iconRegistry } from "../Icon"
 import { isRTL } from "app/i18n"
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
+import { useAppTheme } from "app/utils/useAppTheme"
+import { ThemedStyle } from "app/theme"
 
 export interface SwitchToggleProps extends Omit<ToggleProps<SwitchInputProps>, "ToggleInput"> {
   /**
@@ -48,6 +49,11 @@ function SwitchInput(props: SwitchInputProps) {
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,
   } = props
+
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
   const animate = useRef(new Animated.Value(on ? 1 : 0)).current // Initial value is set based on isActive
   const [opacity] = useState(new Animated.Value(0))
 
@@ -108,17 +114,18 @@ function SwitchInput(props: SwitchInputProps) {
   })()
 
   const rtlAdjustment = isRTL ? -1 : 1
+  const $themedSwitchInner = React.useMemo(() => themed($switchInner), [themed])
 
   const offsetLeft = ($innerStyleOverride?.paddingStart ||
     $innerStyleOverride?.paddingLeft ||
-    $switchInner?.paddingStart ||
-    $switchInner?.paddingLeft ||
+    $themedSwitchInner?.paddingStart ||
+    $themedSwitchInner?.paddingLeft ||
     0) as number
 
   const offsetRight = ($innerStyleOverride?.paddingEnd ||
     $innerStyleOverride?.paddingRight ||
-    $switchInner?.paddingEnd ||
-    $switchInner?.paddingRight ||
+    $themedSwitchInner?.paddingEnd ||
+    $themedSwitchInner?.paddingRight ||
     0) as number
 
   const outputRange =
@@ -137,7 +144,7 @@ function SwitchInput(props: SwitchInputProps) {
     <View style={[$inputOuter, { backgroundColor: offBackgroundColor }, $outerStyleOverride]}>
       <Animated.View
         style={[
-          $switchInner,
+          $themedSwitchInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
           { opacity },
@@ -166,6 +173,10 @@ function SwitchInput(props: SwitchInputProps) {
  */
 function SwitchAccessibilityLabel(props: SwitchInputProps & { role: "on" | "off" }) {
   const { on, disabled, status, accessibilityMode, role, innerStyle, detailStyle } = props
+
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   if (!accessibilityMode) return null
 
@@ -212,7 +223,7 @@ const $inputOuter: StyleProp<ViewStyle> = [
   { height: 32, width: 56, borderRadius: 16, borderWidth: 0 },
 ]
 
-const $switchInner: ViewStyle = {
+const $switchInner: ThemedStyle<ViewStyle> = ({ colors }) => ({
   width: "100%",
   height: "100%",
   alignItems: "center",
@@ -221,7 +232,7 @@ const $switchInner: ViewStyle = {
   position: "absolute",
   paddingStart: 4,
   paddingEnd: 4,
-}
+})
 
 const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
   borderRadius: 12,

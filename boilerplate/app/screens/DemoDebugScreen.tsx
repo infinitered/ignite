@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import * as Application from "expo-application"
 import { LayoutAnimation, Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
-import { Button, ListItem, Screen, Text, Toggle } from "../components"
+import { Button, ListItem, Screen, Switch, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import type { ThemedStyle } from "app/theme"
 import { isRTL } from "../i18n"
@@ -64,9 +64,8 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
 
       <View style={themed($itemsContainer)}>
         <Button onPress={toggleTheme} text={`Switch Theme: ${themeContext}`} />
-        <Toggle
+        <Switch
           label="Dark Mode"
-          variant="switch"
           value={themeContext === "dark"}
           onValueChange={(value: boolean) => {
             setThemeContextOverride(value ? "dark" : "light")

@@ -1,6 +1,11 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+import { Text } from "../../../components"
+import { Demo } from "../DemoShowroomScreen"
+import { DemoDivider } from "../DemoDivider"
+import { DemoUseCase } from "../DemoUseCase"
+import type { ThemedStyle } from "app/theme"
 import {
   Checkbox,
   CheckboxToggleProps,
@@ -8,12 +13,7 @@ import {
   RadioToggleProps,
   Switch,
   SwitchToggleProps,
-  Text,
-} from "../../../components"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoDivider } from "../DemoDivider"
-import { DemoUseCase } from "../DemoUseCase"
-import type { ThemedStyle } from "app/theme"
+} from "app/components/Toggle"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
   const [value, setValue] = React.useState(props.value || false)
@@ -102,7 +102,7 @@ export const DemoToggle: Demo = {
       <ControlledRadio value status="disabled" containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value status="disabled" containerStyle={$centeredOneThirdCol} />
       <Text preset="formHelper" style={themed($centeredText)}>
-        Disabled status - disables the editability and mutes input
+        Disabled status - disables the edibility and mutes input
       </Text>
     </DemoUseCase>,
 
