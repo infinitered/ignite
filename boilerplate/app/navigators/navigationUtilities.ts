@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { BackHandler, Platform } from "react-native"
+import { BackHandler, Linking, Platform } from "react-native"
 import {
   NavigationState,
   PartialState,
@@ -147,8 +147,13 @@ export function useNavigationPersistence(storage: Storage, persistenceKey: strin
 
   const restoreState = async () => {
     try {
-      const state = (await storage.load(persistenceKey)) as NavigationProps["initialState"] | null
-      if (state) setInitialNavigationState(state)
+      const initialUrl = await Linking.getInitialURL()
+
+      // Only restore the state if app has not started from a deep link
+      if (!initialUrl) {
+        const state = (await storage.load(persistenceKey)) as NavigationProps["initialState"] | null
+        if (state) setInitialNavigationState(state)
+      }
     } finally {
       if (isMounted()) setIsRestored(true)
     }
