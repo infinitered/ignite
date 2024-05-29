@@ -6,9 +6,6 @@ const config = getDefaultConfig(__dirname);
 
 config.transformer.getTransformOptions = async () => ({
   transform: {
-    // TODO: Document why we added this
-    experimentalImportSupport: false,
-
     // Inline requires are very useful for deferring loading of large dependencies/components.
     // For example, we use it in app.tsx to conditionally load Reactotron.
     // However, this comes with some gotchas.
