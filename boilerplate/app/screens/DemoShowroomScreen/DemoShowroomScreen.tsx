@@ -150,25 +150,28 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         onClose={() => setOpen(false)}
         drawerType={isRTL ? "slide" : "back"}
         drawerPosition={isRTL ? "right" : "left"}
+        drawerStyle={{width: 350}}
         renderDrawerContent={() => (
           <View style={[$drawer, $drawerInsets]}>
-            <View style={$logoContainer}>
-              <Image source={logo} style={$logoImage} />
-            </View>
+            <View style={[isRTL ? $drawerRTL : { flex: 1 }]} pointerEvents="box-none">
+              <View style={$logoContainer}>
+                <Image source={logo} style={$logoImage} />
+              </View>
 
-            <ListView<DemoListItem["item"]>
-              ref={menuRef}
-              contentContainerStyle={$listContentContainer}
-              estimatedItemSize={250}
-              data={Object.values(Demos).map((d) => ({
-                name: d.name,
-                useCases: d.data.map((u) => u.props.name as string),
-              }))}
-              keyExtractor={(item) => item.name}
-              renderItem={({ item, index: sectionIndex }) => (
-                <ShowroomListItem {...{ item, sectionIndex, handleScroll }} />
-              )}
-            />
+              <ListView<DemoListItem["item"]>
+                ref={menuRef}
+                contentContainerStyle={$listContentContainer}
+                estimatedItemSize={250}
+                data={Object.values(Demos).map((d) => ({
+                  name: d.name,
+                  useCases: d.data.map((u) => u.props.name as string),
+                }))}
+                keyExtractor={(item) => item.name}
+                renderItem={({ item, index: sectionIndex }) => (
+                  <ShowroomListItem {...{ item, sectionIndex, handleScroll }} />
+                )}
+              />
+            </View>
           </View>
         )}
       >
@@ -213,6 +216,10 @@ const $drawer: ViewStyle = {
   flex: 1,
 }
 
+const $drawerRTL: ViewStyle = {
+  transform: [{ translateX: -400 }]
+}
+
 const $listContentContainer: ContentStyle = {
   paddingHorizontal: spacing.lg,
 }
@@ -254,5 +261,3 @@ const $demoItemDescription: TextStyle = {
 const $demoUseCasesSpacer: ViewStyle = {
   paddingBottom: spacing.xxl,
 }
-
-// @demo remove-file
