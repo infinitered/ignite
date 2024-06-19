@@ -150,10 +150,10 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         onClose={() => setOpen(false)}
         drawerType={isRTL ? "slide" : "back"}
         drawerPosition={isRTL ? "right" : "left"}
-        drawerStyle={{ width: 350 }}
+        drawerStyle={$drawerInner}
         renderDrawerContent={() => (
           <View style={[$drawer, $drawerInsets]}>
-            <View style={[isRTL ? $drawerRTL : { flex: 1 }]} pointerEvents="box-none">
+            <View style={[isRTL ? $drawerRTL : $drawerInnerContainer]} pointerEvents="box-none">
               <View style={$logoContainer}>
                 <Image source={logo} style={$logoImage} />
               </View>
@@ -213,6 +213,14 @@ const $screenContainer: ViewStyle = {
 
 const $drawer: ViewStyle = {
   backgroundColor: colors.background,
+  flex: 1,
+}
+
+const $drawerInner: ViewStyle = {
+  width: 350,
+}
+
+const $drawerInnerContainer: ViewStyle = {
   flex: 1,
 }
 
