@@ -32,11 +32,12 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     const rotate = interpolate(progress.value, [0, 1], [0, isRTL ? 45 : -45])
     const marginBottom = interpolate(progress.value, [0, 1], [0, -2])
     const width = interpolate(progress.value, [0, 1], [18, 12])
-    const marginHorizontal = isWeb && isRTL
-      ? { marginRight: marginStart }
-      : {
-          marginLeft: marginStart,
-        }
+    const marginHorizontal =
+      isWeb && isRTL
+        ? { marginRight: marginStart }
+        : {
+            marginLeft: marginStart,
+          }
 
     return {
       ...marginHorizontal,
@@ -63,11 +64,12 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     const marginStart = interpolate(progress.value, [0, 1], [0, -11.5])
     const rotate = interpolate(progress.value, [0, 1], [0, isRTL ? -45 : 45])
     const width = interpolate(progress.value, [0, 1], [18, 12])
-    const marginHorizontal = isWeb && isRTL
-      ? { marginRight: marginStart }
-      : {
-          marginLeft: marginStart,
-        }
+    const marginHorizontal =
+      isWeb && isRTL
+        ? { marginRight: marginStart }
+        : {
+            marginLeft: marginStart,
+          }
 
     return {
       ...marginHorizontal,
