@@ -148,30 +148,27 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
-        drawerType={isRTL ? "slide" : "back"}
+        drawerType="back"
         drawerPosition={isRTL ? "right" : "left"}
-        drawerStyle={$drawerInner}
         renderDrawerContent={() => (
           <View style={[$drawer, $drawerInsets]}>
-            <View style={[isRTL ? $drawerRTL : $drawerInnerContainer]} pointerEvents="box-none">
-              <View style={$logoContainer}>
-                <Image source={logo} style={$logoImage} />
-              </View>
-
-              <ListView<DemoListItem["item"]>
-                ref={menuRef}
-                contentContainerStyle={$listContentContainer}
-                estimatedItemSize={250}
-                data={Object.values(Demos).map((d) => ({
-                  name: d.name,
-                  useCases: d.data.map((u) => u.props.name as string),
-                }))}
-                keyExtractor={(item) => item.name}
-                renderItem={({ item, index: sectionIndex }) => (
-                  <ShowroomListItem {...{ item, sectionIndex, handleScroll }} />
-                )}
-              />
+            <View style={$logoContainer}>
+              <Image source={logo} style={$logoImage} />
             </View>
+
+            <ListView<DemoListItem["item"]>
+              ref={menuRef}
+              contentContainerStyle={$listContentContainer}
+              estimatedItemSize={250}
+              data={Object.values(Demos).map((d) => ({
+                name: d.name,
+                useCases: d.data.map((u) => u.props.name as string),
+              }))}
+              keyExtractor={(item) => item.name}
+              renderItem={({ item, index: sectionIndex }) => (
+                <ShowroomListItem {...{ item, sectionIndex, handleScroll }} />
+              )}
+            />
           </View>
         )}
       >
@@ -214,18 +211,6 @@ const $screenContainer: ViewStyle = {
 const $drawer: ViewStyle = {
   backgroundColor: colors.background,
   flex: 1,
-}
-
-const $drawerInner: ViewStyle = {
-  width: 350,
-}
-
-const $drawerInnerContainer: ViewStyle = {
-  flex: 1,
-}
-
-const $drawerRTL: ViewStyle = {
-  transform: [{ translateX: -400 }],
 }
 
 const $listContentContainer: ContentStyle = {
