@@ -40,7 +40,7 @@ function CheckboxInput(props: CheckboxInputProps) {
   const {
     theme: { colors },
   } = useAppTheme()
-  
+
   const [opacity] = useState(new Animated.Value(0))
 
   useEffect(() => {

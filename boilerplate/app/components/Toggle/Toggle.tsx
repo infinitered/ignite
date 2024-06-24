@@ -144,7 +144,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
     theme: { colors },
     themed,
   } = useAppTheme()
-  
+
   const disabled = editable === false || status === "disabled" || props.disabled
 
   const Wrapper = useMemo(
@@ -221,7 +221,7 @@ function FieldLabel<T>(props: ToggleProps<T>) {
     labelPosition,
     labelStyle: $labelStyleOverride,
   } = props
-  
+
   const {
     theme: { colors },
     themed,
