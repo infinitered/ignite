@@ -28,8 +28,9 @@ import {
   Icon,
   ListView,
   Screen,
+  Switch,
   Text,
-} from "../components"
+} from "app/components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -38,7 +39,6 @@ import type { ThemedStyle } from "app/theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { useAppTheme } from "app/utils/useAppTheme"
-import { Switch } from "app/components/Toggle/Switch"
 
 const ICON_SIZE = 14
 

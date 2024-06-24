@@ -29,15 +29,15 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 
 | Library           | Category             | Version | Description                                    |
 | ----------------- | -------------------- | ------- | ---------------------------------------------- |
-| React Native      | Mobile Framework     | v0.73   | The best cross-platform mobile framework       |
+| React Native      | Mobile Framework     | v0.74   | The best cross-platform mobile framework       |
 | React             | UI Framework         | v18     | The most popular UI framework in the world     |
 | TypeScript        | Language             | v5      | Static typechecking                            |
 | React Navigation  | Navigation           | v6      | Performant and consistent navigation framework |
 | MobX-State-Tree   | State Management     | v5      | Observable state tree                          |
 | MobX-React-Lite   | React Integration    | v3      | Re-render React performantly                   |
-| Expo              | SDK                  | v50     | Allows (optional) Expo modules                 |
-| Expo Font         | Custom Fonts         | v11     | Import custom fonts                            |
-| Expo Localization | Internationalization | v14     | i18n support (including RTL!)                  |
+| Expo              | SDK                  | v51     | Allows (optional) Expo modules                 |
+| Expo Font         | Custom Fonts         | v12     | Import custom fonts                            |
+| Expo Localization | Internationalization | v15     | i18n support (including RTL!)                  |
 | Expo Status Bar   | Status Bar Library   | v1      | Status bar support                             |
 | RN Reanimated     | Animations           | v3      | Beautiful and performant animations            |
 | AsyncStorage      | Persistence          | v1      | State persistence                              |

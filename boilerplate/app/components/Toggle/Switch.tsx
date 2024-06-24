@@ -14,7 +14,7 @@ import { iconRegistry } from "../Icon"
 import { isRTL } from "app/i18n"
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 import { useAppTheme } from "app/utils/useAppTheme"
-import { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "app/theme"
 
 export interface SwitchToggleProps extends Omit<ToggleProps<SwitchInputProps>, "ToggleInput"> {
   /**
@@ -54,6 +54,7 @@ function SwitchInput(props: SwitchInputProps) {
     theme: { colors },
     themed,
   } = useAppTheme()
+
   const animate = useRef(new Animated.Value(on ? 1 : 0)).current // Initial value is set based on isActive
   const [opacity] = useState(new Animated.Value(0))
 

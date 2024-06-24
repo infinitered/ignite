@@ -131,6 +131,7 @@ const $logoContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",
+  alignSelf: "stretch",
 })
 
 const $logo: ImageStyle = {
