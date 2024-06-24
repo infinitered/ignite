@@ -229,7 +229,7 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={themed([$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles])}
+              style={[themed($iconContainer), StyleSheet.absoluteFill, animatedLikeButtonStyles]}
             >
               <Icon
                 icon="heart"
@@ -237,7 +237,7 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={themed([$iconContainer, animatedUnlikeButtonStyles])}>
+            <Animated.View style={[themed($iconContainer), animatedUnlikeButtonStyles]}>
               <Icon
                 icon="heart"
                 size={ICON_SIZE}

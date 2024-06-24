@@ -76,7 +76,7 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
       <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
-      <Animated.View style={themed([$middleBar, animatedMiddleBarStyles])} />
+      <Animated.View style={[themed($middleBar), animatedMiddleBarStyles]} />
 
       <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
     </AnimatedPressable>
