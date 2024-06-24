@@ -67,7 +67,7 @@ export type ThemedStyleArray<T> = (
   | (StyleProp<T> | ThemedStyle<T>)[]
 )[]
 
-// Export the two Theme objects:
-export { colorsLight, colorsDark }
+// Export the theme objects with backwards compatibility for the old theme structure.
+export { colorsLight as colors, colorsDark, spacingLight as spacing, typography }
 
 export { customFontsToLoad } from "./typography"
