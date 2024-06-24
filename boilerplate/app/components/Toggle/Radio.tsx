@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { StyleProp, View, ViewStyle, Animated } from "react-native"
-import { colors } from "../../theme"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface RadioToggleProps extends Omit<ToggleProps<RadioInputProps>, "ToggleInput"> {
   /**
@@ -30,6 +30,9 @@ function RadioInput(props: RadioInputProps) {
     detailStyle: $detailStyleOverride,
   } = props
 
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const [opacity] = useState(new Animated.Value(0))
 
   useEffect(() => {

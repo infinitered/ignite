@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React from "react"
 import { Text } from "../../../components"
-import { colors } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -10,7 +9,7 @@ export const DemoText: Demo = {
   name: "Text",
   description:
     "For your text displaying needs. This component is a HOC over the built-in React Native one.",
-  data: [
+  data: ({ theme }) => [
     <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
       <Text>
         default preset - Cillum eu laboris in labore. Excepteur mollit tempor reprehenderit fugiat
@@ -116,12 +115,14 @@ export const DemoText: Demo = {
 
     <DemoUseCase name="Styling" description="The component can be styled easily.">
       <Text>
-        <Text style={{ color: colors.error }}>
+        <Text style={{ color: theme.colors.error }}>
           Consequat ullamco veniam velit mollit proident excepteur aliquip id culpa ipsum velit sint
           nostrud.
         </Text>
         {` `}
-        <Text style={{ color: colors.palette.neutral100, backgroundColor: colors.error }}>
+        <Text
+          style={{ color: theme.colors.palette.neutral100, backgroundColor: theme.colors.error }}
+        >
           Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco
           adipisicing tempor adipisicing.
         </Text>
@@ -131,8 +132,8 @@ export const DemoText: Demo = {
           style={{
             textDecorationLine: "underline line-through",
             textDecorationStyle: "dashed",
-            color: colors.error,
-            textDecorationColor: colors.error,
+            color: theme.colors.error,
+            textDecorationColor: theme.colors.error,
           }}
         >
           Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco

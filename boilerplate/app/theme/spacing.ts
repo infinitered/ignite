@@ -12,5 +12,3 @@ export const spacing = {
   xxl: 48,
   xxxl: 64,
 } as const
-
-export type Spacing = keyof typeof spacing
