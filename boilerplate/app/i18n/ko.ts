@@ -33,14 +33,14 @@ const ko: Translations = {
     invalidEmail: "잘못된 이메일 주소 입니다.",
   },
   loginScreen: {
-    signIn: "로그인",
+    logIn: "로그인",
     enterDetails:
       "일급비밀 정보를 해제하기 위해 상세 정보를 입력하세요. 무엇이 기다리고 있는지 절대 모를겁니다. 혹은 알 수 있을지도 모르겠군요. 엄청 복잡한 뭔가는 아닙니다.",
     emailFieldLabel: "이메일",
     passwordFieldLabel: "비밀번호",
     emailFieldPlaceholder: "이메일을 입력하세요",
     passwordFieldPlaceholder: "엄청 비밀스러운 암호를 입력하세요",
-    tapToSignIn: "눌러서 로그인 하기!",
+    tapToLogIn: "눌러서 로그인 하기!",
     hint: "힌트: 가장 좋아하는 암호와 아무런 아무 이메일 주소나 사용할 수 있어요 :)",
   },
   demoNavigator: {
