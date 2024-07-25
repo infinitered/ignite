@@ -21,6 +21,7 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
 
+
   // we need a name for this component
   let name = parameters.second
   if (!name) {

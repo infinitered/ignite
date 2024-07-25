@@ -450,6 +450,7 @@ module.exports = {
     // #region Experimental Features parsing
     let newArch
     let expoVersion
+    let expoRouter = false
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
@@ -457,7 +458,15 @@ module.exports = {
       if (flag === "new-arch") {
         newArch = true
       } else if (flag.indexOf("expo-") > -1) {
-        expoVersion = flag.substring(5)
+        if (flag !== "expo-router") {
+          expoVersion = flag.substring(5)
+        } else {
+          // user wants to convert to expo-router
+          // force demo code removal for easier conversion
+          // maybe one day convert the demo app
+          expoRouter = true
+          removeDemo = true
+        }
       }
     })
     // #endregion
@@ -571,12 +580,30 @@ module.exports = {
         .replace(/HelloWorld/g, projectName)
         .replace(/hello-world/g, projectNameKebab)
 
+      // add in expo-router package
+      if (expoRouter) {
+        // find "expo-localization" line and append "expo-router" line after it
+        packageJsonRaw = packageJsonRaw.replace(
+          /"expo-localization": ".*",/g,
+          `"expo-localization": "~15.0.3",${EOL}    "expo-router":  "~3.5.17",`,
+        )
+
+        // replace "main" entry point from App.js to "expo-router/entry"
+        packageJsonRaw = packageJsonRaw.replace(/"main": ".*",/g, `"main": "expo-router/entry",`)
+
+        // replace format and lint scripts
+        packageJsonRaw = packageJsonRaw.replace(
+          /"format": ".*",/g,
+          `"format": "prettier --write \\"src/**/*.{js,jsx,json,md,ts,tsx}\\"",`,
+        )
+        packageJsonRaw = packageJsonRaw.replace(
+          /"lint": ".*",/g,
+          `"lint": "eslint src test --fix --ext .js,.ts,.tsx && npm run format",`,
+        )
+      }
+
       // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
       if (needsPrebuild) {
-        packageJsonRaw = packageJsonRaw
-          .replace(/start --android/g, "run:android")
-          .replace(/start --ios/g, "run:ios")
-
         // If using canary build, update the expo dependency to the canary version
         if (expoVersion) {
           const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
@@ -597,15 +624,14 @@ module.exports = {
         )
       }
 
-      // - If we're removing the demo code, clean up some dependencies that are no longer needed
+      // If we're removing the demo code, clean up some dependencies that are no longer needed
       if (removeDemo) {
         log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
       }
 
-      // - Then write it back out.
+      // Then write it back out.
       const packageJson = JSON.parse(packageJsonRaw)
-
       write("./package.json", packageJson)
       // #endregion
 
@@ -682,8 +708,8 @@ module.exports = {
         startSpinner(unboxingMessage)
         await packager.install({ ...packagerOptions, onProgress: log })
 
-        // if we're using the canary build, we need to install the canary versions of supporting Expo packages
-        if (expoVersion) {
+        // if we're using the Expo Go or canary build, we need to install the canary versions of supporting Expo packages
+        if (expoVersion || workflow === "expo") {
           await system.run("npx expo install --fix", { onProgress: log })
         }
         stopSpinner(unboxingMessage, "🧶")
@@ -726,6 +752,11 @@ module.exports = {
           appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
         }
 
+        if (expoRouter) {
+          appJson.expo.experiments.typedRoutes = true
+          appJson.expo.plugins.push("expo-router")
+        }
+
         write("./app.json", appJson)
       } catch (e) {
         log(e)
@@ -766,6 +797,64 @@ module.exports = {
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
       stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
+      // #endregion
+
+      // #region Expo Router edits
+      /**
+       * instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
+       * TODO
+       * fix generators
+       * remove the resetNavigation command from reactotronConfig
+       */
+      if (expoRouter) {
+        // mv ALL files under app/ to src/
+        await system.run(log(`mv app/* src/`))
+
+        // replace app/ with src/ in files
+        const expoRouterFilesToFix = [
+          "tsconfig.json",
+          "test/i18n.test.ts",
+          "src/devtools/ReactotronConfig.ts",
+          "src/components/Toggle.tsx",
+          "src/components/ListView.tsx",
+          "src/screens/WelcomeScreen.tsx",
+        ]
+        expoRouterFilesToFix.forEach((file) => {
+          const filePath = path(targetPath, file)
+          let fileContents = read(filePath)
+          fileContents = fileContents.replace(/app\//g, "src/")
+          write(filePath, fileContents)
+        })
+
+        // work in reactotron custom commands
+        const reactotronConfigPath = path(targetPath, "src/devtools/ReactotronConfig.ts")
+        let reactotronConfig = read(reactotronConfigPath)
+        reactotronConfig = reactotronConfig
+          .replace(
+            /import { goBack, resetRoot, navigate }.*/g,
+            'import { router } from "expo-router"',
+          )
+          .replace(/navigate\(route as any\).*/g, "router.push(route)")
+          .replace(/goBack\(\).*/g, " router.back()")
+
+        write(reactotronConfigPath, reactotronConfig)
+
+        // some clean up
+        await system.run(
+          log(`
+          \\rm src/app.tsx
+          mkdir src/components/ErrorBoundary
+          mv src/screens/ErrorScreen/* src/components/ErrorBoundary
+          rm -rf src/screens
+          rm -rf src/navigators
+          rm -rf app
+        `),
+        )
+      } else {
+        // remove src/ dir since not using expo-router
+        await system.run(log(`rm -rf src`))
+      }
+
       // #endregion
 
       // #region Format generator templates EOL for Windows
