@@ -102,7 +102,10 @@ interface ListItemActionProps {
  * @param {ListItemProps} props - The props for the `ListItem` component.
  * @returns {JSX.Element} The rendered `ListItem` component.
  */
-export function ListItem(props: ListItemProps) {
+export const ListItem = React.forwardRef<View, ListItemProps>(function ListItem(
+  props: ListItemProps,
+  ref,
+) {
   const {
     bottomSeparator,
     children,
@@ -135,7 +138,7 @@ export function ListItem(props: ListItemProps) {
   const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
 
   return (
-    <View style={$containerStyles}>
+    <View ref={ref} style={$containerStyles}>
       <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
         <ListItemAction
           side="left"
@@ -159,7 +162,7 @@ export function ListItem(props: ListItemProps) {
       </TouchableOpacity>
     </View>
   )
-}
+})
 
 /**
  * @param {ListItemActionProps} props - The props for the `ListItemAction` component.
