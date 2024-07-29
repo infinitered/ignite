@@ -6,21 +6,21 @@ const jp: Translations = {
     ok: "OK",
     cancel: "キャンセル",
     back: "戻る",
-    logOut: "ログアウト",
+    logOut: "ログアウト", // @demo remove-current-line
   },
   welcomeScreen: {
     postscript:
       "注目！ — このアプリはお好みの見た目では無いかもしれません(デザイナーがこのスクリーンを送ってこない限りは。もしそうなら公開しちゃいましょう！)",
     readyForLaunch: "このアプリはもう少しで公開できます！",
     exciting: "(楽しみですね！)",
-    letsGo: "レッツゴー！",
+    letsGo: "レッツゴー！", // @demo remove-current-line
   },
   errorScreen: {
     title: "問題が発生しました",
     friendlySubtitle:
       "本番では、エラーが投げられた時にこのページが表示されます。もし使うならこのメッセージに変更を加えてください(`app/i18n/jp.ts`)レイアウトはこちらで変更できます(`app/screens/ErrorScreen`)。もしこのスクリーンを取り除きたい場合は、`app/app.tsx`にある<ErrorBoundary>コンポーネントをチェックしてください",
     reset: "リセット",
-    traceTitle: "エラーのスタック: %{name}",
+    traceTitle: "エラーのスタック: %{name}", // @demo remove-current-line
   },
   emptyStateComponent: {
     generic: {
@@ -30,7 +30,7 @@ const jp: Translations = {
       button: "もう一度やってみよう",
     },
   },
-
+  // @demo remove-block-start
   errors: {
     invalidEmail: "有効なメールアドレスを入力してください.",
   },
