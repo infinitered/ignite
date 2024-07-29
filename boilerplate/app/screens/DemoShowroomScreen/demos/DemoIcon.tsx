@@ -32,12 +32,11 @@ const $customIcon: ImageStyle = {
 
 export const DemoIcon: Demo = {
   name: "Icon",
-  description:
-    "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.",
+  description: "demoIcon.description",
   data: [
     <DemoUseCase
-      name="Icons"
-      description="List of icons registered inside the component."
+      name="demoIcon.useCase.icons.name"
+      description="demoIcon.useCase.icons.description"
       layout="row"
     >
       {Object.keys(iconRegistry).map((icon) => (
@@ -51,14 +50,22 @@ export const DemoIcon: Demo = {
       ))}
     </DemoUseCase>,
 
-    <DemoUseCase name="Size" description="There's a size prop." layout="row">
+    <DemoUseCase
+      name="demoIcon.useCase.size.name"
+      description="demoIcon.useCase.size.description"
+      layout="row"
+    >
       <Icon icon="ladybug" containerStyle={$demoIconContainer} />
       <Icon icon="ladybug" size={35} containerStyle={$demoIconContainer} />
       <Icon icon="ladybug" size={50} containerStyle={$demoIconContainer} />
       <Icon icon="ladybug" size={75} containerStyle={$demoIconContainer} />
     </DemoUseCase>,
 
-    <DemoUseCase name="Color" description="There's a color prop." layout="row">
+    <DemoUseCase
+      name="demoIcon.useCase.color.name"
+      description="demoIcon.useCase.color.description"
+      layout="row"
+    >
       <Icon icon="ladybug" color={colors.palette.accent500} containerStyle={$demoIconContainer} />
       <Icon icon="ladybug" color={colors.palette.primary500} containerStyle={$demoIconContainer} />
       <Icon
@@ -70,7 +77,11 @@ export const DemoIcon: Demo = {
       <Icon icon="ladybug" color={colors.palette.angry500} containerStyle={$demoIconContainer} />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily." layout="row">
+    <DemoUseCase
+      name="demoIcon.useCase.styling.name"
+      description="demoIcon.useCase.styling.description"
+      layout="row"
+    >
       <Icon icon="ladybug" style={$customIcon} size={40} containerStyle={$customIconContainer} />
     </DemoUseCase>,
   ],

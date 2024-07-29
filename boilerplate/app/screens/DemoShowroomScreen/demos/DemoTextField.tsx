@@ -43,17 +43,20 @@ const $customRightAccessoryStyle: ViewStyle = {
 
 export const DemoTextField: Demo = {
   name: "TextField",
-  description: "TextField component allows for the entering and editing of text.",
+  description: "demoTextField.description",
   data: [
     <DemoUseCase
-      name="Statuses"
-      description="There is a status prop - similar to `preset` in other components, but affects component functionality as well."
+      name="demoTextField.useCase.statuses.name"
+      description="demoTextField.useCase.statuses.description"
     >
       <TextField
-        label="No Status"
         value="Labore occaecat in id eu commodo aliquip occaecat veniam officia pariatur."
-        helper="This is the default status"
-        placeholder="Text goes here"
+        labelTx="demoTextField.useCase.statuses.noStatus.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.statuses.noStatus.helper"
+        helperTxOptions={{ prop: "helper" }}
+        placeholderTx="demoTextField.useCase.statuses.noStatus.placeholder"
+        placeholderTxOptions={{ prop: "placeholder" }}
       />
 
       <DemoDivider size={24} />
@@ -61,9 +64,12 @@ export const DemoTextField: Demo = {
       <TextField
         status="error"
         value="Est Lorem duis sunt sunt duis proident minim elit dolore incididunt pariatur eiusmod anim cillum."
-        label="Error Status"
-        helper="Status to use when there is an error"
-        placeholder="Text goes here"
+        labelTx="demoTextField.useCase.statuses.error.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.statuses.error.helper"
+        helperTxOptions={{ prop: "helper" }}
+        placeholderTx="demoTextField.useCase.statuses.error.placeholder"
+        placeholderTxOptions={{ prop: "placeholder" }}
       />
 
       <DemoDivider size={24} />
@@ -71,20 +77,26 @@ export const DemoTextField: Demo = {
       <TextField
         status="disabled"
         value="Eu ipsum mollit non minim voluptate nulla fugiat aliqua ullamco aute consectetur nulla nulla amet."
-        label="Disabled Status"
-        helper="Disables the editability and mutes text"
-        placeholder="Text goes here"
+        labelTx="demoTextField.useCase.statuses.disabled.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.statuses.disabled.helper"
+        helperTxOptions={{ prop: "helper" }}
+        placeholderTx="demoTextField.useCase.statuses.disabled.placeholder"
+        placeholderTxOptions={{ prop: "placeholder" }}
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
+      name="demoTextField.useCase.passingContent.name"
+      description="demoTextField.useCase.passingContent.description"
     >
       <TextField
-        label="Via `label` prop"
-        helper="Via `helper` prop"
-        placeholder="Via `placeholder` prop"
+        labelTx="demoTextField.useCase.passingContent.viaLabel.labelTx"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.passingContent.viaLabel.helper"
+        helperTxOptions={{ prop: "helper" }}
+        placeholderTx="demoTextField.useCase.passingContent.viaLabel.placeholder"
+        placeholderTxOptions={{ prop: "placeholder" }}
       />
 
       <DemoDivider size={24} />
@@ -101,17 +113,21 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        label="RightAccessory"
-        helper="This prop takes a function that returns a React element."
         value="Reprehenderit Lorem magna non consequat ullamco cupidatat."
+        labelTx="demoTextField.useCase.passingContent.rightAccessory.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.passingContent.rightAccessory.helper"
+        helperTxOptions={{ prop: "helper" }}
         RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
 
       <DemoDivider size={24} />
 
       <TextField
-        label="LeftAccessory"
-        helper="This prop takes a function that returns a React element."
+        labelTx="demoTextField.useCase.passingContent.leftAccessory.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.passingContent.leftAccessory.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Eiusmod exercitation mollit elit magna occaecat eiusmod Lorem minim veniam."
         LeftAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
@@ -119,18 +135,25 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        label="Supports Multiline"
-        helper="Enables a taller input for multiline text."
+        labelTx="demoTextField.useCase.passingContent.supportsMultiline.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.passingContent.supportsMultiline.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Eiusmod exercitation mollit elit magna occaecat eiusmod Lorem minim veniam. Laborum Lorem velit velit minim irure ad in ut adipisicing consectetur."
         multiline
         RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="demoTextField.useCase.styling.name"
+      description="demoTextField.useCase.styling.description"
+    >
       <TextField
-        label="Style Input"
-        helper="Via `style` prop"
+        labelTx="demoTextField.useCase.styling.styleInput.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.styling.styleInput.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Laborum cupidatat aliquip sunt sunt voluptate sint sit proident sunt mollit exercitation ullamco ea elit."
         style={$customInputStyle}
       />
@@ -138,8 +161,10 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        label="Style Input Wrapper"
-        helper="Via `inputWrapperStyle` prop"
+        labelTx="demoTextField.useCase.styling.styleInputWrapper.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.styling.styleInputWrapper.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Aute velit esse dolore pariatur exercitation irure nulla do sunt in duis mollit duis et."
         inputWrapperStyle={$customInputWrapperStyle}
         style={$customInputStyle}
@@ -148,8 +173,10 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        label="Style Container"
-        helper="Via `containerStyle` prop"
+        labelTx="demoTextField.useCase.styling.styleContainer.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.styling.styleContainer.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Aliquip proident commodo adipisicing non adipisicing Lorem excepteur ullamco voluptate laborum."
         style={$customInputStyle}
         containerStyle={$customContainerStyle}
@@ -159,8 +186,10 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        label="Style Label & Helper"
-        helper="Via `LabelTextProps` & `HelperTextProps` style prop"
+        labelTx="demoTextField.useCase.styling.styleLabel.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.styling.styleLabel.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Ex culpa in consectetur dolor irure velit."
         style={$customInputStyle}
         containerStyle={$customContainerStyle}
@@ -172,8 +201,10 @@ export const DemoTextField: Demo = {
       <DemoDivider size={24} />
 
       <TextField
-        label="Style Accessories"
-        helper="Via `RightAccessory` & `LeftAccessory` style prop"
+        labelTx="demoTextField.useCase.styling.styleAccessories.label"
+        labelTxOptions={{ prop: "label" }}
+        helperTx="demoTextField.useCase.styling.styleAccessories.helper"
+        helperTxOptions={{ prop: "helper" }}
         value="Aute nisi dolore fugiat anim mollit nulla ex minim ipsum ex elit."
         style={$customInputWithAbsoluteAccessoriesStyle}
         LeftAccessory={() => (
