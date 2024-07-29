@@ -35,7 +35,7 @@ import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import { $styles, colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 
@@ -73,7 +73,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
       <Screen
         preset="fixed"
         safeAreaEdges={["top"]}
-        contentContainerStyle={$screenContentContainer}
+        contentContainerStyle={$styles.flex1}
       >
         <ListView<Episode>
           contentContainerStyle={$listContentContainer}
@@ -300,10 +300,6 @@ const EpisodeCard = observer(function EpisodeCard({
 })
 
 // #region Styles
-const $screenContentContainer: ViewStyle = {
-  flex: 1,
-}
-
 const $listContentContainer: ContentStyle = {
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.lg + spacing.xl,
