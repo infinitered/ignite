@@ -1,3 +1,4 @@
+import demoFr from "./demo-fr"
 import { Translations } from "./en"
 
 const fr: Translations = {
@@ -5,21 +6,21 @@ const fr: Translations = {
     ok: "OK !",
     cancel: "Annuler",
     back: "Retour",
-    logOut: "Déconnexion", // @demo remove-current-line
+    logOut: "Déconnexion",
   },
   welcomeScreen: {
     postscript:
       "psst  — Ce n'est probablement pas à quoi ressemble votre application. (À moins que votre designer ne vous ait donné ces écrans, dans ce cas, mettez la en prod !)",
     readyForLaunch: "Votre application, presque prête pour le lancement !",
     exciting: "(ohh, c'est excitant !)",
-    letsGo: "Allons-y !", // @demo remove-current-line
+    letsGo: "Allons-y !",
   },
   errorScreen: {
     title: "Quelque chose s'est mal passé !",
     friendlySubtitle:
       "C'est l'écran que vos utilisateurs verront en production lorsqu'une erreur sera lancée. Vous voudrez personnaliser ce message (situé dans `app/i18n/fr.ts`) et probablement aussi la mise en page (`app/screens/ErrorScreen`). Si vous voulez le supprimer complètement, vérifiez `app/app.tsx` pour le composant <ErrorBoundary>.",
     reset: "RÉINITIALISER L'APPLICATION",
-    traceTitle: "Erreur depuis %{name}", // @demo remove-current-line
+    traceTitle: "Erreur depuis %{name}",
   },
   emptyStateComponent: {
     generic: {
@@ -29,7 +30,7 @@ const fr: Translations = {
       button: "Essayons à nouveau",
     },
   },
-  // @demo remove-block-start
+
   errors: {
     invalidEmail: "Adresse e-mail invalide.",
   },
@@ -123,6 +124,8 @@ const fr: Translations = {
         "Aucun favori n'a été ajouté pour le moment. Appuyez sur le cœur d'un épisode pour l'ajouter à vos favoris !",
     },
   },
+  // @demo remove-block-start
+  ...demoFr,
   // @demo remove-block-end
 }
 
