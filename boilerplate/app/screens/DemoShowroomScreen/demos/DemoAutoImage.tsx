@@ -3,6 +3,7 @@ import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { AutoImage, Text } from "../../../components"
 import type { ThemedStyle } from "../../../theme"
+import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -18,7 +19,6 @@ const $aspectRatioDescription: ThemedStyle<TextStyle> = ({ spacing }) => ({
 })
 
 const $aspectRatioWidthExampleContainer: ViewStyle = {
-  flexDirection: "row",
   justifyContent: "space-between",
 }
 
@@ -64,7 +64,7 @@ export const DemoAutoImage: Demo = {
       description="Providing a `maxWidth` and/or `maxHeight` props, the image will automatically scale while retaining it's aspect ratio. How is this different from `resizeMode: 'contain'`? Firstly, you can
       specify only one side's size (not both). Secondly, the image will scale to fit the desired dimensions instead of just being contained within its image-container."
     >
-      <View style={$aspectRatioWidthExampleContainer}>
+      <View style={[$styles.row, $aspectRatioWidthExampleContainer]}>
         <Text
           text="<View />"
           size="xxs"
@@ -95,7 +95,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={5} />
 
-      <View style={[$aspectRatioWidthExampleContainer, { height: 80 }]}>
+      <View style={[$styles.row, $aspectRatioWidthExampleContainer, { height: 80 }]}>
         <View style={themed([$aspectRatioBox, { width: 60 }])} />
         <Image
           source={{
@@ -119,7 +119,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={40} />
 
-      <View style={{ flexDirection: "row" }}>
+      <View style={$styles.row}>
         <View style={$aspectRatioHeightExampleContainer}>
           <Text
             text="<View />"
@@ -168,7 +168,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={40} />
 
-      <View style={$aspectRatioWidthExampleContainer}>
+      <View style={[$styles.row, $aspectRatioWidthExampleContainer]}>
         <Text
           text="<View />"
           size="xxs"
@@ -199,7 +199,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={5} />
 
-      <View style={$aspectRatioWidthExampleContainer}>
+      <View style={[$styles.row, $aspectRatioWidthExampleContainer]}>
         <View style={themed([$aspectRatioBox, { width: 60, height: 60 }])} />
         <Image
           source={{

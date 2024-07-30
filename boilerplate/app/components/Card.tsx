@@ -9,6 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 import type { ThemedStyle, ThemedStyleArray } from "app/theme"
+import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -262,7 +263,6 @@ const $containerBase: ThemedStyle<ViewStyle> = (theme) => ({
   shadowRadius: 12.81,
   elevation: 16,
   minHeight: 96,
-  flexDirection: "row",
 })
 
 const $alignmentWrapper: ViewStyle = {
@@ -279,6 +279,7 @@ const $alignmentWrapperFlexOptions = {
 
 const $containerPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
   default: [
+    $styles.row,
     $containerBase,
     (theme) => ({
       backgroundColor: theme.colors.palette.neutral100,
@@ -286,6 +287,7 @@ const $containerPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
     }),
   ],
   reversed: [
+    $styles.row,
     $containerBase,
     (theme) => ({
       backgroundColor: theme.colors.palette.neutral800,

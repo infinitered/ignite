@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import { isRTL, translate } from "../i18n"
 import type { ThemedStyle, ThemedStyleArray } from "app/theme"
+import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -143,6 +144,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   const $labelStyles = [$labelStyle, LabelTextProps?.style]
 
   const $inputWrapperStyles = [
+    $styles.row,
     $inputWrapperStyle,
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
@@ -244,7 +246,6 @@ const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
 })
 
 const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  flexDirection: "row",
   alignItems: "flex-start",
   borderWidth: 1,
   borderRadius: 4,

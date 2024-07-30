@@ -12,6 +12,7 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
+import { $styles } from "../../theme"
 import { Text, TextProps } from "../Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 import type { ThemedStyle } from "app/theme"
@@ -153,7 +154,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
   )
 
   const $containerStyles = [$containerStyleOverride]
-  const $inputWrapperStyles = [$inputWrapper, $inputWrapperStyleOverride]
+  const $inputWrapperStyles = [$styles.row, $inputWrapper, $inputWrapperStyleOverride]
   const $helperStyles = themed([
     $helper,
     status === "error" && { color: colors.error },
@@ -251,7 +252,6 @@ function FieldLabel<T>(props: ToggleProps<T>) {
 }
 
 const $inputWrapper: ViewStyle = {
-  flexDirection: "row",
   alignItems: "center",
 }
 

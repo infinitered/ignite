@@ -3,6 +3,7 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
 import type { ThemedStyle } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
+import { $styles } from "app/theme"
 
 interface DemoUseCaseProps {
   name: string
@@ -25,7 +26,7 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
       {description && <Text style={themed($description)}>{description}</Text>}
 
-      <View style={themed([layout === "row" && $rowLayout, $item])}>{children}</View>
+      <View style={themed([layout === "row" && $styles.row, $item])}>{children}</View>
     </View>
   )
 }
@@ -44,10 +45,5 @@ const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
 const $name: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontFamily: typography.primary.bold,
 })
-
-const $rowLayout: ViewStyle = {
-  flexDirection: "row",
-  flexWrap: "wrap",
-}
 
 // @demo remove-file

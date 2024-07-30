@@ -10,6 +10,7 @@ import {
   ViewStyle,
 } from "react-native"
 
+import { $styles } from "../../theme"
 import { iconRegistry } from "../Icon"
 import { isRTL } from "app/i18n"
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
@@ -115,7 +116,10 @@ function SwitchInput(props: SwitchInputProps) {
   })()
 
   const rtlAdjustment = isRTL ? -1 : 1
-  const $themedSwitchInner = React.useMemo(() => themed($switchInner), [themed])
+  const $themedSwitchInner = React.useMemo(
+    () => themed([$styles.toggleInner, $switchInner]),
+    [themed],
+  )
 
   const offsetLeft = ($innerStyleOverride?.paddingStart ||
     $innerStyleOverride?.paddingLeft ||
@@ -225,11 +229,7 @@ const $inputOuter: StyleProp<ViewStyle> = [
 ]
 
 const $switchInner: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  width: "100%",
-  height: "100%",
-  alignItems: "center",
   borderColor: colors.transparent,
-  overflow: "hidden",
   position: "absolute",
   paddingStart: 4,
   paddingEnd: 4,

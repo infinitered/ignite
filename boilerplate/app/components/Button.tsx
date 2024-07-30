@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from "react-native"
 import type { ThemedStyle, ThemedStyleArray } from "app/theme"
+import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -180,7 +181,6 @@ const $baseViewStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   borderRadius: 4,
   justifyContent: "center",
   alignItems: "center",
-  flexDirection: "row",
   paddingVertical: spacing.sm,
   paddingHorizontal: spacing.sm,
   overflow: "hidden",
@@ -207,6 +207,7 @@ const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 
 const $viewPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
   default: [
+    $styles.row,
     $baseViewStyle,
     ({ colors }) => ({
       borderWidth: 1,
@@ -214,8 +215,16 @@ const $viewPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
       backgroundColor: colors.palette.neutral100,
     }),
   ],
-  filled: [$baseViewStyle, ({ colors }) => ({ backgroundColor: colors.palette.neutral300 })],
-  reversed: [$baseViewStyle, ({ colors }) => ({ backgroundColor: colors.palette.neutral800 })],
+  filled: [
+    $styles.row,
+    $baseViewStyle,
+    ({ colors }) => ({ backgroundColor: colors.palette.neutral300 }),
+  ],
+  reversed: [
+    $styles.row,
+    $baseViewStyle,
+    ({ colors }) => ({ backgroundColor: colors.palette.neutral800 }),
+  ],
 }
 
 const $textPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {

@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import { $styles } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 import type { ThemedStyle } from "app/theme"
@@ -134,7 +135,7 @@ export function ListItem(props: ListItemProps) {
     $containerStyleOverride,
   ]
 
-  const $touchableStyles = [$touchableStyle, { minHeight: height }, style]
+  const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
 
   return (
     <View style={themed($containerStyles)}>
@@ -212,7 +213,6 @@ const $textStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
 })
 
 const $touchableStyle: ViewStyle = {
-  flexDirection: "row",
   alignItems: "flex-start",
 }
 

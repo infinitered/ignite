@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { StyleProp, View, ViewStyle, Animated } from "react-native"
+import { $styles } from "../../theme"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 import { useAppTheme } from "app/utils/useAppTheme"
 
@@ -78,7 +79,7 @@ function RadioInput(props: RadioInputProps) {
     >
       <Animated.View
         style={[
-          $radioInner,
+          $styles.toggleInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
           { opacity },
@@ -90,14 +91,6 @@ function RadioInput(props: RadioInputProps) {
       </Animated.View>
     </View>
   )
-}
-
-const $radioInner: ViewStyle = {
-  width: "100%",
-  height: "100%",
-  alignItems: "center",
-  justifyContent: "center",
-  overflow: "hidden",
 }
 
 const $radioDetail: ViewStyle = {

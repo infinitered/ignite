@@ -4,6 +4,7 @@ import { LayoutAnimation, Linking, Platform, TextStyle, View, ViewStyle } from "
 import { Button, ListItem, Screen, Switch, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import type { ThemedStyle } from "app/theme"
+import { $styles } from "../theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
 import { useAppTheme } from "app/utils/useAppTheme"
@@ -53,7 +54,11 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   }, [themeContext, setThemeContextOverride])
 
   return (
-    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={themed($container)}>
+    <Screen
+      preset="scroll"
+      safeAreaEdges={["top"]}
+      contentContainerStyle={[$styles.container, themed($container)]}
+    >
       <Text
         style={themed($reportBugsLink)}
         tx="demoDebugScreen.reportBugs"
@@ -135,9 +140,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
 }
 
 const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.xxl,
-  paddingHorizontal: spacing.lg,
 })
 
 const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({

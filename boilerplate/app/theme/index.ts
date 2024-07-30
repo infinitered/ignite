@@ -68,6 +68,8 @@ export type ThemedStyleArray<T> = (
 )[]
 
 // Export the theme objects with backwards compatibility for the old theme structure.
-export { colorsLight as colors, colorsDark, spacingLight as spacing, typography }
+export { colorsLight as colors, colorsDark, spacingLight as spacing }
 
-export { customFontsToLoad } from "./typography"
+export * from "./styles"
+export * from "./typography"
+export * from "./timing"
