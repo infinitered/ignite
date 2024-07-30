@@ -29,7 +29,6 @@ import * as storage from "./utils/storage"
 import { $styles, customFontsToLoad } from "./theme"
 import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { ViewStyle } from "react-native"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
