@@ -71,6 +71,23 @@ The `Card` component is useful for displaying related information in a contained
 
 [Full Card Component Documentation](./Card.md)
 
+### Checkbox
+
+The `Checkbox` component is useful for displaying a user's choice for a boolean value.
+
+```tsx
+<Checkbox
+  value={value}
+  icon="check"
+  onValueChange={setValue}
+  labelTx="signup.rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Checkbox Component Documentation](./Checkbox.md)
+
 ### EmptyState
 
 The `EmptyState` component can be used when there is no data to display and direct the user on how to proceed.
@@ -131,6 +148,22 @@ This is a component that renders an icon.
 
 [Full Icon Component Documentation](./Icon.md)
 
+### Radio
+
+The `Radio` component is useful for displaying a user's choice for a boolean value.
+
+```tsx
+<Radio
+  value={value}
+  onValueChange={setValue}
+  labelTx="signup.rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Radio Component Documentation](./Radio.md)
+
 ### Screen
 
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
@@ -143,6 +176,23 @@ This is a component that renders a screen. It is used to wrap your entire screen
 ```
 
 [Full Screen Component Documentation](./Screen.md)
+
+### Switch
+
+The `Switch` component is useful for displaying a user's choice for a boolean value.
+
+```tsx
+<Switch
+  value={value}
+  accessibilityMode="icon"
+  onValueChange={setValue}
+  labelTx="signup.rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Switch Component Documentation](./Switch.md)
 
 ### Text
 
@@ -181,23 +231,6 @@ const inputRef = useRef()
 ```
 
 [Full Text Component Documentation](./TextField.md)
-
-### Toggle
-
-This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button.
-
-```tsx
-<Toggle
-  variant="checkbox"
-  value={value}
-  onValueChange={setValue}
-  labelTx="signup.rememberMe"
-  labelStyle={{ color: "#a511dc" }}
-  containerStyle={{ backgroundColor: "#fff" }}
-/>
-```
-
-[Full Toggle Component Documentation](./Toggle.md)
 
 ## Custom Components
 

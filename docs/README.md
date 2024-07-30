@@ -6,7 +6,7 @@ sidebar_position: 1
 
 With over seven years of active development, Ignite is the most popular React Native app starter boilerplate for both Expo and bare React Native.
 
-This is the React Native stack that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning nd improves their confidence over the lifetime of the entire project.
+This is the React Native stack that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning and improves their confidence over the lifetime of the entire project.
 
 ## Getting Started
 

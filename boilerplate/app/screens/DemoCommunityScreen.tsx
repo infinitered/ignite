@@ -126,6 +126,7 @@ const $logoContainer: ViewStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",
+  alignSelf: "stretch",
 }
 
 const $logo: ImageStyle = {
