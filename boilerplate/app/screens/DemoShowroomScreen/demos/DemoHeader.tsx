@@ -2,7 +2,7 @@
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Header, Icon } from "../../../components"
-import { colors } from "../../../theme"
+import { $styles, colors } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -16,7 +16,6 @@ const $customLeftAction: ViewStyle = {
   flexGrow: 0,
   flexBasis: 100,
   height: "100%",
-  flexDirection: "row",
   flexWrap: "wrap",
   overflow: "hidden",
 }
@@ -68,7 +67,7 @@ export const DemoHeader: Demo = {
         titleMode="flex"
         titleStyle={$rightAlignTitle}
         LeftActionComponent={
-          <View style={$customLeftAction}>
+          <View style={[$styles.row, $customLeftAction]}>
             {Array.from({ length: 20 }, (x, i) => i).map((i) => (
               <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
             ))}

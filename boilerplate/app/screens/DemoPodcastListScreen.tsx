@@ -223,7 +223,12 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              style={[
+                $styles.row,
+                $iconContainer,
+                StyleSheet.absoluteFill,
+                animatedLikeButtonStyles,
+              ]}
             >
               <Icon
                 icon="heart"
@@ -231,7 +236,7 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+            <Animated.View style={[$styles.row, $iconContainer, animatedUnlikeButtonStyles]}>
               <Icon
                 icon="heart"
                 size={ICON_SIZE}
@@ -251,7 +256,7 @@ const EpisodeCard = observer(function EpisodeCard({
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
       HeadingComponent={
-        <View style={$metadata}>
+        <View style={[$styles.row, $metadata]}>
           <Text
             style={$metadataText}
             size="xxs"
@@ -331,14 +336,12 @@ const $labelStyle: TextStyle = {
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
-  flexDirection: "row",
   marginEnd: spacing.sm,
 }
 
 const $metadata: TextStyle = {
   color: colors.textDim,
   marginTop: spacing.xs,
-  flexDirection: "row",
 }
 
 const $metadataText: TextStyle = {

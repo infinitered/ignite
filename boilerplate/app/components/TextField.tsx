@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { colors, spacing, typography } from "../theme"
+import { $styles, colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
 export interface TextFieldAccessoryProps {
@@ -137,6 +137,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   const $labelStyles = [$labelStyle, LabelTextProps?.style]
 
   const $inputWrapperStyles = [
+    $styles.row,
     $inputWrapperStyle,
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
@@ -238,7 +239,6 @@ const $labelStyle: TextStyle = {
 }
 
 const $inputWrapperStyle: ViewStyle = {
-  flexDirection: "row",
   alignItems: "flex-start",
   borderWidth: 1,
   borderRadius: 4,

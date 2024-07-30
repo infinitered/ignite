@@ -8,7 +8,7 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import { colors, spacing } from "../theme"
+import { $styles, colors, spacing } from "../theme"
 import { Text, TextProps } from "./Text"
 
 type Presets = keyof typeof $containerPresets
@@ -253,7 +253,6 @@ const $containerBase: ViewStyle = {
   shadowRadius: 12.81,
   elevation: 16,
   minHeight: 96,
-  flexDirection: "row",
 }
 
 const $alignmentWrapper: ViewStyle = {
@@ -270,6 +269,7 @@ const $alignmentWrapperFlexOptions = {
 
 const $containerPresets = {
   default: [
+    $styles.row,
     $containerBase,
     {
       backgroundColor: colors.palette.neutral100,
@@ -278,6 +278,7 @@ const $containerPresets = {
   ] as StyleProp<ViewStyle>,
 
   reversed: [
+    $styles.row,
     $containerBase,
     { backgroundColor: colors.palette.neutral800, borderColor: colors.palette.neutral500 },
   ] as StyleProp<ViewStyle>,

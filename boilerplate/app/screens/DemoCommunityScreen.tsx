@@ -50,7 +50,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={reactNativeRadioLogo} style={$logo} />
             </View>
           }
@@ -61,7 +61,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={reactNativeNewsletterLogo} style={$logo} />
             </View>
           }
@@ -72,7 +72,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={reactNativeLiveLogo} style={$logo} />
             </View>
           }
@@ -82,7 +82,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           tx="demoCommunityScreen.chainReactConferenceLink"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={chainReactLogo} style={$logo} />
             </View>
           }
@@ -118,7 +118,6 @@ const $sectionTitle: TextStyle = {
 
 const $logoContainer: ViewStyle = {
   marginEnd: spacing.md,
-  flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",
   alignSelf: "stretch",
