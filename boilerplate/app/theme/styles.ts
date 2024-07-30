@@ -9,4 +9,11 @@ export const $styles = {
     paddingTop: spacing.lg + spacing.xl,
     paddingHorizontal: spacing.lg,
   } as ViewStyle,
+  toggleInner: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  } as ViewStyle,
 }

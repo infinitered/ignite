@@ -2,7 +2,7 @@
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { AutoImage, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
+import { $styles, colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -111,7 +111,7 @@ export const DemoAutoImage: Demo = {
 
       <DemoDivider size={40} />
 
-      <View style={{ flexDirection: "row" }}>
+      <View style={$styles.row}>
         <View style={$aspectRatioHeightExampleContainer}>
           <Text
             text="<View />"

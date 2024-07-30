@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { colors } from "../../theme"
+import { $styles, colors } from "../../theme"
 import { iconRegistry } from "../Icon"
 import { isRTL } from "app/i18n"
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
@@ -137,6 +137,7 @@ function SwitchInput(props: SwitchInputProps) {
     <View style={[$inputOuter, { backgroundColor: offBackgroundColor }, $outerStyleOverride]}>
       <Animated.View
         style={[
+          $styles.toggleInner,
           $switchInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
@@ -213,11 +214,7 @@ const $inputOuter: StyleProp<ViewStyle> = [
 ]
 
 const $switchInner: ViewStyle = {
-  width: "100%",
-  height: "100%",
-  alignItems: "center",
   borderColor: colors.transparent,
-  overflow: "hidden",
   position: "absolute",
   paddingStart: 4,
   paddingEnd: 4,
