@@ -46,7 +46,11 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   )
 
   return (
-    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={[$styles.container, $container]}>
+    <Screen
+      preset="scroll"
+      safeAreaEdges={["top"]}
+      contentContainerStyle={[$styles.container, $container]}
+    >
       <Text
         style={$reportBugsLink}
         tx="demoDebugScreen.reportBugs"

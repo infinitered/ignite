@@ -70,13 +70,9 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     }
 
     return (
-      <Screen
-        preset="fixed"
-        safeAreaEdges={["top"]}
-        contentContainerStyle={$styles.flex1}
-      >
+      <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
         <ListView<Episode>
-          contentContainerStyle={{...$styles.container,...$listContentContainer}}
+          contentContainerStyle={{ ...$styles.container, ...$listContentContainer }}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}

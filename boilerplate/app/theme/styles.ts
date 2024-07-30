@@ -1,5 +1,5 @@
-import { ViewStyle } from "react-native";
-import { spacing } from "./spacing";
+import { ViewStyle } from "react-native"
+import { spacing } from "./spacing"
 
 /* Use this file to define styles that are used in multiple places in your app. */
 export const $styles = {

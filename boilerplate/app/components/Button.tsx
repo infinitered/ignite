@@ -207,7 +207,8 @@ const $viewPresets = {
   ] as StyleProp<ViewStyle>,
 
   filled: [
-    $styles.row, $baseViewStyle,
+    $styles.row,
+    $baseViewStyle,
     { backgroundColor: colors.palette.neutral300 },
   ] as StyleProp<ViewStyle>,
 
