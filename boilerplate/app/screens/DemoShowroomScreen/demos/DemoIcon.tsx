@@ -5,6 +5,7 @@ import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 import type { ThemedStyle } from "app/theme"
+import { $styles } from "app/theme"
 
 const $demoIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   padding: spacing.xs,
@@ -39,6 +40,7 @@ export const DemoIcon: Demo = {
       name="Icons"
       description="List of icons registered inside the component."
       layout="row"
+      itemStyle={$styles.flexWrap}
     >
       {Object.keys(iconRegistry).map((icon) => (
         <View key={icon} style={themed($iconTile)}>

@@ -166,7 +166,6 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             <View style={themed($logoContainer)}>
               <Image source={logo} style={$logoImage} />
             </View>
-
             <ListView<DemoListItem["item"]>
               ref={menuRef}
               contentContainerStyle={themed($listContentContainer)}
@@ -190,8 +189,11 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             ref={listRef}
             contentContainerStyle={themed($sectionListContentContainer)}
             stickySectionHeadersEnabled={false}
-            // @ts-expect-error
-            sections={Object.values(Demos)}
+            keyExtractor={(item, index) => item.name + index}
+            sections={Object.values(Demos).map((d) => ({
+              ...d,
+              data: [d.data({ theme, themed })],
+            }))}
             renderItem={({ item }) => item}
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={

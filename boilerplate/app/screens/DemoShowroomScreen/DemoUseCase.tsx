@@ -9,6 +9,7 @@ interface DemoUseCaseProps {
   name: string
   description?: string
   layout?: "column" | "row"
+  itemStyle?: ViewStyle
   children: ReactNode
 }
 
@@ -17,7 +18,7 @@ interface DemoUseCaseProps {
  * @returns {JSX.Element} The rendered `DemoUseCase` component.
  */
 export function DemoUseCase(props: DemoUseCaseProps) {
-  const { name, description, children, layout = "column" } = props
+  const { name, description, children, layout = "column", itemStyle = {} } = props
   const { themed } = useAppTheme()
 
   return (
@@ -26,7 +27,7 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
       {description && <Text style={themed($description)}>{description}</Text>}
 
-      <View style={themed([layout === "row" && $styles.row, $item])}>{children}</View>
+      <View style={[itemStyle, layout === "row" && $styles.row, themed($item)]}>{children}</View>
     </View>
   )
 }
