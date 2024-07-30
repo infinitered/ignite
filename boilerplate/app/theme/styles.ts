@@ -5,10 +5,12 @@ import { spacing } from "./spacing"
 export const $styles = {
   row: { flexDirection: "row" } as ViewStyle,
   flex1: { flex: 1 } as ViewStyle,
+  // @demo remove-block-start
   container: {
     paddingTop: spacing.lg + spacing.xl,
     paddingHorizontal: spacing.lg,
   } as ViewStyle,
+  // @demo remove-block-end
   toggleInner: {
     width: "100%",
     height: "100%",
