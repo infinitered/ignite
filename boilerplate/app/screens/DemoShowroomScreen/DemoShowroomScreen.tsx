@@ -6,7 +6,7 @@ import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import { colors, spacing } from "../../theme"
+import { $styles, colors, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
@@ -172,7 +172,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           </View>
         )}
       >
-        <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
+        <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
           <DrawerIconButton onPress={toggleDrawer} />
 
           <SectionList
@@ -203,10 +203,6 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
       </Drawer>
     )
   }
-
-const $screenContainer: ViewStyle = {
-  flex: 1,
-}
 
 const $drawer: ViewStyle = {
   backgroundColor: colors.background,

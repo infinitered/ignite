@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
-import { colors, spacing, typography } from "../../theme"
+import { $styles, colors, spacing, typography } from "../../theme"
 
 interface DemoUseCaseProps {
   name: string
@@ -23,7 +23,7 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
       {description && <Text style={$description}>{description}</Text>}
 
-      <View style={[layout === "row" && $rowLayout, $item]}>{children}</View>
+      <View style={[layout === "row" && $styles.row, $wrapLayout, $item]}>{children}</View>
     </View>
   )
 }
@@ -43,8 +43,7 @@ const $name: TextStyle = {
   fontFamily: typography.primary.bold,
 }
 
-const $rowLayout: ViewStyle = {
-  flexDirection: "row",
+const $wrapLayout: ViewStyle = {
   flexWrap: "wrap",
 }
 
