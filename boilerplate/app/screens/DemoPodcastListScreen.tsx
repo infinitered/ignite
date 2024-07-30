@@ -76,7 +76,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         contentContainerStyle={$styles.flex1}
       >
         <ListView<Episode>
-          contentContainerStyle={$listContentContainer}
+          contentContainerStyle={{...$styles.container,...$listContentContainer}}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}
@@ -301,8 +301,6 @@ const EpisodeCard = observer(function EpisodeCard({
 
 // #region Styles
 const $listContentContainer: ContentStyle = {
-  paddingHorizontal: spacing.lg,
-  paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,
 }
 
