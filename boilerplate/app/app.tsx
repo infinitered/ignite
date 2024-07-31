@@ -75,6 +75,7 @@ function App(props: AppProps) {
 
   // @mst replace-next-line React.useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
+    // @mst replace-next-line
     // This runs after the root store has been initialized and rehydrated.
 
     // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
