@@ -29,7 +29,7 @@ export const spacing = {
 Example:
 
 ```ts
-import { spacing } from "app/theme"
+import { spacing } from "../theme"
 
 $containerStyle = {
   margin: spacing.small,

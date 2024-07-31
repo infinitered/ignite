@@ -42,7 +42,7 @@ Head on over to the [Ignite Cookbook](https://ignitecookbook.com/) to find recip
 
 :::
 
-Previously we relied on pure style objects typed as `ViewStyle`, `TextStyle`, `ImageStyle`, etc. This didn't quite fit circumstances where you wanted to dynamically change the overall app's theme during runtime. You could always reload the javascript bundle to see changes, but that was a less than ideal solution.
+In Ignite `<10` we relied on pure style objects typed as `ViewStyle`, `TextStyle`, `ImageStyle`, etc. This didn't quite fit circumstances where you wanted to dynamically change the overall app's theme during runtime. You could always reload the javascript bundle to see changes, but that was a less than ideal solution.
 
 Ignite now has the concept of `ThemedStyle`s. You can stick with the traditional pure style objects but if you want to take advantage of themed global colors, spacing, typography, and timings, you've got to add a little more code...
 
@@ -50,7 +50,12 @@ Here's an example of how to use the new `useAppTheme()` hook to style your compo
 
 ```tsx
 import { type ViewStyle, View } from 'react-native'
-import { type ThemedStyle, useAppTheme } from 'app/theme'
+import { 
+  type ThemedStyle, 
+  useAppTheme, 
+  ThemeProvider, 
+  useThemeProvider 
+} from 'app/theme'
 
 const $container: ThemedStyle<ViewStyle> = (theme) => ({
   flex: 1,
@@ -70,6 +75,16 @@ const Component = () => {
     <View style={themed($container)}>
       <View style={$normalStyle}>
     </View>
+  )
+}
+
+const App = () => {
+  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
+    useThemeProvider()
+  return (
+    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+      <Component />
+    </ThemeProvider>
   )
 }
 ```
@@ -92,6 +107,11 @@ const onThemeButtonPress = () => {
   // This will toggle between light and dark mode.
   setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
 }
+
+// Or you can let them use their deice's system setting: light/dark
+const resetThemeontextOverride = () => {
+  setThemeContextOverride(undefined)
+}
 ```
 
 You could also hook it up to a switch if that's more your style:
@@ -113,4 +133,52 @@ const {
   }}
 />
 
+```
+
+Once you have set an explicit theme override, the app will not respect the user's system setting, allowing you to lock the app to dark mode or light mode even when the user's system setting is different.
+
+To have your app go back to respecting the user's device system setting, you can call `setThemeContextOverride(undefined)`.
+
+## Hooking up the navigation theme
+
+Ignite uses `react-navigation` so it's already hooked up for use with your `NavigationController`! The `navigationTheme` variable returned from `useThemeProvider()` is a `react-navigation` heme object you can pass to the root `NavigtionController`.
+
+```tsx
+const { navigationTheme } = useThemeProvider()
+return <NavigationContainer theme={navigationTheme} {...props} />
+```
+
+## Integrating other styling and component libraries
+
+There are many component libraries that offer light/dark modes to their components. Here's an example of how to use `react-native-elements` with Ignite's theming system by exending their own `ThemeProvider`:
+
+```tsx
+
+import { colorsDark, colorsLight, customFontsToLoad } from "src/theme"
+import { createTheme as createRNEUITheme, ThemeProvider as RNEUIThemeProvider } from "@rneui/themed"
+
+export const ThemedRNEUIProvider = ({ children }) => {
+  const { themeScheme } = useThemeProvider()
+  const themeColors = themeScheme === "light" ? colorsLight : colorsDark
+v
+  const RNEUITheme = createRNEUITheme({
+    mode: themeScheme,
+    lightColors: {
+      primary: colorsLight.palette.secondary500,
+    },
+    darkColors: {
+      primary: colorsDark.palette.secondary500,
+    },
+    components: {
+      Text: {
+        style: {
+          color: themeColors.text,
+        },
+      },
+      // ...etc
+    },
+  })
+
+  return <RNEUIThemeProvider theme={RNEUITheme}>{children}</RNEUIThemeProvider>
+}
 ```

@@ -63,7 +63,34 @@ const $plainObjectStyle: ViewStyle = {
 
 ## Properties:
 
-### Using `themed()`
+### `navTheme`
+
+A `react-navigtion` [theme object](https://reactnavigation.org/docs/themes#built-in-themes). This is the same object you would pass to a `NavigationContainer` component. 
+
+### `setThemeContextOverride`
+
+A function that allows you to override the theme context. This is useful for allowing users to switch between light and dark mode.
+
+The default behavior is to use the system theme, but you can override this by calling `setThemeContextOverride("light" | "dark")`.
+
+Calling `setThemeContextOverride(undefined)` will reset the theme to the user's system preference.
+
+### `theme`
+
+A `Theme` object that contains all the colors, spacing, and other theme-related properties of the current theme context.
+
+### `themeContext`
+
+A string that represents the current theme context. This will almost always be either "light" or "dark".
+
+:::info
+
+When resetting the theme context to the system preference with `setThemeContextOverride(undefined)`, the `themeContext` will not be undefined. It will be the return value of `react-native`'s `useColorScheme()` hook.
+
+:::
+
+
+### `themed`
 
 `themed()` is a simple function with complex types. You can pass a plain style object to it, a `ThemedStyle` function, or an array of either.
 
@@ -101,3 +128,5 @@ const $themedStyle: ThemedStyle<ViewStyle> = (theme) => ({
   { width: 7, backgroundColor: 'yellow'}
 ])} />
 ```
+
+Make sure you don't pass any `Animated` styles to `themed()`. It will not work as expected! Keep them in separate style array objects: `<Animatd.View style={[$animatedStyle, themed($myThemedStyle)]}>`.

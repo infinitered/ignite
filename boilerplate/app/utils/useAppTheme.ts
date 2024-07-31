@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react"
-import { Alert, StyleProp, useColorScheme } from "react-native"
+import { StyleProp, useColorScheme } from "react-native"
 import { DarkTheme, DefaultTheme, useTheme as useNavTheme } from "@react-navigation/native"
 import {
   type Theme,
@@ -19,7 +19,7 @@ type ThemeContextType = {
 export const ThemeContext = createContext<ThemeContextType>({
   themeScheme: undefined, // default to the system theme
   setThemeContextOverride: (_newTheme: ThemeContexts) => {
-    Alert.alert("setThemeContextOverride not implemented")
+    console.error("Tried to call setThemeContextOverride before the ThemeProvider was initialized")
   },
 })
 
