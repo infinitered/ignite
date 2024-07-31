@@ -60,18 +60,6 @@ module.exports = {
       ["npx ignite-cli remove-demo-markup", "npx ignite-cli remove-demo-markup --dry-run"],
     )
     p()
-    command(
-      "remove-mst (rm-mst)",
-      "Removes MobX-State-Tree code from the project (add --dry-run to list changes but not execute)",
-      ["npx ignite-cli remove-mst", "npx ignite-cli remove-mst --dry-run"],
-    )
-    p()
-    command(
-      "remove-mst-markup (rmstm)",
-      "Removes @mst markup from the project (add --dry-run to list changes but not execute)",
-      ["npx ignite-cli remove-mst-markup", "npx ignite-cli remove-mst-markup --dry-run"],
-    )
-    p()
     command("snackify        ", "Creates a new branch which can be imported as an Expo snack", [
       "npx ignite-cli snackify",
     ])
