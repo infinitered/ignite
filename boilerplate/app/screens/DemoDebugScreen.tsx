@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Button, ListItem, Screen, Switch, Text } from "../components"
+import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import type { ThemedStyle } from "app/theme"
 import { $styles } from "../theme"
@@ -173,10 +173,6 @@ const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 
 const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
-})
-
-const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginTop: spacing.md,
 })
 
 const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
