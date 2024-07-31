@@ -80,15 +80,28 @@ We instead use a strategy of constants, colocated with our components, camelCase
 
 ```tsx
 import { View, ViewStyle } from "react-native"
-import { palette } from "app/theme"
+import { useAppTheme } from "app/utils/useAppTheme"
+import type { ThemedStyle } from "app/theme"
 
+// This is a themed style that you must wrap with `themed()` to pass the style object.
 const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
-  backgroundColor: palette.bgColor,
+  backgroundColor: colors.palette.bgColor,
 })
 
+// This is a non-themed style
+const $innerView: ViewStyle{
+  backgroundColor: '#fff,
+  alignItems: "center",
+}
+
 const MyComponent = () => {
-  return <View style={$container}>...</View>
+  const { themed } = useAppTheme()
+  return (
+    <View style={themed($container)}>
+    <View style={$innerView}>...</View>
+    </View>
+  )
 }
 ```
 
