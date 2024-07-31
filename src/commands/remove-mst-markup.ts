@@ -53,8 +53,10 @@ module.exports = {
 
     // Run prettier at the end to clean up any spacing issues
     if (!dryRun) {
-      await system.run(`npx prettier@2.8.1 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
+      p(`Running prettier to clean up code formatting`)
+      await system.run(`npx prettier@2.8.8 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
         trim: true,
+        cwd: TARGET_DIR,
       })
     }
 
