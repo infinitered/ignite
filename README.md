@@ -89,6 +89,10 @@ If you run into problems, first search the issues and discussions in this reposi
 
 If you still need help after reaching out to the proper channels, feel free to open a new GitHub issue via `npx ignite-cli issue "Unable to Ignite new app"` (as an example). This will help start writing your issue with the correct diagnostic information included.
 
+## Contributing to Ignite
+
+Want to contribute to Ignite? Check out [the contributing guide](./docs/contributing/Contributing-To-Ignite.md) for more info on how to work with the codebase.
+
 ## Need Inspiration?
 
 If you need battle-tested solutions from Infinite Red experts on everything from Accessibility, to CI/CD configuration, head to [Ignite Cookbook](https://ignitecookbook.com) for code snippets from our team and the community!
