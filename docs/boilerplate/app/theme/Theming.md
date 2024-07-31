@@ -50,11 +50,11 @@ Here's an example of how to use the new `useAppTheme()` hook to style your compo
 
 ```tsx
 import { type ViewStyle, View } from 'react-native'
-import { 
-  type ThemedStyle, 
-  useAppTheme, 
-  ThemeProvider, 
-  useThemeProvider 
+import {
+  type ThemedStyle,
+  useAppTheme,
+  ThemeProvider,
+  useThemeProvider
 } from 'app/theme'
 
 const $container: ThemedStyle<ViewStyle> = (theme) => ({
@@ -132,7 +132,6 @@ const {
     setThemeContextOverride(value ? "dark" : "light")
   }}
 />
-
 ```
 
 Once you have set an explicit theme override, the app will not respect the user's system setting, allowing you to lock the app to dark mode or light mode even when the user's system setting is different.
@@ -153,14 +152,12 @@ return <NavigationContainer theme={navigationTheme} {...props} />
 There are many component libraries that offer light/dark modes to their components. Here's an example of how to use `react-native-elements` with Ignite's theming system by exending their own `ThemeProvider`:
 
 ```tsx
-
 import { colorsDark, colorsLight, customFontsToLoad } from "src/theme"
 import { createTheme as createRNEUITheme, ThemeProvider as RNEUIThemeProvider } from "@rneui/themed"
 
 export const ThemedRNEUIProvider = ({ children }) => {
   const { themeScheme } = useThemeProvider()
   const themeColors = themeScheme === "light" ? colorsLight : colorsDark
-v
   const RNEUITheme = createRNEUITheme({
     mode: themeScheme,
     lightColors: {

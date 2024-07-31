@@ -65,7 +65,7 @@ const $plainObjectStyle: ViewStyle = {
 
 ### `navTheme`
 
-A `react-navigtion` [theme object](https://reactnavigation.org/docs/themes#built-in-themes). This is the same object you would pass to a `NavigationContainer` component. 
+A `react-navigtion` [theme object](https://reactnavigation.org/docs/themes#built-in-themes). This is the same object you would pass to a `NavigationContainer` component.
 
 ### `setThemeContextOverride`
 
@@ -88,7 +88,6 @@ A string that represents the current theme context. This will almost always be e
 When resetting the theme context to the system preference with `setThemeContextOverride(undefined)`, the `themeContext` will not be undefined. It will be the return value of `react-native`'s `useColorScheme()` hook.
 
 :::
-
 
 ### `themed`
 
