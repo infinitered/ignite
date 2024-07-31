@@ -17,8 +17,6 @@ module.exports = {
     const TARGET_DIR = parameters.first ?? CWD
     const dryRun = boolFlag(parameters.options.dryRun) ?? false
 
-    // TODO: full dryRun support
-
     p()
     p(`Removing MobX-State-Tree code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
 
