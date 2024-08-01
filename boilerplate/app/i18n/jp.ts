@@ -1,3 +1,4 @@
+import demoJp from "./demo-jp"
 import { Translations } from "./en"
 
 const jp: Translations = {
@@ -121,6 +122,8 @@ const jp: Translations = {
         "お気に入りのエピソードがまだありません。エピソードにあるハートマークにタップして、お気に入りに追加しましょう！",
     },
   },
+  // @demo remove-block-start
+  ...demoJp,
   // @demo remove-block-end
 }
 
