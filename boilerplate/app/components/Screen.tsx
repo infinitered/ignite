@@ -270,7 +270,7 @@ const $outerStyle: ViewStyle = {
 }
 
 const $justifyFlexEnd: ViewStyle = {
-  justifyContent: 'flex-end',
+  justifyContent: "flex-end",
 }
 
 const $innerStyle: ViewStyle = {
