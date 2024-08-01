@@ -25,6 +25,7 @@ export interface Theme {
   spacing: Spacing
   typography: Typography
   timing: Timing
+  isDark: boolean
 }
 
 // Here we define our themes.
@@ -33,12 +34,14 @@ export const lightTheme: Theme = {
   spacing: spacingLight,
   typography,
   timing,
+  isDark: false,
 }
 export const darkTheme: Theme = {
   colors: colorsDark,
   spacing: spacingDark,
   typography,
   timing,
+  isDark: false,
 }
 
 /**

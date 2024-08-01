@@ -21,7 +21,7 @@ interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
   _props, // @demo remove-current-line
 ) {
-  const { themed } = useAppTheme()
+  const { themed, theme } = useAppTheme()
   // @demo remove-block-start
   const { navigation } = _props
   const {
@@ -54,7 +54,12 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
           preset="heading"
         />
         <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
+        <Image
+          style={$welcomeFace}
+          source={welcomeFace}
+          resizeMode="contain"
+          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+        />
       </View>
 
       <View style={themed([$bottomContainer, $bottomContainerInsets])}>

@@ -7,7 +7,6 @@ import { useAppTheme } from "app/utils/useAppTheme"
 import type { ThemedStyle } from "app/theme"
 
 const sadFace = require("../../assets/images/sad-face.png")
-const sadFaceDark = require("../../assets/images/sad-face-dark.png")
 
 interface EmptyStateProps {
   /**
@@ -118,14 +117,14 @@ interface EmptyStatePresetItem {
  */
 export function EmptyState(props: EmptyStateProps) {
   const {
-    themeContext,
+    theme,
     themed,
     theme: { spacing },
   } = useAppTheme()
 
   const EmptyStatePresets = {
     generic: {
-      imageSource: themeContext === "dark" ? sadFaceDark : sadFace,
+      imageSource: sadFace,
       heading: translate("emptyStateComponent.generic.heading"),
       content: translate("emptyStateComponent.generic.content"),
       button: translate("emptyStateComponent.generic.button"),
@@ -192,7 +191,14 @@ export function EmptyState(props: EmptyStateProps) {
 
   return (
     <View style={$containerStyles}>
-      {isImagePresent && <Image source={imageSource} {...ImageProps} style={$imageStyles} />}
+      {isImagePresent && (
+        <Image
+          source={imageSource}
+          {...ImageProps}
+          style={$imageStyles}
+          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+        />
+      )}
 
       {isHeadingPresent && (
         <Text
