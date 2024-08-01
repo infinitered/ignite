@@ -34,14 +34,14 @@ const jp: Translations = {
     invalidEmail: "有効なメールアドレスを入力してください.",
   },
   loginScreen: {
-    signIn: "サインイン",
+    logIn: "サインイン",
     enterDetails:
       "ここにあなたの情報を入力してトップシークレットをアンロックしましょう。何が待ち構えているか予想もつかないはずです。はたまたそうでも無いかも - ロケットサイエンスほど複雑なものではありません。",
     emailFieldLabel: "メールアドレス",
     passwordFieldLabel: "パスワード",
     emailFieldPlaceholder: "メールアドレスを入力してください",
     passwordFieldPlaceholder: "パスワードを入力してください",
-    tapToSignIn: "タップしてサインインしよう！",
+    tapToLogIn: "タップしてサインインしよう！",
     hint: "ヒント: お好みのメールアドレスとパスワードを使ってください :)",
   },
   demoNavigator: {
