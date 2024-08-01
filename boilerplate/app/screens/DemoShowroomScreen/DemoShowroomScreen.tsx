@@ -102,10 +102,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         let findItemIndex = 0
         if (params.itemIndex) {
           try {
-            findItemIndex =
-              demoValues[findSectionIndex]
-                .data({ themed, theme })
-                .findIndex((u) => slugify(u.props.name) === params.itemIndex) + 1
+            findItemIndex = demoValues[findSectionIndex]
+              .data({ themed, theme })
+              .findIndex((u) => slugify(u.props.name) === params.itemIndex)
           } catch (err) {
             console.error(err)
           }
