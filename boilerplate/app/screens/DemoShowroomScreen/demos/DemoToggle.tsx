@@ -174,9 +174,9 @@ export const DemoToggle: Demo = {
         value
         variant="switch"
         switchAccessibilityMode="text"
-        labelTx="demoToggle.useCase.variants.switch.label"
+        labelTx="demoToggle.useCase.passingContent.useCase.switch.label"
         status="error"
-        helperTx="demoToggle.useCase.variants.switch.helper"
+        helperTx="demoToggle.useCase.passingContent.useCase.switch.helper"
       />
       <DemoDivider size={24} />
       <ControlledToggle

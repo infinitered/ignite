@@ -58,10 +58,10 @@ export const DemoCard: Demo = {
       <DemoDivider />
       <Card
         preset="reversed"
-        headingTx="demoCard.useCase.presets.reversed.heading"
+        headingTx="demoCard.useCase.verticalAlignment.reversed.heading"
         verticalAlignment="force-footer-bottom"
-        contentTx="demoCard.useCase.presets.reversed.content"
-        footerTx="demoCard.useCase.presets.reversed.footer"
+        contentTx="demoCard.useCase.verticalAlignment.reversed.content"
+        footerTx="demoCard.useCase.verticalAlignment.reversed.footer"
         style={{ minHeight: 160 }}
       />
     </DemoUseCase>,
