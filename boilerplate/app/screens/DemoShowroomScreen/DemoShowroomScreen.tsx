@@ -10,6 +10,7 @@ import { $styles, colors, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 
 const logo = require("../../../assets/images/logo.png")
 
@@ -181,6 +182,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             stickySectionHeadersEnabled={false}
             sections={Object.values(Demos)}
             renderItem={({ item }) => item}
+            renderScrollComponent={({ contentContainerStyle }) => (
+              <KeyboardAwareScrollView
+                contentContainerStyle={contentContainerStyle}
+                bottomOffset={50}
+              />
+            )}
             renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
             ListHeaderComponent={
               <View style={$heading}>

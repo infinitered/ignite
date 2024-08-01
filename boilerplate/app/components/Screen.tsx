@@ -166,7 +166,7 @@ function useAutoPreset(props: AutoScreenProps): {
 function ScreenWithoutScrolling(props: ScreenProps) {
   const { style, contentContainerStyle, children } = props
   return (
-    <View style={[$outerStyle, style]}>
+    <View style={[$outerStyle, $justifyFlexEnd, style]}>
       <View style={[$innerStyle, contentContainerStyle]}>{children}</View>
     </View>
   )
@@ -267,6 +267,10 @@ const $outerStyle: ViewStyle = {
   flex: 1,
   height: "100%",
   width: "100%",
+}
+
+const $justifyFlexEnd: ViewStyle = {
+  justifyContent: 'flex-end',
 }
 
 const $innerStyle: ViewStyle = {
