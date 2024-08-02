@@ -21,6 +21,9 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
 
+  // check if we should override front matter destinationDir or default dir
+  const destinationDir = parameters.options.destinationDir ?? parameters.third
+
   // we need a name for this component
   let name = parameters.second
   if (!name) {
@@ -57,9 +60,12 @@ async function generate(toolbox: GluegunToolbox) {
   const overwrite = !options.overwrite ? defaultOverwrite : boolFlag(options.overwrite)
   const { written, overwritten, exists } = await generateFromTemplate(generator, {
     name: pascalName,
+    originalName: name,
     skipIndexFile: parameters.options.skipIndexFile,
     overwrite,
     subdirectory,
+    destinationDir,
+    exact: parameters.options.exact,
   })
 
   heading(`Generated new files:`)
