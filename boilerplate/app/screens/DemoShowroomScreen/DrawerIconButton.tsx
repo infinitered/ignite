@@ -1,5 +1,5 @@
 import React from "react"
-import { Pressable, PressableProps, ViewStyle } from "react-native"
+import { Pressable, PressableProps, ViewStyle, Platform } from "react-native"
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 import { useDrawerProgress } from "react-native-drawer-layout"
 import { isRTL } from "../../i18n"
@@ -16,6 +16,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { ...PressableProps } = props
   const progress = useDrawerProgress()
+  const isWeb = Platform.OS === "web"
 
   const animatedContainerStyles = useAnimatedStyle(() => {
     const translateX = interpolate(progress.value, [0, 1], [0, isRTL ? 60 : -60])
@@ -31,10 +32,16 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     const rotate = interpolate(progress.value, [0, 1], [0, isRTL ? 45 : -45])
     const marginBottom = interpolate(progress.value, [0, 1], [0, -2])
     const width = interpolate(progress.value, [0, 1], [18, 12])
+    const marginHorizontal =
+      isWeb && isRTL
+        ? { marginRight: marginStart }
+        : {
+            marginLeft: marginStart,
+          }
 
     return {
+      ...marginHorizontal,
       backgroundColor,
-      marginStart,
       marginBottom,
       width,
       transform: [{ rotate: `${rotate}deg` }],
@@ -57,10 +64,16 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     const marginStart = interpolate(progress.value, [0, 1], [0, -11.5])
     const rotate = interpolate(progress.value, [0, 1], [0, isRTL ? -45 : 45])
     const width = interpolate(progress.value, [0, 1], [18, 12])
+    const marginHorizontal =
+      isWeb && isRTL
+        ? { marginRight: marginStart }
+        : {
+            marginLeft: marginStart,
+          }
 
     return {
+      ...marginHorizontal,
       backgroundColor,
-      marginStart,
       width,
       marginTop,
       transform: [{ rotate: `${rotate}deg` }],
