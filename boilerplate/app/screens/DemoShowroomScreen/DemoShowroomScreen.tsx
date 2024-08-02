@@ -1,6 +1,15 @@
 import { Link, RouteProp, useRoute } from "@react-navigation/native"
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react"
-import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
+import {
+  Image,
+  ImageStyle,
+  Platform,
+  SectionList,
+  SectionListRenderItemInfo,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
@@ -10,7 +19,7 @@ import { $styles, colors, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
+import { SectionListWithKeyboardAwareScrollView } from "app/components/SectionListWithKeyboardAwareScrollView"
 
 const logo = require("../../../assets/images/logo.png")
 
@@ -176,18 +185,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
           <DrawerIconButton onPress={toggleDrawer} />
 
-          <SectionList
+          <SectionListWithKeyboardAwareScrollView<ReactElement>
             ref={listRef}
             contentContainerStyle={$sectionListContentContainer}
             stickySectionHeadersEnabled={false}
             sections={Object.values(Demos)}
-            renderItem={({ item }) => item}
-            renderScrollComponent={({ contentContainerStyle }) => (
-              <KeyboardAwareScrollView
-                contentContainerStyle={contentContainerStyle}
-                bottomOffset={50}
-              />
-            )}
+            renderItem={({ item }: SectionListRenderItemInfo<ReactElement>) => item}
             renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
             ListHeaderComponent={
               <View style={$heading}>
