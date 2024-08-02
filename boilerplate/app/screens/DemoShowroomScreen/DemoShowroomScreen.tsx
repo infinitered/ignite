@@ -19,7 +19,7 @@ import { $styles, colors, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
-import { SectionListWithKeyboardAwareScrollView } from "./SectionListWithKeyboardAwareScrollView"
+import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 
 const logo = require("../../../assets/images/logo.png")
 
