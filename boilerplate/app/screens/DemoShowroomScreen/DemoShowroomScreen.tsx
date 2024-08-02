@@ -148,7 +148,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
-        drawerType={"slide"}
+        drawerType="back"
         drawerPosition={isRTL ? "right" : "left"}
         renderDrawerContent={() => (
           <View style={[$drawer, $drawerInsets]}>
