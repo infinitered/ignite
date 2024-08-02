@@ -33,14 +33,14 @@ const ar: Translations = {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
   },
   loginScreen: {
-    signIn: "تسجيل الدخول",
+    logIn: "تسجيل الدخول",
     enterDetails:
       ".ادخل التفاصيل الخاصة بك ادناه لفتح معلومات سرية للغاية. لن تخمن ابداً ما الذي ننتظره. او ربما ستفعل انها انها ليست علم الصواريخ",
     emailFieldLabel: "البريد الالكتروني",
     passwordFieldLabel: "كلمة السر",
     emailFieldPlaceholder: "ادخل بريدك الالكتروني",
     passwordFieldPlaceholder: "كلمة السر هنا فائقة السر",
-    tapToSignIn: "انقر لتسجيل الدخول!",
+    tapToLogIn: "انقر لتسجيل الدخول!",
     hint: "(: تلميح: يمكنك استخدام اي عنوان بريد الكتروني وكلمة السر المفضلة لديك",
   },
   demoNavigator: {
