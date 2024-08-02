@@ -36,6 +36,7 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoShowroomScreen.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoUseCase.tsx
    Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DrawerIconButton.tsx
+   Found '@demo remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/SectionListWithKeyboardAwareScrollView.tsx
    Found '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/index.ts
    Found '@demo remove-file' in /user/home/ignite/app/screens/LoginScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx
