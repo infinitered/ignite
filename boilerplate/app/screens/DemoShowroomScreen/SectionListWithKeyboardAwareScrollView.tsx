@@ -51,3 +51,5 @@ export default React.forwardRef(SectionListWithKeyboardAwareScrollView) as <Item
     ref?: React.Ref<SectionList<ItemType>>
   },
 ) => ReactElement
+
+// @demo remove-file
