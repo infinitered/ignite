@@ -1,6 +1,12 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { runIgnite } from "../_test-helpers"
+import {
+  copyDefaultScreenGenerator,
+  copyExpoRouterScreenGenerator,
+  removeDefaultScreenGenerator,
+  removeExpoRouterScreenGenerator,
+  runIgnite,
+} from "../_test-helpers"
 
 const BOILERPLATE_PATH = filesystem.path(__dirname, "../../boilerplate")
 
@@ -24,20 +30,20 @@ const setup = (): { TEMP_DIR: string } => {
 
 const { read } = filesystem
 
+const { TEMP_DIR } = setup()
+const options = {
+  pre: `cd ${TEMP_DIR}`,
+  post: `cd ${process.cwd()}`,
+}
+
+/**
+ * "/user/home/ignite" replaces the temp directory, so we don't get failures when it changes every test run
+ * @returns command output with temp directory replaced
+ */
+const replaceHomeDir = (result: string, { mock = "/user/home/ignite", temp = TEMP_DIR } = {}) =>
+  result.replace(new RegExp(temp, "g"), mock)
+
 describe("ignite-cli generate", () => {
-  const { TEMP_DIR } = setup()
-  const options = {
-    pre: `cd ${TEMP_DIR}`,
-    post: `cd ${process.cwd()}`,
-  }
-
-  /**
-   * "/user/home/ignite" replaces the temp directory, so we don't get failures when it changes every test run
-   * @returns command output with temp directory replaced
-   */
-  const replaceHomeDir = (result: string, { mock = "/user/home/ignite", temp = TEMP_DIR } = {}) =>
-    result.replace(new RegExp(temp, "g"), mock)
-
   describe("model", () => {
     it("should generate Pizza model and test, patch index model export, not patch RootStore and testing --overwrite option", async () => {
       const result = await runIgnite(`generate model Pizza`, options)
@@ -353,5 +359,84 @@ describe("ignite-cli generate", () => {
         "
       `)
     })
+  })
+})
+
+describe("ignite-cli generate with path params", () => {
+  it("should generate Topping component in the src/components directory", async () => {
+    const result = await runIgnite(
+      `generate component Topping --destination-dir=src/components`,
+      options,
+    )
+
+    expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+      "   
+         
+         Generated new files:
+         /user/home/ignite/src/components/Topping.tsx
+      "
+    `)
+  })
+
+  it("should generate Sicilian screen in the src/screens directory", async () => {
+    const result = await runIgnite(
+      `generate screen Sicilian --destination-dir=src/screens`,
+      options,
+    )
+
+    expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+      "   
+         
+         Generated new files:
+         /user/home/ignite/src/screens/SicilianScreen.tsx
+      "
+    `)
+  })
+
+  it("should generate `pizza` model in the src/models directory with exact casing", async () => {
+    const result = await runIgnite(
+      `generate model pizza --exact --destination-dir=src/models`,
+      options,
+    )
+
+    expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+      "   
+         
+         Generated new files:
+         /user/home/ignite/src/models/pizza.test.ts
+         /user/home/ignite/src/models/pizza.ts
+      "
+    `)
+  })
+})
+
+describe("ignite-cli generate screens expo-router style", () => {
+  beforeEach(() => {
+    // modify the generator template for screens to be a standard pattern for expo-router
+    removeDefaultScreenGenerator(TEMP_DIR)
+    copyExpoRouterScreenGenerator(TEMP_DIR)
+  })
+
+  afterEach(() => {
+    // restore the generator template for screens to be a standard pattern for react-navigation
+    removeExpoRouterScreenGenerator(TEMP_DIR)
+    copyDefaultScreenGenerator(TEMP_DIR)
+  })
+
+  it("should generate `log-in` screen exactly in the requested path", async () => {
+    const result = await runIgnite(
+      `generate screen log-in --exact --destination-dir="src/app/(app)/(tabs)"`,
+      options,
+    )
+
+    expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+      "   
+         
+         Generated new files:
+         /user/home/ignite/src/app/(app)/(tabs)/log-in.tsx
+      "
+    `)
+
+    // TODO add expect read and check template content
   })
 })
