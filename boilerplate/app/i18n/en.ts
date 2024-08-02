@@ -1,3 +1,5 @@
+import demoEn from "./demo-en"
+
 const en = {
   common: {
     ok: "OK!",
@@ -119,6 +121,8 @@ const en = {
         "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
     },
   },
+  // @demo remove-block-start
+  ...demoEn,
   // @demo remove-block-end
 }
 

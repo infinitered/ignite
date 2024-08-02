@@ -1,11 +1,12 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+import { TxKeyPath, translate } from "app/i18n"
 import { Text } from "../../components"
 import { colors, spacing, typography } from "../../theme"
 
 interface DemoUseCaseProps {
-  name: string
-  description?: string
+  name: TxKeyPath
+  description?: TxKeyPath
   layout?: "column" | "row"
   children: ReactNode
 }
@@ -19,9 +20,8 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
   return (
     <View>
-      <Text style={$name}>{name}</Text>
-
-      {description && <Text style={$description}>{description}</Text>}
+      <Text style={$name}>{translate(name)}</Text>
+      {description && <Text style={$description}>{translate(description)}</Text>}
 
       <View style={[layout === "row" && $rowLayout, $item]}>{children}</View>
     </View>

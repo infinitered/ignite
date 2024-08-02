@@ -1,3 +1,4 @@
+import demoJp from "./demo-jp"
 import { Translations } from "./en"
 
 const jp: Translations = {
@@ -34,14 +35,14 @@ const jp: Translations = {
     invalidEmail: "有効なメールアドレスを入力してください.",
   },
   loginScreen: {
-    logIn: "サインイン",
+    logIn: "ログイン",
     enterDetails:
       "ここにあなたの情報を入力してトップシークレットをアンロックしましょう。何が待ち構えているか予想もつかないはずです。はたまたそうでも無いかも - ロケットサイエンスほど複雑なものではありません。",
     emailFieldLabel: "メールアドレス",
     passwordFieldLabel: "パスワード",
     emailFieldPlaceholder: "メールアドレスを入力してください",
     passwordFieldPlaceholder: "パスワードを入力してください",
-    tapToLogIn: "タップしてサインインしよう！",
+    tapToLogIn: "タップしてログインしよう！",
     hint: "ヒント: お好みのメールアドレスとパスワードを使ってください :)",
   },
   demoNavigator: {
@@ -78,8 +79,8 @@ const jp: Translations = {
     lorem2Sentences:
       "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
     demoHeaderTxExample: "Yay",
-    demoViaTxProp: "`tx` Propから",
-    demoViaSpecifiedTxProp: "`{{prop}}Tx` Propから",
+    demoViaTxProp: "`tx`から",
+    demoViaSpecifiedTxProp: "`{{prop}}Tx`から",
   },
   demoDebugScreen: {
     howTo: "ハウツー",
@@ -121,6 +122,8 @@ const jp: Translations = {
         "お気に入りのエピソードがまだありません。エピソードにあるハートマークにタップして、お気に入りに追加しましょう！",
     },
   },
+  // @demo remove-block-start
+  ...demoJp,
   // @demo remove-block-end
 }
 

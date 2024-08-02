@@ -5,125 +5,124 @@ import { colors } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import { translate } from "app/i18n"
 
 export const DemoText: Demo = {
   name: "Text",
-  description:
-    "For your text displaying needs. This component is a HOC over the built-in React Native one.",
+  description: "demoText.description",
   data: [
-    <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
-      <Text>
-        default preset - Cillum eu laboris in labore. Excepteur mollit tempor reprehenderit fugiat
-        elit et eu consequat laborum.
-      </Text>
+    <DemoUseCase
+      name="demoText.useCase.presets.name"
+      description="demoText.useCase.presets.description"
+    >
+      <Text>{translate("demoText.useCase.presets.default")}</Text>
 
       <DemoDivider />
 
-      <Text preset="bold">
-        bold preset - Tempor et ullamco cupidatat in officia. Nulla ea duis elit id sunt ipsum
-        cillum duis deserunt nostrud ut nostrud id.
-      </Text>
+      <Text preset="bold">{translate("demoText.useCase.presets.bold")}</Text>
 
       <DemoDivider />
 
-      <Text preset="subheading">subheading preset - In Cupidatat Cillum.</Text>
+      <Text preset="subheading">{translate("demoText.useCase.presets.subheading")}</Text>
 
       <DemoDivider />
 
-      <Text preset="heading">heading preset - Voluptate Adipis.</Text>
-    </DemoUseCase>,
-
-    <DemoUseCase name="Sizes" description="There's a size prop.">
-      <Text size="xs">xs - Ea ipsum est ea ex sunt.</Text>
-
-      <DemoDivider />
-
-      <Text size="sm">sm - Lorem sunt adipisicin.</Text>
-
-      <DemoDivider />
-
-      <Text size="md">md - Consequat id do lorem.</Text>
-
-      <DemoDivider />
-
-      <Text size="lg">lg - Nostrud ipsum ea.</Text>
-
-      <DemoDivider />
-
-      <Text size="xl">xl - Eiusmod ex excepteur.</Text>
-
-      <DemoDivider />
-
-      <Text size="xxl">xxl - Cillum eu laboris.</Text>
-    </DemoUseCase>,
-
-    <DemoUseCase name="Weights" description="There's a weight prop.">
-      <Text weight="light">
-        light - Nulla magna incididunt excepteur est occaecat duis culpa dolore cupidatat enim et.
-      </Text>
-
-      <DemoDivider />
-
-      <Text weight="normal">
-        normal - Magna incididunt dolor ut veniam veniam laboris aliqua velit ea incididunt.
-      </Text>
-
-      <DemoDivider />
-
-      <Text weight="medium">medium - Non duis laborum quis laboris occaecat culpa cillum.</Text>
-
-      <DemoDivider />
-
-      <Text weight="semiBold">
-        semiBold - Exercitation magna nostrud pariatur laborum occaecat aliqua.
-      </Text>
-
-      <DemoDivider />
-
-      <Text weight="bold">bold - Eiusmod ullamco magna exercitation est excepteur.</Text>
+      <Text preset="heading">{translate("demoText.useCase.presets.heading")}</Text>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
+      name="demoText.useCase.sizes.name"
+      description="demoText.useCase.sizes.description"
     >
-      <Text text="via `text` prop - Billum in aute fugiat proident nisi pariatur est. Cupidatat anim cillum eiusmod ad. Officia eu magna aliquip labore dolore consequat." />
+      <Text size="xs">{translate("demoText.useCase.sizes.xs")}</Text>
+
+      <DemoDivider />
+
+      <Text size="sm">{translate("demoText.useCase.sizes.sm")}</Text>
+
+      <DemoDivider />
+
+      <Text size="md">{translate("demoText.useCase.sizes.md")}</Text>
+
+      <DemoDivider />
+
+      <Text size="lg">{translate("demoText.useCase.sizes.lg")}</Text>
+
+      <DemoDivider />
+
+      <Text size="xl">{translate("demoText.useCase.sizes.xl")}</Text>
+
+      <DemoDivider />
+
+      <Text size="xxl">{translate("demoText.useCase.sizes.xxl")}</Text>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="demoText.useCase.weights.name"
+      description="demoText.useCase.weights.description"
+    >
+      <Text weight="light">{translate("demoText.useCase.weights.light")}</Text>
+
+      <DemoDivider />
+
+      <Text weight="normal">{translate("demoText.useCase.weights.normal")}</Text>
+
+      <DemoDivider />
+
+      <Text weight="medium">{translate("demoText.useCase.weights.medium")}</Text>
+
+      <DemoDivider />
+
+      <Text weight="semiBold">{translate("demoText.useCase.weights.semibold")}</Text>
+
+      <DemoDivider />
+
+      <Text weight="bold">{translate("demoText.useCase.weights.bold")}</Text>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="demoText.useCase.passingContent.name"
+      description="demoText.useCase.passingContent.description"
+    >
+      <Text text={translate("demoText.useCase.passingContent.viaText")} />
 
       <DemoDivider />
 
       <Text>
-        <Text text="via `tx` prop - " />
+        <Text tx="demoText.useCase.passingContent.viaTx" />
         <Text tx="demoShowroomScreen.lorem2Sentences" />
       </Text>
 
       <DemoDivider />
 
-      <Text>children - Aliqua velit irure reprehenderit eu qui amet veniam consectetur.</Text>
+      <Text>{translate("demoText.useCase.passingContent.children")}</Text>
 
       <DemoDivider />
 
       <Text>
-        <Text>nested children - </Text>
-        <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
+        <Text>{translate("demoText.useCase.passingContent.nestedChildren")}</Text>
+        <Text preset="bold">{translate("demoText.useCase.passingContent.nestedChildren2")}</Text>
         {` `}
-        <Text preset="default">
-          Ullamco cupidatat officia exercitation velit non ullamco nisi..
-        </Text>
+        <Text preset="default">{translate("demoText.useCase.passingContent.nestedChildren3")}</Text>
         {` `}
-        <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
+        <Text preset="bold"> {translate("demoText.useCase.passingContent.nestedChildren4")}</Text>
       </Text>
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="demoText.useCase.styling.name"
+      description="demoText.useCase.styling.description"
+    >
       <Text>
-        <Text style={{ color: colors.error }}>
-          Consequat ullamco veniam velit mollit proident excepteur aliquip id culpa ipsum velit sint
-          nostrud.
-        </Text>
+        <Text style={{ color: colors.error }}>{translate("demoText.useCase.styling.text")}</Text>
         {` `}
-        <Text style={{ color: colors.palette.neutral100, backgroundColor: colors.error }}>
-          Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco
-          adipisicing tempor adipisicing.
+        <Text
+          style={{
+            color: colors.palette.neutral100,
+            backgroundColor: colors.error,
+          }}
+        >
+          {translate("demoText.useCase.styling.text2")}
         </Text>
         {` `}
         <Text
@@ -135,8 +134,7 @@ export const DemoText: Demo = {
             textDecorationColor: colors.error,
           }}
         >
-          Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco
-          adipisicing tempor adipisicing.
+          {translate("demoText.useCase.styling.text3")}
         </Text>
       </Text>
     </DemoUseCase>,
