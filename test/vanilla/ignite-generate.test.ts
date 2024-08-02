@@ -436,7 +436,24 @@ describe("ignite-cli generate screens expo-router style", () => {
          /user/home/ignite/src/app/(app)/(tabs)/log-in.tsx
       "
     `)
+    expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/log-in.tsx`)).toMatchInlineSnapshot(`
+      "import React, { FC } from \\"react\\"
+      import { observer } from \\"mobx-react-lite\\"
+      import { ViewStyle } from \\"react-native\\"
+      import { Screen, Text } from \\"app/components\\"
 
-    // TODO add expect read and check template content
+      export default observer(function LogInScreen() {
+        return (
+          <Screen style={$root} preset=\\"scroll\\">
+            <Text text=\\"logIn\\" />
+          </Screen>
+        )
+      })
+
+      const $root: ViewStyle = {
+        flex: 1,
+      }
+      "
+    `)
   })
 })

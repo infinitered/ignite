@@ -41,8 +41,7 @@ function generateExpoRouterTemplatePath(pathname: string): string {
 }
 
 export function copyDefaultScreenGenerator(tempBoilerplatePath: string): void {
-  const REACT_NAVIGATION_SCREEN_TPL = `
----
+  const REACT_NAVIGATION_SCREEN_TPL = `---
 destinationDir: app/screens
 patches:
 - path: "app/screens/index.ts"
@@ -89,12 +88,10 @@ const $root: ViewStyle = {
 }
 
 export function copyExpoRouterScreenGenerator(tempBoilerplatePath: string): void {
-  const EXPO_ROUTER_SCREEN_TPL = `
-import React, { FC } from "react"
+  const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { Screen, Text } from "app/components"
-
 
 export default observer(function <%= props.pascalCaseName %>Screen() {
   return (
