@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement } from "react"
+import React, { forwardRef, ReactElement } from "react"
 import { SectionList, SectionListProps } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 
