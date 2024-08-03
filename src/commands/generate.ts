@@ -65,7 +65,7 @@ async function generate(toolbox: GluegunToolbox) {
     overwrite,
     subdirectory,
     dir,
-    exact: parameters.options.exact,
+    case: parameters.options.case,
   })
 
   heading(`Generated new files:`)

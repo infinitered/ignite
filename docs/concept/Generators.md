@@ -123,15 +123,28 @@ Lastly, the splash-screen generator will exit if your input file has not been mo
 
 ## CLI Options
 
-### `--exact`
+### `--case`
 
-The default filename is PascalCased based on the name you pass in to the generate command. For example:
+The default filename format is PascalCase (`--case auto` or `--case pascal`), based on the name you pass in to the generate command. For example:
 
 `npx ignite-cli@latest g screen Episodes` will generate `EpisodesScreen.tsx` in the case of the default generator template `NAMEScreen.tsx`.
 
-This `--exact` switch specifies the generated filenames (`NAME` in the filename of your template) will be how you pass it in. For example:
+This `--case` switch specifies the generated filenames (`NAME` in the filename of your template) will be how you pass it in. For example:
 
-`npx ignite-cli@latest g screen log-in` will generate `log-inScreen.tsx`
+`npx ignite-cli@latest g screen log-in` will generate the following outputs given their template name:
+
+| --case       | tpl filename       | generated filename |
+| ------------ | ------------------ | ------------------ |
+| auto, pascal | NAMEScreen.tsx.ejs | LogInScreen.tsx    |
+| camel        | NAMEScreen.tsx.ejs | logInScreen.tsx    |
+| snake        | NAMEScreen.tsx.ejs | log_in_screen.tsx  |
+| kebab        | NAMEScreen.tsx.ejs | log-in-screen.tsx  |
+| none         | NAMEScreen.tsx.ejs | log-in.tsx         |
+| auto, pascal | NAME.tsx.ejs       | LogIn.tsx          |
+| camel        | NAME.tsx.ejs       | logIn.tsx          |
+| snake        | NAME.tsx.ejs       | log_in.tsx         |
+| kebab        | NAME.tsx.ejs       | log-in.tsx         |
+| none         | NAME.tsx.ejs       | log-in.tsx         |
 
 ### `--dir`
 

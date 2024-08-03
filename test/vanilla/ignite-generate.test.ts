@@ -388,7 +388,7 @@ describe("ignite-cli generate with path params", () => {
   })
 
   it("should generate `pizza` model in the src/models directory with exact casing", async () => {
-    const result = await runIgnite(`generate model pizza --exact --dir=src/models`, options)
+    const result = await runIgnite(`generate model pizza --case=none --dir=src/models`, options)
 
     expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
       "   
@@ -416,7 +416,7 @@ describe("ignite-cli generate screens expo-router style", () => {
 
   it("should generate `log-in` screen exactly in the requested path", async () => {
     const result = await runIgnite(
-      `generate screen log-in --exact --dir="src/app/(app)/(tabs)"`,
+      `generate screen log-in --case=none --dir="src/app/(app)/(tabs)"`,
       options,
     )
 
@@ -450,7 +450,7 @@ describe("ignite-cli generate screens expo-router style", () => {
 
   it("should generate dynamic id files at requested path", async () => {
     const result = await runIgnite(
-      `generate screen [id] --exact --dir="src/app/(app)/(tabs)/podcasts"`,
+      `generate screen [id] --case=none --dir="src/app/(app)/(tabs)/podcasts"`,
       options,
     )
 
