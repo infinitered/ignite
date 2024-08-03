@@ -83,11 +83,15 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   p()
   heading("Options")
   p()
-  command("--dir  ", "Override front matter or default path for generated files", [
+  command("--dir", "Override front matter or default path for generated files", [
     "npx ignite-cli g model Episodes --dir src/models",
   ])
-  command("--exact  ", "Skips PascalCase of the name and uses it as is", [
-    "npx ignite-cli g model episode --exact",
+  command("--case", "Formats the generated filename", [
+    "npx ignite-cli g model episode --case=auto",
+    "npx ignite-cli g model episode --case=pascal",
+    "npx ignite-cli g model episode --case=kebab",
+    "npx ignite-cli g model episode --case=snake",
+    "npx ignite-cli g model episode --case=none",
   ])
   p()
   heading("Installed generators")
@@ -229,6 +233,8 @@ function installedGenerators(): string[] {
   return generators
 }
 
+type GeneratorCaseOptions = "auto" | "pascal" | "camel" | "kebab" | "snake" | "none"
+
 type GeneratorOptions = {
   name: string
   originalName: string
@@ -236,7 +242,7 @@ type GeneratorOptions = {
   subdirectory: string
   overwrite: boolean
   dir?: string
-  exact?: boolean
+  case?: GeneratorCaseOptions
 }
 
 /**
@@ -247,13 +253,13 @@ export async function generateFromTemplate(
   options: GeneratorOptions,
 ): Promise<{ written: string[]; overwritten: string[]; exists: string[] }> {
   const { find, path, dir, separator } = filesystem
-  const { pascalCase, kebabCase, pluralize, camelCase, lowerCase } = strings
+  const { pascalCase, kebabCase, pluralize, camelCase, snakeCase } = strings
 
   // permutations of the name
   const pascalCaseName = pascalCase(options.name)
   const kebabCaseName = kebabCase(options.name)
   const camelCaseName = camelCase(options.name)
-  const lowerCaseName = lowerCase(options.name)
+  const snakeCaseName = snakeCase(options.name)
 
   // array of written, exists and overwritten files
   const written: string[] = []
@@ -261,7 +267,7 @@ export async function generateFromTemplate(
   const exists: string[] = []
 
   // passed into the template generator
-  const props = { camelCaseName, kebabCaseName, pascalCaseName, lowerCaseName, ...options }
+  const props = { camelCaseName, kebabCaseName, pascalCaseName, snakeCaseName, ...options }
 
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
@@ -269,13 +275,31 @@ export async function generateFromTemplate(
   // find the files
   const files = find(templateDir, { matching: "*" })
 
+  // check case options
+  let formattedName: string = pascalCaseName
+  switch (options.case) {
+    case "camel":
+      formattedName = camelCaseName
+      break
+    case "kebab":
+      formattedName = kebabCaseName
+      break
+    case "snake":
+      formattedName = snakeCaseName
+      break
+    case "none":
+      formattedName = options.originalName
+      break
+    case "auto":
+    default:
+      formattedName = pascalCaseName
+      break
+  }
+
   // loop through the files
   for (const templateFilename of files) {
     // get the filename and replace `NAME` with the actual name
-    let filename = templateFilename
-      .split(separator)
-      .slice(-1)[0]
-      .replace("NAME", options.exact === true ? options.originalName : pascalCaseName)
+    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", formattedName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) {
