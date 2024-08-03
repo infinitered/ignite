@@ -36,7 +36,7 @@ module.exports = {
       "npx ignite-cli generate component Hello",
       "npx ignite-cli generate model User",
       "npx ignite-cli generate screen Login",
-      "npx ignite-cli generate component Hello --destinationDir src/components",
+      "npx ignite-cli generate component Hello --dir src/components",
     ])
     p()
     command(

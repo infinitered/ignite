@@ -364,10 +364,7 @@ describe("ignite-cli generate", () => {
 
 describe("ignite-cli generate with path params", () => {
   it("should generate Topping component in the src/components directory", async () => {
-    const result = await runIgnite(
-      `generate component Topping --destination-dir=src/components`,
-      options,
-    )
+    const result = await runIgnite(`generate component Topping --dir=src/components`, options)
 
     expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
       "   
@@ -379,10 +376,7 @@ describe("ignite-cli generate with path params", () => {
   })
 
   it("should generate Sicilian screen in the src/screens directory", async () => {
-    const result = await runIgnite(
-      `generate screen Sicilian --destination-dir=src/screens`,
-      options,
-    )
+    const result = await runIgnite(`generate screen Sicilian --dir=src/screens`, options)
 
     expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
       "   
@@ -394,10 +388,7 @@ describe("ignite-cli generate with path params", () => {
   })
 
   it("should generate `pizza` model in the src/models directory with exact casing", async () => {
-    const result = await runIgnite(
-      `generate model pizza --exact --destination-dir=src/models`,
-      options,
-    )
+    const result = await runIgnite(`generate model pizza --exact --dir=src/models`, options)
 
     expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
       "   
@@ -425,7 +416,7 @@ describe("ignite-cli generate screens expo-router style", () => {
 
   it("should generate `log-in` screen exactly in the requested path", async () => {
     const result = await runIgnite(
-      `generate screen log-in --exact --destination-dir="src/app/(app)/(tabs)"`,
+      `generate screen log-in --exact --dir="src/app/(app)/(tabs)"`,
       options,
     )
 
@@ -455,5 +446,39 @@ describe("ignite-cli generate screens expo-router style", () => {
       }
       "
     `)
+  })
+
+  it("should generate dynamic id files at requested path", async () => {
+    const result = await runIgnite(
+      `generate screen [id] --exact --dir="src/app/(app)/(tabs)/podcasts"`,
+      options,
+    )
+
+    expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
+        "   
+           
+           Generated new files:
+           /user/home/ignite/src/app/(app)/(tabs)/podcasts/[id].tsx
+        "
+      `)
+    expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/podcasts/[id].tsx`)).toMatchInlineSnapshot(`
+      "import React, { FC } from \\"react\\"
+      import { observer } from \\"mobx-react-lite\\"
+      import { ViewStyle } from \\"react-native\\"
+      import { Screen, Text } from \\"app/components\\"
+
+      export default observer(function IdScreen() {
+        return (
+          <Screen style={$root} preset=\\"scroll\\">
+            <Text text=\\"id\\" />
+          </Screen>
+        )
+      })
+
+      const $root: ViewStyle = {
+        flex: 1,
+      }
+      "
+      `)
   })
 })

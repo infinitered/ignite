@@ -83,8 +83,8 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   p()
   heading("Options")
   p()
-  command("--destinationDir  ", "Override front matter or default path for generated files", [
-    "npx ignite-cli g model Episodes --destinationDir src/models",
+  command("--dir  ", "Override front matter or default path for generated files", [
+    "npx ignite-cli g model Episodes --dir src/models",
   ])
   command("--exact  ", "Skips PascalCase of the name and uses it as is", [
     "npx ignite-cli g model episode --exact",
@@ -235,7 +235,7 @@ type GeneratorOptions = {
   skipIndexFile?: boolean
   subdirectory: string
   overwrite: boolean
-  destinationDir?: string
+  dir?: string
   exact?: boolean
 }
 
@@ -299,7 +299,7 @@ export async function generateFromTemplate(
 
     // where are we copying to?
     const defaultDestinationDir = path(appDir(), pluralize(generator), options.subdirectory) // e.g. app/components, app/screens, app/models
-    const overrideDestinationDir = options.destinationDir ?? frontMatterData.destinationDir // cli dir takes priority over front matter dir
+    const overrideDestinationDir = options.dir ?? frontMatterData.destinationDir // cli dir takes priority over front matter dir
     const destinationDir = overrideDestinationDir
       ? path(cwd(), overrideDestinationDir)
       : defaultDestinationDir

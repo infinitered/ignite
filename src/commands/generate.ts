@@ -21,8 +21,8 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
 
-  // check if we should override front matter destinationDir or default dir
-  const destinationDir = parameters.options.destinationDir ?? parameters.third
+  // check if we should override front matter dir or default dir
+  const dir = parameters.options.dir ?? parameters.third
 
   // we need a name for this component
   let name = parameters.second
@@ -64,7 +64,7 @@ async function generate(toolbox: GluegunToolbox) {
     skipIndexFile: parameters.options.skipIndexFile,
     overwrite,
     subdirectory,
-    destinationDir,
+    dir,
     exact: parameters.options.exact,
   })
 
