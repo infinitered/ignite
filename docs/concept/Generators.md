@@ -133,7 +133,7 @@ This `--exact` switch specifies the generated filenames (`NAME` in the filename 
 
 `npx ignite-cli@latest g screen log-in` will generate `log-inScreen.tsx`
 
-### `--destinationDir`
+### `--dir`
 
 Specifies the output path for the generated files. This will override the default path of `app/` (Ignite's path where all app code lives at the time of this writing) and any `destinationDir:` front matter that exists. This is useful in the case of file-based routing navigation systems, such as [Expo Router](https://docs.expo.dev/router/introduction/).
 
