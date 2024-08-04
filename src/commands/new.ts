@@ -657,12 +657,12 @@ module.exports = {
       if (shouldFreshInstallDeps) {
         const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
         startSpinner(unboxingMessage)
-        await packager.install({ ...packagerOptions, onProgress: log })
 
-        // if we're using the Expo Go or canary build, we need to install the canary versions of supporting Expo packages
-        if (expoVersion || workflow === "expo") {
-          await system.run("npx expo install --fix", { onProgress: log })
-        }
+        // do base install
+        await packager.install({ ...packagerOptions, onProgress: log })
+        // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
+        await system.run("npx expo install --fix", { onProgress: log })
+
         stopSpinner(unboxingMessage, "🧶")
       }
 
