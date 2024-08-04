@@ -828,7 +828,7 @@ module.exports = {
       /**
        * instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
        * TODO
-       * fix generators
+       * set up a proper screen generator (depends on PR #2726)
        * remove the resetNavigation command from reactotronConfig
        */
       if (expoRouter) {
