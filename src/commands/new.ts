@@ -451,7 +451,7 @@ module.exports = {
     // #region Experimental Features parsing
     let newArch
     let expoVersion
-    let expoRouter = false
+    let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
@@ -474,6 +474,26 @@ module.exports = {
 
     // #region Prompt to enable experimental features
 
+    // Expo Router
+    const defaultExpoRouter = false
+    let experimentalExpoRouter = useDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
+    if (experimentalExpoRouter === undefined) {
+      const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalExpoRouter",
+        message: "❗EXPERIMENTAL❗Would you use Expo Router for navigation?",
+        initial: defaultExpoRouter,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalExpoRouter = expoRouterResponse.experimentalExpoRouter
+
+      // update experimental flags if needed for buildCliCommand output
+      if (experimentalExpoRouter && !experimentalFlags.includes("expo-router")) {
+        experimentalFlags.push("expo-router")
+      }
+    }
+
     // New Architecture
     const defaultNewArch = false
     let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
@@ -487,7 +507,12 @@ module.exports = {
         prefix,
       }))
       experimentalNewArch = newArchResponse.experimentalNewArch
+      // update experimental flags if needed for buildCliCommand output
+      if (experimentalNewArch && !experimentalFlags.includes("new-arch")) {
+        experimentalFlags.push("new-arch")
+      }
     }
+
     // #endregion
 
     // #region Debug
@@ -578,7 +603,7 @@ module.exports = {
         .replace(/hello-world/g, projectNameKebab)
 
       // add in expo-router package
-      if (expoRouter) {
+      if (experimentalExpoRouter) {
         // find "expo-localization" line and append "expo-router" line after it
         packageJsonRaw = packageJsonRaw.replace(
           /"expo-localization": ".*",/g,
@@ -743,7 +768,7 @@ module.exports = {
           appJson.expo.plugins[1][1].android.newArchEnabled = true
         }
 
-        if (expoRouter) {
+        if (experimentalExpoRouter) {
           appJson.expo.experiments.typedRoutes = true
           appJson.expo.plugins.push("expo-router")
         }
@@ -753,7 +778,7 @@ module.exports = {
         log(e)
         p(yellow("Unable to configure app.json."))
       }
-      stopSpinner(" Configuring app.json", "")
+      stopSpinner(" Configuring app.json", "⚙️")
       // #endregion
 
       // #region Run Format
@@ -831,8 +856,10 @@ module.exports = {
        * set up a proper screen generator (depends on PR #2726)
        * remove the resetNavigation command from reactotronConfig
        */
-      if (expoRouter) {
+      if (experimentalExpoRouter) {
         // mv ALL files under app/ to src/
+        const expoRouterMsg = " Recalibrating compass with Expo Router"
+        startSpinner(expoRouterMsg)
         await system.run(log(`mv app/* src/`))
 
         // replace app/ with src/ in files
@@ -840,15 +867,19 @@ module.exports = {
           "tsconfig.json",
           "test/i18n.test.ts",
           "src/devtools/ReactotronConfig.ts",
-          "src/components/Toggle.tsx",
+          "src/components/Toggle/Switch.tsx",
           "src/components/ListView.tsx",
           "src/screens/WelcomeScreen.tsx",
         ]
         expoRouterFilesToFix.forEach((file) => {
           const filePath = path(targetPath, file)
           let fileContents = read(filePath)
-          fileContents = fileContents.replace(/app\//g, "src/")
-          write(filePath, fileContents)
+          try {
+            fileContents = fileContents.replace(/app\//g, "src/")
+            write(filePath, fileContents)
+          } catch (e) {
+            log(`Unable to locate ${file}.`)
+          }
         })
 
         // work in reactotron custom commands
@@ -875,6 +906,7 @@ module.exports = {
           rm -rf app
         `),
         )
+        stopSpinner(expoRouterMsg, "🧭")
       } else {
         // remove src/ dir since not using expo-router
         await system.run(log(`rm -rf src`))
@@ -977,7 +1009,7 @@ module.exports = {
         toolbox,
       })
 
-      p2(`For next time: here are the Ignite options you picked!`)
+      p2(`For next time, here are the Ignite options you picked:`)
 
       // create a multi-line string of the command, where each --flag is on it's own line
       const prettyCliCommand = cliCommand
