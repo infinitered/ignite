@@ -35,7 +35,7 @@ import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import { $styles, colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 
@@ -70,13 +70,9 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     }
 
     return (
-      <Screen
-        preset="fixed"
-        safeAreaEdges={["top"]}
-        contentContainerStyle={$screenContentContainer}
-      >
+      <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
         <ListView<Episode>
-          contentContainerStyle={$listContentContainer}
+          contentContainerStyle={{ ...$styles.container, ...$listContentContainer }}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}
@@ -223,7 +219,12 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              style={[
+                $styles.row,
+                $iconContainer,
+                StyleSheet.absoluteFill,
+                animatedLikeButtonStyles,
+              ]}
             >
               <Icon
                 icon="heart"
@@ -231,7 +232,7 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+            <Animated.View style={[$styles.row, $iconContainer, animatedUnlikeButtonStyles]}>
               <Icon
                 icon="heart"
                 size={ICON_SIZE}
@@ -251,7 +252,7 @@ const EpisodeCard = observer(function EpisodeCard({
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
       HeadingComponent={
-        <View style={$metadata}>
+        <View style={[$styles.row, $metadata]}>
           <Text
             style={$metadataText}
             size="xxs"
@@ -300,13 +301,7 @@ const EpisodeCard = observer(function EpisodeCard({
 })
 
 // #region Styles
-const $screenContentContainer: ViewStyle = {
-  flex: 1,
-}
-
 const $listContentContainer: ContentStyle = {
-  paddingHorizontal: spacing.lg,
-  paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,
 }
 
@@ -337,14 +332,12 @@ const $labelStyle: TextStyle = {
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
-  flexDirection: "row",
   marginEnd: spacing.sm,
 }
 
 const $metadata: TextStyle = {
   color: colors.textDim,
   marginTop: spacing.xs,
-  flexDirection: "row",
 }
 
 const $metadataText: TextStyle = {

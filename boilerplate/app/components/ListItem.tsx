@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { colors, spacing } from "../theme"
+import { $styles, colors, spacing } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 
@@ -132,7 +132,7 @@ export function ListItem(props: ListItemProps) {
     $containerStyleOverride,
   ]
 
-  const $touchableStyles = [$touchableStyle, { minHeight: height }, style]
+  const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
 
   return (
     <View style={$containerStyles}>
@@ -209,7 +209,6 @@ const $textStyle: TextStyle = {
 }
 
 const $touchableStyle: ViewStyle = {
-  flexDirection: "row",
   alignItems: "flex-start",
 }
 

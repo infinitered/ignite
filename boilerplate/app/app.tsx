@@ -26,10 +26,9 @@ import { useInitialRootStore } from "./models" // @mst remove-current-line
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
-import { customFontsToLoad } from "./theme"
+import { $styles, customFontsToLoad } from "./theme"
 import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { ViewStyle } from "react-native"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -71,7 +70,7 @@ function App(props: AppProps) {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
-  const [areFontsLoaded] = useFonts(customFontsToLoad)
+  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
 
   // @mst replace-next-line React.useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
@@ -93,8 +92,9 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  // @mst replace-next-line if (!isNavigationStateRestored || !areFontsLoaded) return null
-  if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null
+  if (!rehydrated || !isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
+    return null
+  }
 
   const linking = {
     prefixes: [prefix],
@@ -105,7 +105,7 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <GestureHandlerRootView style={$container}>
+        <GestureHandlerRootView style={$styles.flex1}>
           <AppNavigator
             linking={linking}
             initialState={initialNavigationState}
@@ -118,7 +118,3 @@ function App(props: AppProps) {
 }
 
 export default App
-
-const $container: ViewStyle = {
-  flex: 1,
-}

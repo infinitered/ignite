@@ -3,7 +3,7 @@ import * as Application from "expo-application"
 import { Linking, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import { $styles, colors, spacing } from "../theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
 
@@ -46,7 +46,11 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   )
 
   return (
-    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+    <Screen
+      preset="scroll"
+      safeAreaEdges={["top"]}
+      contentContainerStyle={[$styles.container, $container]}
+    >
       <Text
         style={$reportBugsLink}
         tx="demoDebugScreen.reportBugs"
@@ -115,9 +119,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
 }
 
 const $container: ViewStyle = {
-  paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.xxl,
-  paddingHorizontal: spacing.lg,
 }
 
 const $title: TextStyle = {

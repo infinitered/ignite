@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { colors, spacing } from "../theme"
+import { $styles, colors, spacing } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
@@ -177,7 +177,7 @@ export function Header(props: HeaderProps) {
 
   return (
     <View style={[$container, $containerInsets, { backgroundColor }, $containerStyleOverride]}>
-      <View style={[$wrapper, $styleOverride]}>
+      <View style={[$styles.row, $wrapper, $styleOverride]}>
         <HeaderAction
           tx={leftTx}
           text={leftText}
@@ -264,7 +264,6 @@ function HeaderAction(props: HeaderActionProps) {
 
 const $wrapper: ViewStyle = {
   height: 56,
-  flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
 }

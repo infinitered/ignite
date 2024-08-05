@@ -12,7 +12,7 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import { colors, spacing } from "../../theme"
+import { $styles, colors, spacing } from "../../theme"
 import { Text, TextProps } from "../Text"
 
 export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
@@ -147,7 +147,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
   )
 
   const $containerStyles = [$containerStyleOverride]
-  const $inputWrapperStyles = [$inputWrapper, $inputWrapperStyleOverride]
+  const $inputWrapperStyles = [$styles.row, $inputWrapper, $inputWrapperStyleOverride]
   const $helperStyles = [
     $helper,
     status === "error" && { color: colors.error },
@@ -240,7 +240,6 @@ function FieldLabel<T>(props: ToggleProps<T>) {
 }
 
 const $inputWrapper: ViewStyle = {
-  flexDirection: "row",
   alignItems: "center",
 }
 

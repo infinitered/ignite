@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { spacing } from "../theme"
+import { $styles, spacing } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
 
@@ -14,7 +14,7 @@ const reactNativeNewsletterLogo = require("../../assets/images/demo/rnn-logo.png
 export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   function DemoCommunityScreen(_props) {
     return (
-      <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
+      <Screen preset="scroll" contentContainerStyle={$styles.container} safeAreaEdges={["top"]}>
         <Text preset="heading" tx="demoCommunityScreen.title" style={$title} />
         <Text tx="demoCommunityScreen.tagLine" style={$tagline} />
 
@@ -50,7 +50,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={reactNativeRadioLogo} style={$logo} />
             </View>
           }
@@ -61,7 +61,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={reactNativeNewsletterLogo} style={$logo} />
             </View>
           }
@@ -72,7 +72,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={reactNativeLiveLogo} style={$logo} />
             </View>
           }
@@ -82,7 +82,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           tx="demoCommunityScreen.chainReactConferenceLink"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, $logoContainer]}>
               <Image source={chainReactLogo} style={$logo} />
             </View>
           }
@@ -99,11 +99,6 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
       </Screen>
     )
   }
-
-const $container: ViewStyle = {
-  paddingTop: spacing.lg + spacing.xl,
-  paddingHorizontal: spacing.lg,
-}
 
 const $title: TextStyle = {
   marginBottom: spacing.sm,
@@ -123,7 +118,6 @@ const $sectionTitle: TextStyle = {
 
 const $logoContainer: ViewStyle = {
   marginEnd: spacing.md,
-  flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",
   alignSelf: "stretch",

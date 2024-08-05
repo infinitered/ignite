@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
-import { colors } from "../../theme"
+import { $styles, colors } from "../../theme"
 import { iconRegistry, IconTypes } from "../Icon"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
@@ -82,7 +82,7 @@ function CheckboxInput(props: CheckboxInputProps) {
     >
       <Animated.View
         style={[
-          $checkboxInner,
+          $styles.toggleInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
           { opacity },
@@ -99,14 +99,6 @@ function CheckboxInput(props: CheckboxInputProps) {
       </Animated.View>
     </View>
   )
-}
-
-const $checkboxInner: ViewStyle = {
-  width: "100%",
-  height: "100%",
-  alignItems: "center",
-  justifyContent: "center",
-  overflow: "hidden",
 }
 
 const $checkboxDetail: ImageStyle = {
