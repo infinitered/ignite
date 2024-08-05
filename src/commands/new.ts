@@ -26,7 +26,9 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
+import { mstDependenciesToRemove } from "../tools/mst"
+import { findAndRemoveDependencies } from "../tools/dependencies"
+import { demoDependenciesToRemove } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
 
@@ -139,6 +141,13 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
+  /**
+   * Whether or not to include MobX-State-Tree boilerplate code
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default true
+   */
+  mst?: boolean
 }
 
 module.exports = {
@@ -332,6 +341,36 @@ module.exports = {
       }))
       removeDemo = removeDemoResponse.removeDemo
     }
+    // #endregion
+
+    // #region Prompt to Remove MobX-State-Tree code
+    const defaultMST = true
+    let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
+
+    if (includeMST === undefined) {
+      if (!removeDemo) {
+        includeMST = true
+      } else {
+        // only ask if we're removing the demo code
+        const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
+          type: "confirm",
+          name: "includeMST",
+          message: "Include MobX-State-Tree code? (recommended)",
+          initial: defaultMST,
+          format: prettyPrompt.format.boolean,
+          prefix,
+        }))
+        includeMST = includeMSTResponse.includeMST
+      }
+    }
+
+    if (!removeDemo && includeMST === false) {
+      p()
+      p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
+      p(yellow(`Setting includeMST to true.`))
+      includeMST = true
+    }
+
     // #endregion
 
     // #region Packager
@@ -547,7 +586,12 @@ module.exports = {
       // - If we're removing the demo code, clean up some dependencies that are no longer needed
       if (removeDemo) {
         log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
-        packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
+        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
+      }
+
+      if (!includeMST) {
+        log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
+        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
       // - Then write it back out.
@@ -710,6 +754,42 @@ module.exports = {
       stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
+      // #region Remove MST code
+      if (includeMST) {
+        // remove MST markup only
+        startSpinner(`Removing MobX-State-Tree markup`)
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(`${IGNITE} remove-mst-markup "${targetPath}"`, {
+            onProgress: log,
+          })
+        } catch (e) {
+          log(e)
+          p(yellow(`Unable to remove MobX-State-Tree markup`))
+        }
+        stopSpinner(`Removing MobX-State-Tree markup`, "🛠️")
+      } else {
+        startSpinner(`Removing MobX-State-Tree code`)
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(`${IGNITE} remove-mst "${targetPath}"`, {
+            onProgress: log,
+          })
+        } catch (e) {
+          log(e)
+          p(
+            yellow(
+              `Unable to remove MobX-State-Tree code. To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`,
+            ),
+          )
+        }
+        stopSpinner(`Removing MobX-State-Tree code`, "🛠️")
+      }
+
+      // #endregion
+
       // #region Format generator templates EOL for Windows
       let warnAboutEOL = false
       if (isWindows) {
@@ -800,6 +880,7 @@ module.exports = {
           y: yname,
           yes: yname,
           noTimeout,
+          mst: includeMST,
         },
         projectName,
         toolbox,

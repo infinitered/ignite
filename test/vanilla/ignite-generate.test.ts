@@ -68,7 +68,8 @@ describe("ignite-cli generate", () => {
         export interface PizzaSnapshotOut extends SnapshotOut<typeof PizzaModel> {}
         export interface PizzaSnapshotIn extends SnapshotIn<typeof PizzaModel> {}
         export const createPizzaDefaultModel = () => types.optional(PizzaModel, {})
-        "
+
+        // @mst remove-file"
       `)
       expect(read(`${TEMP_DIR}/app/models/Pizza.test.ts`)).toMatchInlineSnapshot(`
         "import { PizzaModel } from \\"./Pizza\\"
@@ -78,13 +79,16 @@ describe("ignite-cli generate", () => {
 
           expect(instance).toBeTruthy()
         })
-        "
+
+        // @mst remove-file"
       `)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
         "export * from \\"./RootStore\\"
         export * from \\"./helpers/getRootStore\\"
         export * from \\"./helpers/useStores\\"
         export * from \\"./helpers/setupRootStore\\"
+
+        // @mst remove-file
         export * from \\"./Pizza\\"
         "
       `)
@@ -145,7 +149,8 @@ describe("ignite-cli generate", () => {
         export interface PizzaStoreSnapshotOut extends SnapshotOut<typeof PizzaStoreModel> {}
         export interface PizzaStoreSnapshotIn extends SnapshotIn<typeof PizzaStoreModel> {}
         export const createPizzaStoreDefaultModel = () => types.optional(PizzaStoreModel, {})
-        "
+
+        // @mst remove-file"
       `)
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.test.ts`)).toMatchInlineSnapshot(`
         "import { PizzaStoreModel } from \\"./PizzaStore\\"
@@ -155,13 +160,16 @@ describe("ignite-cli generate", () => {
 
           expect(instance).toBeTruthy()
         })
-        "
+
+        // @mst remove-file"
       `)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
         "export * from \\"./RootStore\\"
         export * from \\"./helpers/getRootStore\\"
         export * from \\"./helpers/useStores\\"
         export * from \\"./helpers/setupRootStore\\"
+
+        // @mst remove-file
         export * from \\"./PizzaStore\\"
         "
       `)
@@ -188,6 +196,8 @@ describe("ignite-cli generate", () => {
          * The data of a RootStore.
          */
         export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+
+        // @mst remove-file
         "
       `)
       const resultWithoutOverwriteOption = await runIgnite(`generate model PizzaStore`, options)
@@ -233,35 +243,37 @@ describe("ignite-cli generate", () => {
       expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
-        import { observer } from \\"mobx-react-lite\\"
+        import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
         import { colors, typography } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
-        
+
         export interface ToppingProps {
           /**
            * An optional style override useful for padding & margin.
            */
           style?: StyleProp<ViewStyle>
         }
-        
+
         /**
          * Describe your component here
          */
+        // @mst replace-next-line export const Topping = (props: ToppingProps) => {
         export const Topping = observer(function Topping(props: ToppingProps) {
           const { style } = props
           const $styles = [$container, style]
-        
+
           return (
             <View style={$styles}>
               <Text style={$text}>Hello</Text>
             </View>
           )
+        // @mst replace-next-line }
         })
-        
+
         const $container: ViewStyle = {
           justifyContent: \\"center\\",
         }
-        
+
         const $text: TextStyle = {
           fontFamily: typography.primary.normal,
           fontSize: 14,
@@ -300,35 +312,37 @@ describe("ignite-cli generate", () => {
       expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
-        import { observer } from \\"mobx-react-lite\\"
+        import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
         import { colors, typography } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
-        
+
         export interface ToppingProps {
           /**
            * An optional style override useful for padding & margin.
            */
           style?: StyleProp<ViewStyle>
         }
-        
+
         /**
          * Describe your component here
          */
+        // @mst replace-next-line export const Topping = (props: ToppingProps) => {
         export const Topping = observer(function Topping(props: ToppingProps) {
           const { style } = props
           const $styles = [$container, style]
-        
+
           return (
             <View style={$styles}>
               <Text style={$text}>Hello</Text>
             </View>
           )
+        // @mst replace-next-line }
         })
-        
+
         const $container: ViewStyle = {
           justifyContent: \\"center\\",
         }
-        
+
         const $text: TextStyle = {
           fontFamily: typography.primary.normal,
           fontSize: 14,
