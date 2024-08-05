@@ -85,7 +85,7 @@ const App = () => {
 }
 ```
 
-For more information on the `useAppTheme()`, [check out its documentation](../utils/useAppTheme.tsx.md).
+For more information on the `useAppTheme()` hook, [check out its documentation](../utils/useAppTheme.tsx.md).
 
 ## Switching Between Themes
 
