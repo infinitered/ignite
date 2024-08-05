@@ -13,7 +13,6 @@ Example usage:
 ```tsx
 import { View, type ViewStyle } from "react-native"
 import { useAppTheme } from "app/utils/useAppTheme"
-import { colors } from "app/theme"
 
 const MyComponent = () => {
   const {
@@ -77,7 +76,7 @@ Calling `setThemeContextOverride(undefined)` will reset the theme to the user's 
 
 ### `theme`
 
-A `Theme` object that contains all the colors, spacing, and other theme-related properties of the current theme context.
+A `Theme` object that contains all the colors, spacing, and other theme-related properties of the current theme context. You can edit these values in the `app/theme` folder.
 
 ### `themeContext`
 
