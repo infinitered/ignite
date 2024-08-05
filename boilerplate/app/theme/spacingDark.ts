@@ -1,4 +1,4 @@
-const SPACING_MULTIPLIER = 0.6
+const SPACING_MULTIPLIER = 1.0
 
 // This is an example of how you can have different spacing values for different themes.
 export const spacing = {
