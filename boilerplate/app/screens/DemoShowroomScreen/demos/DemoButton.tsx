@@ -47,175 +47,177 @@ export const DemoButton: Demo = {
   description:
     "A component that allows users to take actions and make choices. Wraps the Text component with a Pressable component.",
   data: ({ themed }) => [
-    <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
-      <Button>Default - Laboris In Labore</Button>
-      <DemoDivider />
+    <View key="button">
+      <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
+        <Button>Default - Laboris In Labore</Button>
+        <DemoDivider />
 
-      <Button preset="filled">Filled - Laboris Ex</Button>
-      <DemoDivider />
+        <Button preset="filled">Filled - Laboris Ex</Button>
+        <DemoDivider />
 
-      <Button preset="reversed">Reversed - Ad Ipsum</Button>
-    </DemoUseCase>,
+        <Button preset="reversed">Reversed - Ad Ipsum</Button>
+      </DemoUseCase>
 
-    <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
-    >
-      <Button text="Via `text` Prop - Billum In" />
-      <DemoDivider />
-
-      <Button tx="demoShowroomScreen.demoViaTxProp" />
-      <DemoDivider />
-
-      <Button>Children - Irure Reprehenderit</Button>
-      <DemoDivider />
-
-      <Button
-        preset="filled"
-        RightAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
-        )}
+      <DemoUseCase
+        name="Passing Content"
+        description="There are a few different ways to pass content."
       >
-        RightAccessory - Duis Quis
-      </Button>
-      <DemoDivider />
+        <Button text="Via `text` Prop - Billum In" />
+        <DemoDivider />
 
-      <Button
-        preset="filled"
-        LeftAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
-        )}
-      >
-        LeftAccessory - Duis Proident
-      </Button>
-      <DemoDivider />
+        <Button tx="demoShowroomScreen.demoViaTxProp" />
+        <DemoDivider />
 
-      <Button>
-        <Text>
-          <Text preset="bold">Nested children - proident veniam.</Text>
-          {` `}
-          <Text preset="default">
-            Ullamco cupidatat officia exercitation velit non ullamco nisi..
+        <Button>Children - Irure Reprehenderit</Button>
+        <DemoDivider />
+
+        <Button
+          preset="filled"
+          RightAccessory={(props) => (
+            <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          )}
+        >
+          RightAccessory - Duis Quis
+        </Button>
+        <DemoDivider />
+
+        <Button
+          preset="filled"
+          LeftAccessory={(props) => (
+            <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          )}
+        >
+          LeftAccessory - Duis Proident
+        </Button>
+        <DemoDivider />
+
+        <Button>
+          <Text>
+            <Text preset="bold">Nested children - proident veniam.</Text>
+            {` `}
+            <Text preset="default">
+              Ullamco cupidatat officia exercitation velit non ullamco nisi..
+            </Text>
+            {` `}
+            <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
           </Text>
-          {` `}
-          <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
-        </Text>
-      </Button>
-      <DemoDivider />
+        </Button>
+        <DemoDivider />
 
-      <Button
-        preset="reversed"
-        RightAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
-        )}
-        LeftAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
-        )}
+        <Button
+          preset="reversed"
+          RightAccessory={(props) => (
+            <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          )}
+          LeftAccessory={(props) => (
+            <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          )}
+        >
+          Multiline - consequat veniam veniam reprehenderit. Fugiat id nisi quis duis sunt proident
+          mollit dolor mollit adipisicing proident deserunt.
+        </Button>
+      </DemoUseCase>
+
+      <DemoUseCase name="Styling" description="The component can be styled easily.">
+        <Button style={themed($customButtonStyle)}>Style Container - Exercitation</Button>
+        <DemoDivider />
+
+        <Button preset="filled" textStyle={themed($customButtonTextStyle)}>
+          Style Text - Ea Anim
+        </Button>
+        <DemoDivider />
+
+        <Button
+          preset="reversed"
+          RightAccessory={() => <View style={themed($customButtonRightAccessoryStyle)} />}
+        >
+          Style Accessories - enim ea id fugiat anim ad.
+        </Button>
+        <DemoDivider />
+
+        <Button
+          pressedStyle={themed($customButtonPressedStyle)}
+          pressedTextStyle={themed($customButtonPressedTextStyle)}
+          RightAccessory={(props) => (
+            <Icon
+              containerStyle={props.style}
+              style={[
+                $iconStyle,
+                props.pressableState.pressed && themed($customButtonPressedRightAccessoryStyle),
+              ]}
+              icon="ladybug"
+            />
+          )}
+        >
+          Style Pressed State - fugiat anim
+        </Button>
+      </DemoUseCase>
+
+      <DemoUseCase
+        name="Disabling"
+        description="The component can be disabled, and styled based on that. Press behavior will be disabled."
       >
-        Multiline - consequat veniam veniam reprehenderit. Fugiat id nisi quis duis sunt proident
-        mollit dolor mollit adipisicing proident deserunt.
-      </Button>
-    </DemoUseCase>,
+        <Button
+          disabled
+          disabledStyle={$disabledOpacity}
+          pressedStyle={themed($customButtonPressedStyle)}
+          pressedTextStyle={themed($customButtonPressedTextStyle)}
+        >
+          Disabled - standard
+        </Button>
+        <DemoDivider />
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
-      <Button style={themed($customButtonStyle)}>Style Container - Exercitation</Button>
-      <DemoDivider />
+        <Button
+          disabled
+          preset="filled"
+          disabledStyle={$disabledOpacity}
+          pressedStyle={themed($customButtonPressedStyle)}
+          pressedTextStyle={themed($customButtonPressedTextStyle)}
+        >
+          Disabled - filled
+        </Button>
+        <DemoDivider />
 
-      <Button preset="filled" textStyle={themed($customButtonTextStyle)}>
-        Style Text - Ea Anim
-      </Button>
-      <DemoDivider />
+        <Button
+          disabled
+          preset="reversed"
+          disabledStyle={$disabledOpacity}
+          pressedStyle={themed($customButtonPressedStyle)}
+          pressedTextStyle={themed($customButtonPressedTextStyle)}
+        >
+          Disabled - reversed
+        </Button>
+        <DemoDivider />
 
-      <Button
-        preset="reversed"
-        RightAccessory={() => <View style={themed($customButtonRightAccessoryStyle)} />}
-      >
-        Style Accessories - enim ea id fugiat anim ad.
-      </Button>
-      <DemoDivider />
+        <Button
+          disabled
+          pressedStyle={themed($customButtonPressedStyle)}
+          pressedTextStyle={themed($customButtonPressedTextStyle)}
+          RightAccessory={(props) => (
+            <View
+              style={
+                props.disabled
+                  ? [$customButtonRightAccessoryStyle, $disabledOpacity]
+                  : themed($customButtonPressedRightAccessoryStyle)
+              }
+            />
+          )}
+        >
+          Disabled accessory style
+        </Button>
+        <DemoDivider />
 
-      <Button
-        pressedStyle={themed($customButtonPressedStyle)}
-        pressedTextStyle={themed($customButtonPressedTextStyle)}
-        RightAccessory={(props) => (
-          <Icon
-            containerStyle={props.style}
-            style={[
-              $iconStyle,
-              props.pressableState.pressed && themed($customButtonPressedRightAccessoryStyle),
-            ]}
-            icon="ladybug"
-          />
-        )}
-      >
-        Style Pressed State - fugiat anim
-      </Button>
-    </DemoUseCase>,
-
-    <DemoUseCase
-      name="Disabling"
-      description="The component can be disabled, and styled based on that. Press behavior will be disabled."
-    >
-      <Button
-        disabled
-        disabledStyle={$disabledOpacity}
-        pressedStyle={themed($customButtonPressedStyle)}
-        pressedTextStyle={themed($customButtonPressedTextStyle)}
-      >
-        Disabled - standard
-      </Button>
-      <DemoDivider />
-
-      <Button
-        disabled
-        preset="filled"
-        disabledStyle={$disabledOpacity}
-        pressedStyle={themed($customButtonPressedStyle)}
-        pressedTextStyle={themed($customButtonPressedTextStyle)}
-      >
-        Disabled - filled
-      </Button>
-      <DemoDivider />
-
-      <Button
-        disabled
-        preset="reversed"
-        disabledStyle={$disabledOpacity}
-        pressedStyle={themed($customButtonPressedStyle)}
-        pressedTextStyle={themed($customButtonPressedTextStyle)}
-      >
-        Disabled - reversed
-      </Button>
-      <DemoDivider />
-
-      <Button
-        disabled
-        pressedStyle={themed($customButtonPressedStyle)}
-        pressedTextStyle={themed($customButtonPressedTextStyle)}
-        RightAccessory={(props) => (
-          <View
-            style={
-              props.disabled
-                ? [$customButtonRightAccessoryStyle, $disabledOpacity]
-                : themed($customButtonPressedRightAccessoryStyle)
-            }
-          />
-        )}
-      >
-        Disabled accessory style
-      </Button>
-      <DemoDivider />
-
-      <Button
-        disabled
-        preset="filled"
-        disabledTextStyle={themed([$customButtonTextStyle, $disabledButtonTextStyle])}
-        pressedStyle={themed($customButtonPressedStyle)}
-        pressedTextStyle={themed($customButtonPressedTextStyle)}
-      >
-        Disabled text style
-      </Button>
-    </DemoUseCase>,
+        <Button
+          disabled
+          preset="filled"
+          disabledTextStyle={themed([$customButtonTextStyle, $disabledButtonTextStyle])}
+          pressedStyle={themed($customButtonPressedStyle)}
+          pressedTextStyle={themed($customButtonPressedTextStyle)}
+        >
+          Disabled text style
+        </Button>
+      </DemoUseCase>
+    </View>,
   ],
 }
 
