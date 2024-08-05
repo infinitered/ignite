@@ -4,7 +4,6 @@ import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react
 import { useDrawerProgress } from "react-native-drawer-layout"
 import { isRTL } from "../../i18n"
 import { useAppTheme } from "app/utils/useAppTheme"
-import type { ThemedStyle } from "app/theme"
 
 interface DrawerIconButtonProps extends PressableProps {}
 
@@ -109,10 +108,10 @@ const $topBar: ViewStyle = {
   height: barHeight,
 }
 
-const $middleBar: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+const $middleBar: ViewStyle = {
   height: barHeight,
-  marginTop: spacing.xxs,
-})
+  marginTop: 4,
+}
 
 const $bottomBar: ViewStyle = {
   height: barHeight,
