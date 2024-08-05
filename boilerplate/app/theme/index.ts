@@ -41,7 +41,7 @@ export const darkTheme: Theme = {
   spacing: spacingDark,
   typography,
   timing,
-  isDark: false,
+  isDark: true,
 }
 
 /**
