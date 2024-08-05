@@ -779,7 +779,11 @@ module.exports = {
           })
         } catch (e) {
           log(e)
-          p(yellow(`Unable to remove MobX-State-Tree code`))
+          p(
+            yellow(
+              `Unable to remove MobX-State-Tree code. To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`,
+            ),
+          )
         }
         stopSpinner(`Removing MobX-State-Tree code`, "🛠️")
       }
