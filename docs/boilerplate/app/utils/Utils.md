@@ -29,7 +29,7 @@ const $themedStyle: ThemedStyle<ViewStyle> = (theme) =({
 </View>
 ```
 
-[Full `useAppTheme`](./useAppTheme.ts.md)
+[Full `useAppTheme`](./useAppTheme.tsx.md)
 
 ### useSafeAreaInsetsStyle
 

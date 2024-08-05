@@ -127,4 +127,4 @@ const $themedStyle: ThemedStyle<ViewStyle> = (theme) => ({
 ])} />
 ```
 
-Make sure you don't pass any `Animated` styles to `themed()`. It will not work as expected! Keep them in separate style array objects: `<Animatd.View style={[$animatedStyle, themed($myThemedStyle)]}>`.
+Make sure you don't pass any `Animated` styles to `themed()`. It will not work as expected! Keep them in separate style array objects: `<Animated.View style={[$animatedStyle, themed($myThemedStyle)]}>`.
