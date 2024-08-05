@@ -78,12 +78,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={themed($screenContentContainer)}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text
-        testID="login-heading"
-        tx="loginScreen.signIn"
-        preset="heading"
-        style={themed($signIn)}
-      />
+      <Text testID="login-heading" tx="loginScreen.logIn" preset="heading" style={themed($logIn)} />
       <Text tx="loginScreen.enterDetails" preset="subheading" style={themed($enterDetails)} />
       {attemptsCount > 2 && (
         <Text tx="loginScreen.hint" size="sm" weight="light" style={themed($hint)} />
@@ -121,7 +116,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
       <Button
         testID="login-button"
-        tx="loginScreen.tapToSignIn"
+        tx="loginScreen.tapToLogIn"
         style={themed($tapButton)}
         preset="reversed"
         onPress={login}
@@ -135,7 +130,7 @@ const $screenContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
 })
 
-const $signIn: ThemedStyle<TextStyle> = ({ spacing }) => ({
+const $logIn: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.sm,
 })
 
