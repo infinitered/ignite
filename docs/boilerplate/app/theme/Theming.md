@@ -42,11 +42,7 @@ Head on over to the [Ignite Cookbook](https://ignitecookbook.com/) to find recip
 
 :::
 
-In Ignite `<10` we relied on pure style objects typed as `ViewStyle`, `TextStyle`, `ImageStyle`, etc. This didn't quite fit circumstances where you wanted to dynamically change the overall app's theme during runtime. You could always reload the javascript bundle to see changes, but that was a less than ideal solution.
-
-Ignite now has the concept of `ThemedStyle`s. You can stick with the traditional pure style objects but if you want to take advantage of themed global colors, spacing, typography, and timings, you've got to add a little more code...
-
-Here's an example of how to use the new `useAppTheme()` hook to style your components and dynamically use the correct theme:
+**New in Ignite 10**: the `useAppTheme` hook allows you to create dynamically-themed styles, right out of the box. Here's an example:
 
 ```tsx
 import { type ViewStyle, View } from 'react-native'
