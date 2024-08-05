@@ -23,6 +23,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const {
     themed,
     theme: { colors },
+    themeContext,
   } = useAppTheme()
 
   useEffect(() => {
@@ -69,7 +70,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
           />
         )
       },
-    [isAuthPasswordHidden],
+    [isAuthPasswordHidden, themeContext],
   )
 
   return (

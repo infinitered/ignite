@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ignite-cli remove-mst should print the expected response 1`] = `
+"   
+   Removing MobX-State-Tree code from '/user/home/ignite'
+   Removing dependencies from package.json: mobx, mobx-react-lite, mobx-state-tree, reactotron-mst 
+removing file /user/home/ignite/app/models/RootStore.ts
+removing file /user/home/ignite/app/models/helpers/getRootStore.ts
+removing file /user/home/ignite/app/models/helpers/setupRootStore.ts
+removing file /user/home/ignite/app/models/helpers/useStores.ts
+removing file /user/home/ignite/app/models/helpers/withSetPropAction.ts
+removing file /user/home/ignite/app/models/index.ts
+   Found '@mst remove-current-line', '@mst replace-next-line' in /user/home/ignite/app/app.tsx
+   Found '@mst remove-current-line', '@mst remove-block-start', '@mst remove-block-end' in /user/home/ignite/app/devtools/ReactotronConfig.ts
+   Found 'remove-file' in /user/home/ignite/app/models/helpers/getRootStore.ts
+   Found 'remove-file' in /user/home/ignite/app/models/helpers/setupRootStore.ts
+   Found 'remove-file' in /user/home/ignite/app/models/helpers/useStores.ts
+   Found 'remove-file' in /user/home/ignite/app/models/helpers/withSetPropAction.ts
+   Found 'remove-file' in /user/home/ignite/app/models/index.ts
+   Found 'remove-file' in /user/home/ignite/app/models/RootStore.ts
+   Found '@mst remove-current-line', '@mst replace-next-line' in /user/home/ignite/app/navigators/AppNavigator.tsx
+   Found '@mst remove-current-line', '@mst replace-next-line' in /user/home/ignite/app/screens/WelcomeScreen.tsx
+   Removed empty directory '/user/home/ignite/app/models/helpers'
+   Running prettier to clean up code formatting
+   Done removing MobX-State-Tree code from '/user/home/ignite'
+"
+`;

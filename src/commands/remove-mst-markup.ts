@@ -2,12 +2,12 @@ import { GluegunToolbox } from "gluegun"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 import { findFiles, updateFiles } from "../tools/markup"
-import { DEMO_MARKUP_PREFIX } from "../tools/demo"
+import { MST_MARKUP_PREFIX } from "../tools/mst"
 
 module.exports = {
-  alias: ["rdm"],
+  alias: ["rmstm", "remove-mst-markup"],
   description:
-    "Remove all demo markup from generated boilerplate. Add --dry-run to see what would be removed.",
+    "Remove all MobX-State-Tree markup from boilerplate. Add --dry-run to see what would be removed.",
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, system } = toolbox
 
@@ -16,20 +16,20 @@ module.exports = {
     const dryRun = boolFlag(parameters.options.dryRun) ?? false
 
     p()
-    p(`Removing demo markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
+    p(`Removing MobX-State-Tree markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
 
     const filePaths = findFiles(TARGET_DIR)
 
     // Go through every file path and handle the operation for each demo comment
-    const demoCommentResults = await updateFiles({
+    const mstCommentResults = await updateFiles({
       filePaths,
-      markupPrefix: DEMO_MARKUP_PREFIX,
+      markupPrefix: MST_MARKUP_PREFIX,
       dryRun,
       removeMarkupOnly: true,
     })
 
     // Handle the results of the demo comment operations
-    demoCommentResults
+    mstCommentResults
       // Sort the results by the path in alphabetical order
       .sort((a, b) => {
         if (a.status === "fulfilled" && b.status === "fulfilled") {
@@ -53,12 +53,13 @@ module.exports = {
 
     // Run prettier at the end to clean up any spacing issues
     if (!dryRun) {
+      p(`Running prettier to clean up code formatting`)
       await system.run(`npx prettier@2.8.8 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
         trim: true,
         cwd: TARGET_DIR,
       })
     }
 
-    p(`Done removing demo markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
+    p(`Done removing MobX-State-Tree markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },
 }
