@@ -188,12 +188,15 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             ref={listRef}
             contentContainerStyle={themed($sectionListContentContainer)}
             stickySectionHeadersEnabled={false}
-            keyExtractor={(item, index) => item.name + index}
             sections={Object.values(Demos).map((d) => ({
               ...d,
               data: [d.data({ theme, themed })],
             }))}
-            renderItem={({ item }) => item}
+            renderItem={({ item, index: sectionIndex }) =>
+              item.map((demo: ReactElement, demoIndex: number) => (
+                <View key={`${sectionIndex}-${demoIndex}`}>{demo}</View>
+              ))
+            }
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={
               <View style={themed($heading)}>
