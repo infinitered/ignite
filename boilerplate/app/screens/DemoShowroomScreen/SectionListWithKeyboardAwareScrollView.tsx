@@ -1,8 +1,7 @@
+import { DEFAULT_BOTTOM_OFFSET } from "app/components"
 import React, { ReactElement } from "react"
 import { SectionList, SectionListProps } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
-
-const DEFAULT_BOTTOM_OFFSET = 50
 
 type SectionType<ItemType> = {
   name: string
