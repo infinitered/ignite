@@ -191,7 +191,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             keyExtractor={(item, index) => item.name + index}
             sections={Object.values(Demos).map((d) => ({
               ...d,
-              data: d.data({ theme, themed }),
+              data: [d.data({ theme, themed })],
             }))}
             renderItem={({ item }) => item}
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
