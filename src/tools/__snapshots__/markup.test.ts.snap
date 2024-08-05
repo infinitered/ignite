@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`demo remove should remove all comments in AppNavigator 1`] = `
+exports[`markup remove should remove all comments in AppNavigator 1`] = `
 "
 /**
  * The app navigator (formerly \\"AppNavigator\\" and \\"MainNavigator\\") is used for the primary
@@ -86,7 +86,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
 "
 `;
 
-exports[`demo remove should remove all comments in WelcomeScreen 1`] = `
+exports[`markup remove should remove all comments in WelcomeScreen 1`] = `
 "
 import { observer } from \\"mobx-react-lite\\"
 import React, { useLayoutEffect } from \\"react\\"
@@ -170,35 +170,35 @@ const $welcomeHeading: TextStyle = {
 "
 `;
 
-exports[`demo removeBlock should remove comments and lines between "# @demo remove-block-start" and "# @demo remove-block-end" 1`] = `
+exports[`markup removeBlock should remove comments and lines between "# @test remove-block-start" and "# @test remove-block-end" 1`] = `
 "
-
-      ---
-      - runFlow: Login.yaml
-      - tapOn: \\"Podcast, tab, 3 of 4\\"
-      - assertVisible: \\"React Native Radio episodes\\"
-      "
+  
+        ---
+        - runFlow: Login.yaml
+        - tapOn: \\"Podcast, tab, 3 of 4\\"
+        - assertVisible: \\"React Native Radio episodes\\"
+        "
 `;
 
-exports[`demo removeBlock should remove comments and lines between "/* @demo remove-block-start */" and "/* @demo remove-block-end */" 1`] = `
+exports[`markup removeBlock should remove comments and lines between "/* @test remove-block-start */" and "/* @test remove-block-end */" 1`] = `
 "
-        export * from \\"./WelcomeScreen\\"
-        export * from \\"./LoginScreen\\"
-        export * from \\"./ErrorScreen/ErrorBoundary\\"
-        // export other screens here
-      "
+          export * from \\"./WelcomeScreen\\"
+          export * from \\"./LoginScreen\\"
+          export * from \\"./ErrorScreen/ErrorBoundary\\"
+          // export other screens here
+        "
 `;
 
-exports[`demo removeBlock should remove comments and lines between "// @demo remove-block-start" and "// @demo remove-block-end" 1`] = `
+exports[`markup removeBlock should remove comments and lines between "// @test remove-block-start" and "// @test remove-block-end" 1`] = `
 "
-        export * from \\"./WelcomeScreen\\"
-        export * from \\"./LoginScreen\\"
-        export * from \\"./ErrorScreen/ErrorBoundary\\"
-        // export other screens here
-      "
+          export * from \\"./WelcomeScreen\\"
+          export * from \\"./LoginScreen\\"
+          export * from \\"./ErrorScreen/ErrorBoundary\\"
+          // export other screens here
+        "
 `;
 
-exports[`demo removeCurrentLine should remove line with "# @demo remove-current-line" comment 1`] = `
+exports[`markup removeCurrentLine should remove line with "# @test remove-current-line" comment 1`] = `
 "
       # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
       env:
@@ -212,7 +212,7 @@ exports[`demo removeCurrentLine should remove line with "# @demo remove-current-
       "
 `;
 
-exports[`demo removeCurrentLine should remove line with "/* @demo remove-current-line */" comment 1`] = `
+exports[`markup removeCurrentLine should remove line with "/* @test remove-current-line */" comment 1`] = `
 "
         import React from \\"react\\"
         import { StyleProp, View, ViewStyle } from \\"react-native\\"
@@ -239,12 +239,11 @@ exports[`demo removeCurrentLine should remove line with "/* @demo remove-current
         
         const $divider: ViewStyle = {
             flexGrow: 0,
-            flexShrink: 0,
         }
       "
 `;
 
-exports[`demo removeCurrentLine should remove line with "// @demo remove-current-line" comment 1`] = `
+exports[`markup removeCurrentLine should remove line with "// @test remove-current-line" comment 1`] = `
 "
         import React from \\"react\\"
         import { StyleProp, View, ViewStyle } from \\"react-native\\"
@@ -276,30 +275,39 @@ exports[`demo removeCurrentLine should remove line with "// @demo remove-current
       "
 `;
 
-exports[`demo removeNextLine should remove comment and next line after "# @demo remove-next-line" 1`] = `
-"
-      # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
-      env:
-        TITLE: \\"RNR 257 - META RESPONDS! How can we improve React Native, part 2\\"
-        FAVORITES_TEXT: \\"Switch on to only show favorites\\"
-
-      ---
-      - runFlow: Login.yaml
-      - tapOn: \\"Podcast, tab, 3 of 4\\"
-      - assertVisible: \\"React Native Radio episodes\\"
-      "
+exports[`markup removeNextLine should not modify other lines other than "// @test remove-next-line and line after" 1`] = `
+"export * from \\"./DemoIcon\\"
+export * from \\"./DemoTextField\\"
+export * from \\"./DemoButton\\"
+export * from \\"./DemoListItem\\"
+export * from \\"./DemoHeader\\"
+export * from \\"./DemoText\\""
 `;
 
-exports[`demo removeNextLine should remove comment and next line after "/* @demo remove-next-line */" 1`] = `
+exports[`markup removeNextLine should remove comment and next line after "# @test remove-next-line" 1`] = `
 "
-        export * from \\"./WelcomeScreen\\"
-        export * from \\"./LoginScreen\\"
-      "
+        # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+        env:
+          TITLE: \\"RNR 257 - META RESPONDS! How can we improve React Native, part 2\\"
+          FAVORITES_TEXT: \\"Switch on to only show favorites\\"
+  
+        ---
+        - runFlow: Login.yaml
+        - tapOn: \\"Podcast, tab, 3 of 4\\"
+        - assertVisible: \\"React Native Radio episodes\\"
+        "
 `;
 
-exports[`demo removeNextLine should remove comment and next line after "// @demo remove-next-line" 1`] = `
+exports[`markup removeNextLine should remove comment and next line after "/* @test remove-next-line */" 1`] = `
 "
-        export * from \\"./WelcomeScreen\\"
-        export * from \\"./LoginScreen\\"
-      "
+          export * from \\"./WelcomeScreen\\"
+          export * from \\"./LoginScreen\\"
+        "
+`;
+
+exports[`markup removeNextLine should remove comment and next line after "// @test remove-next-line" 1`] = `
+"
+          export * from \\"./WelcomeScreen\\"
+          export * from \\"./LoginScreen\\"
+        "
 `;

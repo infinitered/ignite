@@ -1,4 +1,4 @@
-import { observer } from "mobx-react-lite"
+import { observer } from "mobx-react-lite" // @mst remove-current-line
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
@@ -17,8 +17,10 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
+// @mst replace-next-line export const WelcomeScreen: FC<WelcomeScreenProps> = (
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
   _props, // @demo remove-current-line
+  // @mst replace-next-line ) => {
 ) {
   // @demo remove-block-start
   const { navigation } = _props
@@ -68,6 +70,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
       </View>
     </View>
   )
+  // @mst replace-next-line }
 })
 
 const $container: ViewStyle = {
