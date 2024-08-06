@@ -370,7 +370,6 @@ module.exports = {
       p(yellow(`Setting includeMST to true.`))
       includeMST = true
     }
-
     // #endregion
 
     // #region Packager
@@ -814,41 +813,6 @@ module.exports = {
       stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
-      // #region Remove MST code
-      if (includeMST) {
-        // remove MST markup only
-        startSpinner(`Removing MobX-State-Tree markup`)
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-mst-markup "${targetPath}"`, {
-            onProgress: log,
-          })
-        } catch (e) {
-          log(e)
-          p(yellow(`Unable to remove MobX-State-Tree markup`))
-        }
-        stopSpinner(`Removing MobX-State-Tree markup`, "🛠️")
-      } else {
-        startSpinner(`Removing MobX-State-Tree code`)
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-mst "${targetPath}"`, {
-            onProgress: log,
-          })
-        } catch (e) {
-          log(e)
-          p(
-            yellow(
-              `Unable to remove MobX-State-Tree code. To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`,
-            ),
-          )
-        }
-        stopSpinner(`Removing MobX-State-Tree code`, "🛠️")
-      }
-      // #endregion
-
       // #region Expo Router edits
       /**
        * instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
@@ -893,6 +857,11 @@ module.exports = {
           .replace(/navigate\(route as any\).*/g, "router.push(route)")
           .replace(/goBack\(\).*/g, " router.back()")
 
+        // Define the custom command to be removed using a regular expression
+        const customCommandToRemoveRegex =
+          /reactotron\.onCustomCommand\({\s*title: "Reset Navigation State",\s*description: "Resets the navigation state",\s*command: "resetNavigation",\s*handler: \(\) => {\s*Reactotron\.log\("resetting navigation state"\)\s*resetRoot\({ index: 0, routes: \[\] }\)\s*},\s*}\),?\n?/g
+        reactotronConfig = reactotronConfig.replace(customCommandToRemoveRegex, "")
+
         write(reactotronConfigPath, reactotronConfig)
 
         // some clean up
@@ -912,6 +881,48 @@ module.exports = {
         await system.run(log(`rm -rf src`))
       }
       // #endregion
+
+      // #region Remove MST code
+      if (includeMST) {
+        // remove MST markup only
+        startSpinner(`Removing MobX-State-Tree markup`)
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(
+            `${IGNITE} remove-mst-markup "${targetPath}" "${
+              experimentalExpoRouter ? "src" : "app"
+            }"`,
+            {
+              onProgress: log,
+            },
+          )
+        } catch (e) {
+          log(e)
+          p(yellow(`Unable to remove MobX-State-Tree markup`))
+        }
+        stopSpinner(`Removing MobX-State-Tree markup`, "🌳")
+      } else {
+        startSpinner(`Removing MobX-State-Tree code`)
+        try {
+          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+          log(`Ignite bin path: ${IGNITE}`)
+          await system.run(
+            `${IGNITE} remove-mst "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
+            {
+              onProgress: log,
+            },
+          )
+        } catch (e) {
+          log(e)
+          p(
+            yellow(
+              `Unable to remove MobX-State-Tree code. To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`,
+            ),
+          )
+        }
+        stopSpinner(`Removing MobX-State-Tree code`, "🌳")
+      }
 
       // #region Format generator templates EOL for Windows
       let warnAboutEOL = false

@@ -33,7 +33,7 @@ export default observer(function WelcomeScreen() {
       </View>
     </View>
   )
-// @mst replace-next-line {
+// @mst replace-next-line }
 })
 
 const $container: ViewStyle = {

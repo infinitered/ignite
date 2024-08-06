@@ -1,4 +1,5 @@
 import React from "react"
+import { ViewStyle  } from "react-native"
 import { Slot, SplashScreen } from "expo-router"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 // @mst replace-next-line
