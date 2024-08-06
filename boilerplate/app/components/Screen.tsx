@@ -48,6 +48,10 @@ interface BaseScreenProps {
    */
   keyboardOffset?: number
   /**
+   * By how much we scroll up when the keyboard is shown. Defaults to 50.
+   */
+  keyboardBottomOffset?: number
+  /**
    * Pass any additional props directly to the StatusBar component.
    */
   StatusBarProps?: StatusBarProps
@@ -183,6 +187,7 @@ function ScreenWithScrolling(props: ScreenProps) {
   const {
     children,
     keyboardShouldPersistTaps = "handled",
+    keyboardBottomOffset = DEFAULT_BOTTOM_OFFSET,
     contentContainerStyle,
     ScrollViewProps,
     style,
@@ -198,7 +203,7 @@ function ScreenWithScrolling(props: ScreenProps) {
 
   return (
     <KeyboardAwareScrollView
-      bottomOffset={DEFAULT_BOTTOM_OFFSET}
+      bottomOffset={keyboardBottomOffset}
       {...{ keyboardShouldPersistTaps, scrollEnabled, ref }}
       {...ScrollViewProps}
       onLayout={(e) => {
