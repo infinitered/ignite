@@ -121,6 +121,35 @@ A few notes about sizes. iOS size has no upper limit, so be careful with the val
 
 Lastly, the splash-screen generator will exit if your input file has not been modified. The same source equality check, as the one on the app-icon generator, will encourage you to make customizations before using the generator (see the `--skip-source-equality-validation` section above).
 
+## CLI Options
+
+### `--case`
+
+The default filename format is PascalCase (`--case auto` or `--case pascal`), based on the name you pass in to the generate command. For example:
+
+`npx ignite-cli@latest g screen Episodes` will generate `EpisodesScreen.tsx` in the case of the default generator template `NAMEScreen.tsx`.
+
+This `--case` switch specifies the generated filenames (`NAME` in the filename of your template) will be how you pass it in. For example:
+
+`npx ignite-cli@latest g screen log-in` will generate the following outputs given their template name:
+
+| --case       | tpl filename       | generated filename |
+| ------------ | ------------------ | ------------------ |
+| auto, pascal | NAMEScreen.tsx.ejs | LogInScreen.tsx    |
+| camel        | NAMEScreen.tsx.ejs | logInScreen.tsx    |
+| snake        | NAMEScreen.tsx.ejs | log_in_screen.tsx  |
+| kebab        | NAMEScreen.tsx.ejs | log-in-screen.tsx  |
+| none         | NAMEScreen.tsx.ejs | log-in.tsx         |
+| auto, pascal | NAME.tsx.ejs       | LogIn.tsx          |
+| camel        | NAME.tsx.ejs       | logIn.tsx          |
+| snake        | NAME.tsx.ejs       | log_in.tsx         |
+| kebab        | NAME.tsx.ejs       | log-in.tsx         |
+| none         | NAME.tsx.ejs       | log-in.tsx         |
+
+### `--dir`
+
+Specifies the output path for the generated files. This will override the default path of `app/` (Ignite's path where all app code lives at the time of this writing) and any `destinationDir:` front matter that exists. This is useful in the case of file-based routing navigation systems, such as [Expo Router](https://docs.expo.dev/router/introduction/).
+
 ## Customizing generators
 
 You should feel free to make the provided templates your own! Just update the files in the `./ignite/templates/*` folders, and any generated files will then use your updated files. Read more in the [Generator Templates](./Generator-Templates.md) documentation.
@@ -141,6 +170,6 @@ Just run `npx ignite-cli update <type>` or `npx ignite-cli update --all` from th
 
 ## A Note About Windows
 
-If you are noticing upon using the generator for a source file (such as a screen or model) that frontmatter is not removed from the newly created file, it could be that the End of Line Sequence is misconfigured. Ignite tries to take care of this on its own, but sometimes your machine will not have a proper CLI utility such as `unix2dos` installed (this usually comes with Git).
+If you are noticing upon using the generator for a source file (such as a screen or model) that front matter is not removed from the newly created file, it could be that the End of Line Sequence is misconfigured. Ignite tries to take care of this on its own, but sometimes your machine will not have a proper CLI utility such as `unix2dos` installed (this usually comes with Git).
 
 In this case, you can open VS Code (or another IDE) and convert the EOL characters for all `ejs` files in the `ignite/templates` directory. Then run the generator command again and it should create the new files properly.

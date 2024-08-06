@@ -28,7 +28,7 @@ Let's say you have a file called `NAMEScreen.ts`.
 
 If they run `npx ignite-cli generate screen Pizza`, it'll name the file `PizzaScreen.ts`.
 
-If you'd like to customize the filename you can provide a filename option in the frontmatter of the template like so:
+If you'd like to customize the filename you can provide a filename option in the front matter of the template like so:
 
 ```
 ---
@@ -60,7 +60,9 @@ export function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Pr
 
 ## Front Matter
 
-"Front matter" is a way to specify meta-data about a template in the template itself. It's stripped out of the generated file. You delineate front matter by three dashes (`---`) above and below, and it has to be the very first thing in the template.
+"Front matter" is a way to specify meta-data about a template in the template itself. It's stripped out of the generated file. You delineate front matter by three dashes (`---`) above and below, and it has to be the very first thing in the template. The following front matter options are available:
+
+### destinationDir
 
 We use this in Ignite to customize the destination of a given template. For example, in `./ignite/templates/navigator/*` we could have:
 
@@ -74,8 +76,6 @@ import { StackNavigator } from "react-navigation"
 ```
 
 This would copy files to `./app/navigation/*` instead of the default `./app/navigators/*`.
-
-Other front matter options include:
 
 ### patch
 
@@ -110,5 +110,7 @@ patches:
     skip: <%= props.skipIndexFile %>
 ---
 ```
+
+## Notes
 
 Front matter is very powerful, but not necessarily super intuitive. If you have questions about it, ask in the [Ignite Slack community](https://community.infinite.red) or post a [Discussion](https://github.com/infinitered/ignite/discussions).

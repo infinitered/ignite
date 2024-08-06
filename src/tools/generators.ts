@@ -81,6 +81,19 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   )
   warning("          ⚠️  this erases any customizations you've made!")
   p()
+  heading("Options")
+  p()
+  command("--dir", "Override front matter or default path for generated files", [
+    "npx ignite-cli g model Episodes --dir src/models",
+  ])
+  command("--case", "Formats the generated filename", [
+    "npx ignite-cli g model episode --case=auto",
+    "npx ignite-cli g model episode --case=pascal",
+    "npx ignite-cli g model episode --case=kebab",
+    "npx ignite-cli g model episode --case=snake",
+    "npx ignite-cli g model episode --case=none",
+  ])
+  p()
   heading("Installed generators")
   p()
   showGenerators()
@@ -220,11 +233,16 @@ function installedGenerators(): string[] {
   return generators
 }
 
+type GeneratorCaseOptions = "auto" | "pascal" | "camel" | "kebab" | "snake" | "none"
+
 type GeneratorOptions = {
   name: string
+  originalName: string
   skipIndexFile?: boolean
   subdirectory: string
   overwrite: boolean
+  dir?: string
+  case?: GeneratorCaseOptions
 }
 
 /**
@@ -235,12 +253,13 @@ export async function generateFromTemplate(
   options: GeneratorOptions,
 ): Promise<{ written: string[]; overwritten: string[]; exists: string[] }> {
   const { find, path, dir, separator } = filesystem
-  const { pascalCase, kebabCase, pluralize, camelCase } = strings
+  const { pascalCase, kebabCase, pluralize, camelCase, snakeCase } = strings
 
   // permutations of the name
   const pascalCaseName = pascalCase(options.name)
   const kebabCaseName = kebabCase(options.name)
   const camelCaseName = camelCase(options.name)
+  const snakeCaseName = snakeCase(options.name)
 
   // array of written, exists and overwritten files
   const written: string[] = []
@@ -248,7 +267,7 @@ export async function generateFromTemplate(
   const exists: string[] = []
 
   // passed into the template generator
-  const props = { camelCaseName, kebabCaseName, pascalCaseName, ...options }
+  const props = { camelCaseName, kebabCaseName, pascalCaseName, snakeCaseName, ...options }
 
   // where are we copying from?
   const templateDir = path(templatesDir(), generator)
@@ -256,10 +275,31 @@ export async function generateFromTemplate(
   // find the files
   const files = find(templateDir, { matching: "*" })
 
+  // check case options
+  let formattedName: string = pascalCaseName
+  switch (options.case) {
+    case "camel":
+      formattedName = camelCaseName
+      break
+    case "kebab":
+      formattedName = kebabCaseName
+      break
+    case "snake":
+      formattedName = snakeCaseName
+      break
+    case "none":
+      formattedName = options.originalName
+      break
+    case "auto":
+    default:
+      formattedName = pascalCaseName
+      break
+  }
+
   // loop through the files
   for (const templateFilename of files) {
     // get the filename and replace `NAME` with the actual name
-    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", pascalCaseName)
+    let filename = templateFilename.split(separator).slice(-1)[0].replace("NAME", formattedName)
 
     // strip the .ejs
     if (filename.endsWith(".ejs")) {
@@ -275,27 +315,29 @@ export async function generateFromTemplate(
     }
 
     // parse out front matter data and content
-    const { data, content } = frontMatter(templateContents)
+    const { data: frontMatterData, content } = frontMatter(templateContents)
     if (!content) {
       warning("⚠️  Unable to parse front matter. Please check your delimiters.")
       return { written, exists, overwritten }
     }
 
     // where are we copying to?
-    const generatorDir = path(appDir(), pluralize(generator), options.subdirectory)
-    const defaultDestinationDir = generatorDir // e.g. app/components, app/screens, app/models
-    const templateDestinationDir = data.destinationDir
-    const destinationDir = templateDestinationDir
-      ? path(cwd(), templateDestinationDir)
+    const defaultDestinationDir = path(appDir(), pluralize(generator), options.subdirectory) // e.g. app/components, app/screens, app/models
+    const overrideDestinationDir = options.dir ?? frontMatterData.destinationDir // cli dir takes priority over front matter dir
+    const destinationDir = overrideDestinationDir
+      ? path(cwd(), overrideDestinationDir)
       : defaultDestinationDir
-    const destinationPath = path(destinationDir, data.filename ?? filename)
+
+    // apply any provided patches
+    const destinationPath = path(destinationDir, frontMatterData.filename ?? filename)
 
     // apply any provided patches
     const isFileExist = filesystem.exists(destinationPath)
-    if (!isFileExist) await handlePatches(data)
+    if (!isFileExist) await handlePatches(frontMatterData)
 
     // ensure destination folder exists
     dir(destinationDir)
+
     // check if file exist or not and check of overwrite property
     if (isFileExist) {
       if (props.overwrite) {
