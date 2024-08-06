@@ -11,7 +11,7 @@ import {
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
+import { observer } from "mobx-react-lite" // @mst remove-current-line
 import React from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
@@ -56,6 +56,7 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
+// @mst replace-next-line const AppStack = () => {
 const AppStack = observer(function AppStack() {
   // @demo remove-block-start
   const {
@@ -86,11 +87,13 @@ const AppStack = observer(function AppStack() {
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
+  // @mst replace-next-line }
 })
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
+// @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
 
@@ -105,4 +108,5 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       <AppStack />
     </NavigationContainer>
   )
+  // @mst replace-next-line }
 })
