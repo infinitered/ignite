@@ -370,7 +370,6 @@ module.exports = {
       p(yellow(`Setting includeMST to true.`))
       includeMST = true
     }
-
     // #endregion
 
     // #region Packager
@@ -858,6 +857,11 @@ module.exports = {
           .replace(/navigate\(route as any\).*/g, "router.push(route)")
           .replace(/goBack\(\).*/g, " router.back()")
 
+        // Define the custom command to be removed using a regular expression
+        const customCommandToRemoveRegex =
+          /reactotron\.onCustomCommand\({\s*title: "Reset Navigation State",\s*description: "Resets the navigation state",\s*command: "resetNavigation",\s*handler: \(\) => {\s*Reactotron\.log\("resetting navigation state"\)\s*resetRoot\({ index: 0, routes: \[\] }\)\s*},\s*}\),?\n?/g
+        reactotronConfig = reactotronConfig.replace(customCommandToRemoveRegex, "")
+
         write(reactotronConfigPath, reactotronConfig)
 
         // some clean up
@@ -885,9 +889,14 @@ module.exports = {
         try {
           const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
           log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-mst-markup "${targetPath}"`, {
-            onProgress: log,
-          })
+          await system.run(
+            `${IGNITE} remove-mst-markup "${targetPath}" "${
+              experimentalExpoRouter ? "src" : "app"
+            }"`,
+            {
+              onProgress: log,
+            },
+          )
         } catch (e) {
           log(e)
           p(yellow(`Unable to remove MobX-State-Tree markup`))
@@ -898,9 +907,12 @@ module.exports = {
         try {
           const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
           log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-mst "${targetPath}"`, {
-            onProgress: log,
-          })
+          await system.run(
+            `${IGNITE} remove-mst "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
+            {
+              onProgress: log,
+            },
+          )
         } catch (e) {
           log(e)
           p(
