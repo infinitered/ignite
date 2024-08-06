@@ -1,6 +1,7 @@
 import React from "react"
 import { Slot, SplashScreen } from "expo-router"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+// @mst replace-next-line
 import { useInitialRootStore } from "src/models"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
 import { customFontsToLoad } from "src/theme"
@@ -17,9 +18,11 @@ if (__DEV__) {
 export { ErrorBoundary } from "src/components/ErrorBoundary/ErrorBoundary"
 
 export default function Root() {
+  // @mst remove-block-start
   // Wait for stores to load and render our layout inside of it so we have access
   // to auth info etc
   const { rehydrated } = useInitialRootStore()
+  // @mst remove-block-end
 
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
 

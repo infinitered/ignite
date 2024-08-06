@@ -1,3 +1,4 @@
+// @mst replace-next-line
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
@@ -9,6 +10,7 @@ import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
+// @mst replace-next-line export default function WelcomeScreen() {
 export default observer(function WelcomeScreen() {
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
@@ -31,6 +33,7 @@ export default observer(function WelcomeScreen() {
       </View>
     </View>
   )
+// @mst replace-next-line {
 })
 
 const $container: ViewStyle = {
