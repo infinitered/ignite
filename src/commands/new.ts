@@ -367,7 +367,7 @@ module.exports = {
     if (!removeDemo && includeMST === false) {
       p()
       p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
-      p(yellow(`Setting includeMST to true.`))
+      p(yellow(`Setting --mst=true`))
       includeMST = true
     }
     // #endregion
@@ -465,7 +465,17 @@ module.exports = {
           // force demo code removal for easier conversion
           // maybe one day convert the demo app
           expoRouter = true
-          removeDemo = true
+
+          if (!removeDemo) {
+            p()
+            p(
+              yellow(
+                `Enabling Expo Router will currently remove the demo application. To continue with the demo app, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/ExpoRouter`,
+              ),
+            )
+            p(yellow(`Setting --remove-demo=true`))
+            removeDemo = true
+          }
         }
       }
     })
@@ -814,12 +824,7 @@ module.exports = {
       // #endregion
 
       // #region Expo Router edits
-      /**
-       * instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
-       * TODO
-       * set up a proper screen generator (depends on PR #2726)
-       * remove the resetNavigation command from reactotronConfig
-       */
+      // instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
       if (experimentalExpoRouter) {
         // mv ALL files under app/ to src/
         const expoRouterMsg = " Recalibrating compass with Expo Router"
@@ -834,6 +839,8 @@ module.exports = {
           "src/components/Toggle/Switch.tsx",
           "src/components/ListView.tsx",
           "src/screens/WelcomeScreen.tsx",
+          "ignite/templates/model/NAME.ts.ejs",
+          "ignite/templates/component/NAME.tsx.ejs",
         ]
         expoRouterFilesToFix.forEach((file) => {
           const filePath = path(targetPath, file)
@@ -846,7 +853,7 @@ module.exports = {
           }
         })
 
-        // work in reactotron custom commands
+        // update reactotron custom commands
         const reactotronConfigPath = path(targetPath, "src/devtools/ReactotronConfig.ts")
         let reactotronConfig = read(reactotronConfigPath)
         reactotronConfig = reactotronConfig
@@ -857,12 +864,39 @@ module.exports = {
           .replace(/navigate\(route as any\).*/g, "router.push(route)")
           .replace(/goBack\(\).*/g, " router.back()")
 
-        // Define the custom command to be removed using a regular expression
+        // this one gets removed entirely
         const customCommandToRemoveRegex =
           /reactotron\.onCustomCommand\({\s*title: "Reset Navigation State",\s*description: "Resets the navigation state",\s*command: "resetNavigation",\s*handler: \(\) => {\s*Reactotron\.log\("resetting navigation state"\)\s*resetRoot\({ index: 0, routes: \[\] }\)\s*},\s*}\),?\n?/g
         reactotronConfig = reactotronConfig.replace(customCommandToRemoveRegex, "")
 
         write(reactotronConfigPath, reactotronConfig)
+
+        // rewrite the screens generator to something more useful
+        try {
+          const filePath = path(targetPath, "ignite/templates/screen/NAME.tsx.ejs")
+          const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
+import { observer } from "mobx-react-lite"
+import { ViewStyle } from "react-native"
+import { Screen, Text } from "src/components"
+
+// @mst replace-next-line export default function <%= props.pascalCaseName %>Screen() {
+export default observer(function <%= props.pascalCaseName %>Screen() {
+  return (
+    <Screen style={$root} preset="scroll">
+      <Text text="<%= props.camelCaseName %>" />
+    </Screen>
+  )
+// @mst replace-next-line }
+})
+
+const $root: ViewStyle = {
+  flex: 1,
+}
+`
+          write(filePath, EXPO_ROUTER_SCREEN_TPL)
+        } catch (e) {
+          log(`Unable to write screen generator template.`)
+        }
 
         // some clean up
         await system.run(
@@ -870,6 +904,8 @@ module.exports = {
           \\rm src/app.tsx
           mkdir src/components/ErrorBoundary
           mv src/screens/ErrorScreen/* src/components/ErrorBoundary
+          rm ignite/templates/screen/NAMEScreen.tsx.ejs
+          rm -rf ignite/templates/navigator
           rm -rf src/screens
           rm -rf src/navigators
           rm -rf app
