@@ -5,6 +5,10 @@ import {
   copyBoilerplate,
   renameReactNativeApp,
   replaceMaestroBundleIds,
+  createExpoRouterScreenTemplate,
+  refactorExpoRouterReactotronCmds,
+  updateExpoRouterSrcDir,
+  cleanupExpoRouterConversion,
 } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -824,93 +828,24 @@ module.exports = {
       // #endregion
 
       // #region Expo Router edits
-      // instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
       if (experimentalExpoRouter) {
-        // mv ALL files under app/ to src/
         const expoRouterMsg = " Recalibrating compass with Expo Router"
         startSpinner(expoRouterMsg)
+
+        /**
+         * Instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
+         * 1. Move all files from app/ to src/
+         * 2. Update code refs to app/ with src/
+         * 3. Refactor Reactotron commands to use `router` instead of refs to react navigation
+         * 4. Create a screen template that makes sense for Expo Router
+         * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
+         */
         await system.run(log(`mv app/* src/`))
+        updateExpoRouterSrcDir(toolbox)
+        refactorExpoRouterReactotronCmds(toolbox)
+        createExpoRouterScreenTemplate(toolbox)
+        await cleanupExpoRouterConversion(toolbox)
 
-        // replace app/ with src/ in files
-        const expoRouterFilesToFix = [
-          "tsconfig.json",
-          "test/i18n.test.ts",
-          "src/devtools/ReactotronConfig.ts",
-          "src/components/Toggle/Switch.tsx",
-          "src/components/ListView.tsx",
-          "src/screens/WelcomeScreen.tsx",
-          "ignite/templates/model/NAME.ts.ejs",
-          "ignite/templates/component/NAME.tsx.ejs",
-        ]
-        expoRouterFilesToFix.forEach((file) => {
-          const filePath = path(targetPath, file)
-          let fileContents = read(filePath)
-          try {
-            fileContents = fileContents.replace(/app\//g, "src/")
-            write(filePath, fileContents)
-          } catch (e) {
-            log(`Unable to locate ${file}.`)
-          }
-        })
-
-        // update reactotron custom commands
-        const reactotronConfigPath = path(targetPath, "src/devtools/ReactotronConfig.ts")
-        let reactotronConfig = read(reactotronConfigPath)
-        reactotronConfig = reactotronConfig
-          .replace(
-            /import { goBack, resetRoot, navigate }.*/g,
-            'import { router } from "expo-router"',
-          )
-          .replace(/navigate\(route as any\).*/g, "router.push(route)")
-          .replace(/goBack\(\).*/g, " router.back()")
-
-        // this one gets removed entirely
-        const customCommandToRemoveRegex =
-          /reactotron\.onCustomCommand\({\s*title: "Reset Navigation State",\s*description: "Resets the navigation state",\s*command: "resetNavigation",\s*handler: \(\) => {\s*Reactotron\.log\("resetting navigation state"\)\s*resetRoot\({ index: 0, routes: \[\] }\)\s*},\s*}\),?\n?/g
-        reactotronConfig = reactotronConfig.replace(customCommandToRemoveRegex, "")
-
-        write(reactotronConfigPath, reactotronConfig)
-
-        // rewrite the screens generator to something more useful
-        try {
-          const filePath = path(targetPath, "ignite/templates/screen/NAME.tsx.ejs")
-          const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
-import { Screen, Text } from "src/components"
-
-// @mst replace-next-line export default function <%= props.pascalCaseName %>Screen() {
-export default observer(function <%= props.pascalCaseName %>Screen() {
-  return (
-    <Screen style={$root} preset="scroll">
-      <Text text="<%= props.camelCaseName %>" />
-    </Screen>
-  )
-// @mst replace-next-line }
-})
-
-const $root: ViewStyle = {
-  flex: 1,
-}
-`
-          write(filePath, EXPO_ROUTER_SCREEN_TPL)
-        } catch (e) {
-          log(`Unable to write screen generator template.`)
-        }
-
-        // some clean up
-        await system.run(
-          log(`
-          \\rm src/app.tsx
-          mkdir src/components/ErrorBoundary
-          mv src/screens/ErrorScreen/* src/components/ErrorBoundary
-          rm ignite/templates/screen/NAMEScreen.tsx.ejs
-          rm -rf ignite/templates/navigator
-          rm -rf src/screens
-          rm -rf src/navigators
-          rm -rf app
-        `),
-        )
         stopSpinner(expoRouterMsg, "🧭")
       } else {
         // remove src/ dir since not using expo-router
