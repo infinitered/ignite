@@ -313,7 +313,6 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
     "src/devtools/ReactotronConfig.ts",
     "src/components/Toggle/Switch.tsx",
     "src/components/ListView.tsx",
-    "src/screens/WelcomeScreen.tsx",
     "ignite/templates/model/NAME.ts.ejs",
     "ignite/templates/component/NAME.tsx.ejs",
   ]
