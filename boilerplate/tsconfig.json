@@ -31,6 +31,6 @@
       "module": "commonjs"
     }
   },
-  "include": ["index.js", "App.tsx", "app", "types", "plugins", "app.config.ts"],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
   "exclude": ["node_modules", "test/**/*"]
 }
