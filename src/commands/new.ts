@@ -36,6 +36,7 @@ import { demoDependenciesToRemove } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
 type StateMgmt = "mst" | "none"
+
 export interface Options {
   /**
    * alias for `boilerplate`
@@ -818,9 +819,7 @@ module.exports = {
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
         log(`Ignite bin path: ${IGNITE}`)
-        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, {
-          onProgress: log,
-        })
+        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, { onProgress: log })
       } catch (e) {
         log(e)
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
@@ -855,46 +854,27 @@ module.exports = {
       // #endregion
 
       // #region Remove MST code
-      if (stateMgmt === "mst") {
-        // remove MST markup only
-        startSpinner(`Removing MobX-State-Tree markup`)
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(
-            `${IGNITE} remove-mst-markup "${targetPath}" "${
-              experimentalExpoRouter ? "src" : "app"
-            }"`,
-            {
-              onProgress: log,
-            },
-          )
-        } catch (e) {
-          log(e)
-          p(yellow(`Unable to remove MobX-State-Tree markup`))
-        }
-        stopSpinner(`Removing MobX-State-Tree markup`, "🌳")
-      } else {
-        startSpinner(`Removing MobX-State-Tree code`)
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(
-            `${IGNITE} remove-mst "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
-            {
-              onProgress: log,
-            },
-          )
-        } catch (e) {
-          log(e)
-          p(
-            yellow(
-              `Unable to remove MobX-State-Tree code. To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`,
-            ),
-          )
-        }
-        stopSpinner(`Removing MobX-State-Tree code`, "🌳")
+      const removeMstPart = stateMgmt === "none" ? "code" : "markup"
+      startSpinner(`Removing MobX-State-Tree ${removeMstPart}`)
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const CMD = stateMgmt === "none" ? "remove-mst" : "remove-mst-markup"
+
+        log(`Ignite bin path: ${IGNITE}`)
+        await system.run(
+          `${IGNITE} ${CMD} "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
+          { onProgress: log },
+        )
+      } catch (e) {
+        log(e)
+        const additionalInfo =
+          stateMgmt === "none"
+            ? ` To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`
+            : ""
+        p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
       }
+      stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
+      // #endregion
 
       // #region Format generator templates EOL for Windows
       let warnAboutEOL = false
