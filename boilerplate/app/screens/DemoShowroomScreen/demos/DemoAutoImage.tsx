@@ -2,7 +2,8 @@
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { AutoImage, Text } from "../../../components"
-import { $styles, colors, spacing } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
+import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
@@ -11,11 +12,11 @@ const $imageContainer: ViewStyle = {
   alignItems: "center",
 }
 
-const $aspectRatioDescription: TextStyle = {
+const $aspectRatioDescription: ThemedStyle<TextStyle> = ({ spacing }) => ({
   textAlign: "center",
   width: "100%",
   marginTop: spacing.xs,
-}
+})
 
 const $aspectRatioWidthExampleContainer: ViewStyle = {
   justifyContent: "space-between",
@@ -27,17 +28,17 @@ const $aspectRatioHeightExampleContainer: ViewStyle = {
   height: 130,
 }
 
-const $aspectRatioBox: ViewStyle & ImageStyle = {
+const $aspectRatioBox: ThemedStyle<ViewStyle & ImageStyle> = (theme) => ({
   borderRadius: 4,
   borderWidth: 3,
-  borderColor: colors.palette.secondary300,
-  backgroundColor: colors.palette.neutral800,
-}
+  borderColor: theme.colors.palette.secondary300,
+  backgroundColor: theme.colors.palette.neutral800,
+})
 
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
   description: "An Image component that automatically sizes a remote or data-uri image.",
-  data: [
+  data: ({ theme, themed }) => [
     <DemoUseCase name="Remote URI">
       <View style={$imageContainer}>
         <AutoImage
@@ -68,43 +69,51 @@ export const DemoAutoImage: Demo = {
           text="<View />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", color: colors.palette.secondary400 }}
+          style={{ flexBasis: "33.3333%", color: theme.colors.palette.secondary400 }}
         />
         <Text
           text="<Image />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "center",
+            color: theme.colors.palette.secondary400,
+          }}
         />
         <Text
           text="<AutoImage />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "right", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "right",
+            color: theme.colors.palette.secondary400,
+          }}
         />
       </View>
 
       <DemoDivider size={5} />
 
       <View style={[$styles.row, $aspectRatioWidthExampleContainer, { height: 80 }]}>
-        <View style={[$aspectRatioBox, { width: 60 }]} />
+        <View style={themed([$aspectRatioBox, { width: 60 }])} />
         <Image
           source={{
             uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
           }}
-          style={[$aspectRatioBox, { width: 60 }]}
+          style={themed([$aspectRatioBox, { width: 60 }])}
           resizeMode="contain"
         />
         <AutoImage
           maxWidth={60}
-          style={$aspectRatioBox}
+          style={themed($aspectRatioBox)}
           source={{
             uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
           }}
         />
       </View>
 
-      <Text weight="bold" size="xs" style={$aspectRatioDescription}>
+      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
         width: 60 / height: auto
       </Text>
 
@@ -116,34 +125,36 @@ export const DemoAutoImage: Demo = {
             text="<View />"
             size="xxs"
             weight="bold"
-            style={{ color: colors.palette.secondary400 }}
+            style={{ color: theme.colors.palette.secondary400 }}
           />
           <Text
             text="<Image />"
             size="xxs"
             weight="bold"
-            style={{ color: colors.palette.secondary400 }}
+            style={{ color: theme.colors.palette.secondary400 }}
           />
           <Text
             text="<AutoImage />"
             size="xxs"
             weight="bold"
-            style={{ color: colors.palette.secondary400 }}
+            style={{ color: theme.colors.palette.secondary400 }}
           />
         </View>
 
-        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: spacing.sm }]}>
-          <View style={[$aspectRatioBox, { height: 32 }]} />
+        <View
+          style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: theme.spacing.sm }]}
+        >
+          <View style={themed([$aspectRatioBox, { height: 32 }])} />
           <Image
             source={{
               uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
             }}
-            style={[$aspectRatioBox, { height: 32 }]}
+            style={themed([$aspectRatioBox, { height: 32 }])}
             resizeMode="contain"
           />
           <AutoImage
             maxHeight={32}
-            style={[$aspectRatioBox, { alignSelf: "center" }]}
+            style={themed([$aspectRatioBox, { alignSelf: "center" }])}
             source={{
               uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
             }}
@@ -151,7 +162,7 @@ export const DemoAutoImage: Demo = {
         </View>
       </View>
 
-      <Text weight="bold" size="xs" style={$aspectRatioDescription}>
+      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
         width: auto / height: 32
       </Text>
 
@@ -162,44 +173,52 @@ export const DemoAutoImage: Demo = {
           text="<View />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", color: colors.palette.secondary400 }}
+          style={{ flexBasis: "33.3333%", color: theme.colors.palette.secondary400 }}
         />
         <Text
           text="<Image />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "center",
+            color: theme.colors.palette.secondary400,
+          }}
         />
         <Text
           text="<AutoImage />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "right", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "right",
+            color: theme.colors.palette.secondary400,
+          }}
         />
       </View>
 
       <DemoDivider size={5} />
 
       <View style={[$styles.row, $aspectRatioWidthExampleContainer]}>
-        <View style={[$aspectRatioBox, { width: 60, height: 60 }]} />
+        <View style={themed([$aspectRatioBox, { width: 60, height: 60 }])} />
         <Image
           source={{
             uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
           }}
-          style={[$aspectRatioBox, { width: 60, height: 60 }]}
+          style={themed([$aspectRatioBox, { width: 60, height: 60 }])}
           resizeMode="contain"
         />
         <AutoImage
           maxWidth={60}
           maxHeight={60}
-          style={$aspectRatioBox}
+          style={themed($aspectRatioBox)}
           source={{
             uri: "https://user-images.githubusercontent.com/1775841/188244137-a35ab1b9-658d-4701-b1dd-7caa51173fa9.png",
           }}
         />
       </View>
 
-      <Text weight="bold" size="xs" style={$aspectRatioDescription}>
+      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
         width: 60 / height: 60
       </Text>
     </DemoUseCase>,

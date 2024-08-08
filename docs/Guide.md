@@ -76,19 +76,32 @@ Ignite's approach to styling is, like many other things in Ignite, straightforwa
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of constants, colocated with our components, camelCase and prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of constants, co-located with our components, camelCase and prefixed with `$`, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
-import { palette } from "../theme"
+import { useAppTheme } from "app/utils/useAppTheme"
+import type { ThemedStyle } from "app/theme"
 
-const $container: ViewStyle = {
+// This is a themed style that you must wrap with `themed()` to pass the style object.
+const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
-  backgroundColor: palette.bgColor,
+  backgroundColor: colors.palette.bgColor,
+})
+
+// This is a non-themed style
+const $innerView: ViewStyle{
+  backgroundColor: '#fff',
+  alignItems: "center",
 }
 
 const MyComponent = () => {
-  return <View style={$container}>...</View>
+  const { themed } = useAppTheme()
+  return (
+    <View style={themed($container)}>
+    <View style={$innerView}>...</View>
+    </View>
+  )
 }
 ```
 

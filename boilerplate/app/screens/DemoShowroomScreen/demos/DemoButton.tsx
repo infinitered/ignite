@@ -2,42 +2,51 @@
 import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Text } from "../../../components"
-import { colors, typography } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
-const $customButtonStyle: ViewStyle = { backgroundColor: colors.error, height: 100 }
-const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error }
-const $customButtonTextStyle: TextStyle = {
+const $customButtonStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
+  backgroundColor: colors.error,
+  height: 100,
+})
+const $customButtonPressedStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
+  backgroundColor: colors.error,
+})
+const $customButtonTextStyle: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   color: colors.error,
   fontFamily: typography.primary.bold,
   textDecorationLine: "underline",
   textDecorationColor: colors.error,
-}
-const $customButtonPressedTextStyle: TextStyle = { color: colors.palette.neutral100 }
-const $customButtonRightAccessoryStyle: ViewStyle = {
+})
+const $customButtonPressedTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
+  color: colors.palette.neutral100,
+})
+const $customButtonRightAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   width: "53%",
   height: "200%",
   backgroundColor: colors.error,
   position: "absolute",
   top: 0,
   right: 0,
-}
-const $customButtonPressedRightAccessoryStyle: ImageStyle = { tintColor: colors.palette.neutral100 }
+})
+const $customButtonPressedRightAccessoryStyle: ThemedStyle<ImageStyle> = ({ colors }) => ({
+  tintColor: colors.palette.neutral100,
+})
 
 const $disabledOpacity: ViewStyle = { opacity: 0.5 }
-const $disabledButtonTextStyle: TextStyle = {
+const $disabledButtonTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.palette.neutral100,
   textDecorationColor: colors.palette.neutral100,
-}
+})
 
 export const DemoButton: Demo = {
   name: "Button",
   description:
     "A component that allows users to take actions and make choices. Wraps the Text component with a Pressable component.",
-  data: [
+  data: ({ themed }) => [
     <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
       <Button>Default - Laboris In Labore</Button>
       <DemoDivider />
@@ -109,31 +118,31 @@ export const DemoButton: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase name="Styling" description="The component can be styled easily.">
-      <Button style={$customButtonStyle}>Style Container - Exercitation</Button>
+      <Button style={themed($customButtonStyle)}>Style Container - Exercitation</Button>
       <DemoDivider />
 
-      <Button preset="filled" textStyle={$customButtonTextStyle}>
+      <Button preset="filled" textStyle={themed($customButtonTextStyle)}>
         Style Text - Ea Anim
       </Button>
       <DemoDivider />
 
       <Button
         preset="reversed"
-        RightAccessory={() => <View style={$customButtonRightAccessoryStyle} />}
+        RightAccessory={() => <View style={themed($customButtonRightAccessoryStyle)} />}
       >
         Style Accessories - enim ea id fugiat anim ad.
       </Button>
       <DemoDivider />
 
       <Button
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
         RightAccessory={(props) => (
           <Icon
             containerStyle={props.style}
             style={[
               $iconStyle,
-              props.pressableState.pressed && $customButtonPressedRightAccessoryStyle,
+              props.pressableState.pressed && themed($customButtonPressedRightAccessoryStyle),
             ]}
             icon="ladybug"
           />
@@ -150,8 +159,8 @@ export const DemoButton: Demo = {
       <Button
         disabled
         disabledStyle={$disabledOpacity}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
         Disabled - standard
       </Button>
@@ -161,8 +170,8 @@ export const DemoButton: Demo = {
         disabled
         preset="filled"
         disabledStyle={$disabledOpacity}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
         Disabled - filled
       </Button>
@@ -172,8 +181,8 @@ export const DemoButton: Demo = {
         disabled
         preset="reversed"
         disabledStyle={$disabledOpacity}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
         Disabled - reversed
       </Button>
@@ -181,14 +190,14 @@ export const DemoButton: Demo = {
 
       <Button
         disabled
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
         RightAccessory={(props) => (
           <View
             style={
               props.disabled
                 ? [$customButtonRightAccessoryStyle, $disabledOpacity]
-                : $customButtonPressedRightAccessoryStyle
+                : themed($customButtonPressedRightAccessoryStyle)
             }
           />
         )}
@@ -200,9 +209,9 @@ export const DemoButton: Demo = {
       <Button
         disabled
         preset="filled"
-        disabledTextStyle={[$customButtonTextStyle, $disabledButtonTextStyle]}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        disabledTextStyle={themed([$customButtonTextStyle, $disabledButtonTextStyle])}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
         Disabled text style
       </Button>

@@ -330,93 +330,108 @@ describe("markup", () => {
 
 const WelcomeScreen = /* jsx */ `
 import { observer } from "mobx-react-lite"
-import React, { useLayoutEffect } from "react"
+import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { Button, Header, Text } from "../components"
+import {
+  Button, // @demo remove-current-line
+  Text,
+} from "app/components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
-import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "../navigators"
+import type { ThemedStyle } from "app/theme"
+import { useHeader } from "../utils/useHeader" // @demo remove-current-line
+import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
-interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {} // @demo remove-current-line
+interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen = observer(function WelcomeScreen(
-    props: WelcomeScreenProps // @demo remove-current-line
-  ) {
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
+  _props, // @demo remove-current-line
+) {
   // @demo remove-block-start
-  const { navigation } = props
+  const { themed } = useAppTheme()
+  const { navigation } = _props
   const {
     authenticationStore: { logout },
   } = useStores()
 
   function goNext() {
-    navigation.navigate("Demo", { screen: "DemoShowroom" })
+    navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
   }
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      header: () => <Header rightTx="common.logOut" onRightPress={logout} />,
-    })
-  }, [])
+  useHeader(
+    {
+      rightTx: "common.logOut",
+      onRightPress: logout,
+    },
+    [logout],
+  )
   // @demo remove-block-end
 
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
   return (
-    <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text style={$welcomeHeading} tx="welcomeScreen.readyForLaunch" preset="heading" />
+    <View style={themed($container)}>
+      <View style={themed($topContainer)}>
+        <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
+        <Text
+          testID="welcome-heading"
+          style={themed($welcomeHeading)}
+          tx="welcomeScreen.readyForLaunch"
+          preset="heading"
+        />
         <Text tx="welcomeScreen.exciting" preset="subheading" />
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
-      <SafeAreaView style={$bottomContainer} edges={["bottom"]}>
-        <View style={$bottomContentContainer}>
-          <Text tx="welcomeScreen.postscript" size="md" />
-          <Button preset="reversed" tx="welcomeScreen.letsGo" onPress={goNext} /> {/* @demo remove-current-line */}
-        </View>
-      </SafeAreaView>
+      <View style={[themed($bottomContainer), $bottomContainerInsets]}>
+        <Text tx="welcomeScreen.postscript" size="md" />
+        {/* @demo remove-block-start */}
+        <Button
+          testID="next-screen-button"
+          preset="reversed"
+          tx="welcomeScreen.letsGo"
+          onPress={goNext}
+        />
+        {/* @demo remove-block-end */}
+      </View>
     </View>
   )
 })
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
   backgroundColor: colors.background,
-}
+})
 
-const $topContainer: ViewStyle = {
+const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,
   flexGrow: 1,
   flexBasis: "57%",
   justifyContent: "center",
-  paddingHorizontal: spacing.large,
-}
+  paddingHorizontal: spacing.lg,
+})
 
-const $bottomContainer: ViewStyle = {
+const $bottomContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flexShrink: 1,
   flexGrow: 0,
   flexBasis: "43%",
   backgroundColor: colors.palette.neutral100,
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
-}
-
-const $bottomContentContainer: ViewStyle = {
-  flex: 1,
-  paddingHorizontal: spacing.large,
+  paddingHorizontal: spacing.lg,
   justifyContent: "space-around",
-}
+})
 
-const $welcomeLogo: ImageStyle = {
+const $welcomeLogo: ThemedStyle<ImageStyle> = ({ spacing }) => ({
   height: 88,
   width: "100%",
-  marginBottom: spacing.huge,
-}
+  marginBottom: spacing.xxl,
+})
 
 const $welcomeFace: ImageStyle = {
   height: 169,
@@ -427,9 +442,9 @@ const $welcomeFace: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],
 }
 
-const $welcomeHeading: TextStyle = {
-  marginBottom: spacing.medium,
-}
+const $welcomeHeading: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  marginBottom: spacing.md,
+})
 `
 const AppNavigator = /* jsx */ `
 /**
@@ -438,30 +453,25 @@ const AppNavigator = /* jsx */ `
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
- import {
-  DarkTheme,
-  DefaultTheme,
+import {
   NavigationContainer,
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useColorScheme } from "react-native"
+import * as Screens from "app/screens"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
-import { 
-  LoginScreen, // @demo remove-current-line
-  WelcomeScreen 
-} from "../screens"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { useAppTheme, useThemeProvider } from "app/utils/useAppTheme"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
  *
- * If no params are allowed, pass through \`undefined\`. Generally speaking, we
+ * If no params are allowed, pass through undefined. Generally speaking, we
  * recommend using your MobX-State-Tree store(s) to keep application state
  * rather than passing state through navigation params.
  *
@@ -475,6 +485,7 @@ export type AppStackParamList = {
   Login: undefined // @demo remove-current-line
   Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // 🔥 Your screens go here
+  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
 /**
@@ -496,46 +507,54 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
+  const { theme: { colors } } = useAppTheme()
 
   // @demo remove-block-end
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        navigationBarColor: colors.background,
+        contentStyle: {
+          backgroundColor: colors.background,
+        },
+      }}
       initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
     >
       {/* @demo remove-block-start */}
       {isAuthenticated ? (
         <>
           {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Demo" component={DemoNavigator} /> {/* @demo remove-block-start */}
+          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          {/* @demo remove-block-start */}
+          <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Login" component={Screens.LoginScreen} />
         </>
       )}
       {/* @demo remove-block-end */}
       {/** 🔥 Your screens go here */}
+      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })
 
-interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+export interface NavigationProps
+  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const colorScheme = useColorScheme()
+  const { theme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}
-    >
-      <AppStack />
-    </NavigationContainer>
+    <ThemeProvider value={{ theme, setThemeContextOverride }}>
+      <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
+        <AppStack />
+      </NavigationContainer>
+    </ThemeProvider>
   )
 })
 `

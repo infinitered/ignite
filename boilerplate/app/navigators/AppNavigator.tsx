@@ -5,21 +5,18 @@
  * and a "main" flow which the user will use once logged in.
  */
 import {
-  DarkTheme,
-  DefaultTheme,
   NavigationContainer,
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite" // @mst remove-current-line
 import React from "react"
-import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { colors } from "app/theme"
+import { useAppTheme, useThemeProvider } from "app/utils/useAppTheme"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -62,11 +59,20 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
-
   // @demo remove-block-end
+  const {
+    theme: { colors },
+  } = useAppTheme()
+
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+      screenOptions={{
+        headerShown: false,
+        navigationBarColor: colors.background,
+        contentStyle: {
+          backgroundColor: colors.background,
+        },
+      }}
       initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
     >
       {/* @demo remove-block-start */}
@@ -95,18 +101,17 @@ export interface NavigationProps
 
 // @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const colorScheme = useColorScheme()
+  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
+    useThemeProvider()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}
-    >
-      <AppStack />
-    </NavigationContainer>
+    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+      <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
+        <AppStack />
+      </NavigationContainer>
+    </ThemeProvider>
   )
   // @mst replace-next-line }
 })

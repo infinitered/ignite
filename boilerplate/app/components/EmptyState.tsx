@@ -1,9 +1,10 @@
 import React from "react"
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { translate } from "../i18n"
-import { spacing } from "../theme"
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
+import { useAppTheme } from "app/utils/useAppTheme"
+import type { ThemedStyle } from "app/theme"
 
 const sadFace = require("../../assets/images/sad-face.png")
 
@@ -11,7 +12,7 @@ interface EmptyStateProps {
   /**
    * An optional prop that specifies the text/image set to use for the empty state.
    */
-  preset?: keyof typeof EmptyStatePresets
+  preset?: "generic"
   /**
    * Style override for the container.
    */
@@ -108,15 +109,6 @@ interface EmptyStatePresetItem {
   button: TextProps["text"]
 }
 
-const EmptyStatePresets = {
-  generic: {
-    imageSource: sadFace,
-    heading: translate("emptyStateComponent.generic.heading"),
-    content: translate("emptyStateComponent.generic.content"),
-    button: translate("emptyStateComponent.generic.button"),
-  } as EmptyStatePresetItem,
-} as const
-
 /**
  * A component to use when there is no data to display. It can be utilized to direct the user what to do next.
  * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/EmptyState/}
@@ -124,6 +116,21 @@ const EmptyStatePresets = {
  * @returns {JSX.Element} The rendered `EmptyState` component.
  */
 export function EmptyState(props: EmptyStateProps) {
+  const {
+    theme,
+    themed,
+    theme: { spacing },
+  } = useAppTheme()
+
+  const EmptyStatePresets = {
+    generic: {
+      imageSource: sadFace,
+      heading: translate("emptyStateComponent.generic.heading"),
+      content: translate("emptyStateComponent.generic.content"),
+      button: translate("emptyStateComponent.generic.button"),
+    } as EmptyStatePresetItem,
+  } as const
+
   const preset = EmptyStatePresets[props.preset ?? "generic"]
 
   const {
@@ -163,14 +170,14 @@ export function EmptyState(props: EmptyStateProps) {
     ImageProps?.style,
   ]
   const $headingStyles = [
-    $heading,
+    themed($heading),
     isImagePresent && { marginTop: spacing.xxxs },
     (isContentPresent || isButtonPresent) && { marginBottom: spacing.xxxs },
     $headingStyleOverride,
     HeadingTextProps?.style,
   ]
   const $contentStyles = [
-    $content,
+    themed($content),
     (isImagePresent || isHeadingPresent) && { marginTop: spacing.xxxs },
     isButtonPresent && { marginBottom: spacing.xxxs },
     $contentStyleOverride,
@@ -184,7 +191,14 @@ export function EmptyState(props: EmptyStateProps) {
 
   return (
     <View style={$containerStyles}>
-      {isImagePresent && <Image source={imageSource} {...ImageProps} style={$imageStyles} />}
+      {isImagePresent && (
+        <Image
+          source={imageSource}
+          {...ImageProps}
+          style={$imageStyles}
+          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+        />
+      )}
 
       {isHeadingPresent && (
         <Text
@@ -223,5 +237,11 @@ export function EmptyState(props: EmptyStateProps) {
 }
 
 const $image: ImageStyle = { alignSelf: "center" }
-const $heading: TextStyle = { textAlign: "center", paddingHorizontal: spacing.lg }
-const $content: TextStyle = { textAlign: "center", paddingHorizontal: spacing.lg }
+const $heading: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  textAlign: "center",
+  paddingHorizontal: spacing.lg,
+})
+const $content: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  textAlign: "center",
+  paddingHorizontal: spacing.lg,
+})

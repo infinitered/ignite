@@ -7,9 +7,11 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { $styles, colors, spacing } from "../theme"
+import { $styles } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import type { ThemedStyle } from "app/theme"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface ListItemProps extends TouchableOpacityProps {
   /**
@@ -123,6 +125,7 @@ export function ListItem(props: ListItemProps) {
     containerStyle: $containerStyleOverride,
     ...TouchableOpacityProps
   } = props
+  const { themed } = useAppTheme()
 
   const $textStyles = [$textStyle, $textStyleOverride, TextProps?.style]
 
@@ -135,7 +138,7 @@ export function ListItem(props: ListItemProps) {
   const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
 
   return (
-    <View style={$containerStyles}>
+    <View style={themed($containerStyles)}>
       <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
         <ListItemAction
           side="left"
@@ -145,7 +148,7 @@ export function ListItem(props: ListItemProps) {
           Component={LeftComponent}
         />
 
-        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={$textStyles}>
+        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={themed($textStyles)}>
           {children}
         </Text>
 
@@ -167,6 +170,7 @@ export function ListItem(props: ListItemProps) {
  */
 function ListItemAction(props: ListItemActionProps) {
   const { icon, Component, iconColor, size, side } = props
+  const { themed } = useAppTheme()
 
   const $iconContainerStyles = [$iconContainer]
 
@@ -178,12 +182,12 @@ function ListItemAction(props: ListItemActionProps) {
         size={24}
         icon={icon}
         color={iconColor}
-        containerStyle={[
+        containerStyle={themed([
           $iconContainerStyles,
           side === "left" && $iconContainerLeft,
           side === "right" && $iconContainerRight,
           { height: size },
-        ]}
+        ])}
       />
     )
   }
@@ -191,22 +195,22 @@ function ListItemAction(props: ListItemActionProps) {
   return null
 }
 
-const $separatorTop: ViewStyle = {
+const $separatorTop: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderTopWidth: 1,
   borderTopColor: colors.separator,
-}
+})
 
-const $separatorBottom: ViewStyle = {
+const $separatorBottom: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderBottomWidth: 1,
   borderBottomColor: colors.separator,
-}
+})
 
-const $textStyle: TextStyle = {
+const $textStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   paddingVertical: spacing.xs,
   alignSelf: "center",
   flexGrow: 1,
   flexShrink: 1,
-}
+})
 
 const $touchableStyle: ViewStyle = {
   alignItems: "flex-start",
@@ -217,10 +221,10 @@ const $iconContainer: ViewStyle = {
   alignItems: "center",
   flexGrow: 0,
 }
-const $iconContainerLeft: ViewStyle = {
+const $iconContainerLeft: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginEnd: spacing.md,
-}
+})
 
-const $iconContainerRight: ViewStyle = {
+const $iconContainerRight: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginStart: spacing.md,
-}
+})

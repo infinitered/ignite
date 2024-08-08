@@ -114,7 +114,7 @@ Feel free to add your own presets by emulating the style you see with the provid
 
 ```tsx
 $presets = {
-  label: [$baseStyle, $sizeStyles.md, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+  label: [$baseStyle, $sizeStyles.md, $fontWeightStyles.medium],
 }
 ```
 

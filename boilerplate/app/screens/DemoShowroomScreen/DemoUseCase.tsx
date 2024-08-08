@@ -1,12 +1,15 @@
 import React, { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Text } from "../../components"
-import { $styles, colors, spacing, typography } from "../../theme"
+import type { ThemedStyle } from "app/theme"
+import { useAppTheme } from "app/utils/useAppTheme"
+import { $styles } from "app/theme"
 
 interface DemoUseCaseProps {
   name: string
   description?: string
   layout?: "column" | "row"
+  itemStyle?: ViewStyle
   children: ReactNode
 }
 
@@ -15,36 +18,33 @@ interface DemoUseCaseProps {
  * @returns {JSX.Element} The rendered `DemoUseCase` component.
  */
 export function DemoUseCase(props: DemoUseCaseProps) {
-  const { name, description, children, layout = "column" } = props
+  const { name, description, children, layout = "column", itemStyle = {} } = props
+  const { themed } = useAppTheme()
 
   return (
     <View>
-      <Text style={$name}>{name}</Text>
+      <Text style={themed($name)}>{name}</Text>
 
-      {description && <Text style={$description}>{description}</Text>}
+      {description && <Text style={themed($description)}>{description}</Text>}
 
-      <View style={[layout === "row" && $styles.row, $wrapLayout, $item]}>{children}</View>
+      <View style={[itemStyle, layout === "row" && $styles.row, themed($item)]}>{children}</View>
     </View>
   )
 }
 
-const $description: TextStyle = {
+const $description: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.md,
-}
+})
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
   padding: spacing.lg,
   marginVertical: spacing.md,
-}
+})
 
-const $name: TextStyle = {
+const $name: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontFamily: typography.primary.bold,
-}
-
-const $wrapLayout: ViewStyle = {
-  flexWrap: "wrap",
-}
+})
 
 // @demo remove-file
