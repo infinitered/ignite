@@ -1,6 +1,6 @@
 import { DEFAULT_BOTTOM_OFFSET } from "app/components"
 import React, { ReactElement } from "react"
-import { SectionList, SectionListProps } from "react-native"
+import { ScrollViewProps, SectionList, SectionListProps } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 
 type SectionType<ItemType> = {
@@ -11,7 +11,7 @@ type SectionType<ItemType> = {
 
 type SectionListWithKeyboardAwareScrollViewProps<ItemType> = SectionListProps<ItemType> & {
   /* Optional function to pass a custom scroll component */
-  renderScrollComponent?: () => React.ReactNode
+  renderScrollComponent?: (props: ScrollViewProps) => React.ReactNode
   /* Optional bottom offset for the keyboard avoid behavior */
   bottomOffset?: number
   /* The sections to be rendered in the list */
@@ -29,10 +29,11 @@ function SectionListWithKeyboardAwareScrollView<ItemType>(
   }: SectionListWithKeyboardAwareScrollViewProps<ItemType>,
   ref: React.Ref<SectionList<ItemType>>,
 ): ReactElement {
-  const defaultRenderScrollComponent = () => (
+  const defaultRenderScrollComponent = (props: ScrollViewProps) => (
     <KeyboardAwareScrollView
       contentContainerStyle={contentContainerStyle}
       bottomOffset={bottomOffset}
+      {...props}
     />
   )
 
@@ -40,7 +41,12 @@ function SectionListWithKeyboardAwareScrollView<ItemType>(
     <SectionList
       {...props}
       ref={ref}
-      renderScrollComponent={renderScrollComponent || defaultRenderScrollComponent}
+      renderScrollComponent={(props) => {
+        if (renderScrollComponent) {
+          return renderScrollComponent(props)
+        }
+        return defaultRenderScrollComponent(props)
+      }}
     />
   )
 }
