@@ -14,6 +14,9 @@ import {
 } from "react-native"
 import { $styles, colors } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
+
+export const DEFAULT_BOTTOM_OFFSET = 50
 
 interface BaseScreenProps {
   /**
@@ -44,6 +47,10 @@ interface BaseScreenProps {
    * By how much should we offset the keyboard? Defaults to 0.
    */
   keyboardOffset?: number
+  /**
+   * By how much we scroll up when the keyboard is shown. Defaults to 50.
+   */
+  keyboardBottomOffset?: number
   /**
    * Pass any additional props directly to the StatusBar component.
    */
@@ -164,10 +171,12 @@ function useAutoPreset(props: AutoScreenProps): {
  * @returns {JSX.Element} - The rendered `ScreenWithoutScrolling` component.
  */
 function ScreenWithoutScrolling(props: ScreenProps) {
-  const { style, contentContainerStyle, children } = props
+  const { style, contentContainerStyle, children, preset } = props
   return (
     <View style={[$outerStyle, style]}>
-      <View style={[$innerStyle, contentContainerStyle]}>{children}</View>
+      <View style={[$innerStyle, preset === "fixed" && $justifyFlexEnd, contentContainerStyle]}>
+        {children}
+      </View>
     </View>
   )
 }
@@ -180,6 +189,7 @@ function ScreenWithScrolling(props: ScreenProps) {
   const {
     children,
     keyboardShouldPersistTaps = "handled",
+    keyboardBottomOffset = DEFAULT_BOTTOM_OFFSET,
     contentContainerStyle,
     ScrollViewProps,
     style,
@@ -194,7 +204,8 @@ function ScreenWithScrolling(props: ScreenProps) {
   useScrollToTop(ref)
 
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
+      bottomOffset={keyboardBottomOffset}
       {...{ keyboardShouldPersistTaps, scrollEnabled, ref }}
       {...ScrollViewProps}
       onLayout={(e) => {
@@ -213,7 +224,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       ]}
     >
       {children}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   )
 }
 
@@ -267,6 +278,10 @@ const $outerStyle: ViewStyle = {
   flex: 1,
   height: "100%",
   width: "100%",
+}
+
+const $justifyFlexEnd: ViewStyle = {
+  justifyContent: "flex-end",
 }
 
 const $innerStyle: ViewStyle = {
