@@ -41,10 +41,10 @@ We also recognize no state management solution is perfect. MST has some known do
 
 ### Remove MST Option
 
-We understand that state management is a highly opinionated topic with various options available. To accommodate this, we've added an option in Ignite CLI to remove MobX-State-Tree if you choose so! When Igniting a new project, provide `--mst=false` to remove MobX-State-Tree code from the boilerplate. This option only works when also removing demo code.
+We understand that state management is a highly opinionated topic with various options available. To accommodate this, we've added an option in Ignite CLI to remove MobX-State-Tree if you choose so! When Igniting a new project, provide `--state=none` to remove MobX-State-Tree code from the boilerplate. This option only works when also removing demo code.
 
 ```
-npx ignite-cli@latest new PizzaApp --removeDemo=true --mst=false
+npx ignite-cli@latest new PizzaApp --removeDemo=true --state=none
 ```
 
 ## Learning MobX-State-Tree
