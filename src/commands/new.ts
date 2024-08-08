@@ -35,7 +35,7 @@ import { findAndRemoveDependencies } from "../tools/dependencies"
 import { demoDependenciesToRemove } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
-
+type StateMgmt = "mst" | "none"
 export interface Options {
   /**
    * alias for `boilerplate`
@@ -137,6 +137,7 @@ export interface Options {
    * and include them in .gitignore or not
    *
    * Input Source: `prompt.ask`| `parameter.option`
+   * @default cng
    */
   workflow?: Workflow
   /**
@@ -149,9 +150,9 @@ export interface Options {
    * Whether or not to include MobX-State-Tree boilerplate code
    *
    * Input Source: `prompt.ask` | `parameter.option`
-   * @default true
+   * @default mst
    */
-  mst?: boolean
+  state?: StateMgmt
 }
 
 module.exports = {
@@ -287,7 +288,7 @@ module.exports = {
     const defaultWorkflow = "cng"
     let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
-      const useExpoResponse = await prompt.ask<{ workflow: "cng" | "manual" }>(() => ({
+      const useExpoResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
         type: "select",
         name: "workflow",
         message: "How do you want to manage Native code?",
@@ -348,15 +349,15 @@ module.exports = {
     // #endregion
 
     // #region Prompt to Remove MobX-State-Tree code
-    const defaultMST = true
-    let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
+    const defaultMST = "mst"
+    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
 
-    if (includeMST === undefined) {
+    if (stateMgmt === undefined) {
       if (!removeDemo) {
-        includeMST = true
+        stateMgmt = "mst"
       } else {
         // only ask if we're removing the demo code
-        const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
+        const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
           type: "confirm",
           name: "includeMST",
           message: "Include MobX-State-Tree code? (recommended)",
@@ -364,15 +365,15 @@ module.exports = {
           format: prettyPrompt.format.boolean,
           prefix,
         }))
-        includeMST = includeMSTResponse.includeMST
+        stateMgmt = includeMSTResponse.includeMST
       }
     }
 
-    if (!removeDemo && includeMST === false) {
+    if (!removeDemo && stateMgmt === "none") {
       p()
       p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
-      p(yellow(`Setting --mst=true`))
-      includeMST = true
+      p(yellow(`Setting --state=mst`))
+      stateMgmt = "mst"
     }
     // #endregion
 
@@ -658,7 +659,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
       }
 
-      if (!includeMST) {
+      if (stateMgmt === "none") {
         log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
@@ -854,7 +855,7 @@ module.exports = {
       // #endregion
 
       // #region Remove MST code
-      if (includeMST) {
+      if (stateMgmt === "mst") {
         // remove MST markup only
         startSpinner(`Removing MobX-State-Tree markup`)
         try {
@@ -985,7 +986,7 @@ module.exports = {
           y: yname,
           yes: yname,
           noTimeout,
-          mst: includeMST,
+          state: stateMgmt,
         },
         projectName,
         toolbox,
