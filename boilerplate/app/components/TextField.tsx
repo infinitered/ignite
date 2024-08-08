@@ -1,5 +1,6 @@
 import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
 import {
+  ImageStyle,
   StyleProp,
   TextInput,
   TextInputProps,
@@ -15,7 +16,7 @@ import { Text, TextProps } from "./Text"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface TextFieldAccessoryProps {
-  style: StyleProp<any>
+  style: StyleProp<ViewStyle | TextStyle | ImageStyle>
   status: TextFieldProps["status"]
   multiline: boolean
   editable: boolean
@@ -199,7 +200,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       <View style={themed($inputWrapperStyles)}>
         {!!LeftAccessory && (
           <LeftAccessory
-            style={$leftAccessoryStyle}
+            style={themed($leftAccessoryStyle)}
             status={status}
             editable={!disabled}
             multiline={TextInputProps.multiline ?? false}
@@ -219,7 +220,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
         {!!RightAccessory && (
           <RightAccessory
-            style={$rightAccessoryStyle}
+            style={themed($rightAccessoryStyle)}
             status={status}
             editable={!disabled}
             multiline={TextInputProps.multiline ?? false}
