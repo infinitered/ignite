@@ -1,5 +1,5 @@
 import { DEFAULT_BOTTOM_OFFSET } from "app/components"
-import React, { ReactElement } from "react"
+import React, { ReactElement, useCallback } from "react"
 import { ScrollViewProps, SectionList, SectionListProps } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 
@@ -12,7 +12,7 @@ type SectionType<ItemType> = {
 type SectionListWithKeyboardAwareScrollViewProps<ItemType> = SectionListProps<ItemType> & {
   /* Optional function to pass a custom scroll component */
   renderScrollComponent?: (props: ScrollViewProps) => React.ReactNode
-  /* Optional bottom offset for the keyboard avoid behavior */
+  /* Optional additional offset between TextInput bottom edge and keyboard top edge. See https://kirillzyusko.github.io/react-native-keyboard-controller/docs/api/components/keyboard-aware-scroll-view#bottomoffset */
   bottomOffset?: number
   /* The sections to be rendered in the list */
   sections: SectionType<ItemType>[]
@@ -29,24 +29,22 @@ function SectionListWithKeyboardAwareScrollView<ItemType>(
   }: SectionListWithKeyboardAwareScrollViewProps<ItemType>,
   ref: React.Ref<SectionList<ItemType>>,
 ): ReactElement {
-  const defaultRenderScrollComponent = (props: ScrollViewProps) => (
-    <KeyboardAwareScrollView
-      contentContainerStyle={contentContainerStyle}
-      bottomOffset={bottomOffset}
-      {...props}
-    />
+  const defaultRenderScrollComponent = useCallback(
+    (props: ScrollViewProps) => (
+      <KeyboardAwareScrollView
+        contentContainerStyle={contentContainerStyle}
+        bottomOffset={bottomOffset}
+        {...props}
+      />
+    ),
+    [contentContainerStyle, bottomOffset],
   )
 
   return (
     <SectionList
       {...props}
       ref={ref}
-      renderScrollComponent={(props) => {
-        if (renderScrollComponent) {
-          return renderScrollComponent(props)
-        }
-        return defaultRenderScrollComponent(props)
-      }}
+      renderScrollComponent={renderScrollComponent ?? defaultRenderScrollComponent}
     />
   )
 }
