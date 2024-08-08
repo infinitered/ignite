@@ -494,7 +494,7 @@ module.exports = {
       const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
         type: "confirm",
         name: "experimentalExpoRouter",
-        message: "❗EXPERIMENTAL❗Would you use Expo Router for navigation?",
+        message: "[Experimental] Expo Router for navigation?",
         initial: defaultExpoRouter,
         format: prettyPrompt.format.boolean,
         prefix,
@@ -514,7 +514,7 @@ module.exports = {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
-        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        message: "[Experimental] the New Architecture?",
         initial: defaultNewArch,
         format: prettyPrompt.format.boolean,
         prefix,
