@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# useAppTheme()
+# useAppTheme
 
 The `useAppTheme()` hook returns various properties and tools relating to theming your app.
 
