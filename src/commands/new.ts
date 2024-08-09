@@ -30,7 +30,11 @@ import {
   expoGoCompatExpectedVersions,
   findAndUpdateDependencyVersions,
 } from "../tools/expoGoCompatibility"
-import { demoDependenciesToRemove, findAndRemoveDemoDependencies, findDemoPatches } from "../tools/demo"
+import {
+  demoDependenciesToRemove,
+  findAndRemoveDemoDependencies,
+  findDemoPatches,
+} from "../tools/demo"
 
 // deprecated: 'prebuild'. in favor of 'cng' instead.
 type Workflow = "expo" | "cng" | "prebuild" | "manual"
@@ -603,7 +607,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
         const patchesToRemove = findDemoPatches()
         log(`Removing demo patches... ${patchesToRemove}`)
-        patchesToRemove.forEach(patch => filesystem.remove(patch))
+        patchesToRemove.forEach((patch) => filesystem.remove(patch))
       }
 
       // - Then write it back out.

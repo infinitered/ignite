@@ -216,12 +216,10 @@ export const demoDependenciesToRemove = [
 ]
 
 export function findDemoPatches(): string[] {
-  const globs = demoDependenciesToRemove.map((dep) => (`${dep}*.patch`))
-  const filePaths = filesystem
-    .cwd("./patches")
-    .find({
-      matching: globs
-    })
+  const globs = demoDependenciesToRemove.map((dep) => `${dep}*.patch`)
+  const filePaths = filesystem.cwd("./patches").find({
+    matching: globs,
+  })
   return filePaths
 }
 
