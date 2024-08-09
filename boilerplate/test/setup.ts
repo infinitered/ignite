@@ -27,13 +27,6 @@ jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock"),
 )
 
-jest.mock("i18n-js", () => ({
-  currentLocale: () => "en",
-  t: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-}))
-
 jest.mock("expo-localization", () => ({
   ...jest.requireActual("expo-localization"),
   getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
