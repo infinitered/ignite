@@ -30,6 +30,8 @@ The `Card` component is intended to be used for vertically aligned related conte
 
 The `preset` prop is used to set the preset container style of the card. This affects the border and background color of the container. There are two preconfigured presets: `default` and `reversed`.
 
+![card-component-01](https://github.com/user-attachments/assets/e5a19ec9-b426-428e-ae19-a1086dc2e4bc)
+
 ```tsx
 <Card preset="reversed" heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
@@ -37,6 +39,8 @@ The `preset` prop is used to set the preset container style of the card. This af
 ### `verticalAlignment`
 
 The `verticalAlignment` prop is used to set the vertical alignment of the card's content. This affects the alignment of the heading, content, and footer. There are four preconfigured alignments: `top`, `center`, `space-between`, and `force-footer-bottom`. `force-footer-bottom` behaves like `top`, but will force the footer to the bottom of the card.
+
+![card-component-02](https://github.com/user-attachments/assets/e5e9f331-6c4d-4ce3-833d-a00fdf7244f1)
 
 ```tsx
 <Card
@@ -50,6 +54,8 @@ The `verticalAlignment` prop is used to set the vertical alignment of the card's
 ### `LeftComponent` & `RightComponent`
 
 The `LeftComponent` and `RightComponent` props are used to set the component that will be aligned to the left or right of the card body, respectively.
+
+![card-component-03](https://github.com/user-attachments/assets/68df8495-ee9b-452f-b86f-b39ee76a052c)
 
 ```tsx
 <Card

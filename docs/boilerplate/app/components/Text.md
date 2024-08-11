@@ -8,6 +8,8 @@ Ignite's `Text` Component is an enhanced version of the built-in React Native [`
 
 By enhancing the Ignite Text component and using it across your app, you can make sure the right fonts, font weight, and other styles and behaviors are shared across your whole app.
 
+![text-component](https://github.com/user-attachments/assets/61277e64-c530-4043-93fe-5da41c9e9351)
+
 ## Props
 
 ### `text`
