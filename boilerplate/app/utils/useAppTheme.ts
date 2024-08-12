@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { StyleProp, useColorScheme } from "react-native"
 import { DarkTheme, DefaultTheme, useTheme as useNavTheme } from "@react-navigation/native"
 import {
@@ -9,6 +9,7 @@ import {
   lightTheme,
   darkTheme,
 } from "app/theme"
+import * as SystemUI from "expo-system-ui"
 
 type ThemeContextType = {
   themeScheme: ThemeContexts
@@ -23,6 +24,13 @@ export const ThemeContext = createContext<ThemeContextType>({
   },
 })
 
+const themeContextToTheme = (themeContext: ThemeContexts): Theme =>
+  themeContext === "dark" ? darkTheme : lightTheme
+
+const setImperativeThemeing = (theme: Theme) => {
+  SystemUI.setBackgroundColorAsync(theme.colors.background)
+}
+
 export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
   const colorScheme = useColorScheme()
   const [overrideTheme, setTheme] = useState<ThemeContexts>(initialTheme)
@@ -33,6 +41,10 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
 
   const themeScheme = overrideTheme || colorScheme || "light"
   const navigationTheme = themeScheme === "dark" ? DarkTheme : DefaultTheme
+
+  useEffect(() => {
+    setImperativeThemeing(themeContextToTheme(themeScheme))
+  }, [themeScheme])
 
   return {
     themeScheme,
@@ -77,14 +89,11 @@ export const useAppTheme = (): UseAppThemeValue => {
     [overrideTheme, navTheme],
   )
 
-  const themeVariant: Theme = useMemo(
-    () => (themeContext === "dark" ? darkTheme : lightTheme),
-    [themeContext],
-  )
+  const themeVariant: Theme = useMemo(() => themeContextToTheme(themeContext), [themeContext])
 
   const themed = useCallback(
     <T>(styleOrStyleFn: ThemedStyle<T> | StyleProp<T> | ThemedStyleArray<T>) => {
-      const flatStyles = [styleOrStyleFn].flat(3) as (ThemedStyle<T> | StyleProp<T>)[]
+      const flatStyles = [styleOrStyleFn].flat(3)
       const stylesArray = flatStyles.map((f) => {
         if (typeof f === "function") {
           return (f as ThemedStyle<T>)(themeVariant)
