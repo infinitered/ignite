@@ -17,6 +17,7 @@ if (__DEV__) {
   require("./devtools/ReactotronConfig.ts")
 }
 import "./i18n"
+import "~/global.css"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
 import React from "react"
@@ -30,9 +31,26 @@ import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
+import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { Theme, ThemeProvider } from '@react-navigation/native';
+
+import { NAV_THEME } from '~/lib/constants';
+import { useColorScheme } from '~/lib/useColorScheme';
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
-
+//rnr config
+//
+//
+const LIGHT_THEME: Theme = {
+  dark: false,
+  colors: NAV_THEME.light,
+};
+const DARK_THEME: Theme = {
+  dark: true,
+  colors: NAV_THEME.dark,
+};
 // Web linking configuration
 const prefix = Linking.createURL("/")
 const config = {
@@ -102,6 +120,7 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
+        <StatusBar style={'dark'} />
         <GestureHandlerRootView style={$container}>
           <AppNavigator
             linking={linking}
