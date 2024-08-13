@@ -6,7 +6,7 @@ In this tutorial, we'll guide you through the process of setting up a yarn monor
 
 Before you start, ensure you have the following installed on your machine:
 
-* [Node.js](https://nodejs.org/en) (version 14 or later)
+* [Node.js](https://nodejs.org/en) (version 18 or later)
 * [Yarn](https://classic.yarnpkg.com/en/)
 
 ## Use case
@@ -149,7 +149,58 @@ touch packages/form-validator/package.json
 }
 ```
 
-## Step 6: Add the form validator utility to both apps
+## Step 6: Add the form validator utility to the mobile app
+
+1. Add the form validator utility to the app's `package.json` file:
+
+`apps/mobile/package.json`
+```
+"expo-status-bar": "~1.12.1",
+"form-validator": "workspace:^", // <- Add this new line
+"i18n-js": "3.9.2",
+```
+
+2. Import the `isEmailValid` function:
+
+At the top of the `LoginScreen.tsx` file, add the import statement for the isEmailValid function. Ensure that the path corresponds to where your form-validator utility is located within your monorepo.
+
+`apps/mobile/app/screens/LoginScreen.tsx`
+```
+import { AppStackScreenProps } from "../navigators"
+import { colors, spacing } from "../theme"
+import { isEmailValid } from "form-validator" // <- Add this new line
+```
+
+3. Add new `Text` component that will display if the entered email is valid or not.
+
+`apps/mobile/app/screens/LoginScreen.tsx`
+```
+<Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
+      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+
+/** Add these next 5 lines **/
+<Text
+  text={isEmailValid(authEmail) ? "It is a valid email" : "It is not a valid email"}
+  preset="subheading"
+  style={$enterDetails}
+/>
+```
+
+## Step 7: Add the form validator utility to the web app
+
+1. Add the form validator utility to the app's `package.json` file:
+
+`apps/web/package.json`
+```
+"expo-status-bar": "~1.12.1",
+"form-validator": "workspace:^", // <- Add this new line
+"i18n-js": "3.9.2",
+```
+
+
+## Step 8: Run both apps to make sure logic was added
+
+Yarn install to make sure depdencies are added
 
 ## Conclusion
 You've successfully set up a yarn monorepo using the Ignite framewor and the `create-react-app` tool, created a shared form-validator utility, and integrated it into both apps. This setup allows you to scale your projects efficiently by sharing code across multiple apps in a structured way.
