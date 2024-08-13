@@ -47,17 +47,14 @@
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
-    "gluegun": "5.1.2",
-    "sharp": "^0.30.4",
+    "gluegun": "5.1.6",
+    "sharp": "0.32.6",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
-    "@rnx-kit/metro-config": "^1.2.26",
-    "@rnx-kit/metro-resolver-symlinks": "^0.1.15",
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",
-    "@types/sharp": "^0.30.2",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "babel-eslint": "^10.1.0",
