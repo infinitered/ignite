@@ -26,7 +26,9 @@ Here's a quick recap:
 1. Initialize the monorepo:
 
 ```
-yarn init -y
+mkdir monorepo-example
+cd monorepo-example
+yarn init
 ```
 
 2. Configure workspaces in `package.json`:
@@ -77,21 +79,68 @@ We suggest the following answers to the prompts:
 📝 Do you want to install dependencies?: No
 ```
 
-## Step 3: Create web app using create-react-app
+## Step 3: Create web app
 
-Let's create a second app now, using the `create-react-app` tool. This app is meant to be run on web browsers.
+Let's create a second app now. This app is meant to be run on web browsers.
 
-1. Create app using npm:
+1. Initialize web app
 ```
-npx create-react-app web
+cd ..
+mkdir web
+cd web
+yarn init
+```
+
+2. Create an `index.html` file with a simple form:
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Form App</title>
+</head>
+<body>
+  <h1>Sign Up</h1>
+  <form id="signup-form">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="index.js" type="module"></script>
+</body>
+</html>
+```
+
+3. Add a simple development server
+To serve your app with a local server, install a simple development server like `live-server`
+
+```
+yarn add live-server -D
+```
+
+4. Add a script to your `package.json` to run the server:
+```
+"scripts": {
+  "start": "live-server"
+}
 ```
 
 ## Step 4: Install dependencies
 
 Let's make sure all of our dependendencies are installed for both apps.
 
-1. Run `yarn` at the root of the project.
+1. Run `yarn` at the root of the project
 ```
+cd ..
 cd ..
 yarn
 ```
@@ -192,11 +241,40 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 
 `apps/web/package.json`
 ```
-"expo-status-bar": "~1.12.1",
-"form-validator": "workspace:^", // <- Add this new line
-"i18n-js": "3.9.2",
+"dependencies": {
+  "form-validator": "workspace:^"
+}
 ```
 
+2. Create an `index.js` file to handle the form submission and validation:
+
+```
+// Import the validator package
+import { isEmailValid } from 'form-validator';
+
+// Handle form submission
+document.getElementById('signup-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting the default way
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  // Validate email
+  if (!isEmailValid(email)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  // Simple password validation (e.g., check if not empty)
+  if (password.length === 0) {
+    alert('Please enter a password.');
+    return;
+  }
+
+  // If both are valid, submit the form (or do something else)
+  alert('Form submitted successfully!');
+});
+```
 
 ## Step 8: Run both apps to make sure logic was added
 
@@ -220,6 +298,13 @@ cd apps/mobile
 yarn android
 ```
 
+3. Run web app
+```
+cd apps/web
+yarn start
+```
+
+
 ## Conclusion
-You've successfully set up a yarn monorepo using the Ignite framewor and the `create-react-app` tool, created a shared form-validator utility, and integrated it into both apps. This setup allows you to scale your projects efficiently by sharing code across multiple apps in a structured way.
+Congratulations on setting up your yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
 
