@@ -6,8 +6,8 @@ In this tutorial, we'll guide you through the process of setting up a yarn monor
 
 Before you start, ensure you have the following installed on your machine:
 
-* [Node.js](https://nodejs.org/en) (version 18 or later)
-* [Yarn](https://classic.yarnpkg.com/en/)
+- [Node.js](https://nodejs.org/en) (version 18 or later)
+- [Yarn](https://classic.yarnpkg.com/en/)
 
 ## Use case
 
@@ -58,18 +58,21 @@ mkdir apps packages
 Ignite is a powerful tool for scaffolding React Native projects. In this step, we'll create your first app within the monorepo using Ignite.
 
 1. Install Ignite CLI (if you haven't already):
+
 ```
 npm install -g ignite-cli
 ```
 
 2. Generate a new app:
-Navigate to the apps/ directory and run the following command to create a new app:
+   Navigate to the apps/ directory and run the following command to create a new app:
+
 ```
 cd apps
 ignite new mobile
 ```
 
 We suggest the following answers to the prompts:
+
 ```
 📝 Do you want to use Expo?: Expo - Recommended for almost all apps [Default]
 📝 Which Expo workflow?: Expo Go - For simple apps that don't need custom native code [Default]
@@ -114,6 +117,7 @@ module.exports = config;
 Let's create a second app now. This app is meant to be run on web browsers.
 
 1. Initialize web app
+
 ```
 cd ..
 mkdir web
@@ -151,13 +155,14 @@ yarn init
 ```
 
 3. Add a simple development server
-To serve your app with a local server, install a simple development server like `live-server`
+   To serve your app with a local server, install a simple development server like `live-server`
 
 ```
 yarn add live-server -D
 ```
 
 4. Add a script to your `package.json` to run the server:
+
 ```
 "scripts": {
   "start": "live-server"
@@ -169,6 +174,7 @@ yarn add live-server -D
 Let's make sure all of our dependendencies are installed for both apps.
 
 1. Run `yarn` at the root of the project
+
 ```
 cd ..
 cd ..
@@ -182,6 +188,7 @@ Now that you have both apps set up, it's time to add a shared utility that can b
 1. Create the utility:
 
 In the `packages/` directory, create a new folder `validators/` with a file named `validator.ts`:
+
 ```
 mkdir packages/form-validator
 touch packages/form-validator/validator.ts
@@ -211,16 +218,19 @@ touch packages/form-validator/index.ts
 ```
 
 5. Export validators in an `index.ts` file within the same directory:
+
 ```
 export * from './validator';
 ```
 
 6. Create `package.json` file in the same directory:
+
 ```
 touch packages/form-validator/package.json
 ```
 
 7. Add package declaration to the file:
+
 ```
 {
   "name": "form-validator",
@@ -233,6 +243,7 @@ touch packages/form-validator/package.json
 1. Add the form validator utility to the app's `package.json` file:
 
 `apps/mobile/package.json`
+
 ```
 "expo-status-bar": "~1.12.1",
 "form-validator": "workspace:^", // <- Add this new line
@@ -244,6 +255,7 @@ touch packages/form-validator/package.json
 At the top of the `LoginScreen.tsx` file, add the import statement for the isEmailValid function. Ensure that the path corresponds to where your form-validator utility is located within your monorepo.
 
 `apps/mobile/app/screens/LoginScreen.tsx`
+
 ```
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
@@ -253,6 +265,7 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 3. Add new `Text` component that will display if the entered email is valid or not.
 
 `apps/mobile/app/screens/LoginScreen.tsx`
+
 ```
 <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
       {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
@@ -270,6 +283,7 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 1. Add the form validator utility to the app's `package.json` file:
 
 `apps/web/package.json`
+
 ```
 "dependencies": {
   "form-validator": "workspace:^"
@@ -317,24 +331,26 @@ yarn install
 2. Run React Native app (make sure you have your [environment setup](https://reactnative.dev/docs/set-up-your-environment)).
 
 For iOS:
+
 ```
 cd apps/mobile
 yarn ios
 ```
 
 For Android:
+
 ```
 cd apps/mobile
 yarn android
 ```
 
 3. Run web app
+
 ```
 cd apps/web
 yarn start
 ```
 
-
 ## Conclusion
-Congratulations on setting up your yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
 
+Congratulations on setting up your yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
