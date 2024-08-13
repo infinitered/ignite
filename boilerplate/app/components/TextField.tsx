@@ -1,5 +1,6 @@
 import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
 import {
+  ImageStyle,
   StyleProp,
   TextInput,
   TextInputProps,
@@ -9,11 +10,13 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { $styles, colors, spacing, typography } from "../theme"
+import type { ThemedStyle, ThemedStyleArray } from "app/theme"
+import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface TextFieldAccessoryProps {
-  style: StyleProp<any>
+  style: StyleProp<ViewStyle | TextStyle | ImageStyle>
   status: TextFieldProps["status"]
   multiline: boolean
   editable: boolean
@@ -126,6 +129,11 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   } = props
   const input = useRef<TextInput>(null)
 
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
+
   const disabled = TextInputProps.editable === false || status === "disabled"
 
   const placeholderContent = placeholderTx
@@ -146,7 +154,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     $inputWrapperStyleOverride,
   ]
 
-  const $inputStyles: StyleProp<TextStyle> = [
+  const $inputStyles: ThemedStyleArray<TextStyle> = [
     $inputStyle,
     disabled && { color: colors.textDim },
     isRTL && { textAlign: "right" as TextStyle["textAlign"] },
@@ -185,14 +193,14 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           tx={labelTx}
           txOptions={labelTxOptions}
           {...LabelTextProps}
-          style={$labelStyles}
+          style={themed($labelStyles)}
         />
       )}
 
-      <View style={$inputWrapperStyles}>
+      <View style={themed($inputWrapperStyles)}>
         {!!LeftAccessory && (
           <LeftAccessory
-            style={$leftAccessoryStyle}
+            style={themed($leftAccessoryStyle)}
             status={status}
             editable={!disabled}
             multiline={TextInputProps.multiline ?? false}
@@ -207,12 +215,12 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           placeholderTextColor={colors.textDim}
           {...TextInputProps}
           editable={!disabled}
-          style={$inputStyles}
+          style={themed($inputStyles)}
         />
 
         {!!RightAccessory && (
           <RightAccessory
-            style={$rightAccessoryStyle}
+            style={themed($rightAccessoryStyle)}
             status={status}
             editable={!disabled}
             multiline={TextInputProps.multiline ?? false}
@@ -227,27 +235,27 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           tx={helperTx}
           txOptions={helperTxOptions}
           {...HelperTextProps}
-          style={$helperStyles}
+          style={themed($helperStyles)}
         />
       )}
     </TouchableOpacity>
   )
 })
 
-const $labelStyle: TextStyle = {
+const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
-}
+})
 
-const $inputWrapperStyle: ViewStyle = {
+const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   alignItems: "flex-start",
   borderWidth: 1,
   borderRadius: 4,
   backgroundColor: colors.palette.neutral200,
   borderColor: colors.palette.neutral400,
   overflow: "hidden",
-}
+})
 
-const $inputStyle: TextStyle = {
+const $inputStyle: ThemedStyle<ViewStyle> = ({ colors, typography, spacing }) => ({
   flex: 1,
   alignSelf: "stretch",
   fontFamily: typography.primary.normal,
@@ -259,21 +267,22 @@ const $inputStyle: TextStyle = {
   paddingHorizontal: 0,
   marginVertical: spacing.xs,
   marginHorizontal: spacing.sm,
-}
+})
 
-const $helperStyle: TextStyle = {
+const $helperStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.xs,
-}
+})
 
-const $rightAccessoryStyle: ViewStyle = {
+const $rightAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginEnd: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
-}
-const $leftAccessoryStyle: ViewStyle = {
+})
+
+const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginStart: spacing.xs,
   height: 40,
   justifyContent: "center",
   alignItems: "center",
-}
+})

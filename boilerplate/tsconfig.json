@@ -20,7 +20,8 @@
     "paths": {
       "app/*": ["./app/*"],
       "assets/*": ["./assets/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./types"],
   },
   "extends": "expo/tsconfig.base",
   "ts-node": {

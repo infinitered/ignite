@@ -12,8 +12,10 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import { $styles, colors, spacing } from "../../theme"
+import { $styles } from "../../theme"
 import { Text, TextProps } from "../Text"
+import { useAppTheme } from "app/utils/useAppTheme"
+import type { ThemedStyle } from "app/theme"
 
 export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**
@@ -139,6 +141,11 @@ export function Toggle<T>(props: ToggleProps<T>) {
     ...WrapperProps
   } = props
 
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
+
   const disabled = editable === false || status === "disabled" || props.disabled
 
   const Wrapper = useMemo(
@@ -148,11 +155,11 @@ export function Toggle<T>(props: ToggleProps<T>) {
 
   const $containerStyles = [$containerStyleOverride]
   const $inputWrapperStyles = [$styles.row, $inputWrapper, $inputWrapperStyleOverride]
-  const $helperStyles = [
+  const $helperStyles = themed([
     $helper,
     status === "error" && { color: colors.error },
     HelperTextProps?.style,
-  ]
+  ])
 
   /**
    * @param {GestureResponderEvent} e - The event object.
@@ -216,16 +223,21 @@ function FieldLabel<T>(props: ToggleProps<T>) {
     labelStyle: $labelStyleOverride,
   } = props
 
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
+
   if (!label && !labelTx && !LabelTextProps?.children) return null
 
-  const $labelStyle = [
+  const $labelStyle = themed([
     $label,
     status === "error" && { color: colors.error },
     labelPosition === "right" && $labelRight,
     labelPosition === "left" && $labelLeft,
     $labelStyleOverride,
     LabelTextProps?.style,
-  ]
+  ])
 
   return (
     <Text
@@ -255,18 +267,18 @@ export const $inputOuterBase: ViewStyle = {
   flexDirection: "row",
 }
 
-const $helper: TextStyle = {
+const $helper: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.xs,
-}
+})
 
 const $label: TextStyle = {
   flex: 1,
 }
 
-const $labelRight: TextStyle = {
+const $labelRight: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginStart: spacing.md,
-}
+})
 
-const $labelLeft: TextStyle = {
+const $labelLeft: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginEnd: spacing.md,
-}
+})
