@@ -221,6 +221,7 @@ export const demoAr: DemoTranslations = {
       },
       icons: {
         name: "الأيقونات",
+        description: "يمكنك تخصيص الرموز على اليسار أو اليمين",
         leftIcon: "أيقونة اليسار",
         rightIcon: "أيقونة اليمين",
         leftRightIcons: "أيقونة اليمين واليسار",
