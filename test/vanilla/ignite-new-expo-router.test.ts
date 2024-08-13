@@ -6,7 +6,7 @@ const APP_NAME = "Foo"
 const originalDir = process.cwd()
 
 describe(`ignite new with expo-router`, () => {
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --mst --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state=mst --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
@@ -14,7 +14,7 @@ describe(`ignite new with expo-router`, () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await runIgnite(
-        `new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --mst --yes`,
+        `new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state=mst --yes`,
         {
           pre: `cd ${tempDir}`,
           post: `cd ${originalDir}`,
@@ -29,7 +29,7 @@ describe(`ignite new with expo-router`, () => {
     })
 
     it("should convert to Expo Router with MST", async () => {
-      expect(result).toContain("--mst")
+      expect(result).toContain("--state=mst")
 
       // make sure src/navigators, src/screens, app/, app.tsx is gone
       const dirs = filesystem.list(appPath)
@@ -99,7 +99,7 @@ describe(`ignite new with expo-router`, () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --mst-false --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state-none --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
@@ -107,7 +107,7 @@ describe(`ignite new with expo-router`, () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await runIgnite(
-        `new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --mst=false --remove-demo --yes`,
+        `new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state=none --remove-demo --yes`,
         {
           pre: `cd ${tempDir}`,
           post: `cd ${originalDir}`,
@@ -122,8 +122,8 @@ describe(`ignite new with expo-router`, () => {
     })
 
     it("should convert to Expo Router without MST", async () => {
-      expect(result).toContain("--mst=false")
-      expect(result).not.toContain("Setting --mst=true")
+      expect(result).toContain("--state=none")
+      expect(result).not.toContain("Setting --state=mst")
 
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
