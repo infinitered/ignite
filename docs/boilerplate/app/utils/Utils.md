@@ -13,6 +13,24 @@ Every app needs a junk drawer. Here you can find a library of utilities that are
 We sometimes create a separate `app/hooks` folder just for hooks. This is a matter of preference.
 :::
 
+### useAppTheme
+
+A hook that returns various properties and tools relating to theming your app.
+
+```tsx
+const { themed, themeContext } = useAppTheme()
+
+const $themedStyle: ThemedStyle<ViewStyle> = (theme) =({
+  backgroundColor: theme.colors.background
+})
+
+<View style={themed($themedStyle)}>
+  <Text>{themeContext}</Text>
+</View>
+```
+
+[Full `useAppTheme`](./useAppTheme.tsx.md)
+
 ### useSafeAreaInsetsStyle
 
 A hook can be used to create a safe-area-aware style object that can be passed directly to a View.

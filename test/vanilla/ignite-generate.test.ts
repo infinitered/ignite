@@ -244,7 +244,8 @@ describe("ignite-cli generate", () => {
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { colors, typography } from \\"app/theme\\"
+        import { useAppTheme } from \\"app/utils/useAppTheme\\"
+        import type { ThemedStyle } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
 
         export interface ToppingProps {
@@ -261,10 +262,11 @@ describe("ignite-cli generate", () => {
         export const Topping = observer(function Topping(props: ToppingProps) {
           const { style } = props
           const $styles = [$container, style]
+          const { themed } = useAppTheme();
 
           return (
             <View style={$styles}>
-              <Text style={$text}>Hello</Text>
+              <Text style={themed($text)}>Hello</Text>
             </View>
           )
         // @mst replace-next-line }
@@ -274,11 +276,11 @@ describe("ignite-cli generate", () => {
           justifyContent: \\"center\\",
         }
 
-        const $text: TextStyle = {
+        const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
           fontFamily: typography.primary.normal,
           fontSize: 14,
           color: colors.palette.primary500,
-        }
+        })
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
@@ -313,7 +315,8 @@ describe("ignite-cli generate", () => {
         "import * as React from \\"react\\"
         import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { colors, typography } from \\"app/theme\\"
+        import { useAppTheme } from \\"app/utils/useAppTheme\\"
+        import type { ThemedStyle } from \\"app/theme\\"
         import { Text } from \\"app/components/Text\\"
 
         export interface ToppingProps {
@@ -330,10 +333,11 @@ describe("ignite-cli generate", () => {
         export const Topping = observer(function Topping(props: ToppingProps) {
           const { style } = props
           const $styles = [$container, style]
+          const { themed } = useAppTheme();
 
           return (
             <View style={$styles}>
-              <Text style={$text}>Hello</Text>
+              <Text style={themed($text)}>Hello</Text>
             </View>
           )
         // @mst replace-next-line }
@@ -343,11 +347,11 @@ describe("ignite-cli generate", () => {
           justifyContent: \\"center\\",
         }
 
-        const $text: TextStyle = {
+        const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
           fontFamily: typography.primary.normal,
           fontSize: 14,
           color: colors.palette.primary500,
-        }
+        })
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`

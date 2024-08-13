@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
-import { $styles, colors } from "../../theme"
+import { $styles } from "../../theme"
 import { iconRegistry, IconTypes } from "../Icon"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 export interface CheckboxToggleProps extends Omit<ToggleProps<CheckboxInputProps>, "ToggleInput"> {
   /**
@@ -36,6 +37,10 @@ function CheckboxInput(props: CheckboxInputProps) {
     innerStyle: $innerStyleOverride,
     detailStyle: $detailStyleOverride,
   } = props
+
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const [opacity] = useState(new Animated.Value(0))
 
