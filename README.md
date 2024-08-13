@@ -56,7 +56,6 @@ Here are a few videos / talks that introduce Ignite and show off some of its fea
   </tr>
 </table>
 
-
 ## [Full Documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
 
 We've put great effort into the documentation as a team, please [read through it here](https://github.com/infinitered/ignite/blob/master/docs). If you're unsure why a certain decision was made related to this boilerplate or how to proceed with a particular feature, it's likely documented. If it still isn't clear, go through the proper [help channels](#reporting-bugs--getting-help) and we always welcome PRs to improve the docs!
