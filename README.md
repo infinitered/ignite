@@ -15,9 +15,46 @@ This is the React Native boilerplate that the [Infinite Red](https://infinite.re
 
 ## Intro Videos
 
-- Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
-- Jamon's Code Quest on [Ignite 9](https://www.youtube.com/watch?v=QmkMsUYrTlk)
-- Jamon's Code Quest on [MobX-State-Tree](https://www.youtube.com/watch?v=n_VjjJxyd8Q)
+Here are a few videos / talks that introduce Ignite and show off some of its features. Check them out!
+
+<table>
+  <tr>
+    <td width="50%">
+      <figure>
+        <a href="https://www.youtube.com/watch?v=KOSvDlFyg20">
+          <img src="https://img.youtube.com/vi/KOSvDlFyg20/sddefault.jpg" alt="Getting Started with Ignite"  width="100%" /><br />
+        <figcaption><strong>Getting Started with Ignite</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <a href="https://www.youtube.com/watch?v=dNWkJOpD6YE&list=PLFHvL21g9bk0XOO9XK6d6S9w1jBU6Dz_U&index=16">
+          <img src="https://img.youtube.com/vi/dNWkJOpD6YE/sddefault.jpg" alt="Sweetening React Native Development With Ignite" width="100%" /><br />
+        <figcaption><strong>Ignite talk at Chain React 2024 - Robin Heinze</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <figure>
+        <a href="https://www.youtube.com/watch?v=QmkMsUYrTlk">
+          <img src="https://img.youtube.com/vi/QmkMsUYrTlk/sddefault.jpg" alt="Jamon's Code Quest on Ignite 9" width="100%" /><br />
+        <figcaption><strong>What's new in Ignite 9</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <a href="https://www.youtube.com/watch?v=n_VjjJxyd8Q">
+          <img src="https://img.youtube.com/vi/n_VjjJxyd8Q/sddefault.jpg" alt="Jamon's Code Quest on MobX-State-Tree" width="100%" /><br />
+        <figcaption><strong>Intro to MobX-State-Tree</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+  </tr>
+</table>
 
 ## [Full Documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
 
