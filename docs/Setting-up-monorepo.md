@@ -15,7 +15,7 @@ In a monorepo setup, multiple apps often share common functionality. For example
 
 By centralizing these utilities, you reduce code duplication and simplify maintenance, ensuring that any updates or bug fixes are immediately available to all your apps.
 
-In this setup, we’ll create a React Native app, a React app and a form-validator utility that includes functions to validate email addresses, passwords, and generic text fields. This utility will then be integrated to both apps. 
+In this setup, we’ll create a React Native app, a React app and a form-validator utility that includes functions to validate email addresses, passwords, and generic text fields. This utility will then be integrated to both apps.
 
 ## Step 1: Setting up the monorepo
 
@@ -79,7 +79,7 @@ We suggest the following answers to the prompts:
 
 ## Step 3: Create web app using create-react-app
 
-Let's create a second app now, using the `create-react-app` tool. This app is meant to be run on web browsers. 
+Let's create a second app now, using the `create-react-app` tool. This app is meant to be run on web browsers.
 
 1. Create app using npm:
 ```
@@ -88,7 +88,7 @@ npx create-react-app web
 
 ## Step 4: Install dependencies
 
-Let's make sure all of our dependendencies are installed for both apps. 
+Let's make sure all of our dependendencies are installed for both apps.
 
 1. Run `yarn` at the root of the project.
 ```
@@ -200,7 +200,25 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 
 ## Step 8: Run both apps to make sure logic was added
 
-Yarn install to make sure depdencies are added
+1. Make sure dependencies are installed.
+
+```
+yarn install
+```
+
+2. Run React Native app (make sure you have your [environment setup](https://reactnative.dev/docs/set-up-your-environment)).
+
+For iOS:
+```
+cd apps/mobile
+yarn ios
+```
+
+For Android:
+```
+cd apps/mobile
+yarn android
+```
 
 ## Conclusion
 You've successfully set up a yarn monorepo using the Ignite framewor and the `create-react-app` tool, created a shared form-validator utility, and integrated it into both apps. This setup allows you to scale your projects efficiently by sharing code across multiple apps in a structured way.
