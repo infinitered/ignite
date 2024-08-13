@@ -6,6 +6,8 @@ sidebar_position: 36
 
 The `ListItem` component is a component that is used to display a single item in a list. It provides a lot of flexibility in terms of what you can do with it. It can be used to display a simple piece text, or a complex component with multiple actionable and custom styled elements inside.
 
+![listitem-component](https://github.com/user-attachments/assets/009aed59-5597-4d0b-b861-972608ddb8ea)
+
 ```tsx
 <ListItem height={50} />
 ```

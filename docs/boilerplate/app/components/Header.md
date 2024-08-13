@@ -6,6 +6,8 @@ sidebar_position: 34
 
 The `Header` component is a component that will appear at the top of your screen. It is used to hold navigation buttons and the screen title.
 
+![header-component](https://github.com/user-attachments/assets/ab308ec1-21e8-41dc-a7f3-bbc6cac866e0)
+
 ```tsx
 <Header
   titleTx="header.title"

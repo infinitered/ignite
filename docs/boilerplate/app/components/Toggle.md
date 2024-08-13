@@ -6,6 +6,8 @@ sidebar_position: 41
 
 This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button, and exposes style props for every element.
 
+![toggle-component](https://github.com/user-attachments/assets/ffbbe61e-9aea-4895-ab19-d38f76b3e379)
+
 ## Props
 
 ### `variant`
