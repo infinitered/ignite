@@ -2,38 +2,41 @@
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Header, Icon } from "../../../components"
-import { $styles, colors } from "../../../theme"
+import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import type { ThemedStyle } from "app/theme"
 
 const $rightAlignTitle: TextStyle = {
   textAlign: "right",
 }
 
-const $customLeftAction: ViewStyle = {
+const $customLeftAction: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   flexGrow: 0,
   flexBasis: 100,
   height: "100%",
   flexWrap: "wrap",
   overflow: "hidden",
-}
+})
 
-const $customTitle: TextStyle = {
+const $customTitle: ThemedStyle<TextStyle> = ({ colors }) => ({
   textDecorationLine: "underline line-through",
   textDecorationStyle: "dashed",
   color: colors.error,
   textDecorationColor: colors.error,
-}
+})
 
-const $customWhiteTitle: TextStyle = { color: colors.palette.neutral100 }
+const $customWhiteTitle: ThemedStyle<TextStyle> = ({ colors }) => ({
+  color: colors.palette.neutral100,
+})
 
 export const DemoHeader: Demo = {
   name: "Header",
   description:
     "Component that appears on many screens. Will hold navigation buttons and screen title.",
-  data: [
+  data: ({ theme, themed }) => [
     <DemoUseCase
       name="Action Icons"
       description="You can easily pass in icons to the left or right action components."
@@ -67,9 +70,9 @@ export const DemoHeader: Demo = {
         titleMode="flex"
         titleStyle={$rightAlignTitle}
         LeftActionComponent={
-          <View style={[$styles.row, $customLeftAction]}>
+          <View style={themed([$styles.row, $customLeftAction])}>
             {Array.from({ length: 20 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}
           </View>
         }
@@ -93,22 +96,22 @@ export const DemoHeader: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase name="Styling" description="The component can be styled easily.">
-      <Header title="Styled Title" titleStyle={$customTitle} safeAreaEdges={[]} />
+      <Header title="Styled Title" titleStyle={themed($customTitle)} safeAreaEdges={[]} />
       <DemoDivider size={24} />
       <Header
         title="Styled Wrapper"
-        titleStyle={$customWhiteTitle}
-        backgroundColor={colors.error}
+        titleStyle={themed($customWhiteTitle)}
+        backgroundColor={theme.colors.error}
         style={{ height: 35 }}
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
       <Header
         title="Tinted Icons"
-        titleStyle={$customWhiteTitle}
-        backgroundColor={colors.error}
+        titleStyle={themed($customWhiteTitle)}
+        backgroundColor={theme.colors.error}
         leftIcon="ladybug"
-        leftIconColor={colors.palette.neutral100}
+        leftIconColor={theme.colors.palette.neutral100}
         safeAreaEdges={[]}
       />
     </DemoUseCase>,

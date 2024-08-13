@@ -1,5 +1,3 @@
-// TODO: write documentation for colors and palette in own markdown file and add links from here
-
 const palette = {
   neutral100: "#FFFFFF",
   neutral200: "#F4F2F1",
@@ -69,6 +67,10 @@ export const colors = {
    */
   tint: palette.primary500,
   /**
+   * The inactive tinting color.
+   */
+  tintInactive: palette.neutral300,
+  /**
    * A subtle color used for lines.
    */
   separator: palette.neutral300,
@@ -78,7 +80,6 @@ export const colors = {
   error: palette.angry500,
   /**
    * Error Background.
-   *
    */
   errorBackground: palette.angry100,
-}
+} as const

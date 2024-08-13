@@ -5,6 +5,8 @@ import { spacing } from "./spacing"
 export const $styles = {
   row: { flexDirection: "row" } as ViewStyle,
   flex1: { flex: 1 } as ViewStyle,
+  flexWrap: { flexWrap: "wrap" } as ViewStyle,
+
   // @demo remove-block-start
   container: {
     paddingTop: spacing.lg + spacing.xl,
