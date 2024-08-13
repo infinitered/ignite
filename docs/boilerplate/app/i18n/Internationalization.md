@@ -16,8 +16,14 @@ To remove RTL support, follow the following steps:
 
 1. In `/app/i18n/i18n.ts`
 
-- Remove your RTL `.json` file from the `i18n.translations` object
-- Remove lines 19-21 where we allow and force RTL on the native layer
+- Remove your RTL language imports
+- Remove references to those language objects
+- Remove lines where we allow and force RTL on the native layer
+
+```ts
+I18nManager.allowRTL(isRTL)
+I18nManager.forceRTL(isRTL)
+```
 
 2. Remove all other associated logic that uses the exported `isRTL` variable
 3. Remove any `tx="some.i18n.key"` from your components and use `text="Some Text"` instead
