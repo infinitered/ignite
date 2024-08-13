@@ -27,6 +27,7 @@ Prerequisites:
 
 If you're new to Ignite, check out these resources:
 
+- Robin's 2024 Chain React talk - [Sweetening React Native Development With Ignite](https://www.youtube.com/watch?v=dNWkJOpD6YE&list=PLFHvL21g9bk0XOO9XK6d6S9w1jBU6Dz_U&index=16)
 - Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
 - Jamon's Code Quest on [What's new in Ignite 9](https://www.youtube.com/watch?v=QmkMsUYrTlk)
 - Check out our [Guide](./Guide.md) for a walkthrough of the boilerplate project and how to use it

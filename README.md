@@ -16,6 +16,7 @@ This is the React Native boilerplate that the [Infinite Red](https://infinite.re
 ## Intro Videos
 
 - Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
+- Robin's 2024 Chain React talk - [Sweetening React Native Development With Ignite](https://www.youtube.com/watch?v=dNWkJOpD6YE&list=PLFHvL21g9bk0XOO9XK6d6S9w1jBU6Dz_U&index=16)
 - Jamon's Code Quest on [Ignite 9](https://www.youtube.com/watch?v=QmkMsUYrTlk)
 - Jamon's Code Quest on [MobX-State-Tree](https://www.youtube.com/watch?v=n_VjjJxyd8Q)
 
