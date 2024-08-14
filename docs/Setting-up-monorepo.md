@@ -246,7 +246,8 @@ touch packages/form-validator/package.json
 
 ```json
 "expo-status-bar": "~1.12.1",
-"form-validator": "workspace:^", // <- Add this new line
+// success-line
+"form-validator": "workspace:^",
 "i18n-js": "3.9.2",
 ```
 
