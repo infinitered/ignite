@@ -25,7 +25,7 @@ Here's a quick recap:
 
 1. Initialize the monorepo:
 
-```
+```shell
 mkdir monorepo-example
 cd monorepo-example
 yarn init
@@ -33,7 +33,7 @@ yarn init
 
 2. Configure workspaces in `package.json`:
 
-```
+```json
 {
   "private": true,
   "workspaces": {
@@ -49,7 +49,7 @@ yarn init
 
 3. Create directory structure:
 
-```
+```shell
 mkdir apps packages
 ```
 
@@ -59,14 +59,14 @@ Ignite is a powerful tool for scaffolding React Native projects. In this step, w
 
 1. Install Ignite CLI (if you haven't already):
 
-```
-npm install -g ignite-cli
+```shell
+npx ignite-cli@latest
 ```
 
 2. Generate a new app:
    Navigate to the apps/ directory and run the following command to create a new app:
 
-```
+```shell
 cd apps
 ignite new mobile
 ```
@@ -84,7 +84,7 @@ We suggest the following answers to the prompts:
 
 3. Open `metro.config.js` file
 
-```
+```shell
 touch mobile/metro.config.js
 ```
 
@@ -118,7 +118,7 @@ Let's create a second app now. This app is meant to be run on web browsers.
 
 1. Initialize web app
 
-```
+```shell
 cd ..
 mkdir web
 cd web
@@ -130,40 +130,40 @@ yarn init
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Form App</title>
-  </head>
-  <body>
-    <h1>Sign Up</h1>
-    <form id="signup-form">
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Form App</title>
+</head>
+<body>
+  <h1>Sign Up</h1>
+  <form id="signup-form">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
 
-    <script src="index.js" type="module"></script>
-  </body>
+  <script src="index.js" type="module"></script>
+</body>
 </html>
 ```
 
 3. Add a simple development server
    To serve your app with a local server, install a simple development server like `live-server`
 
-```
+```shell
 yarn add live-server -D
 ```
 
 4. Add a script to your `package.json` to run the server:
 
-```
+```json
 "scripts": {
   "start": "live-server"
 }
@@ -175,7 +175,7 @@ Let's make sure all of our dependendencies are installed for both apps.
 
 1. Run `yarn` at the root of the project
 
-```
+```shell
 cd ..
 cd ..
 yarn
@@ -189,7 +189,7 @@ Now that you have both apps set up, it's time to add a shared utility that can b
 
 In the `packages/` directory, create a new folder `validators/` with a file named `validator.ts`:
 
-```
+```shell
 mkdir packages/form-validator
 touch packages/form-validator/validator.ts
 ```
@@ -198,40 +198,40 @@ touch packages/form-validator/validator.ts
 
 ```js
 export const isEmailValid = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
-}
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
 
 export const isPasswordValid = (password: string): boolean => {
-  return password.length >= 8
-}
+  return password.length >= 8;
+};
 
 export const isTextValid = (text: string, minLength: number = 1): boolean => {
-  return text.trim().length >= minLength
-}
+  return text.trim().length >= minLength;
+};
 ```
 
 4. Create `index.ts` file within the same directoy:
 
-```
+```shell
 touch packages/form-validator/index.ts
 ```
 
 5. Export validators in an `index.ts` file within the same directory:
 
 ```ts
-export * from "./validator"
+export * from './validator';
 ```
 
 6. Create `package.json` file in the same directory:
 
-```
+```shell
 touch packages/form-validator/package.json
 ```
 
 7. Add package declaration to the file:
 
-```
+```json
 {
   "name": "form-validator",
   "version": "1.0.0"
@@ -244,7 +244,7 @@ touch packages/form-validator/package.json
 
 `apps/mobile/package.json`
 
-```
+```json
 "expo-status-bar": "~1.12.1",
 "form-validator": "workspace:^", // <- Add this new line
 "i18n-js": "3.9.2",
@@ -267,10 +267,8 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 `apps/mobile/app/screens/LoginScreen.tsx`
 
 ```tsx
-;<Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-{
-  attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />
-}
+<Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
+      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
 
 /** Add these next 5 lines **/
 <Text
@@ -286,7 +284,7 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 
 `apps/web/package.json`
 
-```
+```json
 "dependencies": {
   "form-validator": "workspace:^"
 }
@@ -294,7 +292,7 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 
 2. Create an `index.js` file to handle the form submission and validation:
 
-```
+```js
 // Import the validator package
 import { isEmailValid } from 'form-validator';
 
@@ -326,7 +324,7 @@ document.getElementById('signup-form').addEventListener('submit', function(event
 
 1. Make sure dependencies are installed.
 
-```
+```shell
 yarn install
 ```
 
@@ -334,21 +332,21 @@ yarn install
 
 For iOS:
 
-```
+```shell
 cd apps/mobile
 yarn ios
 ```
 
 For Android:
 
-```
+```shell
 cd apps/mobile
 yarn android
 ```
 
 3. Run web app
 
-```
+```shell
 cd apps/web
 yarn start
 ```
