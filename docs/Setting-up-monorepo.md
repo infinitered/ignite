@@ -1,6 +1,6 @@
 # Setting up a yarn monorepo with Ignite framework (React Native)
 
-In this tutorial, we'll guide you through the process of setting up a yarn monorepo for your React Native projects using the Ignite framework. We'll start by setting up the monorepo structure, create a React Native app using Ignite, a second web app plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
+In this guide, we'll lead you through the process of setting up a yarn monorepo for your React Native projects using the Ignite framework. We'll start by setting up the monorepo structure, create a React Native app using Ignite, a second web app plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Before you start, ensure you have the following installed on your machine:
 
 ## Use case
 
-In a monorepo setup, multiple apps often share common functionality. For example, a mobile (React Native) and a web app (React). This tutorial demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps.
+In a monorepo setup, multiple apps often share common functionality. For example, a mobile (React Native) and a web app (React). This guide demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps.
 
 By centralizing these utilities, you reduce code duplication and simplify maintenance, ensuring that any updates or bug fixes are immediately available to all your apps.
 
