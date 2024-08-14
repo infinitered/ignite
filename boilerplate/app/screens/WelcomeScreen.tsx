@@ -4,6 +4,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line
   Text,
+  Screen,
 } from "app/components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
@@ -46,7 +47,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
   return (
-    <View style={themed($container)}>
+    <Screen preset="fixed">
       <View style={themed($topContainer)}>
         <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
         <Text
@@ -75,14 +76,9 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         />
         {/* @demo remove-block-end */}
       </View>
-    </View>
+    </Screen>
   )
   // @mst replace-next-line }
-})
-
-const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  flex: 1,
-  backgroundColor: colors.background,
 })
 
 const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
