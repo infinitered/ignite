@@ -127,30 +127,30 @@ yarn init
 
 2. Create an `index.html` file with a simple form:
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Form App</title>
-</head>
-<body>
-  <h1>Sign Up</h1>
-  <form id="signup-form">
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Form App</title>
+  </head>
+  <body>
+    <h1>Sign Up</h1>
+    <form id="signup-form">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
 
-  <script src="index.js" type="module"></script>
-</body>
+    <script src="index.js" type="module"></script>
+  </body>
 </html>
 ```
 
@@ -196,19 +196,19 @@ touch packages/form-validator/validator.ts
 
 2. Implement the validators in `validator.ts`:
 
-```
+```js
 export const isEmailValid = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
 
 export const isPasswordValid = (password: string): boolean => {
-  return password.length >= 8;
-};
+  return password.length >= 8
+}
 
 export const isTextValid = (text: string, minLength: number = 1): boolean => {
-  return text.trim().length >= minLength;
-};
+  return text.trim().length >= minLength
+}
 ```
 
 4. Create `index.ts` file within the same directoy:
@@ -219,8 +219,8 @@ touch packages/form-validator/index.ts
 
 5. Export validators in an `index.ts` file within the same directory:
 
-```
-export * from './validator';
+```ts
+export * from "./validator"
 ```
 
 6. Create `package.json` file in the same directory:
@@ -256,7 +256,7 @@ At the top of the `LoginScreen.tsx` file, add the import statement for the isEma
 
 `apps/mobile/app/screens/LoginScreen.tsx`
 
-```
+```tsx
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 import { isEmailValid } from "form-validator" // <- Add this new line
@@ -266,9 +266,11 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 
 `apps/mobile/app/screens/LoginScreen.tsx`
 
-```
-<Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+```tsx
+;<Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
+{
+  attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />
+}
 
 /** Add these next 5 lines **/
 <Text
