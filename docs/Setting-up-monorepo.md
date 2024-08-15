@@ -1,6 +1,6 @@
-# Setting up a yarn monorepo with Ignite
+# Setting up a Yarn monorepo with Ignite
 
-In this guide, we'll lead you through the process of setting up a yarn monorepo for your [React Native](https://reactnative.dev/) projects using the [Ignite](https://github.com/infinitered/ignite) framework. We'll start by setting up the monorepo structure, create a React Native app using Ignite, then a second web app with plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
+In this guide, we'll lead you through the process of setting up a Yarn monorepo for your [React Native](https://reactnative.dev/) projects using the [Ignite](https://github.com/infinitered/ignite) framework. We'll start by setting up the monorepo structure, then create a React Native app using Ignite, a second web app with plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
 
 ## Prerequisites
 
@@ -11,7 +11,13 @@ Before you start, ensure you have the following installed on your machine:
 
 ## Use case
 
-In a monorepo setup, multiple apps often share common functionality. For example, a mobile app (React Native) and a web app (React). This guide demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps. For more information on setting up your app within a monorepo, click here. More information on whether you want to setup your app within a monorepo can be found [here](https://github.com/infinitered/ignite/blob/monorepo-setup-doc/docs/Monorepos-Overview.md).
+In a monorepo setup, multiple apps often share common functionality. For example, a mobile app (React Native) and a web app (React). This guide demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps.
+
+:::info
+
+More information on whether you want to setup your app within a monorepo can be found [here](https://github.com/infinitered/ignite/blob/monorepo-setup-doc/docs/Monorepos-Overview.md).
+
+:::
 
 By centralizing these utilities, you reduce code duplication and simplify maintenance, ensuring that any updates or bug fixes are immediately available to all your apps.
 
@@ -34,6 +40,7 @@ yarn init
 2. Configure workspaces in `package.json`:
 
 ```json
+// success-line-start
 {
   "private": true,
   "workspaces": {
@@ -45,6 +52,7 @@ yarn init
     ]
   }
 }
+// success-line-end
 ```
 
 3. Create directory structure:
@@ -57,7 +65,7 @@ mkdir apps packages
 
 Ignite is a powerful tool for scaffolding React Native projects. In this step, we'll create your first app within the monorepo using Ignite.
 
-1. Install Ignite CLI (if you haven't already):
+1. Install the [Ignite CLI](https://www.npmjs.com/package/ignite-cli) (if you haven't already):
 
 ```shell
 npx ignite-cli@latest
@@ -149,6 +157,7 @@ yarn init
 2. Create an `index.html` file with a simple form:
 
 ```html
+// success-line-start
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -173,6 +182,7 @@ yarn init
   <script src="index.js" type="module"></script>
 </body>
 </html>
+// success-line-end
 ```
 
 3. Add a simple development server
@@ -185,9 +195,11 @@ yarn add live-server -D
 4. Add a script to your `package.json` to run the server:
 
 ```json
+// success-line-start
 "scripts": {
   "start": "live-server"
 }
+// success-line-end
 ```
 
 ## Step 4: Install dependencies
@@ -281,7 +293,8 @@ At the top of the `LoginScreen.tsx` file, add the import statement for the isEma
 ```tsx
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
-import { isEmailValid } from "form-validator" // <- Add this new line
+// success-line
+import { isEmailValid } from "form-validator"
 ```
 
 3. Add new `Text` component that will display if the entered email is valid or not.
@@ -292,12 +305,13 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
       {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
 
-/** Add these next 5 lines **/
+// success-line-start
 <Text
   text={isEmailValid(authEmail) ? "It is a valid email" : "It is not a valid email"}
   preset="subheading"
   style={$enterDetails}
 />
+// success-line-end
 ```
 
 ## Step 7: Add the form validator utility to the web app
@@ -307,14 +321,17 @@ import { isEmailValid } from "form-validator" // <- Add this new line
 `apps/web/package.json`
 
 ```json
+// success-line-start
 "dependencies": {
   "form-validator": "workspace:^"
 }
+// success-line-end
 ```
 
 2. Create an `index.js` file to handle the form submission and validation:
 
 ```js
+// success-line-start
 // Import the validator package
 import { isEmailValid } from 'form-validator';
 
@@ -340,6 +357,7 @@ document.getElementById('signup-form').addEventListener('submit', function(event
   // If both are valid, submit the form (or do something else)
   alert('Form submitted successfully!');
 });
+// success-line-end
 ```
 
 ## Step 8: Run both apps to make sure logic was added
@@ -375,5 +393,4 @@ yarn start
 
 ## Conclusion
 
-Congratulations on setting up your yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
-
+Congratulations on setting up your Yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
