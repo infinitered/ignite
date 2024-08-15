@@ -7,7 +7,7 @@ In this guide, we'll lead you through the process of setting up a Yarn monorepo 
 Before you start, ensure you have the following installed on your machine:
 
 - [Node.js](https://nodejs.org/en) (version 18 or later)
-- [Yarn](https://classic.yarnpkg.com/en/)
+- [Yarn](https://yarnpkg.com) (version 3.8 or later)
 
 ## Use case
 
@@ -214,6 +214,12 @@ cd ..
 yarn
 ```
 
+:::info
+
+When you run yarn at the top of the monorepo with Yarn 3.x, Yarn installs all dependencies and links the packages. It places a single node_modules folder in each package’s directory, but shared dependencies are typically stored in a .yarn/cache folder at the root. Yarn uses Plug’n’Play (PnP) to resolve dependencies without the traditional node_modules structure, creating a more efficient setup. Each package or app is linked to the dependencies it needs through Yarn’s PnP system. For more details, you can check out [Yarn's documentation on Plug'n'Play](https://yarnpkg.com/features/pnp).
+
+:::
+
 ## Step 5: Add a shared form-validator utility
 
 Now that you have both apps set up, it's time to add a shared utility that can be used across multiple apps. We'll create a form-validator utility that checks for valid email addresses, passwords, and text fields.
@@ -394,3 +400,4 @@ yarn start
 ## Conclusion
 
 Congratulations on setting up your Yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
+
