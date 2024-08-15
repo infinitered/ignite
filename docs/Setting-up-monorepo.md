@@ -1,6 +1,6 @@
-# Setting up a yarn monorepo with Ignite framework (React Native)
+# Setting up a yarn monorepo with Ignite
 
-In this guide, we'll lead you through the process of setting up a yarn monorepo for your React Native projects using the Ignite framework. We'll start by setting up the monorepo structure, create a React Native app using Ignite, a second web app plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
+In this guide, we'll lead you through the process of setting up a yarn monorepo for your [React Native](https://reactnative.dev/) projects using the [Ignite](https://github.com/infinitered/ignite) framework. We'll start by setting up the monorepo structure, create a React Native app using Ignite, then a second web app with plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Before you start, ensure you have the following installed on your machine:
 
 ## Use case
 
-In a monorepo setup, multiple apps often share common functionality. For example, a mobile (React Native) and a web app (React). This guide demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps.
+In a monorepo setup, multiple apps often share common functionality. For example, a mobile app (React Native) and a web app (React). This guide demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps. For more information on setting up your app within a monorepo, click here. More information on whether you want to setup your app within a monorepo can be found [here](https://github.com/infinitered/ignite/blob/monorepo-setup-doc/docs/Monorepos-Overview.md).
 
 By centralizing these utilities, you reduce code duplication and simplify maintenance, ensuring that any updates or bug fixes are immediately available to all your apps.
 
@@ -88,19 +88,35 @@ We suggest the following answers to the prompts:
 touch mobile/metro.config.js
 ```
 
-4. Replace Metro configuration with the following content
+4. Replace the following lines in the Metro configuration file with the lines below
 
-```
+```js
+// Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
-const path = require('path');
 
-// Find the project and workspace directories
-const projectRoot = __dirname;
-// This can be replaced with `find-yarn-workspace-root`
+// success-line-start
+// Get monorepo root folder
 const monorepoRoot = path.resolve(projectRoot, '../..');
+// success-line-end
 
+/** @type {import('expo/metro-config').MetroConfig} */
+// error-line
+const config = getDefaultConfig(__dirname);
+// success-line
 const config = getDefaultConfig(projectRoot);
 
+config.transformer.getTransformOptions = async () => ({
+  transform: {
+    // Inline requires are very useful for deferring loading of large dependencies/components.
+    // For example, we use it in app.tsx to conditionally load Reactotron.
+    // However, this comes with some gotchas.
+    // Read more here: https://reactnative.dev/docs/optimizing-javascript-loading
+    // And here: https://github.com/expo/expo/issues/27279#issuecomment-1971610698
+    inlineRequires: true,
+  },
+});
+
+// success-line-start
 // 1. Watch all files within the monorepo
 config.watchFolders = [monorepoRoot];
 // 2. Let Metro know where to resolve packages and in what order
@@ -108,6 +124,11 @@ config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, 'node_modules'),
   path.resolve(monorepoRoot, 'node_modules'),
 ];
+// success-line-end
+
+// This helps support certain popular third-party libraries
+// such as Firebase that use the extension cjs.
+config.resolver.sourceExts.push("cjs")
 
 module.exports = config;
 ```
@@ -355,3 +376,4 @@ yarn start
 ## Conclusion
 
 Congratulations on setting up your yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
+
