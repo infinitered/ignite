@@ -220,153 +220,253 @@ When you run yarn at the top of the monorepo with Yarn 3.x, Yarn installs all de
 
 :::
 
-## Step 5: Add a shared form-validator utility
+## Step 5: Add a shared ESLint configuration with TypeScript
 
-Now that you have both apps set up, it's time to add a shared utility that can be used across multiple apps. We'll create a form-validator utility that checks for valid email addresses, passwords, and text fields.
+In a monorepo setup, maintaining consistent code quality across TypeScript projects is essential. Sharing a single ESLint configuration file between these apps ensures consistent coding standards and streamlines the development process.
 
-1. Create the utility:
+1. Create a shared ESLint configuration package:
 
-In the `packages/` directory, create a new folder `validators/` with a file named `validator.ts`:
-
-```shell
-mkdir packages/form-validator
-touch packages/form-validator/validator.ts
-```
-
-2. Implement the validators in `validator.ts`:
-
-```js
-export const isEmailValid = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
-
-export const isPasswordValid = (password: string): boolean => {
-  return password.length >= 8;
-};
-
-export const isTextValid = (text: string, minLength: number = 1): boolean => {
-  return text.trim().length >= minLength;
-};
-```
-
-4. Create `index.ts` file within the same directoy:
+Inside your monorepo, create a new package for your shared ESLint configuration.
 
 ```shell
-touch packages/form-validator/index.ts
+mkdir packages/eslint-config
+cd packages/eslint-config
 ```
 
-5. Export validators in an `index.ts` file within the same directory:
+2. Initialize the package:
 
-```ts
-export * from './validator';
-```
-
-6. Create `package.json` file in the same directory:
+Initialize the package with a package.json file.
 
 ```shell
-touch packages/form-validator/package.json
+yarn init -y
 ```
 
-7. Add package declaration to the file:
+3. Install ESLint and TypeScript dependencies:
+
+Install ESLint, TypeScript, and any shared plugins or configurations that you want to use across the apps.
+
+```shell
+yarn add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-native eslint-plugin-reactotron eslint-config-standard eslint-config-prettier --dev
+```
+
+4. Create the `tsconfig.json` file:
+
+`packages/eslint-config/tsconfig.js`
 
 ```json
+// success-line-start
 {
-  "name": "form-validator",
-  "version": "1.0.0"
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "strict": true,
+    "esModuleInterop": true,
+  9     "skipLibCheck": true
+ 10   }
+ 11 }
+ // success-line-end
+ ```
+
+5. Create the shared ESLint configuration file:
+
+Create an `index.ts` file in the root of your eslint-config package. We will reuse Ignite’s boilerplate ESLint configuration and then replace the original configuration with it.
+
+`packages/eslint-config/index.ts`
+
+```typescript
+module.exports = {
+  root: true,
+  parser: "@typescript-eslint/parser",
+  extends: [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-native/all",
+    "standard",
+    "prettier",
+  ],
+  plugins: [
+    "@typescript-eslint",
+    "react",
+    "react-native",
+    "reactotron",
+  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  settings: {
+    react: {
+      pragma: "React",
+      version: "detect",
+    },
+  },
+  globals: {
+    __DEV__: false,
+    jasmine: false,
+    beforeAll: false,
+    afterAll: false,
+    beforeEach: false,
+    afterEach: false,
+    test: false,
+    expect: false,
+    describe: false,
+    jest: false,
+    it: false,
+  },
+  rules: {
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/indent": 0,
+    "@typescript-eslint/member-delimiter-style": 0,
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-object-literal-type-assertion": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
+    "comma-dangle": 0,
+    "multiline-ternary": 0,
+    "no-undef": 0,
+    "no-unused-vars": 0,
+    "no-use-before-define": 0,
+    "no-global-assign": 0,
+    "quotes": 0,
+    "react-native/no-raw-text": 0,
+    "react/no-unescaped-entities": 0,
+    "react/prop-types": 0,
+    "space-before-function-paren": 0,
+    "reactotron/no-tron-in-production": "error",
+  },
 }
+// success-line-end
 ```
 
-## Step 6: Add the form validator utility to the mobile app
+This configuration (originally sourced from [Ignite](https://github.com/infinitered/ignite)) provides a strong foundation for TypeScript, React, React Native, and import order rules. You can adjust the rules according to your project's specific needs.
 
-1. Add the form validator utility to the app's `package.json` file:
+5. Compile the TypeScript configuration:
+
+```shell
+npx tsc
+```
+
+This will generate a `index.js` file from your `index.ts` file.
+
+## Step 6: Use the shared ESLint configuration in your apps
+
+1. Navigate to the mobile app:
+
+```shell
+cd ..
+cd ..
+cd apps/mobile
+```
+
+2. Install the shared Configuration in the app:
+
+```shell
+yarn add eslint @monorepo-example/eslint-config --dev
+```
+
+3. Replace the shared ESLint configuration in `package.json`
 
 `apps/mobile/package.json`
 
 ```json
-"expo-status-bar": "~1.12.1",
-// success-line
-"form-validator": "workspace:^",
-"i18n-js": "3.9.2",
-```
-
-2. Import the `isEmailValid` function:
-
-At the top of the `LoginScreen.tsx` file, add the import statement for the isEmailValid function. Ensure that the path corresponds to where your form-validator utility is located within your monorepo.
-
-`apps/mobile/app/screens/LoginScreen.tsx`
-
-```tsx
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
-// success-line
-import { isEmailValid } from "form-validator"
-```
-
-3. Add new `Text` component that will display if the entered email is valid or not.
-
-`apps/mobile/app/screens/LoginScreen.tsx`
-
-```tsx
-<Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
-
+// error-line-start
+"eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:react-native/all",
+      "standard",
+      "prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "react",
+      "react-native",
+      "reactotron"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+      }
+    },
+    "globals": {
+      "__DEV__": false,
+      "jasmine": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
+    },
+    "rules": {
+      "@typescript-eslint/ban-ts-ignore": 0,
+      "@typescript-eslint/ban-ts-comment": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/member-delimiter-style": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ],
+      "comma-dangle": 0,
+      "multiline-ternary": 0,
+      "no-undef": 0,
+      "no-unused-vars": 0,
+      "no-use-before-define": 0,
+      "no-global-assign": 0,
+      "quotes": 0,
+      "react-native/no-raw-text": 0,
+      "react/no-unescaped-entities": 0,
+      "react/prop-types": 0,
+      "space-before-function-paren": 0,
+      "reactotron/no-tron-in-production": "error"
+    }
+  }
+// error-line-end
 // success-line-start
-<Text
-  text={isEmailValid(authEmail) ? "It is a valid email" : "It is not a valid email"}
-  preset="subheading"
-  style={$enterDetails}
-/>
-// success-line-end
-```
-
-## Step 7: Add the form validator utility to the web app
-
-1. Add the form validator utility to the app's `package.json` file:
-
-`apps/web/package.json`
-
-```json
-// success-line-start
-"dependencies": {
-  "form-validator": "workspace:^"
+"eslintConfig": {
+  extends: ["@monorepo-example/eslint-config"],
 }
 // success-line-end
 ```
 
-2. Create an `index.js` file to handle the form submission and validation:
 
-```js
-// success-line-start
-// Import the validator package
-import { isEmailValid } from 'form-validator';
-
-// Handle form submission
-document.getElementById('signup-form').addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent the form from submitting the default way
-
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  // Validate email
-  if (!isEmailValid(email)) {
-    alert('Please enter a valid email address.');
-    return;
-  }
-
-  // Simple password validation (e.g., check if not empty)
-  if (password.length === 0) {
-    alert('Please enter a password.');
-    return;
-  }
-
-  // If both are valid, submit the form (or do something else)
-  alert('Form submitted successfully!');
-});
-// success-line-end
-```
-
-## Step 8: Run both apps to make sure logic was added
+## Step 7: Run both apps to make sure logic was added
 
 1. Make sure dependencies are installed.
 
