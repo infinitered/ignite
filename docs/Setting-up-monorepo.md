@@ -502,6 +502,40 @@ cd apps/web
 yarn start
 ```
 
+## Step 8: Add Yarn global scripts (optional)
+
+Yarn's workspaces feature allows you to define and run scripts globally across all packages in your monorepo. This simplifies your workflow by enabling you to execute tasks like testing, building, or linting from the root of your project, ensuring consistency across all packages. In this section, we’ll explore how to set up and use global scripts with Yarn in your monorepo.
+
+Let's add a global script for the mobile app to run iOS and Android projects.
+
+1. Navigate to the root of the project:
+
+```shell
+cd ..
+cd ..
+```
+
+2. Add a global script to the root `package.json` file:
+
+`package.json`
+
+```json
+  "version": "1.0.0",
+  // success-line-start
+  "scripts": {
+    "mobile:ios" : "yarn workspace mobile ios",
+    "mobile:android" : "yarn workspace mobile android"
+  },
+  // success-line-end
+  "workspaces": [
+    "apps/*",
+    "utilities/*"
+  ]
+```
+
+
+For more information on Yarn's global scripts, check [this site](https://yarnpkg.com/features/workspaces#global-scripts).
+
 ## Conclusion
 
 Congratulations on setting up your Yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
