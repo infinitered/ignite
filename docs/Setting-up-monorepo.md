@@ -372,10 +372,15 @@ cd ..
 cd apps/mobile
 ```
 
-2. Install the shared Configuration in the app:
+2. Add the ESLint shared package to the `package.json` file:
 
-```shell
-yarn add eslint @monorepo-example/eslint-config --dev
+`apps/mobile/package.json`
+
+```json
+"eslint": "8.17.0",
+// success-line
+ "eslint-config": "workspace:^",
+ "eslint-config-prettier": "8.5.0",
 ```
 
 3. Replace the shared ESLint configuration in `package.json`
