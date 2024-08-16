@@ -14,7 +14,9 @@ export function useHeader(
 ) {
   const navigation = useNavigation()
 
-  React.useEffect(() => {
+  // To avoid a visible header jump when navigating between screens, we use
+  // `useLayoutEffect`, which will apply the settings before the screen renders.
+  React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
       header: () => <Header {...headerProps} />,
