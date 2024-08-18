@@ -3,8 +3,8 @@
 // version of each package when generating a new project using Expo Go.
 // New ignited apps using prebuild will have more up-to-date versions of these packages.
 export const expoGoCompatExpectedVersions = {
-  "@react-native-async-storage/async-storage": "1.21.0",
-  "@shopify/flash-list": "1.6.3",
+  "@react-native-async-storage/async-storage": "1.23.1",
+  "@shopify/flash-list": "1.6.4",
 }
 
 // This function takes a package.json file as a string and updates the versions of the
