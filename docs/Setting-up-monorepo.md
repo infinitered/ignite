@@ -13,7 +13,6 @@ Before you start, ensure you have the following installed on your machine:
 
 In a monorepo setup, multiple applications, such as a mobile app (using React Native) and a web app (using React), can share common functionalities. This guide will walk you through the process of setting up and utilizing shared utilities within a monorepo. For instance, if you have several apps that need to share an ESLint configuration or UI components, you can create reusable packages that can be integrated across all your applications.
 
-
 :::info
 
 More information on whether you want to setup your app within a monorepo can be found [here](https://github.com/infinitered/ignite/blob/monorepo-setup-doc/docs/Monorepos-Overview.md).
@@ -45,16 +44,20 @@ yarn init
 {
   "private": true,
   "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "apps": [
-      "apps/*"
-    ]
+    "packages": ["packages/*"],
+    "apps": ["apps/*"]
   }
 }
 // success-line-end
 ```
+
+:::info
+
+You can organize the folder structure of your Yarn monorepo however it best suits your project. While this guide suggests using `apps/` and `packages/`, you can rename or add directories like `services/` or `libs/` to fit your workflow.
+
+The key is to keep your monorepo clear and organized, ensuring that it’s easy to manage and navigate for your team.
+
+:::
 
 3. Create directory structure:
 
@@ -101,18 +104,18 @@ touch mobile/metro.config.js
 
 ```js
 // Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require('expo/metro-config');
+const { getDefaultConfig } = require("expo/metro-config")
 
 // success-line-start
 // Get monorepo root folder
-const monorepoRoot = path.resolve(projectRoot, '../..');
+const monorepoRoot = path.resolve(projectRoot, "../..")
 // success-line-end
 
 /** @type {import('expo/metro-config').MetroConfig} */
 // error-line
-const config = getDefaultConfig(__dirname);
+const config = getDefaultConfig(__dirname)
 // success-line
-const config = getDefaultConfig(projectRoot);
+const config = getDefaultConfig(projectRoot)
 
 config.transformer.getTransformOptions = async () => ({
   transform: {
@@ -123,23 +126,23 @@ config.transformer.getTransformOptions = async () => ({
     // And here: https://github.com/expo/expo/issues/27279#issuecomment-1971610698
     inlineRequires: true,
   },
-});
+})
 
 // success-line-start
 // 1. Watch all files within the monorepo
-config.watchFolders = [monorepoRoot];
+config.watchFolders = [monorepoRoot]
 // 2. Let Metro know where to resolve packages and in what order
 config.resolver.nodeModulesPaths = [
-  path.resolve(projectRoot, 'node_modules'),
-  path.resolve(monorepoRoot, 'node_modules'),
-];
+  path.resolve(projectRoot, "node_modules"),
+  path.resolve(monorepoRoot, "node_modules"),
+]
 // success-line-end
 
 // This helps support certain popular third-party libraries
 // such as Firebase that use the extension cjs.
 config.resolver.sourceExts.push("cjs")
 
-module.exports = config;
+module.exports = config
 ```
 
 ## Step 3: Install dependencies
@@ -205,9 +208,9 @@ yarn add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslin
     "esModuleInterop": true,
     "skipLibCheck": true
   }
- }
- // success-line-end
- ```
+}
+// success-line-end
+```
 
 5. Create the shared ESLint configuration file:
 
@@ -226,12 +229,7 @@ module.exports = {
     "standard",
     "prettier",
   ],
-  plugins: [
-    "@typescript-eslint",
-    "react",
-    "react-native",
-    "reactotron",
-  ],
+  plugins: ["@typescript-eslint", "react", "react-native", "reactotron"],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -467,8 +465,8 @@ yarn add @types/react @types/react-native --dev
   "include": ["src"],
   "exclude": ["node_modules"]
 }
- // success-line-end
- ```
+// success-line-end
+```
 
 5.  Create the badge component:
 
@@ -496,7 +494,13 @@ interface BadgeProps {
   textStyle?: TextStyle
 }
 
-export const Badge: FC<BadgeProps> = ({ label, color = "white", backgroundColor = "red", style, textStyle }) => {
+export const Badge: FC<BadgeProps> = ({
+  label,
+  color = "white",
+  backgroundColor = "red",
+  style,
+  textStyle,
+}) => {
   return (
     <View style={[styles.badge, { backgroundColor }, style]}>
       <Text style={[styles.text, { color }, textStyle]}>{label}</Text>
@@ -629,10 +633,8 @@ cd ..
   ]
 ```
 
-
 For more information on Yarn's global scripts, check [this site](https://yarnpkg.com/features/workspaces#global-scripts).
 
 ## Conclusion
 
 Congratulations on setting up your Yarn monorepo! By using the Ignite framework, and two shared packages, you've successfully integrated these together. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
-
