@@ -1,6 +1,6 @@
 # Setting up a Yarn monorepo with Ignite
 
-In this guide, we'll lead you through the process of setting up a Yarn monorepo for your [React Native](https://reactnative.dev/) projects using the [Ignite](https://github.com/infinitered/ignite) framework. We'll start by setting up the monorepo structure, then create a React Native app using Ignite, a second web app with plain vainilla Javascript, add a shared form-validator utility, and finally integrate this utility into both apps.
+In this guide, we'll lead you through the process of setting up a Yarn monorepo for your [React Native](https://reactnative.dev/) projects using the [Ignite](https://github.com/infinitered/ignite) framework. We'll start by setting up the monorepo structure, then create a React Native app using Ignite, add a shared form-validator utility, add a shared UI package and finally integrate these utilitoes into the mobile app.
 
 ## Prerequisites
 
@@ -11,7 +11,8 @@ Before you start, ensure you have the following installed on your machine:
 
 ## Use case
 
-In a monorepo setup, multiple apps often share common functionality. For example, a mobile app (React Native) and a web app (React). This guide demonstrates how to set up and use shared utilities within a monorepo. For instance, if you have several apps that need to validate user inputs like email addresses, passwords, or text fields, you can create a single validation utility that can be reused across all your apps.
+In a monorepo setup, multiple applications, such as a mobile app (using React Native) and a web app (using React), can share common functionalities. This guide will walk you through the process of setting up and utilizing shared utilities within a monorepo. For instance, if you have several apps that need to share an ESLint configuration or UI components, you can create reusable packages that can be integrated across all your applications.
+
 
 :::info
 
@@ -141,68 +142,7 @@ config.resolver.sourceExts.push("cjs")
 module.exports = config;
 ```
 
-## Step 3: Create web app
-
-Let's create a second app now. This app is meant to be run on web browsers.
-
-1. Initialize web app
-
-```shell
-cd ..
-mkdir web
-cd web
-yarn init
-```
-
-2. Create an `index.html` file with a simple form:
-
-```html
-// success-line-start
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Form App</title>
-</head>
-<body>
-  <h1>Sign Up</h1>
-  <form id="signup-form">
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
-
-  <script src="index.js" type="module"></script>
-</body>
-</html>
-// success-line-end
-```
-
-3. Add a simple development server
-   To serve your app with a local server, install a simple development server like `live-server`
-
-```shell
-yarn add live-server -D
-```
-
-4. Add a script to your `package.json` to run the server:
-
-```json
-// success-line-start
-"scripts": {
-  "start": "live-server"
-}
-// success-line-end
-```
-
-## Step 4: Install dependencies
+## Step 3: Install dependencies
 
 Let's make sure all of our dependendencies are installed for both apps.
 
@@ -220,7 +160,7 @@ When you run yarn at the top of the monorepo with Yarn 3.x, Yarn installs all de
 
 :::
 
-## Step 5: Add a shared ESLint configuration with TypeScript
+## Step 4: Add a shared ESLint configuration with TypeScript
 
 In a monorepo setup, maintaining consistent code quality across TypeScript projects is essential. Sharing a single ESLint configuration file between these apps ensures consistent coding standards and streamlines the development process.
 
@@ -235,7 +175,7 @@ cd packages/eslint-config
 
 2. Initialize the package:
 
-Initialize the package with a package.json file.
+Initialize the package with a `package.json` file.
 
 ```shell
 yarn init -y
@@ -263,9 +203,9 @@ yarn add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslin
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
-  9     "skipLibCheck": true
- 10   }
- 11 }
+    "skipLibCheck": true
+  }
+ }
  // success-line-end
  ```
 
@@ -470,16 +410,179 @@ cd apps/mobile
 // success-line-end
 ```
 
+## Step 6: Create the shared UI components package:
 
-## Step 7: Run both apps to make sure logic was added
+Let's create a Badge component as a shared UI component that can be used across the monorepo apps. The Badge component is a simple, versatile element often used to display small bits of information, such as notifications, statuses, or labels.
 
-1. Make sure dependencies are installed.
+1. Navigate to the packages folder:
 
 ```shell
-yarn install
+cd ..
+cd ..
+cd packages
 ```
 
-2. Run React Native app (make sure you have your [environment setup](https://reactnative.dev/docs/set-up-your-environment)).
+2. Create the package directory:
+
+```shell
+mkdir ui-components
+cd ui-components
+```
+
+3. Initialize the package:
+
+Initialize the package with a `package.json` file.
+
+```shell
+yarn init -y
+```
+
+4. Install dependencies:
+
+Install any necessary dependencies, such as React, React Native, and TypeScript, which will be used across both platforms.
+
+```shell
+yarn add react react-native typescript --peer
+yarn add @types/react @types/react-native --dev
+```
+
+4. Create the `tsconfig.json` file:
+
+`packages/ui-components/tsconfig.json`
+
+```json
+// success-line-start
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "es2017"],
+    "module": "commonjs",
+    "jsx": "react",
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
+ // success-line-end
+ ```
+
+5.  Create the badge component:
+
+Inside the `packages/ui-components` directory, create a `src` folder and add your Badge component.
+
+```shell
+mkdir src
+touch src/Badge.tsx
+```
+
+6. Build the badge component:
+
+`packages/ui-component/src/Badge.tsx`
+
+```tsx
+// success-line-start
+import React, { FC } from "react"
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native"
+
+interface BadgeProps {
+  label: string
+  color?: string
+  backgroundColor?: string
+  style?: ViewStyle
+  textStyle?: TextStyle
+}
+
+export const Badge: FC<BadgeProps> = ({ label, color = "white", backgroundColor = "red", style, textStyle }) => {
+  return (
+    <View style={[styles.badge, { backgroundColor }, style]}>
+      <Text style={[styles.text, { color }, textStyle]}>{label}</Text>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    alignSelf: "flex-start",
+  } as ViewStyle,
+  text: {
+    fontSize: 12,
+    fontWeight: "bold",
+  } as TextStyle,
+})
+// success-line-end
+```
+
+The Badge component is a simple UI element that can display a label with customizable colors, making it versatile for use in different parts of your application, such as notification counts, statuses, or category labels.
+
+7. Export the badge component:
+
+Ensure that your component is exported in the package's main entry file.
+
+`packages/ui-component/src/index.ts`
+
+```ts
+// success-line-start
+export * from "./Badge"
+// success-line-end
+```
+
+8. Compile the package:
+
+Compile your TypeScript code to ensure it's ready for consumption by other packages.
+
+```shell
+yarn tsc
+```
+
+## Step 7: Use the shared UI package in your apps
+
+1. Navigate to the mobile app:
+
+```shell
+cd ..
+cd ..
+cd apps/mobile
+```
+
+2. Add the shared UI package to the `package.json` file:
+
+`apps/moile/package.json`
+
+```json
+"packageManager": "yarn@3.6.4",
+// success-line-start
+"dependencies": {
+  "ui-components": "workspace:^",
+},
+// success-line-end
+"devDependencies": {
+  "live-server": "^1.2.2"
+}
+```
+
+## Step 8: Run both apps to make sure logic was added
+
+1. Navigate to the root of the project:
+
+```shell
+cd ..
+cd ..
+```
+
+2. Make sure dependencies are installed:
+
+```shell
+yarn
+```
+
+3. Run React Native app (make sure you have your [environment setup](https://reactnative.dev/docs/set-up-your-environment)):
 
 For iOS:
 
@@ -495,14 +598,7 @@ cd apps/mobile
 yarn android
 ```
 
-3. Run web app
-
-```shell
-cd apps/web
-yarn start
-```
-
-## Step 8: Add Yarn global scripts (optional)
+## Step 9: Add Yarn global scripts (optional)
 
 Yarn's workspaces feature allows you to define and run scripts globally across all packages in your monorepo. This simplifies your workflow by enabling you to execute tasks like testing, building, or linting from the root of your project, ensuring consistency across all packages. In this section, we’ll explore how to set up and use global scripts with Yarn in your monorepo.
 
@@ -538,5 +634,5 @@ For more information on Yarn's global scripts, check [this site](https://yarnpkg
 
 ## Conclusion
 
-Congratulations on setting up your Yarn monorepo! By using the Ignite framework, a vanilla web app, and a shared form-validator utility, you've successfully integrated these components into both apps. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
+Congratulations on setting up your Yarn monorepo! By using the Ignite framework, and two shared packages, you've successfully integrated these together. This setup enables you to scale your projects efficiently by sharing code across multiple applications in a well-structured and organized manner.
 
