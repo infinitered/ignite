@@ -21,7 +21,7 @@ More information on whether you want to setup your app within a monorepo can be 
 
 By centralizing these utilities, you reduce code duplication and simplify maintenance, ensuring that any updates or bug fixes are immediately available to all your apps.
 
-In this setup, we’ll create a React Native app, a React app and a form-validator utility that includes functions to validate email addresses, passwords, and generic text fields. This utility will then be integrated to both apps.
+In this setup, we’ll create a React Native app along with two shared packages: one for holding a common ESLint configuration and another for shared UI components. Finally, we’ll integrate these packages into the mobile app.
 
 ## Step 1: Setting up the monorepo
 
