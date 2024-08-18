@@ -194,7 +194,7 @@ yarn add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslin
 
 4. Create the `tsconfig.json` file:
 
-`packages/eslint-config/tsconfig.js`
+`packages/eslint-config/tsconfig.json`
 
 ```json
 // success-line-start
@@ -545,7 +545,7 @@ Compile your TypeScript code to ensure it's ready for consumption by other packa
 yarn tsc
 ```
 
-## Step 7: Use the shared UI package in your apps
+## Step 7: Use the shared UI package in the mobile app
 
 1. Navigate to the mobile app:
 
@@ -557,21 +557,45 @@ cd apps/mobile
 
 2. Add the shared UI package to the `package.json` file:
 
-`apps/moile/package.json`
+`apps/mobile/package.json`
 
 ```json
-"packageManager": "yarn@3.6.4",
-// success-line-start
-"dependencies": {
-  "ui-components": "workspace:^",
-},
-// success-line-end
-"devDependencies": {
-  "live-server": "^1.2.2"
-}
+    "react-native-screens": "3.31.1",
+    "react-native-web": "~0.19.6",
+    // success-line
+    "ui-components": "workspace:^",
+  },
 ```
 
-## Step 8: Run both apps to make sure logic was added
+3. Add the Badge component to the UI
+
+Now, decide where you'd like to display the Badge. For this example, let’s place in the login screen, below the heading and above the form fields to indicate the number of login attempts if they exceed a certain number.
+
+`apps/mobile/apps/screebs/LoginScreen.tsx`
+
+```tsx
+import type { ThemedStyle } from "app/theme"
+import { useAppTheme } from "app/utils/useAppTheme"
+// success-line
+import { Badge } from "@myworkspace/ui-components"
+
+...
+
+<Text testID="login-heading" tx="loginScreen.logIn" preset="heading" style={themed($logIn)} />
+
+// success-line-start
+{attemptsCount > 0 && (
+  <Badge
+    label={`Attempt ${attemptsCount}`}
+    backgroundColor={attemptsCount > 2 ? "red" : "blue"}
+    style={themed($badge)}
+    textStyle={themed($badgeText)}
+  />
+)}
+// success-line-end
+```
+
+## Step 8: Run mobile app to make sure logic was added
 
 1. Navigate to the root of the project:
 
