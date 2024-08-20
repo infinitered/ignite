@@ -6,6 +6,7 @@ import { colors, spacing } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import { translate } from "app/i18n"
 
 const $imageContainer: ViewStyle = {
   alignItems: "center",
@@ -37,9 +38,9 @@ const $aspectRatioBox: ViewStyle & ImageStyle = {
 
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
-  description: "An Image component that automatically sizes a remote or data-uri image.",
+  description: "demoAutoImage.description",
   data: [
-    <DemoUseCase name="Remote URI">
+    <DemoUseCase name="demoAutoImage.useCase.remoteUri.name">
       <View style={$imageContainer}>
         <AutoImage
           source={{
@@ -49,7 +50,7 @@ export const DemoAutoImage: Demo = {
       </View>
     </DemoUseCase>,
 
-    <DemoUseCase name="Base64 URI">
+    <DemoUseCase name="demoAutoImage.useCase.base64Uri.name">
       <View style={$imageContainer}>
         <AutoImage
           source={{
@@ -60,9 +61,8 @@ export const DemoAutoImage: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Scaled to Fit Dimensions"
-      description="Providing a `maxWidth` and/or `maxHeight` props, the image will automatically scale while retaining it's aspect ratio. How is this different from `resizeMode: 'contain'`? Firstly, you can
-      specify only one side's size (not both). Secondly, the image will scale to fit the desired dimensions instead of just being contained within its image-container."
+      name="demoAutoImage.useCase.scaledToFitDimensions.name"
+      description="demoAutoImage.useCase.scaledToFitDimensions.description"
     >
       <View style={$aspectRatioWidthExampleContainer}>
         <Text
@@ -106,7 +106,7 @@ export const DemoAutoImage: Demo = {
       </View>
 
       <Text weight="bold" size="xs" style={$aspectRatioDescription}>
-        width: 60 / height: auto
+        {translate("demoAutoImage.useCase.scaledToFitDimensions.heightAuto")}
       </Text>
 
       <DemoDivider size={40} />
@@ -153,7 +153,7 @@ export const DemoAutoImage: Demo = {
       </View>
 
       <Text weight="bold" size="xs" style={$aspectRatioDescription}>
-        width: auto / height: 32
+        {translate("demoAutoImage.useCase.scaledToFitDimensions.widthAuto")}
       </Text>
 
       <DemoDivider size={40} />
@@ -201,7 +201,7 @@ export const DemoAutoImage: Demo = {
       </View>
 
       <Text weight="bold" size="xs" style={$aspectRatioDescription}>
-        width: 60 / height: 60
+        {translate("demoAutoImage.useCase.scaledToFitDimensions.bothManual")}
       </Text>
     </DemoUseCase>,
   ],
