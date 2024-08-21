@@ -16,7 +16,7 @@ import jp from "./jp"
 // to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
 export const i18n = new I18n(
-  { ar, en, "en-US": en, ko, fr, jp },
+  { ar, en, "en-US": en, ko, fr, ja: jp },
   { locale: fallbackLocale, defaultLocale: fallbackLocale, enableFallback: true },
 )
 
