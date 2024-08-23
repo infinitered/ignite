@@ -81,6 +81,7 @@ const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) 
 )
 
 const ShowroomListItem = Platform.select({ web: WebListItem, default: NativeListItem })
+const isAndroid = Platform.OS === "android"
 
 export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
@@ -182,7 +183,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           </View>
         )}
       >
-        <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
+        <Screen
+          preset="fixed"
+          safeAreaEdges={["top"]}
+          contentContainerStyle={$styles.flex1}
+          {...(isAndroid ? { KeyboardAvoidingViewProps: {behavior: undefined} } : {})}
+        >
           <DrawerIconButton onPress={toggleDrawer} />
 
           <SectionListWithKeyboardAwareScrollView<ReactElement>
