@@ -7,8 +7,9 @@ import { Icon } from "../components"
 import { translate } from "../i18n"
 import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
-import { colors, spacing, typography } from "../theme"
+import type { ThemedStyle } from "app/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 export type DemoTabParamList = {
   DemoCommunity: undefined
@@ -38,17 +39,21 @@ const Tab = createBottomTabNavigator<DemoTabParamList>()
  */
 export function DemoNavigator() {
   const { bottom } = useSafeAreaInsets()
+  const {
+    themed,
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: [$tabBar, { height: bottom + 70 }],
+        tabBarStyle: themed([$tabBar, { height: bottom + 70 }]),
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.text,
-        tabBarLabelStyle: $tabBarLabel,
-        tabBarItemStyle: $tabBarItem,
+        tabBarLabelStyle: themed($tabBarLabel),
+        tabBarItemStyle: themed($tabBarItem),
       }}
     >
       <Tab.Screen
@@ -57,7 +62,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.componentsTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
+            <Icon icon="components" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
         }}
       />
@@ -68,7 +73,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.communityTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused ? colors.tint : undefined} size={30} />
+            <Icon icon="community" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
         }}
       />
@@ -80,7 +85,7 @@ export function DemoNavigator() {
           tabBarAccessibilityLabel: translate("demoNavigator.podcastListTab"),
           tabBarLabel: translate("demoNavigator.podcastListTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="podcast" color={focused ? colors.tint : undefined} size={30} />
+            <Icon icon="podcast" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
         }}
       />
@@ -91,7 +96,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.debugTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="debug" color={focused ? colors.tint : undefined} size={30} />
+            <Icon icon="debug" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
         }}
       />
@@ -99,19 +104,20 @@ export function DemoNavigator() {
   )
 }
 
-const $tabBar: ViewStyle = {
+const $tabBar: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.background,
   borderTopColor: colors.transparent,
-}
+})
 
-const $tabBarItem: ViewStyle = {
+const $tabBarItem: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingTop: spacing.md,
-}
+})
 
-const $tabBarLabel: TextStyle = {
+const $tabBarLabel: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   fontSize: 12,
   fontFamily: typography.primary.medium,
   lineHeight: 16,
-}
+  color: colors.text,
+})
 
 // @demo remove-file

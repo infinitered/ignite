@@ -2,49 +2,49 @@
 import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { Icon, TextField } from "../../../components"
-import { colors, spacing } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 
-const $customInputStyle: TextStyle = {
+const $customInputStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   color: colors.palette.neutral100,
-}
+})
 
-const $customInputWrapperStyle: ViewStyle = {
+const $customInputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   borderColor: colors.palette.neutral800,
-}
+})
 
-const $customContainerStyle: ViewStyle = {
+const $customContainerStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
-}
+})
 
-const $customLabelAndHelperStyle: TextStyle = {
+const $customLabelAndHelperStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.palette.neutral100,
-}
+})
 
-const $customInputWithAbsoluteAccessoriesStyle: ViewStyle = {
+const $customInputWithAbsoluteAccessoriesStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginHorizontal: spacing.xxl,
-}
+})
 
-const $customLeftAccessoryStyle: ViewStyle = {
+const $customLeftAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   position: "absolute",
   left: 0,
-}
+})
 
-const $customRightAccessoryStyle: ViewStyle = {
+const $customRightAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   position: "absolute",
   right: 0,
-}
+})
 
 export const DemoTextField: Demo = {
   name: "TextField",
   description: "TextField component allows for the entering and editing of text.",
-  data: [
+  data: ({ themed }) => [
     <DemoUseCase
       name="Statuses"
       description="There is a status prop - similar to `preset` in other components, but affects component functionality as well."
@@ -132,7 +132,7 @@ export const DemoTextField: Demo = {
         label="Style Input"
         helper="Via `style` prop"
         value="Laborum cupidatat aliquip sunt sunt voluptate sint sit proident sunt mollit exercitation ullamco ea elit."
-        style={$customInputStyle}
+        style={themed($customInputStyle)}
       />
 
       <DemoDivider size={24} />
@@ -141,8 +141,8 @@ export const DemoTextField: Demo = {
         label="Style Input Wrapper"
         helper="Via `inputWrapperStyle` prop"
         value="Aute velit esse dolore pariatur exercitation irure nulla do sunt in duis mollit duis et."
-        inputWrapperStyle={$customInputWrapperStyle}
-        style={$customInputStyle}
+        inputWrapperStyle={themed($customInputWrapperStyle)}
+        style={themed($customInputStyle)}
       />
 
       <DemoDivider size={24} />
@@ -151,9 +151,9 @@ export const DemoTextField: Demo = {
         label="Style Container"
         helper="Via `containerStyle` prop"
         value="Aliquip proident commodo adipisicing non adipisicing Lorem excepteur ullamco voluptate laborum."
-        style={$customInputStyle}
-        containerStyle={$customContainerStyle}
-        inputWrapperStyle={$customInputWrapperStyle}
+        style={themed($customInputStyle)}
+        containerStyle={themed($customContainerStyle)}
+        inputWrapperStyle={themed($customInputWrapperStyle)}
       />
 
       <DemoDivider size={24} />
@@ -162,11 +162,11 @@ export const DemoTextField: Demo = {
         label="Style Label & Helper"
         helper="Via `LabelTextProps` & `HelperTextProps` style prop"
         value="Ex culpa in consectetur dolor irure velit."
-        style={$customInputStyle}
-        containerStyle={$customContainerStyle}
-        inputWrapperStyle={$customInputWrapperStyle}
-        HelperTextProps={{ style: $customLabelAndHelperStyle }}
-        LabelTextProps={{ style: $customLabelAndHelperStyle }}
+        style={themed($customInputStyle)}
+        containerStyle={themed($customContainerStyle)}
+        inputWrapperStyle={themed($customInputWrapperStyle)}
+        HelperTextProps={{ style: themed($customLabelAndHelperStyle) }}
+        LabelTextProps={{ style: themed($customLabelAndHelperStyle) }}
       />
 
       <DemoDivider size={24} />
@@ -175,14 +175,19 @@ export const DemoTextField: Demo = {
         label="Style Accessories"
         helper="Via `RightAccessory` & `LeftAccessory` style prop"
         value="Aute nisi dolore fugiat anim mollit nulla ex minim ipsum ex elit."
-        style={$customInputWithAbsoluteAccessoriesStyle}
+        style={themed($customInputWithAbsoluteAccessoriesStyle)}
         LeftAccessory={() => (
-          <Icon icon="ladybug" containerStyle={$customLeftAccessoryStyle} color="white" size={41} />
+          <Icon
+            icon="ladybug"
+            containerStyle={themed($customLeftAccessoryStyle)}
+            color="white"
+            size={41}
+          />
         )}
         RightAccessory={() => (
           <Icon
             icon="ladybug"
-            containerStyle={$customRightAccessoryStyle}
+            containerStyle={themed($customRightAccessoryStyle)}
             color="white"
             size={41}
           />

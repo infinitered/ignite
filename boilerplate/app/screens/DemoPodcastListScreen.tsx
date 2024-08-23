@@ -30,14 +30,16 @@ import {
   Screen,
   Switch,
   Text,
-} from "../components"
+} from "app/components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { $styles, colors, spacing } from "../theme"
+import type { ThemedStyle } from "app/theme"
+import { $styles } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import { useAppTheme } from "app/utils/useAppTheme"
 
 const ICON_SIZE = 14
 
@@ -49,6 +51,7 @@ const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
     const { episodeStore } = useStores()
+    const { themed } = useAppTheme()
 
     const [refreshing, setRefreshing] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
@@ -72,7 +75,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     return (
       <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
         <ListView<Episode>
-          contentContainerStyle={{ ...$styles.container, ...$listContentContainer }}
+          contentContainerStyle={themed([$styles.container, $listContentContainer])}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}
@@ -84,7 +87,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             ) : (
               <EmptyState
                 preset="generic"
-                style={$emptyState}
+                style={themed($emptyState)}
                 headingTx={
                   episodeStore.favoritesOnly
                     ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
@@ -103,10 +106,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             )
           }
           ListHeaderComponent={
-            <View style={$heading}>
+            <View style={themed($heading)}>
               <Text preset="heading" tx="demoPodcastListScreen.title" />
               {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
-                <View style={$toggle}>
+                <View style={themed($toggle)}>
                   <Switch
                     value={episodeStore.favoritesOnly}
                     onValueChange={() =>
@@ -143,8 +146,12 @@ const EpisodeCard = observer(function EpisodeCard({
   onPressFavorite: () => void
   isFavorite: boolean
 }) {
-  const liked = useSharedValue(isFavorite ? 1 : 0)
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
 
+  const liked = useSharedValue(isFavorite ? 1 : 0)
   const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
@@ -221,7 +228,7 @@ const EpisodeCard = observer(function EpisodeCard({
             <Animated.View
               style={[
                 $styles.row,
-                $iconContainer,
+                themed($iconContainer),
                 StyleSheet.absoluteFill,
                 animatedLikeButtonStyles,
               ]}
@@ -232,7 +239,9 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={[$styles.row, $iconContainer, animatedUnlikeButtonStyles]}>
+            <Animated.View
+              style={[$styles.row, themed($iconContainer), animatedUnlikeButtonStyles]}
+            >
               <Icon
                 icon="heart"
                 size={ICON_SIZE}
@@ -242,26 +251,26 @@ const EpisodeCard = observer(function EpisodeCard({
           </View>
         )
       },
-    [],
+    [themed],
   )
 
   return (
     <Card
-      style={$item}
+      style={themed($item)}
       verticalAlignment="force-footer-bottom"
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
       HeadingComponent={
-        <View style={[$styles.row, $metadata]}>
+        <View style={[$styles.row, themed($metadata)]}>
           <Text
-            style={$metadataText}
+            style={themed($metadataText)}
             size="xxs"
             accessibilityLabel={episode.datePublished.accessibilityLabel}
           >
             {episode.datePublished.textLabel}
           </Text>
           <Text
-            style={$metadataText}
+            style={themed($metadataText)}
             size="xxs"
             accessibilityLabel={episode.duration.accessibilityLabel}
           >
@@ -271,12 +280,12 @@ const EpisodeCard = observer(function EpisodeCard({
       }
       content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
       {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      RightComponent={<Image source={imageUri} style={themed($itemThumbnail)} />}
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
           onLongPress={handlePressFavorite}
-          style={[$favoriteButton, isFavorite && $unFavoriteButton]}
+          style={themed([$favoriteButton, isFavorite && $unFavoriteButton])}
           accessibilityLabel={
             isFavorite
               ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
@@ -301,52 +310,55 @@ const EpisodeCard = observer(function EpisodeCard({
 })
 
 // #region Styles
-const $listContentContainer: ContentStyle = {
+const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
+  paddingHorizontal: spacing.lg,
+  paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,
-}
+})
 
-const $heading: ViewStyle = {
+const $heading: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   padding: spacing.md,
   marginTop: spacing.md,
   minHeight: 120,
-}
+  backgroundColor: colors.palette.neutral100,
+})
 
-const $itemThumbnail: ImageStyle = {
+const $itemThumbnail: ThemedStyle<ImageStyle> = ({ spacing }) => ({
   marginTop: spacing.sm,
   borderRadius: 50,
   alignSelf: "flex-start",
-}
+})
 
-const $toggle: ViewStyle = {
+const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.md,
-}
+})
 
 const $labelStyle: TextStyle = {
   textAlign: "left",
 }
 
-const $iconContainer: ViewStyle = {
+const $iconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   height: ICON_SIZE,
   width: ICON_SIZE,
   marginEnd: spacing.sm,
-}
+})
 
-const $metadata: TextStyle = {
+const $metadata: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.textDim,
   marginTop: spacing.xs,
-}
+})
 
-const $metadataText: TextStyle = {
+const $metadataText: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.textDim,
   marginEnd: spacing.md,
   marginBottom: spacing.xs,
-}
+})
 
-const $favoriteButton: ViewStyle = {
+const $favoriteButton: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   borderRadius: 17,
   marginTop: spacing.md,
   justifyContent: "flex-start",
@@ -357,16 +369,16 @@ const $favoriteButton: ViewStyle = {
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
-}
+})
 
-const $unFavoriteButton: ViewStyle = {
+const $unFavoriteButton: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderColor: colors.palette.primary100,
   backgroundColor: colors.palette.primary100,
-}
+})
 
-const $emptyState: ViewStyle = {
+const $emptyState: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.xxl,
-}
+})
 
 const $emptyStateImage: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],
