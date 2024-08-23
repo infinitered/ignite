@@ -187,7 +187,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           preset="fixed"
           safeAreaEdges={["top"]}
           contentContainerStyle={$styles.flex1}
-          {...(isAndroid ? { KeyboardAvoidingViewProps: {behavior: undefined} } : {})}
+          {...(isAndroid ? { KeyboardAvoidingViewProps: { behavior: undefined } } : {})}
         >
           <DrawerIconButton onPress={toggleDrawer} />
 
