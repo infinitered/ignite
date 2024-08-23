@@ -5,7 +5,6 @@ import {
   ImageStyle,
   Platform,
   SectionList,
-  SectionListRenderItemInfo,
   TextStyle,
   View,
   ViewStyle,
