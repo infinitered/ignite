@@ -123,7 +123,7 @@ const hi: Translations = {
         "अभी तक कोई पसंदीदा नहीं जोड़ा गया है। इसे अपने पसंदीदा में जोड़ने के लिए किसी एपिसोड पर दिल पर टैप करें!",
     },
   },
-  /// @demo remove-block-start
+  // @demo remove-block-start
   ...demoHi,
   // @demo remove-block-end
 }
