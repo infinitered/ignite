@@ -200,19 +200,22 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         >
           <DrawerIconButton onPress={toggleDrawer} />
 
-          <SectionListWithKeyboardAwareScrollView<ReactElement>
+          <SectionListWithKeyboardAwareScrollView<ReactElement[]>
             ref={listRef}
             contentContainerStyle={themed($sectionListContentContainer)}
             stickySectionHeadersEnabled={false}
             sections={Object.values(Demos).map((d) => ({
-              ...d,
+              name: d.name,
+              description: d.description,
               data: [d.data({ theme, themed })],
             }))}
-            renderItem={({ item, index: sectionIndex }) =>
-              item.map((demo: ReactElement, demoIndex: number) => (
-                <View key={`${sectionIndex}-${demoIndex}`}>{demo}</View>
-              ))
-            }
+            renderItem={({ item, index: sectionIndex }) => (
+              <View>
+                {item.map((demo: ReactElement, demoIndex: number) => (
+                  <View key={`${sectionIndex}-${demoIndex}`}>{demo}</View>
+                ))}
+              </View>
+            )}
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={
               <View style={themed($heading)}>
