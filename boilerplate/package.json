@@ -5,8 +5,9 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
-    "lint": "eslint App.tsx app test --fix --ext .js,.ts,.tsx && npm run format",
+    "format": "eslint . --fix",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
     "patch": "patch-package",
     "test": "jest",
     "test:watch": "jest --watch",
