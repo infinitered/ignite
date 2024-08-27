@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { ComponentType, FC, useEffect, useMemo } from "react"
+import React, { ComponentType, FC, useCallback, useEffect, useMemo } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -180,6 +180,11 @@ const EpisodeCard = observer(function EpisodeCard({
     }
   })
 
+  const handlePressFavorite = useCallback(() => {
+    onPressFavorite()
+    liked.value = withSpring(liked.value ? 0 : 1)
+  }, [liked, onPressFavorite])
+
   /**
    * Android has a "longpress" accessibility action. iOS does not, so we just have to use a hint.
    * @see https://reactnative.dev/docs/accessibility#accessibilityactions
@@ -208,13 +213,8 @@ const EpisodeCard = observer(function EpisodeCard({
           },
         },
       }),
-    [episode, isFavorite],
+    [episode.title, handlePressFavorite, isFavorite],
   )
-
-  const handlePressFavorite = () => {
-    onPressFavorite()
-    liked.value = withSpring(liked.value ? 0 : 1)
-  }
 
   const handlePressCard = () => {
     openLinkInBrowser(episode.enclosure.link)
