@@ -37,7 +37,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       setAuthPassword("")
       setAuthEmail("")
     }
-  }, [])
+  }, [setAuthEmail])
 
   const error = isSubmitted ? validationError : ""
 
