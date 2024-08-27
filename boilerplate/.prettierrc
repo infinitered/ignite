@@ -2,5 +2,6 @@
   "printWidth": 100,
   "semi": false,
   "singleQuote": false,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "quoteProps": "consistent"
 }

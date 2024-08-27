@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key, react-native/no-inline-styles */
+/* eslint-disable react/jsx-key */
 import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import {
