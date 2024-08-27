@@ -5,5 +5,12 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "@typescript-eslint/array-type": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
   },
 }

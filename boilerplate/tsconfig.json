@@ -10,7 +10,6 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
     "sourceMap": true,
     "target": "esnext",
     "lib": ["esnext", "dom"],
