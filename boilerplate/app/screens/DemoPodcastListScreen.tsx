@@ -251,7 +251,7 @@ const EpisodeCard = observer(function EpisodeCard({
           </View>
         )
       },
-    [themed],
+    [animatedLikeButtonStyles, animatedUnlikeButtonStyles, colors, themed],
   )
 
   return (
