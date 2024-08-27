@@ -66,7 +66,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   const resetTheme = React.useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setThemeContextOverride(undefined)
-  }, [themeContext, setThemeContextOverride])
+  }, [setThemeContextOverride])
 
   return (
     <Screen
