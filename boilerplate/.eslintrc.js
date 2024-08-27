@@ -4,5 +4,6 @@ module.exports = {
   plugins: ["prettier"],
   rules: {
     "prettier/prettier": "error",
+    "@typescript-eslint/array-type": 0,
   },
 }
