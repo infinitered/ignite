@@ -804,7 +804,7 @@ module.exports = {
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
         // Prebuild also handles the packager install
-        const prebuildMessage = ` Generating native template via Expo Prebuild`
+        const prebuildMessage = `Generating native template via Expo Prebuild`
         startSpinner(prebuildMessage)
         await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
         stopSpinner(prebuildMessage, "🛠️")
@@ -813,7 +813,7 @@ module.exports = {
 
       // #region Remove Demo code
       const removeDemoPart = removeDemo === true ? "code" : "markup"
-      startSpinner(` Removing fancy demo ${removeDemoPart}`)
+      startSpinner(`Removing fancy demo ${removeDemoPart}`)
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
@@ -824,7 +824,7 @@ module.exports = {
         log(e)
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
-      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
+      stopSpinner(`Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
       // #region Expo Router edits
@@ -877,7 +877,7 @@ module.exports = {
       // #endregion
 
       // #region Run Format
-      const formattingMessage = ` Cleaning up formatting`
+      const formattingMessage = `Cleaning up`
       startSpinner(formattingMessage)
       if (installDeps === true) {
         // Make sure all our modifications are formatted nicely
