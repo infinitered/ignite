@@ -799,7 +799,7 @@ module.exports = {
       stopSpinner(" Configuring app.json", "⚙️")
       // #endregion
 
-      // #region Run Format
+      // #region Run Prebuild
       // we can't run this option if we didn't install deps
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
@@ -808,9 +808,6 @@ module.exports = {
         startSpinner(prebuildMessage)
         await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
         stopSpinner(prebuildMessage, "🛠️")
-
-        // Make sure all our modifications are formatted nicely
-        await packager.run("format", { ...packagerOptions, silent: !debug })
       }
       // #endregion
 
@@ -877,6 +874,24 @@ module.exports = {
         p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
       }
       stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
+      // #endregion
+
+      // #region Run Format
+      const formattingMessage = ` Cleaning up formatting`
+      startSpinner(formattingMessage)
+      if (installDeps === true) {
+        // Make sure all our modifications are formatted nicely
+        await packager.run("format", { ...packagerOptions })
+      } else {
+        // if our linting configuration is not installed, try format
+        // using prettier to make sure it's reasonably close, but this will skip
+        // eslint issues
+        await system.run(`npx prettier@3.3.3 --write .`, {
+          trim: true,
+          cwd: targetPath,
+        })
+      }
+      stopSpinner(formattingMessage, "🧽")
       // #endregion
 
       // #region Format generator templates EOL for Windows
