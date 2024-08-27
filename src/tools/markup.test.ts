@@ -14,7 +14,6 @@ describe("markup", () => {
     it(`should remove line with "// ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveCurrentLine}" comment`, () => {
       const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
-        import React from "react"
         import { StyleProp, View, ViewStyle } from "react-native"
         
         interface DemoDividerProps {
@@ -51,7 +50,6 @@ describe("markup", () => {
     it(`should remove line with "/* ${TEST_MARKUP_PREFIX} ${MarkupComments.RemoveCurrentLine} */" comment`, () => {
       const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
-        import React from "react"
         import { StyleProp, View, ViewStyle } from "react-native"
         
         interface DemoDividerProps {
@@ -330,7 +328,7 @@ describe("markup", () => {
 
 const WelcomeScreen = /* jsx */ `
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
+import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line
@@ -459,7 +457,6 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
-import React from "react"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line

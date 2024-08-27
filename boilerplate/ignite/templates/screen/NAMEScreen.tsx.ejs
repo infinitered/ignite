@@ -12,7 +12,7 @@ patches:
   insert: "<Stack.Screen name=\"<%= props.pascalCaseName %>\" component={Screens.<%= props.pascalCaseName %>Screen} />\n\t\t\t{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}"
   skip: <%= props.skipIndexFile %>
 ---
-import React, { FC } from "react"
+import { FC } from "react"
 import { observer } from "mobx-react-lite" // @mst remove-current-line
 import { ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"

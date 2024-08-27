@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite" // @mst remove-current-line
-import React, { FC } from "react"
+import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line

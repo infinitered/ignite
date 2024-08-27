@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { ComponentType, FC, useCallback, useEffect, useMemo } from "react"
+import { ComponentType, FC, useCallback, useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -53,8 +53,8 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     const { episodeStore } = useStores()
     const { themed } = useAppTheme()
 
-    const [refreshing, setRefreshing] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(false)
+    const [refreshing, setRefreshing] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     // initially, kick off a background refresh without the refreshing UI
     useEffect(() => {

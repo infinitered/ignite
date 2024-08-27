@@ -1,5 +1,5 @@
 import { Link, RouteProp, useRoute } from "@react-navigation/native"
-import React, { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
+import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
 import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
@@ -115,7 +115,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     )
 
     // handle Web links
-    React.useEffect(() => {
+    useEffect(() => {
       if (params !== undefined && Object.keys(params).length > 0) {
         const demoValues = Object.values(Demos)
         const findSectionIndex = demoValues.findIndex(

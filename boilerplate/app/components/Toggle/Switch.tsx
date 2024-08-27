@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import {
   Animated,
   Image,
@@ -116,10 +116,7 @@ function SwitchInput(props: SwitchInputProps) {
   })()
 
   const rtlAdjustment = isRTL ? -1 : 1
-  const $themedSwitchInner = React.useMemo(
-    () => themed([$styles.toggleInner, $switchInner]),
-    [themed],
-  )
+  const $themedSwitchInner = useMemo(() => themed([$styles.toggleInner, $switchInner]), [themed])
 
   const offsetLeft = ($innerStyleOverride?.paddingStart ||
     $innerStyleOverride?.paddingLeft ||

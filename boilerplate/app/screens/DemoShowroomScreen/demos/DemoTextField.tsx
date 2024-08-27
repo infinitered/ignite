@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key */
-import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { Icon, TextField } from "../../../components"
 import type { ThemedStyle } from "../../../theme"

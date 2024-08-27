@@ -13,7 +13,6 @@ import {
 } from \\"@react-navigation/native\\"
 import { createNativeStackNavigator, NativeStackScreenProps } from \\"@react-navigation/native-stack\\"
 import { observer } from \\"mobx-react-lite\\"
-import React from \\"react\\"
 import * as Screens from \\"app/screens\\"
 import Config from \\"../config\\"
 import { navigationRef, useBackButtonHandler } from \\"./navigationUtilities\\"
@@ -92,7 +91,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
 exports[`markup remove should remove all comments in WelcomeScreen 1`] = `
 "
 import { observer } from \\"mobx-react-lite\\"
-import React, { FC } from \\"react\\"
+import { FC } from \\"react\\"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from \\"react-native\\"
 import {
   Text,
@@ -222,7 +221,6 @@ exports[`markup removeCurrentLine should remove line with "# @test remove-curren
 
 exports[`markup removeCurrentLine should remove line with "/* @test remove-current-line */" comment 1`] = `
 "
-        import React from \\"react\\"
         import { StyleProp, View, ViewStyle } from \\"react-native\\"
         
         interface DemoDividerProps {
@@ -253,7 +251,6 @@ exports[`markup removeCurrentLine should remove line with "/* @test remove-curre
 
 exports[`markup removeCurrentLine should remove line with "// @test remove-current-line" comment 1`] = `
 "
-        import React from \\"react\\"
         import { StyleProp, View, ViewStyle } from \\"react-native\\"
         
         interface DemoDividerProps {

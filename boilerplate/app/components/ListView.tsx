@@ -1,4 +1,4 @@
-import React, { forwardRef, PropsWithoutRef } from "react"
+import { ForwardedRef, forwardRef, PropsWithoutRef, ReactElement, RefObject } from "react"
 import { FlatList } from "react-native"
 import { isRTL } from "app/i18n"
 import { FlashList, FlashListProps } from "@shopify/flash-list"
@@ -21,11 +21,11 @@ export type ListViewProps<T> = PropsWithoutRef<FlashListProps<T>>
  * @see {@link https://github.com/Shopify/flash-list/issues/544|RTL Bug Android}
  * @see {@link https://github.com/Shopify/flash-list/issues/840|Flashlist Not Support RTL}
  * @param {FlashListProps | FlatListProps} props - The props for the `ListView` component.
- * @param {React.RefObject<ListViewRef>} forwardRef - An optional forwarded ref.
+ * @param {RefObject<ListViewRef>} forwardRef - An optional forwarded ref.
  * @returns {JSX.Element} The rendered `ListView` component.
  */
 const ListViewComponent = forwardRef(
-  <T,>(props: ListViewProps<T>, ref: React.ForwardedRef<ListViewRef<T>>) => {
+  <T,>(props: ListViewProps<T>, ref: ForwardedRef<ListViewRef<T>>) => {
     const ListComponentWrapper = isRTL ? FlatList : FlashList
 
     return <ListComponentWrapper {...props} ref={ref} />
@@ -36,6 +36,6 @@ ListViewComponent.displayName = "ListView"
 
 export const ListView = ListViewComponent as <T>(
   props: ListViewProps<T> & {
-    ref?: React.RefObject<ListViewRef<T>>
+    ref?: RefObject<ListViewRef<T>>
   },
-) => React.ReactElement
+) => ReactElement

@@ -1,4 +1,4 @@
-import React, { ComponentType, Fragment, ReactElement } from "react"
+import { ComponentType, Fragment, ReactElement } from "react"
 import {
   StyleProp,
   TextStyle,

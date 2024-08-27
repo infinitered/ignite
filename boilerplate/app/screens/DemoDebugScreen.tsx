@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC, useCallback, useMemo } from "react"
 import * as Application from "expo-application"
 import {
   LayoutAnimation,
@@ -38,7 +38,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   // @ts-expect-error
   const usingFabric = global.nativeFabricUIManager != null
 
-  const demoReactotron = React.useMemo(
+  const demoReactotron = useMemo(
     () => async () => {
       if (__DEV__) {
         console.tron.display({
@@ -57,14 +57,14 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     [],
   )
 
-  const toggleTheme = React.useCallback(() => {
+  const toggleTheme = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut) // Animate the transition
     setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
   }, [themeContext, setThemeContextOverride])
 
   // Resets the theme to the system theme
   const colorScheme = useColorScheme()
-  const resetTheme = React.useCallback(() => {
+  const resetTheme = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setThemeContextOverride(undefined)
   }, [setThemeContextOverride])

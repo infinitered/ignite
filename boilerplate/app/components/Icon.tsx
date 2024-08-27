@@ -1,4 +1,3 @@
-import * as React from "react"
 import { ComponentType } from "react"
 import {
   Image,

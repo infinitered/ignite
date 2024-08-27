@@ -10,13 +10,13 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite" // @mst remove-current-line
-import React from "react"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useAppTheme, useThemeProvider } from "app/utils/useAppTheme"
+import { ComponentProps } from "react"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -96,8 +96,7 @@ const AppStack = observer(function AppStack() {
   // @mst replace-next-line }
 })
 
-export interface NavigationProps
-  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+export interface NavigationProps extends Partial<ComponentProps<typeof NavigationContainer>> {}
 
 // @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
