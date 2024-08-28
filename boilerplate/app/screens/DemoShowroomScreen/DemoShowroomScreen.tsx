@@ -191,7 +191,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         >
           <DrawerIconButton onPress={toggleDrawer} />
 
-          <SectionListWithKeyboardAwareScrollView<ReactElement[]>
+          <SectionListWithKeyboardAwareScrollView
             ref={listRef}
             contentContainerStyle={themed($sectionListContentContainer)}
             stickySectionHeadersEnabled={false}
