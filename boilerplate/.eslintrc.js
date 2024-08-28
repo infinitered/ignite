@@ -27,6 +27,19 @@ module.exports = {
     "@typescript-eslint/no-var-requires": 0,
     // eslint
     "no-use-before-define": 0,
+    "no-restricted-imports": [
+      "error",
+      {
+        paths: [
+          // Prefer named exports from 'react' instead of importing `React`
+          {
+            name: "react",
+            importNames: ["default"],
+            message: "Import named exports from 'react' instead.",
+          },
+        ],
+      },
+    ],
     // reactotron
     "reactotron/no-tron-in-production": "error",
     // eslint-config-standard overrides
