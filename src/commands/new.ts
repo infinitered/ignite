@@ -32,7 +32,7 @@ import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { mstDependenciesToRemove } from "../tools/mst"
 import { findAndRemoveDependencies } from "../tools/dependencies"
-import { demoDependenciesToRemove } from "../tools/demo"
+import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
 type StateMgmt = "mst" | "none"
@@ -658,6 +658,9 @@ module.exports = {
       if (removeDemo) {
         log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
+        const patchesToRemove = findDemoPatches()
+        log(`Removing demo patches... ${patchesToRemove}`)
+        patchesToRemove.forEach((patch) => filesystem.remove(patch))
       }
 
       if (stateMgmt === "none") {

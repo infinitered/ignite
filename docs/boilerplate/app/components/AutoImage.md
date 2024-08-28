@@ -6,6 +6,8 @@ sidebar_position: 30
 
 Ignite's `AutoImage` Component is an enhanced version of the built-in React Native [Image](https://reactnative.dev/docs/image) component. It automatically resizes the image view to fit a max width or height constraint
 
+![autoimage-component](https://github.com/user-attachments/assets/8fba1f1d-81d2-4f0d-84bb-8286b048ff16)
+
 ```tsx
 <AutoImage
   source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}

@@ -4,7 +4,7 @@ import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } 
 import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
-import { isRTL } from "../../i18n"
+import { TxKeyPath, isRTL, translate } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import type { Theme, ThemedStyle } from "app/theme"
 import { $styles } from "app/theme"
@@ -17,7 +17,7 @@ const logo = require("../../../assets/images/logo.png")
 
 export interface Demo {
   name: string
-  description: string
+  description: TxKeyPath
   data: ({ themed, theme }: { themed: any; theme: Theme }) => ReactElement[]
 }
 
@@ -171,7 +171,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data({ theme, themed }).map((u) => u.props.name as string),
+                useCases: d.data({ theme, themed }).map((u) => translate(u.props.name)),
               }))}
               keyExtractor={(item) => item.name}
               renderItem={({ item, index: sectionIndex }) => (
@@ -210,7 +210,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
                   <Text preset="heading" style={themed($demoItemName)}>
                     {section.name}
                   </Text>
-                  <Text style={themed($demoItemDescription)}>{section.description}</Text>
+                  <Text style={themed($demoItemDescription)}>{translate(section.description)}</Text>
                 </View>
               )
             }}

@@ -1,5 +1,5 @@
 import * as Localization from "expo-localization"
-import i18n from "i18n-js"
+import { I18n } from "i18n-js"
 import { I18nManager } from "react-native"
 
 // if English isn't your default language, move Translations to the appropriate language file.
@@ -9,14 +9,19 @@ import ko from "./ko"
 import fr from "./fr"
 import jp from "./jp"
 
-i18n.fallbacks = true
+// Migration guide from i18n 3.x -> 4.x:
+// https://github.com/fnando/i18n-js/blob/main/MIGRATING_FROM_V3_TO_V4.md
+// https://github.com/fnando/i18n/discussions/24
 
 // to use regional locales use { "en-US": enUS } etc
-i18n.translations = { ar, en, "en-US": en, ko, fr, jp }
-
 const fallbackLocale = "en-US"
+export const i18n = new I18n(
+  { ar, en, "en-US": en, ko, fr, jp },
+  { locale: fallbackLocale, defaultLocale: fallbackLocale, enableFallback: true },
+)
+
 const systemLocale = Localization.getLocales()[0]
-const systemLocaleTag = systemLocale?.languageTag ?? "en-US"
+const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
 
 if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
   // if specific locales like en-FI or en-US is available, set it
