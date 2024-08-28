@@ -113,7 +113,9 @@ export const DemoText: Demo = {
       description="demoText.useCase.styling.description"
     >
       <Text>
-        <Text style={{ color: theme.colors.error }}>{translate("demoText.useCase.styling.text")}</Text>
+        <Text style={{ color: theme.colors.error }}>
+          {translate("demoText.useCase.styling.text")}
+        </Text>
         {` `}
         <Text
           style={{
