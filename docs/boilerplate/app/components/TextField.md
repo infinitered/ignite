@@ -8,6 +8,8 @@ Ignite's `TextField` Component is an enhanced version of the built-in React Nati
 
 With this component you will be able to standardise TextInput component across your app.
 
+![textfield-component](https://github.com/user-attachments/assets/cfdc97dc-5692-4286-8682-9243ee0e7650)
+
 ```tsx
 import { TextField } from '../components';
 

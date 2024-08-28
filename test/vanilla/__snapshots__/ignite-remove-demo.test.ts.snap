@@ -5,6 +5,11 @@ exports[`ignite-cli remove-demo should print the expected response 1`] = `
    Removing demo code from '/user/home/ignite'
 removing file /user/home/ignite/.maestro/FavoritePodcast.yaml
 removing file /user/home/ignite/.maestro/Login.yaml
+removing file /user/home/ignite/app/i18n/demo-ar.ts
+removing file /user/home/ignite/app/i18n/demo-en.ts
+removing file /user/home/ignite/app/i18n/demo-fr.ts
+removing file /user/home/ignite/app/i18n/demo-jp.ts
+removing file /user/home/ignite/app/i18n/demo-ko.ts
 removing file /user/home/ignite/app/models/AuthenticationStore.ts
 removing file /user/home/ignite/app/models/Episode.test.ts
 removing file /user/home/ignite/app/models/Episode.ts
@@ -33,6 +38,11 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/.maestro/Login.yaml
    Found '@demo remove-current-line' in /user/home/ignite/app/components/Icon.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ar.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-ar.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-en.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-fr.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-jp.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-ko.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/en.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/fr.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/jp.ts

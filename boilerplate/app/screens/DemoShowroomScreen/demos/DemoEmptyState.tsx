@@ -7,32 +7,31 @@ import { DemoUseCase } from "../DemoUseCase"
 
 export const DemoEmptyState: Demo = {
   name: "EmptyState",
-  description:
-    "A component to use when there is no data to display. It can be utilized to direct the user what to do next",
+  description: "demoEmptyState.description",
   data: ({ theme }) => [
     <DemoUseCase
-      name="Presets"
-      description="You can create different text/image sets. One is predefined called `generic`. Note, there's no default in case you want to have a completely custom EmptyState."
+      name="demoEmptyState.useCase.presets.name"
+      description="demoEmptyState.useCase.presets.description"
     >
       <EmptyState preset="generic" />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
+      name="demoEmptyState.useCase.passingContent.name"
+      description="demoEmptyState.useCase.passingContent.description"
     >
       <EmptyState
         imageSource={require("../../../../assets/images/logo.png")}
-        heading="Customize Image"
-        content="You can pass in any image source."
+        headingTx="demoEmptyState.useCase.passingContent.customizeImageHeading"
+        contentTx="demoEmptyState.useCase.passingContent.customizeImageContent"
       />
 
       <DemoDivider size={30} line />
 
       <EmptyState
-        heading="Via `heading` Prop"
-        content="Via `content` prop."
-        button="Via `button` Prop"
+        headingTx="demoEmptyState.useCase.passingContent.viaHeadingProp"
+        contentTx="demoEmptyState.useCase.passingContent.viaContentProp"
+        buttonTx="demoEmptyState.useCase.passingContent.viaButtonProp"
       />
 
       <DemoDivider size={30} line />
@@ -47,7 +46,10 @@ export const DemoEmptyState: Demo = {
       />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="demoEmptyState.useCase.styling.name"
+      description="demoEmptyState.useCase.styling.description"
+    >
       <EmptyState
         preset="generic"
         style={{ backgroundColor: theme.colors.error, paddingVertical: 20 }}

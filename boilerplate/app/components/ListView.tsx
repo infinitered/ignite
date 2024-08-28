@@ -10,7 +10,7 @@ export type ListViewProps<T> = PropsWithoutRef<FlashListProps<T>>
 /**
  * This is a Higher Order Component meant to ease the pain of using @shopify/flash-list
  * when there is a chance that a user would have their device language set to an
- * RTL language like Arabic or Punjabi. This component will use react-native's
+ * RTL language like Arabic or Persian. This component will use react-native's
  * FlatList if the user's language is RTL or FlashList if the user's language is LTR.
  *
  * Because FlashList's props are a superset of FlatList's, you must pass estimatedItemSize
