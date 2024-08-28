@@ -98,12 +98,13 @@ Starts the interactive prompt for generating a new Ignite project. Any options n
 - `--overwrite` overwrite the target directory if it exists
 - `--targetPath` string, specify a target directory where the project should be created
 - `--removeDemo` will remove the boilerplate demo code after project creation
-- `--mst` flag to specify whether to include MobX-State-Tree in project (can only be set to `false` if `--removeDemo=true`)
+- `--state` string, one of `mst` or `none` to include MobX-State-Tree in project (can only be set to `none` if `--removeDemo=true`)
 - `--useCache` flag specifying to use dependency cache for quicker installs
 - `--no-timeout` flag to disable the timeout protection (useful for slow internet connections)
 - `--yes` accept all prompt defaults
-- `--workflow` string, one of `expo`, `cng` or `manual` for project initialization
+- `--workflow` string, one of `cng` or `manual` for project initialization
 - `--experimental` comma separated string, indicates experimental features (which may or may not be stable) to turn on during installation. **A CNG workflow is require for these flags** `--workflow=cng`
+  - `expo-router` converts the project to [Expo Router](https://docs.expo.dev/router/introduction/) from React Navigation
   - `new-arch` enables [The New Architecture](https://reactnative.dev/docs/new-architecture-intro)
   - `expo-canary` uses Expo's highly experimental canary release instead of the la test stable SDK
   - `expo-beta` uses Expo's latest beta SDK available instead of the latest stable SDK

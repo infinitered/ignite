@@ -5,6 +5,10 @@ import {
   copyBoilerplate,
   renameReactNativeApp,
   replaceMaestroBundleIds,
+  createExpoRouterScreenTemplate,
+  refactorExpoRouterReactotronCmds,
+  updateExpoRouterSrcDir,
+  cleanupExpoRouterConversion,
 } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -31,6 +35,7 @@ import { findAndRemoveDependencies } from "../tools/dependencies"
 import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
+type StateMgmt = "mst" | "none"
 
 export interface Options {
   /**
@@ -133,6 +138,7 @@ export interface Options {
    * and include them in .gitignore or not
    *
    * Input Source: `prompt.ask`| `parameter.option`
+   * @default cng
    */
   workflow?: Workflow
   /**
@@ -145,9 +151,9 @@ export interface Options {
    * Whether or not to include MobX-State-Tree boilerplate code
    *
    * Input Source: `prompt.ask` | `parameter.option`
-   * @default true
+   * @default mst
    */
-  mst?: boolean
+  state?: StateMgmt
 }
 
 module.exports = {
@@ -283,7 +289,7 @@ module.exports = {
     const defaultWorkflow = "cng"
     let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
-      const useExpoResponse = await prompt.ask<{ workflow: "cng" | "manual" }>(() => ({
+      const useExpoResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
         type: "select",
         name: "workflow",
         message: "How do you want to manage Native code?",
@@ -344,15 +350,15 @@ module.exports = {
     // #endregion
 
     // #region Prompt to Remove MobX-State-Tree code
-    const defaultMST = true
-    let includeMST = useDefault(options.mst) ? defaultMST : boolFlag(options.mst)
+    const defaultMST = "mst"
+    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
 
-    if (includeMST === undefined) {
+    if (stateMgmt === undefined) {
       if (!removeDemo) {
-        includeMST = true
+        stateMgmt = "mst"
       } else {
         // only ask if we're removing the demo code
-        const includeMSTResponse = await prompt.ask<{ includeMST: boolean }>(() => ({
+        const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
           type: "confirm",
           name: "includeMST",
           message: "Include MobX-State-Tree code? (recommended)",
@@ -360,17 +366,16 @@ module.exports = {
           format: prettyPrompt.format.boolean,
           prefix,
         }))
-        includeMST = includeMSTResponse.includeMST
+        stateMgmt = includeMSTResponse.includeMST
       }
     }
 
-    if (!removeDemo && includeMST === false) {
+    if (!removeDemo && stateMgmt === "none") {
       p()
       p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
-      p(yellow(`Setting includeMST to true.`))
-      includeMST = true
+      p(yellow(`Setting --state=mst`))
+      stateMgmt = "mst"
     }
-
     // #endregion
 
     // #region Packager
@@ -451,6 +456,7 @@ module.exports = {
     // #region Experimental Features parsing
     let newArch
     let expoVersion
+    let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
@@ -458,12 +464,50 @@ module.exports = {
       if (flag === "new-arch") {
         newArch = true
       } else if (flag.indexOf("expo-") > -1) {
-        expoVersion = flag.substring(5)
+        if (flag !== "expo-router") {
+          expoVersion = flag.substring(5)
+        } else {
+          // user wants to convert to expo-router
+          // force demo code removal for easier conversion
+          // maybe one day convert the demo app
+          expoRouter = true
+
+          if (!removeDemo) {
+            p()
+            p(
+              yellow(
+                `Enabling Expo Router will currently remove the demo application. To continue with the demo app, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/ExpoRouter`,
+              ),
+            )
+            p(yellow(`Setting --remove-demo=true`))
+            removeDemo = true
+          }
+        }
       }
     })
     // #endregion
 
     // #region Prompt to enable experimental features
+
+    // Expo Router
+    const defaultExpoRouter = false
+    let experimentalExpoRouter = useDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
+    if (experimentalExpoRouter === undefined) {
+      const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalExpoRouter",
+        message: "[Experimental] Expo Router for navigation?",
+        initial: defaultExpoRouter,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalExpoRouter = expoRouterResponse.experimentalExpoRouter
+
+      // update experimental flags if needed for buildCliCommand output
+      if (experimentalExpoRouter && !experimentalFlags.includes("expo-router")) {
+        experimentalFlags.push("expo-router")
+      }
+    }
 
     // New Architecture
     const defaultNewArch = false
@@ -472,13 +516,18 @@ module.exports = {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
-        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        message: "[Experimental] the New Architecture?",
         initial: defaultNewArch,
         format: prettyPrompt.format.boolean,
         prefix,
       }))
       experimentalNewArch = newArchResponse.experimentalNewArch
+      // update experimental flags if needed for buildCliCommand output
+      if (experimentalNewArch && !experimentalFlags.includes("new-arch")) {
+        experimentalFlags.push("new-arch")
+      }
     }
+
     // #endregion
 
     // #region Debug
@@ -568,7 +617,29 @@ module.exports = {
         .replace(/HelloWorld/g, projectName)
         .replace(/hello-world/g, projectNameKebab)
 
-      // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
+      // add in expo-router package
+      if (experimentalExpoRouter) {
+        // find "expo-localization" line and append "expo-router" line after it
+        packageJsonRaw = packageJsonRaw.replace(
+          /"expo-localization": ".*",/g,
+          `"expo-localization": "~15.0.3",${EOL}    "expo-router":  "~3.5.17",`,
+        )
+
+        // replace "main" entry point from App.js to "expo-router/entry"
+        packageJsonRaw = packageJsonRaw.replace(/"main": ".*",/g, `"main": "expo-router/entry",`)
+
+        // replace format and lint scripts
+        packageJsonRaw = packageJsonRaw.replace(
+          /"format": ".*",/g,
+          `"format": "prettier --write \\"src/**/*.{js,jsx,json,md,ts,tsx}\\"",`,
+        )
+        packageJsonRaw = packageJsonRaw.replace(
+          /"lint": ".*",/g,
+          `"lint": "eslint src test --fix --ext .js,.ts,.tsx && npm run format",`,
+        )
+      }
+
+      // If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
       packageJsonRaw = packageJsonRaw
         .replace(/start --android/g, "run:android")
         .replace(/start --ios/g, "run:ios")
@@ -583,7 +654,7 @@ module.exports = {
         packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
       }
 
-      // - If we're removing the demo code, clean up some dependencies that are no longer needed
+      // If we're removing the demo code, clean up some dependencies that are no longer needed
       if (removeDemo) {
         log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
@@ -592,14 +663,13 @@ module.exports = {
         patchesToRemove.forEach((patch) => filesystem.remove(patch))
       }
 
-      if (!includeMST) {
+      if (stateMgmt === "none") {
         log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
-      // - Then write it back out.
+      // Then write it back out.
       const packageJson = JSON.parse(packageJsonRaw)
-
       write("./package.json", packageJson)
       // #endregion
 
@@ -674,12 +744,12 @@ module.exports = {
       if (shouldFreshInstallDeps) {
         const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
         startSpinner(unboxingMessage)
-        await packager.install({ ...packagerOptions, onProgress: log })
 
-        // if we're using the canary build, we need to install the canary versions of supporting Expo packages
-        if (expoVersion) {
-          await system.run("npx expo install --fix", { onProgress: log })
-        }
+        // do base install
+        await packager.install({ ...packagerOptions, onProgress: log })
+        // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
+        await system.run("npx expo install --fix", { onProgress: log })
+
         stopSpinner(unboxingMessage, "🧶")
       }
 
@@ -716,12 +786,17 @@ module.exports = {
           appJson.expo.plugins[1][1].android.newArchEnabled = true
         }
 
+        if (experimentalExpoRouter) {
+          appJson.expo.experiments.typedRoutes = true
+          appJson.expo.plugins.push("expo-router")
+        }
+
         write("./app.json", appJson)
       } catch (e) {
         log(e)
         p(yellow("Unable to configure app.json."))
       }
-      stopSpinner(" Configuring app.json", "")
+      stopSpinner(" Configuring app.json", "⚙️")
       // #endregion
 
       // #region Run Format
@@ -747,9 +822,7 @@ module.exports = {
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
         log(`Ignite bin path: ${IGNITE}`)
-        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, {
-          onProgress: log,
-        })
+        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, { onProgress: log })
       } catch (e) {
         log(e)
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
@@ -757,40 +830,53 @@ module.exports = {
       stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
-      // #region Remove MST code
-      if (includeMST) {
-        // remove MST markup only
-        startSpinner(`Removing MobX-State-Tree markup`)
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-mst-markup "${targetPath}"`, {
-            onProgress: log,
-          })
-        } catch (e) {
-          log(e)
-          p(yellow(`Unable to remove MobX-State-Tree markup`))
-        }
-        stopSpinner(`Removing MobX-State-Tree markup`, "🛠️")
-      } else {
-        startSpinner(`Removing MobX-State-Tree code`)
-        try {
-          const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-          log(`Ignite bin path: ${IGNITE}`)
-          await system.run(`${IGNITE} remove-mst "${targetPath}"`, {
-            onProgress: log,
-          })
-        } catch (e) {
-          log(e)
-          p(
-            yellow(
-              `Unable to remove MobX-State-Tree code. To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`,
-            ),
-          )
-        }
-        stopSpinner(`Removing MobX-State-Tree code`, "🛠️")
-      }
+      // #region Expo Router edits
+      if (experimentalExpoRouter) {
+        const expoRouterMsg = " Recalibrating compass with Expo Router"
+        startSpinner(expoRouterMsg)
 
+        /**
+         * Instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
+         * 1. Move all files from app/ to src/
+         * 2. Update code refs to app/ with src/
+         * 3. Refactor Reactotron commands to use `router` instead of refs to react navigation
+         * 4. Create a screen template that makes sense for Expo Router
+         * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
+         */
+        await system.run(log(`mv app/* src/`))
+        updateExpoRouterSrcDir(toolbox)
+        refactorExpoRouterReactotronCmds(toolbox)
+        createExpoRouterScreenTemplate(toolbox)
+        await cleanupExpoRouterConversion(toolbox)
+
+        stopSpinner(expoRouterMsg, "🧭")
+      } else {
+        // remove src/ dir since not using expo-router
+        await system.run(log(`rm -rf src`))
+      }
+      // #endregion
+
+      // #region Remove MST code
+      const removeMstPart = stateMgmt === "none" ? "code" : "markup"
+      startSpinner(`Removing MobX-State-Tree ${removeMstPart}`)
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const CMD = stateMgmt === "none" ? "remove-mst" : "remove-mst-markup"
+
+        log(`Ignite bin path: ${IGNITE}`)
+        await system.run(
+          `${IGNITE} ${CMD} "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
+          { onProgress: log },
+        )
+      } catch (e) {
+        log(e)
+        const additionalInfo =
+          stateMgmt === "none"
+            ? ` To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`
+            : ""
+        p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
+      }
+      stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
       // #endregion
 
       // #region Format generator templates EOL for Windows
@@ -883,13 +969,13 @@ module.exports = {
           y: yname,
           yes: yname,
           noTimeout,
-          mst: includeMST,
+          state: stateMgmt,
         },
         projectName,
         toolbox,
       })
 
-      p2(`For next time: here are the Ignite options you picked!`)
+      p2(`For next time, here are the Ignite options you picked:`)
 
       // create a multi-line string of the command, where each --flag is on it's own line
       const prettyCliCommand = cliCommand
