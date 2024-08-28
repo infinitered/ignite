@@ -13,6 +13,7 @@ module.exports = {
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
+    const SRC_DIR = parameters.second ?? "app"
     const dryRun = boolFlag(parameters.options.dryRun) ?? false
 
     p()
@@ -54,7 +55,7 @@ module.exports = {
     // Run prettier at the end to clean up any spacing issues
     if (!dryRun) {
       p(`Running prettier to clean up code formatting`)
-      await system.run(`npx prettier@2.8.8 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
+      await system.run(`npx prettier@2.8.8 --write "./${SRC_DIR}/**/*.{js,jsx,json,md,ts,tsx}"`, {
         trim: true,
         cwd: TARGET_DIR,
       })

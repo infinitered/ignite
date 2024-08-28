@@ -6,6 +6,8 @@ sidebar_position: 31
 
 The `Button` component is a wrapper around the [`Pressable`](https://reactnative.dev/docs/pressable) component. Any prop that can be passed to `Pressable` can be passed to `Button` and it will be forwarded. `Button` renders a button with given text in a [`Text`](./Text.md) component or children. It allows you to specify the preset style of the button, you can override both the `Pressable` and `Text` styles.
 
+![button-component](https://github.com/user-attachments/assets/485e0fe9-caba-4477-ae29-39bd30107809)
+
 ```tsx
 <Button
   text="Click It"
