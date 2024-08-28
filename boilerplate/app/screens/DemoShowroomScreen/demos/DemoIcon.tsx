@@ -33,12 +33,11 @@ const $customIcon: ThemedStyle<ImageStyle> = ({ colors }) => ({
 
 export const DemoIcon: Demo = {
   name: "Icon",
-  description:
-    "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.",
+  description: "demoIcon.description",
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="Icons"
-      description="List of icons registered inside the component."
+      name="demoIcon.useCase.icons.name"
+      description="demoIcon.useCase.icons.description"
       layout="row"
       itemStyle={$styles.flexWrap}
     >
@@ -53,50 +52,49 @@ export const DemoIcon: Demo = {
       ))}
     </DemoUseCase>,
 
-    <DemoUseCase name="Size" description="There's a size prop." layout="row">
-      <Icon icon="ladybug" containerStyle={themed($demoIconContainer)} />
-      <Icon icon="ladybug" size={35} containerStyle={themed($demoIconContainer)} />
-      <Icon icon="ladybug" size={50} containerStyle={themed($demoIconContainer)} />
-      <Icon icon="ladybug" size={75} containerStyle={themed($demoIconContainer)} />
-    </DemoUseCase>,
+    <DemoUseCase
+        name="demoIcon.useCase.size.name"
+        description="demoIcon.useCase.size.description"
+        layout="row"
+      >
+        <Icon icon="ladybug" containerStyle={themed($demoIconContainer)} />
+        <Icon icon="ladybug" size={35} containerStyle={themed($demoIconContainer)} />
+        <Icon icon="ladybug" size={50} containerStyle={themed($demoIconContainer)} />
+        <Icon icon="ladybug" size={75} containerStyle={themed($demoIconContainer)} />
+      </DemoUseCase>,
 
-    <DemoUseCase name="Color" description="There's a color prop." layout="row">
-      <Icon
-        icon="ladybug"
-        color={theme.colors.palette.accent500}
-        containerStyle={themed($demoIconContainer)}
-      />
-      <Icon
-        icon="ladybug"
-        color={theme.colors.palette.primary500}
-        containerStyle={themed($demoIconContainer)}
-      />
-      <Icon
-        icon="ladybug"
-        color={theme.colors.palette.secondary500}
-        containerStyle={themed($demoIconContainer)}
-      />
-      <Icon
-        icon="ladybug"
-        color={theme.colors.palette.neutral700}
-        containerStyle={themed($demoIconContainer)}
-      />
-      <Icon
-        icon="ladybug"
-        color={theme.colors.palette.angry500}
-        containerStyle={themed($demoIconContainer)}
-      />
-    </DemoUseCase>,
+      <DemoUseCase
+        name="demoIcon.useCase.color.name"
+        description="demoIcon.useCase.color.description"
+        layout="row"
+      >
+        <Icon icon="ladybug" color={theme.colors.palette.accent500} containerStyle={themed($demoIconContainer)} />
+        <Icon icon="ladybug" color={theme.colors.palette.primary500} containerStyle={themed($demoIconContainer)} />
+        <Icon
+          icon="ladybug"
+          color={theme.colors.palette.secondary500}
+          containerStyle={themed($demoIconContainer)}
+        />
+        <Icon
+          icon="ladybug"
+          color={theme.colors.palette.neutral700}
+          containerStyle={themed($demoIconContainer)}
+        />
+        <Icon
+          icon="ladybug"
+          color={theme.colors.palette.angry500}
+          containerStyle={themed($demoIconContainer)}
+        />
+      </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily." layout="row">
-      <Icon
-        icon="ladybug"
-        style={themed($customIcon)}
-        size={40}
-        containerStyle={themed($customIconContainer)}
-      />
-    </DemoUseCase>,
-  ],
+    <DemoUseCase
+        name="demoIcon.useCase.styling.name"
+        description="demoIcon.useCase.styling.description"
+        layout="row"
+      >
+        <Icon icon="ladybug" style={themed($customIcon)} size={40} containerStyle={themed($customIconContainer)} />
+      </DemoUseCase>,
+      ],
 }
 
 // @demo remove-file

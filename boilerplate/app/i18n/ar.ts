@@ -1,3 +1,4 @@
+import demoAr from "./demo-ar"
 import { Translations } from "./en"
 
 const ar: Translations = {
@@ -117,6 +118,8 @@ const ar: Translations = {
         "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
     },
   },
+  // @demo remove-block-start
+  ...demoAr,
   // @demo remove-block-end
 }
 

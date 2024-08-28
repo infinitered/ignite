@@ -16,6 +16,7 @@ if (__DEV__) {
   // If you turn it off in metro.config.js, you'll have to manually import it.
   require("./devtools/ReactotronConfig.ts")
 }
+import "./utils/gestureHandler"
 import "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
@@ -28,7 +29,6 @@ import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { $styles, customFontsToLoad } from "./theme"
 import Config from "./config"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -106,6 +106,7 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
+<<<<<<< HEAD
         <GestureHandlerRootView style={$styles.flex1}>
           <AppNavigator
             linking={linking}
@@ -113,6 +114,13 @@ function App(props: AppProps) {
             onStateChange={onNavigationStateChange}
           />
         </GestureHandlerRootView>
+=======
+        <AppNavigator
+          linking={linking}
+          initialState={initialNavigationState}
+          onStateChange={onNavigationStateChange}
+        />
+>>>>>>> master
       </ErrorBoundary>
     </SafeAreaProvider>
   )

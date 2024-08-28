@@ -6,6 +6,8 @@ sidebar_position: 35
 
 Ignite's `Icon` Component renders an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. If `onPress` is passed, it will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, otherwise it will use a [`View`](https://reactnative.dev/docs/view) component.
 
+![icon-component](https://github.com/user-attachments/assets/25888c72-8bd9-4cbd-b55f-909b0f6b0bca)
+
 ```tsx
 <Icon icon="ladybug" onPress={() => Alert.alert("Hello")} />
 ```
