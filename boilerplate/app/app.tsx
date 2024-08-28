@@ -27,7 +27,7 @@ import { useInitialRootStore } from "./models" // @mst remove-current-line
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
-import { $styles, customFontsToLoad } from "./theme"
+import { customFontsToLoad } from "./theme"
 import Config from "./config"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
@@ -106,21 +106,11 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-<<<<<<< HEAD
-        <GestureHandlerRootView style={$styles.flex1}>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </GestureHandlerRootView>
-=======
         <AppNavigator
           linking={linking}
           initialState={initialNavigationState}
           onStateChange={onNavigationStateChange}
         />
->>>>>>> master
       </ErrorBoundary>
     </SafeAreaProvider>
   )
