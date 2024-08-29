@@ -1,7 +1,7 @@
-import demoJp from "./demo-jp"
+import demoJa from "./demo-ja"
 import { Translations } from "./en"
 
-const jp: Translations = {
+const ja: Translations = {
   common: {
     ok: "OK",
     cancel: "キャンセル",
@@ -123,8 +123,8 @@ const jp: Translations = {
     },
   },
   // @demo remove-block-start
-  ...demoJp,
+  ...demoJa,
   // @demo remove-block-end
 }
 
-export default jp
+export default ja
