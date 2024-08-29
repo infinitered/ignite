@@ -22,6 +22,7 @@ removing file /user/home/ignite/app/screens/DemoShowroomScreen/DemoDivider.tsx
 removing file /user/home/ignite/app/screens/DemoShowroomScreen/DemoShowroomScreen.tsx
 removing file /user/home/ignite/app/screens/DemoShowroomScreen/DemoUseCase.tsx
 removing file /user/home/ignite/app/screens/DemoShowroomScreen/DrawerIconButton.tsx
+removing file /user/home/ignite/app/screens/DemoShowroomScreen/SectionListWithKeyboardAwareScrollView.tsx
 removing file /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoAutoImage.tsx
 removing file /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoButton.tsx
 removing file /user/home/ignite/app/screens/DemoShowroomScreen/demos/DemoCard.tsx
@@ -72,6 +73,7 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoShowroomScreen.tsx
    Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoUseCase.tsx
    Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DrawerIconButton.tsx
+   Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/SectionListWithKeyboardAwareScrollView.tsx
    Found '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/index.ts
    Found 'remove-file' in /user/home/ignite/app/screens/LoginScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx

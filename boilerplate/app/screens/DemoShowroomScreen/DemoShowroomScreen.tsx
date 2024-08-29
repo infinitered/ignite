@@ -11,6 +11,7 @@ import { $styles } from "app/theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
+import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 import { useAppTheme } from "app/utils/useAppTheme"
 
 const logo = require("../../../assets/images/logo.png")
@@ -80,6 +81,7 @@ const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) 
 }
 
 const ShowroomListItem = Platform.select({ web: WebListItem, default: NativeListItem })
+const isAndroid = Platform.OS === "android"
 
 export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
@@ -181,22 +183,30 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           </View>
         )}
       >
-        <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
+        <Screen
+          preset="fixed"
+          safeAreaEdges={["top"]}
+          contentContainerStyle={$styles.flex1}
+          {...(isAndroid ? { KeyboardAvoidingViewProps: { behavior: undefined } } : {})}
+        >
           <DrawerIconButton onPress={toggleDrawer} />
 
-          <SectionList
+          <SectionListWithKeyboardAwareScrollView
             ref={listRef}
             contentContainerStyle={themed($sectionListContentContainer)}
             stickySectionHeadersEnabled={false}
             sections={Object.values(Demos).map((d) => ({
-              ...d,
+              name: d.name,
+              description: d.description,
               data: [d.data({ theme, themed })],
             }))}
-            renderItem={({ item, index: sectionIndex }) =>
-              item.map((demo: ReactElement, demoIndex: number) => (
-                <View key={`${sectionIndex}-${demoIndex}`}>{demo}</View>
-              ))
-            }
+            renderItem={({ item, index: sectionIndex }) => (
+              <View>
+                {item.map((demo: ReactElement, demoIndex: number) => (
+                  <View key={`${sectionIndex}-${demoIndex}`}>{demo}</View>
+                ))}
+              </View>
+            )}
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={
               <View style={themed($heading)}>
