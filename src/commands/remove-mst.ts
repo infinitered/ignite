@@ -36,7 +36,7 @@ module.exports = {
       filePaths,
       markupPrefix: MST_MARKUP_PREFIX,
       removeMarkupOnly: false,
-      dryRun: dryRun,
+      dryRun,
     })
 
     // Handle the results of the mst comment operations
