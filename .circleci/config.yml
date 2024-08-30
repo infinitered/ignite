@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: cimg/node:18.17.1
+    - image: cimg/node:20.17.0
   working_directory: /mnt/ramdisk/repo
 
 version: 2.1
