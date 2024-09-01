@@ -7,7 +7,7 @@ import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
 import fr from "./fr"
-import jp from "./jp"
+import ja from "./ja"
 import hi from "./hi"
 
 // Migration guide from i18n 3.x -> 4.x:
@@ -17,7 +17,7 @@ import hi from "./hi"
 // to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
 export const i18n = new I18n(
-  { ar, en, "en-US": en, ko, fr, jp, hi },
+  { ar, en, "en-US": en, ko, fr, ja, hi },
   { locale: fallbackLocale, defaultLocale: fallbackLocale, enableFallback: true },
 )
 
