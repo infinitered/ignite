@@ -55,7 +55,6 @@ ignite-project
 │       ├── model
 │       ├── navigator
 │       └── screen
-├── index.js
 ├── ios
 │   ├── IgniteProject
 │   ├── IgniteProject-tvOS
