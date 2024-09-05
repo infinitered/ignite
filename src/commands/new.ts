@@ -773,7 +773,7 @@ module.exports = {
 
       // #region Configure app.json
       // Enable New Architecture if requested (must happen before prebuild)
-      startSpinner(" Configuring app.json")
+      startSpinner("Configuring app.json")
       try {
         const appJsonRaw = read("app.json")
         const appJson = JSON.parse(appJsonRaw)
@@ -796,7 +796,7 @@ module.exports = {
         log(e)
         p(yellow("Unable to configure app.json."))
       }
-      stopSpinner(" Configuring app.json", "⚙️")
+      stopSpinner("Configuring app.json", "⚙️")
       // #endregion
 
       // #region Run Prebuild
