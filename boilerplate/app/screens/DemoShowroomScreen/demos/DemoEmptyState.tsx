@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import { EmptyState } from "../../../components"
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"

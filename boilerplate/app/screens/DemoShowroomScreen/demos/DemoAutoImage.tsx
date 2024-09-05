@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { AutoImage, Text } from "../../../components"
 import type { ThemedStyle } from "../../../theme"

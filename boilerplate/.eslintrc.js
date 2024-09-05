@@ -4,6 +4,7 @@ module.exports = {
     "standard",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:react-native/all",
     // `expo` must come after `standard` or its globals configuration will be overridden
     "expo",
     // `jsx-runtime` must come after `expo` or it will be overridden
@@ -40,6 +41,8 @@ module.exports = {
         ],
       },
     ],
+    //react-native
+    "react-native/no-raw-text": 0,
     // reactotron
     "reactotron/no-tron-in-production": "error",
     // eslint-config-standard overrides
