@@ -1,5 +1,5 @@
 import { Link, RouteProp, useRoute } from "@react-navigation/native"
-import React, { FC, ReactElement, useEffect, useRef, useState } from "react"
+import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
 import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
@@ -94,8 +94,28 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
 
     const { themed, theme } = useAppTheme()
 
+    const toggleDrawer = useCallback(() => {
+      if (!open) {
+        setOpen(true)
+      } else {
+        setOpen(false)
+      }
+    }, [open])
+
+    const handleScroll = useCallback(
+      (sectionIndex: number, itemIndex = 0) => {
+        listRef.current?.scrollToLocation({
+          animated: true,
+          itemIndex,
+          sectionIndex,
+        })
+        toggleDrawer()
+      },
+      [toggleDrawer],
+    )
+
     // handle Web links
-    React.useEffect(() => {
+    useEffect(() => {
       if (params !== undefined && Object.keys(params).length > 0) {
         const demoValues = Object.values(Demos)
         const findSectionIndex = demoValues.findIndex(
@@ -113,24 +133,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         }
         handleScroll(findSectionIndex, findItemIndex)
       }
-    }, [params])
-
-    const toggleDrawer = () => {
-      if (!open) {
-        setOpen(true)
-      } else {
-        setOpen(false)
-      }
-    }
-
-    const handleScroll = (sectionIndex: number, itemIndex = 0) => {
-      listRef.current?.scrollToLocation({
-        animated: true,
-        itemIndex,
-        sectionIndex,
-      })
-      toggleDrawer()
-    }
+    }, [handleScroll, params, theme, themed])
 
     const scrollToIndexFailed = (info: {
       index: number

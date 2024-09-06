@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite" // @mst remove-current-line
-import React, { FC } from "react"
+import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line
@@ -20,66 +20,68 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
 // @mst replace-next-line export const WelcomeScreen: FC<WelcomeScreenProps> = (
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
-  _props, // @demo remove-current-line
-  // @mst replace-next-line ) => {
-) {
-  const { themed, theme } = useAppTheme()
-  // @demo remove-block-start
-  const { navigation } = _props
-  const {
-    authenticationStore: { logout },
-  } = useStores()
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
+  function WelcomeScreen(
+    _props, // @demo remove-current-line
+    // @mst replace-next-line ) => {
+  ) {
+    const { themed, theme } = useAppTheme()
+    // @demo remove-block-start
+    const { navigation } = _props
+    const {
+      authenticationStore: { logout },
+    } = useStores()
 
-  function goNext() {
-    navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
-  }
+    function goNext() {
+      navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
+    }
 
-  useHeader(
-    {
-      rightTx: "common.logOut",
-      onRightPress: logout,
-    },
-    [logout],
-  )
-  // @demo remove-block-end
+    useHeader(
+      {
+        rightTx: "common.logOut",
+        onRightPress: logout,
+      },
+      [logout],
+    )
+    // @demo remove-block-end
 
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+    const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
-  return (
-    <Screen preset="fixed">
-      <View style={themed($topContainer)}>
-        <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={themed($welcomeHeading)}
-          tx="welcomeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image
-          style={$welcomeFace}
-          source={welcomeFace}
-          resizeMode="contain"
-          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
-        />
-      </View>
+    return (
+      <Screen preset="fixed">
+        <View style={themed($topContainer)}>
+          <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
+          <Text
+            testID="welcome-heading"
+            style={themed($welcomeHeading)}
+            tx="welcomeScreen.readyForLaunch"
+            preset="heading"
+          />
+          <Text tx="welcomeScreen.exciting" preset="subheading" />
+          <Image
+            style={$welcomeFace}
+            source={welcomeFace}
+            resizeMode="contain"
+            tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+          />
+        </View>
 
-      <View style={themed([$bottomContainer, $bottomContainerInsets])}>
-        <Text tx="welcomeScreen.postscript" size="md" />
-        {/* @demo remove-block-start */}
-        <Button
-          testID="next-screen-button"
-          preset="reversed"
-          tx="welcomeScreen.letsGo"
-          onPress={goNext}
-        />
-        {/* @demo remove-block-end */}
-      </View>
-    </Screen>
-  )
-  // @mst replace-next-line }
-})
+        <View style={themed([$bottomContainer, $bottomContainerInsets])}>
+          <Text tx="welcomeScreen.postscript" size="md" />
+          {/* @demo remove-block-start */}
+          <Button
+            testID="next-screen-button"
+            preset="reversed"
+            tx="welcomeScreen.letsGo"
+            onPress={goNext}
+          />
+          {/* @demo remove-block-end */}
+        </View>
+      </Screen>
+    )
+    // @mst replace-next-line }
+  },
+)
 
 const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,

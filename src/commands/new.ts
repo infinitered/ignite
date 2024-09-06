@@ -773,7 +773,7 @@ module.exports = {
 
       // #region Configure app.json
       // Enable New Architecture if requested (must happen before prebuild)
-      startSpinner(" Configuring app.json")
+      startSpinner("Configuring app.json")
       try {
         const appJsonRaw = read("app.json")
         const appJson = JSON.parse(appJsonRaw)
@@ -796,27 +796,24 @@ module.exports = {
         log(e)
         p(yellow("Unable to configure app.json."))
       }
-      stopSpinner(" Configuring app.json", "⚙️")
+      stopSpinner("Configuring app.json", "⚙️")
       // #endregion
 
-      // #region Run Format
+      // #region Run Prebuild
       // we can't run this option if we didn't install deps
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
         // Prebuild also handles the packager install
-        const prebuildMessage = ` Generating native template via Expo Prebuild`
+        const prebuildMessage = `Generating native template via Expo Prebuild`
         startSpinner(prebuildMessage)
         await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
         stopSpinner(prebuildMessage, "🛠️")
-
-        // Make sure all our modifications are formatted nicely
-        await packager.run("format", { ...packagerOptions, silent: !debug })
       }
       // #endregion
 
       // #region Remove Demo code
       const removeDemoPart = removeDemo === true ? "code" : "markup"
-      startSpinner(` Removing fancy demo ${removeDemoPart}`)
+      startSpinner(`Removing fancy demo ${removeDemoPart}`)
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
@@ -827,7 +824,7 @@ module.exports = {
         log(e)
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
-      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
+      stopSpinner(`Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
       // #region Expo Router edits
@@ -877,6 +874,24 @@ module.exports = {
         p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
       }
       stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
+      // #endregion
+
+      // #region Run Format
+      const formattingMessage = `Cleaning up`
+      startSpinner(formattingMessage)
+      if (installDeps === true) {
+        // Make sure all our modifications are formatted nicely
+        await packager.run("format", { ...packagerOptions })
+      } else {
+        // if our linting configuration is not installed, try format
+        // using prettier to make sure it's reasonably close, but this will skip
+        // eslint issues
+        await system.run(`npx prettier@3.3.3 --write .`, {
+          trim: true,
+          cwd: targetPath,
+        })
+      }
+      stopSpinner(formattingMessage, "🧽")
       // #endregion
 
       // #region Format generator templates EOL for Windows

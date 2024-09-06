@@ -5,8 +5,9 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
-    "lint": "eslint App.tsx app test --fix --ext .js,.ts,.tsx && npm run format",
+    "format": "eslint . --fix",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
     "patch": "patch-package",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -66,32 +67,27 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@babel/plugin-transform-arrow-functions": "^7.0.0",
-    "@babel/plugin-transform-shorthand-properties": "^7.0.0",
-    "@babel/plugin-transform-template-literals": "^7.0.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@testing-library/react-native": "^12.5.2",
     "@types/i18n-js": "3.8.2",
     "@types/jest": "^29.2.1",
     "@types/react": "~18.2.14",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
     "babel-jest": "^29.2.1",
-    "eslint": "8.17.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-config-standard": "17.0.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-n": "^15.0.0",
-    "eslint-plugin-promise": "6.0.0",
-    "eslint-plugin-react": "7.30.0",
-    "eslint-plugin-react-native": "4.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "^7.1.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-n": "^17.10.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-react-native": "^4.1.0",
     "eslint-plugin-reactotron": "^0.1.2",
     "jest": "^29.2.1",
     "jest-expo": "~51.0.2",
     "patch-package": "^8.0.0",
     "postinstall-prepare": "1.0.1",
-    "prettier": "2.8.8",
+    "prettier": "^3.3.3",
     "reactotron-core-client": "^2.8.13",
     "reactotron-mst": "^3.1.7",
     "reactotron-react-js": "^3.3.11",
@@ -102,85 +98,6 @@
     "typescript": "~5.3.3"
   },
   "engines": {
-    "node": ">=18"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "all"
-  },
-  "eslintConfig": {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react/recommended",
-      "plugin:react-native/all",
-      "standard",
-      "prettier"
-    ],
-    "plugins": [
-      "@typescript-eslint",
-      "react",
-      "react-native",
-      "reactotron"
-    ],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "settings": {
-      "react": {
-        "pragma": "React",
-        "version": "detect"
-      }
-    },
-    "globals": {
-      "__DEV__": false,
-      "jasmine": false,
-      "beforeAll": false,
-      "afterAll": false,
-      "beforeEach": false,
-      "afterEach": false,
-      "test": false,
-      "expect": false,
-      "describe": false,
-      "jest": false,
-      "it": false
-    },
-    "rules": {
-      "@typescript-eslint/ban-ts-ignore": 0,
-      "@typescript-eslint/ban-ts-comment": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/member-delimiter-style": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-object-literal-type-assertion": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
-        }
-      ],
-      "comma-dangle": 0,
-      "multiline-ternary": 0,
-      "no-undef": 0,
-      "no-unused-vars": 0,
-      "no-use-before-define": 0,
-      "no-global-assign": 0,
-      "quotes": 0,
-      "react-native/no-raw-text": 0,
-      "react/no-unescaped-entities": 0,
-      "react/prop-types": 0,
-      "space-before-function-paren": 0,
-      "reactotron/no-tron-in-production": "error"
-    }
+    "node": "^18.18.0 || >=20.0.0"
   }
 }

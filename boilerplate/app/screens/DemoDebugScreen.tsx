@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC, useCallback, useMemo } from "react"
 import * as Application from "expo-application"
 import {
   LayoutAnimation,
@@ -25,6 +25,8 @@ function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }
 
+const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
+
 export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
   _props,
 ) {
@@ -33,11 +35,10 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     authenticationStore: { logout },
   } = useStores()
 
-  const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
   // @ts-expect-error
   const usingFabric = global.nativeFabricUIManager != null
 
-  const demoReactotron = React.useMemo(
+  const demoReactotron = useMemo(
     () => async () => {
       if (__DEV__) {
         console.tron.display({
@@ -56,17 +57,17 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     [],
   )
 
-  const toggleTheme = React.useCallback(() => {
+  const toggleTheme = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut) // Animate the transition
     setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
   }, [themeContext, setThemeContextOverride])
 
   // Resets the theme to the system theme
   const colorScheme = useColorScheme()
-  const resetTheme = React.useCallback(() => {
+  const resetTheme = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setThemeContextOverride(undefined)
-  }, [themeContext, setThemeContextOverride])
+  }, [setThemeContextOverride])
 
   return (
     <Screen

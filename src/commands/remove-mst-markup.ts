@@ -9,11 +9,10 @@ module.exports = {
   description:
     "Remove all MobX-State-Tree markup from boilerplate. Add --dry-run to see what would be removed.",
   run: async (toolbox: GluegunToolbox) => {
-    const { parameters, system } = toolbox
+    const { parameters } = toolbox
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
-    const SRC_DIR = parameters.second ?? "app"
     const dryRun = boolFlag(parameters.options.dryRun) ?? false
 
     p()
@@ -51,15 +50,6 @@ module.exports = {
           p(`Found ${comments.map((c) => `'${c}'`).join(", ")} in ${path}`)
         }
       })
-
-    // Run prettier at the end to clean up any spacing issues
-    if (!dryRun) {
-      p(`Running prettier to clean up code formatting`)
-      await system.run(`npx prettier@2.8.8 --write "./${SRC_DIR}/**/*.{js,jsx,json,md,ts,tsx}"`, {
-        trim: true,
-        cwd: TARGET_DIR,
-      })
-    }
 
     p(`Done removing MobX-State-Tree markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },

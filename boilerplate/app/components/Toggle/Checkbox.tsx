@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
 import { $styles } from "../../theme"
 import { iconRegistry, IconTypes } from "../Icon"
@@ -42,10 +42,10 @@ function CheckboxInput(props: CheckboxInputProps) {
     theme: { colors },
   } = useAppTheme()
 
-  const [opacity] = useState(new Animated.Value(0))
+  const opacity = useRef(new Animated.Value(0))
 
   useEffect(() => {
-    Animated.timing(opacity, {
+    Animated.timing(opacity.current, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
@@ -90,7 +90,7 @@ function CheckboxInput(props: CheckboxInputProps) {
           $styles.toggleInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          { opacity },
+          { opacity: opacity.current },
         ]}
       >
         <Image

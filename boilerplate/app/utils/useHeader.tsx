@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react"
+import { useLayoutEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
 import { Header, HeaderProps } from "../components"
 
@@ -16,10 +16,12 @@ export function useHeader(
 
   // To avoid a visible header jump when navigating between screens, we use
   // `useLayoutEffect`, which will apply the settings before the screen renders.
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
       header: () => <Header {...headerProps} />,
     })
+    // intentionally created API to have user set when they want to update the header via `deps`
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, navigation])
 }

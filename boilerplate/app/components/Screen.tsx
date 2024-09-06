@@ -1,6 +1,6 @@
 import { useScrollToTop } from "@react-navigation/native"
 import { StatusBar, StatusBarProps, StatusBarStyle } from "expo-status-bar"
-import React, { useRef, useState } from "react"
+import { ReactNode, useRef, useState } from "react"
 import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
@@ -23,7 +23,7 @@ interface BaseScreenProps {
   /**
    * Children components.
    */
-  children?: React.ReactNode
+  children?: ReactNode
   /**
    * Style for the outer content container useful for padding & margin.
    */

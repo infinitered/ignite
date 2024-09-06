@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-key */
-import React from "react"
+/* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import { Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
@@ -127,7 +126,6 @@ export const DemoText: Demo = {
         </Text>
         {` `}
         <Text
-          /* eslint-disable react-native/no-inline-styles */
           style={{
             textDecorationLine: "underline line-through",
             textDecorationStyle: "dashed",

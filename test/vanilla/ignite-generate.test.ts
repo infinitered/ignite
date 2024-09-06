@@ -247,8 +247,7 @@ describe("ignite-cli generate", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
-        "import * as React from \\"react\\"
-        import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
+        "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
         import { useAppTheme } from \\"app/utils/useAppTheme\\"
         import type { ThemedStyle } from \\"app/theme\\"
@@ -318,8 +317,7 @@ describe("ignite-cli generate", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
-        "import * as React from \\"react\\"
-        import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
+        "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
         import { useAppTheme } from \\"app/utils/useAppTheme\\"
         import type { ThemedStyle } from \\"app/theme\\"

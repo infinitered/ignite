@@ -61,5 +61,5 @@ type RecursiveKeyOfInner<TObj extends object> = {
 type RecursiveKeyOfHandleValue<TValue, Text extends string> = TValue extends any[]
   ? Text
   : TValue extends object
-  ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
-  : Text
+    ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
+    : Text

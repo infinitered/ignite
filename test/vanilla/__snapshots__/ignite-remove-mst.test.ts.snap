@@ -21,7 +21,6 @@ removing file /user/home/ignite/app/models/index.ts
    Found '@mst remove-current-line', '@mst replace-next-line' in /user/home/ignite/app/navigators/AppNavigator.tsx
    Found '@mst remove-current-line', '@mst replace-next-line' in /user/home/ignite/app/screens/WelcomeScreen.tsx
    Removed empty directory '/user/home/ignite/app/models/helpers'
-   Running prettier to clean up code formatting
    Done removing MobX-State-Tree code from '/user/home/ignite'
 "
 `;

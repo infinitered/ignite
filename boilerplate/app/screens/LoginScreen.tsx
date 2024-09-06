@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
+import { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 import { TextInput, TextStyle, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
@@ -23,7 +23,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const {
     themed,
     theme: { colors },
-    themeContext,
   } = useAppTheme()
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       setAuthPassword("")
       setAuthEmail("")
     }
-  }, [])
+  }, [setAuthEmail])
 
   const error = isSubmitted ? validationError : ""
 
@@ -70,7 +69,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
           />
         )
       },
-    [isAuthPasswordHidden, themeContext],
+    [isAuthPasswordHidden, colors.palette.neutral800],
   )
 
   return (
