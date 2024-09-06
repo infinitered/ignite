@@ -22,7 +22,7 @@ The `text` optional prop is the text of the component. We encourage you to not u
 
 ### `tx`
 
-The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization.
+The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization.
 
 ````tsx
 
@@ -32,7 +32,7 @@ The `tx` optional prop is the string key used to look up the translated text for
 
 ### `txOptions`
 
-The `txOptions` optional prop is an object of options to pass to i18n. Useful for [interpolation](http://i18njs.com/) as well as explicitly setting locale or translation fallbacks. You'll be defining these in the `app/i18n/*.json` files, and can use `{{variableName}}` for interpolation.
+The `txOptions` optional prop is an object of options to pass to i18n. Useful for [interpolation](https://www.i18next.com/) as well as explicitly setting locale or translation fallbacks. You'll be defining these in the `app/i18n/*.json` files, and can use `{{variableName}}` for interpolation.
 
 ```tsx
 // in en.json

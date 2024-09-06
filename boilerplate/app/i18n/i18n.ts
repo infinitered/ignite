@@ -2,6 +2,7 @@ import * as Localization from "expo-localization"
 import { I18nManager } from "react-native"
 import i18next from "i18next"
 import { initReactI18next } from "react-i18next"
+import 'intl-pluralrules'
 
 // if English isn't your default language, move Translations to the appropriate language file.
 import en, { Translations } from "./en"
@@ -13,40 +14,54 @@ import jp from "./jp"
 // to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
 
-export const i18n = i18next.createInstance()
-i18n.use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources: {
-      ar,
-      en,
-      "en-US": en,
-      ko,
-      fr,
-      jp,
-    },
-    lng: fallbackLocale,
-    fallbackLng: fallbackLocale,
 
-    interpolation: {
-      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+export const i18n = i18next.use(initReactI18next).init({
+  debug: true,
+  resources: {
+    // ar,
+    // en,
+    en: {
+      loginScreen: {
+        logIn: "hello world",
+        enterDetails: "hello world",
+      },
     },
-  })
+    "en-US": {
+      loginScreen: {
+        logIn: "hello world",
+        enterDetails: "hello world",
+      },
+    },
+    // ko,
+    // fr,
+    // jp,
+  },
+  lng: fallbackLocale,
+  fallbackLng: fallbackLocale,
+
+  interpolation: {
+    escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+  },
+})
+
+console.log("i18next.languages 2")
+console.log(i18next.languages)
 
 const systemLocale = Localization.getLocales()[0]
 const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
 
-if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
-  // if specific locales like en-FI or en-US is available, set it
-  i18n.locale = systemLocaleTag
-} else {
-  // otherwise try to fallback to the general locale (dropping the -XX suffix)
-  const generalLocale = systemLocaleTag.split("-")[0]
-  if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
-    i18n.locale = generalLocale
-  } else {
-    i18n.locale = fallbackLocale
-  }
-}
+// if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
+//   // if specific locales like en-FI or en-US is available, set it
+//   i18n.locale = systemLocaleTag
+// } else {
+//   // otherwise try to fallback to the general locale (dropping the -XX suffix)
+//   const generalLocale = systemLocaleTag.split("-")[0]
+//   if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
+//     i18n.locale = generalLocale
+//   } else {
+//     i18n.locale = fallbackLocale
+//   }
+// }
 
 // handle RTL languages
 export const isRTL = systemLocale?.textDirection === "rtl"

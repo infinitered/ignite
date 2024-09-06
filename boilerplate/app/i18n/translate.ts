@@ -17,7 +17,7 @@ import { i18n, TxKeyPath } from "./i18n"
  *
  * Usage:
  * ```ts
- * import { translate } from "i18n-js"
+ * import { translate } from "./i18n"
  *
  * translate("common.ok", { name: "world" })
  * // => "Hello world!"
