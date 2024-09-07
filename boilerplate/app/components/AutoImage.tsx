@@ -12,7 +12,7 @@ export interface AutoImageProps extends ImageProps {
   maxHeight?: number
   headers?: {
     [key: string]: string
-  };
+  }
 }
 
 /**
@@ -30,7 +30,7 @@ export interface AutoImageProps extends ImageProps {
 export function useAutoImage(
   remoteUri: string,
   headers?: {
-    [key: string]: string;
+    [key: string]: string
   },
   dimensions?: [maxWidth?: number, maxHeight?: number],
 ): [width: number, height: number] {
@@ -44,11 +44,9 @@ export function useAutoImage(
     if (!headers) {
       Image.getSize(remoteUri, (w, h) => setRemoteImageDimensions([w, h]))
     } else {
-      Image.getSizeWithHeaders(remoteUri, headers, (w, h) =>
-        setRemoteImageDimensions([w, h]),
-      )
+      Image.getSizeWithHeaders(remoteUri, headers, (w, h) => setRemoteImageDimensions([w, h]))
     }
-  }, [remoteUri, headers]);
+  }, [remoteUri, headers])
 
   if (Number.isNaN(remoteAspectRatio)) return [0, 0]
 
