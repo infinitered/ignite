@@ -47,13 +47,3 @@ As a general rule of thumb, it's not a bad idea to start with Expo CLI. You'll a
 Where you generally will need to start considering diverging from standard Expo is when you need custom native functionality. Note that you can do a lot of custom native code with Expo's new [Config Plugins](https://docs.expo.dev/guides/config-plugins/) feature, too, so even native code is no longer much of a barrier.
 
 If you still would rather not use Expo Go / CLI, then Ignite is already ready for you -- no "ejecting" necessary. Expo refers to this as the "bare workflow." Just run `yarn ios` / `yarn android` and it'll build using the React Native CLI.
-
-## Expo Snacks
-
-You can't run an Ignite app directly in [Expo Snack](https://snack.expo.dev/), but we have a new command in Ignite that will set up your project so it can load in a Snack!
-
-This is one of the coolest ways to demo an app to someone else without having to send them a build. They can try your app out right in their browser!
-
-Note there are some limitations to Expo Snacks, and making those work (other than out of the box for Ignite) is beyond the scope of this documentation. You can learn more in [the Snack docs](https://docs.expo.dev/workflow/snack/).
-
-TODO: add documentation for `npx ignite-cli snackify` here.
