@@ -23,7 +23,7 @@ jest.doMock("react-native", () => {
   )
 })
 
-jest.mock("i18n-js", () => ({
+jest.mock("i18next", () => ({
   currentLocale: () => "en",
   t: (key: string, params: Record<string, string>) => {
     return `${key} ${JSON.stringify(params)}`
