@@ -2,10 +2,10 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Text } from "src/components"
-import { isRTL } from "../i18n"
-import { colors, spacing } from "../theme"
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { Text } from "app/components"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
+import { isRTL } from "app/i18n"
+import { colors, spacing } from "app/theme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -21,15 +21,15 @@ export default observer(function WelcomeScreen() {
         <Text
           testID="welcome-heading"
           style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
+          tx="welcomeScreen:readyForLaunch"
           preset="heading"
         />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
+        <Text tx="welcomeScreen:exciting" preset="subheading" />
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
       <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
+        <Text tx="welcomeScreen:postscript" size="md" />
       </View>
     </View>
   )
