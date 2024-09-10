@@ -11,11 +11,11 @@ import {
 } from "react-native"
 import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import type { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "@/theme"
 import { $styles } from "../theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 /**
  * @param {string} url - The URL to open in the browser.

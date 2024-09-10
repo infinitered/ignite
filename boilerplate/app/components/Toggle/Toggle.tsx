@@ -14,8 +14,8 @@ import {
 } from "react-native"
 import { $styles } from "../../theme"
 import { Text, TextProps } from "../Text"
-import { useAppTheme } from "app/utils/useAppTheme"
-import type { ThemedStyle } from "app/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
 
 export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**

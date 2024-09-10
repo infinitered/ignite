@@ -249,9 +249,9 @@ describe("ignite-cli generate", () => {
       expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
         "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { useAppTheme } from \\"app/utils/useAppTheme\\"
-        import type { ThemedStyle } from \\"app/theme\\"
-        import { Text } from \\"app/components/Text\\"
+        import { useAppTheme } from \\"@/utils/useAppTheme\\"
+        import type { ThemedStyle } from \\"@/theme\\"
+        import { Text } from \\"@/components/Text\\"
 
         export interface ToppingProps {
           /**
@@ -319,9 +319,9 @@ describe("ignite-cli generate", () => {
       expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
         "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
         import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { useAppTheme } from \\"app/utils/useAppTheme\\"
-        import type { ThemedStyle } from \\"app/theme\\"
-        import { Text } from \\"app/components/Text\\"
+        import { useAppTheme } from \\"@/utils/useAppTheme\\"
+        import type { ThemedStyle } from \\"@/theme\\"
+        import { Text } from \\"@/components/Text\\"
 
         export interface ToppingProps {
           /**
@@ -447,7 +447,7 @@ describe("ignite-cli generate screens expo-router style", () => {
       "import React, { FC } from \\"react\\"
       import { observer } from \\"mobx-react-lite\\"
       import { ViewStyle } from \\"react-native\\"
-      import { Screen, Text } from \\"app/components\\"
+      import { Screen, Text } from \\"@/components\\"
 
       export default observer(function LogInScreen() {
         return (
@@ -481,7 +481,7 @@ describe("ignite-cli generate screens expo-router style", () => {
       "import React, { FC } from \\"react\\"
       import { observer } from \\"mobx-react-lite\\"
       import { ViewStyle } from \\"react-native\\"
-      import { Screen, Text } from \\"app/components\\"
+      import { Screen, Text } from \\"@/components\\"
 
       export default observer(function IdScreen() {
         return (

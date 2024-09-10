@@ -14,7 +14,7 @@ We instead use a strategy of bare JS objects and functions that take a theme par
 
 ```tsx
 import { View, type ViewStyle } from "react-native"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const MyComponent = () => {
   const { themed } = useAppTheme()

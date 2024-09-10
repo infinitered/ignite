@@ -9,8 +9,8 @@ import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst" // @mst remove-current-line
 import mmkvPlugin from "reactotron-react-native-mmkv"
 
-import { storage, clear } from "app/utils/storage"
-import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
+import { storage, clear } from "@/utils/storage"
+import { goBack, resetRoot, navigate } from "@/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
 import { ReactotronReactNative } from "reactotron-react-native"

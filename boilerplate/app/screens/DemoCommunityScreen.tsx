@@ -5,8 +5,8 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { $styles } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
-import type { ThemedStyle } from "app/theme"
-import { useAppTheme } from "app/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const chainReactLogo = require("../../assets/images/demo/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/demo/rnl-logo.png")
