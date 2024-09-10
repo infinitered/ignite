@@ -16,6 +16,9 @@ const fallbackLocale = "en-US"
 
 export let i18n: i18next.i18n
 
+const systemLocale = Localization.getLocales()[0]
+const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
+
 export const initI18n = async () => {
   i18n = i18next.use(initReactI18next)
 
@@ -35,27 +38,21 @@ export const initI18n = async () => {
     },
   })
 
+  if (Object.prototype.hasOwnProperty.call(i18n.languages, systemLocaleTag)) {
+    // if specific locales like en-FI or en-US is available, set it
+    await i18n.changeLanguage(systemLocaleTag)
+  } else {
+    // otherwise try to fallback to the general locale (dropping the -XX suffix)
+    const generalLocale = systemLocaleTag.split("-")[0]
+    if (Object.prototype.hasOwnProperty.call(i18n.languages, generalLocale)) {
+      await i18n.changeLanguage(generalLocale)
+    } else {
+      await i18n.changeLanguage(fallbackLocale)
+    }
+  }
+
   return i18n
 }
-
-// console.log("i18next.languages 2")
-// console.log(i18next.languages)
-
-const systemLocale = Localization.getLocales()[0]
-// const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
-
-// if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
-//   // if specific locales like en-FI or en-US is available, set it
-//   i18n.locale = systemLocaleTag
-// } else {
-//   // otherwise try to fallback to the general locale (dropping the -XX suffix)
-//   const generalLocale = systemLocaleTag.split("-")[0]
-//   if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
-//     i18n.locale = generalLocale
-//   } else {
-//     i18n.locale = fallbackLocale
-//   }
-// }
 
 // handle RTL languages
 export const isRTL = systemLocale?.textDirection === "rtl"
