@@ -99,7 +99,7 @@ The `headingTx` prop is used to set the heading text of the EmptyState using a t
 
 ```tsx
 <EmptyState
-  headingTx="EmptyState.heading"
+  headingTx="EmptyState:heading"
   content="EmptyState Content"
   button="EmptyState Button"
 />
@@ -111,7 +111,7 @@ The `headingTxOptions` prop is used to set the options for the translation key u
 
 ```tsx
 <EmptyState
-  headingTx="EmptyState.heading"
+  headingTx="EmptyState:heading"
   headingTxOptions={{ count: 2 }}
   content="EmptyState Content"
   button="EmptyState Button"
@@ -159,7 +159,7 @@ The `contentTx` prop is used to set the content text of the EmptyState using a t
 ```tsx
 <EmptyState
   heading="EmptyState Heading"
-  contentTx="EmptyState.content"
+  contentTx="EmptyState:content"
   button="EmptyState Button"
 />
 ```
@@ -171,7 +171,7 @@ The `contentTxOptions` prop is used to set the options for the translation key u
 ```tsx
 <EmptyState
   heading="EmptyState Heading"
-  contentTx="EmptyState.content"
+  contentTx="EmptyState:content"
   contentTxOptions={{ count: 2 }}
   button="EmptyState Button"
 />
@@ -219,7 +219,7 @@ The `buttonTx` prop is used to set the button text of the EmptyState using a tra
 <EmptyState
   heading="EmptyState Heading"
   content="EmptyState Content"
-  buttonTx="EmptyState.button"
+  buttonTx="EmptyState:button"
 />
 ```
 
@@ -231,7 +231,7 @@ The `buttonTxOptions` prop is used to set the options for the translation key us
 <EmptyState
   heading="EmptyState Heading"
   content="EmptyState Content"
-  buttonTx="EmptyState.button"
+  buttonTx="EmptyState:button"
   buttonTxOptions={{ count: 2 }}
 />
 ```

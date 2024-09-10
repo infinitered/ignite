@@ -57,7 +57,7 @@ profile: {
 The `style` optional prop is an object with overrides for this particular component. You can use `style` overrides with presets.
 
 ```tsx
-<Text tx="welcome.title" style={{ fontSize: 40 }} />
+<Text tx="welcome:title" style={{ fontSize: 40 }} />
 ```
 
 ### `weight`
@@ -65,7 +65,7 @@ The `style` optional prop is an object with overrides for this particular compon
 The `weight` optional prop is the font weight to use for the text. It utilizes the fonts defined in the `app/theme/typography.tsx` file.
 
 ```tsx
-<Text tx="welcome.title" weight="medium" />
+<Text tx="welcome:title" weight="medium" />
 ```
 
 ### `size`
@@ -73,7 +73,7 @@ The `weight` optional prop is the font weight to use for the text. It utilizes t
 The `size` optional prop is the font size to use for the text. The options are defined as `$sizeStyles` in `app/components/Text.tsx`. You can add sizes as you need to the `$sizeStyles` object and use them in your `Text` component.
 
 ```tsx
-<Text tx="welcome.title" size="lg" />
+<Text tx="welcome:title" size="lg" />
 ```
 
 ### `preset`
