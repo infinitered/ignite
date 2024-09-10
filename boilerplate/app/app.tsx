@@ -17,7 +17,7 @@ if (__DEV__) {
   require("./devtools/ReactotronConfig.ts")
 }
 import "./utils/gestureHandler"
-import "./i18n"
+import { initI18n } from "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
 import React, { useEffect, useState } from "react"
@@ -30,7 +30,6 @@ import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { KeyboardProvider } from "react-native-keyboard-controller"
-import { initI18n } from "./i18n"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -103,7 +102,8 @@ function App(props: AppProps) {
   if (
     !rehydrated ||
     !isNavigationStateRestored ||
-    !isI18nInitialized || (!areFontsLoaded && !fontLoadError)
+    !isI18nInitialized ||
+    (!areFontsLoaded && !fontLoadError)
   ) {
     return null
   }

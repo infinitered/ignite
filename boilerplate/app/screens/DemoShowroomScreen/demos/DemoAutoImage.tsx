@@ -38,9 +38,9 @@ const $aspectRatioBox: ThemedStyle<ViewStyle & ImageStyle> = (theme) => ({
 
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
-  description: "demoAutoImage.description",
+  description: "demoAutoImage:description",
   data: ({ theme, themed }) => [
-    <DemoUseCase name="demoAutoImage.useCase.remoteUri.name">
+    <DemoUseCase name="demoAutoImage:useCase.remoteUri.name">
       <View style={$imageContainer}>
         <AutoImage
           source={{
@@ -50,7 +50,7 @@ export const DemoAutoImage: Demo = {
       </View>
     </DemoUseCase>,
 
-    <DemoUseCase name="demoAutoImage.useCase.base64Uri.name">
+    <DemoUseCase name="demoAutoImage:useCase.base64Uri.name">
       <View style={$imageContainer}>
         <AutoImage
           source={{
@@ -61,8 +61,8 @@ export const DemoAutoImage: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoAutoImage.useCase.scaledToFitDimensions.name"
-      description="demoAutoImage.useCase.scaledToFitDimensions.description"
+      name="demoAutoImage:useCase.scaledToFitDimensions.name"
+      description="demoAutoImage:useCase.scaledToFitDimensions.description"
     >
       <View style={[$styles.row, $aspectRatioWidthExampleContainer]}>
         <Text
@@ -114,7 +114,7 @@ export const DemoAutoImage: Demo = {
       </View>
 
       <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
-        {translate("demoAutoImage.useCase.scaledToFitDimensions.heightAuto")}
+        {translate("demoAutoImage:useCase.scaledToFitDimensions.heightAuto")}
       </Text>
 
       <DemoDivider size={40} />
@@ -163,7 +163,7 @@ export const DemoAutoImage: Demo = {
       </View>
 
       <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
-        {translate("demoAutoImage.useCase.scaledToFitDimensions.widthAuto")}
+        {translate("demoAutoImage:useCase.scaledToFitDimensions.widthAuto")}
       </Text>
 
       <DemoDivider size={40} />
@@ -219,7 +219,7 @@ export const DemoAutoImage: Demo = {
       </View>
 
       <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
-        {translate("demoAutoImage.useCase.scaledToFitDimensions.bothManual")}
+        {translate("demoAutoImage:useCase.scaledToFitDimensions.bothManual")}
       </Text>
     </DemoUseCase>,
   ],

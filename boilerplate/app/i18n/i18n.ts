@@ -2,7 +2,7 @@ import * as Localization from "expo-localization"
 import { I18nManager } from "react-native"
 import * as i18next from "i18next"
 import { initReactI18next } from "react-i18next"
-import 'intl-pluralrules'
+import "intl-pluralrules"
 
 // if English isn't your default language, move Translations to the appropriate language file.
 import en, { Translations } from "./en"
@@ -14,7 +14,6 @@ import jp from "./jp"
 // to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
 
-
 export let i18n: i18next.i18n
 
 export const initI18n = async () => {
@@ -22,8 +21,12 @@ export const initI18n = async () => {
 
   await i18n.init({
     resources: {
+      ar,
       en,
-      "en-US": en
+      "en-US": en,
+      ko,
+      fr,
+      jp,
     },
     lng: fallbackLocale,
     fallbackLng: fallbackLocale,
@@ -39,7 +42,7 @@ export const initI18n = async () => {
 // console.log(i18next.languages)
 
 const systemLocale = Localization.getLocales()[0]
-const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
+// const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
 
 // if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
 //   // if specific locales like en-FI or en-US is available, set it

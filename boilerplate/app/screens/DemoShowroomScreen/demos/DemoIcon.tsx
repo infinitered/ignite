@@ -33,11 +33,11 @@ const $customIcon: ThemedStyle<ImageStyle> = ({ colors }) => ({
 
 export const DemoIcon: Demo = {
   name: "Icon",
-  description: "demoIcon.description",
+  description: "demoIcon:description",
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="demoIcon.useCase.icons.name"
-      description="demoIcon.useCase.icons.description"
+      name="demoIcon:useCase.icons.name"
+      description="demoIcon:useCase.icons.description"
       layout="row"
       itemStyle={$styles.flexWrap}
     >
@@ -53,8 +53,8 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoIcon.useCase.size.name"
-      description="demoIcon.useCase.size.description"
+      name="demoIcon:useCase.size.name"
+      description="demoIcon:useCase.size.description"
       layout="row"
     >
       <Icon icon="ladybug" containerStyle={themed($demoIconContainer)} />
@@ -64,8 +64,8 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoIcon.useCase.color.name"
-      description="demoIcon.useCase.color.description"
+      name="demoIcon:useCase.color.name"
+      description="demoIcon:useCase.color.description"
       layout="row"
     >
       <Icon
@@ -96,8 +96,8 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoIcon.useCase.styling.name"
-      description="demoIcon.useCase.styling.description"
+      name="demoIcon:useCase.styling.name"
+      description="demoIcon:useCase.styling.description"
       layout="row"
     >
       <Icon

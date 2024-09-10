@@ -119,15 +119,15 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         <Text
           testID=\\"welcome-heading\\"
           style={themed($welcomeHeading)}
-          tx=\\"welcomeScreen.readyForLaunch\\"
+          tx=\\"welcomeScreen:readyForLaunch\\"
           preset=\\"heading\\"
         />
-        <Text tx=\\"welcomeScreen.exciting\\" preset=\\"subheading\\" />
+        <Text tx=\\"welcomeScreen:exciting\\" preset=\\"subheading\\" />
         <Image style={$welcomeFace} source={welcomeFace} resizeMode=\\"contain\\" />
       </View>
 
       <View style={[themed($bottomContainer), $bottomContainerInsets]}>
-        <Text tx=\\"welcomeScreen.postscript\\" size=\\"md\\" />
+        <Text tx=\\"welcomeScreen:postscript\\" size=\\"md\\" />
       </View>
     </View>
   )
@@ -180,7 +180,7 @@ const $welcomeHeading: ThemedStyle<TextStyle> = ({ spacing }) => ({
 
 exports[`markup removeBlock should remove comments and lines between "# @test remove-block-start" and "# @test remove-block-end" 1`] = `
 "
-  
+
         ---
         - runFlow: Login.yaml
         - tapOn: \\"Podcast, tab, 3 of 4\\"
@@ -224,16 +224,16 @@ exports[`markup removeCurrentLine should remove line with "/* @test remove-curre
 "
         import React from \\"react\\"
         import { StyleProp, View, ViewStyle } from \\"react-native\\"
-        
+
         interface DemoDividerProps {
             type?: \\"vertical\\" | \\"horizontal\\"
             size?: number
             style?: StyleProp<ViewStyle>
         }
-        
+
         export function DemoDivider(props: DemoDividerProps) {
             const { type = \\"horizontal\\", size = 10, style: $styleOverride } = props
-        
+
             return (
               <View
                   style={[
@@ -244,7 +244,7 @@ exports[`markup removeCurrentLine should remove line with "/* @test remove-curre
               />
             )
         }
-        
+
         const $divider: ViewStyle = {
             flexGrow: 0,
         }
@@ -255,16 +255,16 @@ exports[`markup removeCurrentLine should remove line with "// @test remove-curre
 "
         import React from \\"react\\"
         import { StyleProp, View, ViewStyle } from \\"react-native\\"
-        
+
         interface DemoDividerProps {
             type?: \\"vertical\\" | \\"horizontal\\"
             size?: number
             style?: StyleProp<ViewStyle>
         }
-        
+
         export function DemoDivider(props: DemoDividerProps) {
             const { type = \\"horizontal\\", size = 10, style: $styleOverride } = props
-        
+
             return (
               <View
                   style={[
@@ -276,7 +276,7 @@ exports[`markup removeCurrentLine should remove line with "// @test remove-curre
               />
             )
         }
-        
+
         const $divider: ViewStyle = {
             flexGrow: 0,
         }
@@ -298,7 +298,7 @@ exports[`markup removeNextLine should remove comment and next line after "# @tes
         env:
           TITLE: \\"RNR 257 - META RESPONDS! How can we improve React Native, part 2\\"
           FAVORITES_TEXT: \\"Switch on to only show favorites\\"
-  
+
         ---
         - runFlow: Login.yaml
         - tapOn: \\"Podcast, tab, 3 of 4\\"
