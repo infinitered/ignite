@@ -20,7 +20,7 @@ import "./utils/gestureHandler"
 import "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
 import { useInitialRootStore } from "./models" // @mst remove-current-line
@@ -30,6 +30,7 @@ import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { KeyboardProvider } from "react-native-keyboard-controller"
+import { initI18n } from "./i18n"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -72,6 +73,11 @@ function App(props: AppProps) {
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
+
+  useEffect(() => {
+    initI18n().then(() => setIsI18nInitialized(true))
+  }, [])
 
   // @mst replace-next-line React.useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
@@ -94,7 +100,11 @@ function App(props: AppProps) {
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
   // @mst replace-next-line if (!isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
-  if (!rehydrated || !isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
+  if (
+    !rehydrated ||
+    !isNavigationStateRestored ||
+    !isI18nInitialized || (!areFontsLoaded && !fontLoadError)
+  ) {
     return null
   }
 

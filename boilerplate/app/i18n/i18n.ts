@@ -1,6 +1,6 @@
 import * as Localization from "expo-localization"
 import { I18nManager } from "react-native"
-import i18next from "i18next"
+import * as i18next from "i18next"
 import { initReactI18next } from "react-i18next"
 import 'intl-pluralrules'
 
@@ -15,37 +15,28 @@ import jp from "./jp"
 const fallbackLocale = "en-US"
 
 
-export const i18n = i18next.use(initReactI18next).init({
-  debug: true,
-  resources: {
-    // ar,
-    // en,
-    en: {
-      loginScreen: {
-        logIn: "hello world",
-        enterDetails: "hello world",
-      },
-    },
-    "en-US": {
-      loginScreen: {
-        logIn: "hello world",
-        enterDetails: "hello world",
-      },
-    },
-    // ko,
-    // fr,
-    // jp,
-  },
-  lng: fallbackLocale,
-  fallbackLng: fallbackLocale,
+export let i18n: i18next.i18n
 
-  interpolation: {
-    escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
-  },
-})
+export const initI18n = async () => {
+  i18n = i18next.use(initReactI18next)
 
-console.log("i18next.languages 2")
-console.log(i18next.languages)
+  await i18n.init({
+    resources: {
+      en,
+      "en-US": en
+    },
+    lng: fallbackLocale,
+    fallbackLng: fallbackLocale,
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+
+  return i18n
+}
+
+// console.log("i18next.languages 2")
+// console.log(i18next.languages)
 
 const systemLocale = Localization.getLocales()[0]
 const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
@@ -71,22 +62,26 @@ I18nManager.forceRTL(isRTL)
 /**
  * Builds up valid keypaths for translations.
  */
+
 export type TxKeyPath = RecursiveKeyOf<Translations>
 
 // via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`>
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, true>
 }[keyof TObj & (string | number)]
 
 type RecursiveKeyOfInner<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<
-    TObj[TKey],
-    `['${TKey}']` | `.${TKey}`
-  >
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, false>
 }[keyof TObj & (string | number)]
 
-type RecursiveKeyOfHandleValue<TValue, Text extends string> = TValue extends any[]
+type RecursiveKeyOfHandleValue<
+  TValue,
+  Text extends string,
+  IsFirstLevel extends boolean,
+> = TValue extends any[]
   ? Text
   : TValue extends object
-  ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
+  ? IsFirstLevel extends true
+    ? Text | `${Text}:${RecursiveKeyOfInner<TValue>}`
+    : Text | `${Text}.${RecursiveKeyOfInner<TValue>}`
   : Text

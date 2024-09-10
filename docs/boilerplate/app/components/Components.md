@@ -31,7 +31,7 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 ```tsx
 <Button
   text="Click It"
-  tx="button.clickIt"
+  tx="button:clickIt"
   preset="primary"
   onPress={() => Alert.alert("pressed")}
   style={[{ paddingVertical: 100 }, { borderRadius: 0 }]}
@@ -201,7 +201,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
 ```tsx
 <Text
   preset="header"
-  tx="welcome.header"
+  tx="welcome:header"
   txOptions={{
     name: rootStore.currentUser.name,
   }}

@@ -27,7 +27,7 @@ The `tx` optional prop is the string key used to look up the translated text for
 ````tsx
 
 ```tsx
-<Text tx="welcomeScreen.readyForLaunch" />
+<Text tx="welcomeScreen:readyForLaunch" />
 ````
 
 ### `txOptions`
@@ -44,7 +44,7 @@ profile: {
 ```tsx
 // in your component
 <Text
-  tx="profile.details"
+  tx="profile:details"
   txOptions={{
     name: "Jamon",
     age: 40,
