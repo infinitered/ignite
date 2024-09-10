@@ -78,6 +78,8 @@ export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
       // cleanup
       if (_unsubscribe !== undefined) _unsubscribe()
     }
+    // only runs on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { rootStore, rehydrated }

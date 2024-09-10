@@ -1,4 +1,4 @@
-import React, { ComponentType, Fragment, ReactElement } from "react"
+import { ComponentType, Fragment, ReactElement } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -271,8 +271,8 @@ const $alignmentWrapper: ViewStyle = {
 }
 
 const $alignmentWrapperFlexOptions = {
-  top: "flex-start",
-  center: "center",
+  "top": "flex-start",
+  "center": "center",
   "space-between": "space-between",
   "force-footer-bottom": "space-between",
 } as const

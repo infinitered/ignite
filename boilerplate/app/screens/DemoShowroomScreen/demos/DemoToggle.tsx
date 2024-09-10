@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
+import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import {
   Checkbox,
@@ -17,17 +17,17 @@ import type { ThemedStyle } from "app/theme"
 import { translate } from "app/i18n"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
-  const [value, setValue] = React.useState(props.value || false)
+  const [value, setValue] = useState(props.value || false)
   return <Checkbox {...props} value={value} onPress={() => setValue(!value)} />
 }
 
 function ControlledRadio(props: RadioToggleProps) {
-  const [value, setValue] = React.useState(props.value || false)
+  const [value, setValue] = useState(props.value || false)
   return <Radio {...props} value={value} onPress={() => setValue(!value)} />
 }
 
 function ControlledSwitch(props: SwitchToggleProps) {
-  const [value, setValue] = React.useState(props.value || false)
+  const [value, setValue] = useState(props.value || false)
   return <Switch {...props} value={value} onPress={() => setValue(!value)} />
 }
 

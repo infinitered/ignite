@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import {
   Animated,
   Image,
@@ -56,11 +56,11 @@ function SwitchInput(props: SwitchInputProps) {
     themed,
   } = useAppTheme()
 
-  const animate = useRef(new Animated.Value(on ? 1 : 0)).current // Initial value is set based on isActive
-  const [opacity] = useState(new Animated.Value(0))
+  const animate = useRef(new Animated.Value(on ? 1 : 0)) // Initial value is set based on isActive
+  const opacity = useRef(new Animated.Value(0))
 
   useEffect(() => {
-    Animated.timing(animate, {
+    Animated.timing(animate.current, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true, // Enable native driver for smoother animations
@@ -68,7 +68,7 @@ function SwitchInput(props: SwitchInputProps) {
   }, [on])
 
   useEffect(() => {
-    Animated.timing(opacity, {
+    Animated.timing(opacity.current, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
@@ -116,10 +116,7 @@ function SwitchInput(props: SwitchInputProps) {
   })()
 
   const rtlAdjustment = isRTL ? -1 : 1
-  const $themedSwitchInner = React.useMemo(
-    () => themed([$styles.toggleInner, $switchInner]),
-    [themed],
-  )
+  const $themedSwitchInner = useMemo(() => themed([$styles.toggleInner, $switchInner]), [themed])
 
   const offsetLeft = ($innerStyleOverride?.paddingStart ||
     $innerStyleOverride?.paddingLeft ||
@@ -140,7 +137,7 @@ function SwitchInput(props: SwitchInputProps) {
         : [offsetLeft, +(knobWidth || 0) + offsetRight]
       : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
 
-  const $animatedSwitchKnob = animate.interpolate({
+  const $animatedSwitchKnob = animate.current.interpolate({
     inputRange: [0, 1],
     outputRange,
   })
@@ -152,7 +149,7 @@ function SwitchInput(props: SwitchInputProps) {
           $themedSwitchInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          { opacity },
+          { opacity: opacity.current },
         ]}
       />
 

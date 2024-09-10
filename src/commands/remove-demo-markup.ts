@@ -9,7 +9,7 @@ module.exports = {
   description:
     "Remove all demo markup from generated boilerplate. Add --dry-run to see what would be removed.",
   run: async (toolbox: GluegunToolbox) => {
-    const { parameters, system } = toolbox
+    const { parameters } = toolbox
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
@@ -50,14 +50,6 @@ module.exports = {
           p(`Found ${comments.map((c) => `'${c}'`).join(", ")} in ${path}`)
         }
       })
-
-    // Run prettier at the end to clean up any spacing issues
-    if (!dryRun) {
-      await system.run(`npx prettier@2.8.8 --write "./app/**/*.{js,jsx,json,md,ts,tsx}"`, {
-        trim: true,
-        cwd: TARGET_DIR,
-      })
-    }
 
     p(`Done removing demo markup from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },

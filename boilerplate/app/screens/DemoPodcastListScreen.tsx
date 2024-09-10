@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { ComponentType, FC, useEffect, useMemo } from "react"
+import { ComponentType, FC, useCallback, useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -53,8 +53,8 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     const { episodeStore } = useStores()
     const { themed } = useAppTheme()
 
-    const [refreshing, setRefreshing] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(false)
+    const [refreshing, setRefreshing] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     // initially, kick off a background refresh without the refreshing UI
     useEffect(() => {
@@ -180,6 +180,11 @@ const EpisodeCard = observer(function EpisodeCard({
     }
   })
 
+  const handlePressFavorite = useCallback(() => {
+    onPressFavorite()
+    liked.value = withSpring(liked.value ? 0 : 1)
+  }, [liked, onPressFavorite])
+
   /**
    * Android has a "longpress" accessibility action. iOS does not, so we just have to use a hint.
    * @see https://reactnative.dev/docs/accessibility#accessibilityactions
@@ -208,13 +213,8 @@ const EpisodeCard = observer(function EpisodeCard({
           },
         },
       }),
-    [episode, isFavorite],
+    [episode.title, handlePressFavorite, isFavorite],
   )
-
-  const handlePressFavorite = () => {
-    onPressFavorite()
-    liked.value = withSpring(liked.value ? 0 : 1)
-  }
 
   const handlePressCard = () => {
     openLinkInBrowser(episode.enclosure.link)
@@ -251,7 +251,7 @@ const EpisodeCard = observer(function EpisodeCard({
           </View>
         )
       },
-    [themed],
+    [animatedLikeButtonStyles, animatedUnlikeButtonStyles, colors, themed],
   )
 
   return (

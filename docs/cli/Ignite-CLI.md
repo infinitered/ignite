@@ -146,13 +146,6 @@ Removes all demo code (files, marked code blocks and lines) from the generated b
 
 Renames your current project to the desired new name. It'll also help switch the bundle identifier.
 
-### Snackify
-
-- `npx ignite-cli snackify`
-- Alias: `npx ignite-cli s`
-
-Turns an Ignite app into a project compatible with uploading directly to [Expo's Snack platform](https://snack.expo.dev/). This will create a separate branch to do so without worrying about modifying your current project structure.
-
 ### Update
 
 - `npx ignite-cli update`

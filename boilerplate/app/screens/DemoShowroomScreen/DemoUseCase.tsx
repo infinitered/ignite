@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { TxKeyPath, translate } from "app/i18n"
 import { Text } from "../../components"

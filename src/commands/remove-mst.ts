@@ -1,4 +1,4 @@
-import { GluegunToolbox, system } from "gluegun"
+import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
@@ -15,7 +15,6 @@ module.exports = {
 
     const CWD = process.cwd()
     const TARGET_DIR = parameters.first ?? CWD
-    const SRC_DIR = parameters.second ?? "app"
     const dryRun = boolFlag(parameters.options.dryRun) ?? false
 
     p()
@@ -37,7 +36,7 @@ module.exports = {
       filePaths,
       markupPrefix: MST_MARKUP_PREFIX,
       removeMarkupOnly: false,
-      dryRun: dryRun,
+      dryRun,
     })
 
     // Handle the results of the mst comment operations
@@ -68,15 +67,6 @@ module.exports = {
     emptyDirsRemoved.forEach((path) => {
       p(`Removed empty directory '${path}'`)
     })
-
-    // Run prettier at the end to clean up any spacing issues
-    if (!dryRun) {
-      p(`Running prettier to clean up code formatting`)
-      await system.run(`npx prettier@2.8.8 --write "./${SRC_DIR}/**/*.{js,jsx,json,md,ts,tsx}"`, {
-        trim: true,
-        cwd: TARGET_DIR,
-      })
-    }
 
     p(`Done removing MobX-State-Tree code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
   },

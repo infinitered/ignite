@@ -5,6 +5,7 @@ import { isRTL, translate, TxKeyPath } from "../i18n"
 import type { ThemedStyle, ThemedStyleArray } from "app/theme"
 import { useAppTheme } from "app/utils/useAppTheme"
 import { typography } from "app/theme/typography"
+import { ReactNode } from "react"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
@@ -43,7 +44,7 @@ export interface TextProps extends RNTextProps {
   /**
    * Children components.
    */
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 /**

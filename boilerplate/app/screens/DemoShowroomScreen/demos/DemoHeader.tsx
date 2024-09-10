@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Header, Icon } from "../../../components"
 import { $styles } from "../../../theme"

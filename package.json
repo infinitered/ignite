@@ -43,7 +43,7 @@
     "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
   "engines": {
-    "node": ">=18"
+    "node": "^18.18.0 || >=20.0.0"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
@@ -55,22 +55,23 @@
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.23.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-config-standard": "^16.0.2",
+    "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-n": "^17.10.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^7.1.0",
     "husky": "^7.0.1",
     "jest": "^27.0.6",
-    "prettier": "2.8.8",
+    "prettier": "^3.3.3",
     "semantic-release": "^17.4.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",
-    "typescript": "^5.0.4"
+    "typescript": "~5.3.3"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -126,7 +127,8 @@
     "printWidth": 100,
     "semi": false,
     "singleQuote": false,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "quoteProps": "consistent"
   },
   "release": {
     "plugins": [

@@ -41,6 +41,8 @@ export function getActiveRouteName(state: NavigationState | PartialState<Navigat
   return getActiveRouteName(route.state as NavigationState<AppStackParamList>)
 }
 
+const iosExit = () => false
+
 /**
  * Hook that handles Android back button presses and forwards those on to
  * the navigation or allows exiting the app.
@@ -49,12 +51,9 @@ export function getActiveRouteName(state: NavigationState | PartialState<Navigat
  * @returns {void}
  */
 export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
-  // ignore unless android... no back button!
-  if (Platform.OS !== "android") return
-
   // The reason we're using a ref here is because we need to be able
   // to update the canExit function without re-setting up all the listeners
-  const canExitRef = useRef(canExit)
+  const canExitRef = useRef(Platform.OS !== "android" ? iosExit : canExit)
 
   useEffect(() => {
     canExitRef.current = canExit
@@ -161,7 +160,9 @@ export function useNavigationPersistence(storage: Storage, persistenceKey: strin
 
   useEffect(() => {
     if (!isRestored) restoreState()
-  }, [isRestored])
+    // runs once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return { onNavigationStateChange, restoreState, isRestored, initialNavigationState }
 }

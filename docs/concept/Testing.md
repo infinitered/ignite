@@ -109,7 +109,6 @@ This particular example from the [official Jest docs](https://jestjs.io/docs/moc
 Testing code that touches other libraries such as `axios` can be challenging, because we need to rely on the network for what gets returned from users.
 
 ```tsx
-import React from "react"
 import { View, Text } from "react-native"
 import axios from "axios"
 

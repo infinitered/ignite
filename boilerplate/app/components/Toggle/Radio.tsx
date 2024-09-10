@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { StyleProp, View, ViewStyle, Animated } from "react-native"
 import { $styles } from "../../theme"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
@@ -34,10 +34,11 @@ function RadioInput(props: RadioInputProps) {
   const {
     theme: { colors },
   } = useAppTheme()
-  const [opacity] = useState(new Animated.Value(0))
+
+  const opacity = useRef(new Animated.Value(0))
 
   useEffect(() => {
-    Animated.timing(opacity, {
+    Animated.timing(opacity.current, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
@@ -82,7 +83,7 @@ function RadioInput(props: RadioInputProps) {
           $styles.toggleInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          { opacity },
+          { opacity: opacity.current },
         ]}
       >
         <View

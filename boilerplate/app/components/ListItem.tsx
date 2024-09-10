@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import { forwardRef, ReactElement } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -104,7 +104,7 @@ interface ListItemActionProps {
  * @param {ListItemProps} props - The props for the `ListItem` component.
  * @returns {JSX.Element} The rendered `ListItem` component.
  */
-export const ListItem = React.forwardRef<View, ListItemProps>(function ListItem(
+export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   props: ListItemProps,
   ref,
 ) {
