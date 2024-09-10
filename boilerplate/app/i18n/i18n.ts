@@ -81,7 +81,7 @@ type RecursiveKeyOfHandleValue<
 > = TValue extends any[]
   ? Text
   : TValue extends object
-  ? IsFirstLevel extends true
-    ? Text | `${Text}:${RecursiveKeyOfInner<TValue>}`
-    : Text | `${Text}.${RecursiveKeyOfInner<TValue>}`
-  : Text
+    ? IsFirstLevel extends true
+      ? Text | `${Text}:${RecursiveKeyOfInner<TValue>}`
+      : Text | `${Text}.${RecursiveKeyOfInner<TValue>}`
+    : Text
