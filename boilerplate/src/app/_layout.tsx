@@ -3,9 +3,9 @@ import { ViewStyle  } from "react-native"
 import { Slot, SplashScreen } from "expo-router"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 // @mst replace-next-line
-import { useInitialRootStore } from "src/models"
+import { useInitialRootStore } from "@/models"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
-import { customFontsToLoad } from "src/theme"
+import { customFontsToLoad } from "@/theme"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -16,7 +16,7 @@ if (__DEV__) {
   require("src/devtools/ReactotronConfig.ts")
 }
 
-export { ErrorBoundary } from "src/components/ErrorBoundary/ErrorBoundary"
+export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
 
 export default function Root() {
   // @mst remove-block-start
