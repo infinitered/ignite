@@ -1,6 +1,7 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
 import { runIgnite, runError, run } from "../_test-helpers"
+import { stripANSI } from "../../src/tools/strip-ansi"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -31,10 +32,15 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
+      try {
+        result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+        })
+      } catch (e) {
+        console.log("Ignite new output: \n", stripANSI(e.stdout))
+        throw new Error("Ignite new failed")
+      }
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
