@@ -342,6 +342,7 @@ export async function cleanupExpoRouterConversion(toolbox: GluegunToolbox) {
       \\rm src/app.tsx
       mkdir src/components/ErrorBoundary
       mv src/screens/ErrorScreen/* src/components/ErrorBoundary
+      rm App.tsx
       rm ignite/templates/screen/NAMEScreen.tsx.ejs
       rm -rf ignite/templates/navigator
       rm -rf src/screens
