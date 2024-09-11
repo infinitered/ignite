@@ -1,5 +1,5 @@
-import React from "react"
-import { ViewStyle  } from "react-native"
+import { useEffect } from "react"
+import { ViewStyle } from "react-native"
 import { Slot, SplashScreen } from "expo-router"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 // @mst replace-next-line
@@ -29,11 +29,11 @@ export default function Root() {
 
   const loaded = fontsLoaded && rehydrated
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (fontError) throw fontError
   }, [fontError])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync()
     }
