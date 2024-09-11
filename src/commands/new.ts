@@ -650,7 +650,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
         const patchesToRemove = findDemoPatches()
         log(`Removing demo patches... ${patchesToRemove}`)
-        patchesToRemove.forEach((patch) => filesystem.remove(patch))
+        patchesToRemove.forEach((patch) => filesystem.cwd("./patches").remove(patch))
       }
 
       if (stateMgmt === "none") {
