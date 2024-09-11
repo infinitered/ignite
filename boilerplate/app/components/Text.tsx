@@ -1,5 +1,4 @@
 import { TOptions } from "i18next"
-import React from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
 import type { ThemedStyle, ThemedStyleArray } from "app/theme"
