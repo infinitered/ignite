@@ -87,3 +87,6 @@ web-build/
 !env.js
 
 /coverage
+
+# Yarn
+.yarn/*

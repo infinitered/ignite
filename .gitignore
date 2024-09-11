@@ -23,3 +23,6 @@ boilerplate/.gitignore.template
 
 # flame CLI
 .config
+
+# Yarn
+.yarn/*
