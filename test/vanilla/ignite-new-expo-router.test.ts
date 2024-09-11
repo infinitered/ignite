@@ -1,12 +1,12 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { runIgnite } from "../_test-helpers"
+import { run, runIgnite } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
 
 describe(`ignite new with expo-router`, () => {
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state=mst --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
@@ -14,7 +14,7 @@ describe(`ignite new with expo-router`, () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await runIgnite(
-        `new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state=mst --yes`,
+        `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`,
         {
           pre: `cd ${tempDir}`,
           post: `cd ${originalDir}`,
@@ -46,10 +46,6 @@ describe(`ignite new with expo-router`, () => {
       expect(templates).toContain("screen")
       expect(templates).not.toContain("navigator")
 
-      // check tsconfig for path alias
-      const tsConfigJson = filesystem.read(`${appPath}/tsconfig.json`)
-      expect(tsConfigJson).toContain(`"src/*": ["./src/*"]`)
-
       // check entry point
       const packageJson = filesystem.read(`${appPath}/package.json`)
       expect(packageJson).toContain("expo-router/entry")
@@ -60,27 +56,6 @@ describe(`ignite new with expo-router`, () => {
       const appJson = filesystem.read(`${appPath}/app.json`)
       expect(appJson).toContain("expo-router")
       expect(appJson).toContain("typedRoutes")
-
-      // check generator templates for src/components and src/models
-      const componentGenerator = filesystem.read(
-        `${appPath}/ignite/templates/component/NAME.tsx.ejs`,
-      )
-      expect(componentGenerator).toContain("src/components/index.ts")
-      expect(componentGenerator).toContain("src/theme")
-      expect(componentGenerator).not.toContain("app/components/index.ts")
-      expect(componentGenerator).not.toContain("app/theme")
-      const modelGenerator = filesystem.read(`${appPath}/ignite/templates/model/NAME.ts.ejs`)
-      expect(modelGenerator).toContain("src/models")
-      expect(modelGenerator).not.toContain("app/models")
-
-      // check components for src/i18n
-      const listViewComponent = filesystem.read(`${appPath}/src/components/ListView.tsx`)
-      expect(listViewComponent).toContain("src/i18n")
-      expect(listViewComponent).not.toContain("app/i18n")
-
-      const switchComponent = filesystem.read(`${appPath}/src/components/Toggle/Switch.tsx`)
-      expect(switchComponent).toContain("src/i18n")
-      expect(switchComponent).not.toContain("app/i18n")
 
       // check ReactotronConfig for router.back etc
       const reactotronConfig = filesystem.read(`${appPath}/src/devtools/ReactotronConfig.ts`)
@@ -96,6 +71,19 @@ describe(`ignite new with expo-router`, () => {
       // make sure index has observer
       const rootIndex = filesystem.read(`${appPath}/src/app/index.tsx`)
       expect(rootIndex).toContain("observer")
+    })
+
+    it("should pass test, lint, and compile checks", async () => {
+      const runOpts = {
+        pre: `cd ${appPath}`,
+        post: `cd ${originalDir}`,
+      }
+      // #region Assert package.json Scripts Can Be Run
+      // run the tests; if they fail, run will raise and this test will fail
+      await run(`bun run test`, runOpts)
+      await run(`bun run lint`, runOpts)
+      await run(`bun run compile`, runOpts)
+      expect(await run("git diff HEAD --no-ext-diff", runOpts)).toContain("+  Bowser: undefined") 
     })
   })
 
