@@ -311,6 +311,7 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
     "tsconfig.json",
     // has its own tsconfig, needs updating separately
     "test/i18n.test.ts",
+    "test/setup.ts",
     "ignite/templates/model/NAME.ts.ejs",
     "ignite/templates/component/NAME.tsx.ejs",
   ]
