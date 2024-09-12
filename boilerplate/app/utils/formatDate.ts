@@ -8,7 +8,7 @@ import parseISO from "date-fns/parseISO"
 import ar from "date-fns/locale/ar-SA"
 import ko from "date-fns/locale/ko"
 import en from "date-fns/locale/en-US"
-import { i18n } from "app/i18n"
+import { i18n } from "@/i18n"
 
 type Options = Parameters<typeof format>[2]
 

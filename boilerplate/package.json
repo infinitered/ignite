@@ -99,5 +99,8 @@
   },
   "engines": {
     "node": "^18.18.0 || >=20.0.0"
+  },
+  "resolutions": {
+    "eslint-plugin-react": "7.35.2"
   }
 }

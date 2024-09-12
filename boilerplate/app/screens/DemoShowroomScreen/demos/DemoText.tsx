@@ -3,7 +3,7 @@ import { Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "app/i18n"
+import { translate } from "@/i18n"
 
 export const DemoText: Demo = {
   name: "Text",

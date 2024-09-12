@@ -30,16 +30,16 @@ import {
   Screen,
   Switch,
   Text,
-} from "app/components"
+} from "@/components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import type { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "@/theme"
 import { $styles } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const ICON_SIZE = 14
 

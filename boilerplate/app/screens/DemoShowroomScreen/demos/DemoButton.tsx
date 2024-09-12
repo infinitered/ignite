@@ -5,7 +5,7 @@ import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "app/i18n"
+import { translate } from "@/i18n"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
 const $customButtonStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({

@@ -58,10 +58,10 @@ patches:
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "app/navigators"
-import { Screen, Text } from "app/components"
+import { AppStackScreenProps } from "@/navigators"
+import { Screen, Text } from "@/components"
 // import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+// import { useStores } from "@/models"
 
 interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
 
@@ -91,7 +91,7 @@ export function copyExpoRouterScreenGenerator(tempBoilerplatePath: string): void
   const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { Screen, Text } from "app/components"
+import { Screen, Text } from "@/components"
 
 export default observer(function <%= props.pascalCaseName %>Screen() {
   return (

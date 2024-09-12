@@ -6,9 +6,9 @@ patch:
 ---
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite" // @mst remove-current-line
-import { useAppTheme } from "app/utils/useAppTheme"
-import type { ThemedStyle } from "app/theme"
-import { Text } from "app/components/Text"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { Text } from "@/components/Text"
 
 export interface <%= props.pascalCaseName %>Props {
   /**

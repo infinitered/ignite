@@ -1,11 +1,10 @@
 // @mst replace-next-line
 import { observer } from "mobx-react-lite"
-import React from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Text } from "src/components"
-import { isRTL } from "../i18n"
-import { colors, spacing } from "../theme"
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { Text } from "@/components"
+import { isRTL } from "@/i18n"
+import { colors, spacing } from "@/theme"
+import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")

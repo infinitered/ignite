@@ -1,4 +1,4 @@
-import { DEFAULT_BOTTOM_OFFSET } from "app/components"
+import { DEFAULT_BOTTOM_OFFSET } from "@/components"
 import { forwardRef, ReactElement, ReactNode, useCallback } from "react"
 import { ScrollViewProps, SectionList, SectionListProps } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"

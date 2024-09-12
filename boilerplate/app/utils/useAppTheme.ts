@@ -8,7 +8,7 @@ import {
   type ThemedStyleArray,
   lightTheme,
   darkTheme,
-} from "app/theme"
+} from "@/theme"
 import * as SystemUI from "expo-system-ui"
 
 type ThemeContextType = {

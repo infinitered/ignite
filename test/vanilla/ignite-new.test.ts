@@ -31,10 +31,17 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
+      try {
+        result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+        })
+      } catch (e) {
+        // Uncomment to debug tests. Leaving commented for now, because we were
+        // seeing issues with max buffer size exceeded.
+        // console.log("Ignite new output: \n", stripANSI(e.stdout))
+        throw new Error("Ignite new failed")
+      }
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
