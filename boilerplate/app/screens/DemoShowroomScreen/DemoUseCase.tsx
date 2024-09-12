@@ -1,10 +1,10 @@
 import { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
-import { TxKeyPath, translate } from "app/i18n"
+import { TxKeyPath, translate } from "@/i18n"
 import { Text } from "../../components"
-import type { ThemedStyle } from "app/theme"
-import { useAppTheme } from "app/utils/useAppTheme"
-import { $styles } from "app/theme"
+import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import { $styles } from "@/theme"
 
 interface DemoUseCaseProps {
   name: TxKeyPath

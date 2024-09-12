@@ -627,16 +627,6 @@ module.exports = {
 
         // replace "main" entry point from App.js to "expo-router/entry"
         packageJsonRaw = packageJsonRaw.replace(/"main": ".*",/g, `"main": "expo-router/entry",`)
-
-        // replace format and lint scripts
-        packageJsonRaw = packageJsonRaw.replace(
-          /"format": ".*",/g,
-          `"format": "prettier --write \\"src/**/*.{js,jsx,json,md,ts,tsx}\\"",`,
-        )
-        packageJsonRaw = packageJsonRaw.replace(
-          /"lint": ".*",/g,
-          `"lint": "eslint src test --fix --ext .js,.ts,.tsx && npm run format",`,
-        )
       }
 
       // If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
@@ -660,7 +650,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
         const patchesToRemove = findDemoPatches()
         log(`Removing demo patches... ${patchesToRemove}`)
-        patchesToRemove.forEach((patch) => filesystem.remove(patch))
+        patchesToRemove.forEach((patch) => filesystem.cwd("./patches").remove(patch))
       }
 
       if (stateMgmt === "none") {

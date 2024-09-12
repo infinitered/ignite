@@ -1,4 +1,4 @@
-import demoFr from "./demo-fr"
+import demoFr from "./demo-fr" // @demo remove-current-line
 import { Translations } from "./en"
 
 const fr: Translations = {

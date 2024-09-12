@@ -10,10 +10,10 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import type { ThemedStyle, ThemedStyleArray } from "app/theme"
+import type { ThemedStyle, ThemedStyleArray } from "@/theme"
 import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 export interface TextFieldAccessoryProps {
   style: StyleProp<ViewStyle | TextStyle | ImageStyle>

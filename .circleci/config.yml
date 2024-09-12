@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Run jest tests
           command: yarn test
-          no_output_timeout: 5m
+          no_output_timeout: 10m
       - save_cache:
           name: Save ignite dependency cache
           paths:

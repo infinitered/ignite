@@ -6,7 +6,7 @@ import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "app/i18n"
+import { translate } from "@/i18n"
 
 const $imageContainer: ViewStyle = {
   alignItems: "center",

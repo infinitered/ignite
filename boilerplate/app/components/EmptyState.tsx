@@ -2,8 +2,8 @@ import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } 
 import { translate } from "../i18n"
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
-import { useAppTheme } from "app/utils/useAppTheme"
-import type { ThemedStyle } from "app/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
 
 const sadFace = require("../../assets/images/sad-face.png")
 

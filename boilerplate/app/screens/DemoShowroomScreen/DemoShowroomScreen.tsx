@@ -6,13 +6,13 @@ import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
 import { TxKeyPath, isRTL, translate } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
-import type { Theme, ThemedStyle } from "app/theme"
-import { $styles } from "app/theme"
+import type { Theme, ThemedStyle } from "@/theme"
+import { $styles } from "@/theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const logo = require("../../../assets/images/logo.png")
 

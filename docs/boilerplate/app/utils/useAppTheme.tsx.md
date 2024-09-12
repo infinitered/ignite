@@ -12,7 +12,7 @@ Example usage:
 
 ```tsx
 import { View, type ViewStyle } from "react-native"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const MyComponent = () => {
   const {

@@ -5,14 +5,14 @@ import {
   Button, // @demo remove-current-line
   Text,
   Screen,
-} from "app/components"
+} from "@/components"
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import type { ThemedStyle } from "app/theme"
+import type { ThemedStyle } from "@/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "app/utils/useAppTheme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")

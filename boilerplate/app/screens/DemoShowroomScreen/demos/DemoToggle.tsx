@@ -9,12 +9,12 @@ import {
   Switch,
   SwitchToggleProps,
   Text,
-} from "app/components"
+} from "@/components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import type { ThemedStyle } from "app/theme"
-import { translate } from "app/i18n"
+import type { ThemedStyle } from "@/theme"
+import { translate } from "@/i18n"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
   const [value, setValue] = useState(props.value || false)

@@ -1,4 +1,4 @@
-import demoEn from "./demo-en"
+import demoEn from "./demo-en" // @demo remove-current-line
 
 const en = {
   common: {
