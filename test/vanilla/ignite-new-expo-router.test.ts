@@ -1,7 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
 import { run, runIgnite } from "../_test-helpers"
-import { stripANSI } from "../../src/tools/strip-ansi"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -23,7 +22,9 @@ describe(`ignite new with expo-router`, () => {
           },
         )
       } catch (e) {
-        console.log("Ignite new output: \n", stripANSI(e.stdout))
+        // Uncomment to debug tests. Leaving commented for now, because we were
+        // seeing issues with max buffer size exceeded.
+        // console.log("Ignite new output: \n", stripANSI(e.stdout))
         throw new Error("Ignite new failed")
       }
       appPath = filesystem.path(tempDir, APP_NAME)
