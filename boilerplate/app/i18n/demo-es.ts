@@ -1,101 +1,101 @@
 import { DemoTranslations } from "./demo-en"
 
 export const demoEs: DemoTranslations = {
-  demoIcon: {
-    description:
-      "Un composant pour faire le rendu d’une icône enregistrée. Il est enveloppé dans un <TouchableOpacity /> si `onPress` est fourni, sinon dans une <View />.",
-    useCase: {
-      icons: {
-        name: "Icônes",
-        description: "Liste des icônes enregistrées dans le composant.",
-      },
-      size: {
-        name: "Taille",
-        description: "Il y a une prop de taille.",
-      },
-      color: {
-        name: "Couleur",
-        description: "Il y a une prop de couleur.",
-      },
-      styling: {
-        name: "Style",
-        description: "Le composant peut être facilement stylisé.",
-      },
-    },
-  },
-  demoTextField: {
-    description: "Le composant <TextField /> permet la saisie et l'édition de texte.",
+    demoIcon: {
+        description:
+            "Un componente para dibujar un ícono pre-definido. Si se proporciona el atributo `onPress`, se rodea por un componente <TouchableOpacity />. De lo contrario, se rodea con un componente <View />.",
+        useCase: {
+            icons: {
+            name: "Íconos",
+            description: "Lista de los íconos pre-definidos para el componente.",
+            },
+            size: {
+            name: "Tamaño",
+            description: "Hay un atributo para el tamaño.",
+            },
+            color: {
+            name: "Color",
+            description: "Hay un atributo para el color.",
+            },
+            styling: {
+            name: "Estilo",
+            description: "El componente puede ser configurado fácilmente.",
+            },
+        },
+},
+demoTextField: {
+    description: "El componente <TextField /> permite el ingreso y edición de texto.",
     useCase: {
       statuses: {
-        name: "Statuts",
+        name: "Estados",
         description:
-          "Il y a une prop de statut - similaire à `preset` dans d'autres composants, mais affecte également la fonctionnalité du composant.",
+          "Hay un atributo para el estado - similar a `preset` en otros componentes, pero que además impacta en la funcionalidad del componente.",
         noStatus: {
-          label: "Pas de statut",
-          helper: "C'est le statut par défaut",
-          placeholder: "Le texte passe par là",
+          label: "Sin estado",
+          helper: "Este es el estado predeterminado",
+          placeholder: "El texto va acá",
         },
         error: {
-          label: "Statut d'erreur",
-          helper: "Statut à utiliser en cas d’erreur",
-          placeholder: "Le texte passe par ici",
+          label: "Estado de error",
+          helper: "Estado para usar en caso de error",
+          placeholder: "El texto va acá",
         },
         disabled: {
-          label: "Statut désactivé",
-          helper: "Désactive l’édition et atténue le texte",
-          placeholder: "Le texte repasse par là",
+          label: "Estado desactivado",
+          helper: "Desactiva la edición y atenúa el texto",
+          placeholder: "El texto va acá",
         },
       },
       passingContent: {
-        name: "Transfert de contenu",
-        description: "Il y a plusieurs façons de transmettre du contenu.",
+        name: "Entregando contenido",
+        description: "Hay varias formas de entregar contenido.",
         viaLabel: {
-          labelTx: "Via la prop `label`",
-          helper: "Via la prop `helper`",
-          placeholder: "Via la prop `placeholder`",
+          labelTx: "A través del atributo `label`",
+          helper: "A través del atributo `helper`",
+          placeholder: "A través del atributo `placeholder`",
         },
         rightAccessory: {
-          label: "Accessoire droit",
-          helper: "Cette prop demande une fonction qui retourne un élément React.",
+          label: "Complemento derecho",
+          helper: "Este atributo requiere una función que retorne un elemento React.",
         },
         leftAccessory: {
-          label: "Accessoire gauche",
-          helper: "Cette prop demande une fonction qui retourne un élément React.",
+          label: "Complemento izquierdo",
+          helper: "Este atributo requiere una función que retorne un elemento React.",
         },
         supportsMultiline: {
-          label: "Supporte le multiligne",
-          helper: "Permet une saisie plus longue pour le texte multiligne.",
+          label: "Soporta múltilíneas",
+          helper: "Permite un input de texto más largo para texto multilinea.",
         },
       },
       styling: {
-        name: "Style",
-        description: "Le composant peut être facilement stylisé.",
+        name: "Estilo",
+        description: "El componente puede ser configurado fácilmente.",
         styleInput: {
-          label: "Style de saisie",
-          helper: "Via la prop `style`",
+          label: "Estilo del input",
+          helper: "A través de el atributo `style`",
         },
         styleInputWrapper: {
-          label: "Style du wrapper de saisie",
-          helper: "Via la prop `inputWrapperStyle`",
+          label: "Estilo del contenedor del input",
+          helper: "A través de el atributo `inputWrapperStyle`",
         },
         styleContainer: {
-          label: "Style du conteneur",
-          helper: "Via la prop `containerStyle`",
+          label: "Estilo del contenedor",
+          helper: "A través de el atributo `containerStyle`",
         },
         styleLabel: {
-          label: "Style du label et de l’aide",
-          helper: "Via les props de style `LabelTextProps` et `HelperTextProps`",
+          label: "Estilo de la etiqueta y texto de ayuda",
+          helper: "A través de las props de estilo `LabelTextProps` y `HelperTextProps`",
         },
         styleAccessories: {
-          label: "Style des accessoires",
-          helper: "Via les props de style `RightAccessory` et `LeftAccessory`",
+          label: "Estilo de los accesorios",
+          helper: "A través de las props de estilo `RightAccessory` y `LeftAccessory`",
         },
       },
     },
   },
   demoToggle: {
     description:
-      "Fait le rendu d’un booléen. Ce composant contrôlé nécessite un callback `onValueChange` qui met à jour la prop `value` pour que le composant reflète les actions de l'utilisateur. Si la prop `value` n'est pas mise à jour, le composant continuera à rendre la prop `value` fournie au lieu du résultat attendu des actions de l'utilisateur.",
+      "Fait le rendu d’un booléen. Ce composant contrôlé nécessite un callback `onValueChange` qui met à jour el atributo `value` pour que le composant reflète les actions de l'utilisateur. Si el atributo `value` n'est pas mise à jour, le composant continuera à rendre el atributo `value` fournie au lieu du résultat attendu des actions de l'utilisateur.",
     useCase: {
       variants: {
         name: "Variantes",
@@ -128,8 +128,8 @@ export const demoEs: DemoTranslations = {
         description: "Il y a plusieurs façons de transmettre du contenu.",
         useCase: {
           checkBox: {
-            label: "Via la prop `labelTx`",
-            helper: "Via la prop `helperTx`.",
+            label: "Via el atributo `labelTx`",
+            helper: "Via el atributo `helperTx`.",
           },
           checkBoxMultiLine: {
             helper: "Supporte le multiligne - Nulla proident consectetur labore sunt ea labore. ",
@@ -173,7 +173,7 @@ export const demoEs: DemoTranslations = {
       passingContent: {
         name: "Transfert de contenu",
         description: "Il y a plusieurs façons de transmettre du contenu.",
-        viaTextProps: "Via la prop `text` - Billum In",
+        viaTextProps: "Via el atributo `text` - Billum In",
         children: "Enfants - Irure Reprehenderit",
         rightAccessory: "Accessoire droit - Duis Quis",
         leftAccessory: "Accessoire gauche - Duis Proident",
@@ -211,7 +211,7 @@ export const demoEs: DemoTranslations = {
         name: "Hauteur",
         description: "La ligne peut avoir différentes hauteurs.",
         defaultHeight: "Hauteur par défaut (56px)",
-        customHeight: "Hauteur personnalisée via la prop `height`",
+        customHeight: "Hauteur personnalisée via el atributo `height`",
         textHeight:
           "Hauteur déterminée par le contenu du texte - Reprehenderit incididunt deserunt do do ea labore.",
         longText:
@@ -241,7 +241,7 @@ export const demoEs: DemoTranslations = {
       passingContent: {
         name: "Transfert de contenu",
         description: "Il y a plusieurs façons de transmettre du contenu.",
-        text: "Via la prop `text` - reprehenderit sint",
+        text: "Via el atributo `text` - reprehenderit sint",
         children: "Enfants - mostrud mollit",
         nestedChildren1: "Enfants imbriqués - proident veniam.",
         nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
@@ -306,8 +306,8 @@ export const demoEs: DemoTranslations = {
       passingContent: {
         name: "Transfert de contenu",
         description: "Il y a plusieurs façons de transmettre du contenu.",
-        heading: "Via la prop `heading`",
-        content: "Via la prop `content`",
+        heading: "Via el atributo `heading`",
+        content: "Via el atributo `content`",
         footer: "Je suis si seul ici en bas.",
       },
       customComponent: {
@@ -380,8 +380,8 @@ export const demoEs: DemoTranslations = {
         name: "Transfert de contenu",
         description: "Il y a plusieurs façons de transférer du contenu.",
         viaText:
-          "via la prop `text` - Billum in aute fugiat proident nisi pariatur est. Cupidatat anim cillum eiusmod ad. Officia eu magna aliquip labore dolore consequat.",
-        viaTx: "via la prop `tx` -",
+          "via el atributo `text` - Billum in aute fugiat proident nisi pariatur est. Cupidatat anim cillum eiusmod ad. Officia eu magna aliquip labore dolore consequat.",
+        viaTx: "via el atributo `tx` -",
         children: "enfants - Aliqua velit irure reprehenderit eu qui amet veniam consectetur.",
         nestedChildren: "Enfants imbriqués -",
         nestedChildren2: "Occaecat aliqua irure proident veniam.",
@@ -454,9 +454,9 @@ export const demoEs: DemoTranslations = {
         description: "Il y a plusieurs façons de transférer du contenu.",
         customizeImageHeading: "Personnaliser l’image",
         customizeImageContent: "Vous pouvez passer n’importe quelle source d'image.",
-        viaHeadingProp: "Via la prop `heading`",
-        viaContentProp: "Via la prop `content`.",
-        viaButtonProp: "Via la prop `button`",
+        viaHeadingProp: "Via el atributo `heading`",
+        viaContentProp: "Via el atributo `content`.",
+        viaButtonProp: "Via el atributo `button`",
       },
       styling: {
         name: "Style",
