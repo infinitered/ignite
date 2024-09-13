@@ -1,132 +1,132 @@
 import demoEs from "./demo-es" // @demo remove-current-line
 import { Translations } from "./en"
 
-const fr: Translations = {
-  common: {
-    ok: "OK !",
-    cancel: "Annuler",
-    back: "Retour",
-    logOut: "Déconnexion", // @demo remove-current-line
-  },
-  welcomeScreen: {
-    postscript:
-      "psst  — Ce n'est probablement pas à quoi ressemble votre application. (À moins que votre designer ne vous ait donné ces écrans, dans ce cas, mettez la en prod !)",
-    readyForLaunch: "Votre application, presque prête pour le lancement !",
-    exciting: "(ohh, c'est excitant !)",
-    letsGo: "Allons-y !", // @demo remove-current-line
-  },
-  errorScreen: {
-    title: "Quelque chose s'est mal passé !",
-    friendlySubtitle:
-      "C'est l'écran que vos utilisateurs verront en production lorsqu'une erreur sera lancée. Vous voudrez personnaliser ce message (situé dans `app/i18n/fr.ts`) et probablement aussi la mise en page (`app/screens/ErrorScreen`). Si vous voulez le supprimer complètement, vérifiez `app/app.tsx` pour le composant <ErrorBoundary>.",
-    reset: "RÉINITIALISER L'APPLICATION",
-    traceTitle: "Erreur depuis %{name}", // @demo remove-current-line
-  },
-  emptyStateComponent: {
-    generic: {
-      heading: "Si vide... si triste",
-      content:
-        "Aucune donnée trouvée pour le moment. Essayez de cliquer sur le bouton pour rafraîchir ou recharger l'application.",
-      button: "Essayons à nouveau",
+const es: Translations = {
+    common: {
+      ok: "OK",
+      cancel: "Cancelar",
+      back: "Volver",
+      logOut: "Cerrar sesión", // @demo remove-current-line
     },
-  },
-  // @demo remove-block-start
-  errors: {
-    invalidEmail: "Adresse e-mail invalide.",
-  },
-  loginScreen: {
-    logIn: "Se connecter",
-    enterDetails:
-      "Entrez vos informations ci-dessous pour débloquer des informations top secrètes. Vous ne devinerez jamais ce que nous avons en attente. Ou peut-être que vous le ferez ; ce n'est pas de la science spatiale ici.",
-    emailFieldLabel: "E-mail",
-    passwordFieldLabel: "Mot de passe",
-    emailFieldPlaceholder: "Entrez votre adresse e-mail",
-    passwordFieldPlaceholder: "Mot de passe super secret ici",
-    tapToLogIn: "Appuyez pour vous connecter!",
-    hint: "Astuce : vous pouvez utiliser n'importe quelle adresse e-mail et votre mot de passe préféré :)",
-  },
-  demoNavigator: {
-    componentsTab: "Composants",
-    debugTab: "Débogage",
-    communityTab: "Communauté",
-    podcastListTab: "Podcasts",
-  },
-  demoCommunityScreen: {
-    title: "Connectez-vous avec la communauté",
-    tagLine:
-      "Rejoignez la communauté d'ingénieurs React Native d'Infinite Red et améliorez votre développement d'applications avec nous !",
-    joinUsOnSlackTitle: "Rejoignez-nous sur Slack",
-    joinUsOnSlack:
-      "Vous souhaitez vous connecter avec des ingénieurs React Native du monde entier ? Rejoignez la conversation dans la communauté Slack d'Infinite Red ! Notre communauté en pleine croissance est un espace sûr pour poser des questions, apprendre des autres et développer votre réseau.",
-    joinSlackLink: "Rejoindre la communauté Slack",
-    makeIgniteEvenBetterTitle: "Rendre Ignite encore meilleur",
-    makeIgniteEvenBetter:
-      "Vous avez une idée pour rendre Ignite encore meilleur ? Nous sommes heureux de l'entendre ! Nous cherchons toujours des personnes qui veulent nous aider à construire les meilleurs outils React Native. Rejoignez-nous sur GitHub pour nous aider à construire l'avenir d'Ignite.",
-    contributeToIgniteLink: "Contribuer à Ignite",
-    theLatestInReactNativeTitle: "Les dernières nouvelles de React Native",
-    theLatestInReactNative:
-      "Nous sommes là pour vous tenir au courant de tout ce que React Native a à offrir.",
-    reactNativeRadioLink: "React Native Radio",
-    reactNativeNewsletterLink: "React Native Newsletter",
-    reactNativeLiveLink: "React Native Live",
-    chainReactConferenceLink: "Conférence Chain React",
-    hireUsTitle: "Engagez Infinite Red pour votre prochain projet",
-    hireUs:
-      "Que ce soit pour gérer un projet complet ou pour former des équipes à notre formation pratique, Infinite Red peut vous aider pour presque tous les projets React Native.",
-    hireUsLink: "Envoyez-nous un message",
-  },
-  demoShowroomScreen: {
-    jumpStart: "Composants pour démarrer votre projet !",
-    lorem2Sentences:
-      "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
-    demoHeaderTxExample: "Yay",
-    demoViaTxProp: "Via la propriété `tx`",
-    demoViaSpecifiedTxProp: "Via la propriété `{{prop}}Tx` spécifiée",
-  },
-  demoDebugScreen: {
-    howTo: "COMMENT FAIRE",
-    title: "Débugage",
-    tagLine:
-      "Félicitations, vous avez un modèle d'application React Native très avancé ici. Profitez de cette base de code !",
-    reactotron: "Envoyer à Reactotron",
-    reportBugs: "Signaler des bugs",
-    demoList: "Liste de démonstration",
-    demoPodcastList: "Liste de podcasts de démonstration",
-    androidReactotronHint:
-      "Si cela ne fonctionne pas, assurez-vous que l'application de bureau Reactotron est en cours d'exécution, exécutez adb reverse tcp:9090 tcp:9090 à partir de votre terminal, puis rechargez l'application.",
-    iosReactotronHint:
-      "Si cela ne fonctionne pas, assurez-vous que l'application de bureau Reactotron est en cours d'exécution, puis rechargez l'application.",
-    macosReactotronHint:
-      "Si cela ne fonctionne pas, assurez-vous que l'application de bureau Reactotron est en cours d'exécution, puis rechargez l'application.",
-    webReactotronHint:
-      "Si cela ne fonctionne pas, assurez-vous que l'application de bureau Reactotron est en cours d'exécution, puis rechargez l'application.",
-    windowsReactotronHint:
-      "Si cela ne fonctionne pas, assurez-vous que l'application de bureau Reactotron est en cours d'exécution, puis rechargez l'application.",
-  },
-  demoPodcastListScreen: {
-    title: "Épisodes de Radio React Native",
-    onlyFavorites: "Afficher uniquement les favoris",
-    favoriteButton: "Favori",
-    unfavoriteButton: "Non favori",
-    accessibility: {
-      cardHint:
-        "Double-cliquez pour écouter l'épisode. Double-cliquez et maintenez pour {{action}} cet épisode.",
-      switch: "Activez pour afficher uniquement les favoris",
-      favoriteAction: "Basculer en favori",
-      favoriteIcon: "Épisode non favori",
-      unfavoriteIcon: "Épisode favori",
-      publishLabel: "Publié le {{date}}",
-      durationLabel: "Durée : {{hours}} heures {{minutes}} minutes {{seconds}} secondes",
+    welcomeScreen: {
+      postscript:
+        "psst — Esto probablemente no es cómo se va a ver tu app. (A menos que tu diseñador te haya enviado estas pantallas, y en ese caso, ¡lánzalas en producción!)",
+      readyForLaunch: "Tu app, casi lista para su lanzamiento",
+      exciting: "(¡ohh, esto es emocionante!)",
+      letsGo: "¡Vamos!", // @demo remove-current-line
     },
-    noFavoritesEmptyState: {
-      heading: "C'est un peu vide ici",
-      content:
-        "Aucun favori n'a été ajouté pour le moment. Appuyez sur le cœur d'un épisode pour l'ajouter à vos favoris !",
+    errorScreen: {
+      title: "¡Algo salió mal!",
+      friendlySubtitle:
+        "Esta es la pantalla que verán tus usuarios en producción cuando haya un error. Vas a querer personalizar este mensaje (que está ubicado en `app/i18n/es.ts`) y probablemente también su diseño (`app/screens/ErrorScreen`). Si quieres eliminarlo completamente, revisa `app/app.tsx` y el componente <ErrorBoundary>.",
+      reset: "REINICIA LA APP",
+      traceTitle: "Error desde %{name}", // @demo remove-current-line
     },
-  },
-  // @demo remove-block-start
-  ...demoEs,
-  // @demo remove-block-end
-}
+    emptyStateComponent: {
+      generic: {
+        heading: "Muy vacío... muy triste",
+        content:
+          "No se han encontrado datos por el momento. Intenta darle clic en el botón para refrescar o recargar la app.",
+        button: "Intentemos de nuevo",
+      },
+    },
+    // @demo remove-block-start
+    errors: {
+      invalidEmail: "Email inválido.",
+    },
+    loginScreen: {
+      logIn: "Iniciar sesión",
+      enterDetails:
+        "Ingresa tus datos a continuación para desbloquear información ultra secreta. Nunca vas a adivinar lo que te espera al otro lado. O quizás si lo harás; la verdad no hay mucha ciencia alrededor.",
+      emailFieldLabel: "Email",
+      passwordFieldLabel: "Contraseña",
+      emailFieldPlaceholder: "Ingresa tu email",
+      passwordFieldPlaceholder: "Contraseña super secreta aquí",
+      tapToLogIn: "¡Presiona acá para iniciar sesión!",
+      hint: "Consejo: puedes usar cualquier email y tu contraseña preferida :)",
+    },
+    demoNavigator: {
+      componentsTab: "Componentes",
+      debugTab: "Debug",
+      communityTab: "Comunidad",
+      podcastListTab: "Podcasts",
+    },
+    demoCommunityScreen: {
+      title: "Conecta con la comunidad",
+      tagLine:
+        "Únete a la comunidad de ingenieros de React Native de Infinite Red y mejora tu desarrollo de aplicaciones con nosotros.",
+      joinUsOnSlackTitle: "Únete a nosotros en Slack",
+      joinUsOnSlack:
+        "¿Quieres conectarte con ingenieros de React Native de todo el mundo? Únete a la conversación en la comunidad de Slack de Infinite Red. Nuestra comunidad en crecimiento es un espacio seguro para hacer preguntas, aprender de los demás y ampliar tu red.",
+      joinSlackLink: "Únete a la comunidad de Slack",
+      makeIgniteEvenBetterTitle: "Haz que Ignite sea aún mejor",
+      makeIgniteEvenBetter:
+        "¿Tienes una idea para hacer que Ignite sea aún mejor? ¡Nos encantaría escucharla! Siempre buscamos personas que quieran ayudarnos a construir las mejores herramientas para React Native. Únete a nosotros en GitHub para ayudarnos a construir el futuro de Ignite.",
+      contributeToIgniteLink: "Contribuir a Ignite",
+      theLatestInReactNativeTitle: "Lo último en React Native",
+      theLatestInReactNative:
+        "Estamos aquí para mantenerte al día con todo lo que React Native tiene para ofrecer.",
+      reactNativeRadioLink: "Radio React Native",
+      reactNativeNewsletterLink: "Boletín de React Native",
+      reactNativeLiveLink: "React Native Live",
+      chainReactConferenceLink: "Conferencia Chain React",
+      hireUsTitle: "Contrata a Infinite Red para tu próximo proyecto",
+      hireUs:
+        "Ya sea para gestionar un proyecto completo o para formar equipos a través de nuestra capacitación práctica, Infinite Red puede ayudarte con casi cualquier proyecto de React Native.",
+      hireUsLink: "Envíanos un mensaje",
+    },
+    demoShowroomScreen: {
+      jumpStart: "Componentes para comenzar tu proyecto",
+      lorem2Sentences:
+        "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
+      demoHeaderTxExample: "Yay",
+      demoViaTxProp: "A través de la propiedad `tx`",
+      demoViaSpecifiedTxProp: "A través de la propiedad especificada `{{prop}}Tx`",
+    },
+    demoDebugScreen: {
+      howTo: "CÓMO HACERLO",
+      title: "Depuración",
+      tagLine:
+        "Felicidades, tienes un modelo de app de React Native muy avanzado aquí. ¡Disfruta de esta base de código!",
+      reactotron: "Enviar a Reactotron",
+      reportBugs: "Reportar errores",
+      demoList: "Lista de demostración",
+      demoPodcastList: "Lista de podcasts de demostración",
+      androidReactotronHint:
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, ejecuta adb reverse tcp:9090 tcp:9090 desde tu terminal, y luego recarga la app.",
+      iosReactotronHint:
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+      macosReactotronHint:
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+      webReactotronHint:
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+      windowsReactotronHint:
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+    },
+    demoPodcastListScreen: {
+      title: "Episodios de Radio React Native",
+      onlyFavorites: "Mostrar solo favoritos",
+      favoriteButton: "Favorito",
+      unfavoriteButton: "No favorito",
+      accessibility: {
+        cardHint:
+          "Haz doble clic para escuchar el episodio. Haz doble clic y mantén para {{action}} este episodio.",
+        switch: "Activa para mostrar solo favoritos",
+        favoriteAction: "Alternar a favorito",
+        favoriteIcon: "Episodio no favorito",
+        unfavoriteIcon: "Episodio favorito",
+        publishLabel: "Publicado el {{date}}",
+        durationLabel: "Duración: {{hours}} horas {{minutes}} minutos {{seconds}} segundos",
+      },
+      noFavoritesEmptyState: {
+        heading: "Está un poco vacío aquí",
+        content:
+          "No se han agregado favoritos todavía. ¡Presiona el corazón en un episodio para agregarlo a tus favoritos!",
+      },
+    },
+    // @demo remove-block-start
+    ...demoEs,
+    // @demo remove-block-end
+  }
 
 export default es
