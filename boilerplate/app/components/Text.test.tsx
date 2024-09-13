@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native"
-
 import { Text } from "./Text"
 
 /* This is an example component test using react-native-testing-library. For more
