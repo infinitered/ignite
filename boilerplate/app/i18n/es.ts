@@ -54,25 +54,25 @@ const es: Translations = {
     demoCommunityScreen: {
       title: "Conecta con la comunidad",
       tagLine:
-        "Únete a la comunidad de ingenieros de React Native de Infinite Red y mejora tu desarrollo de aplicaciones con nosotros.",
+        "Únete a la comunidad React Native con los ingenieros de Infinite Red y mejora con nosotros tus habilidades para el desarrollo de apps.",
       joinUsOnSlackTitle: "Únete a nosotros en Slack",
       joinUsOnSlack:
-        "¿Quieres conectarte con ingenieros de React Native de todo el mundo? Únete a la conversación en la comunidad de Slack de Infinite Red. Nuestra comunidad en crecimiento es un espacio seguro para hacer preguntas, aprender de los demás y ampliar tu red.",
+        "¿Quieres conectar con desarrolladores de React Native de todo el mundo? Únete a la conversación en nuestra comunidad de Slack. Nuestra comunidad, que crece día a día, es un espacio seguro para hacer preguntas, aprender de los demás y ampliar tu red.",
       joinSlackLink: "Únete a la comunidad de Slack",
       makeIgniteEvenBetterTitle: "Haz que Ignite sea aún mejor",
       makeIgniteEvenBetter:
-        "¿Tienes una idea para hacer que Ignite sea aún mejor? ¡Nos encantaría escucharla! Siempre buscamos personas que quieran ayudarnos a construir las mejores herramientas para React Native. Únete a nosotros en GitHub para ayudarnos a construir el futuro de Ignite.",
+        "¿Tienes una idea para hacer que Ignite sea aún mejor? ¡Nos encantaría escucharla! Estamos siempre buscando personas que quieran ayudarnos a construir las mejores herramientas para React Native. Únete a nosotros en GitHub para ayudarnos a construir el futuro de Ignite.",
       contributeToIgniteLink: "Contribuir a Ignite",
-      theLatestInReactNativeTitle: "Lo último en React Native",
+      theLatestInReactNativeTitle: "Lo último en el mundo de React Native",
       theLatestInReactNative:
         "Estamos aquí para mantenerte al día con todo lo que React Native tiene para ofrecer.",
-      reactNativeRadioLink: "Radio React Native",
-      reactNativeNewsletterLink: "Boletín de React Native",
+      reactNativeRadioLink: "React Native Radio",
+      reactNativeNewsletterLink: "Newsletter de React Native",
       reactNativeLiveLink: "React Native Live",
       chainReactConferenceLink: "Conferencia Chain React",
-      hireUsTitle: "Contrata a Infinite Red para tu próximo proyecto",
+      hireUsTitle: "Trabaja con Infinite Red en tu próximo proyecto",
       hireUs:
-        "Ya sea para gestionar un proyecto completo o para formar equipos a través de nuestra capacitación práctica, Infinite Red puede ayudarte con casi cualquier proyecto de React Native.",
+        "Ya sea para gestionar un proyecto de inicio a fin o educación a equipos a través de nuestros cursos y capacitación práctica, Infinite Red puede ayudarte en casi cualquier proyecto de React Native.",
       hireUsLink: "Envíanos un mensaje",
     },
     demoShowroomScreen: {
@@ -80,48 +80,48 @@ const es: Translations = {
       lorem2Sentences:
         "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
       demoHeaderTxExample: "Yay",
-      demoViaTxProp: "A través de la propiedad `tx`",
-      demoViaSpecifiedTxProp: "A través de la propiedad especificada `{{prop}}Tx`",
+      demoViaTxProp: "A través de el atributo `tx`",
+      demoViaSpecifiedTxProp: "A través de el atributo específico `{{prop}}Tx`",
     },
     demoDebugScreen: {
       howTo: "CÓMO HACERLO",
-      title: "Depuración",
+      title: "Debug",
       tagLine:
-        "Felicidades, tienes un modelo de app de React Native muy avanzado aquí. ¡Disfruta de esta base de código!",
+        "Felicidades, aquí tienes una propuesta de arquitectura y base de código avanzada para una app en React Native. ¡Disfrutalos!",
       reactotron: "Enviar a Reactotron",
       reportBugs: "Reportar errores",
-      demoList: "Lista de demostración",
-      demoPodcastList: "Lista de podcasts de demostración",
+      demoList: "Lista demo",
+      demoPodcastList: "Lista demo de podcasts",
       androidReactotronHint:
-        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, ejecuta adb reverse tcp:9090 tcp:9090 desde tu terminal, y luego recarga la app.",
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron se esté ejecutando, corre adb reverse tcp:9090 tcp:9090 desde tu terminal, y luego recarga la app.",
       iosReactotronHint:
-        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron se esté ejecutando, y luego recarga la app.",
       macosReactotronHint:
-        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron se esté ejecutando, y luego recarga la app.",
       webReactotronHint:
-        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron se esté ejecutando, y luego recarga la app.",
       windowsReactotronHint:
-        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron esté funcionando, y luego recarga la app.",
+        "Si esto no funciona, asegúrate de que la app de escritorio de Reactotron se esté ejecutando, y luego recarga la app.",
     },
     demoPodcastListScreen: {
-      title: "Episodios de Radio React Native",
+      title: "Episodios de React Native Radio",
       onlyFavorites: "Mostrar solo favoritos",
       favoriteButton: "Favorito",
       unfavoriteButton: "No favorito",
       accessibility: {
         cardHint:
-          "Haz doble clic para escuchar el episodio. Haz doble clic y mantén para {{action}} este episodio.",
+          "Haz doble clic para escuchar el episodio. Haz doble clic y mantén presionado para {{action}} este episodio.",
         switch: "Activa para mostrar solo favoritos",
-        favoriteAction: "Alternar a favorito",
+        favoriteAction: "Cambiar a favorito",
         favoriteIcon: "Episodio no favorito",
         unfavoriteIcon: "Episodio favorito",
         publishLabel: "Publicado el {{date}}",
         durationLabel: "Duración: {{hours}} horas {{minutes}} minutos {{seconds}} segundos",
       },
       noFavoritesEmptyState: {
-        heading: "Está un poco vacío aquí",
+        heading: "Esto está un poco vacío",
         content:
-          "No se han agregado favoritos todavía. ¡Presiona el corazón en un episodio para agregarlo a tus favoritos!",
+          "No se han agregado episodios favoritos todavía. ¡Presiona el corazón dentro de un episodio para agregarlo a tus favoritos!",
       },
     },
     // @demo remove-block-start
