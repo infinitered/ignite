@@ -4,7 +4,7 @@ sidebar_position: 160
 
 # Internationalization in Ignite Apps
 
-Ignite currently set up to have Internationalization setup in English, Arabic, Korean, French and Japanese! This is detected on app load and will set your app to that language.
+Ignite is currently set up to support Internationalization in English, Arabic, Korean, French, Japanese and Hindi. This is detected on app load and will set your app to that language.
 
 ## Right to Left languages (RTL)
 

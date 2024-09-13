@@ -9,7 +9,8 @@ import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
 import fr from "./fr"
-import jp from "./jp"
+import ja from "./ja"
+import hi from "./hi"
 
 // to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
@@ -29,7 +30,8 @@ export const initI18n = async () => {
       "en-US": en,
       ko,
       fr,
-      jp,
+      ja,
+      hi,
     },
     lng: fallbackLocale,
     fallbackLng: fallbackLocale,

@@ -1,6 +1,6 @@
 import { DemoTranslations } from "./demo-en"
 
-export const demoJp: DemoTranslations = {
+export const demoJa: DemoTranslations = {
   demoIcon: {
     description:
       "あらかじめ登録されたアイコンを描画するコンポーネントです。 `onPress` が提供されている場合は <TouchableOpacity /> にラップされますが、それ以外の場合は <View /> にラップされます。",
@@ -459,6 +459,6 @@ export const demoJp: DemoTranslations = {
   },
 }
 
-export default demoJp
+export default demoJa
 
 // @demo remove-file
