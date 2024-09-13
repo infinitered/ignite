@@ -8,7 +8,8 @@ removing file /user/home/ignite/.maestro/Login.yaml
 removing file /user/home/ignite/app/i18n/demo-ar.ts
 removing file /user/home/ignite/app/i18n/demo-en.ts
 removing file /user/home/ignite/app/i18n/demo-fr.ts
-removing file /user/home/ignite/app/i18n/demo-jp.ts
+removing file /user/home/ignite/app/i18n/demo-hi.ts
+removing file /user/home/ignite/app/i18n/demo-ja.ts
 removing file /user/home/ignite/app/i18n/demo-ko.ts
 removing file /user/home/ignite/app/models/AuthenticationStore.ts
 removing file /user/home/ignite/app/models/Episode.test.ts
@@ -42,11 +43,13 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-ar.ts
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-en.ts
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-fr.ts
-   Found 'remove-file' in /user/home/ignite/app/i18n/demo-jp.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-hi.ts
+   Found 'remove-file' in /user/home/ignite/app/i18n/demo-ja.ts
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-ko.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/en.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/fr.ts
-   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/jp.ts
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/hi.ts
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ja.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ko.ts
    Found 'remove-file' in /user/home/ignite/app/models/AuthenticationStore.ts
    Found 'remove-file' in /user/home/ignite/app/models/Episode.test.ts
