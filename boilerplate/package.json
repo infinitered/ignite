@@ -98,13 +98,7 @@
     "ts-node": "^10.9.2",
     "typescript": "~5.3.3"
   },
-  "resolutions": {
-    "eslint-plugin-react": "7.35.2"
-  },
   "engines": {
     "node": "^18.18.0 || >=20.0.0"
-  },
-  "resolutions": {
-    "eslint-plugin-react": "7.35.2"
   }
 }
