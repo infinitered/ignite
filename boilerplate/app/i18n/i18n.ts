@@ -8,6 +8,7 @@ import "intl-pluralrules"
 import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
+import es from "./es"
 import fr from "./fr"
 import ja from "./ja"
 import hi from "./hi"
@@ -29,6 +30,7 @@ export const initI18n = async () => {
       en,
       "en-US": en,
       ko,
+      es,
       fr,
       ja,
       hi,
