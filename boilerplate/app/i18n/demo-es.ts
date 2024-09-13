@@ -32,7 +32,7 @@ demoTextField: {
           "Hay un atributo para el estado - similar a `preset` en otros componentes, pero que además impacta en la funcionalidad del componente.",
         noStatus: {
           label: "Sin estado",
-          helper: "Este es el estado predeterminado",
+          helper: "Este es el estado por defecto",
           placeholder: "El texto va acá",
         },
         error: {
@@ -95,111 +95,110 @@ demoTextField: {
   },
   demoToggle: {
     description:
-      "Fait le rendu d’un booléen. Ce composant contrôlé nécessite un callback `onValueChange` qui met à jour el atributo `value` pour que le composant reflète les actions de l'utilisateur. Si el atributo `value` n'est pas mise à jour, le composant continuera à rendre el atributo `value` fournie au lieu du résultat attendu des actions de l'utilisateur.",
+      "Dibuja un switch de tipo booleano. Este componente requiere un callback `onValueChange` que actualice el atributo `value` para que este refleje las acciones del usuario. Si el atributo `value` no se actualiza, el componente seguirá mostrando el valor proporcionado por defecto en lugar de lo esperado por las acciones del usuario.",
     useCase: {
       variants: {
         name: "Variantes",
         description:
-          "Le composant supporte différentes variantes. Si une personnalisation poussée d'une variante spécifique est nécessaire, elle peut être facilement refactorisée. La valeur par défaut est `checkbox`.",
+          "El componente soporta diferentes variantes. Si se necesita una personalización más avanzada o variante específica, puede ser fácilmente refactorizada. El valor por defecto es `checkbox`.",
         checkbox: {
           label: "Variante `checkbox`",
-          helper: "Peut être utilisée pour une seule valeure on/off.",
+          helper: "Puede ser utilizada para un único valor del tipo on/off.",
         },
         radio: {
           label: "Variante `radio`",
-          helper: "Utilisez ceci quand vous avez plusieurs options.",
+          helper: "Usa esto cuando tengas múltiples opciones.",
         },
         switch: {
           label: "Variante `switch`",
-          helper:
-            "Une entrée on/off plus proéminente. Possède un meilleur support d’accessibilité.",
+          helper: "Una entrada del tipo on/off que sobresale más. Tiene mejor soporte de accesibilidad.",
         },
       },
       statuses: {
-        name: "Statuts",
+        name: "Estados",
         description:
-          "Il y a une prop de statut - similaire à `preset` dans d'autres composants, mais affecte également la fonctionnalité du composant.",
-        noStatus: "Pas de statut - c'est le défaut",
-        errorStatus: "Statut d’erreur - à utiliser quand il y a une erreur",
-        disabledStatus: "Statut désactivé - désactive l’édition et atténue le style",
+          "Hay un atributo de estado - similar a `preset` en otros componentes, pero que además impacta en la funcionalidad del componente.",
+        noStatus: "Sin estado - este es el valor por defecto",
+        errorStatus: "Estado de error - para usar cuando haya un error",
+        disabledStatus: "Estado desactivado - desactiva la edición y silencia el input",
       },
       passingContent: {
-        name: "Transfert de contenu",
-        description: "Il y a plusieurs façons de transmettre du contenu.",
+        name: "Entregando contenido",
+        description: "Hay varias formas de entregar contenido.",
         useCase: {
           checkBox: {
-            label: "Via el atributo `labelTx`",
-            helper: "Via el atributo `helperTx`.",
+            label: "A través del atributo `labelTx`",
+            helper: "A través del atributo `helperTx`.",
           },
           checkBoxMultiLine: {
-            helper: "Supporte le multiligne - Nulla proident consectetur labore sunt ea labore. ",
+            helper: "Soporta multi líneas - Nulla proident consectetur labore sunt ea labore.",
           },
           radioChangeSides: {
             helper:
-              "Vous pouvez changer de côté - Laborum labore adipisicing in eu ipsum deserunt.",
+              "Puedes cambiarle el lado - Laborum labore adipisicing in eu ipsum deserunt.",
           },
           customCheckBox: {
-            label: "Passez une icône de case à cocher personnalisée.",
+            label: "Pasa un ícono para un checkbox personalizado.",
           },
           switch: {
-            label: "Les interrupteurs peuvent être lus comme du texte",
+            label: "Los interruptores pueden leerse como texto",
             helper:
-              "Par défaut, cette option n’utilise pas `Text` car selon la police, les caractères on/off pourraient paraître étranges. Personnalisez selon vos besoins.",
+              "Por defecto, esta opción no usa `Text` ya que, dependiendo de la fuente, los caracteres on/off podrían no dibujarse bien. Personalízalo según tus necesidades.",
           },
           switchAid: {
-            label: "Ou aidé d’une icône",
+            label: "O con la ayuda de un ícono",
           },
         },
       },
       styling: {
-        name: "Style",
-        description: "Le composant peut être facilement stylisé.",
-        outerWrapper: "1 - styliser le wrapper extérieur de l’entrée",
-        innerWrapper: "2 - styliser le wrapper intérieur de l’entrée",
-        inputDetail: "3 - styliser le détail de l’entrée",
-        labelTx: "Vous pouvez aussi styliser le labelTx",
-        styleContainer: "Ou, styliser le conteneur entier",
+        name: "Estilo",
+        description: "El componente puede ser configurado fácilmente.",
+        outerWrapper: "1 - configura el contenedor externo del input",
+        innerWrapper: "2 - configura el contenedor interno del input",
+        inputDetail: "3 - configura el detalle del input",
+        labelTx: "También puedes configurar el atributo labelTx",
+        styleContainer: "O, configura todo el contenedor",
       },
     },
   },
   demoButton: {
     description:
-      "Un composant qui permet aux utilisateurs d’effectuer des actions et de faire des choix. Enveloppe le composant Text avec un composant Pressable.",
+      "Un componente que permite a los usuarios realizar acciones y hacer elecciones. Rodea un componente Text con otro componente Pressable.",
     useCase: {
       presets: {
-        name: "Préréglages",
-        description: "Il y a quelques préréglages préconfigurés.",
+        name: "Preajustes",
+        description: "Hay algunos preajustes por defecto.",
       },
       passingContent: {
-        name: "Transfert de contenu",
-        description: "Il y a plusieurs façons de transmettre du contenu.",
-        viaTextProps: "Via el atributo `text` - Billum In",
-        children: "Enfants - Irure Reprehenderit",
-        rightAccessory: "Accessoire droit - Duis Quis",
-        leftAccessory: "Accessoire gauche - Duis Proident",
-        nestedChildren: "Enfants imbriqués - proident veniam.",
+        name: "Entregando contenido",
+        description: "Hay varias formas de entregar contenido.",
+        viaTextProps: "A través del atributo `text` - Billum In",
+        children: "Contenido anidado (children) - Irure Reprehenderit",
+        rightAccessory: "Componente derecho - Duis Quis",
+        leftAccessory: "Componente izquierdo - Duis Proident",
+        nestedChildren: "Contenido anidado - proident veniam.",
         nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
         nestedChildren3: "Occaecat aliqua irure proident veniam.",
         multiLine:
-          "Multiligne - consequat veniam veniam reprehenderit. Fugiat id nisi quis duis sunt proident mollit dolor mollit adipisicing proident deserunt.",
+          "Multilínea - consequat veniam veniam reprehenderit. Fugiat id nisi quis duis sunt proident mollit dolor mollit adipisicing proident deserunt.",
       },
       styling: {
-        name: "Style",
-        description: "Le composant peut être facilement stylisé.",
-        styleContainer: "Style du conteneur - Exercitation",
-        styleText: "Style du texte - Ea Anim",
-        styleAccessories: "Style des accessoires - enim ea id fugiat anim ad.",
-        pressedState: "Style de l’état pressé - fugiat anim",
+        name: "Estilo",
+        description: "El componente puede ser configurando fácilmente.",
+        styleContainer: "Estilo del contenedor - Exercitation",
+        styleText: "Estilo del texto - Ea Anim",
+        styleAccessories: "Estilo de los componentes - enim ea id fugiat anim ad.",
+        pressedState: "Estilo para el estado presionado - fugiat anim",
       },
       disabling: {
-        name: "Désactivation",
+        name: "Desactivado",
         description:
-          "Le composant peut être désactivé et stylisé en conséquence. Le comportement de pression sera désactivé.",
-        standard: "Désactivé - standard",
-        filled: "Désactivé - rempli",
-        reversed: "Désactivé - inversé",
-        accessory: "Style d’accessoire désactivé",
-        textStyle: "Style de texte désactivé",
+          "El componente puede ser desactivado y como consecuencia, estilizado. El comportamiento para hacer clic será desactivado.",
+        standard: "Desactivado - estándar",
+        filled: "Desactivado - relleno",
+        reversed: "Desactivado - invertido",
+        accessory: "Estilo del componente desactivado",
+        textStyle: "Estilo del texto desactivado",
       },
     },
   },
