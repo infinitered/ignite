@@ -1,29 +1,29 @@
 import { DemoTranslations } from "./demo-en"
 
 export const demoEs: DemoTranslations = {
-    demoIcon: {
-        description:
-            "Un componente para dibujar un ícono pre-definido. Si se proporciona el atributo `onPress`, se rodea por un componente <TouchableOpacity />. De lo contrario, se rodea con un componente <View />.",
-        useCase: {
-            icons: {
-            name: "Íconos",
-            description: "Lista de los íconos pre-definidos para el componente.",
-            },
-            size: {
-            name: "Tamaño",
-            description: "Hay un atributo para el tamaño.",
-            },
-            color: {
-            name: "Color",
-            description: "Hay un atributo para el color.",
-            },
-            styling: {
-            name: "Estilo",
-            description: "El componente puede ser configurado fácilmente.",
-            },
-        },
-},
-demoTextField: {
+  demoIcon: {
+    description:
+      "Un componente para dibujar un ícono pre-definido. Si se proporciona el atributo `onPress`, se rodea por un componente <TouchableOpacity />. De lo contrario, se rodea con un componente <View />.",
+    useCase: {
+      icons: {
+        name: "Íconos",
+        description: "Lista de los íconos pre-definidos para el componente.",
+      },
+      size: {
+        name: "Tamaño",
+        description: "Hay un atributo para el tamaño.",
+      },
+      color: {
+        name: "Color",
+        description: "Hay un atributo para el color.",
+      },
+      styling: {
+        name: "Estilo",
+        description: "El componente puede ser configurado fácilmente.",
+      },
+    },
+  },
+  demoTextField: {
     description: "El componente <TextField /> permite el ingreso y edición de texto.",
     useCase: {
       statuses: {
@@ -111,7 +111,8 @@ demoTextField: {
         },
         switch: {
           label: "Variante `switch`",
-          helper: "Una entrada del tipo on/off que sobresale más. Tiene mejor soporte de accesibilidad.",
+          helper:
+            "Una entrada del tipo on/off que sobresale más. Tiene mejor soporte de accesibilidad.",
         },
       },
       statuses: {
@@ -134,8 +135,7 @@ demoTextField: {
             helper: "Soporta multi líneas - Nulla proident consectetur labore sunt ea labore.",
           },
           radioChangeSides: {
-            helper:
-              "Puedes cambiarle el lado - Laborum labore adipisicing in eu ipsum deserunt.",
+            helper: "Puedes cambiarle el lado - Laborum labore adipisicing in eu ipsum deserunt.",
           },
           customCheckBox: {
             label: "Pasa un ícono para un checkbox personalizado.",
@@ -381,7 +381,8 @@ demoTextField: {
         viaText:
           "a través del atributo `text` - Billum in aute fugiat proident nisi pariatur est. Cupidatat anim cillum eiusmod ad. Officia eu magna aliquip labore dolore consequat.",
         viaTx: "a través del atributo `tx` -",
-        children: "Contenido anidado (children) - Aliqua velit irure reprehenderit eu qui amet veniam consectetur.",
+        children:
+          "Contenido anidado (children) - Aliqua velit irure reprehenderit eu qui amet veniam consectetur.",
         nestedChildren: "Contenidos anidados -",
         nestedChildren2: "Occaecat aliqua irure proident veniam.",
         nestedChildren3: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
@@ -404,16 +405,14 @@ demoTextField: {
     useCase: {
       actionIcons: {
         name: "Íconos de acción",
-        description:
-          "Puedes pasar fácilmente íconos a los componentes de la izquierda o derecha.",
+        description: "Puedes pasar fácilmente íconos a los componentes de la izquierda o derecha.",
         leftIconTitle: "Ícono izquierdo",
         rightIconTitle: "Ícono derecho",
         bothIconsTitle: "Ambos íconos",
       },
       actionText: {
         name: "Texto de acción",
-        description:
-          "Puedes pasar fácilmente texto a los componentes de la izquierda o derecha.",
+        description: "Puedes pasar fácilmente texto a los componentes de la izquierda o derecha.",
         leftTxTitle: "A través de `leftTx`",
         rightTextTitle: "A través de `rightText`",
       },
