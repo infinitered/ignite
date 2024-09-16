@@ -3,7 +3,7 @@ import { DemoTranslations } from "./demo-en"
 export const demoEs: DemoTranslations = {
   demoIcon: {
     description:
-      "Un componente para dibujar un ícono pre-definido. Si se proporciona el atributo `onPress`, se rodea por un componente <TouchableOpacity />. De lo contrario, se rodea con un componente <View />.",
+      "Un componente para dibujar un ícono pre-definido. Si se proporciona el atributo `onPress`, se rodea por un componente <TouchableOpacity />. De lo contrario, se rodea por un componente <View />.",
     useCase: {
       icons: {
         name: "Íconos",
