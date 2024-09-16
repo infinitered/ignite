@@ -49,12 +49,14 @@
     "expo-splash-screen": "~0.27.4",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
-    "i18n-js": "^4.4.3",
+    "i18next": "^23.14.0",
+    "intl-pluralrules": "^2.0.1",
     "mobx": "6.10.2",
     "mobx-react-lite": "4.0.5",
     "mobx-state-tree": "5.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-i18next": "^15.0.1",
     "react-native": "0.74.5",
     "react-native-drawer-layout": "4.0.0-alpha.9",
     "react-native-gesture-handler": "~2.16.1",
@@ -70,7 +72,6 @@
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@testing-library/react-native": "^12.5.2",
-    "@types/i18n-js": "3.8.2",
     "@types/jest": "^29.2.1",
     "@types/react": "~18.2.14",
     "babel-jest": "^29.2.1",
@@ -99,8 +100,5 @@
   },
   "engines": {
     "node": "^18.18.0 || >=20.0.0"
-  },
-  "resolutions": {
-    "eslint-plugin-react": "7.35.2"
   }
 }

@@ -15,16 +15,16 @@ describe("markup", () => {
       const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
         import { StyleProp, View, ViewStyle } from "react-native"
-        
+
         interface DemoDividerProps {
             type?: "vertical" | "horizontal"
             size?: number
             style?: StyleProp<ViewStyle>
         }
-        
+
         export function DemoDivider(props: DemoDividerProps) {
             const { type = "horizontal", size = 10, style: $styleOverride } = props
-        
+
             return (
               <View
                   style={[
@@ -36,7 +36,7 @@ describe("markup", () => {
               />
             )
         }
-        
+
         const $divider: ViewStyle = {
             flexGrow: 0,
             flexShrink: 0, // ${comment}
@@ -51,16 +51,16 @@ describe("markup", () => {
       const comment = markupComment(TEST_MARKUP_PREFIX, MarkupComments.RemoveCurrentLine)
       const contents = `
         import { StyleProp, View, ViewStyle } from "react-native"
-        
+
         interface DemoDividerProps {
             type?: "vertical" | "horizontal"
             size?: number
             style?: StyleProp<ViewStyle>
         }
-        
+
         export function DemoDivider(props: DemoDividerProps) {
             const { type = "horizontal", size = 10, style: $styleOverride } = props
-        
+
             return (
               <View
                   style={[
@@ -72,7 +72,7 @@ describe("markup", () => {
               />
             )
         }
-        
+
         const $divider: ViewStyle = {
             flexGrow: 0,
             flexShrink: 0, // ${comment}
@@ -140,7 +140,7 @@ describe("markup", () => {
         env:
           TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
           FAVORITES_TEXT: "Switch on to only show favorites"
-  
+
         ---
         - runFlow: Login.yaml
         - tapOn: "Podcast, tab, 3 of 4"
@@ -239,7 +239,7 @@ describe("markup", () => {
         TITLE: "RNR 257 - META RESPONDS! How can we improve React Native, part 2"
         FAVORITES_TEXT: "Switch on to only show favorites"
         # ${endComment}
-  
+
         ---
         - runFlow: Login.yaml
         - tapOn: "Podcast, tab, 3 of 4"
@@ -300,7 +300,7 @@ describe("markup", () => {
       expect(result).not.toContain(blockEndComment)
       expect(result).not.toContain(currentLineComment)
       expect(result).not.toContain(
-        /* jsx */ `<Button preset="reversed" tx="welcomeScreen.letsGo" onPress={goNext} />`,
+        /* jsx */ `<Button preset="reversed" tx="welcomeScreen:letsGo" onPress={goNext} />`,
       )
       expect(result).not.toContain(`props: WelcomeScreenProps`)
       expect(result).not.toContain(`goNext()`)
@@ -379,20 +379,20 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         <Text
           testID="welcome-heading"
           style={themed($welcomeHeading)}
-          tx="welcomeScreen.readyForLaunch"
+          tx="welcomeScreen:readyForLaunch"
           preset="heading"
         />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
+        <Text tx="welcomeScreen:exciting" preset="subheading" />
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
       <View style={[themed($bottomContainer), $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
+        <Text tx="welcomeScreen:postscript" size="md" />
         {/* @demo remove-block-start */}
         <Button
           testID="next-screen-button"
           preset="reversed"
-          tx="welcomeScreen.letsGo"
+          tx="welcomeScreen:letsGo"
           onPress={goNext}
         />
         {/* @demo remove-block-end */}

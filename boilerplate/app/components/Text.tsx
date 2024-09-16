@@ -1,4 +1,4 @@
-import i18n from "i18n-js"
+import { TOptions } from "i18next"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
@@ -23,7 +23,7 @@ export interface TextProps extends RNTextProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: i18n.TranslateOptions
+  txOptions?: TOptions
   /**
    * An optional style override useful for padding & margin.
    */

@@ -213,7 +213,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={
               <View style={themed($heading)}>
-                <Text preset="heading" tx="demoShowroomScreen.jumpStart" />
+                <Text preset="heading" tx="demoShowroomScreen:jumpStart" />
               </View>
             }
             onScrollToIndexFailed={scrollToIndexFailed}

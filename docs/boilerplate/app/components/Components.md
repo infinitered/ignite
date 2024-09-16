@@ -31,7 +31,7 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 ```tsx
 <Button
   text="Click It"
-  tx="button.clickIt"
+  tx="button:clickIt"
   preset="primary"
   onPress={() => Alert.alert("pressed")}
   style={[{ paddingVertical: 100 }, { borderRadius: 0 }]}
@@ -80,7 +80,7 @@ The `Checkbox` component is useful for displaying a user's choice for a boolean 
   value={value}
   icon="check"
   onValueChange={setValue}
-  labelTx="signup.rememberMe"
+  labelTx="signup:rememberMe"
   labelStyle={{ color: "#a511dc" }}
   containerStyle={{ backgroundColor: "#fff" }}
 />
@@ -118,7 +118,7 @@ The `Header` component is a component that will appear at the top of your screen
 
 ```tsx
 <Header
-  headerTx="header.title"
+  headerTx="header:title"
   headerText="Header Title"
   leftIcon="back"
   rightIcon="bullet"
@@ -156,7 +156,7 @@ The `Radio` component is useful for displaying a user's choice for a boolean val
 <Radio
   value={value}
   onValueChange={setValue}
-  labelTx="signup.rememberMe"
+  labelTx="signup:rememberMe"
   labelStyle={{ color: "#a511dc" }}
   containerStyle={{ backgroundColor: "#fff" }}
 />
@@ -186,7 +186,7 @@ The `Switch` component is useful for displaying a user's choice for a boolean va
   value={value}
   accessibilityMode="icon"
   onValueChange={setValue}
-  labelTx="signup.rememberMe"
+  labelTx="signup:rememberMe"
   labelStyle={{ color: "#a511dc" }}
   containerStyle={{ backgroundColor: "#fff" }}
 />
@@ -201,7 +201,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
 ```tsx
 <Text
   preset="header"
-  tx="welcome.header"
+  tx="welcome:header"
   txOptions={{
     name: rootStore.currentUser.name,
   }}
@@ -221,8 +221,8 @@ const inputRef = useRef()
 <TextField
   value={input}
   onChangeText={setInput}
-  labelTx="signup.name"
-  placeholderTx="signup.nameplaceholder"
+  labelTx="signup:name"
+  placeholderTx="signup:nameplaceholder"
   style={$header}
   inputStyle={$inputStyle}
   preset="default"

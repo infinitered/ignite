@@ -77,11 +77,11 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     >
       <Text
         style={themed($reportBugsLink)}
-        tx="demoDebugScreen.reportBugs"
+        tx="demoDebugScreen:reportBugs"
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
       />
 
-      <Text style={themed($title)} preset="heading" tx="demoDebugScreen.title" />
+      <Text style={themed($title)} preset="heading" tx="demoDebugScreen:title" />
       <Text preset="bold">Current system theme: {colorScheme}</Text>
       <Text preset="bold">Current app theme: {themeContext}</Text>
       <Button onPress={resetTheme} text={`Reset`} />
@@ -140,11 +140,11 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
       </View>
       <View style={themed($buttonContainer)}>
-        <Button style={themed($button)} tx="demoDebugScreen.reactotron" onPress={demoReactotron} />
-        <Text style={themed($hint)} tx={`demoDebugScreen.${Platform.OS}ReactotronHint` as const} />
+        <Button style={themed($button)} tx="demoDebugScreen:reactotron" onPress={demoReactotron} />
+        <Text style={themed($hint)} tx={`demoDebugScreen:${Platform.OS}ReactotronHint` as const} />
       </View>
       <View style={themed($buttonContainer)}>
-        <Button style={themed($button)} tx="common.logOut" onPress={logout} />
+        <Button style={themed($button)} tx="common:logOut" onPress={logout} />
       </View>
     </Screen>
   )

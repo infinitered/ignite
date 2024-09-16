@@ -38,7 +38,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
 
     useHeader(
       {
-        rightTx: "common.logOut",
+        rightTx: "common:logOut",
         onRightPress: logout,
       },
       [logout],
@@ -54,10 +54,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
           <Text
             testID="welcome-heading"
             style={themed($welcomeHeading)}
-            tx="welcomeScreen.readyForLaunch"
+            tx="welcomeScreen:readyForLaunch"
             preset="heading"
           />
-          <Text tx="welcomeScreen.exciting" preset="subheading" />
+          <Text tx="welcomeScreen:exciting" preset="subheading" />
           <Image
             style={$welcomeFace}
             source={welcomeFace}
@@ -67,12 +67,12 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
         </View>
 
         <View style={themed([$bottomContainer, $bottomContainerInsets])}>
-          <Text tx="welcomeScreen.postscript" size="md" />
+          <Text tx="welcomeScreen:postscript" size="md" />
           {/* @demo remove-block-start */}
           <Button
             testID="next-screen-button"
             preset="reversed"
-            tx="welcomeScreen.letsGo"
+            tx="welcomeScreen:letsGo"
             onPress={goNext}
           />
           {/* @demo remove-block-end */}

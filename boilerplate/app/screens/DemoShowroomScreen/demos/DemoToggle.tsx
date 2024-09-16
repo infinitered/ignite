@@ -44,31 +44,31 @@ const $centeredText: ThemedStyle<TextStyle> = ({ spacing }) => ({
 
 export const DemoToggle: Demo = {
   name: "Toggle",
-  description: "demoToggle.description",
+  description: "demoToggle:description",
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="demoToggle.useCase.variants.name"
-      description="demoToggle.useCase.variants.description"
+      name="demoToggle:useCase.variants.name"
+      description="demoToggle:useCase.variants.description"
     >
       <ControlledCheckbox
-        labelTx="demoToggle.useCase.variants.checkbox.label"
-        helperTx="demoToggle.useCase.variants.checkbox.helper"
+        labelTx="demoToggle:useCase.variants.checkbox.label"
+        helperTx="demoToggle:useCase.variants.checkbox.helper"
       />
       <DemoDivider size={24} />
       <ControlledRadio
-        labelTx="demoToggle.useCase.variants.radio.label"
-        helperTx="demoToggle.useCase.variants.radio.helper"
+        labelTx="demoToggle:useCase.variants.radio.label"
+        helperTx="demoToggle:useCase.variants.radio.helper"
       />
       <DemoDivider size={24} />
       <ControlledSwitch
-        labelTx="demoToggle.useCase.variants.switch.label"
-        helperTx="demoToggle.useCase.variants.switch.helper"
+        labelTx="demoToggle:useCase.variants.switch.label"
+        helperTx="demoToggle:useCase.variants.switch.helper"
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoToggle.useCase.statuses.name"
-      description="demoToggle.useCase.statuses.description"
+      name="demoToggle:useCase.statuses.name"
+      description="demoToggle:useCase.statuses.description"
       layout="row"
     >
       <ControlledCheckbox containerStyle={$centeredOneThirdCol} />
@@ -79,7 +79,7 @@ export const DemoToggle: Demo = {
       <ControlledRadio value containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value containerStyle={$centeredOneThirdCol} />
       <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle.useCase.statuses.noStatus")}
+        {translate("demoToggle:useCase.statuses.noStatus")}
       </Text>
 
       <DemoDivider size={24} style={{ width: "100%" }} />
@@ -92,7 +92,7 @@ export const DemoToggle: Demo = {
       <ControlledRadio value status="error" containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value status="error" containerStyle={$centeredOneThirdCol} />
       <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle.useCase.statuses.errorStatus")}
+        {translate("demoToggle:useCase.statuses.errorStatus")}
       </Text>
 
       <DemoDivider size={24} style={{ width: "100%" }} />
@@ -105,37 +105,37 @@ export const DemoToggle: Demo = {
       <ControlledRadio value status="disabled" containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value status="disabled" containerStyle={$centeredOneThirdCol} />
       <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle.useCase.statuses.disabledStatus")}
+        {translate("demoToggle:useCase.statuses.disabledStatus")}
       </Text>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoToggle.useCase.passingContent.name"
-      description="demoToggle.useCase.passingContent.description"
+      name="demoToggle:useCase.passingContent.name"
+      description="demoToggle:useCase.passingContent.description"
     >
       <ControlledCheckbox
         value
-        labelTx="demoToggle.useCase.passingContent.useCase.checkBox.label"
-        helperTx="demoToggle.useCase.passingContent.useCase.checkBox.helper"
+        labelTx="demoToggle:useCase.passingContent.useCase.checkBox.label"
+        helperTx="demoToggle:useCase.passingContent.useCase.checkBox.helper"
       />
       <DemoDivider size={24} />
       <ControlledRadio
         value
-        labelTx="demoShowroomScreen.demoViaSpecifiedTxProp"
+        labelTx="demoShowroomScreen:demoViaSpecifiedTxProp"
         labelTxOptions={{ prop: "label" }}
-        helperTx="demoShowroomScreen.demoViaSpecifiedTxProp"
+        helperTx="demoShowroomScreen:demoViaSpecifiedTxProp"
         helperTxOptions={{ prop: "helper" }}
       />
       <DemoDivider size={24} />
       <ControlledCheckbox
         value
-        labelTx="demoToggle.useCase.passingContent.useCase.checkBoxMultiLine.helper"
+        labelTx="demoToggle:useCase.passingContent.useCase.checkBoxMultiLine.helper"
         editable={false}
       />
       <DemoDivider size={24} />
       <ControlledRadio
         value
-        labelTx="demoToggle.useCase.passingContent.useCase.radioChangeSides.helper"
+        labelTx="demoToggle:useCase.passingContent.useCase.radioChangeSides.helper"
         labelPosition="left"
       />
       <DemoDivider size={24} />
@@ -143,28 +143,28 @@ export const DemoToggle: Demo = {
         value
         status="error"
         icon="ladybug"
-        labelTx="demoToggle.useCase.passingContent.useCase.customCheckBox.label"
+        labelTx="demoToggle:useCase.passingContent.useCase.customCheckBox.label"
       />
       <DemoDivider size={24} />
       <ControlledSwitch
         value
         accessibilityMode="text"
-        labelTx="demoToggle.useCase.passingContent.useCase.switch.label"
+        labelTx="demoToggle:useCase.passingContent.useCase.switch.label"
         status="error"
-        helperTx="demoToggle.useCase.passingContent.useCase.switch.helper"
+        helperTx="demoToggle:useCase.passingContent.useCase.switch.helper"
       />
       <DemoDivider size={24} />
       <ControlledSwitch
         value
         labelPosition="left"
         accessibilityMode="icon"
-        labelTx="demoToggle.useCase.passingContent.useCase.switchAid.label"
+        labelTx="demoToggle:useCase.passingContent.useCase.switchAid.label"
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoToggle.useCase.styling.name"
-      description="demoToggle.useCase.styling.description"
+      name="demoToggle:useCase.styling.name"
+      description="demoToggle:useCase.styling.description"
       layout="row"
     >
       <ControlledCheckbox
@@ -197,7 +197,7 @@ export const DemoToggle: Demo = {
         }}
       />
       <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle.useCase.styling.outerWrapper")}
+        {translate("demoToggle:useCase.styling.outerWrapper")}
       </Text>
 
       <DemoDivider style={{ width: "100%" }} />
@@ -246,7 +246,7 @@ export const DemoToggle: Demo = {
         }}
       />
       <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle.useCase.styling.innerWrapper")}
+        {translate("demoToggle:useCase.styling.innerWrapper")}
       </Text>
 
       <DemoDivider style={{ width: "100%" }} />
@@ -316,7 +316,7 @@ export const DemoToggle: Demo = {
       />
 
       <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle.useCase.styling.inputDetail")}
+        {translate("demoToggle:useCase.styling.inputDetail")}
       </Text>
 
       <DemoDivider size={32} style={{ width: "100%" }} />
@@ -324,7 +324,7 @@ export const DemoToggle: Demo = {
       <View style={{ width: "100%" }}>
         <ControlledRadio
           value
-          labelTx="demoToggle.useCase.styling.labelTx"
+          labelTx="demoToggle:useCase.styling.labelTx"
           LabelTextProps={{ size: "xs", weight: "bold" }}
           status="error"
           labelStyle={{
@@ -342,7 +342,7 @@ export const DemoToggle: Demo = {
           value
           labelPosition="left"
           containerStyle={{ padding: 10, backgroundColor: theme.colors.error }}
-          labelTx="demoToggle.useCase.styling.styleContainer"
+          labelTx="demoToggle:useCase.styling.styleContainer"
           status="error"
           labelStyle={{ color: theme.colors.palette.neutral100 }}
         />

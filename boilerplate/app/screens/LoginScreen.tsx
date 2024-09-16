@@ -78,10 +78,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={themed($screenContentContainer)}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="loginScreen.logIn" preset="heading" style={themed($logIn)} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={themed($enterDetails)} />
+      <Text testID="login-heading" tx="loginScreen:logIn" preset="heading" style={themed($logIn)} />
+      <Text tx="loginScreen:enterDetails" preset="subheading" style={themed($enterDetails)} />
       {attemptsCount > 2 && (
-        <Text tx="loginScreen.hint" size="sm" weight="light" style={themed($hint)} />
+        <Text tx="loginScreen:hint" size="sm" weight="light" style={themed($hint)} />
       )}
 
       <TextField
@@ -92,8 +92,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoComplete="email"
         autoCorrect={false}
         keyboardType="email-address"
-        labelTx="loginScreen.emailFieldLabel"
-        placeholderTx="loginScreen.emailFieldPlaceholder"
+        labelTx="loginScreen:emailFieldLabel"
+        placeholderTx="loginScreen:emailFieldPlaceholder"
         helper={error}
         status={error ? "error" : undefined}
         onSubmitEditing={() => authPasswordInput.current?.focus()}
@@ -108,15 +108,15 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoComplete="password"
         autoCorrect={false}
         secureTextEntry={isAuthPasswordHidden}
-        labelTx="loginScreen.passwordFieldLabel"
-        placeholderTx="loginScreen.passwordFieldPlaceholder"
+        labelTx="loginScreen:passwordFieldLabel"
+        placeholderTx="loginScreen:passwordFieldPlaceholder"
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
       />
 
       <Button
         testID="login-button"
-        tx="loginScreen.tapToLogIn"
+        tx="loginScreen:tapToLogIn"
         style={themed($tapButton)}
         preset="reversed"
         onPress={login}

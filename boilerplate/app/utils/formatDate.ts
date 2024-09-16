@@ -13,7 +13,7 @@ import { i18n } from "@/i18n"
 type Options = Parameters<typeof format>[2]
 
 const getLocale = (): Locale => {
-  const locale = i18n.locale.split("-")[0]
+  const locale = i18n.language.split("-")[0]
   return locale === "ar" ? ar : locale === "ko" ? ko : en
 }
 

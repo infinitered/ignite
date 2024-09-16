@@ -18,25 +18,25 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
     const { themed } = useAppTheme()
     return (
       <Screen preset="scroll" contentContainerStyle={$styles.container} safeAreaEdges={["top"]}>
-        <Text preset="heading" tx="demoCommunityScreen.title" style={themed($title)} />
-        <Text tx="demoCommunityScreen.tagLine" style={themed($tagline)} />
+        <Text preset="heading" tx="demoCommunityScreen:title" style={themed($title)} />
+        <Text tx="demoCommunityScreen:tagLine" style={themed($tagline)} />
 
-        <Text preset="subheading" tx="demoCommunityScreen.joinUsOnSlackTitle" />
-        <Text tx="demoCommunityScreen.joinUsOnSlack" style={themed($description)} />
+        <Text preset="subheading" tx="demoCommunityScreen:joinUsOnSlackTitle" />
+        <Text tx="demoCommunityScreen:joinUsOnSlack" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.joinSlackLink"
+          tx="demoCommunityScreen:joinSlackLink"
           leftIcon="slack"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://community.infinite.red/")}
         />
         <Text
           preset="subheading"
-          tx="demoCommunityScreen.makeIgniteEvenBetterTitle"
+          tx="demoCommunityScreen:makeIgniteEvenBetterTitle"
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen.makeIgniteEvenBetter" style={themed($description)} />
+        <Text tx="demoCommunityScreen:makeIgniteEvenBetter" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.contributeToIgniteLink"
+          tx="demoCommunityScreen:contributeToIgniteLink"
           leftIcon="github"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
@@ -44,12 +44,12 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
 
         <Text
           preset="subheading"
-          tx="demoCommunityScreen.theLatestInReactNativeTitle"
+          tx="demoCommunityScreen:theLatestInReactNativeTitle"
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen.theLatestInReactNative" style={themed($description)} />
+        <Text tx="demoCommunityScreen:theLatestInReactNative" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.reactNativeRadioLink"
+          tx="demoCommunityScreen:reactNativeRadioLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
@@ -60,7 +60,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           onPress={() => openLinkInBrowser("https://reactnativeradio.com/")}
         />
         <ListItem
-          tx="demoCommunityScreen.reactNativeNewsletterLink"
+          tx="demoCommunityScreen:reactNativeNewsletterLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
@@ -71,7 +71,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           onPress={() => openLinkInBrowser("https://reactnativenewsletter.com/")}
         />
         <ListItem
-          tx="demoCommunityScreen.reactNativeLiveLink"
+          tx="demoCommunityScreen:reactNativeLiveLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
@@ -82,7 +82,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           onPress={() => openLinkInBrowser("https://rn.live/")}
         />
         <ListItem
-          tx="demoCommunityScreen.chainReactConferenceLink"
+          tx="demoCommunityScreen:chainReactConferenceLink"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
             <View style={[$styles.row, themed($logoContainer)]}>
@@ -93,12 +93,12 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
         />
         <Text
           preset="subheading"
-          tx="demoCommunityScreen.hireUsTitle"
+          tx="demoCommunityScreen:hireUsTitle"
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen.hireUs" style={themed($description)} />
+        <Text tx="demoCommunityScreen:hireUs" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.hireUsLink"
+          tx="demoCommunityScreen:hireUsLink"
           leftIcon="clap"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://infinite.red/contact")}

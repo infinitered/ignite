@@ -23,12 +23,15 @@ jest.doMock("react-native", () => {
   )
 })
 
-jest.mock("i18n-js", () => ({
-  currentLocale: () => "en",
+jest.mock('i18next', () => ({
+  currentLocale: "en",
   t: (key: string, params: Record<string, string>) => {
+     return `${key} ${JSON.stringify(params)}`
+  },
+  translate: (key: string, params: Record<string, string>) => {
     return `${key} ${JSON.stringify(params)}`
   },
-}))
+}));
 
 jest.mock("expo-localization", () => ({
   ...jest.requireActual("expo-localization"),
@@ -37,7 +40,8 @@ jest.mock("expo-localization", () => ({
 
 jest.mock("../app/i18n/i18n.ts", () => ({
   i18n: {
-    locale: "en",
+    isInitialized: true,
+    language: "en",
     t: (key: string, params: Record<string, string>) => {
       return `${key} ${JSON.stringify(params)}`
     },

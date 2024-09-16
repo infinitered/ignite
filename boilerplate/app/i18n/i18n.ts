@@ -1,6 +1,8 @@
 import * as Localization from "expo-localization"
-import { I18n } from "i18n-js"
 import { I18nManager } from "react-native"
+import * as i18next from "i18next"
+import { initReactI18next } from "react-i18next"
+import "intl-pluralrules"
 
 // if English isn't your default language, move Translations to the appropriate language file.
 import en, { Translations } from "./en"
@@ -10,31 +12,48 @@ import fr from "./fr"
 import ja from "./ja"
 import hi from "./hi"
 
-// Migration guide from i18n 3.x -> 4.x:
-// https://github.com/fnando/i18n-js/blob/main/MIGRATING_FROM_V3_TO_V4.md
-// https://github.com/fnando/i18n/discussions/24
-
 // to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
-export const i18n = new I18n(
-  { ar, en, "en-US": en, ko, fr, ja, hi },
-  { locale: fallbackLocale, defaultLocale: fallbackLocale, enableFallback: true },
-)
+
+export let i18n: i18next.i18n
 
 const systemLocale = Localization.getLocales()[0]
 const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
 
-if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
-  // if specific locales like en-FI or en-US is available, set it
-  i18n.locale = systemLocaleTag
-} else {
-  // otherwise try to fallback to the general locale (dropping the -XX suffix)
-  const generalLocale = systemLocaleTag.split("-")[0]
-  if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
-    i18n.locale = generalLocale
+export const initI18n = async () => {
+  i18n = i18next.use(initReactI18next)
+
+  await i18n.init({
+    resources: {
+      ar,
+      en,
+      "en-US": en,
+      ko,
+      fr,
+      ja,
+      hi,
+    },
+    lng: fallbackLocale,
+    fallbackLng: fallbackLocale,
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+
+  if (Object.prototype.hasOwnProperty.call(i18n.languages, systemLocaleTag)) {
+    // if specific locales like en-FI or en-US is available, set it
+    await i18n.changeLanguage(systemLocaleTag)
   } else {
-    i18n.locale = fallbackLocale
+    // otherwise try to fallback to the general locale (dropping the -XX suffix)
+    const generalLocale = systemLocaleTag.split("-")[0]
+    if (Object.prototype.hasOwnProperty.call(i18n.languages, generalLocale)) {
+      await i18n.changeLanguage(generalLocale)
+    } else {
+      await i18n.changeLanguage(fallbackLocale)
+    }
   }
+
+  return i18n
 }
 
 // handle RTL languages
@@ -45,22 +64,26 @@ I18nManager.forceRTL(isRTL)
 /**
  * Builds up valid keypaths for translations.
  */
+
 export type TxKeyPath = RecursiveKeyOf<Translations>
 
 // via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`>
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, true>
 }[keyof TObj & (string | number)]
 
 type RecursiveKeyOfInner<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<
-    TObj[TKey],
-    `['${TKey}']` | `.${TKey}`
-  >
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, false>
 }[keyof TObj & (string | number)]
 
-type RecursiveKeyOfHandleValue<TValue, Text extends string> = TValue extends any[]
+type RecursiveKeyOfHandleValue<
+  TValue,
+  Text extends string,
+  IsFirstLevel extends boolean,
+> = TValue extends any[]
   ? Text
   : TValue extends object
-    ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
+    ? IsFirstLevel extends true
+      ? Text | `${Text}:${RecursiveKeyOfInner<TValue>}`
+      : Text | `${Text}.${RecursiveKeyOfInner<TValue>}`
     : Text
