@@ -90,6 +90,7 @@
     "patch-package": "^8.0.0",
     "postinstall-prepare": "1.0.1",
     "prettier": "2.8.8",
+    "react-test-renderer": "18.2.0",
     "reactotron-core-client": "^2.8.13",
     "reactotron-mst": "^3.1.7",
     "reactotron-react-js": "^3.3.11",
