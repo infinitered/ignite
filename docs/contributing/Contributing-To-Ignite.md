@@ -39,9 +39,9 @@ When merging PRs, we need maintainers to make sure that there's appropriately fo
 You have two choices when merging to Ignite:
 
 1. Merge with a merge commit, keeping the original commits. In this case, if the original commits are using the semantic-release conventions, those messages will be used for the changelog and release determinations.
-  1. If everything in the PR is sufficiently documented by those commit messages, you don't need to add anything to the commit message.
-  2. If there are no change entries, you should update the merge commit message when you merge to match the expected conventions.
-2. Alternatively, if you don't want to keep the original commits, you can use a squash merge. You will need to update the merge commit message to match semantic-release conventions as required by the particular change.
+   1. If everything in the PR is sufficiently documented by those commit messages, you don't need to add anything to the commit message.
+   1. If there are no change entries, you should update the merge commit message when you merge to match the expected conventions.
+1. Alternatively, if you don't want to keep the original commits, you can use a squash merge. You will need to update the merge commit message to match semantic-release conventions as required by the particular change.
 
 Not every included commit in a PR needs to be formatted this way, only enough commits to ensure relevant changes have been documented.
 
