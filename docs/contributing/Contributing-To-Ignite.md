@@ -34,7 +34,9 @@ Maintainers may choose to rewrite this description for our changelog, or squash 
 
 ### Merging PRs
 
-When merging PRs, we need maintainers to make sure that there's appropriately formatted commit message(s) for semantic-release to document changes for the release notes and pick the next-released version for Ignite. See [Releasing Ignite](./Releasing-Ignite.md) for more info on how to format commit messages.
+When merging PRs, we need maintainers to make sure that there's appropriately formatted commit message(s) for semantic-release to document changes for the release notes and pick the next-released version for Ignite.
+
+Make sure the merge commit is appropriately marked as a fix, feature, etc, and also maintain credit for the PR in release notes by keeping the default `(#PRNUMBER by @gituser)` in the title. See [Releasing Ignite](./Releasing-Ignite.md) for more info on how to format commit messages.
 
 You have two choices when merging to Ignite:
 
