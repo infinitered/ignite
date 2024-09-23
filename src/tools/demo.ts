@@ -215,6 +215,14 @@ export const demoDependenciesToRemove = [
   "react-native-drawer-layout",
 ]
 
+export function findDemoPatches(): string[] {
+  const globs = demoDependenciesToRemove.map((dep) => `${dep}*.patch`)
+  const filePaths = filesystem.cwd("./patches").find({
+    matching: globs,
+  })
+  return filePaths
+}
+
 // This function takes a package.json file as a string and removes the dependencies
 // specified in demoDependenciesToRemove and returns the updated package.json as a string.
 export function findAndRemoveDemoDependencies(packageJsonRaw: string): string {

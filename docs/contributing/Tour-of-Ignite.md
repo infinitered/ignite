@@ -1,5 +1,5 @@
 ---
-sidebar_position: 150
+sidebar_position: 151
 ---
 
 # A Tour of the Ignite CLI Code Base
@@ -22,9 +22,9 @@ Prettier is also used in this project. You won't find terminal semicolons, gener
 
 ## Documentation
 
-We include a `README.md`, `LICENSE`, and `CODE_OF_CONDUCT.md` in the root of the folder. You should read all three of them. The license is a standard MIT permissive license, and the code of conduct ensures that people are to treat each other with respect.
+The `docs` folder contains all of our documentation, including this file. They're all written in Markdown for a better/simpler developer authoring experience.
 
-There's also a `docs` folder which contains more documentation, including this file. They're all written in Markdown for a better/simpler developer authoring experience.
+The docs are rolled up and published to https://docs.infinite.red by the [ir-docs project](https://github.com/infinitered/ir-docs). To learn how to see your documentation changes locally before they're published, see [the guide in ir-docs](https://github.com/infinitered/ir-docs?tab=readme-ov-file#testing-docs-locally).
 
 ## CircleCI and GitHub
 

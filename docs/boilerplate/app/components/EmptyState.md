@@ -29,6 +29,7 @@ The `EmptyState` component is to be used when there is no data to display, usual
 ### `preset`
 
 The `preset` prop is used to set the preset container style of the EmptyState. This affects the default image, heading, content and button. Currently, only one preconfigured preset exists: `generic`.
+![empty-state](https://github.com/user-attachments/assets/aa8bca01-24f2-45e5-977d-5f6ac949d580)
 
 ```tsx
 <EmptyState preset="generic" heading="EmptyState Heading" content="EmptyState Content" />

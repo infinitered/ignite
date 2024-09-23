@@ -9,9 +9,9 @@ appId: com.helloworld # the app id of the app we want to test
 ---
 - clearState # clears the state of our app (navigation and authentication)
 - launchApp # launches the app
-- assertVisible: "Sign In"
+- assertVisible: "Log In"
 - tapOn:
-    text: "Tap to sign in!"
+    text: "Tap to Log in!"
 - assertVisible: "Your app, almost ready for launch!"
 - tapOn:
     text: "Let's go!"
