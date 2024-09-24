@@ -32,25 +32,39 @@ export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<s
 
   let igniteNew: ChildProcess
   const outputLog = filesystem.createWriteStream(options.outputFile)
-  return new Promise((resolve, reject) => {
-    outputLog.on('open', () => {
-      igniteNew = spawn('sh', ['-c', fullCmd], { stdio: ['ignore', outputLog, outputLog] })
 
+  // make sure file descriptor exists before passing log stream to spawn
+  await new Promise((resolve, reject) => {
+    outputLog.on('open', resolve)
+    outputLog.on('error', err => reject(new Error(`Failed to open ${options.outputFile}: ${err}`)))
+  })
+
+  try {
+    igniteNew = spawn('sh', ['-c', fullCmd], { stdio: ['ignore', outputLog, outputLog] })
+    // Wait for the process to finish
+    await new Promise((resolve, reject) => {
       igniteNew.on('close', (code) => {
         console.log(`${fullCmd} exited with code ${code}`)
+        // resolve even if it's an error, we may want to test that output
         outputLog.end(() => resolve(''))
       })
-
       igniteNew.on('error', (err) => {
         console.log(`Failed to start subprocess: ${err}`)
         outputLog.end(() => reject(err))
       })
-
-      outputLog.on('error', (err) => {
-        reject(new Error(`Failed to open output file: ${err}`))
-      })
     })
-  })
+
+    outputLog.end()
+
+    const fileData = await filesystem.readAsync(options.outputFile)
+    if (fileData === undefined) {
+      throw new Error('Failed to read output file')
+    }
+    return fileData
+  } catch (e) {
+    outputLog.end()
+    throw e
+  }
 }
 
 export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
