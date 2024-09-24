@@ -366,7 +366,7 @@ module.exports = {
           format: prettyPrompt.format.boolean,
           prefix,
         }))
-        stateMgmt = includeMSTResponse.includeMST
+        stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
       }
     }
 
