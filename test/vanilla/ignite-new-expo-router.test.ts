@@ -14,12 +14,12 @@ describe(`ignite new with expo-router`, () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await spawnIgniteAndPrintIfFail(
-          `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`,
-          {
-            pre: `cd ${tempDir}`,
-            post: `cd ${originalDir}`,
-            outputFileName: 'ignite-new-router-bun.txt'
-          },
+        `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`,
+        {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+          outputFileName: "ignite-new-router-bun.txt",
+        },
       )
       appPath = filesystem.path(tempDir, APP_NAME)
     })

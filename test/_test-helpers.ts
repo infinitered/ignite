@@ -18,8 +18,8 @@ type SpawnOptions = RunOptions & {
 }
 
 type CommandOutput = {
-  output: string,
-  exitCode: number,
+  output: string
+  exitCode: number
 }
 
 function buildCommand(cmd: string, options: RunOptions) {
@@ -58,8 +58,8 @@ async function setUpLogFile(filePath: string): Promise<WriteStream> {
   const outputLog = filesystem.createWriteStream(filePath)
 
   await new Promise((resolve, reject) => {
-    outputLog.on('open', resolve)
-    outputLog.on('error', err => reject(err))
+    outputLog.on("open", resolve)
+    outputLog.on("error", (err) => reject(err))
   })
 
   return outputLog
@@ -78,12 +78,12 @@ async function setUpLogFile(filePath: string): Promise<WriteStream> {
  */
 async function startSpawnAndLog(cmd: string, outputLog: WriteStream): Promise<number> {
   return new Promise((resolve, reject) => {
-    const subprocess = spawn('sh', ['-c', cmd], { stdio: ['ignore', outputLog, outputLog] })
-    subprocess.on('close', (code) => {
+    const subprocess = spawn("sh", ["-c", cmd], { stdio: ["ignore", outputLog, outputLog] })
+    subprocess.on("close", (code) => {
       console.log(`${cmd} exited with code ${code}`)
       resolve(code ?? 99)
     })
-    subprocess.on('error', (err) => {
+    subprocess.on("error", (err) => {
       console.log(`Failed to start subprocess: ${err}`)
       reject(err)
     })
@@ -117,7 +117,7 @@ export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<C
 
     const fileData = await filesystem.readAsync(filePath)
     if (fileData === undefined) {
-      throw new Error('Failed to read output file')
+      throw new Error("Failed to read output file")
     }
     return { exitCode, output: fileData }
   } catch (e) {
@@ -128,7 +128,10 @@ export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<C
 
 // Designed for printing command output to the Jest test console if it fails, by
 // throwing the output.
-export async function spawnIgniteAndPrintIfFail(cmd: string, options: SpawnOptions): Promise<string> {
+export async function spawnIgniteAndPrintIfFail(
+  cmd: string,
+  options: SpawnOptions,
+): Promise<string> {
   const { output, exitCode } = await spawnAndLogIgnite(cmd, options)
   if (exitCode !== 0) {
     // print entire command output to test console
@@ -138,7 +141,10 @@ export async function spawnIgniteAndPrintIfFail(cmd: string, options: SpawnOptio
   }
 }
 
-export async function spawnAndLogIgnite(cmd: string, options: SpawnOptions): Promise<CommandOutput> {
+export async function spawnAndLogIgnite(
+  cmd: string,
+  options: SpawnOptions,
+): Promise<CommandOutput> {
   return spawnAndLog(`${IGNITE} ${cmd}`, options)
 }
 

@@ -34,7 +34,7 @@ describe("ignite new", () => {
       result = await spawnIgniteAndPrintIfFail(`new ${APP_NAME} --debug --packager=bun --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
-        outputFileName: "ignite-new-output-bun.txt"
+        outputFileName: "ignite-new-output-bun.txt",
       })
 
       appPath = filesystem.path(tempDir, APP_NAME)
@@ -281,11 +281,14 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await spawnIgniteAndPrintIfFail(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-        outputFileName: "ignite-new-output-yarn.txt"
-      })
+      result = await spawnIgniteAndPrintIfFail(
+        `new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`,
+        {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+          outputFileName: "ignite-new-output-yarn.txt",
+        },
+      )
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
