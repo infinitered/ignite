@@ -17,7 +17,7 @@ export async function runIgnite(cmd: string, options: RunOptions = {}): Promise<
 }
 
 type SpawnOptions = RunOptions & {
-  outputFile: string
+  outputFileName: string
 }
 
 async function deleteFileIfExists(file: string) {
@@ -37,17 +37,20 @@ type CommandOutput = {
 // Error code can be used to log output to test console only in case of error.
 export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<CommandOutput> {
   const fullCmd = `${options.pre ? options.pre + " && " : ""}${IGNITE} ${cmd}${options.post ? " && " + options.post : ""}`
-  await deleteFileIfExists(options.outputFile)
+  const logDirectory = filesystem.path(__dirname, "artifacts")
+  filesystem.dir(logDirectory)
+  const filePath = filesystem.path(logDirectory, options.outputFileName)
+  await deleteFileIfExists(filePath)
 
   let igniteNew: ChildProcess
-  const outputLog = filesystem.createWriteStream(options.outputFile)
+  const outputLog = filesystem.createWriteStream(filePath)
   // default to 99, should always be assigned
   let exitCode: number = 99
 
   // make sure file descriptor exists before passing log stream to spawn
   await new Promise((resolve, reject) => {
     outputLog.on('open', resolve)
-    outputLog.on('error', err => reject(new Error(`Failed to open ${options.outputFile}: ${err}`)))
+    outputLog.on('error', err => reject(err))
   })
 
   try {
@@ -68,7 +71,7 @@ export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<C
 
     outputLog.end()
 
-    const fileData = await filesystem.readAsync(options.outputFile)
+    const fileData = await filesystem.readAsync(filePath)
     if (fileData === undefined) {
       throw new Error('Failed to read output file')
     }

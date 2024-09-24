@@ -21,6 +21,9 @@ boilerplate/yarn.lock
 boilerplate/bun.lockb
 boilerplate/.gitignore.template
 
+# Test artifacts
+test/artifacts/*
+
 # flame CLI
 .config
 

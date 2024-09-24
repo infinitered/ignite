@@ -35,7 +35,7 @@ describe("ignite new", () => {
       const commandOutput = await spawnIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
-        outputFile: "ignite-new-output.txt"
+        outputFileName: "ignite-new-output.txt"
       })
       result = commandOutput.output
       if (commandOutput.exitCode !== 0) {
@@ -290,7 +290,7 @@ describe("ignite new", () => {
       const commandOutput = await spawnIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
-        outputFile: "ignite-new-output.txt"
+        outputFileName: "ignite-new-output.txt"
       })
       result = commandOutput.output
       if (commandOutput.exitCode !== 0) {
