@@ -1,5 +1,6 @@
 import { system, filesystem } from "gluegun"
 import { stripANSI } from "../src/tools/strip-ansi"
+import { ChildProcess, spawn } from "child_process"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }
@@ -13,6 +14,43 @@ type RunOptions = {
 
 export async function runIgnite(cmd: string, options: RunOptions = {}): Promise<string> {
   return run(`${IGNITE} ${cmd}`, options)
+}
+
+type SpawnOptions = RunOptions & {
+  outputFile: string
+}
+
+async function deleteFileIfExists(file: string) {
+  if (filesystem.exists(file)) {
+    filesystem.remove(file)
+  }
+}
+
+export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<string> {
+  const fullCmd = `${options.pre ? options.pre + " && " : ""}${IGNITE} ${cmd}${options.post ? " && " + options.post : ""}`
+  await deleteFileIfExists(options.outputFile)
+
+  let igniteNew: ChildProcess
+  const outputLog = filesystem.createWriteStream(options.outputFile)
+  return new Promise((resolve, reject) => {
+    outputLog.on('open', () => {
+      igniteNew = spawn('sh', ['-c', fullCmd], { stdio: ['ignore', outputLog, outputLog] })
+
+      igniteNew.on('close', (code) => {
+        console.log(`${fullCmd} exited with code ${code}`)
+        outputLog.end(() => resolve(''))
+      })
+
+      igniteNew.on('error', (err) => {
+        console.log(`Failed to start subprocess: ${err}`)
+        outputLog.end(() => reject(err))
+      })
+
+      outputLog.on('error', (err) => {
+        reject(new Error(`Failed to open output file: ${err}`))
+      })
+    })
+  })
 }
 
 export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
