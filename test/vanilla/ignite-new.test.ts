@@ -1,6 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { spawnIgnite, runError, run, runIgnite } from "../_test-helpers"
+import { spawnAndLog, runError, run, runIgnite } from "../_test-helpers"
 import { stripANSI } from "../../src/tools/strip-ansi"
 
 const APP_NAME = "Foo"
@@ -32,7 +32,7 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      const commandOutput = await spawnIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
+      const commandOutput = await spawnAndLog(`new ${APP_NAME} --debug --packager=bun --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
         outputFileName: "ignite-new-output.txt"
@@ -287,7 +287,7 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      const commandOutput = await spawnIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
+      const commandOutput = await spawnAndLog(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
         outputFileName: "ignite-new-output.txt"

@@ -1,6 +1,7 @@
 import { system, filesystem } from "gluegun"
 import { stripANSI } from "../src/tools/strip-ansi"
-import { ChildProcess, spawn } from "child_process"
+import { spawn } from "child_process"
+import { WriteStream } from "fs"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }
@@ -31,44 +32,75 @@ type CommandOutput = {
   exitCode: number,
 }
 
-// Use `spawn` to run ignite command so that we can capture output in case of failure.
-// We write to a file in order to ensure we have at least partial output if there's enough errors that max buffer size is reached.
-// If the command completes, we'll read from the file and return the output.
-// Error code can be used to log output to test console only in case of error.
-export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<CommandOutput> {
-  const fullCmd = `${options.pre ? options.pre + " && " : ""}${IGNITE} ${cmd}${options.post ? " && " + options.post : ""}`
-  const logDirectory = filesystem.path(__dirname, "artifacts")
-  filesystem.dir(logDirectory)
-  const filePath = filesystem.path(logDirectory, options.outputFileName)
-  await deleteFileIfExists(filePath)
+const artifactsDirectory = filesystem.path(__dirname, "artifacts")
 
-  let igniteNew: ChildProcess
+export function ensureArtifactsDirectory() {
+  filesystem.dir(artifactsDirectory)
+}
+
+async function setUpLogFile(filePath: string): Promise<WriteStream> {
   const outputLog = filesystem.createWriteStream(filePath)
-  // default to 99, should always be assigned
-  let exitCode: number = 99
 
-  // make sure file descriptor exists before passing log stream to spawn
   await new Promise((resolve, reject) => {
     outputLog.on('open', resolve)
     outputLog.on('error', err => reject(err))
   })
 
-  try {
-    igniteNew = spawn('sh', ['-c', fullCmd], { stdio: ['ignore', outputLog, outputLog] })
-    // Wait for the process to finish
-    await new Promise((resolve, reject) => {
-      igniteNew.on('close', (code) => {
-        console.log(`${fullCmd} exited with code ${code}`)
-        exitCode = code ?? exitCode
-        // resolve even if it's an error, we may want to test that output
-        outputLog.end(() => resolve(''))
-      })
-      igniteNew.on('error', (err) => {
-        console.log(`Failed to start subprocess: ${err}`)
-        outputLog.end(() => reject(err))
-      })
-    })
+  return outputLog
+}
 
+function buildCommand(cmd: string, options: RunOptions) {
+  return `${options.pre ? options.pre + " && " : ""}${IGNITE} ${cmd}${options.post ? " && " + options.post : ""}`
+}
+
+/**
+ * Spawns a shell command and logs its output to the provided WriteStream.
+ * Meant to log to a temporary file for later reading. This is an internal
+ * function for use by `spawnAndLog`.
+ *
+ * @param cmd - The shell command to execute.
+ * @param outputLog - The WriteStream where the command's output will be logged.
+ * @returns A promise that resolves to the exit code of the command, or 99 if the exit code is null or undefined.
+ *
+ * @throws Will reject the promise if the subprocess fails to start.
+ */
+async function runSpawnAndLog(cmd: string, outputLog: WriteStream): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const subprocess = spawn('sh', ['-c', cmd], { stdio: ['ignore', outputLog, outputLog] })
+    subprocess.on('close', (code) => {
+      console.log(`${cmd} exited with code ${code}`)
+      resolve(code ?? 99)
+    })
+    subprocess.on('error', (err) => {
+      console.log(`Failed to start subprocess: ${err}`)
+      reject(err)
+    })
+  })
+}
+
+/**
+ * Executes a command, logs its output to a file, and returns the command's exit code and output.
+ * Uses `spawn`to run commands so that we can capture output in case of failure.
+ * We can log the output to the test console by throwing it, or if that fails,
+ * we can read the file for troubleshooting. Keep in mind that the output will
+ * need ANSI characters stripped to be readable in that case.
+ *
+ * The error code should typically be `1` if the command fails, but is set to `99` by default in `runSpawnAndLog`.
+ *
+ * @param cmd - The command to execute.
+ * @param options - Options for spawning the command, including the output file name.
+ * @returns A promise that resolves to an object containing the exit code and the output of the command.
+ * @throws Will throw an error if the output file cannot be read or if the command execution fails.
+ */
+export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<CommandOutput> {
+  const fullCmd = buildCommand(cmd, options)
+  const filePath = filesystem.path(artifactsDirectory, options.outputFileName)
+  await deleteFileIfExists(filePath)
+
+  const outputLog = await setUpLogFile(filePath)
+
+  try {
+    const exitCode = await runSpawnAndLog(fullCmd, outputLog)
     outputLog.end()
 
     const fileData = await filesystem.readAsync(filePath)
@@ -83,9 +115,7 @@ export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<C
 }
 
 export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
-  const pre = options.pre ? `${options.pre} && ` : ""
-  const post = options.post ? ` && ${options.post}` : ""
-  const resultANSI = await system.run(`${pre}${cmd}${post}`, shellOpts)
+  const resultANSI = await system.run(buildCommand(cmd, options), shellOpts)
   return stripANSI(resultANSI)
 }
 
