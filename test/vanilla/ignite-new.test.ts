@@ -1,6 +1,7 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { runIgnite, runError, run } from "../_test-helpers"
+import { spawnIgnite, runError, run, runIgnite } from "../_test-helpers"
+import { stripANSI } from "../../src/tools/strip-ansi"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -31,16 +32,15 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      try {
-        result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
-          pre: `cd ${tempDir}`,
-          post: `cd ${originalDir}`,
-        })
-      } catch (e) {
-        // Uncomment to debug tests. Leaving commented for now, because we were
-        // seeing issues with max buffer size exceeded.
-        // console.log("Ignite new output: \n", stripANSI(e.stdout))
-        throw new Error("Ignite new failed")
+      const commandOutput = await spawnIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
+        pre: `cd ${tempDir}`,
+        post: `cd ${originalDir}`,
+        outputFile: "ignite-new-output.txt"
+      })
+      result = commandOutput.output
+      if (commandOutput.exitCode !== 0) {
+        // print entire command output to test console
+        throw new Error(`Ignite new exited with code ${commandOutput.exitCode}: \n${stripANSI(result)}`)
       }
 
       appPath = filesystem.path(tempDir, APP_NAME)
