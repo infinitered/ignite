@@ -27,7 +27,8 @@ export default function Root() {
 
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
 
-  const loaded = fontsLoaded && rehydrated
+  const loaded = fontsLoaded 
+                         && rehydrated // @mst remove-current-line
 
   useEffect(() => {
     if (fontError) throw fontError
