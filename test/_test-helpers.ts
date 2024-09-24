@@ -112,7 +112,11 @@ export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<C
 }
 
 export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
-  const resultANSI = await system.run(buildCommand(cmd, options), shellOpts)
+  const pre = options.pre ? `${options.pre} && ` : ""
+  const post = options.post ? ` && ${options.post}` : ""
+  const resultANSI = await system.run(`${pre}${cmd}${post}`, shellOpts)
+  // this might have gone wrong?
+  // const resultANSI = await system.run(buildCommand(cmd, options), shellOpts)
   return stripANSI(resultANSI)
 }
 
