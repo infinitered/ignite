@@ -126,6 +126,13 @@ export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<C
   }
 }
 
+export async function spawnAndLogIgnite(
+  cmd: string,
+  options: SpawnOptions,
+): Promise<CommandOutput> {
+  return spawnAndLog(`${IGNITE} ${cmd}`, options)
+}
+
 // Designed for printing command output to the Jest test console if it fails, by
 // throwing the output.
 export async function spawnIgniteAndPrintIfFail(
@@ -139,13 +146,6 @@ export async function spawnIgniteAndPrintIfFail(
   } else {
     return output
   }
-}
-
-export async function spawnAndLogIgnite(
-  cmd: string,
-  options: SpawnOptions,
-): Promise<CommandOutput> {
-  return spawnAndLog(`${IGNITE} ${cmd}`, options)
 }
 
 function generateDefaultTemplatePath(pathname: string): string {
