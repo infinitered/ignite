@@ -34,11 +34,8 @@ type CommandOutput = {
 
 const artifactsDirectory = filesystem.path(__dirname, "artifacts")
 
-export function ensureArtifactsDirectory() {
-  filesystem.dir(artifactsDirectory)
-}
-
 async function setUpLogFile(filePath: string): Promise<WriteStream> {
+  filesystem.dir(artifactsDirectory)
   const outputLog = filesystem.createWriteStream(filePath)
 
   await new Promise((resolve, reject) => {

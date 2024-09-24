@@ -1,10 +1,6 @@
 // we always make sure 'react-native' gets included first
 import * as ReactNative from "react-native"
 import mockFile from "./mockFile"
-import { ensureArtifactsDirectory } from "../../test/_test-helpers"
-
-// make sure the git-ignored artifacts directory exists
-ensureArtifactsDirectory();
 
 // libraries to mock
 jest.doMock("react-native", () => {
