@@ -31,6 +31,10 @@ type CommandOutput = {
   exitCode: number,
 }
 
+// Use `spawn` to run ignite command so that we can capture output in case of failure.
+// We write to a file in order to ensure we have at least partial output if there's enough errors that max buffer size is reached.
+// If the command completes, we'll read from the file and return the output.
+// Error code can be used to log output to test console only in case of error.
 export async function spawnIgnite(cmd: string, options: SpawnOptions): Promise<CommandOutput> {
   const fullCmd = `${options.pre ? options.pre + " && " : ""}${IGNITE} ${cmd}${options.post ? " && " + options.post : ""}`
   await deleteFileIfExists(options.outputFile)
