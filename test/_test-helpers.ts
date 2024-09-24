@@ -65,11 +65,11 @@ async function runSpawnAndLog(cmd: string, outputLog: WriteStream): Promise<numb
   return new Promise((resolve, reject) => {
     const subprocess = spawn('sh', ['-c', cmd], { stdio: ['ignore', outputLog, outputLog] })
     subprocess.on('close', (code) => {
-      console.log(`${cmd} exited with code ${code}`)
+      console.debug(`${cmd} exited with code ${code}`)
       resolve(code ?? 99)
     })
     subprocess.on('error', (err) => {
-      console.log(`Failed to start subprocess: ${err}`)
+      console.debug(`Failed to start subprocess: ${err}`)
       reject(err)
     })
   })
