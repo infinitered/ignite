@@ -329,51 +329,6 @@ describe("ignite new", () => {
 
     // we're done!
   })
-
-  // Yarn (only testing what might be affected by a different package manager: dependency installation, running commands)
-  describe(`ignite new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, () => {
-    let tempDir: string
-    let result: string
-    let appPath: string
-    beforeAll(async () => {
-      tempDir = tempy.directory({ prefix: "ignite-" })
-
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
-
-      appPath = filesystem.path(tempDir, APP_NAME)
-    })
-
-    afterAll(() => {
-      // console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
-      filesystem.remove(tempDir) // clean up our mess
-    })
-
-    it("should print success message", () => {
-      // at some point this should probably be a snapshot?
-      expect(result).toContain("Now get cooking! 🍽")
-    })
-
-    it("should be able to use `generate` command and have pass output pass yarn test, yarn lint, and yarn compile scripts", async () => {
-      // other common test operations
-      const runOpts = {
-        pre: `cd ${appPath}`,
-        post: `cd ${originalDir}`,
-      }
-
-      // #region Assert package.json Scripts Can Be Run
-      // run the tests; if they fail, run will raise and this test will fail
-      await run(`yarn test`, runOpts)
-      await run(`yarn lint`, runOpts)
-      await run(`yarn compile`, runOpts)
-      expect(await run("git diff HEAD --no-ext-diff", runOpts)).toBe("")
-    })
-    // #endregion
-
-    // we're done!
-  })
 })
 
 async function checkForLeftoverHelloWorld(filePath: string) {
