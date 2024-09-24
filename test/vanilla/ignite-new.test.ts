@@ -287,10 +287,16 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
+      const commandOutput = await spawnIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
+        outputFile: "ignite-new-output.txt"
       })
+      result = commandOutput.output
+      if (commandOutput.exitCode !== 0) {
+        // print entire command output to test console
+        throw new Error(`Ignite new exited with code ${commandOutput.exitCode}: \n${stripANSI(result)}`)
+      }
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
