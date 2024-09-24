@@ -13,23 +13,42 @@ type RunOptions = {
   post?: string // command to run after the command
 }
 
-export async function runIgnite(cmd: string, options: RunOptions = {}): Promise<string> {
-  return run(`${IGNITE} ${cmd}`, options)
-}
-
 type SpawnOptions = RunOptions & {
   outputFileName: string
+}
+
+type CommandOutput = {
+  output: string,
+  exitCode: number,
+}
+
+function buildCommand(cmd: string, options: RunOptions) {
+  return `${options.pre ? options.pre + " && " : ""}${cmd}${options.post ? " && " + options.post : ""}`
+}
+
+export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
+  const resultANSI = await system.run(buildCommand(cmd, options), shellOpts)
+  return stripANSI(resultANSI)
+}
+
+export async function runError(cmd: string): Promise<string | any> {
+  let resultANSI: string
+  try {
+    resultANSI = await system.run(`${IGNITE} ${cmd}`, shellOpts)
+  } catch (e) {
+    return e
+  }
+  return `No error thrown? Output: ${resultANSI}`
+}
+
+export async function runIgnite(cmd: string, options: RunOptions = {}): Promise<string> {
+  return run(`${IGNITE} ${cmd}`, options)
 }
 
 async function deleteFileIfExists(file: string) {
   if (filesystem.exists(file)) {
     filesystem.remove(file)
   }
-}
-
-type CommandOutput = {
-  output: string,
-  exitCode: number,
 }
 
 const artifactsDirectory = filesystem.path(__dirname, "artifacts")
@@ -46,10 +65,6 @@ async function setUpLogFile(filePath: string): Promise<WriteStream> {
   return outputLog
 }
 
-function buildCommand(cmd: string, options: RunOptions) {
-  return `${options.pre ? options.pre + " && " : ""}${IGNITE} ${cmd}${options.post ? " && " + options.post : ""}`
-}
-
 /**
  * Spawns a shell command and logs its output to the provided WriteStream.
  * Meant to log to a temporary file for later reading. This is an internal
@@ -61,7 +76,7 @@ function buildCommand(cmd: string, options: RunOptions) {
  *
  * @throws Will reject the promise if the subprocess fails to start.
  */
-async function runSpawnAndLog(cmd: string, outputLog: WriteStream): Promise<number> {
+async function startSpawnAndLog(cmd: string, outputLog: WriteStream): Promise<number> {
   return new Promise((resolve, reject) => {
     const subprocess = spawn('sh', ['-c', cmd], { stdio: ['ignore', outputLog, outputLog] })
     subprocess.on('close', (code) => {
@@ -97,7 +112,7 @@ export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<C
   const outputLog = await setUpLogFile(filePath)
 
   try {
-    const exitCode = await runSpawnAndLog(fullCmd, outputLog)
+    const exitCode = await startSpawnAndLog(fullCmd, outputLog)
     outputLog.end()
 
     const fileData = await filesystem.readAsync(filePath)
@@ -111,23 +126,20 @@ export async function spawnAndLog(cmd: string, options: SpawnOptions): Promise<C
   }
 }
 
-export async function run(cmd: string, options: RunOptions = {}): Promise<string> {
-  const pre = options.pre ? `${options.pre} && ` : ""
-  const post = options.post ? ` && ${options.post}` : ""
-  const resultANSI = await system.run(`${pre}${cmd}${post}`, shellOpts)
-  // this might have gone wrong?
-  // const resultANSI = await system.run(buildCommand(cmd, options), shellOpts)
-  return stripANSI(resultANSI)
+// Designed for printing command output to the Jest test console if it fails, by
+// throwing the output.
+export async function spawnIgniteAndPrintIfFail(cmd: string, options: SpawnOptions): Promise<string> {
+  const { output, exitCode } = await spawnAndLogIgnite(cmd, options)
+  if (exitCode !== 0) {
+    // print entire command output to test console
+    throw new Error(`Ignite new exited with code ${exitCode}: \n${stripANSI(output)}`)
+  } else {
+    return output
+  }
 }
 
-export async function runError(cmd: string): Promise<string | any> {
-  let resultANSI: string
-  try {
-    resultANSI = await system.run(`${IGNITE} ${cmd}`, shellOpts)
-  } catch (e) {
-    return e
-  }
-  return `No error thrown? Output: ${resultANSI}`
+export async function spawnAndLogIgnite(cmd: string, options: SpawnOptions): Promise<CommandOutput> {
+  return spawnAndLog(`${IGNITE} ${cmd}`, options)
 }
 
 function generateDefaultTemplatePath(pathname: string): string {

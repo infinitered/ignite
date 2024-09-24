@@ -1,7 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { run, runIgnite, spawnAndLog } from "../_test-helpers"
-import { stripANSI } from "../../src/tools/strip-ansi"
+import { run, runIgnite, spawnIgniteAndPrintIfFail } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -14,26 +13,14 @@ describe(`ignite new with expo-router`, () => {
 
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
-      try {
-        const commandOutput = await spawnAndLog(
+      result = await spawnIgniteAndPrintIfFail(
           `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`,
           {
             pre: `cd ${tempDir}`,
             post: `cd ${originalDir}`,
             outputFileName: 'ignite-new-router-bun.txt'
           },
-        )
-        result = commandOutput.output
-        if (commandOutput.exitCode !== 0) {
-        // print entire command output to test console
-          throw new Error(`Ignite new exited with code ${commandOutput.exitCode}: \n${stripANSI(result)}`)
-        }
-      } catch (e) {
-        // Uncomment to debug tests. Leaving commented for now, because we were
-        // seeing issues with max buffer size exceeded.
-        // console.log("Ignite new output: \n", stripANSI(e.stdout))
-        throw new Error("Ignite new failed")
-      }
+      )
       appPath = filesystem.path(tempDir, APP_NAME)
     })
 

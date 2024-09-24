@@ -1,7 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { spawnAndLog, runError, run, runIgnite } from "../_test-helpers"
-import { stripANSI } from "../../src/tools/strip-ansi"
+import { runError, run, runIgnite, spawnIgniteAndPrintIfFail } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -32,16 +31,11 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      const commandOutput = await spawnAndLog(`new ${APP_NAME} --debug --packager=bun --yes`, {
+      result = await spawnIgniteAndPrintIfFail(`new ${APP_NAME} --debug --packager=bun --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
         outputFileName: "ignite-new-output-bun.txt"
       })
-      result = commandOutput.output
-      if (commandOutput.exitCode !== 0) {
-        // print entire command output to test console
-        throw new Error(`Ignite new exited with code ${commandOutput.exitCode}: \n${stripANSI(result)}`)
-      }
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
@@ -287,16 +281,11 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      const commandOutput = await spawnAndLog(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
+      result = await spawnIgniteAndPrintIfFail(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
         outputFileName: "ignite-new-output-yarn.txt"
       })
-      result = commandOutput.output
-      if (commandOutput.exitCode !== 0) {
-        // print entire command output to test console
-        throw new Error(`Ignite new exited with code ${commandOutput.exitCode}: \n${stripANSI(result)}`)
-      }
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
