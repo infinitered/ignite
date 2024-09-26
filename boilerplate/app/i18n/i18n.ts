@@ -1,6 +1,6 @@
 import * as Localization from "expo-localization"
 import { I18nManager } from "react-native"
-import * as i18next from "i18next"
+import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import "intl-pluralrules"
 
@@ -14,8 +14,6 @@ import ja from "./ja"
 import hi from "./hi"
 
 const fallbackLocale = "en-US"
-
-export let i18n: i18next.i18n
 
 const systemLocales = Localization.getLocales()
 
@@ -46,7 +44,7 @@ if (locale?.languageTag && locale?.textDirection === "rtl") {
 }
 
 export const initI18n = async () => {
-  i18n = i18next.use(initReactI18next)
+  i18n.use(initReactI18next)
 
   await i18n.init({
     resources,
