@@ -31,7 +31,11 @@ import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
 import { mstDependenciesToRemove } from "../tools/mst"
-import { findAndRemoveDependencies } from "../tools/dependencies"
+import {
+  findAndRemoveDependencies,
+  findAndUpdateDependencyVersions,
+  newArchCompatExpectedVersions,
+} from "../tools/dependencies"
 import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
@@ -366,7 +370,7 @@ module.exports = {
           format: prettyPrompt.format.boolean,
           prefix,
         }))
-        stateMgmt = includeMSTResponse.includeMST
+        stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
       }
     }
 
@@ -656,6 +660,14 @@ module.exports = {
       if (stateMgmt === "none") {
         log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
+      }
+
+      if (experimentalNewArch) {
+        log(`Swapping new architecture compatible dependencies...`)
+        packageJsonRaw = findAndUpdateDependencyVersions(
+          packageJsonRaw,
+          newArchCompatExpectedVersions,
+        )
       }
 
       // Then write it back out.
