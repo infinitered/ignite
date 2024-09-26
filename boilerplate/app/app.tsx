@@ -30,6 +30,7 @@ import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { KeyboardProvider } from "react-native-keyboard-controller"
+import { loadDateFnsLocale } from "./utils/formatDate"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -75,7 +76,9 @@ function App(props: AppProps) {
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
   useEffect(() => {
-    initI18n().then(() => setIsI18nInitialized(true))
+    initI18n()
+      .then(() => setIsI18nInitialized(true))
+      .then(() => loadDateFnsLocale())
   }, [])
 
   // @mst replace-next-line React.useEffect(() => {
