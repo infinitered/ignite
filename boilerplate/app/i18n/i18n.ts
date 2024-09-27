@@ -1,6 +1,6 @@
 import * as Localization from "expo-localization"
 import { I18nManager } from "react-native"
-import * as i18next from "i18next"
+import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import "intl-pluralrules"
 
@@ -13,55 +13,50 @@ import fr from "./fr"
 import ja from "./ja"
 import hi from "./hi"
 
-// to use regional locales use { "en-US": enUS } etc
 const fallbackLocale = "en-US"
 
-export let i18n: i18next.i18n
+const systemLocales = Localization.getLocales()
 
-const systemLocale = Localization.getLocales()[0]
-const systemLocaleTag = systemLocale?.languageTag ?? fallbackLocale
+const resources = { ar, en, ko, es, fr, ja, hi }
+const supportedTags = Object.keys(resources)
+
+// Checks to see if the device locale matches any of the supported locales
+// Device locale may be more specific and still match (e.g., en-US matches en)
+const systemTagMatchesSupportedTags = (deviceTag: string) => {
+  const primaryTag = deviceTag.split("-")[0]
+  return supportedTags.includes(primaryTag)
+}
+
+const pickSupportedLocale: () => Localization.Locale | undefined = () => {
+  return systemLocales.find((locale) => systemTagMatchesSupportedTags(locale.languageTag))
+}
+
+const locale = pickSupportedLocale()
+
+export let isRTL = false
+
+// Need to set RTL ASAP to ensure the app is rendered correctly. Waiting for i18n to init is too late.
+if (locale?.languageTag && locale?.textDirection === "rtl") {
+  I18nManager.allowRTL(true)
+  isRTL = true
+} else {
+  I18nManager.allowRTL(false)
+}
 
 export const initI18n = async () => {
-  i18n = i18next.use(initReactI18next)
+  i18n.use(initReactI18next)
 
   await i18n.init({
-    resources: {
-      ar,
-      en,
-      "en-US": en,
-      ko,
-      es,
-      fr,
-      ja,
-      hi,
-    },
-    lng: fallbackLocale,
+    resources,
+    lng: locale?.languageTag ?? fallbackLocale,
     fallbackLng: fallbackLocale,
     interpolation: {
       escapeValue: false,
     },
   })
 
-  if (Object.prototype.hasOwnProperty.call(i18n.languages, systemLocaleTag)) {
-    // if specific locales like en-FI or en-US is available, set it
-    await i18n.changeLanguage(systemLocaleTag)
-  } else {
-    // otherwise try to fallback to the general locale (dropping the -XX suffix)
-    const generalLocale = systemLocaleTag.split("-")[0]
-    if (Object.prototype.hasOwnProperty.call(i18n.languages, generalLocale)) {
-      await i18n.changeLanguage(generalLocale)
-    } else {
-      await i18n.changeLanguage(fallbackLocale)
-    }
-  }
-
   return i18n
 }
-
-// handle RTL languages
-export const isRTL = systemLocale?.textDirection === "rtl"
-I18nManager.allowRTL(isRTL)
-I18nManager.forceRTL(isRTL)
 
 /**
  * Builds up valid keypaths for translations.
