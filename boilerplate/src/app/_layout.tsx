@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ViewStyle } from "react-native"
 import { Slot, SplashScreen } from "expo-router"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
@@ -6,6 +6,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useInitialRootStore } from "@/models"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
 import { customFontsToLoad } from "@/theme"
+import { initI18n } from "@/i18n"
+import { loadDateFnsLocale } from "@/utils/formatDate"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -26,8 +28,15 @@ export default function Root() {
   // @mst remove-block-end
 
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
-  const loaded = fontsLoaded 
+  useEffect(() => {
+    initI18n()
+      .then(() => setIsI18nInitialized(true))
+      .then(() => loadDateFnsLocale())
+  }, [])
+
+  const loaded = fontsLoaded && isI18nInitialized 
                          && rehydrated // @mst remove-current-line
 
   useEffect(() => {
