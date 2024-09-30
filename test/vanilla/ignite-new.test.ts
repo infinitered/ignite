@@ -1,6 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { runIgnite, runError, run } from "../_test-helpers"
+import { runError, run, runIgnite, spawnIgniteAndPrintIfFail } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -31,17 +31,11 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      try {
-        result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
-          pre: `cd ${tempDir}`,
-          post: `cd ${originalDir}`,
-        })
-      } catch (e) {
-        // Uncomment to debug tests. Leaving commented for now, because we were
-        // seeing issues with max buffer size exceeded.
-        // console.log("Ignite new output: \n", stripANSI(e.stdout))
-        throw new Error("Ignite new failed")
-      }
+      result = await spawnIgniteAndPrintIfFail(`new ${APP_NAME} --debug --packager=bun --yes`, {
+        pre: `cd ${tempDir}`,
+        post: `cd ${originalDir}`,
+        outputFileName: "ignite-new-output-bun.txt",
+      })
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
@@ -287,55 +281,14 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
-
-      appPath = filesystem.path(tempDir, APP_NAME)
-    })
-
-    afterAll(() => {
-      // console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
-      filesystem.remove(tempDir) // clean up our mess
-    })
-
-    it("should print success message", () => {
-      // at some point this should probably be a snapshot?
-      expect(result).toContain("Now get cooking! 🍽")
-    })
-
-    it("should be able to use `generate` command and have pass output pass yarn test, yarn lint, and yarn compile scripts", async () => {
-      // other common test operations
-      const runOpts = {
-        pre: `cd ${appPath}`,
-        post: `cd ${originalDir}`,
-      }
-
-      // #region Assert package.json Scripts Can Be Run
-      // run the tests; if they fail, run will raise and this test will fail
-      await run(`yarn test`, runOpts)
-      await run(`yarn lint`, runOpts)
-      await run(`yarn compile`, runOpts)
-      expect(await run("git diff HEAD --no-ext-diff", runOpts)).toBe("")
-    })
-    // #endregion
-
-    // we're done!
-  })
-
-  // Yarn (only testing what might be affected by a different package manager: dependency installation, running commands)
-  describe(`ignite new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, () => {
-    let tempDir: string
-    let result: string
-    let appPath: string
-    beforeAll(async () => {
-      tempDir = tempy.directory({ prefix: "ignite-" })
-
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
+      result = await spawnIgniteAndPrintIfFail(
+        `new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`,
+        {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+          outputFileName: "ignite-new-output-yarn.txt",
+        },
+      )
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })
