@@ -6,3 +6,15 @@
 - [ ] `README.md` (or relevant documentation) has been updated with your changes
 
 ## Describe your PR
+
+## Screenshots (if applicable)
+
+If you’re updating code related to a visible feature, please include before-and-after screenshots or videos. This helps the reviewer easily compare and understand the changes.
+
+| Before | After |
+|--------|-------|
+| [Insert before screenshot] | [Insert after screenshot] |
+
+
+
+
