@@ -1,4 +1,4 @@
-## For issue #
+## For issue
 
 ## Please verify the following:
 
