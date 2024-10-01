@@ -17,7 +17,3 @@ If you’re submitting code changes related to a visible feature, please include
 | Before | After |
 |--------|-------|
 | [Insert before screenshot/video] | [Insert after screenshot/video] |
-
-
-
-
