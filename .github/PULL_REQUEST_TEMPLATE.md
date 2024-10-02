@@ -17,7 +17,7 @@
 
 ## Screenshots (if applicable)
 
-If you’re submitting code changes related to a visible feature, please include before-and-after screenshots or videos. This helps the reviewer easily compare and understand the changes.
+If you’re submitting code changes related to a visible feature, please include before-and-after screenshots or videos.
 
 | Before                           | After                           |
 | -------------------------------- | ------------------------------- |
