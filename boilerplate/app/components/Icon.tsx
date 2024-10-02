@@ -9,6 +9,7 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -66,9 +67,11 @@ export function Icon(props: IconProps) {
     TouchableOpacityProps | ViewProps
   >
 
+  const { theme } = useAppTheme()
+
   const $imageStyle: StyleProp<ImageStyle> = [
     $imageStyleBase,
-    color !== undefined && { tintColor: color },
+    { tintColor: color ?? theme.colors.text },
     size !== undefined && { width: size, height: size },
     $imageStyleOverride,
   ]
