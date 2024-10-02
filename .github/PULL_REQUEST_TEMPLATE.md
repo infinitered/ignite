@@ -7,7 +7,7 @@
 - [ ] `yarn format:check` **prettier** checks pass with new code, if relevant
 - [ ] `README.md` (or relevant documentation) has been updated with your changes
 - [ ] Include issue number in title and description
-- [ ] (If applicable) The feature related to this PR was tested across various use cases to ensure it works correctly.
+- [ ] If this affects functionality there aren't tests for, I manually tested it, including by generating a new app locally if needed ([see docs](https://docs.infinite.red/ignite-cli/contributing/Contributing-To-Ignite/#testing-changes-from-your-local-copy-of-ignite)).
 
 ## Describe your PR
 
