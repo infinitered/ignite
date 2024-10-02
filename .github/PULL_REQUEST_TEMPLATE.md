@@ -1,5 +1,3 @@
-## For issue
-
 ## Please verify the following:
 
 - [ ] `yarn test` **jest** tests pass with new tests, if relevant
