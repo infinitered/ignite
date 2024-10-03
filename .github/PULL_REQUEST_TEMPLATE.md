@@ -16,6 +16,8 @@
 
 If you’re submitting code changes related to a visible feature, please include before-and-after screenshots or videos.
 
+<!-- If GH's auto attachment previews too large, trying resizing it with: <img src="filename-from-github-upload" width="300" /> -->
+
 | Before                           | After                           |
 | -------------------------------- | ------------------------------- |
 | [Insert before screenshot/video] | [Insert after screenshot/video] |
