@@ -10,11 +10,11 @@
 
 <!-- If this PR addresses an issue, link to it in description: "Closes #333" -->
 
-[Add your PR description]
+<!-- Add your PR description -->
 
 ## Screenshots (if applicable)
 
-If you’re submitting code changes related to a visible feature, please include before-and-after screenshots or videos.
+<!-- If you’re submitting code changes related to a visible feature, please include before-and-after screenshots or videos. -->
 
 <!-- If GH's auto attachment previews too large, trying resizing it with: <img src="filename-from-github-upload" width="300" /> -->
 
