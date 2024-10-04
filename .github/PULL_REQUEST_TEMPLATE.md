@@ -8,7 +8,7 @@
 
 ## Describe your PR
 
-<!-- If this PR addresses an issue, link to it in description: "Addresses #333" -->
+<!-- If this PR addresses an issue, link to it in description: "Closes #333" -->
 
 [Add your PR description]
 
