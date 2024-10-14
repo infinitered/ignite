@@ -18,7 +18,7 @@ In order to start a new Ignite project, you can use the CLI. No need to install 
 npx ignite-cli@latest new PizzaApp
 ```
 
-It'll walk you through several questions.
+It'll walk you through several prompts to configure your package manager, navigation library and state management. Or you can simply take all the defaults via `--yes` and jump right into the demo application.
 
 Once it's up and running, you can use the Ignite CLI to [generate](./concept/Generators.md) components, screens, MST models, and more.
 
@@ -26,14 +26,14 @@ Running into errors? have a look at [Troubleshooting](./cli/Troubleshooting.md)
 
 ### Ignite Boilerplate
 
-Your new Ignite project (whether you start with Expo or not) comes with a full stack of useful libraries, pre-set up for you so you can start coding.
+Your new Ignite project comes with a full stack of useful libraries, pre-set up for you so you can start coding. Some of the following are optional, but this list details the default options:
 
 - React Native
 - React Navigation
 - MobX-State-Tree [(Why not Redux?)](./concept/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
-- AsyncStorage (integrated with MST for restoring state)
+- React Native MMKV (integrated with MST for restoring state)
 - apisauce (to talk to REST servers)
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
@@ -64,7 +64,7 @@ Check out the [Components](./boilerplate/app/components/Components.md) documenta
 
 ### Testing
 
-Ignite is pre-configured to use Jest for unit tests.
+Ignite is pre-configured to use Jest for unit tests and [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) for component tests.
 
 Ignite includes samples of UI end-to-end tests using [Maestro](https://maestro.mobile.dev/). See our [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/MaestroSetup) for setup and walkthrough of the test samples or check out Maestro's docs on [Installing Maestro](https://maestro.mobile.dev/getting-started/installing-maestro) to run the flows.
 
