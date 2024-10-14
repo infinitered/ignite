@@ -1,10 +1,12 @@
-import React, { FC } from "react"
+import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { spacing } from "../theme"
+import { $styles } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
+import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const chainReactLogo = require("../../assets/images/demo/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/demo/rnl-logo.png")
@@ -13,27 +15,28 @@ const reactNativeNewsletterLogo = require("../../assets/images/demo/rnn-logo.png
 
 export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   function DemoCommunityScreen(_props) {
+    const { themed } = useAppTheme()
     return (
-      <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
-        <Text preset="heading" tx="demoCommunityScreen.title" style={$title} />
-        <Text tx="demoCommunityScreen.tagLine" style={$tagline} />
+      <Screen preset="scroll" contentContainerStyle={$styles.container} safeAreaEdges={["top"]}>
+        <Text preset="heading" tx="demoCommunityScreen:title" style={themed($title)} />
+        <Text tx="demoCommunityScreen:tagLine" style={themed($tagline)} />
 
-        <Text preset="subheading" tx="demoCommunityScreen.joinUsOnSlackTitle" />
-        <Text tx="demoCommunityScreen.joinUsOnSlack" style={$description} />
+        <Text preset="subheading" tx="demoCommunityScreen:joinUsOnSlackTitle" />
+        <Text tx="demoCommunityScreen:joinUsOnSlack" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.joinSlackLink"
+          tx="demoCommunityScreen:joinSlackLink"
           leftIcon="slack"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://community.infinite.red/")}
         />
         <Text
           preset="subheading"
-          tx="demoCommunityScreen.makeIgniteEvenBetterTitle"
-          style={$sectionTitle}
+          tx="demoCommunityScreen:makeIgniteEvenBetterTitle"
+          style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen.makeIgniteEvenBetter" style={$description} />
+        <Text tx="demoCommunityScreen:makeIgniteEvenBetter" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.contributeToIgniteLink"
+          tx="demoCommunityScreen:contributeToIgniteLink"
           leftIcon="github"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
@@ -41,57 +44,61 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
 
         <Text
           preset="subheading"
-          tx="demoCommunityScreen.theLatestInReactNativeTitle"
-          style={$sectionTitle}
+          tx="demoCommunityScreen:theLatestInReactNativeTitle"
+          style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen.theLatestInReactNative" style={$description} />
+        <Text tx="demoCommunityScreen:theLatestInReactNative" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.reactNativeRadioLink"
+          tx="demoCommunityScreen:reactNativeRadioLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, themed($logoContainer)]}>
               <Image source={reactNativeRadioLogo} style={$logo} />
             </View>
           }
           onPress={() => openLinkInBrowser("https://reactnativeradio.com/")}
         />
         <ListItem
-          tx="demoCommunityScreen.reactNativeNewsletterLink"
+          tx="demoCommunityScreen:reactNativeNewsletterLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, themed($logoContainer)]}>
               <Image source={reactNativeNewsletterLogo} style={$logo} />
             </View>
           }
           onPress={() => openLinkInBrowser("https://reactnativenewsletter.com/")}
         />
         <ListItem
-          tx="demoCommunityScreen.reactNativeLiveLink"
+          tx="demoCommunityScreen:reactNativeLiveLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, themed($logoContainer)]}>
               <Image source={reactNativeLiveLogo} style={$logo} />
             </View>
           }
           onPress={() => openLinkInBrowser("https://rn.live/")}
         />
         <ListItem
-          tx="demoCommunityScreen.chainReactConferenceLink"
+          tx="demoCommunityScreen:chainReactConferenceLink"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
-            <View style={$logoContainer}>
+            <View style={[$styles.row, themed($logoContainer)]}>
               <Image source={chainReactLogo} style={$logo} />
             </View>
           }
           onPress={() => openLinkInBrowser("https://cr.infinite.red/")}
         />
-        <Text preset="subheading" tx="demoCommunityScreen.hireUsTitle" style={$sectionTitle} />
-        <Text tx="demoCommunityScreen.hireUs" style={$description} />
+        <Text
+          preset="subheading"
+          tx="demoCommunityScreen:hireUsTitle"
+          style={themed($sectionTitle)}
+        />
+        <Text tx="demoCommunityScreen:hireUs" style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen.hireUsLink"
+          tx="demoCommunityScreen:hireUsLink"
           leftIcon="clap"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://infinite.red/contact")}
@@ -100,34 +107,28 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
     )
   }
 
-const $container: ViewStyle = {
-  paddingTop: spacing.lg + spacing.xl,
-  paddingHorizontal: spacing.lg,
-}
-
-const $title: TextStyle = {
+const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.sm,
-}
+})
 
-const $tagline: TextStyle = {
+const $tagline: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xxl,
-}
+})
 
-const $description: TextStyle = {
+const $description: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.lg,
-}
+})
 
-const $sectionTitle: TextStyle = {
+const $sectionTitle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.xxl,
-}
+})
 
-const $logoContainer: ViewStyle = {
+const $logoContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginEnd: spacing.md,
-  flexDirection: "row",
   flexWrap: "wrap",
   alignContent: "center",
   alignSelf: "stretch",
-}
+})
 
 const $logo: ImageStyle = {
   height: 38,

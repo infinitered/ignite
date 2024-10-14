@@ -17,18 +17,20 @@ if (__DEV__) {
   require("./devtools/ReactotronConfig.ts")
 }
 import "./utils/gestureHandler"
-import "./i18n"
+import { initI18n } from "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
-import React from "react"
+import { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
-import { useInitialRootStore } from "./models"
+import { useInitialRootStore } from "./models" // @mst remove-current-line
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+import { loadDateFnsLocale } from "./utils/formatDate"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -71,8 +73,17 @@ function App(props: AppProps) {
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
+  useEffect(() => {
+    initI18n()
+      .then(() => setIsI18nInitialized(true))
+      .then(() => loadDateFnsLocale())
+  }, [])
+
+  // @mst replace-next-line React.useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
+    // @mst replace-next-line
     // This runs after the root store has been initialized and rehydrated.
 
     // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
@@ -80,6 +91,8 @@ function App(props: AppProps) {
     // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
     // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
     setTimeout(hideSplashScreen, 500)
+
+    // @mst replace-next-line }, [])
   })
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -88,7 +101,13 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!rehydrated || !isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
+  // @mst replace-next-line if (!isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
+  if (
+    !rehydrated ||
+    !isNavigationStateRestored ||
+    !isI18nInitialized ||
+    (!areFontsLoaded && !fontLoadError)
+  ) {
     return null
   }
 
@@ -101,11 +120,13 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <AppNavigator
-          linking={linking}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
+        <KeyboardProvider>
+          <AppNavigator
+            linking={linking}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </KeyboardProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   )

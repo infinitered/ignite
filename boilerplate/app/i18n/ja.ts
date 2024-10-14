@@ -1,4 +1,4 @@
-import demoJa from "./demo-ja"
+import demoJa from "./demo-ja" // @demo remove-current-line
 import { Translations } from "./en"
 
 const ja: Translations = {
@@ -122,7 +122,6 @@ const ja: Translations = {
         "お気に入りのエピソードがまだありません。エピソードにあるハートマークにタップして、お気に入りに追加しましょう！",
     },
   },
-  // @demo remove-block-end
   // @demo remove-block-start
   ...demoJa,
   // @demo remove-block-end

@@ -98,11 +98,13 @@ Starts the interactive prompt for generating a new Ignite project. Any options n
 - `--overwrite` overwrite the target directory if it exists
 - `--targetPath` string, specify a target directory where the project should be created
 - `--removeDemo` will remove the boilerplate demo code after project creation
+- `--state` string, one of `mst` or `none` to include MobX-State-Tree in project (can only be set to `none` if `--removeDemo=true`)
 - `--useCache` flag specifying to use dependency cache for quicker installs
 - `--no-timeout` flag to disable the timeout protection (useful for slow internet connections)
 - `--yes` accept all prompt defaults
-- `--workflow` string, one of `expo`, `cng` or `manual` for project initialization
+- `--workflow` string, one of `cng` or `manual` for project initialization
 - `--experimental` comma separated string, indicates experimental features (which may or may not be stable) to turn on during installation. **A CNG workflow is require for these flags** `--workflow=cng`
+  - `expo-router` converts the project to [Expo Router](https://docs.expo.dev/router/introduction/) from React Navigation
   - `new-arch` enables [The New Architecture](https://reactnative.dev/docs/new-architecture-intro)
   - `expo-canary` uses Expo's highly experimental canary release instead of the la test stable SDK
   - `expo-beta` uses Expo's latest beta SDK available instead of the latest stable SDK
@@ -143,13 +145,6 @@ Removes all demo code (files, marked code blocks and lines) from the generated b
 - Alias: `npx ignite-cli rn`
 
 Renames your current project to the desired new name. It'll also help switch the bundle identifier.
-
-### Snackify
-
-- `npx ignite-cli snackify`
-- Alias: `npx ignite-cli s`
-
-Turns an Ignite app into a project compatible with uploading directly to [Expo's Snack platform](https://snack.expo.dev/). This will create a separate branch to do so without worrying about modifying your current project structure.
 
 ### Update
 

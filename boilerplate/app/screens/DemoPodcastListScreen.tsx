@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { ComponentType, FC, useEffect, useMemo } from "react"
+import { ComponentType, FC, useCallback, useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -14,7 +14,7 @@ import {
 } from "react-native"
 import { type ContentStyle } from "@shopify/flash-list"
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -28,16 +28,18 @@ import {
   Icon,
   ListView,
   Screen,
+  Switch,
   Text,
-  Toggle,
-} from "../components"
+} from "@/components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
+import type { ThemedStyle } from "@/theme"
+import { $styles } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const ICON_SIZE = 14
 
@@ -49,9 +51,10 @@ const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
     const { episodeStore } = useStores()
+    const { themed } = useAppTheme()
 
-    const [refreshing, setRefreshing] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(false)
+    const [refreshing, setRefreshing] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     // initially, kick off a background refresh without the refreshing UI
     useEffect(() => {
@@ -70,13 +73,9 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     }
 
     return (
-      <Screen
-        preset="fixed"
-        safeAreaEdges={["top"]}
-        contentContainerStyle={$screenContentContainer}
-      >
+      <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
         <ListView<Episode>
-          contentContainerStyle={$listContentContainer}
+          contentContainerStyle={themed([$styles.container, $listContentContainer])}
           data={episodeStore.episodesForList.slice()}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           refreshing={refreshing}
@@ -88,15 +87,15 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             ) : (
               <EmptyState
                 preset="generic"
-                style={$emptyState}
+                style={themed($emptyState)}
                 headingTx={
                   episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
+                    ? "demoPodcastListScreen:noFavoritesEmptyState.heading"
                     : undefined
                 }
                 contentTx={
                   episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen.noFavoritesEmptyState.content"
+                    ? "demoPodcastListScreen:noFavoritesEmptyState.content"
                     : undefined
                 }
                 button={episodeStore.favoritesOnly ? "" : undefined}
@@ -107,20 +106,19 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             )
           }
           ListHeaderComponent={
-            <View style={$heading}>
-              <Text preset="heading" tx="demoPodcastListScreen.title" />
+            <View style={themed($heading)}>
+              <Text preset="heading" tx="demoPodcastListScreen:title" />
               {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
-                <View style={$toggle}>
-                  <Toggle
+                <View style={themed($toggle)}>
+                  <Switch
                     value={episodeStore.favoritesOnly}
                     onValueChange={() =>
                       episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
                     }
-                    variant="switch"
-                    labelTx="demoPodcastListScreen.onlyFavorites"
+                    labelTx="demoPodcastListScreen:onlyFavorites"
                     labelPosition="left"
                     labelStyle={$labelStyle}
-                    accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
+                    accessibilityLabel={translate("demoPodcastListScreen:accessibility.switch")}
                   />
                 </View>
               )}
@@ -148,8 +146,12 @@ const EpisodeCard = observer(function EpisodeCard({
   onPressFavorite: () => void
   isFavorite: boolean
 }) {
-  const liked = useSharedValue(isFavorite ? 1 : 0)
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
 
+  const liked = useSharedValue(isFavorite ? 1 : 0)
   const imageUri = useMemo<ImageSourcePropType>(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
@@ -159,10 +161,10 @@ const EpisodeCard = observer(function EpisodeCard({
     return {
       transform: [
         {
-          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.EXTEND),
+          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.EXTEND),
         },
       ],
-      opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+      opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.CLAMP),
     }
   })
 
@@ -178,6 +180,11 @@ const EpisodeCard = observer(function EpisodeCard({
     }
   })
 
+  const handlePressFavorite = useCallback(() => {
+    onPressFavorite()
+    liked.value = withSpring(liked.value ? 0 : 1)
+  }, [liked, onPressFavorite])
+
   /**
    * Android has a "longpress" accessibility action. iOS does not, so we just have to use a hint.
    * @see https://reactnative.dev/docs/accessibility#accessibilityactions
@@ -187,7 +194,7 @@ const EpisodeCard = observer(function EpisodeCard({
       Platform.select<AccessibilityProps>({
         ios: {
           accessibilityLabel: episode.title,
-          accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
+          accessibilityHint: translate("demoPodcastListScreen:accessibility.cardHint", {
             action: isFavorite ? "unfavorite" : "favorite",
           }),
         },
@@ -196,7 +203,7 @@ const EpisodeCard = observer(function EpisodeCard({
           accessibilityActions: [
             {
               name: "longpress",
-              label: translate("demoPodcastListScreen.accessibility.favoriteAction"),
+              label: translate("demoPodcastListScreen:accessibility.favoriteAction"),
             },
           ],
           onAccessibilityAction: ({ nativeEvent }) => {
@@ -206,13 +213,8 @@ const EpisodeCard = observer(function EpisodeCard({
           },
         },
       }),
-    [episode, isFavorite],
+    [episode.title, handlePressFavorite, isFavorite],
   )
-
-  const handlePressFavorite = () => {
-    onPressFavorite()
-    liked.value = withSpring(liked.value ? 0 : 1)
-  }
 
   const handlePressCard = () => {
     openLinkInBrowser(episode.enclosure.link)
@@ -224,7 +226,12 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              style={[
+                $styles.row,
+                themed($iconContainer),
+                StyleSheet.absoluteFill,
+                animatedLikeButtonStyles,
+              ]}
             >
               <Icon
                 icon="heart"
@@ -232,7 +239,9 @@ const EpisodeCard = observer(function EpisodeCard({
                 color={colors.palette.neutral800} // dark grey
               />
             </Animated.View>
-            <Animated.View style={[$iconContainer, animatedUnlikeButtonStyles]}>
+            <Animated.View
+              style={[$styles.row, themed($iconContainer), animatedUnlikeButtonStyles]}
+            >
               <Icon
                 icon="heart"
                 size={ICON_SIZE}
@@ -242,26 +251,26 @@ const EpisodeCard = observer(function EpisodeCard({
           </View>
         )
       },
-    [],
+    [animatedLikeButtonStyles, animatedUnlikeButtonStyles, colors, themed],
   )
 
   return (
     <Card
-      style={$item}
+      style={themed($item)}
       verticalAlignment="force-footer-bottom"
       onPress={handlePressCard}
       onLongPress={handlePressFavorite}
       HeadingComponent={
-        <View style={$metadata}>
+        <View style={[$styles.row, themed($metadata)]}>
           <Text
-            style={$metadataText}
+            style={themed($metadataText)}
             size="xxs"
             accessibilityLabel={episode.datePublished.accessibilityLabel}
           >
             {episode.datePublished.textLabel}
           </Text>
           <Text
-            style={$metadataText}
+            style={themed($metadataText)}
             size="xxs"
             accessibilityLabel={episode.duration.accessibilityLabel}
           >
@@ -271,16 +280,16 @@ const EpisodeCard = observer(function EpisodeCard({
       }
       content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
       {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      RightComponent={<Image source={imageUri} style={themed($itemThumbnail)} />}
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
           onLongPress={handlePressFavorite}
-          style={[$favoriteButton, isFavorite && $unFavoriteButton]}
+          style={themed([$favoriteButton, isFavorite && $unFavoriteButton])}
           accessibilityLabel={
             isFavorite
-              ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-              : translate("demoPodcastListScreen.accessibility.favoriteIcon")
+              ? translate("demoPodcastListScreen:accessibility.unfavoriteIcon")
+              : translate("demoPodcastListScreen:accessibility.favoriteIcon")
           }
           LeftAccessory={ButtonLeftAccessory}
         >
@@ -290,8 +299,8 @@ const EpisodeCard = observer(function EpisodeCard({
             weight="medium"
             text={
               isFavorite
-                ? translate("demoPodcastListScreen.unfavoriteButton")
-                : translate("demoPodcastListScreen.favoriteButton")
+                ? translate("demoPodcastListScreen:unfavoriteButton")
+                : translate("demoPodcastListScreen:favoriteButton")
             }
           />
         </Button>
@@ -301,60 +310,55 @@ const EpisodeCard = observer(function EpisodeCard({
 })
 
 // #region Styles
-const $screenContentContainer: ViewStyle = {
-  flex: 1,
-}
-
-const $listContentContainer: ContentStyle = {
+const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,
-}
+})
 
-const $heading: ViewStyle = {
+const $heading: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-}
+})
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   padding: spacing.md,
   marginTop: spacing.md,
   minHeight: 120,
-}
+  backgroundColor: colors.palette.neutral100,
+})
 
-const $itemThumbnail: ImageStyle = {
+const $itemThumbnail: ThemedStyle<ImageStyle> = ({ spacing }) => ({
   marginTop: spacing.sm,
   borderRadius: 50,
   alignSelf: "flex-start",
-}
+})
 
-const $toggle: ViewStyle = {
+const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.md,
-}
+})
 
 const $labelStyle: TextStyle = {
   textAlign: "left",
 }
 
-const $iconContainer: ViewStyle = {
+const $iconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   height: ICON_SIZE,
   width: ICON_SIZE,
-  flexDirection: "row",
   marginEnd: spacing.sm,
-}
+})
 
-const $metadata: TextStyle = {
+const $metadata: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.textDim,
   marginTop: spacing.xs,
-  flexDirection: "row",
-}
+})
 
-const $metadataText: TextStyle = {
+const $metadataText: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.textDim,
   marginEnd: spacing.md,
   marginBottom: spacing.xs,
-}
+})
 
-const $favoriteButton: ViewStyle = {
+const $favoriteButton: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   borderRadius: 17,
   marginTop: spacing.md,
   justifyContent: "flex-start",
@@ -365,16 +369,16 @@ const $favoriteButton: ViewStyle = {
   paddingBottom: 0,
   minHeight: 32,
   alignSelf: "flex-start",
-}
+})
 
-const $unFavoriteButton: ViewStyle = {
+const $unFavoriteButton: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderColor: colors.palette.primary100,
   backgroundColor: colors.palette.primary100,
-}
+})
 
-const $emptyState: ViewStyle = {
+const $emptyState: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginTop: spacing.xxl,
-}
+})
 
 const $emptyStateImage: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],

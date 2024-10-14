@@ -63,6 +63,7 @@ export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
 
       // reactotron integration with the MST root store (DEV only)
       if (__DEV__) {
+        // @ts-ignore
         console.tron.trackMstNode(rootStore)
       }
 
@@ -77,7 +78,11 @@ export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
       // cleanup
       if (_unsubscribe !== undefined) _unsubscribe()
     }
+    // only runs on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { rootStore, rehydrated }
 }
+
+// @mst remove-file

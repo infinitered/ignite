@@ -39,6 +39,14 @@ We also recognize no state management solution is perfect. MST has some known do
 - Fatal errors are sometimes too-easily triggered and error messages can be verbose and hard to grok
 - The API has a large surface area and the docs tend to be technical and unfriendly, although work is ongoing improving them all the time.
 
+### Remove MST Option
+
+We understand that state management is a highly opinionated topic with various options available. To accommodate this, we've added an option in Ignite CLI to remove MobX-State-Tree if you choose so! When Igniting a new project, provide `--state=none` to remove MobX-State-Tree code from the boilerplate. This option only works when also removing demo code.
+
+```
+npx ignite-cli@latest new PizzaApp --removeDemo=true --state=none
+```
+
 ## Learning MobX-State-Tree
 
 MobX and MobX-State-Tree can be a lot to learn if you're coming from Redux, so here are a few of our favorite resources to learn the basics:

@@ -8,21 +8,31 @@ Ignite's approach to styling individual components is, like many other things in
 
 If you're looking to set app-wide styles such as fonts/typography or colors, check out the [Theming](../boilerplate/app/theme/Theming.md) documentation.
 
-We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
+We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects and functions.
 
-We instead use a strategy of bare JS objects, colocated with our components (usually below the component in the file), prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of bare JS objects and functions that take a theme parameter, colocated with our components (usually below the component in the file), prefixed with `$`, and typed with TypeScript:
 
 ```tsx
-import type { View, ViewStyle } from "react-native"
-import { colors } from "../theme"
+import { View, type ViewStyle } from "react-native"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 const MyComponent = () => {
-  return <View style={$container}>...</View>
+  const { themed } = useAppTheme()
+  return (
+    <View style={themed($container)}>
+      <View style={$plainObjectStyle} />
+    </View>
+  )
 }
 
-const $container: ViewStyle = {
+const $container: ThemedStyle<ViewStyle> = (theme) => ({
   flex: 1,
-  backgroundColor: colors.background,
+  backgroundColor: theme.colors.background,
+  paddingHorizontal: theme.spacing.small,
+})
+
+const $plainObjectStyle: ViewStyle = {
+  marginBottom: 20,
 }
 ```
 
@@ -54,14 +64,12 @@ Most of the [components](../boilerplate/app/components/Components.md) we include
 Presets are defined in the component file itself, usually something like this:
 
 ```tsx
-const $presets = {
-  default: $baseStyle,
-
-  bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
-
-  heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
-
-  subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+type Presets = "default" | "bold" | "heading" | "subheading"
+const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [$baseStyle],
+  bold: [$baseStyle, $fontWeightStyles.bold],
+  heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold],
+  subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium],
 }
 ```
 
@@ -72,9 +80,13 @@ So, let's say we want a button that is a destructive action. We might add a "des
 The preset might look like this:
 
 ```tsx
-const $warning = { backgroundColor: "red", color: "white" }
+const $warning: ThemedStyle<ViewStyle> = (theme) => ({
+  backgroundColor: theme.colors.alert,
+  color: "white",
+  padding: theme.spacing.lg,
+})
 
-const $viewPresets = {
+const $viewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
   destructive: [$baseViewStyle, $warning],
 }
 ```

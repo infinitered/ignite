@@ -1,8 +1,9 @@
 import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
-import { demo } from "../tools/demo"
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
+import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
+import { DEMO_MARKUP_PREFIX } from "../tools/demo"
 
 const MATCHING_GLOBS = [
   "!**/.DS_Store",
@@ -33,10 +34,14 @@ module.exports = {
     p()
     p(`Removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)
 
-    const filePaths = demo.find(TARGET_DIR)
+    const filePaths = findFiles(TARGET_DIR)
 
     // Go through every file path and handle the operation for each demo comment
-    const demoCommentResults = await demo.update({ filePaths, dryRun })
+    const demoCommentResults = await updateFiles({
+      filePaths,
+      markupPrefix: DEMO_MARKUP_PREFIX,
+      dryRun,
+    })
 
     // Handle the results of the demo comment operations
     demoCommentResults
@@ -61,24 +66,6 @@ module.exports = {
         }
       })
 
-    function removeEmptyDirs() {
-      const emptyDirPaths = filesystem
-        .cwd(TARGET_DIR)
-        .find({
-          matching: MATCHING_GLOBS,
-          recursive: true,
-          files: false,
-          directories: true,
-        })
-        .map((path) => pathlib.join(TARGET_DIR, path))
-        .filter((path) => !filesystem.list(path)?.length)
-
-      emptyDirPaths.forEach((path) => {
-        if (!dryRun) filesystem.remove(path)
-        p(`Removed empty directory '${path}'`)
-      })
-    }
-
     function removeDemoAssets() {
       const demoPaths = filesystem
         .cwd(TARGET_DIR)
@@ -96,10 +83,11 @@ module.exports = {
     }
 
     // first pass
-    removeEmptyDirs()
-    // second pass, for nested directories that are now empty after the first pass
-    // https://github.com/infinitered/ignite/issues/2225
-    removeEmptyDirs()
+    const emptyDirsRemoved = removeEmptyDirs({ targetDir: TARGET_DIR, dryRun })
+    emptyDirsRemoved.forEach((path) => {
+      p(`Removed empty directory '${path}'`)
+    })
+
     removeDemoAssets()
 
     p(`Done removing demo code from '${TARGET_DIR}'${dryRun ? " (dry run)" : ""}`)

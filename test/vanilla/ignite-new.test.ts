@@ -1,7 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
-import { runIgnite, runError, run } from "../_test-helpers"
-import { expoGoCompatExpectedVersions } from "../../src/tools/expoGoCompatibility"
+import { runError, run, runIgnite, spawnIgniteAndPrintIfFail } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
@@ -32,9 +31,10 @@ describe("ignite new", () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --yes`, {
+      result = await spawnIgniteAndPrintIfFail(`new ${APP_NAME} --debug --packager=bun --yes`, {
         pre: `cd ${tempDir}`,
         post: `cd ${originalDir}`,
+        outputFileName: "ignite-new-output-bun.txt",
       })
 
       appPath = filesystem.path(tempDir, APP_NAME)
@@ -53,8 +53,8 @@ describe("ignite new", () => {
     it("should have created expected directories", () => {
       // now let's examine the spun-up app
       const dirs = filesystem.list(appPath)
-      expect(dirs).not.toContain("ios")
-      expect(dirs).not.toContain("android")
+      expect(dirs).toContain("ios")
+      expect(dirs).toContain("android")
       expect(dirs).toContain("app")
       expect(dirs).toContain("bun.lockb")
 
@@ -72,20 +72,24 @@ describe("ignite new", () => {
       await checkForLeftoverHelloWorld(appPath)
     })
 
-    it("should have modified package.json to add scripts and dependencies", () => {
+    it("should have changed the android bundle id", () => {
+      const androidPackageName = APP_NAME.toLowerCase()
+      const mainAppJava = filesystem.read(
+        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.kt`,
+      )
+      expect(mainAppJava).toContain(`package com.${androidPackageName}`)
+      const mainActivityJava = filesystem.read(
+        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.kt`,
+      )
+      expect(mainActivityJava).toContain(`package com.${androidPackageName}`)
+    })
+
+    it("should have modified package.json for proper run scripts", () => {
       const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
       expect(igniteJSON).toHaveProperty("scripts")
       expect(igniteJSON).toHaveProperty("dependencies")
-      expect(igniteJSON.scripts.android).toBe("npx expo start --android")
-      expect(igniteJSON.scripts.ios).toBe("npx expo start --ios")
-    })
-
-    it("should have modified the package.json to have versions that work with expo go", () => {
-      const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
-      expect(igniteJSON).toHaveProperty("dependencies")
-      Object.keys(expoGoCompatExpectedVersions).forEach((key) => {
-        expect(igniteJSON.dependencies[key]).toBe(expoGoCompatExpectedVersions[key])
-      })
+      expect(igniteJSON.scripts.android).toBe("npx expo run:android")
+      expect(igniteJSON.scripts.ios).toBe("npx expo run:ios")
     })
 
     it("should have created app.tsx with default export and RootStore", () => {
@@ -269,84 +273,22 @@ describe("ignite new", () => {
     })
   })
 
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --workflow=cng --yes`, () => {
-    let tempDir: string
-    let result: string
-    let appPath: string
-
-    beforeAll(async () => {
-      tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=bun --workflow=cng --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
-      appPath = filesystem.path(tempDir, APP_NAME)
-    })
-
-    afterAll(() => {
-      // console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
-      filesystem.remove(tempDir) // clean up our mess
-    })
-
-    it("should print success message", () => {
-      // at some point this should probably be a snapshot?
-      expect(result).toContain("Now get cooking! 🍽")
-    })
-
-    it("should have created expected directories", () => {
-      // now let's examine the spun-up app
-      const dirs = filesystem.list(appPath)
-      expect(dirs).toContain("ios")
-      expect(dirs).toContain("android")
-      expect(dirs).toContain("app")
-
-      // check the contents of ignite/templates
-      const templates = filesystem.list(`${appPath}/ignite/templates`)
-      expect(templates).toContain("component")
-      expect(templates).toContain("model")
-      expect(templates).toContain("screen")
-      expect(templates).toContain("app-icon")
-    })
-
-    it("should have changed the android bundle id", () => {
-      const androidPackageName = APP_NAME.toLowerCase()
-      const mainAppJava = filesystem.read(
-        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainApplication.kt`,
-      )
-      expect(mainAppJava).toContain(`package com.${androidPackageName}`)
-      const mainActivityJava = filesystem.read(
-        `${appPath}/android/app/src/main/java/com/${androidPackageName}/MainActivity.kt`,
-      )
-      expect(mainActivityJava).toContain(`package com.${androidPackageName}`)
-    })
-
-    it("should have modified package.json for proper run scripts", () => {
-      const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
-      expect(igniteJSON.scripts.android).toBe("npx expo run:android")
-      expect(igniteJSON.scripts.ios).toBe("npx expo run:ios")
-    })
-
-    it("should NOT have modified the package.json to have versions that work with expo go", () => {
-      const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
-      expect(igniteJSON).toHaveProperty("dependencies")
-      Object.keys(expoGoCompatExpectedVersions).forEach((key) => {
-        expect(igniteJSON.dependencies[key]).not.toBe(expoGoCompatExpectedVersions[key])
-      })
-    })
-  })
-
   // Yarn (only testing what might be affected by a different package manager: dependency installation, running commands)
-  describe(`ignite new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=yarn --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
 
-      result = await runIgnite(`new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`, {
-        pre: `cd ${tempDir}`,
-        post: `cd ${originalDir}`,
-      })
+      result = await spawnIgniteAndPrintIfFail(
+        `new ${APP_NAME} --debug --packager=yarn --workflow=cng --yes`,
+        {
+          pre: `cd ${tempDir}`,
+          post: `cd ${originalDir}`,
+          outputFileName: "ignite-new-output-yarn.txt",
+        },
+      )
 
       appPath = filesystem.path(tempDir, APP_NAME)
     })

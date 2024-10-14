@@ -4,11 +4,11 @@ patch:
   append: "export * from \"./<%= props.subdirectory %><%= props.pascalCaseName %>\"\n"
   skip: <%= props.skipIndexFile %>
 ---
-import * as React from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { observer } from "mobx-react-lite"
-import { colors, typography } from "app/theme"
-import { Text } from "app/components/Text"
+import { observer } from "mobx-react-lite" // @mst remove-current-line
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { Text } from "@/components/Text"
 
 export interface <%= props.pascalCaseName %>Props {
   /**
@@ -20,23 +20,26 @@ export interface <%= props.pascalCaseName %>Props {
 /**
  * Describe your component here
  */
+// @mst replace-next-line export const <%= props.pascalCaseName %> = (props: <%= props.pascalCaseName %>Props) => {
 export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
   const { style } = props
   const $styles = [$container, style]
+  const { themed } = useAppTheme();
 
   return (
     <View style={$styles}>
-      <Text style={$text}>Hello</Text>
+      <Text style={themed($text)}>Hello</Text>
     </View>
   )
+// @mst replace-next-line }
 })
 
 const $container: ViewStyle = {
   justifyContent: "center",
 }
 
-const $text: TextStyle = {
+const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   fontFamily: typography.primary.normal,
   fontSize: 14,
   color: colors.palette.primary500,
-}
+})

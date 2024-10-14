@@ -60,7 +60,7 @@ The `label` optional prop is a string that is used to set the label. If this is 
 
 ### `labelTx`
 
-The `labelTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used.
+The `labelTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used.
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} labelTx="signup.name" />
@@ -102,7 +102,7 @@ The `helper` optional prop is a string that is used to set the helper text. If t
 
 ### `helperTx`
 
-The `helperTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization. If this is not set, the `helper` prop must be present to set the helper text. If both are set, the `helper` value will be used.
+The `helperTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization. If this is not set, the `helper` prop must be present to set the helper text. If both are set, the `helper` value will be used.
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} helperTx="signup.name" />
@@ -144,7 +144,7 @@ The `placeholder` optional prop is a string that is used to set the placeholder.
 
 ### `placeholderTx`
 
-The `placeholderTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
+The `placeholderTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} placeholderTx="signup.name" />

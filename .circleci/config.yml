@@ -6,7 +6,7 @@
 defaults: &defaults
   docker:
     # Choose the version of Node you want here
-    - image: cimg/node:18.17.1
+    - image: cimg/node:20.17.0
   working_directory: /mnt/ramdisk/repo
 
 version: 2.1
@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Run jest tests
           command: yarn test
-          no_output_timeout: 5m
+          no_output_timeout: 10m
       - save_cache:
           name: Save ignite dependency cache
           paths:

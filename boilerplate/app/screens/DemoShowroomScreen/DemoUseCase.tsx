@@ -1,13 +1,16 @@
-import React, { ReactNode } from "react"
+import { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
-import { TxKeyPath, translate } from "app/i18n"
+import { TxKeyPath, translate } from "@/i18n"
 import { Text } from "../../components"
-import { colors, spacing, typography } from "../../theme"
+import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import { $styles } from "@/theme"
 
 interface DemoUseCaseProps {
   name: TxKeyPath
   description?: TxKeyPath
   layout?: "column" | "row"
+  itemStyle?: ViewStyle
   children: ReactNode
 }
 
@@ -16,36 +19,32 @@ interface DemoUseCaseProps {
  * @returns {JSX.Element} The rendered `DemoUseCase` component.
  */
 export function DemoUseCase(props: DemoUseCaseProps) {
-  const { name, description, children, layout = "column" } = props
+  const { name, description, children, layout = "column", itemStyle = {} } = props
+  const { themed } = useAppTheme()
 
   return (
     <View>
-      <Text style={$name}>{translate(name)}</Text>
-      {description && <Text style={$description}>{translate(description)}</Text>}
+      <Text style={themed($name)}>{translate(name)}</Text>
+      {description && <Text style={themed($description)}>{translate(description)}</Text>}
 
-      <View style={[layout === "row" && $rowLayout, $item]}>{children}</View>
+      <View style={[itemStyle, layout === "row" && $styles.row, themed($item)]}>{children}</View>
     </View>
   )
 }
 
-const $description: TextStyle = {
+const $description: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.md,
-}
+})
 
-const $item: ViewStyle = {
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   backgroundColor: colors.palette.neutral100,
   borderRadius: 8,
   padding: spacing.lg,
   marginVertical: spacing.md,
-}
+})
 
-const $name: TextStyle = {
+const $name: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontFamily: typography.primary.bold,
-}
-
-const $rowLayout: ViewStyle = {
-  flexDirection: "row",
-  flexWrap: "wrap",
-}
+})
 
 // @demo remove-file

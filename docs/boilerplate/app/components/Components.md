@@ -31,7 +31,7 @@ This is a component that renders a [`TouchableOpacity`](https://reactnative.dev/
 ```tsx
 <Button
   text="Click It"
-  tx="button.clickIt"
+  tx="button:clickIt"
   preset="primary"
   onPress={() => Alert.alert("pressed")}
   style={[{ paddingVertical: 100 }, { borderRadius: 0 }]}
@@ -71,6 +71,23 @@ The `Card` component is useful for displaying related information in a contained
 
 [Full Card Component Documentation](./Card.md)
 
+### Checkbox
+
+The `Checkbox` component is useful for displaying a user's choice for a boolean value.
+
+```tsx
+<Checkbox
+  value={value}
+  icon="check"
+  onValueChange={setValue}
+  labelTx="signup:rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Checkbox Component Documentation](./Checkbox.md)
+
 ### EmptyState
 
 The `EmptyState` component can be used when there is no data to display and direct the user on how to proceed.
@@ -101,7 +118,7 @@ The `Header` component is a component that will appear at the top of your screen
 
 ```tsx
 <Header
-  headerTx="header.title"
+  headerTx="header:title"
   headerText="Header Title"
   leftIcon="back"
   rightIcon="bullet"
@@ -131,6 +148,22 @@ This is a component that renders an icon.
 
 [Full Icon Component Documentation](./Icon.md)
 
+### Radio
+
+The `Radio` component is useful for displaying a user's choice for a boolean value.
+
+```tsx
+<Radio
+  value={value}
+  onValueChange={setValue}
+  labelTx="signup:rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Radio Component Documentation](./Radio.md)
+
 ### Screen
 
 This is a component that renders a screen. It is used to wrap your entire screen, and handles scrolling, [safe areas](https://reactnavigation.org/docs/handling-safe-area/), and keyboard avoiding behavior.
@@ -144,6 +177,23 @@ This is a component that renders a screen. It is used to wrap your entire screen
 
 [Full Screen Component Documentation](./Screen.md)
 
+### Switch
+
+The `Switch` component is useful for displaying a user's choice for a boolean value.
+
+```tsx
+<Switch
+  value={value}
+  accessibilityMode="icon"
+  onValueChange={setValue}
+  labelTx="signup:rememberMe"
+  labelStyle={{ color: "#a511dc" }}
+  containerStyle={{ backgroundColor: "#fff" }}
+/>
+```
+
+[Full Switch Component Documentation](./Switch.md)
+
 ### Text
 
 This is an enhanced version of the built-in React Native Text component. It adds internationalization and property presets.
@@ -151,7 +201,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
 ```tsx
 <Text
   preset="header"
-  tx="welcome.header"
+  tx="welcome:header"
   txOptions={{
     name: rootStore.currentUser.name,
   }}
@@ -171,8 +221,8 @@ const inputRef = useRef()
 <TextField
   value={input}
   onChangeText={setInput}
-  labelTx="signup.name"
-  placeholderTx="signup.nameplaceholder"
+  labelTx="signup:name"
+  placeholderTx="signup:nameplaceholder"
   style={$header}
   inputStyle={$inputStyle}
   preset="default"
@@ -181,23 +231,6 @@ const inputRef = useRef()
 ```
 
 [Full Text Component Documentation](./TextField.md)
-
-### Toggle
-
-This component is a flexible component that can be used to toggle a boolean value. It can be used to render a switch, checkbox, or radio button.
-
-```tsx
-<Toggle
-  variant="checkbox"
-  value={value}
-  onValueChange={setValue}
-  labelTx="signup.rememberMe"
-  labelStyle={{ color: "#a511dc" }}
-  containerStyle={{ backgroundColor: "#fff" }}
-/>
-```
-
-[Full Toggle Component Documentation](./Toggle.md)
 
 ## Custom Components
 

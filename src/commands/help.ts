@@ -36,6 +36,7 @@ module.exports = {
       "npx ignite-cli generate component Hello",
       "npx ignite-cli generate model User",
       "npx ignite-cli generate screen Login",
+      "npx ignite-cli generate component Hello --dir src/components",
     ])
     p()
     command(
@@ -59,10 +60,6 @@ module.exports = {
       "Removes @demo markup from the project (add --dry-run to list changes but not execute)",
       ["npx ignite-cli remove-demo-markup", "npx ignite-cli remove-demo-markup --dry-run"],
     )
-    p()
-    command("snackify        ", "Creates a new branch which can be imported as an Expo snack", [
-      "npx ignite-cli snackify",
-    ])
     p()
     direction(
       `See the documentation: ${link("https://github.com/infinitered/ignite/tree/master/docs")}`,
