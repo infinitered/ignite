@@ -27,7 +27,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 const themeContextToTheme = (themeContext: ThemeContexts): Theme =>
   themeContext === "dark" ? darkTheme : lightTheme
 
-const setImperativeThemeing = (theme: Theme) => {
+const setImperativeTheming = (theme: Theme) => {
   SystemUI.setBackgroundColorAsync(theme.colors.background)
 }
 
@@ -43,7 +43,7 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
   const navigationTheme = themeScheme === "dark" ? DarkTheme : DefaultTheme
 
   useEffect(() => {
-    setImperativeThemeing(themeContextToTheme(themeScheme))
+    setImperativeTheming(themeContextToTheme(themeScheme))
   }, [themeScheme])
 
   return {
