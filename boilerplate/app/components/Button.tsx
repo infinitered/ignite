@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react"
+import { ComponentType } from "react"
 import {
   Pressable,
   PressableProps,
@@ -7,10 +7,12 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native"
-import { colors, spacing, typography } from "../theme"
+import type { ThemedStyle, ThemedStyleArray } from "@/theme"
+import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
+import { useAppTheme } from "@/utils/useAppTheme"
 
-type Presets = keyof typeof $viewPresets
+type Presets = "default" | "filled" | "reversed"
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -89,7 +91,7 @@ export interface ButtonProps extends PressableProps {
  * @returns {JSX.Element} The rendered `Button` component.
  * @example
  * <Button
- *   tx="common.ok"
+ *   tx="common:ok"
  *   style={styles.button}
  *   textStyle={styles.buttonText}
  *   onPress={handleButtonPress}
@@ -113,6 +115,8 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
+  const { themed } = useAppTheme()
+
   const preset: Presets = props.preset ?? "default"
   /**
    * @param {PressableStateCallbackType} root0 - The root object containing the pressed state.
@@ -121,9 +125,9 @@ export function Button(props: ButtonProps) {
    */
   function $viewStyle({ pressed }: PressableStateCallbackType): StyleProp<ViewStyle> {
     return [
-      $viewPresets[preset],
+      themed($viewPresets[preset]),
       $viewStyleOverride,
-      !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
+      !!pressed && themed([$pressedViewPresets[preset], $pressedViewStyleOverride]),
       !!disabled && $disabledViewStyleOverride,
     ]
   }
@@ -134,9 +138,9 @@ export function Button(props: ButtonProps) {
    */
   function $textStyle({ pressed }: PressableStateCallbackType): StyleProp<TextStyle> {
     return [
-      $textPresets[preset],
+      themed($textPresets[preset]),
       $textStyleOverride,
-      !!pressed && [$pressedTextPresets[preset], $pressedTextStyleOverride],
+      !!pressed && themed([$pressedTextPresets[preset], $pressedTextStyleOverride]),
       !!disabled && $disabledTextStyleOverride,
     ]
   }
@@ -172,18 +176,17 @@ export function Button(props: ButtonProps) {
   )
 }
 
-const $baseViewStyle: ViewStyle = {
+const $baseViewStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   minHeight: 56,
   borderRadius: 4,
   justifyContent: "center",
   alignItems: "center",
-  flexDirection: "row",
   paddingVertical: spacing.sm,
   paddingHorizontal: spacing.sm,
   overflow: "hidden",
-}
+})
 
-const $baseTextStyle: TextStyle = {
+const $baseTextStyle: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontSize: 16,
   lineHeight: 20,
   fontFamily: typography.primary.medium,
@@ -191,43 +194,53 @@ const $baseTextStyle: TextStyle = {
   flexShrink: 1,
   flexGrow: 0,
   zIndex: 2,
-}
+})
 
-const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
-const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
+const $rightAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginStart: spacing.xs,
+  zIndex: 1,
+})
+const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginEnd: spacing.xs,
+  zIndex: 1,
+})
 
-const $viewPresets = {
+const $viewPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
   default: [
+    $styles.row,
     $baseViewStyle,
-    {
+    ({ colors }) => ({
       borderWidth: 1,
       borderColor: colors.palette.neutral400,
       backgroundColor: colors.palette.neutral100,
-    },
-  ] as StyleProp<ViewStyle>,
-
-  filled: [$baseViewStyle, { backgroundColor: colors.palette.neutral300 }] as StyleProp<ViewStyle>,
-
-  reversed: [
+    }),
+  ],
+  filled: [
+    $styles.row,
     $baseViewStyle,
-    { backgroundColor: colors.palette.neutral800 },
-  ] as StyleProp<ViewStyle>,
+    ({ colors }) => ({ backgroundColor: colors.palette.neutral300 }),
+  ],
+  reversed: [
+    $styles.row,
+    $baseViewStyle,
+    ({ colors }) => ({ backgroundColor: colors.palette.neutral800 }),
+  ],
 }
 
-const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: $baseTextStyle,
-  filled: $baseTextStyle,
-  reversed: [$baseTextStyle, { color: colors.palette.neutral100 }],
+const $textPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [$baseTextStyle],
+  filled: [$baseTextStyle],
+  reversed: [$baseTextStyle, ({ colors }) => ({ color: colors.palette.neutral100 })],
 }
 
-const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: { backgroundColor: colors.palette.neutral200 },
-  filled: { backgroundColor: colors.palette.neutral400 },
-  reversed: { backgroundColor: colors.palette.neutral700 },
+const $pressedViewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
+  default: ({ colors }) => ({ backgroundColor: colors.palette.neutral200 }),
+  filled: ({ colors }) => ({ backgroundColor: colors.palette.neutral400 }),
+  reversed: ({ colors }) => ({ backgroundColor: colors.palette.neutral700 }),
 }
 
-const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: { opacity: 0.9 },
-  filled: { opacity: 0.9 },
-  reversed: { opacity: 0.9 },
+const $pressedTextPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
+  default: () => ({ opacity: 0.9 }),
+  filled: () => ({ opacity: 0.9 }),
+  reversed: () => ({ opacity: 0.9 }),
 }

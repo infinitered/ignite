@@ -22,17 +22,17 @@ The `text` optional prop is the text of the component. We encourage you to not u
 
 ### `tx`
 
-The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18n-js`](http://i18njs.com/) for internationalization.
+The `tx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization.
 
 ````tsx
 
 ```tsx
-<Text tx="welcomeScreen.readyForLaunch" />
+<Text tx="welcomeScreen:readyForLaunch" />
 ````
 
 ### `txOptions`
 
-The `txOptions` optional prop is an object of options to pass to i18n. Useful for [interpolation](http://i18njs.com/) as well as explicitly setting locale or translation fallbacks. You'll be defining these in the `app/i18n/*.json` files, and can use `{{variableName}}` for interpolation.
+The `txOptions` optional prop is an object of options to pass to i18n. Useful for [interpolation](https://www.i18next.com/) as well as explicitly setting locale or translation fallbacks. You'll be defining these in the `app/i18n/*.json` files, and can use `{{variableName}}` for interpolation.
 
 ```tsx
 // in en.json
@@ -44,7 +44,7 @@ profile: {
 ```tsx
 // in your component
 <Text
-  tx="profile.details"
+  tx="profile:details"
   txOptions={{
     name: "Jamon",
     age: 40,
@@ -57,7 +57,7 @@ profile: {
 The `style` optional prop is an object with overrides for this particular component. You can use `style` overrides with presets.
 
 ```tsx
-<Text tx="welcome.title" style={{ fontSize: 40 }} />
+<Text tx="welcome:title" style={{ fontSize: 40 }} />
 ```
 
 ### `weight`
@@ -65,7 +65,7 @@ The `style` optional prop is an object with overrides for this particular compon
 The `weight` optional prop is the font weight to use for the text. It utilizes the fonts defined in the `app/theme/typography.tsx` file.
 
 ```tsx
-<Text tx="welcome.title" weight="medium" />
+<Text tx="welcome:title" weight="medium" />
 ```
 
 ### `size`
@@ -73,7 +73,7 @@ The `weight` optional prop is the font weight to use for the text. It utilizes t
 The `size` optional prop is the font size to use for the text. The options are defined as `$sizeStyles` in `app/components/Text.tsx`. You can add sizes as you need to the `$sizeStyles` object and use them in your `Text` component.
 
 ```tsx
-<Text tx="welcome.title" size="lg" />
+<Text tx="welcome:title" size="lg" />
 ```
 
 ### `preset`
@@ -116,7 +116,7 @@ Feel free to add your own presets by emulating the style you see with the provid
 
 ```tsx
 $presets = {
-  label: [$baseStyle, $sizeStyles.md, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+  label: [$baseStyle, $sizeStyles.md, $fontWeightStyles.medium],
 }
 ```
 

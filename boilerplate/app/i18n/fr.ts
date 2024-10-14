@@ -1,4 +1,4 @@
-import demoFr from "./demo-fr"
+import demoFr from "./demo-fr" // @demo remove-current-line
 import { Translations } from "./en"
 
 const fr: Translations = {
@@ -124,7 +124,6 @@ const fr: Translations = {
         "Aucun favori n'a été ajouté pour le moment. Appuyez sur le cœur d'un épisode pour l'ajouter à vos favoris !",
     },
   },
-  // @demo remove-block-end
   // @demo remove-block-start
   ...demoFr,
   // @demo remove-block-end

@@ -1,4 +1,4 @@
-import demoHi from "./demo-hi"
+import demoHi from "./demo-hi" // @demo remove-current-line
 import { Translations } from "./en"
 
 const hi: Translations = {

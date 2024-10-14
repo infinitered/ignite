@@ -1,4 +1,5 @@
 ---
+destinationDir: app/models
 patches:
   - path: "app/models/RootStore.ts"
     after: "from \"mobx-state-tree\"\n"
@@ -29,3 +30,5 @@ export interface <%= props.pascalCaseName %> extends Instance<typeof <%= props.p
 export interface <%= props.pascalCaseName %>SnapshotOut extends SnapshotOut<typeof <%= props.pascalCaseName %>Model> {}
 export interface <%= props.pascalCaseName %>SnapshotIn extends SnapshotIn<typeof <%= props.pascalCaseName %>Model> {}
 export const create<%= props.pascalCaseName %>DefaultModel = () => types.optional(<%= props.pascalCaseName %>Model, {})
+
+// @mst remove-file

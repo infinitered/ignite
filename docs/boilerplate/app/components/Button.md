@@ -11,7 +11,7 @@ The `Button` component is a wrapper around the [`Pressable`](https://reactnative
 ```tsx
 <Button
   text="Click It"
-  tx="button.clickIt"
+  tx="button:clickIt"
   preset="default"
   onPress={() => Alert.alert("pressed")}
   style={[{ paddingVertical: 100 }, { borderRadius: 0 }]}
@@ -38,7 +38,7 @@ The `text` prop is required if `tx` or `children` are not provided. This is the 
 The `tx` prop is required if `text` or `children` are not provided. This is the translation key to be used to translate the text.
 
 ```tsx
-<Button tx="button.clickMe" />
+<Button tx="button:clickMe" />
 ```
 
 ### `children`
@@ -56,7 +56,7 @@ The `children` prop is required if no `tx` or `text` prop is passed. This is the
 The `preset` prop is optional. This is the preset style of the button. It can be one of the following built-in options: `default`, `filled`, `reversed`
 
 ```tsx
-<Button preset="default" tx="button.clickMe" />
+<Button preset="default" tx="button:clickMe" />
 ```
 
 To make a custom preset, add a key to the `$viewPresets`, `$textPresets`, `$pressedViewPresets` and `$pressedTextPresets` objects in `app/components/Button.tsx` and then pass the name of the preset to the `preset` prop.

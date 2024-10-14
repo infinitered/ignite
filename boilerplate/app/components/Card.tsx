@@ -1,4 +1,4 @@
-import React, { ComponentType, Fragment, ReactElement } from "react"
+import { ComponentType, Fragment, ReactElement } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -8,10 +8,12 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import { colors, spacing } from "../theme"
+import type { ThemedStyle, ThemedStyleArray } from "@/theme"
+import { $styles } from "../theme"
 import { Text, TextProps } from "./Text"
+import { useAppTheme } from "@/utils/useAppTheme"
 
-type Presets = keyof typeof $containerPresets
+type Presets = "default" | "reversed"
 
 interface CardProps extends TouchableOpacityProps {
   /**
@@ -150,6 +152,11 @@ export function Card(props: CardProps) {
     ...WrapperProps
   } = props
 
+  const {
+    themed,
+    theme: { spacing },
+  } = useAppTheme()
+
   const preset: Presets = props.preset ?? "default"
   const isPressable = !!WrapperProps.onPress
   const isHeadingPresent = !!(HeadingComponent || heading || headingTx)
@@ -161,22 +168,25 @@ export function Card(props: CardProps) {
   >
   const HeaderContentWrapper = verticalAlignment === "force-footer-bottom" ? View : Fragment
 
-  const $containerStyle = [$containerPresets[preset], $containerStyleOverride]
+  const $containerStyle: StyleProp<ViewStyle> = [
+    themed($containerPresets[preset]),
+    $containerStyleOverride,
+  ]
   const $headingStyle = [
-    $headingPresets[preset],
+    themed($headingPresets[preset]),
     (isFooterPresent || isContentPresent) && { marginBottom: spacing.xxxs },
     $headingStyleOverride,
     HeadingTextProps?.style,
   ]
   const $contentStyle = [
-    $contentPresets[preset],
+    themed($contentPresets[preset]),
     isHeadingPresent && { marginTop: spacing.xxxs },
     isFooterPresent && { marginBottom: spacing.xxxs },
     $contentStyleOverride,
     ContentTextProps?.style,
   ]
   const $footerStyle = [
-    $footerPresets[preset],
+    themed($footerPresets[preset]),
     (isHeadingPresent || isContentPresent) && { marginTop: spacing.xxxs },
     $footerStyleOverride,
     FooterTextProps?.style,
@@ -243,18 +253,17 @@ export function Card(props: CardProps) {
   )
 }
 
-const $containerBase: ViewStyle = {
-  borderRadius: spacing.md,
-  padding: spacing.xs,
+const $containerBase: ThemedStyle<ViewStyle> = (theme) => ({
+  borderRadius: theme.spacing.md,
+  padding: theme.spacing.xs,
   borderWidth: 1,
-  shadowColor: colors.palette.neutral800,
+  shadowColor: theme.colors.palette.neutral800,
   shadowOffset: { width: 0, height: 12 },
   shadowOpacity: 0.08,
   shadowRadius: 12.81,
   elevation: 16,
   minHeight: 96,
-  flexDirection: "row",
-}
+})
 
 const $alignmentWrapper: ViewStyle = {
   flex: 1,
@@ -262,38 +271,42 @@ const $alignmentWrapper: ViewStyle = {
 }
 
 const $alignmentWrapperFlexOptions = {
-  top: "flex-start",
-  center: "center",
+  "top": "flex-start",
+  "center": "center",
   "space-between": "space-between",
   "force-footer-bottom": "space-between",
 } as const
 
-const $containerPresets = {
+const $containerPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
   default: [
+    $styles.row,
     $containerBase,
-    {
-      backgroundColor: colors.palette.neutral100,
-      borderColor: colors.palette.neutral300,
-    },
-  ] as StyleProp<ViewStyle>,
-
+    (theme) => ({
+      backgroundColor: theme.colors.palette.neutral100,
+      borderColor: theme.colors.palette.neutral300,
+    }),
+  ],
   reversed: [
+    $styles.row,
     $containerBase,
-    { backgroundColor: colors.palette.neutral800, borderColor: colors.palette.neutral500 },
-  ] as StyleProp<ViewStyle>,
+    (theme) => ({
+      backgroundColor: theme.colors.palette.neutral800,
+      borderColor: theme.colors.palette.neutral500,
+    }),
+  ],
 }
 
-const $headingPresets: Record<Presets, TextStyle> = {
-  default: {},
-  reversed: { color: colors.palette.neutral100 },
+const $headingPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [],
+  reversed: [(theme) => ({ color: theme.colors.palette.neutral100 })],
 }
 
-const $contentPresets: Record<Presets, TextStyle> = {
-  default: {},
-  reversed: { color: colors.palette.neutral100 },
+const $contentPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [],
+  reversed: [(theme) => ({ color: theme.colors.palette.neutral100 })],
 }
 
-const $footerPresets: Record<Presets, TextStyle> = {
-  default: {},
-  reversed: { color: colors.palette.neutral100 },
+const $footerPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [],
+  reversed: [(theme) => ({ color: theme.colors.palette.neutral100 })],
 }
