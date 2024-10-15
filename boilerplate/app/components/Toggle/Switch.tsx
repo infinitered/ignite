@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useCallback } from "react"
 import {
   Animated,
   Image,
@@ -39,13 +39,17 @@ interface SwitchInputProps extends BaseToggleInputProps<SwitchToggleProps> {
  */
 export function Switch(props: SwitchToggleProps) {
   const { accessibilityMode, ...rest } = props
+  const switchInput = useCallback(
+    (toggleProps: SwitchInputProps) => (
+      <SwitchInput {...toggleProps} accessibilityMode={accessibilityMode} />
+    ),
+    [accessibilityMode],
+  )
   return (
     <Toggle
       accessibilityRole="switch"
       {...rest}
-      ToggleInput={(toggleProps) => (
-        <SwitchInput {...toggleProps} accessibilityMode={accessibilityMode} />
-      )}
+      ToggleInput={switchInput}
     />
   )
 }
