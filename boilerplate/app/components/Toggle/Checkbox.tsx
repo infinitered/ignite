@@ -29,13 +29,7 @@ export function Checkbox(props: CheckboxToggleProps) {
     (toggleProps: CheckboxInputProps) => <CheckboxInput {...toggleProps} icon={icon} />,
     [icon],
   )
-  return (
-    <Toggle
-      accessibilityRole="checkbox"
-      {...rest}
-      ToggleInput={checkboxInput}
-    />
-  )
+  return <Toggle accessibilityRole="checkbox" {...rest} ToggleInput={checkboxInput} />
 }
 
 function CheckboxInput(props: CheckboxInputProps) {
