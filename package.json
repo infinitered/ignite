@@ -40,10 +40,11 @@
     "semantic-release": "semantic-release",
     "clean": "rm -drf ./build ./boilerplate/.gitignore.template ./boilerplate/node_modules ./boilerplate/ios/build/ ./boilerplate/ios/Pods/ ./boilerplate/android/app/build ./boilerplate/ios/.xcode.env.local",
     "ignite-cli:dev": "node bin/ignite",
-    "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
+    "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap",
+    "preinstall": "node ./scripts/check-node-version.js"
   },
   "engines": {
-    "node": "^18.18.0 || >=20.0.0"
+    "node": ">=20.10.0"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
