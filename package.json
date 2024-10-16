@@ -44,7 +44,7 @@
     "preinstall": "node ./scripts/check-node-version.js"
   },
   "engines": {
-    "node": ">=20.10.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
