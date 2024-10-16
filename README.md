@@ -77,7 +77,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | Expo Localization                | Internationalization | v15     | i18n support (including RTL!)                  |
 | Expo Status Bar                  | Status Bar Library   | v1      | Status bar support                             |
 | RN Reanimated                    | Animations           | v3      | Beautiful and performant animations            |
-| AsyncStorage                     | Persistence          | v1      | State persistence                              |
+| MMKV                             | Persistence          | v2      | State persistence                              |
 | apisauce                         | REST client          | v2      | Communicate with back-end                      |
 | Reactotron RN                    | Inspector/Debugger   | v3      | JS debugging                                   |
 | Hermes                           | JS engine            |         | Fine-tuned JS engine for RN                    |
