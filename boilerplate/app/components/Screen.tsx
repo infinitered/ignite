@@ -265,19 +265,28 @@ export function Screen(props: ScreenProps) {
         style={statusBarStyle || (themeContext === "dark" ? "light" : "dark")}
         {...StatusBarProps}
       />
-
-      <KeyboardAvoidingView
-        behavior={isIos ? "padding" : "height"}
-        keyboardVerticalOffset={keyboardOffset}
-        {...KeyboardAvoidingViewProps}
-        style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
-      >
-        {isNonScrolling(props.preset) ? (
+      {/**
+       * KeyboardAvoidingView crashes in web,
+       * therefore we want to use ScrollView just for web
+       */}
+      {Platform.OS === "web" ? (
+        <ScrollView>
           <ScreenWithoutScrolling {...props} />
-        ) : (
-          <ScreenWithScrolling {...props} />
-        )}
-      </KeyboardAvoidingView>
+        </ScrollView>
+      ) : (
+        <KeyboardAvoidingView
+          behavior={isIos ? "padding" : "height"}
+          keyboardVerticalOffset={keyboardOffset}
+          {...KeyboardAvoidingViewProps}
+          style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
+        >
+          {isNonScrolling(props.preset) ? (
+            <ScreenWithoutScrolling {...props} />
+          ) : (
+            <ScreenWithScrolling {...props} />
+          )}
+        </KeyboardAvoidingView>
+      )}
     </View>
   )
 }
