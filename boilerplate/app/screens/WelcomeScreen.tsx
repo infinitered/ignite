@@ -89,7 +89,7 @@ const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexBasis: "57%",
   justifyContent: "space-around",
   paddingHorizontal: spacing.lg,
-  paddingBottom: spacing.sm
+  paddingBottom: spacing.sm,
 })
 
 const $bottomContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
