@@ -107,13 +107,13 @@ The main entry point for your app!
 
 **[.maestro](./maestro.md)** - Maestro e2e tests
 
-**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
+**[android](./android.md)** - Native Android / Android Studio project files for manual workflows
 
 **[assets](./assets.md)** - icons and images
 
 **[ignite](./ignite.md)** - all things Ignite, including generator templates.
 
-**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
+**[ios](./ios.md)** - Native iOS / Xcode project files for manual workflows
 
 **[plugins](./plugins/Plugins.md)** - any custom Expo Config Plugins to be applied during the prebuild process when generating the native code for the project.
 
