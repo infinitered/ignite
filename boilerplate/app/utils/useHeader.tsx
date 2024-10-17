@@ -14,9 +14,12 @@ export function useHeader(
   deps: Parameters<typeof useLayoutEffect>[1] = [],
 ) {
   const navigation = useNavigation()
-
-  // To avoid a visible header jump when navigating between screens, we use
-  // `useLayoutEffect`, which will apply the settings before the screen renders.
+  /**
+   * We need to have multiple implementations of this hook for web and mobile.
+   * Web needs to use useEffect to avoid a rendering loop.
+   * In mobile and also to avoid a visible header jump when navigating between screens, we use
+   * `useLayoutEffect`, which will apply the settings before the screen renders.
+   */
   const useAppropriateEffect = Platform.OS === "web" ? useEffect : useLayoutEffect
 
   useAppropriateEffect(() => {
