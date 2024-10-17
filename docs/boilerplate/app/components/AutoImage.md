@@ -46,7 +46,7 @@ This props let you use the image with additional headers
   source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
   headers: {
     Authorization: `Bearer abc123`,
-  },
+  }
 />
 ```
 
