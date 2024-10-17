@@ -13,7 +13,7 @@ import {
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import type { ThemedStyle } from "@/theme"
+import { $styles, type ThemedStyle } from "@/theme"
 import { translate } from "@/i18n"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
@@ -70,6 +70,7 @@ export const DemoToggle: Demo = {
       name="demoToggle:useCase.statuses.name"
       description="demoToggle:useCase.statuses.description"
       layout="row"
+      itemStyle={$styles.flexWrap}
     >
       <ControlledCheckbox containerStyle={$centeredOneThirdCol} />
       <ControlledRadio containerStyle={$centeredOneThirdCol} />
@@ -166,6 +167,7 @@ export const DemoToggle: Demo = {
       name="demoToggle:useCase.styling.name"
       description="demoToggle:useCase.styling.description"
       layout="row"
+      itemStyle={$styles.flexWrap}
     >
       <ControlledCheckbox
         containerStyle={$centeredOneThirdCol}
