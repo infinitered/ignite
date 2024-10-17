@@ -266,7 +266,9 @@ export function Screen(props: ScreenProps) {
         {...StatusBarProps}
       />
       {Platform.OS === "web" ? (
-        <ScrollView {...props} style={$styles.flex1} />
+        <ScrollView>
+          <ScreenWithoutScrolling {...props} />
+        </ScrollView>
       ) : (
         <KeyboardAvoidingView
           behavior={isIos ? "padding" : "height"}
