@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useCallback } from "react"
 import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
 import { $styles } from "../../theme"
 import { iconRegistry, IconTypes } from "../Icon"
@@ -24,7 +24,12 @@ interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
  * @returns {JSX.Element} The rendered `Checkbox` component.
  */
 export function Checkbox(props: CheckboxToggleProps) {
-  return <Toggle accessibilityRole="checkbox" {...props} ToggleInput={CheckboxInput} />
+  const { icon, ...rest } = props
+  const checkboxInput = useCallback(
+    (toggleProps: CheckboxInputProps) => <CheckboxInput {...toggleProps} icon={icon} />,
+    [icon],
+  )
+  return <Toggle accessibilityRole="checkbox" {...rest} ToggleInput={checkboxInput} />
 }
 
 function CheckboxInput(props: CheckboxInputProps) {
