@@ -265,6 +265,10 @@ export function Screen(props: ScreenProps) {
         style={statusBarStyle || (themeContext === "dark" ? "light" : "dark")}
         {...StatusBarProps}
       />
+      {/**
+       * KeyboardAvoidingView crashes in web,
+       * therefore we want to use ScrollView just for web
+       */}
       {Platform.OS === "web" ? (
         <ScrollView>
           <ScreenWithoutScrolling {...props} />
