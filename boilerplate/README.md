@@ -1,11 +1,26 @@
 # Welcome to your new ignited app!
 
-## The latest and greatest boilerplate for Infinite Red opinions
+> The latest and greatest boilerplate for Infinite Red opinions
 
 This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
 
 - [Quick start documentation](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/Boilerplate.md)
 - [Full documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
+
+## Getting Started
+
+```bash
+yarn
+yarn start
+```
+
+To make things work on your local simulator, or on your phone, you need first to [run `eas build`](https://github.com/infinitered/ignite/blob/master/docs/expo/EAS.md). We have many shortcuts on `package.json` to make it easier:
+
+```bash
+yarn build:ios:sim # build for ios simulator
+yarn build:ios:dev # build for ios device
+yarn build:ios:prod # build for ios device
+```
 
 ### `./assets` directory
 
