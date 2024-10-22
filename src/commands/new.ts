@@ -299,12 +299,12 @@ module.exports = {
         message: "How do you want to manage Native code?",
         choices: [
           {
-            name: "CNG",
+            name: "cng",
             message: "Via Expo's Continuous Native Generation - Recommended [Default]",
             value: "cng",
           },
           {
-            name: "Manual",
+            name: "manual",
             message: "Manual - commits android/ios directories",
             value: "manual",
           },
