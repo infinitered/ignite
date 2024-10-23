@@ -748,9 +748,11 @@ module.exports = {
         startSpinner(unboxingMessage)
 
         // do base install
-        await packager.install({ ...packagerOptions, onProgress: log })
+        const installCmd = packager.installCmd({ packagerName })
+        await system.run(installCmd, { onProgress: log })
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
-        await system.run("npx expo install --fix", { onProgress: log })
+        const forwardOptions = packagerName === "npm" ? " -- --legacy-peer-deps" : ""
+        await system.run(`npx expo install --fix${forwardOptions}`, { onProgress: log })
 
         stopSpinner(unboxingMessage, "🧶")
       }
