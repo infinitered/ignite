@@ -299,12 +299,12 @@ module.exports = {
         message: "How do you want to manage Native code?",
         choices: [
           {
-            name: "CNG",
+            name: "cng",
             message: "Via Expo's Continuous Native Generation - Recommended [Default]",
             value: "cng",
           },
           {
-            name: "Manual",
+            name: "manual",
             message: "Manual - commits android/ios directories",
             value: "manual",
           },
@@ -844,16 +844,19 @@ module.exports = {
          * 4. Create a screen template that makes sense for Expo Router
          * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
          */
-        await system.run(log(`mv app/* src/`))
+        filesystem
+          .cwd(targetPath)
+          .find("app")
+          .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
         updateExpoRouterSrcDir(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
         createExpoRouterScreenTemplate(toolbox)
-        await cleanupExpoRouterConversion(toolbox)
+        cleanupExpoRouterConversion(toolbox, targetPath)
 
         stopSpinner(expoRouterMsg, "🧭")
       } else {
         // remove src/ dir since not using expo-router
-        await system.run(log(`rm -rf src`))
+        filesystem.cwd(targetPath).remove("src")
       }
       // #endregion
 

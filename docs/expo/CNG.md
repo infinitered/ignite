@@ -6,7 +6,7 @@ sidebar_position: 30
 
 When you want native platform code integrations, we recommend using the Expo CNG workflow with Ignite. This is one of the options when you spin up a new Ignite app.
 
-CNG (and Expo Prebuild) works well for almost any app. It's a great middle ground between Expo Go and the "do it yourself" (DIY) workflow.
+CNG (and Expo Prebuild) works well for almost any app. It's a great middle ground between Expo Go and the "do it yourself" (manual) workflow.
 
 1. You don't have to work with Gradle and CocoaPods directly
 2. Upgrades are much, much easier, since you're not working around your native code customizations
