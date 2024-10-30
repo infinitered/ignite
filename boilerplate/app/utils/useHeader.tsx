@@ -20,7 +20,7 @@ export function useHeader(
    * In mobile and also to avoid a visible header jump when navigating between screens, we use
    * `useLayoutEffect`, which will apply the settings before the screen renders.
    */
-  const usePlatformEffect = Platform.OS === "web" ? useEffect : useLayoutEffect
+  const useAppropriateEffect = Platform.OS === "web" ? useEffect : useLayoutEffect
 
   useAppropriateEffect(() => {
     navigation.setOptions({
