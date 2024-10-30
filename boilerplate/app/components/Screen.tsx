@@ -253,7 +253,11 @@ export function Screen(props: ScreenProps) {
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
-  const WrapperView = Platform.OS === "web"
+  {/**
+    * KeyboardAvoidingView crashes in web,
+    * therefore we want to use ScrollView just for web
+  */}
+  const ContentWrapperView = Platform.OS === "web"
   ? ScrollView
   : (props: KeyboardAvoidingViewProps) => (
       <KeyboardAvoidingView
@@ -277,17 +281,14 @@ export function Screen(props: ScreenProps) {
         style={statusBarStyle || (themeContext === "dark" ? "light" : "dark")}
         {...StatusBarProps}
       />
-      {/**
-       * KeyboardAvoidingView crashes in web,
-       * therefore we want to use ScrollView just for web
-       */}
-      <WrapperView>
+
+      <ContentWrapperView>
       {isNonScrolling(props.preset) ? (
         <ScreenWithoutScrolling {...props} />
       ) : (
         <ScreenWithScrolling {...props} />
       )}
-    </WrapperView>
+    </ContentWrapperView>
     </View>
   )
 }
