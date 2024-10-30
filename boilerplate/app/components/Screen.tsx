@@ -253,21 +253,24 @@ export function Screen(props: ScreenProps) {
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
-  {/**
-    * KeyboardAvoidingView crashes in web,
-    * therefore we want to use ScrollView just for web
-  */}
-  const ContentWrapperView = Platform.OS === "web"
-  ? ScrollView
-  : (props: KeyboardAvoidingViewProps) => (
-      <KeyboardAvoidingView
-        behavior={isIos ? "padding" : "height"}
-        keyboardVerticalOffset={keyboardOffset}
-        {...KeyboardAvoidingViewProps}
-        style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
-        {...props}
-      />
-    )
+  {
+    /**
+     * KeyboardAvoidingView crashes in web,
+     * therefore we want to use ScrollView just for web
+     */
+  }
+  const ContentWrapperView =
+    Platform.OS === "web"
+      ? ScrollView
+      : (props: KeyboardAvoidingViewProps) => (
+          <KeyboardAvoidingView
+            behavior={isIos ? "padding" : "height"}
+            keyboardVerticalOffset={keyboardOffset}
+            {...KeyboardAvoidingViewProps}
+            style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
+            {...props}
+          />
+        )
 
   return (
     <View
@@ -283,12 +286,12 @@ export function Screen(props: ScreenProps) {
       />
 
       <ContentWrapperView>
-      {isNonScrolling(props.preset) ? (
-        <ScreenWithoutScrolling {...props} />
-      ) : (
-        <ScreenWithScrolling {...props} />
-      )}
-    </ContentWrapperView>
+        {isNonScrolling(props.preset) ? (
+          <ScreenWithoutScrolling {...props} />
+        ) : (
+          <ScreenWithScrolling {...props} />
+        )}
+      </ContentWrapperView>
     </View>
   )
 }
