@@ -41,7 +41,9 @@ module.exports = {
         ],
       },
     ],
-    //react-native
+    // react
+    "react/prop-types": 0,
+    // react-native
     "react-native/no-raw-text": 0,
     // reactotron
     "reactotron/no-tron-in-production": "error",
