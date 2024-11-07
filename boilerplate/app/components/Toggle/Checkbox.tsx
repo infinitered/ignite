@@ -21,6 +21,7 @@ interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
 }
 /**
  * @param {CheckboxToggleProps} props - The props for the `Checkbox` component.
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Checkbox}
  * @returns {JSX.Element} The rendered `Checkbox` component.
  */
 export function Checkbox(props: CheckboxToggleProps) {

@@ -35,6 +35,7 @@ interface SwitchInputProps extends BaseToggleInputProps<SwitchToggleProps> {
 
 /**
  * @param {SwitchToggleProps} props - The props for the `Switch` component.
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Switch}
  * @returns {JSX.Element} The rendered `Switch` component.
  */
 export function Switch(props: SwitchToggleProps) {
