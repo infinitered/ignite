@@ -136,7 +136,7 @@ To have your app go back to respecting the user's device system setting, you can
 
 ## Hooking up the navigation theme
 
-Ignite uses `react-navigation` so it's already hooked up for use with your `NavigationController`! The `navigationTheme` variable returned from `useThemeProvider()` is a `react-navigation` heme object you can pass to the root `NavigtionController`.
+Ignite uses `react-navigation` so it's already hooked up for use with your `NavigationController`! The `navigationTheme` variable returned from `useThemeProvider()` is a `react-navigation` theme object you can pass to the root `NavigationController`.
 
 ```tsx
 const { navigationTheme } = useThemeProvider()
@@ -145,7 +145,7 @@ return <NavigationContainer theme={navigationTheme} {...props} />
 
 ## Integrating other styling and component libraries
 
-There are many component libraries that offer light/dark modes to their components. Here's an example of how to use `react-native-elements` with Ignite's theming system by exending their own `ThemeProvider`:
+There are many component libraries that offer light/dark modes to their components. Here's an example of how to use `react-native-elements` with Ignite's theming system by extending their own `ThemeProvider`:
 
 ```tsx
 import { colorsDark, colorsLight, customFontsToLoad } from "src/theme"
