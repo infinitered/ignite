@@ -158,6 +158,13 @@ export interface Options {
    * @default mst
    */
   state?: StateMgmt
+  /**
+   * Whether or not to enable the New Architecture
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default false
+   */
+  newArch?: boolean
 }
 
 module.exports = {
@@ -458,16 +465,13 @@ module.exports = {
     // #endregion
 
     // #region Experimental Features parsing
-    let newArch
     let expoVersion
     let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
     experimentalFlags.forEach((flag) => {
-      if (flag === "new-arch") {
-        newArch = true
-      } else if (flag.indexOf("expo-") > -1) {
+      if (flag.indexOf("expo-") > -1) {
         if (flag !== "expo-router") {
           expoVersion = flag.substring(5)
         } else {
@@ -515,21 +519,17 @@ module.exports = {
 
     // New Architecture
     const defaultNewArch = false
-    let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
-    if (experimentalNewArch === undefined) {
+    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : options.newArch
+    if (newArchEnabled === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
-        message: "[Experimental] the New Architecture?",
+        message: "Enable the New Architecture?",
         initial: defaultNewArch,
         format: prettyPrompt.format.boolean,
         prefix,
       }))
-      experimentalNewArch = newArchResponse.experimentalNewArch
-      // update experimental flags if needed for buildCliCommand output
-      if (experimentalNewArch && !experimentalFlags.includes("new-arch")) {
-        experimentalFlags.push("new-arch")
-      }
+      newArchEnabled = newArchResponse.experimentalNewArch
     }
 
     // #endregion
@@ -662,7 +662,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
-      if (experimentalNewArch) {
+      if (newArchEnabled) {
         log(`Swapping new architecture compatible dependencies...`)
         packageJsonRaw = findAndUpdateDependencyVersions(
           packageJsonRaw,
@@ -790,9 +790,8 @@ module.exports = {
         // Inject ignite version to app.json
         appJson.ignite.version = igniteVersion
 
-        if (experimentalNewArch === true) {
-          appJson.expo.plugins[1][1].ios.newArchEnabled = true
-          appJson.expo.plugins[1][1].android.newArchEnabled = true
+        if (newArchEnabled === true) {
+          appJson.expo.newArchEnabled = true
         }
 
         if (experimentalExpoRouter) {
