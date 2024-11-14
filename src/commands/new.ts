@@ -989,6 +989,7 @@ module.exports = {
           packager: packagerName,
           targetPath,
           removeDemo,
+          newArch: newArchEnabled,
           experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
           workflow,
           useCache,
