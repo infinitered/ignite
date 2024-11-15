@@ -1,7 +1,8 @@
+import neostandard from 'neostandard'
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
   extends: [
-    "standard",
+    ...neostandard(),
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-native/all",
