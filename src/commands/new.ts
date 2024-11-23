@@ -757,18 +757,8 @@ module.exports = {
         }
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
         const forwardOptions = packagerName === "npm" ? " -- --legacy-peer-deps" : ""
-        // only log if not the test environment
-
-        try {
-          await system.run(`npx expo install --fix${forwardOptions}`, { onProgress: log })
-        } catch (e) {
-          log(e)
-          p(
-            yellow(
-              `Unable to run Expo's compatibility check, you may need to run \`npx expo install --fix\` after setup is completed.`,
-            ),
-          )
-        }
+        log("Running `npx expo install --fix...`")
+        await system.run(`npx expo install --fix${forwardOptions}`)
 
         stopSpinner(unboxingMessage, "🧶")
       }
