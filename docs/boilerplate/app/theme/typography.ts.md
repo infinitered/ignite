@@ -1,5 +1,5 @@
 ---
-title: typeography.ts
+title: typography.ts
 ---
 
 # Fonts & Typography

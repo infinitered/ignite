@@ -102,4 +102,4 @@ Ignite's navigation setup also comes with some very useful [navigation utilities
 
 ## A note about Expo Router
 
-We are currently evaluating [Expo Router](https://docs.expo.dev/router/introduction/) to power Ignite's navigation system. It's a very promising project (built on React Navigation), but our philosophy is that nothing makes it into Ignite unless we've proven it in a full project (or two...or three...) first. We'll update this section when we have more information.
+We are currently evaluating [Expo Router](https://docs.expo.dev/router/introduction/) to power Ignite's navigation system. It's a very promising project (built on React Navigation), but our philosophy is that nothing makes it into Ignite unless we've proven it in a full project (or two...or three...) first. In the meantime we've added an experimental option to switch to Expo Router when igniting your project. We'll update this section when we have more information.
