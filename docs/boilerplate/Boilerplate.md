@@ -95,7 +95,7 @@ Here lives the theme for your application, including spacing, colors, and typogr
 
 **[utils](./app/utils/Utils.md)**
 
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
+This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truly shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
 **[app.tsx](./app/app.tsx.md)**
 
