@@ -105,7 +105,7 @@ const onThemeButtonPress = () => {
 }
 
 // Or you can let them use their deice's system setting: light/dark
-const resetThemeontextOverride = () => {
+const resetThemeContextOverride = () => {
   setThemeContextOverride(undefined)
 }
 ```

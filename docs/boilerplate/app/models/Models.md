@@ -2,7 +2,7 @@
 
 Ignite's perhaps most distinctive feature is its use of [MobX-State-Tree](https://mobx-state-tree.js.org/) (MST). This is a powerful and full-featured state management library that allows you to create strongly-typed observable models that can be used throughout your app and rerender on update intelligently without using selectors.
 
-We have [very good reasons](../../../concept/MobX-State-Tree.md) for using MST, but if after reading that doc you're still not keen on using it, we also have an [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/Redux) for removing MST and using Redux instead.
+We have [very good reasons](../../../concept/MobX-State-Tree.md) for using MST, but if after reading that doc you're still not keen on using it, we also have an [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/Redux) for removing MST and using Redux or Zustand instead.
 
 ## RootStore
 
