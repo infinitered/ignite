@@ -373,13 +373,6 @@ module.exports = {
         stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
       }
     }
-
-    if (!removeDemo && stateMgmt === "none") {
-      p()
-      p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
-      p(yellow(`Setting --state=mst`))
-      stateMgmt = "mst"
-    }
     // #endregion
 
     // #region Packager
@@ -489,6 +482,13 @@ module.exports = {
         }
       }
     })
+
+    if (!removeDemo && stateMgmt === "none") {
+      p()
+      p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
+      p(yellow(`Setting --state=mst`))
+      stateMgmt = "mst"
+    }
     // #endregion
 
     // #region Prompt to enable experimental features
