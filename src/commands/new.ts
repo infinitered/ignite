@@ -761,7 +761,7 @@ module.exports = {
         if (process.env.CI !== "true") {
           const forwardOptions = packagerName === "npm" ? " -- --legacy-peer-deps" : ""
           log("Running `npx expo install --fix...`")
-          await system.run(`npx expo install --fix${forwardOptions}`)
+          await system.run(`npx expo install --fix${forwardOptions}`, { onProgress: log })
         }
 
         stopSpinner(unboxingMessage, "🧶")
