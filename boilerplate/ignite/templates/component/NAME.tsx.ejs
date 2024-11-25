@@ -1,5 +1,5 @@
 ---
-destinationDir: app/components
+destinationDir: app/components/<%= props.subdirectory %>
 patch:
   path: "app/components/index.ts"
   append: "export * from \"./<%= props.subdirectory %><%= props.pascalCaseName %>\"\n"
