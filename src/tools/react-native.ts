@@ -327,27 +327,19 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
   })
 }
 
-export async function cleanupExpoRouterConversion(toolbox: GluegunToolbox) {
-  const { system, parameters, print } = toolbox
+export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath: string) {
+  const { filesystem } = toolbox
 
-  // debug?
-  const debug = boolFlag(parameters.options.debug)
-  const log = <T = unknown>(m: T): T => {
-    debug && print.info(` ${m}`)
-    return m
-  }
-
-  await system.run(
-    log(`
-      \\rm src/app.tsx
-      mkdir src/components/ErrorBoundary
-      mv src/screens/ErrorScreen/* src/components/ErrorBoundary
-      rm App.tsx
-      rm ignite/templates/screen/NAMEScreen.tsx.ejs
-      rm -rf ignite/templates/navigator
-      rm -rf src/screens
-      rm -rf src/navigators
-      rm -rf app
-    `),
+  const workingDir = filesystem.cwd(targetPath)
+  workingDir.cwd("src").remove("app.tsx")
+  workingDir.move(
+    workingDir.path("src", "screens", "ErrorScreen"),
+    workingDir.path("src", "components", "ErrorBoundary"),
   )
+  workingDir.remove("App.tsx")
+  workingDir.remove(workingDir.path("ignite", "templates", "screen", "NAMEScreen.tsx.ejs"))
+  workingDir.remove(workingDir.path("ignite", "templates", "navigator"))
+  workingDir.remove(workingDir.path("src", "screens"))
+  workingDir.remove(workingDir.path("src", "navigators"))
+  workingDir.remove("app")
 }

@@ -95,7 +95,7 @@ Here lives the theme for your application, including spacing, colors, and typogr
 
 **[utils](./app/utils/Utils.md)**
 
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
+This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truly shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
 **[app.tsx](./app/app.tsx.md)**
 
@@ -107,13 +107,13 @@ The main entry point for your app!
 
 **[.maestro](./maestro.md)** - Maestro e2e tests
 
-**[android](./android.md)** - Native Android / Android Studio project files for DIY workflows (non-Expo)
+**[android](./android.md)** - Native Android / Android Studio project files for manual workflows
 
 **[assets](./assets.md)** - icons and images
 
 **[ignite](./ignite.md)** - all things Ignite, including generator templates.
 
-**[ios](./ios.md)** - Native iOS / Xcode project files for DIY workflows (non-Expo)
+**[ios](./ios.md)** - Native iOS / Xcode project files for manual workflows
 
 **[plugins](./plugins/Plugins.md)** - any custom Expo Config Plugins to be applied during the prebuild process when generating the native code for the project.
 

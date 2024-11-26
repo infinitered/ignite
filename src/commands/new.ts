@@ -299,12 +299,12 @@ module.exports = {
         message: "How do you want to manage Native code?",
         choices: [
           {
-            name: "CNG",
+            name: "cng",
             message: "Via Expo's Continuous Native Generation - Recommended [Default]",
             value: "cng",
           },
           {
-            name: "Manual",
+            name: "manual",
             message: "Manual - commits android/ios directories",
             value: "manual",
           },
@@ -748,9 +748,21 @@ module.exports = {
         startSpinner(unboxingMessage)
 
         // do base install
-        await packager.install({ ...packagerOptions, onProgress: log })
+        const installCmd = packager.installCmd({ packagerName })
+        await system.run(installCmd, { onProgress: log })
+        // If they chose npm and also Expo Router, we need to run npm install ajv@^8 --legacy-peer-deps.
+        // see https://github.com/infinitered/ignite/issues/2840
+        if (packagerName === "npm" && experimentalExpoRouter) {
+          await system.run(`npm install ajv@^8 --legacy-peer-deps`, { onProgress: log })
+        }
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
-        await system.run("npx expo install --fix", { onProgress: log })
+        // for right now, we don't do this in CI because it returns a non-zero exit code
+        // see https://docs.expo.dev/more/expo-cli/#version-validation
+        if (process.env.CI !== "true") {
+          const forwardOptions = packagerName === "npm" ? " -- --legacy-peer-deps" : ""
+          log("Running `npx expo install --fix...`")
+          await system.run(`npx expo install --fix${forwardOptions}`, { onProgress: log })
+        }
 
         stopSpinner(unboxingMessage, "🧶")
       }
@@ -842,16 +854,19 @@ module.exports = {
          * 4. Create a screen template that makes sense for Expo Router
          * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
          */
-        await system.run(log(`mv app/* src/`))
+        filesystem
+          .cwd(targetPath)
+          .find("app")
+          .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
         updateExpoRouterSrcDir(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
         createExpoRouterScreenTemplate(toolbox)
-        await cleanupExpoRouterConversion(toolbox)
+        cleanupExpoRouterConversion(toolbox, targetPath)
 
         stopSpinner(expoRouterMsg, "🧭")
       } else {
         // remove src/ dir since not using expo-router
-        await system.run(log(`rm -rf src`))
+        filesystem.cwd(targetPath).remove("src")
       }
       // #endregion
 
@@ -1019,7 +1034,7 @@ module.exports = {
         p2()
         p2(yellow(`Generator templates could not be converted to Windows EOL.`))
         p2(yellow(`You may want to update these manually with your code editor, more info at:`))
-        p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md")}`)
+        p2(`${link("https://docs.infinite.red/ignite-cli/concept/Generators/")}`)
         p2()
       }
 

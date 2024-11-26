@@ -101,9 +101,8 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  // @mst replace-next-line if (!isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
   if (
-    !rehydrated ||
+    !rehydrated || // @mst remove-current-line
     !isNavigationStateRestored ||
     !isI18nInitialized ||
     (!areFontsLoaded && !fontLoadError)
