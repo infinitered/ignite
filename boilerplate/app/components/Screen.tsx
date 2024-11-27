@@ -252,12 +252,10 @@ export function Screen(props: ScreenProps) {
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
-  {
-    /**
-     * KeyboardAvoidingView crashes in web,
-     * therefore we want to use ScrollView just for web
-     */
-  }
+  /**
+   * KeyboardAvoidingView crashes in web,
+   * therefore we want to use ScrollView just for web
+   */
   const ContentWrapperView =
     Platform.OS === "web"
       ? ScrollView
