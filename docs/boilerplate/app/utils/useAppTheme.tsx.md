@@ -64,7 +64,7 @@ const $plainObjectStyle: ViewStyle = {
 
 ### `navTheme`
 
-A `react-navigtion` [theme object](https://reactnavigation.org/docs/themes#built-in-themes). This is the same object you would pass to a `NavigationContainer` component.
+A `react-navigation` [theme object](https://reactnavigation.org/docs/themes#built-in-themes). This is the same object you would pass to a `NavigationContainer` component.
 
 ### `setThemeContextOverride`
 

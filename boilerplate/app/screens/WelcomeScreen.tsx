@@ -21,7 +21,7 @@ interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
 // @mst replace-next-line export const WelcomeScreen: FC<WelcomeScreenProps> = (
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
-  function WelcomeScreen(
+  function WelcomeScreen( // @mst remove-current-line
     _props, // @demo remove-current-line
     // @mst replace-next-line ) => {
   ) {
@@ -81,7 +81,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
     )
     // @mst replace-next-line }
   },
-)
+) // @mst remove-current-line
 
 const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,

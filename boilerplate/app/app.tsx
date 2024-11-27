@@ -81,7 +81,7 @@ function App(props: AppProps) {
       .then(() => loadDateFnsLocale())
   }, [])
 
-  // @mst replace-next-line React.useEffect(() => {
+  // @mst replace-next-line useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
     // @mst replace-next-line
     // This runs after the root store has been initialized and rehydrated.
@@ -101,9 +101,8 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  // @mst replace-next-line if (!isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
   if (
-    !rehydrated ||
+    !rehydrated || // @mst remove-current-line
     !isNavigationStateRestored ||
     !isI18nInitialized ||
     (!areFontsLoaded && !fontLoadError)
