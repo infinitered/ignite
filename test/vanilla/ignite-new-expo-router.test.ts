@@ -47,6 +47,19 @@ describe(`ignite new with expo-router`, () => {
       expect(templates).toContain("screen")
       expect(templates).not.toContain("navigator")
 
+      // inspect that destinationDir has been adjusted
+      const modelTpl = filesystem.read(`${appPath}/ignite/templates/model/NAME.ts.ejs`)
+      expect(modelTpl).not.toContain("destinationDir: app/models")
+      expect(modelTpl).toContain("destinationDir: src/models")
+
+      const modelTestTpl = filesystem.read(`${appPath}/ignite/templates/model/NAME.test.ts.ejs`)
+      expect(modelTestTpl).not.toContain("destinationDir: app/models")
+      expect(modelTestTpl).toContain("destinationDir: src/models")
+
+      const componentTpl = filesystem.read(`${appPath}/ignite/templates/component/NAME.tsx.ejs`)
+      expect(componentTpl).not.toContain("app/components")
+      expect(componentTpl).toContain("src/components")
+
       // check entry point
       const packageJson = filesystem.read(`${appPath}/package.json`)
       expect(packageJson).toContain("expo-router/entry")
