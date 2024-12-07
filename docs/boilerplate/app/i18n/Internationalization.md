@@ -4,7 +4,7 @@ sidebar_position: 160
 
 # Internationalization in Ignite Apps
 
-Ignite currently set up to have Internationalization setup in English, Arabic, Korean, French and Japanese! This is detected on app load and will set your app to that language.
+Ignite is currently set up to support Internationalization in English, Arabic, Korean, French, Japanese and Hindi. This is detected on app load and will set your app to that language.
 
 ## Right to Left languages (RTL)
 
@@ -26,9 +26,9 @@ I18nManager.forceRTL(isRTL)
 ```
 
 2. Remove all other associated logic that uses the exported `isRTL` variable
-3. Remove any `tx="some.i18n.key"` from your components and use `text="Some Text"` instead
+3. Remove any `tx="some:i18n.key"` from your components and use `text="Some Text"` instead
    (e.g. `<Text text="Some Text" />`
 
 ## Adding more languages
 
-See the [i18n-js Documentation](https://github.com/fnando/i18n?tab=readme-ov-file#base-translations) to add languages to `app/i18n/i18n.ts`.
+See the [i18next Documentation](https://www.i18next.com/how-to/add-or-load-translations) to add languages to `app/i18n/i18n.ts`.

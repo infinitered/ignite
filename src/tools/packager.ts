@@ -146,7 +146,7 @@ function installCmd(options: PackageRunOptions) {
   } else if (options.packagerName === "yarn") {
     return `yarn install${silent}`
   } else if (options.packagerName === "npm") {
-    return `npm install${silent}`
+    return `npm install${silent} --legacy-peer-deps`
   } else if (options.packagerName === "bun") {
     return `bun install${silent}`
   } else {

@@ -1,4 +1,4 @@
-import demoAr from "./demo-ar"
+import demoAr from "./demo-ar" // @demo remove-current-line
 import { Translations } from "./en"
 
 const ar: Translations = {

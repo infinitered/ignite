@@ -45,7 +45,7 @@ The `text` prop is used to display a simple piece of text inside the `ListItem` 
 The `tx` prop is used to display a simple piece of text inside the `ListItem` component. It is used to display a localized string.
 
 ```tsx
-<ListItem tx="example.helloWorld" />
+<ListItem tx="example:helloWorld" />
 ```
 
 ### `children`
@@ -63,7 +63,7 @@ The `children` prop is used to display components inside the `ListItem` componen
 The `txOptions` prop is used to pass options to the `tx` prop. It is used to display a localized string.
 
 ```tsx
-<ListItem tx="example.helloWorld" txOptions={{ name: "John" }} />
+<ListItem tx="example:helloWorld" txOptions={{ name: "John" }} />
 ```
 
 ### `textStyle`

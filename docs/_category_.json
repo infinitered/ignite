@@ -1,8 +1,8 @@
 {
-  "label": "Ignite",
+  "label": "ignite-cli",
   "link": null,
   "customProps": {
-    "description": "The battle-tested React Native boilerplate",
+    "description": "",
     "projectName": "ignite-cli",
     "repoUrl": "https://github.com/infinitered/ignite",
     "sidebar": {

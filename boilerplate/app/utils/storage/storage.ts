@@ -1,13 +1,14 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { MMKV } from "react-native-mmkv"
+export const storage = new MMKV()
 
 /**
  * Loads a string from storage.
  *
  * @param key The key to fetch.
  */
-export async function loadString(key: string): Promise<string | null> {
+export function loadString(key: string): string | null {
   try {
-    return await AsyncStorage.getItem(key)
+    return storage.getString(key) ?? null
   } catch {
     // not sure why this would fail... even reading the RN docs I'm unclear
     return null
@@ -20,9 +21,9 @@ export async function loadString(key: string): Promise<string | null> {
  * @param key The key to fetch.
  * @param value The value to store.
  */
-export async function saveString(key: string, value: string): Promise<boolean> {
+export function saveString(key: string, value: string): boolean {
   try {
-    await AsyncStorage.setItem(key, value)
+    storage.set(key, value)
     return true
   } catch {
     return false
@@ -34,12 +35,13 @@ export async function saveString(key: string, value: string): Promise<boolean> {
  *
  * @param key The key to fetch.
  */
-export async function load(key: string): Promise<unknown | null> {
+export function load<T>(key: string): T | null {
+  let almostThere: string | null = null
   try {
-    const almostThere = await AsyncStorage.getItem(key)
-    return JSON.parse(almostThere ?? "")
+    almostThere = loadString(key)
+    return JSON.parse(almostThere ?? "") as T
   } catch {
-    return null
+    return (almostThere as T) ?? null
   }
 }
 
@@ -49,9 +51,9 @@ export async function load(key: string): Promise<unknown | null> {
  * @param key The key to fetch.
  * @param value The value to store.
  */
-export async function save(key: string, value: unknown): Promise<boolean> {
+export function save(key: string, value: unknown): boolean {
   try {
-    await AsyncStorage.setItem(key, JSON.stringify(value))
+    saveString(key, JSON.stringify(value))
     return true
   } catch {
     return false
@@ -63,17 +65,17 @@ export async function save(key: string, value: unknown): Promise<boolean> {
  *
  * @param key The key to kill.
  */
-export async function remove(key: string): Promise<void> {
+export function remove(key: string): void {
   try {
-    await AsyncStorage.removeItem(key)
+    storage.delete(key)
   } catch {}
 }
 
 /**
  * Burn it all to the ground.
  */
-export async function clear(): Promise<void> {
+export function clear(): void {
   try {
-    await AsyncStorage.clear()
+    storage.clearAll()
   } catch {}
 }

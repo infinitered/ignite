@@ -225,3 +225,122 @@ export async function replaceMaestroBundleIds(
     }),
   )
 }
+
+export function createExpoRouterScreenTemplate(toolbox: GluegunToolbox) {
+  const { filesystem, parameters, print } = toolbox
+
+  // debug?
+  const debug = boolFlag(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  try {
+    const TARGET_DIR = filesystem.path(process.cwd())
+    const filePath = filesystem.path(TARGET_DIR, "ignite/templates/screen/NAME.tsx.ejs")
+
+    const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
+import { observer } from "mobx-react-lite"
+import { ViewStyle } from "react-native"
+import { Screen, Text } from "src/components"
+
+// @mst replace-next-line export default function <%= props.pascalCaseName %>Screen() {
+export default observer(function <%= props.pascalCaseName %>Screen() {
+  return (
+    <Screen style={$root} preset="scroll">
+      <Text text="<%= props.camelCaseName %>" />
+    </Screen>
+  )
+// @mst replace-next-line }
+})
+
+const $root: ViewStyle = {
+  flex: 1,
+}
+`
+    filesystem.write(filePath, EXPO_ROUTER_SCREEN_TPL)
+  } catch (e) {
+    log(`Unable to write screen generator template.`)
+  }
+}
+
+export function refactorExpoRouterReactotronCmds(toolbox: GluegunToolbox) {
+  const { filesystem, parameters, print } = toolbox
+
+  // debug?
+  const debug = boolFlag(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  try {
+    const TARGET_DIR = filesystem.path(process.cwd())
+    const reactotronConfigPath = filesystem.path(TARGET_DIR, "src/devtools/ReactotronConfig.ts")
+
+    let reactotronConfig = filesystem.read(reactotronConfigPath)
+    reactotronConfig = reactotronConfig
+      .replace(/import { goBack, resetRoot, navigate }.*/g, 'import { router } from "expo-router"')
+      .replace(/navigate\(route as any\).*/g, "router.push(route)")
+      .replace(/goBack\(\).*/g, " router.back()")
+
+    // this one gets removed entirely
+    const customCommandToRemoveRegex =
+      /reactotron\.onCustomCommand\({\s*title: "Reset Navigation State",\s*description: "Resets the navigation state",\s*command: "resetNavigation",\s*handler: \(\) => {\s*Reactotron\.log\("resetting navigation state"\)\s*resetRoot\({ index: 0, routes: \[\] }\)\s*},\s*}\),?\n?/g
+    reactotronConfig = reactotronConfig.replace(customCommandToRemoveRegex, "")
+
+    filesystem.write(reactotronConfigPath, reactotronConfig)
+  } catch (e) {
+    log(`Unable to update ReactotronConfig.`)
+  }
+}
+
+export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
+  const { filesystem, parameters, print } = toolbox
+
+  // debug?
+  const debug = boolFlag(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  const TARGET_DIR = filesystem.path(process.cwd())
+  const expoRouterFilesToFix = [
+    "tsconfig.json",
+    // has its own tsconfig, needs updating separately
+    "test/i18n.test.ts",
+    "test/setup.ts",
+    "ignite/templates/model/NAME.ts.ejs",
+    "ignite/templates/model/NAME.test.ts.ejs",
+    "ignite/templates/component/NAME.tsx.ejs",
+  ]
+  expoRouterFilesToFix.forEach((file) => {
+    const filePath = filesystem.path(TARGET_DIR, file)
+    let fileContents = filesystem.read(filePath)
+    try {
+      fileContents = fileContents.replace(/app\//g, "src/")
+      filesystem.write(filePath, fileContents)
+    } catch (e) {
+      log(`Unable to locate ${file}.`)
+    }
+  })
+}
+
+export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath: string) {
+  const { filesystem } = toolbox
+
+  const workingDir = filesystem.cwd(targetPath)
+  workingDir.cwd("src").remove("app.tsx")
+  workingDir.move(
+    workingDir.path("src", "screens", "ErrorScreen"),
+    workingDir.path("src", "components", "ErrorBoundary"),
+  )
+  workingDir.remove("App.tsx")
+  workingDir.remove(workingDir.path("ignite", "templates", "screen", "NAMEScreen.tsx.ejs"))
+  workingDir.remove(workingDir.path("ignite", "templates", "navigator"))
+  workingDir.remove(workingDir.path("src", "screens"))
+  workingDir.remove(workingDir.path("src", "navigators"))
+  workingDir.remove("app")
+}

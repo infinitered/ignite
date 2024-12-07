@@ -1,9 +1,8 @@
-import React from "react"
 import { Pressable, PressableProps, ViewStyle, Platform } from "react-native"
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 import { useDrawerProgress } from "react-native-drawer-layout"
 import { isRTL } from "../../i18n"
-import { colors, spacing } from "../../theme"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 interface DrawerIconButtonProps extends PressableProps {}
 
@@ -17,6 +16,10 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { ...PressableProps } = props
   const progress = useDrawerProgress()
   const isWeb = Platform.OS === "web"
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
 
   const animatedContainerStyles = useAnimatedStyle(() => {
     const translateX = interpolate(progress.value, [0, 1], [0, isRTL ? 60 : -60])
@@ -84,7 +87,7 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
       <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
-      <Animated.View style={[$middleBar, animatedMiddleBarStyles]} />
+      <Animated.View style={[themed($middleBar), animatedMiddleBarStyles]} />
 
       <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
     </AnimatedPressable>
@@ -106,7 +109,7 @@ const $topBar: ViewStyle = {
 
 const $middleBar: ViewStyle = {
   height: barHeight,
-  marginTop: spacing.xxs,
+  marginTop: 4,
 }
 
 const $bottomBar: ViewStyle = {

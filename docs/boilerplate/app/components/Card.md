@@ -91,7 +91,7 @@ The `heading` prop is used to set the heading text of the card.
 The `headingTx` prop is used to set the heading text of the card using a translation key.
 
 ```tsx
-<Card headingTx="card.heading" content="Card Content" footer="Card Footer" />
+<Card headingTx="card:heading" content="Card Content" footer="Card Footer" />
 ```
 
 ### `headingTxOptions`
@@ -100,7 +100,7 @@ The `headingTxOptions` prop is used to set the options for the translation key u
 
 ```tsx
 <Card
-  headingTx="card.heading"
+  headingTx="card:heading"
   headingTxOptions={{ count: 2 }}
   content="Card Content"
   footer="Card Footer"
@@ -158,7 +158,7 @@ The `content` prop is used to set the content text of the card.
 The `contentTx` prop is used to set the content text of the card using a translation key.
 
 ```tsx
-<Card heading="Card Heading" contentTx="card.content" footer="Card Footer" />
+<Card heading="Card Heading" contentTx="card:content" footer="Card Footer" />
 ```
 
 ### `contentTxOptions`
@@ -168,7 +168,7 @@ The `contentTxOptions` prop is used to set the options for the translation key u
 ```tsx
 <Card
   heading="Card Heading"
-  contentTx="card.content"
+  contentTx="card:content"
   contentTxOptions={{ count: 2 }}
   footer="Card Footer"
 />
@@ -225,7 +225,7 @@ The `footer` prop is used to set the footer text of the card.
 The `footerTx` prop is used to set the footer text of the card using a translation key.
 
 ```tsx
-<Card heading="Card Heading" content="Card Content" footerTx="card.footer" />
+<Card heading="Card Heading" content="Card Content" footerTx="card:footer" />
 ```
 
 ### `footerTxOptions`
@@ -236,7 +236,7 @@ The `footerTxOptions` prop is used to set the options for the translation key us
 <Card
   heading="Card Heading"
   content="Card Content"
-  footerTx="card.footer"
+  footerTx="card:footer"
   footerTxOptions={{ count: 2 }}
 />
 ```

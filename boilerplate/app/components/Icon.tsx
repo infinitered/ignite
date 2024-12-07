@@ -1,4 +1,3 @@
-import * as React from "react"
 import { ComponentType } from "react"
 import {
   Image,
@@ -10,6 +9,7 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -48,7 +48,7 @@ interface IconProps extends TouchableOpacityProps {
 /**
  * A component to render a registered icon.
  * It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Icon/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Icon/}
  * @param {IconProps} props - The props for the `Icon` component.
  * @returns {JSX.Element} The rendered `Icon` component.
  */
@@ -67,9 +67,11 @@ export function Icon(props: IconProps) {
     TouchableOpacityProps | ViewProps
   >
 
+  const { theme } = useAppTheme()
+
   const $imageStyle: StyleProp<ImageStyle> = [
     $imageStyleBase,
-    color !== undefined && { tintColor: color },
+    { tintColor: color ?? theme.colors.text },
     size !== undefined && { width: size, height: size },
     $imageStyleOverride,
   ]

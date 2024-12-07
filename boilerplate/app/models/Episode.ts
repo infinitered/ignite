@@ -46,7 +46,7 @@ export const EpisodeModel = types
         const formatted = formatDate(episode.pubDate)
         return {
           textLabel: formatted,
-          accessibilityLabel: translate("demoPodcastListScreen.accessibility.publishLabel", {
+          accessibilityLabel: translate("demoPodcastListScreen:accessibility.publishLabel", {
             date: formatted,
           }),
         }
@@ -65,7 +65,7 @@ export const EpisodeModel = types
       const sDisplay = s > 0 ? s : ""
       return {
         textLabel: hDisplay + mDisplay + sDisplay,
-        accessibilityLabel: translate("demoPodcastListScreen.accessibility.durationLabel", {
+        accessibilityLabel: translate("demoPodcastListScreen:accessibility.durationLabel", {
           hours: h,
           minutes: m,
           seconds: s,

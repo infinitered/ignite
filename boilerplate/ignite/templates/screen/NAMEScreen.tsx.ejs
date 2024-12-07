@@ -1,4 +1,5 @@
 ---
+destinationDir: app/screens
 patches:
 - path: "app/screens/index.ts"
   append: "export * from \"./<%= props.pascalCaseName %>Screen\"\n"
@@ -11,19 +12,22 @@ patches:
   insert: "<Stack.Screen name=\"<%= props.pascalCaseName %>\" component={Screens.<%= props.pascalCaseName %>Screen} />\n\t\t\t{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}"
   skip: <%= props.skipIndexFile %>
 ---
-import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
+import { FC } from "react"
+import { observer } from "mobx-react-lite" // @mst remove-current-line
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "app/navigators"
-import { Screen, Text } from "app/components"
+import { AppStackScreenProps } from "@/navigators"
+import { Screen, Text } from "@/components"
 // import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+// import { useStores } from "@/models" // @mst remove-current-line
 
 interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
 
+// @mst replace-next-line export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>ScreenProps> = () => {
 export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>ScreenProps> = observer(function <%= props.pascalCaseName %>Screen() {
+  // @mst remove-block-start
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
+  // @mst remove-block-end
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
@@ -32,6 +36,7 @@ export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>Sc
       <Text text="<%= props.camelCaseName %>" />
     </Screen>
   )
+// @mst replace-next-line }
 })
 
 const $root: ViewStyle = {
