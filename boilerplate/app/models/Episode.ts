@@ -50,7 +50,7 @@ export const EpisodeModel = types
             date: formatted,
           }),
         }
-      } catch (error) {
+      } catch {
         return { textLabel: "", accessibilityLabel: "" }
       }
     },
