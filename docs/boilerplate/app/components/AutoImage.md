@@ -23,7 +23,7 @@ const { width, height } = useAutoImage(uri, maxWidth, maxHeight)
 
 ## Props
 
-Ignite's `AutoImage` component has two props of its own: `maxWidth` and `maxHeight`.
+Ignite's `AutoImage` component has these props of its own:
 
 ### `maxWidth` and `maxHeight`
 
@@ -34,6 +34,19 @@ These props are used to constrain the image to a specific size. Use `maxWidth` o
   source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
   maxWidth={200}
   maxHeight={200}
+/>
+```
+
+### `headers`
+
+This props let you use the image with additional headers
+
+```tsx
+<AutoImage
+  source={{ uri: "https://pbs.twimg.com/profile_images/845384502067159040/pqF2RQ2q_400x400.jpg" }}
+  headers: {
+    Authorization: `Bearer abc123`,
+  }
 />
 ```
 
