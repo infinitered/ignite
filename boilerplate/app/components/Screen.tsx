@@ -2,7 +2,6 @@ import { useScrollToTop } from "@react-navigation/native"
 import { StatusBar, StatusBarProps, StatusBarStyle } from "expo-status-bar"
 import { ReactNode, useRef, useState } from "react"
 import {
-  KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
   LayoutChangeEvent,
   Platform,
@@ -14,7 +13,7 @@ import {
 } from "react-native"
 import { $styles } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
+import { KeyboardAwareScrollView, KeyboardAvoidingView } from "react-native-keyboard-controller"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 export const DEFAULT_BOTTOM_OFFSET = 50
@@ -253,6 +252,23 @@ export function Screen(props: ScreenProps) {
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
+  /**
+   * KeyboardAvoidingView crashes in web,
+   * therefore we want to use ScrollView just for web
+   */
+  const ContentWrapperView =
+    Platform.OS === "web"
+      ? ScrollView
+      : (props: KeyboardAvoidingViewProps) => (
+          <KeyboardAvoidingView
+            behavior={isIos ? "padding" : "height"}
+            keyboardVerticalOffset={keyboardOffset}
+            {...KeyboardAvoidingViewProps}
+            style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
+            {...props}
+          />
+        )
+
   return (
     <View
       style={[
@@ -266,18 +282,13 @@ export function Screen(props: ScreenProps) {
         {...StatusBarProps}
       />
 
-      <KeyboardAvoidingView
-        behavior={isIos ? "padding" : "height"}
-        keyboardVerticalOffset={keyboardOffset}
-        {...KeyboardAvoidingViewProps}
-        style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
-      >
+      <ContentWrapperView>
         {isNonScrolling(props.preset) ? (
           <ScreenWithoutScrolling {...props} />
         ) : (
           <ScreenWithScrolling {...props} />
         )}
-      </KeyboardAvoidingView>
+      </ContentWrapperView>
     </View>
   )
 }
