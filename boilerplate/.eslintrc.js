@@ -26,6 +26,8 @@ module.exports = {
       },
     ],
     "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-require-imports": 0,
+    "@typescript-eslint/no-empty-object-type": 0,
     // eslint
     "no-use-before-define": 0,
     "no-restricted-imports": [

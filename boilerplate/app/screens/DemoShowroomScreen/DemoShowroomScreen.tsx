@@ -102,17 +102,13 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
       }
     }, [open])
 
-    const handleScroll = useCallback(
-      (sectionIndex: number, itemIndex = 0) => {
-        listRef.current?.scrollToLocation({
-          animated: true,
-          itemIndex,
-          sectionIndex,
-        })
-        toggleDrawer()
-      },
-      [toggleDrawer],
-    )
+    const handleScroll = useCallback((sectionIndex: number, itemIndex = 0) => {
+      listRef.current?.scrollToLocation({
+        animated: true,
+        itemIndex,
+        sectionIndex,
+      })
+    }, [])
 
     // handle Web links
     useEffect(() => {
