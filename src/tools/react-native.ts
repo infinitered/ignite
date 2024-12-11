@@ -313,6 +313,7 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
     "test/i18n.test.ts",
     "test/setup.ts",
     "ignite/templates/model/NAME.ts.ejs",
+    "ignite/templates/model/NAME.test.ts.ejs",
     "ignite/templates/component/NAME.tsx.ejs",
   ]
   expoRouterFilesToFix.forEach((file) => {

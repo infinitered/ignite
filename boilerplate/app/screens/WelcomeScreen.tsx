@@ -9,7 +9,7 @@ import {
 import { isRTL } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import type { ThemedStyle } from "@/theme"
+import { $styles, type ThemedStyle } from "@/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
@@ -48,7 +48,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
     const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
     return (
-      <Screen preset="fixed">
+      <Screen preset="fixed" contentContainerStyle={$styles.flex1}>
         <View style={themed($topContainer)}>
           <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
           <Text

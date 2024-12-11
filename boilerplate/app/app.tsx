@@ -56,7 +56,7 @@ const config = {
 }
 
 interface AppProps {
-  hideSplashScreen: () => Promise<boolean>
+  hideSplashScreen: () => Promise<void>
 }
 
 /**
@@ -81,7 +81,7 @@ function App(props: AppProps) {
       .then(() => loadDateFnsLocale())
   }, [])
 
-  // @mst replace-next-line React.useEffect(() => {
+  // @mst replace-next-line useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
     // @mst replace-next-line
     // This runs after the root store has been initialized and rehydrated.
