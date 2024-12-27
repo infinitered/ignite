@@ -14,7 +14,9 @@ export function loadString(key: string): string | null {
     }
     return value;
   } catch (error) {
-    console.error("Error reading from storage", error);
+    if (__DEV__) {
+      console.error("Error reading from storage", error);
+    }
     return null;
   }
 }
