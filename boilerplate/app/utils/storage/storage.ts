@@ -8,16 +8,16 @@ export const storage = new MMKV()
  */
 export function loadString(key: string): string | null {
   try {
-    const value = storage.getString(key);
+    const value = storage.getString(key)
     if (value === undefined) {
-      return null; // Explicitly return null if the value is undefined
+      return null // Explicitly return null if the value is undefined
     }
-    return value;
+    return value
   } catch (error) {
     if (__DEV__) {
-      console.error("Error reading from storage", error);
+      console.error("Error reading from storage", error)
     }
-    return null;
+    return null
   }
 }
 
