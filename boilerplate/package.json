@@ -5,7 +5,8 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "eslint . --fix",
+    "prettier": "prettier . --write",
+    "prettier:check": "prettier . --check",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "patch": "patch-package",
