@@ -2,7 +2,7 @@
   "name": "hello-world",
   "version": "0.0.1",
   "private": true,
-  "main": "expo/AppEntry.js",
+  "main": "App.tsx",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
     "format": "eslint . --fix",
