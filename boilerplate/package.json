@@ -20,12 +20,12 @@
     "build:android:sim": "eas build --profile development --platform android --local",
     "build:android:dev": "eas build --profile development:device --platform android --local",
     "build:android:prod": "eas build --profile production --platform android --local",
-    "start": "npx expo start",
-    "android": "npx expo run:android",
-    "ios": "npx expo run:ios",
-    "web": "npx expo start --web",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
     "bundle:web": "npx expo export --platform web",
-    "serve:web": "npx server dist",
+    "serve:web": "npx serve dist",
     "prebuild:clean": "npx expo prebuild --clean"
   },
   "dependencies": {
