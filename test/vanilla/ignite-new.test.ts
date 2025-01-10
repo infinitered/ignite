@@ -92,9 +92,9 @@ describe("ignite new", () => {
       expect(igniteJSON.scripts.ios).toBe("npx expo run:ios")
     })
 
-    it("should have created app.tsx with default export and RootStore", () => {
+    it("should have created app.tsx with export and RootStore", () => {
       const appJS = filesystem.read(`${appPath}/app/app.tsx`)
-      expect(appJS).toContain("export default App")
+      expect(appJS).toContain("export function App")
       expect(appJS).toContain("RootStore")
     })
 
