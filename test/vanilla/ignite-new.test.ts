@@ -88,8 +88,8 @@ describe("ignite new", () => {
       const igniteJSON = filesystem.read(`${appPath}/package.json`, "json")
       expect(igniteJSON).toHaveProperty("scripts")
       expect(igniteJSON).toHaveProperty("dependencies")
-      expect(igniteJSON.scripts.android).toBe("npx expo run:android")
-      expect(igniteJSON.scripts.ios).toBe("npx expo run:ios")
+      expect(igniteJSON.scripts.android).toBe("expo run:android")
+      expect(igniteJSON.scripts.ios).toBe("expo run:ios")
     })
 
     it("should have created app.tsx with export and RootStore", () => {
