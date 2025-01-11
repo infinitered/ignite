@@ -750,18 +750,12 @@ module.exports = {
         // do base install
         const installCmd = packager.installCmd({ packagerName })
         await system.run(installCmd, { onProgress: log })
-        // If they chose npm and also Expo Router, we need to run npm install ajv@^8 --legacy-peer-deps.
-        // see https://github.com/infinitered/ignite/issues/2840
-        if (packagerName === "npm" && experimentalExpoRouter) {
-          await system.run(`npm install ajv@^8 --legacy-peer-deps`, { onProgress: log })
-        }
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
         // for right now, we don't do this in CI because it returns a non-zero exit code
         // see https://docs.expo.dev/more/expo-cli/#version-validation
         if (process.env.CI !== "true") {
-          const forwardOptions = packagerName === "npm" ? " -- --legacy-peer-deps" : ""
           log("Running `npx expo install --fix...`")
-          await system.run(`npx expo install --fix${forwardOptions}`, { onProgress: log })
+          await system.run(`npx expo install --fix`, { onProgress: log })
         }
 
         stopSpinner(unboxingMessage, "🧶")
