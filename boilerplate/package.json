@@ -5,7 +5,6 @@
   "main": "App.tsx",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "eslint . --fix",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "patch": "patch-package",
