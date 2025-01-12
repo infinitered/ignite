@@ -891,7 +891,7 @@ module.exports = {
       startSpinner(formattingMessage)
       if (installDeps === true) {
         // Make sure all our modifications are formatted nicely
-        await packager.run("format", { ...packagerOptions })
+        await packager.run("lint", { ...packagerOptions })
       } else {
         // if our linting configuration is not installed, try format
         // using prettier to make sure it's reasonably close, but this will skip
