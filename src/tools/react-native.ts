@@ -337,7 +337,7 @@ export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath:
     workingDir.path("src", "screens", "ErrorScreen"),
     workingDir.path("src", "components", "ErrorBoundary"),
   )
-  workingDir.remove("App.tsx")
+  workingDir.remove("index.tsx")
   workingDir.remove(workingDir.path("ignite", "templates", "screen", "NAMEScreen.tsx.ejs"))
   workingDir.remove(workingDir.path("ignite", "templates", "navigator"))
   workingDir.remove(workingDir.path("src", "screens"))

@@ -45,7 +45,7 @@ your-project
 │   ├── test-tsconfig.json
 ├── app.config.ts
 ├── app.json
-├── App.tsx
+├── index.tsx
 ├── eas.json
 ├── package.json
 └── README.md
@@ -123,6 +123,6 @@ The main entry point for your app!
 
 **[app.json/app.config.ts](./app.json.md)** - configuration files for your app. `app.json` contains the static configuration which will be fed into the dynamic configuration in `app.config.ts`, where Expo builds it's final configuration for the app.
 
-**[App.tsx](./App.tsx.md)** - entry point to your app. This is where you will find the main App component which renders the rest of the application.
+**[index.tsx](./index.tsx.md)** - entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
 **[eas.json](./eas.json.md)** - build configurations for Expo EAS builds
