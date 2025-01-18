@@ -4,13 +4,21 @@ import path from "path"
 import fs from "fs"
 
 function findAppDirectory(): string {
-  // List of possible paths to find the app directory
+  const currentDir = process.cwd()
+
+  // If we are in an Ignite environment (temporary directory)
+  if (currentDir.includes("ignite-")) {
+    const appDir = path.join(currentDir, "app")
+    if (fs.existsSync(appDir)) {
+      return appDir
+    }
+  }
+
+  // Alternative paths if we are not in the Ignite environment
   const possiblePaths = [
     path.join(process.cwd(), "app"),
     path.join(__dirname, "..", "app"),
     path.join(process.cwd().split("node_modules")[0], "app"),
-    // If running in a temporary directory (Yarn), check for 'Foo/app'
-    path.join(process.cwd(), "Foo", "app"),
   ]
 
   for (const dir of possiblePaths) {
@@ -19,7 +27,7 @@ function findAppDirectory(): string {
     }
   }
 
-  throw new Error("Could not find the 'app' directory. Checked paths: " + possiblePaths.join(", "))
+  throw new Error(`Could not find the 'app' directory. Current directory: ${currentDir}`)
 }
 
 const CONFIG = {
