@@ -8,13 +8,37 @@ function findAppDirectory(): string {
 
   // If we are in an Ignite environment (temporary directory)
   if (currentDir.includes("ignite-")) {
-    const appDir = path.join(currentDir, "Foo", "app")
-    if (fs.existsSync(appDir)) {
-      return appDir
+    // Try to find the actual temporary directory
+    const tempPaths = [
+      // macOS path
+      "/private/var/folders",
+      // Other common temp paths, for CicleCI for example
+      "/tmp",
+      currentDir,
+    ]
+
+    for (const tempPath of tempPaths) {
+      if (fs.existsSync(tempPath)) {
+        // Recursively search for the first directory that starts with 'ignite-'
+        const findIgniteDir = (startPath: string): string | null => {
+          const files = fs.readdirSync(startPath)
+          for (const file of files) {
+            const fullPath = path.join(startPath, file)
+            if (file.startsWith("ignite-") && fs.statSync(fullPath).isDirectory()) {
+              const appDir = path.join(fullPath, "Foo", "app")
+              if (fs.existsSync(appDir)) return appDir
+            }
+          }
+          return null
+        }
+
+        const appDir = findIgniteDir(tempPath)
+        if (appDir) return appDir
+      }
     }
   }
 
-  // Alternative paths if we are not in the Ignite environment
+  // Alternative paths if we don't find it in the temporary directory
   const possiblePaths = [
     path.join(process.cwd(), "app"),
     path.join(__dirname, "..", "app"),
