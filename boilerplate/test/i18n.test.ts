@@ -1,32 +1,50 @@
 import en from "../app/i18n/en"
 import { exec } from "child_process"
 import path from "path"
+import fs from "fs"
 
-// Configuration settings for the i18n test
+function findAppDirectory(): string {
+  // List of possible paths to find the app directory
+  const possiblePaths = [
+    path.join(process.cwd(), "app"),
+    path.join(__dirname, "..", "app"),
+    path.join(process.cwd().split("node_modules")[0], "app"),
+    // If running in a temporary directory (Yarn), check for 'Foo/app'
+    path.join(process.cwd(), "Foo", "app"),
+  ]
+
+  for (const dir of possiblePaths) {
+    if (fs.existsSync(dir)) {
+      return dir
+    }
+  }
+
+  throw new Error("Could not find the 'app' directory. Checked paths: " + possiblePaths.join(", "))
+}
+
 const CONFIG = {
-  srcDir: path.join(__dirname, "..", "app"), // Directory to scan for i18n keys
-  grepRegex: `[Tt]x=[{]?\\\\"[^\\"]*\\\\"[}]?\\|translate(\\\\"[^\\"]*\\\\"`, // Regex to find keys in the codebase
-  exceptions: [] as string[], // List of keys to exclude from checks (e.g., keys that are not in use but should be ignored)
-  retryLimit: 3, // Number of retries for executing the grep command
+  srcDir: findAppDirectory(),
+  grepRegex: `[Tt]x=[{]?\\\\"[^\\"]*\\\\"[}]?\\|translate(\\\\"[^\\"]*\\\\"`,
+  exceptions: [] as string[],
+  retryLimit: 3,
 }
 
 /**
  * Recursively collects all keys from the translation object and returns them in dot notation.
  * This function traverses the entire object to collect all keys, even nested ones.
  *
- * @param obj - The translation object (typically `en` in our case)
+ * @param obj - The translation object (typically `en`)
  * @param prefix - A prefix for nested keys (used for recursion)
  * @param keys - An accumulator array to store collected keys
  * @returns An array of collected keys
  */
 function collectKeys(obj: Record<string, any>, prefix = "", keys: string[] = []): string[] {
-  // Iterate over the object to collect all keys
   for (const [key, value] of Object.entries(obj)) {
-    const currentKey = prefix ? `${prefix}.${key}` : key // Form the full key name (e.g., "namespace.key")
+    const currentKey = prefix ? `${prefix}.${key}` : key
     if (typeof value === "object" && value !== null) {
-      collectKeys(value, currentKey, keys) // Recursively collect keys for nested objects
+      collectKeys(value, currentKey, keys)
     } else {
-      keys.push(currentKey) // Add the key to the list if it’s not an object
+      keys.push(currentKey)
     }
   }
   return keys
@@ -42,22 +60,19 @@ function collectKeys(obj: Record<string, any>, prefix = "", keys: string[] = [])
  */
 function execWithRetries(command: string, retries: number): Promise<string> {
   return new Promise((resolve, reject) => {
-    // Function that attempts to execute the command, with retry logic
     const attempt = (triesLeft: number) => {
       exec(command, (error, stdout) => {
         if (error) {
           if (triesLeft > 0) {
-            // If the command fails, warn the user and retry the command
             console.warn(`Command failed, retrying... (${triesLeft} retries left)`)
             return attempt(triesLeft - 1)
           }
-          // If retries are exhausted, reject with the error message
           return reject(new Error(`Command failed after multiple attempts: ${error.message}`))
         }
-        resolve(stdout.trim()) // Resolve the promise with the command output if successful
+        resolve(stdout.trim())
       })
     }
-    attempt(retries) // Start the first attempt
+    attempt(retries)
   })
 }
 
@@ -68,28 +83,25 @@ function execWithRetries(command: string, retries: number): Promise<string> {
  */
 describe("i18n", () => {
   test("There are no missing or unused keys", async () => {
-    // Build the grep command to search for i18n keys in the codebase
+    if (!fs.existsSync(CONFIG.srcDir)) {
+      throw new Error(`Directory not found: ${CONFIG.srcDir}`)
+    }
+
     const grepCommand = `grep -E '[Tt]x=[{]?"[^"]*"[}]?|translate\\("[^"]*"' -ohr ${CONFIG.srcDir} | grep -o '"[^"]*"'`
 
     try {
-      // Execute the grep command with retries
       const stdout = await execWithRetries(grepCommand, CONFIG.retryLimit)
 
-      // Collect all defined keys from the `en` translation object
-      const allKeysDefined = collectKeys(en).map((key) => key.replace(".", ":")) // Replace dots with colons for i18next compatibility
+      const allKeysDefined = collectKeys(en).map((key) => key.replace(".", ":"))
 
-      // Process the keys used in the codebase (from the grep command output)
       const allKeysUsed = stdout.replace(/"/g, "").split("\n").filter(Boolean)
 
-      // Find missing keys (defined keys that are not used in the codebase)
       const missingKeys = allKeysUsed.filter(
         (key) => !CONFIG.exceptions.includes(key) && !allKeysDefined.includes(key),
       )
 
-      // Find unused keys (used keys that are not defined in the `en` translation object)
       const unusedKeys = allKeysDefined.filter((key) => !allKeysUsed.includes(key))
 
-      // Combine results into a single block of text for clean output
       let output = `--- i18n Test Results ---\n`
       output += `Total keys defined: ${allKeysDefined.length}\n`
       output += `Total keys used: ${allKeysUsed.length}\n`
@@ -97,20 +109,16 @@ describe("i18n", () => {
       output += `Unused keys: ${unusedKeys.length > 0 ? unusedKeys.join(", ") : "None"}\n`
       output += `-------------------------\n`
 
-      // Log the results as a block to the console
       console.log(output)
 
-      // If there are missing keys, throw an error to fail the test
       if (missingKeys.length > 0) {
         throw new Error(`Missing translation keys detected: ${missingKeys.join(", ")}`)
       }
 
-      // If there are unused keys, print a warning to the console
       if (unusedKeys.length > 0) {
         console.warn(`Warning: Unused translation keys detected: ${unusedKeys.join(", ")}`)
       }
     } catch (error) {
-      // If any error occurs, throw an exception to fail the test
       throw new Error(`Test failed: ${error.message}`)
     }
   }, 240000) // 4 minutes timeout
