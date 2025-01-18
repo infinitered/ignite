@@ -1,9 +1,10 @@
 import en from "../app/i18n/en"
 import { exec } from "child_process"
+import path from "path"
 
 // Configuration settings for the i18n test
 const CONFIG = {
-  srcDir: `${process.cwd()}/app`, // Directory to scan for i18n keys
+  srcDir: path.join(__dirname, "..", "app"), // Directory to scan for i18n keys
   grepRegex: `[Tt]x=[{]?\\\\"[^\\"]*\\\\"[}]?\\|translate(\\\\"[^\\"]*\\\\"`, // Regex to find keys in the codebase
   exceptions: [] as string[], // List of keys to exclude from checks (e.g., keys that are not in use but should be ignored)
   retryLimit: 3, // Number of retries for executing the grep command
