@@ -8,7 +8,7 @@ function findAppDirectory(): string {
 
   // If we are in an Ignite environment (temporary directory)
   if (currentDir.includes("ignite-")) {
-    const appDir = path.join(currentDir, "app")
+    const appDir = path.join(currentDir, "Foo", "app")
     if (fs.existsSync(appDir)) {
       return appDir
     }
