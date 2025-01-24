@@ -9,6 +9,7 @@ import {
   refactorExpoRouterReactotronCmds,
   updateExpoRouterSrcDir,
   cleanupExpoRouterConversion,
+  updatePackagerCommandsInReadme,
 } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -593,6 +594,10 @@ module.exports = {
         : boilerplate(".gitignore")
       const targetIgnorePath = log(path(targetPath, ".gitignore"))
       copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
+
+      // adjust the README.md with proper packager run commands
+      const readmePath = path(targetPath, "README.md")
+      updatePackagerCommandsInReadme(readmePath, packagerName)
 
       if (exists(targetIgnorePath) === false) {
         warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
