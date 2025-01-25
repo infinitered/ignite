@@ -581,7 +581,14 @@ module.exports = {
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         targetPath,
-        excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
+        excluded: [
+          ".vscode",
+          "node_modules",
+          "yarn.lock",
+          "bun.lockb",
+          "bun.lock",
+          "package-lock.json",
+        ],
         overwrite,
       })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
