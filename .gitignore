@@ -19,6 +19,7 @@ coverage
 # Ignite's source repo.
 boilerplate/yarn.lock
 boilerplate/bun.lockb
+boilerplate/bun.lock
 boilerplate/.gitignore.template
 
 # Test artifacts
