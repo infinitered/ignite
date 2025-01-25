@@ -1,6 +1,7 @@
-import { GluegunToolbox } from "gluegun"
+import { filesystem, GluegunToolbox } from "gluegun"
 import { children } from "./filesystem-ext"
 import { boolFlag } from "./flag"
+import { packager, PackagerName } from "./packager"
 
 export const isAndroidInstalled = (toolbox: GluegunToolbox): boolean => {
   const androidHome = process.env.ANDROID_HOME
@@ -343,4 +344,23 @@ export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath:
   workingDir.remove(workingDir.path("src", "screens"))
   workingDir.remove(workingDir.path("src", "navigators"))
   workingDir.remove("app")
+}
+
+export function updatePackagerCommandsInReadme(readmePath: string, packagerName: PackagerName) {
+  try {
+    let readmeContents = filesystem.read(readmePath)
+
+    // replace `yarn` exactly with the install command
+    readmeContents = readmeContents.replace("yarn", packager.installCmd({ packagerName }))
+
+    // replace `yarn` plus some command after the space with the proper packager run command
+    // pass the matched command to runCmd as string excluding the `yarn` part
+    readmeContents = readmeContents.replace(/^yarn\s(.*)$/gm, (_, cmd) =>
+      packager.runCmd(cmd, { packagerName }),
+    )
+
+    filesystem.write(readmePath, readmeContents)
+  } catch (e) {
+    console.error("Unable to update README.md.")
+  }
 }

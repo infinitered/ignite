@@ -9,6 +9,7 @@ import {
   refactorExpoRouterReactotronCmds,
   updateExpoRouterSrcDir,
   cleanupExpoRouterConversion,
+  updatePackagerCommandsInReadme,
 } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -580,7 +581,14 @@ module.exports = {
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         targetPath,
-        excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
+        excluded: [
+          ".vscode",
+          "node_modules",
+          "yarn.lock",
+          "bun.lockb",
+          "bun.lock",
+          "package-lock.json",
+        ],
         overwrite,
       })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -593,6 +601,10 @@ module.exports = {
         : boilerplate(".gitignore")
       const targetIgnorePath = log(path(targetPath, ".gitignore"))
       copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
+
+      // adjust the README.md with proper packager run commands
+      const readmePath = path(targetPath, "README.md")
+      updatePackagerCommandsInReadme(readmePath, packagerName)
 
       if (exists(targetIgnorePath) === false) {
         warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)

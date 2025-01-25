@@ -56,7 +56,7 @@ describe("ignite new", () => {
       expect(dirs).toContain("ios")
       expect(dirs).toContain("android")
       expect(dirs).toContain("app")
-      expect(dirs).toContain("bun.lockb")
+      expect(dirs).toContain("bun.lock")
 
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
@@ -326,7 +326,7 @@ describe("ignite new", () => {
 async function checkForLeftoverHelloWorld(filePath: string) {
   const ignoreFolders = [
     "/xcuserdata",
-    "bun.lockb",
+    "bun.lock",
     ".git",
     "node_modules",
     "Pods",
