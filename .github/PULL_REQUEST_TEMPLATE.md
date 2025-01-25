@@ -2,7 +2,7 @@
 
 <!-- Add your PR description here -->
 
-* Issues: <!-- e.g. "fixes #9999", "related: #9999", etc -->
+- Issues: <!-- e.g. "fixes #9999", "related: #9999", etc -->
 
 ## Screenshots
 
