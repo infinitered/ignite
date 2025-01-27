@@ -8,9 +8,15 @@ export const storage = new MMKV()
  */
 export function loadString(key: string): string | null {
   try {
-    return storage.getString(key) ?? null
-  } catch {
-    // not sure why this would fail... even reading the RN docs I'm unclear
+    const value = storage.getString(key)
+    if (value === undefined) {
+      return null // Explicitly return null if the value is undefined
+    }
+    return value
+  } catch (error) {
+    if (__DEV__) {
+      console.error("Error reading from storage", error)
+    }
     return null
   }
 }
