@@ -81,7 +81,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | apisauce                         | REST client          | v2      | Communicate with back-end                      |
 | Reactotron RN                    | Inspector/Debugger   | v3      | JS debugging                                   |
 | Hermes                           | JS engine            |         | Fine-tuned JS engine for RN                    |
-| Jest                             | Test Runner          | v26     | Standard test runner for JS apps               |
+| Jest                             | Test Runner          | v29     | Standard test runner for JS apps               |
 | Maestro                          | Testing Framework    |         | Automate end-to-end UI testing                 |
 | date-fns                         | Date library         | v4      | Excellent date library                         |
 | react-native-keyboard-controller | Keyboard library     | v1      | Great keyboard manager library                 |

@@ -96,7 +96,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from \\"react-native\\"
 import {
   Text,
 } from \\"app/components\\"
-import { isRTL } from \\"../i18n\\"
+import { isRTL } from \\"@/i18n\\"
 import { AppStackScreenProps } from \\"../navigators\\"
 import type { ThemedStyle } from \\"app/theme\\"
 import { useSafeAreaInsetsStyle } from \\"../utils/useSafeAreaInsetsStyle\\"
