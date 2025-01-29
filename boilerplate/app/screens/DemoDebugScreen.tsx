@@ -13,7 +13,7 @@ import { Button, ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "../theme"
-import { isRTL } from "../i18n"
+import { isRTL } from "@/i18n"
 import { useStores } from "../models"
 import { useAppTheme } from "@/utils/useAppTheme"
 

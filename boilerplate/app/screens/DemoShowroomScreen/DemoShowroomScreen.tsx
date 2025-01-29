@@ -4,7 +4,7 @@ import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } 
 import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
-import { TxKeyPath, isRTL, translate } from "../../i18n"
+import { TxKeyPath, isRTL, translate } from "@/i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import type { Theme, ThemedStyle } from "@/theme"
 import { $styles } from "@/theme"

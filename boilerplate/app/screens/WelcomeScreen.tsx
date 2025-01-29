@@ -6,7 +6,7 @@ import {
   Text,
   Screen,
 } from "@/components"
-import { isRTL } from "../i18n"
+import { isRTL } from "@/i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
 import { $styles, type ThemedStyle } from "@/theme"
