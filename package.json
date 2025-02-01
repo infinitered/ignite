@@ -68,6 +68,7 @@
     "husky": "^7.0.1",
     "jest": "^27.0.6",
     "prettier": "^3.3.3",
+    "prettier-2": "npm:prettier@2.8.8",
     "semantic-release": "^17.4.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",
@@ -159,6 +160,7 @@
       "tsx",
       "js",
       "jsx"
-    ]
+    ],
+    "prettierPath": "<rootDir>/node_modules/prettier-2/index.js" 
   }
 }
