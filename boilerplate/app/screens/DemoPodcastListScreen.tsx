@@ -40,6 +40,7 @@ import { $styles } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
 
 const ICON_SIZE = 14
 
@@ -88,14 +89,14 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
               <EmptyState
                 preset="generic"
                 style={themed($emptyState)}
-                headingTx={
+                heading={
                   episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen:noFavoritesEmptyState.heading"
+                    ? translations.noFavoritesEmptyState.heading
                     : undefined
                 }
-                contentTx={
+                content={
                   episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen:noFavoritesEmptyState.content"
+                    ? translations.noFavoritesEmptyState.content
                     : undefined
                 }
                 button={episodeStore.favoritesOnly ? "" : undefined}
@@ -107,7 +108,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           }
           ListHeaderComponent={
             <View style={themed($heading)}>
-              <Text preset="heading" tx="demoPodcastListScreen:title" />
+              <Text preset="heading" text={translations.title} />
               {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
                 <View style={themed($toggle)}>
                   <Switch
@@ -115,10 +116,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
                     onValueChange={() =>
                       episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
                     }
-                    labelTx="demoPodcastListScreen:onlyFavorites"
+                    label={translations.onlyFavorites}
                     labelPosition="left"
                     labelStyle={$labelStyle}
-                    accessibilityLabel={translate("demoPodcastListScreen:accessibility.switch")}
+                    accessibilityLabel={translations.accessibility.switch}
                   />
                 </View>
               )}
@@ -194,7 +195,7 @@ const EpisodeCard = observer(function EpisodeCard({
       Platform.select<AccessibilityProps>({
         ios: {
           accessibilityLabel: episode.title,
-          accessibilityHint: translate("demoPodcastListScreen:accessibility.cardHint", {
+          accessibilityHint: translations.accessibility.cardHint({
             action: isFavorite ? "unfavorite" : "favorite",
           }),
         },
@@ -203,7 +204,8 @@ const EpisodeCard = observer(function EpisodeCard({
           accessibilityActions: [
             {
               name: "longpress",
-              label: translate("demoPodcastListScreen:accessibility.favoriteAction"),
+              // label: translate("demoPodcastListScreen:accessibility.favoriteAction"),
+              label: translations.accessibility.favoriteAction,
             },
           ],
           onAccessibilityAction: ({ nativeEvent }) => {
@@ -288,8 +290,8 @@ const EpisodeCard = observer(function EpisodeCard({
           style={themed([$favoriteButton, isFavorite && $unFavoriteButton])}
           accessibilityLabel={
             isFavorite
-              ? translate("demoPodcastListScreen:accessibility.unfavoriteIcon")
-              : translate("demoPodcastListScreen:accessibility.favoriteIcon")
+              ? translations.accessibility.unfavoriteIcon
+              : translations.accessibility.favoriteIcon
           }
           LeftAccessory={ButtonLeftAccessory}
         >
@@ -297,16 +299,34 @@ const EpisodeCard = observer(function EpisodeCard({
             size="xxs"
             accessibilityLabel={episode.duration.accessibilityLabel}
             weight="medium"
-            text={
-              isFavorite
-                ? translate("demoPodcastListScreen:unfavoriteButton")
-                : translate("demoPodcastListScreen:favoriteButton")
-            }
+            text={isFavorite ? translations.unfavoriteButton : translations.favoriteButton}
           />
         </Button>
       }
     />
   )
+})
+
+const translations = TranslateSheet.create("demoPodcastListScreen", {
+  title: "React Native Radio episodes",
+  onlyFavorites: "Only Show Favorites",
+  favoriteButton: "Favorite",
+  unfavoriteButton: "Unfavorite",
+  accessibility: {
+    cardHint:
+      "Double tap to listen to the episode. Double tap and hold to {{action}} this episode.",
+    switch: "Switch on to only show favorites",
+    favoriteAction: "Toggle Favorite",
+    favoriteIcon: "Episode not favorited",
+    unfavoriteIcon: "Episode favorited",
+    publishLabel: "Published {{date}}",
+    durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
+  },
+  noFavoritesEmptyState: {
+    heading: "This looks a bit empty",
+    content:
+      "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
+  },
 })
 
 // #region Styles
