@@ -62,7 +62,8 @@
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.1.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "translate-sheet": "^0.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

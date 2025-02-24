@@ -28,7 +28,10 @@
     "ios": {
       "icon": "./assets/images/app-icon-ios.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.helloworld"
+      "bundleIdentifier": "com.helloworld",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "web": {
       "favicon": "./assets/images/app-icon-web-favicon.png",
@@ -49,6 +52,11 @@
     ],
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f6d83224-2f31-4a21-aa9e-7627e3deba6a"
+      }
     }
   },
   "ignite": {
