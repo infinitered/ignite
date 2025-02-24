@@ -7,6 +7,7 @@ import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 import { translate } from "@/i18n"
+import TranslateSheet from "translate-sheet"
 
 const $imageContainer: ViewStyle = {
   alignItems: "center",
@@ -35,11 +36,27 @@ const $aspectRatioBox: ThemedStyle<ViewStyle & ImageStyle> = (theme) => ({
   backgroundColor: theme.colors.palette.neutral800,
 })
 
+const translations = TranslateSheet.create("demoAutoImage", {
+  description: "An Image component that automatically sizes a remote or data-uri image.",
+  useCase: {
+    remoteUri: { name: "Remote URI" },
+    base64Uri: { name: "Base64 URI" },
+    scaledToFitDimensions: {
+      name: "Scaled to Fit Dimensions",
+      description:
+        "Providing a `maxWidth` and/or `maxHeight` props, the image will automatically scale while retaining it's aspect ratio. How is this different from `resizeMode: 'contain'`? Firstly, you can specify only one side's size (not both). Secondly, the image will scale to fit the desired dimensions instead of just being contained within its image-container.",
+      heightAuto: "width: 60 / height: auto",
+      widthAuto: "width: auto / height: 32",
+      bothManual: "width: 60 / height: 60",
+    },
+  },
+})
+
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
-  description: "demoAutoImage:description",
+  description: translations.description,
   data: ({ theme, themed }) => [
-    <DemoUseCase name="demoAutoImage:useCase.remoteUri.name">
+    <DemoUseCase name={translations.useCase.remoteUri.name}>
       <View style={$imageContainer}>
         <AutoImage
           source={{
@@ -49,7 +66,7 @@ export const DemoAutoImage: Demo = {
       </View>
     </DemoUseCase>,
 
-    <DemoUseCase name="demoAutoImage:useCase.base64Uri.name">
+    <DemoUseCase name={translations.useCase.base64Uri.name}>
       <View style={$imageContainer}>
         <AutoImage
           source={{
@@ -60,8 +77,8 @@ export const DemoAutoImage: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoAutoImage:useCase.scaledToFitDimensions.name"
-      description="demoAutoImage:useCase.scaledToFitDimensions.description"
+      name={translations.useCase.scaledToFitDimensions.name}
+      description={translations.useCase.scaledToFitDimensions.description}
     >
       <View style={[$styles.row, $aspectRatioWidthExampleContainer]}>
         <Text
@@ -112,9 +129,12 @@ export const DemoAutoImage: Demo = {
         />
       </View>
 
-      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
-        {translate("demoAutoImage:useCase.scaledToFitDimensions.heightAuto")}
-      </Text>
+      <Text
+        text={translations.useCase.scaledToFitDimensions.heightAuto}
+        weight="bold"
+        size="xs"
+        style={themed($aspectRatioDescription)}
+      />
 
       <DemoDivider size={40} />
 
@@ -161,9 +181,12 @@ export const DemoAutoImage: Demo = {
         </View>
       </View>
 
-      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
-        {translate("demoAutoImage:useCase.scaledToFitDimensions.widthAuto")}
-      </Text>
+      <Text
+        text={translations.useCase.scaledToFitDimensions.widthAuto}
+        weight="bold"
+        size="xs"
+        style={themed($aspectRatioDescription)}
+      />
 
       <DemoDivider size={40} />
 
@@ -217,9 +240,12 @@ export const DemoAutoImage: Demo = {
         />
       </View>
 
-      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
-        {translate("demoAutoImage:useCase.scaledToFitDimensions.bothManual")}
-      </Text>
+      <Text
+        text={translations.useCase.scaledToFitDimensions.bothManual}
+        weight="bold"
+        size="xs"
+        style={themed($aspectRatioDescription)}
+      />
     </DemoUseCase>,
   ],
 }

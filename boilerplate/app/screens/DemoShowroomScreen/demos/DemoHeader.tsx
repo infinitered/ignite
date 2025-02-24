@@ -6,10 +6,52 @@ import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 import type { ThemedStyle } from "@/theme"
+import TranslateSheet from "translate-sheet"
 
 const $rightAlignTitle: TextStyle = {
   textAlign: "right",
 }
+
+const translations = TranslateSheet.create("demoHeader", {
+  description:
+    "Component that appears on many screens. Will hold navigation buttons and screen title.",
+  useCase: {
+    actionIcons: {
+      name: "Action Icons",
+      description: "You can easily pass in icons to the left or right action components.",
+      leftIconTitle: "Left Icon",
+      rightIconTitle: "Right Icon",
+      bothIconsTitle: "Both Icons",
+    },
+    actionText: {
+      name: "Action Text",
+      description: "You can easily pass in text to the left or right action components.",
+      leftTxTitle: "Via `leftTx`",
+      rightTextTitle: "Via `rightText`",
+    },
+    customActionComponents: {
+      name: "Custom Action Components",
+      description:
+        "If the icon or text options are not enough, you can pass in your own custom action component.",
+      customLeftActionTitle: "Custom Left Action",
+    },
+    titleModes: {
+      name: "Title Modes",
+      description:
+        "Title can be forced to stay in center (default) but may be cut off if it's too long. You can optionally make it adjust to the action buttons.",
+      centeredTitle: "Centered Title",
+      flexTitle: "Flex Title",
+    },
+    styling: {
+      name: "Styling",
+      description: "The component can be styled easily.",
+      styledTitle: "Styled Title",
+      styledWrapperTitle: "Styled Wrapper",
+      tintedIconsTitle: "Tinted Icons",
+    },
+  },
+  demoHeaderTxExample: "Yay",
+})
 
 const $customLeftAction: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
@@ -33,26 +75,26 @@ const $customWhiteTitle: ThemedStyle<TextStyle> = ({ colors }) => ({
 
 export const DemoHeader: Demo = {
   name: "Header",
-  description: "demoHeader:description",
+  description: translations.description,
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="demoHeader:useCase.actionIcons.name"
-      description="demoHeader:useCase.actionIcons.description"
+      name={translations.useCase.actionIcons.name}
+      description={translations.useCase.actionIcons.description}
     >
       <Header
-        titleTx="demoHeader:useCase.actionIcons.leftIconTitle"
+        title={translations.useCase.actionIcons.leftIconTitle}
         leftIcon="ladybug"
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
       <Header
-        titleTx="demoHeader:useCase.actionIcons.rightIconTitle"
+        title={translations.useCase.actionIcons.rightIconTitle}
         rightIcon="ladybug"
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
       <Header
-        titleTx="demoHeader:useCase.actionIcons.bothIconsTitle"
+        title={translations.useCase.actionIcons.bothIconsTitle}
         leftIcon="ladybug"
         rightIcon="ladybug"
         safeAreaEdges={[]}
@@ -60,28 +102,28 @@ export const DemoHeader: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoHeader:useCase.actionText.name"
-      description="demoHeader:useCase.actionText.description"
+      name={translations.useCase.actionText.name}
+      description={translations.useCase.actionText.description}
     >
       <Header
-        titleTx="demoHeader:useCase.actionText.leftTxTitle"
-        leftTx="demoShowroomScreen:demoHeaderTxExample"
+        title={translations.useCase.actionText.leftTxTitle}
+        leftText={translations.demoHeaderTxExample}
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
       <Header
-        titleTx="demoHeader:useCase.actionText.rightTextTitle"
+        title={translations.useCase.actionText.rightTextTitle}
         rightText="Yay"
         safeAreaEdges={[]}
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoHeader:useCase.customActionComponents.name"
-      description="demoHeader:useCase.customActionComponents.description"
+      name={translations.useCase.customActionComponents.name}
+      description={translations.useCase.customActionComponents.description}
     >
       <Header
-        titleTx="demoHeader:useCase.customActionComponents.customLeftActionTitle"
+        title={translations.useCase.customActionComponents.customLeftActionTitle}
         titleMode="flex"
         titleStyle={$rightAlignTitle}
         LeftActionComponent={
@@ -96,18 +138,18 @@ export const DemoHeader: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoHeader:useCase.titleModes.name"
-      description="demoHeader:useCase.titleModes.description"
+      name={translations.useCase.titleModes.name}
+      description={translations.useCase.titleModes.description}
     >
       <Header
-        titleTx="demoHeader:useCase.titleModes.centeredTitle"
+        title={translations.useCase.titleModes.centeredTitle}
         leftIcon="ladybug"
         rightText="Hooray"
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
       <Header
-        titleTx="demoHeader:useCase.titleModes.flexTitle"
+        title={translations.useCase.titleModes.flexTitle}
         titleMode="flex"
         leftIcon="ladybug"
         rightText="Hooray"
@@ -116,17 +158,17 @@ export const DemoHeader: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoHeader:useCase.styling.name"
-      description="demoHeader:useCase.styling.description"
+      name={translations.useCase.styling.name}
+      description={translations.useCase.styling.description}
     >
       <Header
-        titleTx="demoHeader:useCase.styling.styledTitle"
+        title={translations.useCase.styling.styledTitle}
         titleStyle={themed($customTitle)}
         safeAreaEdges={[]}
       />
       <DemoDivider size={24} />
       <Header
-        titleTx="demoHeader:useCase.styling.styledWrapperTitle"
+        title={translations.useCase.styling.styledWrapperTitle}
         titleStyle={themed($customWhiteTitle)}
         backgroundColor={theme.colors.error}
         style={{ height: 35 }}
@@ -134,7 +176,7 @@ export const DemoHeader: Demo = {
       />
       <DemoDivider size={24} />
       <Header
-        titleTx="demoHeader:useCase.styling.tintedIconsTitle"
+        title={translations.useCase.styling.tintedIconsTitle}
         titleStyle={themed($customWhiteTitle)}
         backgroundColor={theme.colors.error}
         leftIcon="ladybug"

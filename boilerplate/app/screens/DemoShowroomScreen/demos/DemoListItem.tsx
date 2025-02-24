@@ -6,7 +6,7 @@ import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
+import TranslateSheet from "translate-sheet"
 
 const listData =
   `Tempor Id Ea Aliqua Pariatur Aliquip. Irure Minim Voluptate Consectetur Consequat Sint Esse Proident Irure. Nostrud Elit Veniam Nostrud Excepteur Minim Deserunt Quis Dolore Velit Nulla Irure Voluptate Tempor. Occaecat Amet Laboris Nostrud Qui Do Quis Lorem Ex Elit Fugiat Deserunt. In Pariatur Excepteur Exercitation Ex Incididunt Qui Mollit Dolor Sit Non. Culpa Officia Minim Cillum Exercitation Voluptate Proident Laboris Et Est Reprehenderit Quis Pariatur Nisi`
@@ -41,66 +41,113 @@ const $listStyle: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   backgroundColor: colors.palette.neutral200,
 })
 
+const translations = TranslateSheet.create("demoListItem", {
+  description: "A styled row component that can be used in FlatList, SectionList, or by itself.",
+  useCase: {
+    height: {
+      name: "Height",
+      description: "The row can be different heights.",
+      defaultHeight: "Default height (56px)",
+      customHeight: "Custom height via `height` prop",
+      textHeight:
+        "Height determined by text content - Reprehenderit incididunt deserunt do do ea labore.",
+      longText: "Limit long text to one line - Reprehenderit incididunt deserunt do do ea labore.",
+    },
+    separators: {
+      name: "Separators",
+      description: "The separator / divider is preconfigured and optional.",
+      topSeparator: "Only top separator",
+      topAndBottomSeparator: "Top and bottom separators",
+      bottomSeparator: "Only bottom separator",
+    },
+    icons: {
+      name: "Icons",
+      description: "You can customize the icons on the left or right.",
+      leftIcon: "Left icon",
+      rightIcon: "Right Icon",
+      leftRightIcons: "Left & Right Icons",
+    },
+    customLeftRight: {
+      name: "Custom Left/Right Components",
+      description: "If you need a custom left/right component, you can pass it in.",
+      customLeft: "Custom left component",
+      customRight: "Custom right component",
+    },
+    passingContent: {
+      name: "Passing Content",
+      description: "There are a few different ways to pass content.",
+      text: "Via `text` prop - reprehenderit sint",
+      children: "Children - mostrud mollit",
+      nestedChildren1: "Nested children - proident veniam.",
+      nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
+    },
+    listIntegration: {
+      name: "Integrating w/ FlatList & FlashList",
+      description: "The component can be easily integrated with your favorite list interface.",
+    },
+    styling: {
+      name: "Styling",
+      description: "The component can be styled easily.",
+      styledText: "Styled Text",
+      styledContainer: "Styled Container (separators)",
+      tintedIcons: "Tinted Icons",
+    },
+  },
+  demoViaTxProp: "Via `tx` Prop",
+})
+
 export const DemoListItem: Demo = {
   name: "ListItem",
-  description: "demoListItem:description",
+  description: translations.description,
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="demoListItem:useCase.height.name"
-      description="demoListItem:useCase.height.description"
+      name={translations.useCase.height.name}
+      description={translations.useCase.height.description}
     >
-      <ListItem topSeparator>{translate("demoListItem:useCase.height.defaultHeight")}</ListItem>
-
-      <ListItem topSeparator height={100}>
-        {translate("demoListItem:useCase.height.customHeight")}
-      </ListItem>
-
-      <ListItem topSeparator>{translate("demoListItem:useCase.height.textHeight")}</ListItem>
-
-      <ListItem topSeparator bottomSeparator TextProps={{ numberOfLines: 1 }}>
-        {translate("demoListItem:useCase.height.longText")}
-      </ListItem>
+      <ListItem text={translations.useCase.height.defaultHeight} topSeparator />
+      <ListItem text={translations.useCase.height.customHeight} topSeparator height={100} />
+      <ListItem text={translations.useCase.height.textHeight} topSeparator />
+      <ListItem
+        text={translations.useCase.height.longText}
+        topSeparator
+        bottomSeparator
+        TextProps={{ numberOfLines: 1 }}
+      />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoListItem:useCase.separators.name"
-      description="demoListItem:useCase.separators.description"
+      name={translations.useCase.separators.name}
+      description={translations.useCase.separators.description}
     >
-      <ListItem topSeparator>{translate("demoListItem:useCase.separators.topSeparator")}</ListItem>
-
+      <ListItem text={translations.useCase.separators.topSeparator} topSeparator />
       <DemoDivider size={40} />
-
-      <ListItem topSeparator bottomSeparator>
-        {translate("demoListItem:useCase.separators.topAndBottomSeparator")}
-      </ListItem>
-
+      <ListItem
+        text={translations.useCase.separators.topAndBottomSeparator}
+        topSeparator
+        bottomSeparator
+      />
       <DemoDivider size={40} />
-
-      <ListItem bottomSeparator>
-        {translate("demoListItem:useCase.separators.bottomSeparator")}
-      </ListItem>
+      <ListItem text={translations.useCase.separators.bottomSeparator} bottomSeparator />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoListItem:useCase.icons.name"
-      description="demoListItem:useCase.icons.description"
+      name={translations.useCase.icons.name}
+      description={translations.useCase.icons.description}
     >
-      <ListItem topSeparator leftIcon="ladybug">
-        {translate("demoListItem:useCase.icons.leftIcon")}
-      </ListItem>
-
-      <ListItem topSeparator rightIcon="ladybug">
-        {translate("demoListItem:useCase.icons.rightIcon")}
-      </ListItem>
-
-      <ListItem topSeparator bottomSeparator rightIcon="ladybug" leftIcon="ladybug">
-        {translate("demoListItem:useCase.icons.leftRightIcons")}
-      </ListItem>
+      <ListItem text={translations.useCase.icons.leftIcon} topSeparator leftIcon="ladybug" />
+      <ListItem text={translations.useCase.icons.rightIcon} topSeparator rightIcon="ladybug" />
+      <ListItem
+        text={translations.useCase.icons.leftRightIcons}
+        topSeparator
+        bottomSeparator
+        rightIcon="ladybug"
+        leftIcon="ladybug"
+      />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoListItem:useCase.customLeftRight.name"
-      description="demoListItem:useCase.customLeftRight.description"
+      name={translations.useCase.customLeftRight.name}
+      description={translations.useCase.customLeftRight.description}
     >
       <ListItem
         topSeparator
@@ -111,9 +158,8 @@ export const DemoListItem: Demo = {
             ))}
           </View>
         }
-      >
-        {translate("demoListItem:useCase.customLeftRight.customLeft")}
-      </ListItem>
+        text={translations.useCase.customLeftRight.customLeft}
+      />
 
       <ListItem
         topSeparator
@@ -125,34 +171,30 @@ export const DemoListItem: Demo = {
             ))}
           </View>
         }
-      >
-        {translate("demoListItem:useCase.customLeftRight.customRight")}
-      </ListItem>
+        text={translations.useCase.customLeftRight.customRight}
+      />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoListItem:useCase.passingContent.name"
-      description="demoListItem:useCase.passingContent.description"
+      name={translations.useCase.passingContent.name}
+      description={translations.useCase.passingContent.description}
     >
-      <ListItem topSeparator text={translate("demoListItem:useCase.passingContent.children")} />
-      <ListItem topSeparator tx="demoShowroomScreen:demoViaTxProp" />
-      <ListItem topSeparator>{translate("demoListItem:useCase.passingContent.children")}</ListItem>
+      <ListItem text={translations.useCase.passingContent.children} topSeparator />
+      {/* TODO: with TranslateSheet, does the tx prop across components become deprecated? */}
+      {/* <ListItem topSeparator text={translations.demoViaTxProp} /> */}
+      <ListItem text={translations.useCase.passingContent.children} topSeparator />
       <ListItem topSeparator bottomSeparator>
         <Text>
-          <Text preset="bold">
-            {translate("demoListItem:useCase.passingContent.nestedChildren1")}
-          </Text>
+          <Text text={translations.useCase.passingContent.nestedChildren1} preset="bold" />
           {` `}
-          <Text preset="default">
-            {translate("demoListItem:useCase.passingContent.nestedChildren2")}
-          </Text>
+          <Text text={translations.useCase.passingContent.nestedChildren2} preset="default" />
         </Text>
       </ListItem>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoListItem:useCase.listIntegration.name"
-      description="demoListItem:useCase.listIntegration.description"
+      name={translations.useCase.listIntegration.name}
+      description={translations.useCase.listIntegration.description}
     >
       <View style={themed($listStyle)}>
         <ListView<string>
@@ -171,31 +213,30 @@ export const DemoListItem: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoListItem:useCase.styling.name"
-      description="demoListItem:useCase.styling.description"
+      name={translations.useCase.styling.name}
+      description={translations.useCase.styling.description}
     >
-      <ListItem topSeparator textStyle={themed($customTextStyle)}>
-        {translate("demoListItem:useCase.styling.styledText")}
-      </ListItem>
-
+      <ListItem
+        text={translations.useCase.styling.styledText}
+        topSeparator
+        textStyle={themed($customTextStyle)}
+      />
       <ListItem
         topSeparator
+        text={translations.useCase.styling.styledText}
         textStyle={{ color: theme.colors.palette.neutral100 }}
         style={themed($customTouchableStyle)}
-      >
-        {translate("demoListItem:useCase.styling.styledText")}
-      </ListItem>
-
+      />
       <ListItem
         topSeparator
+        text={translations.useCase.styling.styledContainer}
         textStyle={{ color: theme.colors.palette.neutral100 }}
         style={themed($customTouchableStyle)}
         containerStyle={themed($customContainerStyle)}
-      >
-        {translate("demoListItem:useCase.styling.styledContainer")}
-      </ListItem>
+      />
       <ListItem
         topSeparator
+        text={translations.useCase.styling.tintedIcons}
         textStyle={{ color: theme.colors.palette.neutral100 }}
         style={themed($customTouchableStyle)}
         containerStyle={themed($customContainerStyle)}
@@ -203,9 +244,7 @@ export const DemoListItem: Demo = {
         leftIcon="ladybug"
         rightIconColor={theme.colors.palette.neutral100}
         leftIconColor={theme.colors.palette.neutral100}
-      >
-        {translate("demoListItem:useCase.styling.tintedIcons")}
-      </ListItem>
+      />
     </DemoUseCase>,
   ],
 }

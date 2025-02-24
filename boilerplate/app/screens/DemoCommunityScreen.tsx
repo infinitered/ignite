@@ -7,6 +7,7 @@ import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "@/i18n"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
 
 const chainReactLogo = require("../../assets/images/demo/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/demo/rnl-logo.png")
@@ -18,25 +19,25 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
     const { themed } = useAppTheme()
     return (
       <Screen preset="scroll" contentContainerStyle={$styles.container} safeAreaEdges={["top"]}>
-        <Text preset="heading" tx="demoCommunityScreen:title" style={themed($title)} />
-        <Text tx="demoCommunityScreen:tagLine" style={themed($tagline)} />
+        <Text preset="heading" text={translations.title} style={themed($title)} />
+        <Text text={translations.tagLine} style={themed($tagline)} />
 
-        <Text preset="subheading" tx="demoCommunityScreen:joinUsOnSlackTitle" />
-        <Text tx="demoCommunityScreen:joinUsOnSlack" style={themed($description)} />
+        <Text preset="subheading" text={translations.joinUsOnSlackTitle} />
+        <Text text={translations.joinUsOnSlack} style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen:joinSlackLink"
+          text={translations.joinSlackLink}
           leftIcon="slack"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://community.infinite.red/")}
         />
         <Text
           preset="subheading"
-          tx="demoCommunityScreen:makeIgniteEvenBetterTitle"
+          text={translations.makeIgniteEvenBetterTitle}
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen:makeIgniteEvenBetter" style={themed($description)} />
+        <Text text={translations.makeIgniteEvenBetter} style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen:contributeToIgniteLink"
+          text={translations.contributeToIgniteLink}
           leftIcon="github"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
@@ -44,12 +45,12 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
 
         <Text
           preset="subheading"
-          tx="demoCommunityScreen:theLatestInReactNativeTitle"
+          text={translations.theLatestInReactNativeTitle}
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen:theLatestInReactNative" style={themed($description)} />
+        <Text text={translations.theLatestInReactNative} style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen:reactNativeRadioLink"
+          text={translations.reactNativeRadioLink}
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
@@ -60,7 +61,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           onPress={() => openLinkInBrowser("https://reactnativeradio.com/")}
         />
         <ListItem
-          tx="demoCommunityScreen:reactNativeNewsletterLink"
+          text={translations.reactNativeNewsletterLink}
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
@@ -71,7 +72,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           onPress={() => openLinkInBrowser("https://reactnativenewsletter.com/")}
         />
         <ListItem
-          tx="demoCommunityScreen:reactNativeLiveLink"
+          text={translations.reactNativeLiveLink}
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
@@ -82,7 +83,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           onPress={() => openLinkInBrowser("https://rn.live/")}
         />
         <ListItem
-          tx="demoCommunityScreen:chainReactConferenceLink"
+          text={translations.chainReactConferenceLink}
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
             <View style={[$styles.row, themed($logoContainer)]}>
@@ -91,14 +92,10 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           }
           onPress={() => openLinkInBrowser("https://cr.infinite.red/")}
         />
-        <Text
-          preset="subheading"
-          tx="demoCommunityScreen:hireUsTitle"
-          style={themed($sectionTitle)}
-        />
-        <Text tx="demoCommunityScreen:hireUs" style={themed($description)} />
+        <Text preset="subheading" text={translations.hireUsTitle} style={themed($sectionTitle)} />
+        <Text text={translations.hireUs} style={themed($description)} />
         <ListItem
-          tx="demoCommunityScreen:hireUsLink"
+          text={translations.hireUsLink}
           leftIcon="clap"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           onPress={() => openLinkInBrowser("https://infinite.red/contact")}
@@ -106,6 +103,30 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
       </Screen>
     )
   }
+
+const translations = TranslateSheet.create("demoCommunityScreen", {
+  title: "Connect with the community",
+  tagLine:
+    "Plug in to Infinite Red's community of React Native engineers and level up your app development with us!",
+  joinUsOnSlackTitle: "Join us on Slack",
+  joinUsOnSlack:
+    "Wish there was a place to connect with React Native engineers around the world? Join the conversation in the Infinite Red Community Slack! Our growing community is a safe space to ask questions, learn from others, and grow your network.",
+  joinSlackLink: "Join the Slack Community",
+  makeIgniteEvenBetterTitle: "Make Ignite even better",
+  makeIgniteEvenBetter:
+    "Have an idea to make Ignite even better? We're happy to hear that! We're always looking for others who want to help us build the best React Native tooling out there. Join us over on GitHub to join us in building the future of Ignite.",
+  contributeToIgniteLink: "Contribute to Ignite",
+  theLatestInReactNativeTitle: "The latest in React Native",
+  theLatestInReactNative: "We're here to keep you current on all React Native has to offer.",
+  reactNativeRadioLink: "React Native Radio",
+  reactNativeNewsletterLink: "React Native Newsletter",
+  reactNativeLiveLink: "React Native Live",
+  chainReactConferenceLink: "Chain React Conference",
+  hireUsTitle: "Hire Infinite Red for your next project",
+  hireUs:
+    "Whether it's running a full project or getting teams up to speed with our hands-on training, Infinite Red can help with just about any React Native project.",
+  hireUsLink: "Send us a message",
+})
 
 const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.sm,

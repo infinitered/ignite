@@ -14,7 +14,7 @@ import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 import { $styles, type ThemedStyle } from "@/theme"
-import { translate } from "@/i18n"
+import TranslateSheet from "translate-sheet"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
   const [value, setValue] = useState(props.value || false)
@@ -42,33 +42,102 @@ const $centeredText: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginTop: spacing.xs,
 })
 
+const translations = TranslateSheet.create("demoToggle", {
+  description:
+    "Renders a boolean input. This is a controlled component that requires an onValueChange callback that updates the value prop in order for the component to reflect user actions. If the value prop is not updated, the component will continue to render the supplied value prop instead of the expected result of any user actions.",
+  useCase: {
+    variants: {
+      name: "Variants",
+      description:
+        "The component supports a few different variants. If heavy customization of a specific variant is needed, it can be easily refactored. The default is `checkbox`.",
+      checkbox: {
+        label: "`checkbox` variant",
+        helper: "This can be used for a single on/off input.",
+      },
+      radio: {
+        label: "`radio` variant",
+        helper: "Use this when you have multiple options.",
+      },
+      switch: {
+        label: "`switch` variant",
+        helper: "A more prominent on/off input. Has better accessibility support.",
+      },
+    },
+    statuses: {
+      name: "Statuses",
+      description:
+        "There is a status prop - similar to `preset` in other components, but affects component functionality as well.",
+      noStatus: "No status - this is the default",
+      errorStatus: "Error status - use when there is an error",
+      disabledStatus: "Disabled status - disables the editability and mutes input",
+    },
+    passingContent: {
+      name: "Passing Content",
+      description: "There are a few different ways to pass content.",
+      useCase: {
+        checkBox: {
+          label: "Via `labelTx` prop",
+          helper: "Via `helperTx` prop.",
+        },
+        checkBoxMultiLine: {
+          helper: "Supports multiline - Nulla proident consectetur labore sunt ea labore. ",
+        },
+        radioChangeSides: {
+          helper: "You can change sides - Laborum labore adipisicing in eu ipsum deserunt.",
+        },
+        customCheckBox: {
+          label: "Pass in a custom checkbox icon.",
+        },
+        switch: {
+          label: "Switches can be read as text",
+          helper:
+            "By default, this option doesn't use `Text` since depending on the font, the on/off characters might look weird. Customize as needed.",
+        },
+        switchAid: {
+          label: "Or aided with an icon",
+        },
+      },
+    },
+    styling: {
+      name: "Styling",
+      description: "The component can be styled easily.",
+      outerWrapper: "1 - style the input outer wrapper",
+      innerWrapper: "2 - style the input inner wrapper",
+      inputDetail: "3 - style the input detail",
+      labelTx: "You can also style the labelTx",
+      styleContainer: "Or, style the entire container",
+    },
+  },
+  demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
+})
+
 export const DemoToggle: Demo = {
   name: "Toggle",
-  description: "demoToggle:description",
+  description: translations.description,
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="demoToggle:useCase.variants.name"
-      description="demoToggle:useCase.variants.description"
+      name={translations.useCase.variants.name}
+      description={translations.useCase.variants.description}
     >
       <ControlledCheckbox
-        labelTx="demoToggle:useCase.variants.checkbox.label"
-        helperTx="demoToggle:useCase.variants.checkbox.helper"
+        label={translations.useCase.variants.checkbox.label}
+        helper={translations.useCase.variants.checkbox.helper}
       />
       <DemoDivider size={24} />
       <ControlledRadio
-        labelTx="demoToggle:useCase.variants.radio.label"
-        helperTx="demoToggle:useCase.variants.radio.helper"
+        label={translations.useCase.variants.radio.label}
+        helper={translations.useCase.variants.radio.helper}
       />
       <DemoDivider size={24} />
       <ControlledSwitch
-        labelTx="demoToggle:useCase.variants.switch.label"
-        helperTx="demoToggle:useCase.variants.switch.helper"
+        label={translations.useCase.variants.switch.label}
+        helper={translations.useCase.variants.switch.helper}
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoToggle:useCase.statuses.name"
-      description="demoToggle:useCase.statuses.description"
+      name={translations.useCase.statuses.name}
+      description={translations.useCase.statuses.description}
       layout="row"
       itemStyle={$styles.flexWrap}
     >
@@ -79,10 +148,11 @@ export const DemoToggle: Demo = {
       <ControlledCheckbox value containerStyle={$centeredOneThirdCol} />
       <ControlledRadio value containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle:useCase.statuses.noStatus")}
-      </Text>
-
+      <Text
+        text={translations.useCase.statuses.noStatus}
+        preset="formHelper"
+        style={themed($centeredText)}
+      />
       <DemoDivider size={24} style={{ width: "100%" }} />
 
       <ControlledCheckbox status="error" containerStyle={$centeredOneThirdCol} />
@@ -92,9 +162,11 @@ export const DemoToggle: Demo = {
       <ControlledCheckbox value status="error" containerStyle={$centeredOneThirdCol} />
       <ControlledRadio value status="error" containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value status="error" containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle:useCase.statuses.errorStatus")}
-      </Text>
+      <Text
+        preset="formHelper"
+        text={translations.useCase.statuses.errorStatus}
+        style={themed($centeredText)}
+      />
 
       <DemoDivider size={24} style={{ width: "100%" }} />
 
@@ -105,38 +177,38 @@ export const DemoToggle: Demo = {
       <ControlledCheckbox value status="disabled" containerStyle={$centeredOneThirdCol} />
       <ControlledRadio value status="disabled" containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch value status="disabled" containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle:useCase.statuses.disabledStatus")}
-      </Text>
+      <Text
+        preset="formHelper"
+        text={translations.useCase.statuses.disabledStatus}
+        style={themed($centeredText)}
+      />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoToggle:useCase.passingContent.name"
-      description="demoToggle:useCase.passingContent.description"
+      name={translations.useCase.passingContent.name}
+      description={translations.useCase.passingContent.description}
     >
       <ControlledCheckbox
         value
-        labelTx="demoToggle:useCase.passingContent.useCase.checkBox.label"
-        helperTx="demoToggle:useCase.passingContent.useCase.checkBox.helper"
+        label={translations.useCase.passingContent.useCase.checkBox.label}
+        helper={translations.useCase.passingContent.useCase.checkBox.helper}
       />
       <DemoDivider size={24} />
       <ControlledRadio
         value
-        labelTx="demoShowroomScreen:demoViaSpecifiedTxProp"
-        labelTxOptions={{ prop: "label" }}
-        helperTx="demoShowroomScreen:demoViaSpecifiedTxProp"
-        helperTxOptions={{ prop: "helper" }}
+        label={translations.demoViaSpecifiedTxProp({ prop: "label" })}
+        helper={translations.demoViaSpecifiedTxProp({ prop: "helper" })}
       />
       <DemoDivider size={24} />
       <ControlledCheckbox
         value
-        labelTx="demoToggle:useCase.passingContent.useCase.checkBoxMultiLine.helper"
+        label={translations.useCase.passingContent.useCase.checkBoxMultiLine.helper}
         editable={false}
       />
       <DemoDivider size={24} />
       <ControlledRadio
         value
-        labelTx="demoToggle:useCase.passingContent.useCase.radioChangeSides.helper"
+        label={translations.useCase.passingContent.useCase.radioChangeSides.helper}
         labelPosition="left"
       />
       <DemoDivider size={24} />
@@ -144,28 +216,28 @@ export const DemoToggle: Demo = {
         value
         status="error"
         icon="ladybug"
-        labelTx="demoToggle:useCase.passingContent.useCase.customCheckBox.label"
+        label={translations.useCase.passingContent.useCase.customCheckBox.label}
       />
       <DemoDivider size={24} />
       <ControlledSwitch
         value
         accessibilityMode="text"
-        labelTx="demoToggle:useCase.passingContent.useCase.switch.label"
+        label={translations.useCase.passingContent.useCase.switch.label}
         status="error"
-        helperTx="demoToggle:useCase.passingContent.useCase.switch.helper"
+        helper={translations.useCase.passingContent.useCase.switch.helper}
       />
       <DemoDivider size={24} />
       <ControlledSwitch
         value
         labelPosition="left"
         accessibilityMode="icon"
-        labelTx="demoToggle:useCase.passingContent.useCase.switchAid.label"
+        label={translations.useCase.passingContent.useCase.switchAid.label}
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoToggle:useCase.styling.name"
-      description="demoToggle:useCase.styling.description"
+      name={translations.useCase.styling.name}
+      description={translations.useCase.styling.description}
       layout="row"
       itemStyle={$styles.flexWrap}
     >
@@ -198,9 +270,11 @@ export const DemoToggle: Demo = {
           borderColor: theme.colors.palette.accent500,
         }}
       />
-      <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle:useCase.styling.outerWrapper")}
-      </Text>
+      <Text
+        preset="formHelper"
+        text={translations.useCase.styling.outerWrapper}
+        style={themed($centeredText)}
+      />
 
       <DemoDivider style={{ width: "100%" }} />
 
@@ -247,9 +321,11 @@ export const DemoToggle: Demo = {
           paddingRight: 10,
         }}
       />
-      <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle:useCase.styling.innerWrapper")}
-      </Text>
+      <Text
+        preset="formHelper"
+        text={translations.useCase.styling.innerWrapper}
+        style={themed($centeredText)}
+      />
 
       <DemoDivider style={{ width: "100%" }} />
 
@@ -317,16 +393,18 @@ export const DemoToggle: Demo = {
         accessibilityMode="icon"
       />
 
-      <Text preset="formHelper" style={themed($centeredText)}>
-        {translate("demoToggle:useCase.styling.inputDetail")}
-      </Text>
+      <Text
+        preset="formHelper"
+        text={translations.useCase.styling.inputDetail}
+        style={themed($centeredText)}
+      />
 
       <DemoDivider size={32} style={{ width: "100%" }} />
 
       <View style={{ width: "100%" }}>
         <ControlledRadio
           value
-          labelTx="demoToggle:useCase.styling.labelTx"
+          label={translations.useCase.styling.labelTx}
           LabelTextProps={{ size: "xs", weight: "bold" }}
           status="error"
           labelStyle={{
@@ -344,7 +422,7 @@ export const DemoToggle: Demo = {
           value
           labelPosition="left"
           containerStyle={{ padding: 10, backgroundColor: theme.colors.error }}
-          labelTx="demoToggle:useCase.styling.styleContainer"
+          label={translations.useCase.styling.styleContainer}
           status="error"
           labelStyle={{ color: theme.colors.palette.neutral100 }}
         />

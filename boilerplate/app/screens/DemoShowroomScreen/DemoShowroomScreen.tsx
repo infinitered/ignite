@@ -13,12 +13,13 @@ import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
 
 const logo = require("../../../assets/images/logo.png")
 
 export interface Demo {
   name: string
-  description: TxKeyPath
+  description: string
   data: ({ themed, theme }: { themed: any; theme: Theme }) => ReactElement[]
 }
 
@@ -209,7 +210,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={
               <View style={themed($heading)}>
-                <Text preset="heading" tx="demoShowroomScreen:jumpStart" />
+                <Text preset="heading" text={translations.jumpStart} />
               </View>
             }
             onScrollToIndexFailed={scrollToIndexFailed}
@@ -228,6 +229,15 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
       </Drawer>
     )
   }
+
+const translations = TranslateSheet.create("demoShowroomScreen", {
+  jumpStart: "Components to jump start your project!",
+  lorem2Sentences:
+    "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
+  demoHeaderTxExample: "Yay",
+  demoViaTxProp: "Via `tx` Prop",
+  demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
+})
 
 const $drawer: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.background,

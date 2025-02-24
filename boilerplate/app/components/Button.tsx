@@ -22,18 +22,9 @@ export interface ButtonAccessoryProps {
 
 export interface ButtonProps extends PressableProps {
   /**
-   * Text which is looked up via i18n.
-   */
-  tx?: TextProps["tx"]
-  /**
-   * The text to display if not using `tx` or nested components.
+   * The text to display if not using nested components.
    */
   text?: TextProps["text"]
-  /**
-   * Optional options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
-  txOptions?: TextProps["txOptions"]
   /**
    * An optional style override useful for padding & margin.
    */
@@ -99,9 +90,7 @@ export interface ButtonProps extends PressableProps {
  */
 export function Button(props: ButtonProps) {
   const {
-    tx,
     text,
-    txOptions,
     style: $viewStyleOverride,
     pressedStyle: $pressedViewStyleOverride,
     textStyle: $textStyleOverride,
@@ -159,7 +148,7 @@ export function Button(props: ButtonProps) {
             <LeftAccessory style={$leftAccessoryStyle} pressableState={state} disabled={disabled} />
           )}
 
-          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
+          <Text text={text} style={$textStyle(state)}>
             {children}
           </Text>
 

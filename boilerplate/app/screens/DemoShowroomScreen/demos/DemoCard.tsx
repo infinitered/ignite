@@ -3,91 +3,159 @@ import { AutoImage, Button, Card, Icon } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import TranslateSheet from "translate-sheet"
+
+const translations = TranslateSheet.create("demoCard", {
+  description:
+    "Cards are useful for displaying related information in a contained way. If a ListItem displays content horizontally, a Card can be used to display content vertically.",
+  useCase: {
+    presets: {
+      name: "Presets",
+      description: "There are a few presets that are preconfigured.",
+      default: {
+        heading: "Default Preset (default)",
+        content: "Incididunt magna ut aliquip consectetur mollit dolor.",
+        footer: "Consectetur nulla non aliquip velit.",
+      },
+      reversed: {
+        heading: "Reversed Preset",
+        content: "Reprehenderit occaecat proident amet id laboris.",
+        footer: "Consectetur tempor ea non labore anim .",
+      },
+    },
+    verticalAlignment: {
+      name: "Vertical Alignment",
+      description:
+        "Depending on what's required, the card comes preconfigured with different alignment strategies.",
+      top: {
+        heading: "Top (default)",
+        content: "All content is automatically aligned to the top.",
+        footer: "Even the footer",
+      },
+      center: {
+        heading: "Center",
+        content: "Content is centered relative to the card's height.",
+        footer: "Me too!",
+      },
+      spaceBetween: {
+        heading: "Space Between",
+        content: "All content is spaced out evenly.",
+        footer: "I am where I want to be.",
+      },
+      reversed: {
+        heading: "Force Footer Bottom",
+        content: "This pushes the footer where it belongs.",
+        footer: "I'm so lonely down here.",
+      },
+    },
+    passingContent: {
+      name: "Passing Content",
+      description: "There are a few different ways to pass content.",
+      heading: "Via `heading` Prop",
+      content: "Via `content` Prop",
+      footer: "I'm so lonely down here.",
+    },
+    customComponent: {
+      name: "Custom Components",
+      description:
+        "Any of the preconfigured components can be replaced with your own. You can also add additional ones.",
+      rightComponent: "RightComponent",
+      leftComponent: "LeftComponent",
+    },
+    style: {
+      name: "Styling",
+      description: "The component can be styled easily.",
+      heading: "Style the Heading",
+      content: "Style the Content",
+      footer: "Style the Footer",
+    },
+  },
+})
 
 export const DemoCard: Demo = {
   name: "Card",
-  description: "demoCard:description",
+  description: translations.description,
   data: ({ theme }) => [
     <DemoUseCase
-      name="demoCard:useCase.presets.name"
-      description="demoCard:useCase.presets.description"
+      name={translations.useCase.presets.name}
+      description={translations.useCase.presets.description}
     >
       <Card
-        headingTx="demoCard:useCase.presets.default.heading"
-        contentTx="demoCard:useCase.presets.default.content"
-        footerTx="demoCard:useCase.presets.default.footer"
+        heading={translations.useCase.presets.default.heading}
+        content={translations.useCase.presets.default.content}
+        footer={translations.useCase.presets.default.footer}
       />
       <DemoDivider />
       <Card
-        headingTx="demoCard:useCase.presets.reversed.heading"
-        contentTx="demoCard:useCase.presets.reversed.content"
-        footerTx="demoCard:useCase.presets.reversed.footer"
+        heading={translations.useCase.presets.reversed.heading}
+        content={translations.useCase.presets.reversed.content}
+        footer={translations.useCase.presets.reversed.footer}
         preset="reversed"
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoCard:useCase.verticalAlignment.name"
-      description="demoCard:useCase.verticalAlignment.description"
+      name={translations.useCase.verticalAlignment.name}
+      description={translations.useCase.verticalAlignment.description}
     >
       <Card
-        headingTx="demoCard:useCase.verticalAlignment.top.heading"
-        contentTx="demoCard:useCase.verticalAlignment.top.content"
-        footerTx="demoCard:useCase.verticalAlignment.top.footer"
+        heading={translations.useCase.verticalAlignment.top.heading}
+        content={translations.useCase.verticalAlignment.top.content}
+        footer={translations.useCase.verticalAlignment.top.footer}
         style={{ minHeight: 160 }}
       />
       <DemoDivider />
       <Card
-        headingTx="demoCard:useCase.verticalAlignment.center.heading"
+        heading={translations.useCase.verticalAlignment.center.heading}
         verticalAlignment="center"
         preset="reversed"
-        contentTx="demoCard:useCase.verticalAlignment.center.content"
-        footerTx="demoCard:useCase.verticalAlignment.center.footer"
+        content={translations.useCase.verticalAlignment.center.content}
+        footer={translations.useCase.verticalAlignment.center.footer}
         style={{ minHeight: 160 }}
       />
       <DemoDivider />
       <Card
-        headingTx="demoCard:useCase.verticalAlignment.spaceBetween.heading"
+        heading={translations.useCase.verticalAlignment.spaceBetween.heading}
         verticalAlignment="space-between"
-        contentTx="demoCard:useCase.verticalAlignment.spaceBetween.content"
-        footerTx="demoCard:useCase.verticalAlignment.spaceBetween.footer"
+        content={translations.useCase.verticalAlignment.spaceBetween.content}
+        footer={translations.useCase.verticalAlignment.spaceBetween.footer}
         style={{ minHeight: 160 }}
       />
       <DemoDivider />
       <Card
         preset="reversed"
-        headingTx="demoCard:useCase.verticalAlignment.reversed.heading"
+        heading={translations.useCase.verticalAlignment.reversed.heading}
         verticalAlignment="force-footer-bottom"
-        contentTx="demoCard:useCase.verticalAlignment.reversed.content"
-        footerTx="demoCard:useCase.verticalAlignment.reversed.footer"
+        content={translations.useCase.verticalAlignment.reversed.content}
+        footer={translations.useCase.verticalAlignment.reversed.footer}
         style={{ minHeight: 160 }}
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoCard:useCase.passingContent.name"
-      description="demoCard:useCase.passingContent.description"
+      name={translations.useCase.passingContent.name}
+      description={translations.useCase.passingContent.description}
     >
       <Card
-        headingTx="demoCard:useCase.passingContent.heading"
-        contentTx="demoCard:useCase.passingContent.content"
-        footerTx="demoCard:useCase.passingContent.footer"
+        heading={translations.useCase.passingContent.heading}
+        content={translations.useCase.passingContent.content}
+        footer={translations.useCase.passingContent.footer}
       />
       <DemoDivider />
       <Card
         preset="reversed"
-        headingTx="demoShowroomScreen:demoViaSpecifiedTxProp"
+        heading={translations.useCase.passingContent.heading}
         headingTxOptions={{ prop: "heading" }}
-        contentTx="demoShowroomScreen:demoViaSpecifiedTxProp"
+        content={translations.useCase.passingContent.content}
         contentTxOptions={{ prop: "content" }}
-        footerTx="demoShowroomScreen:demoViaSpecifiedTxProp"
+        footer={translations.useCase.passingContent.footer}
         footerTxOptions={{ prop: "footer" }}
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoCard:useCase.customComponent.name"
-      description="demoCard:useCase.customComponent.description"
+      name={translations.useCase.customComponent.name}
+      description={translations.useCase.customComponent.description}
     >
       <Card
         HeadingComponent={
@@ -114,7 +182,7 @@ export const DemoCard: Demo = {
       />
       <DemoDivider />
       <Card
-        headingTx="demoCard:useCase.customComponent.rightComponent"
+        heading={translations.useCase.customComponent.rightComponent}
         verticalAlignment="center"
         RightComponent={
           <AutoImage
@@ -130,7 +198,7 @@ export const DemoCard: Demo = {
       <DemoDivider />
       <Card
         preset="reversed"
-        headingTx="demoCard:useCase.customComponent.leftComponent"
+        heading={translations.useCase.customComponent.leftComponent}
         verticalAlignment="center"
         LeftComponent={
           <AutoImage
@@ -146,18 +214,18 @@ export const DemoCard: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoCard:useCase.style.name"
-      description="demoCard:useCase.style.description"
+      name={translations.useCase.style.name}
+      description={translations.useCase.style.description}
     >
       <Card
-        headingTx="demoCard:useCase.style.heading"
+        heading={translations.useCase.style.heading}
         headingStyle={{ color: theme.colors.error }}
-        contentTx="demoCard:useCase.style.content"
+        content={translations.useCase.style.content}
         contentStyle={{
           backgroundColor: theme.colors.error,
           color: theme.colors.palette.neutral100,
         }}
-        footerTx="demoCard:useCase.style.footer"
+        footer={translations.useCase.style.footer}
         footerStyle={{
           textDecorationLine: "underline line-through",
           textDecorationStyle: "dashed",

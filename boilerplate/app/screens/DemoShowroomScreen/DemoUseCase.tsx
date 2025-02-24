@@ -7,8 +7,8 @@ import { useAppTheme } from "@/utils/useAppTheme"
 import { $styles } from "@/theme"
 
 interface DemoUseCaseProps {
-  name: TxKeyPath
-  description?: TxKeyPath
+  name: string
+  description?: string
   layout?: "column" | "row"
   itemStyle?: ViewStyle
   children: ReactNode
@@ -24,8 +24,8 @@ export function DemoUseCase(props: DemoUseCaseProps) {
 
   return (
     <View>
-      <Text style={themed($name)}>{translate(name)}</Text>
-      {description && <Text style={themed($description)}>{translate(description)}</Text>}
+      <Text style={themed($name)}>{name}</Text>
+      {description && <Text style={themed($description)}>{description}</Text>}
 
       <View style={[itemStyle, layout === "row" && $styles.row, themed($item)]}>{children}</View>
     </View>

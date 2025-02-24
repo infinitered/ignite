@@ -16,6 +16,8 @@ import { $styles } from "../theme"
 import { isRTL } from "@/i18n"
 import { useStores } from "../models"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
+import { commonNamespace } from "@/i18n/commonNamespace"
 
 /**
  * @param {string} url - The URL to open in the browser.
@@ -77,11 +79,11 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     >
       <Text
         style={themed($reportBugsLink)}
-        tx="demoDebugScreen:reportBugs"
+        text={translations.reportBugs}
         onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
       />
 
-      <Text style={themed($title)} preset="heading" tx="demoDebugScreen:title" />
+      <Text style={themed($title)} preset="heading" text={translations.title} />
       <Text preset="bold">Current system theme: {colorScheme}</Text>
       <Text preset="bold">Current app theme: {themeContext}</Text>
       <Button onPress={resetTheme} text={`Reset`} />
@@ -140,15 +142,39 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         />
       </View>
       <View style={themed($buttonContainer)}>
-        <Button style={themed($button)} tx="demoDebugScreen:reactotron" onPress={demoReactotron} />
-        <Text style={themed($hint)} tx={`demoDebugScreen:${Platform.OS}ReactotronHint` as const} />
+        <Button style={themed($button)} text={translations.reactotron} onPress={demoReactotron} />
+        <Text
+          style={themed($hint)}
+          text={translations.reactotronHint({
+            hint:
+              Platform.OS === "android"
+                ? ", run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app."
+                : "and reload app.",
+          })}
+        />
       </View>
       <View style={themed($buttonContainer)}>
-        <Button style={themed($button)} tx="common:logOut" onPress={logout} />
+        <Button
+          style={themed($button)}
+          text={commonNamespace.logOut}
+          onPress={logout}
+        />
       </View>
     </Screen>
   )
 }
+
+const translations = TranslateSheet.create("demoDebugScreen", {
+  howTo: "HOW TO",
+  title: "Debug",
+  tagLine:
+    "Congratulations, you've got a very advanced React Native app template here.  Take advantage of this boilerplate!",
+  reactotron: "Send to Reactotron",
+  reportBugs: "Report Bugs",
+  demoList: "Demo List",
+  demoPodcastList: "Demo Podcast List",
+  reactotronHint: "If this doesn't work, ensure the Reactotron desktop app is running {{hint}}",
+})
 
 const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingBottom: spacing.xxl,

@@ -5,6 +5,7 @@ import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme"
+import TranslateSheet from "translate-sheet"
 
 const $demoIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   padding: spacing.xs,
@@ -30,13 +31,36 @@ const $customIcon: ThemedStyle<ImageStyle> = ({ colors }) => ({
   tintColor: colors.palette.neutral100,
 })
 
+const translations = TranslateSheet.create("demoIcon", {
+  description:
+    "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.",
+  useCase: {
+    icons: {
+      name: "Icons",
+      description: "List of icons registered inside the component.",
+    },
+    size: {
+      name: "Size",
+      description: "There's a size prop.",
+    },
+    color: {
+      name: "Color",
+      description: "There's a color prop.",
+    },
+    styling: {
+      name: "Styling",
+      description: "The component can be styled easily.",
+    },
+  },
+})
+
 export const DemoIcon: Demo = {
   name: "Icon",
-  description: "demoIcon:description",
+  description: translations.description,
   data: ({ theme, themed }) => [
     <DemoUseCase
-      name="demoIcon:useCase.icons.name"
-      description="demoIcon:useCase.icons.description"
+      name={translations.useCase.icons.name}
+      description={translations.useCase.icons.description}
       layout="row"
       itemStyle={$styles.flexWrap}
     >
@@ -52,8 +76,8 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoIcon:useCase.size.name"
-      description="demoIcon:useCase.size.description"
+      name={translations.useCase.size.name}
+      description={translations.useCase.size.description}
       layout="row"
     >
       <Icon icon="ladybug" containerStyle={themed($demoIconContainer)} />
@@ -63,8 +87,8 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoIcon:useCase.color.name"
-      description="demoIcon:useCase.color.description"
+      name={translations.useCase.color.name}
+      description={translations.useCase.color.description}
       layout="row"
     >
       <Icon
@@ -95,8 +119,8 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="demoIcon:useCase.styling.name"
-      description="demoIcon:useCase.styling.description"
+      name={translations.useCase.styling.name}
+      description={translations.useCase.styling.description}
       layout="row"
     >
       <Icon
