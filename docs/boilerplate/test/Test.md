@@ -8,3 +8,5 @@ Ignite includes support for writing [Jest](https://jestjs.io/) tests, which can 
 It searches the codebase for components using the `tx=""` prop, or any `translate("")` commands, and checks for a valid i18n key between the double quotes.
 
 This approach isn't 100% perfect. If you are storing your key string in a variable because you are setting it conditionally, then it won't be picked up.
+
+<!-- TODO: BA -->

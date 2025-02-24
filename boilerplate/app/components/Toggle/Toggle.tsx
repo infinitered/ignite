@@ -63,18 +63,9 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
    */
   labelPosition?: "left" | "right"
   /**
-   * The label text to display if not using `labelTx`.
+   * The label text to display.
    */
   label?: TextProps["text"]
-  /**
-   * Label text which is looked up via i18n.
-   */
-  labelTx?: TextProps["tx"]
-  /**
-   * Optional label options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
-  labelTxOptions?: TextProps["txOptions"]
   /**
    * Style overrides for label text.
    */
@@ -84,18 +75,9 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
    */
   LabelTextProps?: TextProps
   /**
-   * The helper text to display if not using `helperTx`.
+   * The helper text to display.
    */
   helper?: TextProps["text"]
-  /**
-   * Helper text which is looked up via i18n.
-   */
-  helperTx?: TextProps["tx"]
-  /**
-   * Optional helper options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
-  helperTxOptions?: TextProps["txOptions"]
   /**
    * Pass any additional props directly to the helper Text component.
    */
@@ -130,8 +112,6 @@ export function Toggle<T>(props: ToggleProps<T>) {
     onValueChange,
     labelPosition = "right",
     helper,
-    helperTx,
-    helperTxOptions,
     HelperTextProps,
     containerStyle: $containerStyleOverride,
     inputWrapperStyle: $inputWrapperStyleOverride,
@@ -193,15 +173,8 @@ export function Toggle<T>(props: ToggleProps<T>) {
         {labelPosition === "right" && <FieldLabel<T> {...props} labelPosition={labelPosition} />}
       </View>
 
-      {!!(helper || helperTx) && (
-        <Text
-          preset="formHelper"
-          text={helper}
-          tx={helperTx}
-          txOptions={helperTxOptions}
-          {...HelperTextProps}
-          style={$helperStyles}
-        />
+      {!!helper && (
+        <Text preset="formHelper" text={helper} {...HelperTextProps} style={$helperStyles} />
       )}
     </Wrapper>
   )
@@ -212,22 +185,14 @@ export function Toggle<T>(props: ToggleProps<T>) {
  * @returns {JSX.Element} The rendered `FieldLabel` component.
  */
 function FieldLabel<T>(props: ToggleProps<T>) {
-  const {
-    status,
-    label,
-    labelTx,
-    labelTxOptions,
-    LabelTextProps,
-    labelPosition,
-    labelStyle: $labelStyleOverride,
-  } = props
+  const { status, label, LabelTextProps, labelPosition, labelStyle: $labelStyleOverride } = props
 
   const {
     theme: { colors },
     themed,
   } = useAppTheme()
 
-  if (!label && !labelTx && !LabelTextProps?.children) return null
+  if (!label && !LabelTextProps?.children) return null
 
   const $labelStyle = themed([
     $label,
@@ -238,16 +203,7 @@ function FieldLabel<T>(props: ToggleProps<T>) {
     LabelTextProps?.style,
   ])
 
-  return (
-    <Text
-      preset="formLabel"
-      text={label}
-      tx={labelTx}
-      txOptions={labelTxOptions}
-      {...LabelTextProps}
-      style={$labelStyle}
-    />
-  )
+  return <Text preset="formLabel" text={label} {...LabelTextProps} style={$labelStyle} />
 }
 
 const $inputWrapper: ViewStyle = {

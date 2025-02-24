@@ -14,6 +14,7 @@ import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
 import TranslateSheet from "translate-sheet"
+import { commonNamespace } from "@/i18n/commonNamespace"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -39,7 +40,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
 
     useHeader(
       {
-        rightTx: "common:logOut",
+        rightText: commonNamespace.logOut,
         onRightPress: logout,
       },
       [logout],

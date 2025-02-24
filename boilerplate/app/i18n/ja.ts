@@ -20,7 +20,6 @@ const ja: Translations = {
     friendlySubtitle:
       "本番では、エラーが投げられた時にこのページが表示されます。もし使うならこのメッセージに変更を加えてください(`app/i18n/jp.ts`)レイアウトはこちらで変更できます(`app/screens/ErrorScreen`)。もしこのスクリーンを取り除きたい場合は、`app/app.tsx`にある<ErrorBoundary>コンポーネントをチェックしてください",
     reset: "リセット",
-    traceTitle: "エラーのスタック: %{name}", // @demo remove-current-line
   },
   emptyStateComponent: {
     generic: {

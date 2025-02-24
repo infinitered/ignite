@@ -140,18 +140,6 @@ export const DemoText: Demo = {
       name={translations.useCase.passingContent.name}
       description={translations.useCase.passingContent.description}
     >
-      {/*TODO: With TranslateSheet, tx prop across all components is no longer needed  */}
-      {/* <Text text={translations.useCase.passingContent.viaTx} />
-
-      <DemoDivider />
-
-      <Text>
-        <Text tx="demoText:useCase.passingContent.viaTx" />
-        <Text tx="demoShowroomScreen:lorem2Sentences" />
-      </Text>
-
-      <DemoDivider /> */}
-
       <Text>{translations.useCase.passingContent.children}</Text>
 
       <DemoDivider />

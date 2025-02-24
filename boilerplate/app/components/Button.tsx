@@ -82,7 +82,7 @@ export interface ButtonProps extends PressableProps {
  * @returns {JSX.Element} The rendered `Button` component.
  * @example
  * <Button
- *   tx="common:ok"
+ *   text={commonNamespace.ok}
  *   style={styles.button}
  *   textStyle={styles.buttonText}
  *   onPress={handleButtonPress}

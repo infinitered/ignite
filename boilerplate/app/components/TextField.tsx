@@ -28,52 +28,25 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    */
   status?: "error" | "disabled"
   /**
-   * The label text to display if not using `labelTx`.
+   * The label text to display.
    */
   label?: TextProps["text"]
-  /**
-   * Label text which is looked up via i18n.
-   */
-  labelTx?: TextProps["tx"]
-  /**
-   * Optional label options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
-  labelTxOptions?: TextProps["txOptions"]
   /**
    * Pass any additional props directly to the label Text component.
    */
   LabelTextProps?: TextProps
   /**
-   * The helper text to display if not using `helperTx`.
+   * The helper text to display.
    */
   helper?: TextProps["text"]
-  /**
-   * Helper text which is looked up via i18n.
-   */
-  helperTx?: TextProps["tx"]
-  /**
-   * Optional helper options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
-  helperTxOptions?: TextProps["txOptions"]
   /**
    * Pass any additional props directly to the helper Text component.
    */
   HelperTextProps?: TextProps
   /**
-   * The placeholder text to display if not using `placeholderTx`.
+   * The placeholder text to display.
    */
   placeholder?: TextProps["text"]
-  /**
-   * Placeholder text which is looked up via i18n.
-   */
-  placeholderTx?: TextProps["tx"]
-  /**
-   * Optional placeholder options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
-  placeholderTxOptions?: TextProps["txOptions"]
   /**
    * Optional input style override.
    */
@@ -108,15 +81,9 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
  */
 export const TextField = forwardRef(function TextField(props: TextFieldProps, ref: Ref<TextInput>) {
   const {
-    labelTx,
     label,
-    labelTxOptions,
-    placeholderTx,
     placeholder,
-    placeholderTxOptions,
     helper,
-    helperTx,
-    helperTxOptions,
     status,
     RightAccessory,
     LeftAccessory,
@@ -135,10 +102,6 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   } = useAppTheme()
 
   const disabled = TextInputProps.editable === false || status === "disabled"
-
-  const placeholderContent = placeholderTx
-    ? translate(placeholderTx, placeholderTxOptions)
-    : placeholder
 
   const $containerStyles = [$containerStyleOverride]
 
@@ -186,12 +149,10 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       onPress={focusInput}
       accessibilityState={{ disabled }}
     >
-      {!!(label || labelTx) && (
+      {!!(label) && (
         <Text
           preset="formLabel"
           text={label}
-          tx={labelTx}
-          txOptions={labelTxOptions}
           {...LabelTextProps}
           style={themed($labelStyles)}
         />
@@ -211,7 +172,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           ref={input}
           underlineColorAndroid={colors.transparent}
           textAlignVertical="top"
-          placeholder={placeholderContent}
+          placeholder={placeholder}
           placeholderTextColor={colors.textDim}
           {...TextInputProps}
           editable={!disabled}
@@ -228,12 +189,10 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
         )}
       </View>
 
-      {!!(helper || helperTx) && (
+      {!!(helper) && (
         <Text
           preset="formHelper"
           text={helper}
-          tx={helperTx}
-          txOptions={helperTxOptions}
           {...HelperTextProps}
           style={themed($helperStyles)}
         />

@@ -86,27 +86,6 @@ The `heading` prop is used to set the heading text of the card.
 <Card heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
 
-### `headingTx`
-
-The `headingTx` prop is used to set the heading text of the card using a translation key.
-
-```tsx
-<Card headingTx="card:heading" content="Card Content" footer="Card Footer" />
-```
-
-### `headingTxOptions`
-
-The `headingTxOptions` prop is used to set the options for the translation key used by the `headingTx` prop.
-
-```tsx
-<Card
-  headingTx="card:heading"
-  headingTxOptions={{ count: 2 }}
-  content="Card Content"
-  footer="Card Footer"
-/>
-```
-
 ### `headingStyle`
 
 The `headingStyle` prop is used to set the style of the heading text.
@@ -153,27 +132,6 @@ The `content` prop is used to set the content text of the card.
 <Card heading="Card Heading" content="Card Content" footer="Card Footer" />
 ```
 
-### `contentTx`
-
-The `contentTx` prop is used to set the content text of the card using a translation key.
-
-```tsx
-<Card heading="Card Heading" contentTx="card:content" footer="Card Footer" />
-```
-
-### `contentTxOptions`
-
-The `contentTxOptions` prop is used to set the options for the translation key used by the `contentTx` prop.
-
-```tsx
-<Card
-  heading="Card Heading"
-  contentTx="card:content"
-  contentTxOptions={{ count: 2 }}
-  footer="Card Footer"
-/>
-```
-
 ### `contentStyle`
 
 The `contentStyle` prop is used to set the style of the content text.
@@ -218,27 +176,6 @@ The `footer` prop is used to set the footer text of the card.
 
 ```tsx
 <Card heading="Card Heading" content="Card Content" footer="Card Footer" />
-```
-
-### `footerTx`
-
-The `footerTx` prop is used to set the footer text of the card using a translation key.
-
-```tsx
-<Card heading="Card Heading" content="Card Content" footerTx="card:footer" />
-```
-
-### `footerTxOptions`
-
-The `footerTxOptions` prop is used to set the options for the translation key used by the `footerTx` prop.
-
-```tsx
-<Card
-  heading="Card Heading"
-  content="Card Content"
-  footerTx="card:footer"
-  footerTxOptions={{ count: 2 }}
-/>
 ```
 
 ### `footerStyle`

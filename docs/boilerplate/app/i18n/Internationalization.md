@@ -32,3 +32,5 @@ I18nManager.forceRTL(isRTL)
 ## Adding more languages
 
 See the [i18next Documentation](https://www.i18next.com/how-to/add-or-load-translations) to add languages to `app/i18n/i18n.ts`.
+
+<!-- TODO: BA -->

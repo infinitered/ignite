@@ -3,6 +3,7 @@ import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text } from "../../components"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
 
 export interface ErrorDetailsProps {
   error: Error
@@ -25,8 +26,8 @@ export function ErrorDetails(props: ErrorDetailsProps) {
     >
       <View style={$topSection}>
         <Icon icon="ladybug" size={64} />
-        <Text style={themed($heading)} preset="subheading" tx="errorScreen:title" />
-        <Text tx="errorScreen:friendlySubtitle" />
+        <Text style={themed($heading)} preset="subheading" text={translations.title} />
+        <Text text={translations.friendlySubtitle} />
       </View>
 
       <ScrollView
@@ -45,11 +46,18 @@ export function ErrorDetails(props: ErrorDetailsProps) {
         preset="reversed"
         style={themed($resetButton)}
         onPress={props.onReset}
-        tx="errorScreen:reset"
+        text={translations.reset}
       />
     </Screen>
   )
 }
+
+const translations = TranslateSheet.create("errorScreen", {
+  title: "Something went wrong!",
+  friendlySubtitle:
+    "This is the screen that your users will see in production when an error is thrown. You'll want to customize this message (located in `app/i18n/en.ts`) and probably the layout as well (`app/screens/ErrorScreen`). If you want to remove this entirely, check `app/app.tsx` for the <ErrorBoundary> component.",
+  reset: "RESET APP",
+})
 
 const $contentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   alignItems: "center",
