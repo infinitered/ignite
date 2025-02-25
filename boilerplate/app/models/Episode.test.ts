@@ -1,4 +1,4 @@
-import { EpisodeModel } from "./Episode"
+import { EpisodeModel, translations } from "./Episode"
 
 const data = {
   guid: "f91f2ea0-378a-4a90-9a83-d438a0cc32f6",
@@ -22,20 +22,24 @@ const data = {
     },
   },
 }
+
 const episode = EpisodeModel.create(data)
 
 test("publish date format", () => {
   expect(episode.datePublished.textLabel).toBe("Jan 20, 2022")
   expect(episode.datePublished.accessibilityLabel).toBe(
-    "demoPodcastListScreen:accessibility.publishLabel",
+    translations.accessibility.publishLabel({ date: "Jan 20, 2022" }),
   )
 })
 
 test("duration format", () => {
+  // 2578 seconds => 0 hours, 42 minutes, and 58 seconds.
   expect(episode.duration.textLabel).toBe("42:58")
   expect(episode.duration.accessibilityLabel).toBe(
-    "demoPodcastListScreen:accessibility.durationLabel",
+    translations.accessibility.durationLabel({
+      hours: 0,
+      minutes: 42,
+      seconds: 58,
+    }),
   )
 })
-
-// @demo remove-file

@@ -77,7 +77,7 @@ export interface EpisodeSnapshotOut extends SnapshotOut<typeof EpisodeModel> {}
 export interface EpisodeSnapshotIn extends SnapshotIn<typeof EpisodeModel> {}
 
 
-const translations = TranslateSheet.create("episodeModel", {
+export const translations = TranslateSheet.create("episodeModel", {
   accessibility: {
     publishLabel: "Publicado el {{date}}",
     durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",

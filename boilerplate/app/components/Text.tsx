@@ -1,6 +1,5 @@
-import { TOptions } from "i18next"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { isRTL, translate, TxKeyPath } from "@/i18n"
+import { isRTL } from "@/i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { typography } from "@/theme/typography"

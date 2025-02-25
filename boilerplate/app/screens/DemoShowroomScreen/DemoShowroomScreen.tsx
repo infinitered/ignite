@@ -13,8 +13,7 @@ import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 import { useAppTheme } from "@/utils/useAppTheme"
-import TranslateSheet, { useLanguageChange } from "translate-sheet"
-import { useTranslation } from "react-i18next"
+import TranslateSheet from "translate-sheet"
 
 const logo = require("../../../assets/images/logo.png")
 
