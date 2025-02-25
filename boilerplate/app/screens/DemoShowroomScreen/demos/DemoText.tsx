@@ -3,7 +3,6 @@ import { Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
 import TranslateSheet from "translate-sheet"
 
 const translations = TranslateSheet.create("demoText", {
@@ -66,7 +65,9 @@ const translations = TranslateSheet.create("demoText", {
 
 export const DemoText: Demo = {
   name: "Text",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme }) => [
     <DemoUseCase
       name={translations.useCase.presets.name}

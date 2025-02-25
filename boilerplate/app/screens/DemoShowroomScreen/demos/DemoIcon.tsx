@@ -33,7 +33,7 @@ const $customIcon: ThemedStyle<ImageStyle> = ({ colors }) => ({
 
 const translations = TranslateSheet.create("demoIcon", {
   description:
-    "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.",
+    "A component to render a registered icon. It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />. ",
   useCase: {
     icons: {
       name: "Icons",
@@ -56,7 +56,12 @@ const translations = TranslateSheet.create("demoIcon", {
 
 export const DemoIcon: Demo = {
   name: "Icon",
-  description: translations.description,
+  // Using a getter to ensure `description` always resolves dynamically.
+  // This prevents `description` from being stored as a static value at creation time,
+  // ensuring it always reflects the latest translation when accessed.
+  get description() {
+    return translations.description;
+  },
   data: ({ theme, themed }) => [
     <DemoUseCase
       name={translations.useCase.icons.name}

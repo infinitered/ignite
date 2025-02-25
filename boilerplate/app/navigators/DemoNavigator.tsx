@@ -3,12 +3,12 @@ import { CompositeScreenProps } from "@react-navigation/native"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
-import { translate } from "@/i18n"
 import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import type { ThemedStyle } from "@/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
 
 export type DemoTabParamList = {
   DemoCommunity: undefined
@@ -59,7 +59,8 @@ export function DemoNavigator() {
         name="DemoShowroom"
         component={DemoShowroomScreen}
         options={{
-          tabBarLabel: translate("demoNavigator:componentsTab"),
+          tabBarAccessibilityLabel: translations.componentsTab,
+          tabBarLabel: translations.componentsTab,
           tabBarIcon: ({ focused }) => (
             <Icon icon="components" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
@@ -70,7 +71,8 @@ export function DemoNavigator() {
         name="DemoCommunity"
         component={DemoCommunityScreen}
         options={{
-          tabBarLabel: translate("demoNavigator:communityTab"),
+          tabBarAccessibilityLabel: translations.communityTab,
+          tabBarLabel: translations.communityTab,
           tabBarIcon: ({ focused }) => (
             <Icon icon="community" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
@@ -81,8 +83,8 @@ export function DemoNavigator() {
         name="DemoPodcastList"
         component={DemoPodcastListScreen}
         options={{
-          tabBarAccessibilityLabel: translate("demoNavigator:podcastListTab"),
-          tabBarLabel: translate("demoNavigator:podcastListTab"),
+          tabBarAccessibilityLabel: translations.podcastListTab,
+          tabBarLabel: translations.podcastListTab,
           tabBarIcon: ({ focused }) => (
             <Icon icon="podcast" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
@@ -93,7 +95,8 @@ export function DemoNavigator() {
         name="DemoDebug"
         component={DemoDebugScreen}
         options={{
-          tabBarLabel: translate("demoNavigator:debugTab"),
+          tabBarAccessibilityLabel: translations.debugTab,
+          tabBarLabel: translations.debugTab,
           tabBarIcon: ({ focused }) => (
             <Icon icon="debug" color={focused ? colors.tint : colors.tintInactive} size={30} />
           ),
@@ -102,6 +105,13 @@ export function DemoNavigator() {
     </Tab.Navigator>
   )
 }
+
+const translations = TranslateSheet.create("demoNavigator", {
+  componentsTab: "Components",
+  debugTab: "Debug",
+  communityTab: "Community",
+  podcastListTab: "Podcast",
+})
 
 const $tabBar: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.background,

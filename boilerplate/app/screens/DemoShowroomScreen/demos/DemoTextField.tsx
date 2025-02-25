@@ -115,7 +115,9 @@ const translations = TranslateSheet.create("demoTextField", {
 
 export const DemoTextField: Demo = {
   name: "TextField",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ themed }) => [
     <DemoUseCase
       name={translations.useCase.statuses.name}
@@ -172,9 +174,7 @@ export const DemoTextField: Demo = {
       <TextField
         value="Reprehenderit Lorem magna non consequat ullamco cupidatat."
         label={translations.useCase.passingContent.rightAccessory.label}
-        labelTxOptions={{ prop: "label" }}
         helper={translations.useCase.passingContent.rightAccessory.helper}
-        helperTxOptions={{ prop: "helper" }}
         RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
       />
 

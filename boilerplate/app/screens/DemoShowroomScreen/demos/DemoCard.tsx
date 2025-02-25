@@ -74,7 +74,9 @@ const translations = TranslateSheet.create("demoCard", {
 
 export const DemoCard: Demo = {
   name: "Card",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme }) => [
     <DemoUseCase
       name={translations.useCase.presets.name}
@@ -145,11 +147,8 @@ export const DemoCard: Demo = {
       <Card
         preset="reversed"
         heading={translations.useCase.passingContent.heading}
-        headingTxOptions={{ prop: "heading" }}
         content={translations.useCase.passingContent.content}
-        contentTxOptions={{ prop: "content" }}
         footer={translations.useCase.passingContent.footer}
-        footerTxOptions={{ prop: "footer" }}
       />
     </DemoUseCase>,
 

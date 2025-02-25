@@ -75,7 +75,9 @@ const $customWhiteTitle: ThemedStyle<TextStyle> = ({ colors }) => ({
 
 export const DemoHeader: Demo = {
   name: "Header",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme, themed }) => [
     <DemoUseCase
       name={translations.useCase.actionIcons.name}

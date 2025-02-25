@@ -6,7 +6,6 @@ import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
 import TranslateSheet from "translate-sheet"
 
 const $imageContainer: ViewStyle = {
@@ -54,7 +53,9 @@ const translations = TranslateSheet.create("demoAutoImage", {
 
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme, themed }) => [
     <DemoUseCase name={translations.useCase.remoteUri.name}>
       <View style={$imageContainer}>

@@ -98,7 +98,9 @@ const translations = TranslateSheet.create("demoListItem", {
 
 export const DemoListItem: Demo = {
   name: "ListItem",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme, themed }) => [
     <DemoUseCase
       name={translations.useCase.height.name}
@@ -180,8 +182,6 @@ export const DemoListItem: Demo = {
       description={translations.useCase.passingContent.description}
     >
       <ListItem text={translations.useCase.passingContent.children} topSeparator />
-      {/* TODO: with TranslateSheet, does the tx prop across components become deprecated? */}
-      {/* <ListItem topSeparator text={translations.demoViaTxProp} /> */}
       <ListItem text={translations.useCase.passingContent.children} topSeparator />
       <ListItem topSeparator bottomSeparator>
         <Text>

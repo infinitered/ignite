@@ -113,7 +113,9 @@ const translations = TranslateSheet.create("demoToggle", {
 
 export const DemoToggle: Demo = {
   name: "Toggle",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme, themed }) => [
     <DemoUseCase
       name={translations.useCase.variants.name}

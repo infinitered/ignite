@@ -5,7 +5,6 @@ import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
 import TranslateSheet from "translate-sheet"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
@@ -88,7 +87,9 @@ const translations = TranslateSheet.create("demoButton", {
 
 export const DemoButton: Demo = {
   name: "Button",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ themed }) => [
     <DemoUseCase
       name={translations.useCase.presets.name}

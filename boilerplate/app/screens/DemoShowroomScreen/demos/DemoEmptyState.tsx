@@ -33,7 +33,9 @@ const translations = TranslateSheet.create("demoEmptyState", {
 
 export const DemoEmptyState: Demo = {
   name: "EmptyState",
-  description: translations.description,
+  get description() {
+    return translations.description;
+  },
   data: ({ theme }) => [
     <DemoUseCase
       name={translations.useCase.presets.name}
