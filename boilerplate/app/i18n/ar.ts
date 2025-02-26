@@ -20,6 +20,7 @@ const ar: Translations = {
     friendlySubtitle:
       "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة ( الموجودة في 'ts.en/i18n/app') وربما التخطيط ايضاً ('app/screens/ErrorScreen'). إذا كنت تريد إزالة هذا بالكامل، تحقق من 'app/app.tsp' من اجل عنصر <ErrorBoundary>.",
     reset: "اعادة تعيين التطبيق",
+    traceTitle: "خطأ من مجموعة %{name}", // @demo remove-current-line
   },
   emptyStateComponent: {
     generic: {
