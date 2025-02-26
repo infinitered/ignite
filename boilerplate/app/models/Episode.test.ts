@@ -43,3 +43,5 @@ test("duration format", () => {
     }),
   )
 })
+
+// @demo remove-file

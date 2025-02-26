@@ -1,3 +1,7 @@
+// BA - this file is no longer being used
+// need to figure out how typing of the file is going to work however
+// in order to detect missing translation keys
+
 import demoEn from "./demo-en" // @demo remove-current-line
 
 const en = {
