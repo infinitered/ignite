@@ -81,8 +81,7 @@ const translations = TranslateSheet.create("demoButton", {
       accessory: "Disabled accessory style",
       textStyle: "Disabled text style",
     },
-  },
-  demoViaTxProp: "Via `tx` Prop",
+  }
 })
 
 export const DemoButton: Demo = {
@@ -109,9 +108,6 @@ export const DemoButton: Demo = {
       description={translations.useCase.passingContent.description}
     >
       <Button text={translations.useCase.passingContent.viaTextProps} />
-      <DemoDivider />
-
-      <Button text={translations.demoViaTxProp} />
       <DemoDivider />
 
       <Button>{translations.useCase.passingContent.children}</Button>

@@ -49,8 +49,7 @@ const translations = TranslateSheet.create("demoHeader", {
       styledWrapperTitle: "Styled Wrapper",
       tintedIconsTitle: "Tinted Icons",
     },
-  },
-  demoHeaderTxExample: "Yay",
+  }
 })
 
 const $customLeftAction: ThemedStyle<ViewStyle> = ({ colors }) => ({
@@ -107,12 +106,6 @@ export const DemoHeader: Demo = {
       name={translations.useCase.actionText.name}
       description={translations.useCase.actionText.description}
     >
-      <Header
-        title={translations.useCase.actionText.leftTxTitle}
-        leftText={translations.demoHeaderTxExample}
-        safeAreaEdges={[]}
-      />
-      <DemoDivider size={24} />
       <Header
         title={translations.useCase.actionText.rightTextTitle}
         rightText="Yay"

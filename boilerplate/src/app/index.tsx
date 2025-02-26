@@ -6,7 +6,7 @@ import { isRTL } from "@/i18n"
 import { ThemedStyle } from "@/theme"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
-import TranslateSheet from "translate-sheet"
+import { translations } from "./../../app/screens/WelcomeScreen"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -44,14 +44,6 @@ export default observer(function WelcomeScreen() {
     </Screen>
   )
 // @mst replace-next-line }
-})
-
-const translations = TranslateSheet.create("welcomeScreen", {
-  postscript:
-    "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
-  readyForLaunch: "Your app, almost ready for launch!",
-  exciting: "(ohh, this is exciting!)",
-  letsGo: "Let's go!",
 })
 
 const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({

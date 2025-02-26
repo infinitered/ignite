@@ -27,8 +27,7 @@ const translations = TranslateSheet.create("demoEmptyState", {
       name: "Styling",
       description: "The component can be styled easily.",
     },
-  },
-  demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
+  }
 })
 
 export const DemoEmptyState: Demo = {
@@ -62,13 +61,6 @@ export const DemoEmptyState: Demo = {
         button={translations.useCase.passingContent.viaButtonProp}
       />
 
-      <DemoDivider size={30} line />
-
-      <EmptyState
-        heading={translations.demoViaSpecifiedTxProp({ prop: "heading" })}
-        content={translations.demoViaSpecifiedTxProp({ prop: "content" })}
-        button={translations.demoViaSpecifiedTxProp({ prop: "button" })}
-      />
     </DemoUseCase>,
 
     <DemoUseCase

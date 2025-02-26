@@ -145,20 +145,15 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         <Button style={themed($button)} text={translations.reactotron} onPress={demoReactotron} />
         <Text
           style={themed($hint)}
-          text={translations.reactotronHint({
-            hint:
-              Platform.OS === "android"
-                ? ", run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app."
-                : "and reload app.",
-          })}
+          text={
+            Platform.OS === "android"
+              ? translations.androidReactotronHint
+              : translations.reactotronHint
+          }
         />
       </View>
       <View style={themed($buttonContainer)}>
-        <Button
-          style={themed($button)}
-          text={commonNamespace.logOut}
-          onPress={logout}
-        />
+        <Button style={themed($button)} text={commonNamespace.logOut} onPress={logout} />
       </View>
     </Screen>
   )
@@ -173,7 +168,10 @@ const translations = TranslateSheet.create("demoDebugScreen", {
   reportBugs: "Report Bugs",
   demoList: "Demo List",
   demoPodcastList: "Demo Podcast List",
-  reactotronHint: "If this doesn't work, ensure the Reactotron desktop app is running {{hint}}",
+  androidReactotronHint:
+    "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
+  reactotronHint:
+    "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
 })
 
 const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({

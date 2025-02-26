@@ -109,8 +109,7 @@ const translations = TranslateSheet.create("demoTextField", {
         helper: "Via `RightAccessory` & `LeftAccessory` style prop",
       },
     },
-  },
-  demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
+  }
 })
 
 export const DemoTextField: Demo = {
@@ -160,15 +159,7 @@ export const DemoTextField: Demo = {
         helper={translations.useCase.passingContent.viaLabel.helper}
         placeholder={translations.useCase.passingContent.viaLabel.placeholder}
       />
-
-      <DemoDivider size={24} />
-
-      <TextField
-        label={translations.demoViaSpecifiedTxProp({ prop: "label" })}
-        helper={translations.demoViaSpecifiedTxProp({ prop: "helper" })}
-        placeholder={translations.demoViaSpecifiedTxProp({ prop: "placeholder" })}
-      />
-
+      
       <DemoDivider size={24} />
 
       <TextField

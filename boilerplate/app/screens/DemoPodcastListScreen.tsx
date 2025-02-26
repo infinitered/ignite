@@ -318,8 +318,6 @@ const translations = TranslateSheet.create("demoPodcastListScreen", {
     favoriteAction: "Toggle Favorite",
     favoriteIcon: "Episode not favorited",
     unfavoriteIcon: "Episode favorited",
-    publishLabel: "Published {{date}}",
-    durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
   },
   noFavoritesEmptyState: {
     heading: "This looks a bit empty",

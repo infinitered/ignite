@@ -79,7 +79,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
   },
 ) // @mst remove-current-line
 
-const translations = TranslateSheet.create("welcomeScreen", {
+export const translations = TranslateSheet.create("welcomeScreen", {
   postscript:
     "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
   readyForLaunch:  "Your app, almost ready for launch!",

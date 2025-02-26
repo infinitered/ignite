@@ -92,8 +92,7 @@ const translations = TranslateSheet.create("demoListItem", {
       styledContainer: "Styled Container (separators)",
       tintedIcons: "Tinted Icons",
     },
-  },
-  demoViaTxProp: "Via `tx` Prop",
+  }
 })
 
 export const DemoListItem: Demo = {

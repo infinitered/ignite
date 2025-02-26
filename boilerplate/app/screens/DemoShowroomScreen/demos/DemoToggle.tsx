@@ -108,7 +108,6 @@ const translations = TranslateSheet.create("demoToggle", {
       styleContainer: "Or, style the entire container",
     },
   },
-  demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
 })
 
 export const DemoToggle: Demo = {
@@ -194,12 +193,6 @@ export const DemoToggle: Demo = {
         value
         label={translations.useCase.passingContent.useCase.checkBox.label}
         helper={translations.useCase.passingContent.useCase.checkBox.helper}
-      />
-      <DemoDivider size={24} />
-      <ControlledRadio
-        value
-        label={translations.demoViaSpecifiedTxProp({ prop: "label" })}
-        helper={translations.demoViaSpecifiedTxProp({ prop: "helper" })}
       />
       <DemoDivider size={24} />
       <ControlledCheckbox
