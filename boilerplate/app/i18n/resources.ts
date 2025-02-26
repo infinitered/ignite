@@ -1,3 +1,4 @@
+import { Resource } from "i18next"
 import ar from "./ar"
 import es from "./es"
 import fr from "./fr"
@@ -5,8 +6,8 @@ import hi from "./hi"
 import ja from "./ja"
 import ko from "./ko"
 
-const resources = {
-  en: "primary language",
+const resources: Resource = {
+  en: { language: "isPrimary" },
   ar: ar,
   es: es,
   fr: fr,
