@@ -60,11 +60,10 @@ async function generate(toolbox: GluegunToolbox) {
       const directoryDirSetInFrontMatter = frontMatterDirectoryDir("screen")
 
       if (directoryDirSetInFrontMatter || dir) {
-        dir = dir || directoryDirSetInFrontMatter
-
         heading(
-          `Determined directory for screen from ${dir ? "override" : "template front matter"}`,
+          `It looks like you're working in a project using Expo Router, determined directory for screen from ${dir ? "override" : "template front matter"}`,
         )
+        dir = dir || directoryDirSetInFrontMatter
       } else {
         const result = await prompt.ask({
           type: "input",
@@ -91,7 +90,7 @@ async function generate(toolbox: GluegunToolbox) {
               filesystem.dir(result.dir)
               dir = result.dir
             } else {
-              warning(`⚠️ Placing component in src/app root.`)
+              warning(`⚠️ Placing screen in src/app root.`)
               p()
               dir = "src/app"
             }
