@@ -1,7 +1,7 @@
 import { GluegunToolbox } from "gluegun"
 import { boolFlag } from "../tools/flag"
-import { generateFromTemplate, runGenerator } from "../tools/generators"
-import { command, heading, p, warning } from "../tools/pretty"
+import { frontMatterDirectoryDir, generateFromTemplate, runGenerator } from "../tools/generators"
+import { command, heading, p, prettyPrompt, warning } from "../tools/pretty"
 import { Options } from "./new"
 
 const SUB_DIR_DELIMITER = "/"
@@ -57,33 +57,44 @@ async function generate(toolbox: GluegunToolbox) {
     const isExpoRouterApp = filesystem.exists("src/app") === "dir"
 
     if (isExpoRouterApp) {
-      const result = await prompt.ask({
-        type: "input",
-        name: "dir",
-        message:
-          "It looks like you're working in a project using Expo Router, please enter the desired directory (e.g., src/app):",
-      })
+      const directoryDirSetInFrontMatter = frontMatterDirectoryDir("screen")
 
-      if (result.dir) {
-        // Validate the directory
-        const isValidDir = filesystem.exists(result.dir) === "dir"
-        if (isValidDir) {
-          dir = result.dir
-        } else {
-          const createDirResult = await prompt.ask({
-            type: "confirm",
-            name: "createDir",
-            message: `⚠️  Directory ${result.dir} does not exist. Would you like to create it?`,
-            initial: true,
-          })
+      if (directoryDirSetInFrontMatter || dir) {
+        dir = dir || directoryDirSetInFrontMatter
 
-          if (createDirResult.createDir) {
-            filesystem.dir(result.dir)
+        heading(
+          `Determined directory for screen from ${dir ? "override" : "template front matter"}`,
+        )
+      } else {
+        const result = await prompt.ask({
+          type: "input",
+          name: "dir",
+          message:
+            "It looks like you're working in a project using Expo Router, please enter the desired directory (e.g., src/app):",
+        })
+
+        if (result.dir) {
+          // Validate the directory
+          const isValidDir = filesystem.exists(result.dir) === "dir"
+          if (isValidDir) {
             dir = result.dir
           } else {
-            warning(`⚠️ Placing component in src/app root.`)
-            p()
-            dir = "src/app"
+            const createDirResult = await prompt.ask({
+              type: "confirm",
+              name: "createDir",
+              message: `⚠️  Directory ${result.dir} does not exist. Would you like to create it?`,
+              initial: true,
+              format: prettyPrompt.format.boolean,
+            })
+
+            if (createDirResult.createDir) {
+              filesystem.dir(result.dir)
+              dir = result.dir
+            } else {
+              warning(`⚠️ Placing component in src/app root.`)
+              p()
+              dir = "src/app"
+            }
           }
         }
       }
