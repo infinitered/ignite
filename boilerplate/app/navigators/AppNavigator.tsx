@@ -96,7 +96,8 @@ const AppStack = observer(function AppStack() {
   // @mst replace-next-line }
 })
 
-export interface NavigationProps extends Partial<ComponentProps<typeof NavigationContainer>> {}
+export interface NavigationProps
+  extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
 // @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
