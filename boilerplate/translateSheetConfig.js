@@ -16,5 +16,5 @@ const translateSheetConfig = {
     generatePrimaryLanguageFile: false,
   };
   
-  export default translateSheetConfig;
+module.exports = translateSheetConfig;
   

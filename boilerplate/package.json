@@ -25,7 +25,10 @@
     "web": "expo start --web",
     "bundle:web": "npx expo export --platform web",
     "serve:web": "npx serve dist",
-    "prebuild:clean": "npx expo prebuild --clean"
+    "prebuild:clean": "npx expo prebuild --clean",
+    "translate:generate": "translate-sheet generate",
+    "translate:pull": "translate-sheet pull",
+    "translate:gen-types": "translate-sheet generate-types"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
@@ -63,7 +66,7 @@
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.1.0",
     "react-native-web": "~0.19.6",
-    "translate-sheet": "^0.3.17"
+    "translate-sheet": "^0.3.18"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -96,6 +99,5 @@
   },
   "engines": {
     "node": "^18.18.0 || >=20.0.0"
-  },
-  "type": "module"
+  }
 }
