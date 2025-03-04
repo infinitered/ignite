@@ -54,7 +54,10 @@ async function generate(toolbox: GluegunToolbox) {
   }
   // Check if src/app exists, denoting an Expo Router app
   if (generator === "screen") {
-    const isExpoRouterApp = filesystem.exists("src/app") === "dir"
+    const appJson = filesystem.read("app.json", "json")
+    const isExpoRouterApp = !!appJson?.expo?.plugins?.["expo-router"]
+    // const packageJson = filesystem.read("package.json", "json")
+    // const isExpoRouterApp = !!packageJson?.dependencies?.["expo-router"]
 
     if (isExpoRouterApp) {
       const directoryDirSetInFrontMatter = frontMatterDirectoryDir("screen")
