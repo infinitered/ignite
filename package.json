@@ -161,6 +161,6 @@
       "js",
       "jsx"
     ],
-    "prettierPath": "<rootDir>/node_modules/prettier-2/index.js" 
+    "prettierPath": "<rootDir>/node_modules/prettier-2/index.js"
   }
 }
