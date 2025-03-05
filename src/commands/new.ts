@@ -9,6 +9,7 @@ import {
   refactorExpoRouterReactotronCmds,
   updateExpoRouterSrcDir,
   cleanupExpoRouterConversion,
+  updatePackagerCommandsInReadme,
 } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -158,6 +159,13 @@ export interface Options {
    * @default mst
    */
   state?: StateMgmt
+  /**
+   * Whether or not to enable the New Architecture
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default false
+   */
+  newArch?: boolean
 }
 
 module.exports = {
@@ -299,12 +307,12 @@ module.exports = {
         message: "How do you want to manage Native code?",
         choices: [
           {
-            name: "CNG",
+            name: "cng",
             message: "Via Expo's Continuous Native Generation - Recommended [Default]",
             value: "cng",
           },
           {
-            name: "Manual",
+            name: "manual",
             message: "Manual - commits android/ios directories",
             value: "manual",
           },
@@ -458,16 +466,13 @@ module.exports = {
     // #endregion
 
     // #region Experimental Features parsing
-    let newArch
     let expoVersion
     let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
     experimentalFlags.forEach((flag) => {
-      if (flag === "new-arch") {
-        newArch = true
-      } else if (flag.indexOf("expo-") > -1) {
+      if (flag.indexOf("expo-") > -1) {
         if (flag !== "expo-router") {
           expoVersion = flag.substring(5)
         } else {
@@ -515,21 +520,17 @@ module.exports = {
 
     // New Architecture
     const defaultNewArch = false
-    let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
-    if (experimentalNewArch === undefined) {
+    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : options.newArch
+    if (newArchEnabled === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
-        message: "[Experimental] the New Architecture?",
+        message: "Enable the New Architecture?",
         initial: defaultNewArch,
         format: prettyPrompt.format.boolean,
         prefix,
       }))
-      experimentalNewArch = newArchResponse.experimentalNewArch
-      // update experimental flags if needed for buildCliCommand output
-      if (experimentalNewArch && !experimentalFlags.includes("new-arch")) {
-        experimentalFlags.push("new-arch")
-      }
+      newArchEnabled = newArchResponse.experimentalNewArch
     }
 
     // #endregion
@@ -580,7 +581,14 @@ module.exports = {
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         targetPath,
-        excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
+        excluded: [
+          ".vscode",
+          "node_modules",
+          "yarn.lock",
+          "bun.lockb",
+          "bun.lock",
+          "package-lock.json",
+        ],
         overwrite,
       })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -593,6 +601,10 @@ module.exports = {
         : boilerplate(".gitignore")
       const targetIgnorePath = log(path(targetPath, ".gitignore"))
       copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
+
+      // adjust the README.md with proper packager run commands
+      const readmePath = path(targetPath, "README.md")
+      updatePackagerCommandsInReadme(readmePath, packagerName)
 
       if (exists(targetIgnorePath) === false) {
         warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
@@ -662,7 +674,7 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
-      if (experimentalNewArch) {
+      if (newArchEnabled) {
         log(`Swapping new architecture compatible dependencies...`)
         packageJsonRaw = findAndUpdateDependencyVersions(
           packageJsonRaw,
@@ -748,9 +760,15 @@ module.exports = {
         startSpinner(unboxingMessage)
 
         // do base install
-        await packager.install({ ...packagerOptions, onProgress: log })
+        const installCmd = packager.installCmd({ packagerName })
+        await system.run(installCmd, { onProgress: log })
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
-        await system.run("npx expo install --fix", { onProgress: log })
+        // for right now, we don't do this in CI because it returns a non-zero exit code
+        // see https://docs.expo.dev/more/expo-cli/#version-validation
+        if (process.env.CI !== "true") {
+          log("Running `npx expo install --fix...`")
+          await system.run(`npx expo install --fix`, { onProgress: log })
+        }
 
         stopSpinner(unboxingMessage, "🧶")
       }
@@ -783,9 +801,8 @@ module.exports = {
         // Inject ignite version to app.json
         appJson.ignite.version = igniteVersion
 
-        if (experimentalNewArch === true) {
-          appJson.expo.plugins[1][1].ios.newArchEnabled = true
-          appJson.expo.plugins[1][1].android.newArchEnabled = true
+        if (newArchEnabled === true) {
+          appJson.expo.newArchEnabled = true
         }
 
         if (experimentalExpoRouter) {
@@ -842,16 +859,19 @@ module.exports = {
          * 4. Create a screen template that makes sense for Expo Router
          * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
          */
-        await system.run(log(`mv app/* src/`))
+        filesystem
+          .cwd(targetPath)
+          .find("app")
+          .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
         updateExpoRouterSrcDir(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
         createExpoRouterScreenTemplate(toolbox)
-        await cleanupExpoRouterConversion(toolbox)
+        cleanupExpoRouterConversion(toolbox, targetPath)
 
         stopSpinner(expoRouterMsg, "🧭")
       } else {
         // remove src/ dir since not using expo-router
-        await system.run(log(`rm -rf src`))
+        filesystem.cwd(targetPath).remove("src")
       }
       // #endregion
 
@@ -883,7 +903,7 @@ module.exports = {
       startSpinner(formattingMessage)
       if (installDeps === true) {
         // Make sure all our modifications are formatted nicely
-        await packager.run("format", { ...packagerOptions })
+        await packager.run("lint", { ...packagerOptions })
       } else {
         // if our linting configuration is not installed, try format
         // using prettier to make sure it's reasonably close, but this will skip
@@ -980,6 +1000,7 @@ module.exports = {
           packager: packagerName,
           targetPath,
           removeDemo,
+          newArch: newArchEnabled,
           experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
           workflow,
           useCache,
@@ -1019,7 +1040,7 @@ module.exports = {
         p2()
         p2(yellow(`Generator templates could not be converted to Windows EOL.`))
         p2(yellow(`You may want to update these manually with your code editor, more info at:`))
-        p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md")}`)
+        p2(`${link("https://docs.infinite.red/ignite-cli/concept/Generators/")}`)
         p2()
       }
 

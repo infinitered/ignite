@@ -1,7 +1,7 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { formatDate } from "../utils/formatDate"
-import { translate } from "../i18n"
+import { translate } from "@/i18n"
 
 interface Enclosure {
   link: string
@@ -50,7 +50,7 @@ export const EpisodeModel = types
             date: formatted,
           }),
         }
-      } catch (error) {
+      } catch {
         return { textLabel: "", accessibilityLabel: "" }
       }
     },

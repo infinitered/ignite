@@ -4,7 +4,7 @@ import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } 
 import { Drawer } from "react-native-drawer-layout"
 import { type ContentStyle } from "@shopify/flash-list"
 import { ListItem, ListView, ListViewRef, Screen, Text } from "../../components"
-import { TxKeyPath, isRTL, translate } from "../../i18n"
+import { TxKeyPath, isRTL, translate } from "@/i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import type { Theme, ThemedStyle } from "@/theme"
 import { $styles } from "@/theme"
@@ -102,17 +102,13 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
       }
     }, [open])
 
-    const handleScroll = useCallback(
-      (sectionIndex: number, itemIndex = 0) => {
-        listRef.current?.scrollToLocation({
-          animated: true,
-          itemIndex,
-          sectionIndex,
-        })
-        toggleDrawer()
-      },
-      [toggleDrawer],
-    )
+    const handleScroll = useCallback((sectionIndex: number, itemIndex = 0) => {
+      listRef.current?.scrollToLocation({
+        animated: true,
+        itemIndex,
+        sectionIndex,
+      })
+    }, [])
 
     // handle Web links
     useEffect(() => {

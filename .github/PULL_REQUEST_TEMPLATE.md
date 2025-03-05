@@ -1,18 +1,12 @@
-## Please verify the following:
+## Description
 
-- [ ] `yarn test` **jest** tests pass with new tests, if relevant
-- [ ] `yarn lint` **eslint** checks pass with new code, if relevant
-- [ ] `yarn format:check` **prettier** checks pass with new code, if relevant
-- [ ] `README.md` (or relevant documentation) has been updated with your changes
-- [ ] If this affects functionality there aren't tests for, I manually tested it, including by generating a new app locally if needed ([see docs](https://docs.infinite.red/ignite-cli/contributing/Contributing-To-Ignite/#testing-changes-from-your-local-copy-of-ignite)).
+<!-- Add your PR description here -->
 
-## Describe your PR
+- Issues: <!-- e.g. "fixes #9999", "related: #9999", etc -->
 
-<!-- If this PR addresses an issue, link to it in description: "Closes #333" -->
+## Screenshots
 
-<!-- Add your PR description -->
-
-## Screenshots (if applicable)
+<!-- If not applicable, delete this whole section -->
 
 <!-- If you’re submitting code changes related to a visible feature, please include before-and-after screenshots or videos. -->
 
@@ -21,3 +15,10 @@
 | Before                           | After                           |
 | -------------------------------- | ------------------------------- |
 | [Insert before screenshot/video] | [Insert after screenshot/video] |
+
+## Checklist
+
+<!-- if an item doesn't apply, just delete it -->
+
+- [ ] `README.md` and other relevant documentation has been updated with my changes
+- [ ] I have manually tested this, including by generating a new app locally ([see docs](https://docs.infinite.red/ignite-cli/contributing/Contributing-To-Ignite/#testing-changes-from-your-local-copy-of-ignite)).

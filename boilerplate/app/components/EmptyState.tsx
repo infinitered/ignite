@@ -1,9 +1,10 @@
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { translate } from "../i18n"
+
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "@/utils/useAppTheme"
 import type { ThemedStyle } from "@/theme"
+import { translate } from "@/i18n/translate"
 
 const sadFace = require("../../assets/images/sad-face.png")
 
@@ -110,7 +111,7 @@ interface EmptyStatePresetItem {
 
 /**
  * A component to use when there is no data to display. It can be utilized to direct the user what to do next.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/EmptyState/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/EmptyState/}
  * @param {EmptyStateProps} props - The props for the `EmptyState` component.
  * @returns {JSX.Element} The rendered `EmptyState` component.
  */

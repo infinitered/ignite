@@ -6,7 +6,7 @@ sidebar_position: 40
 
 Ignite's `TextField` Component is an enhanced version of the built-in React Native [`TextInput`](https://reactnative.dev/docs/textinput) component. It consists of TextInput and a Text(./Text.md) label.
 
-With this component you will be able to standardise TextInput component across your app.
+With this component you will be able to standardize TextInput component across your app.
 
 ![textfield-component](https://github.com/user-attachments/assets/cfdc97dc-5692-4286-8682-9243ee0e7650)
 

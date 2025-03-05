@@ -6,10 +6,10 @@ import {
   Text,
   Screen,
 } from "@/components"
-import { isRTL } from "../i18n"
+import { isRTL } from "@/i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
-import type { ThemedStyle } from "@/theme"
+import { $styles, type ThemedStyle } from "@/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
@@ -21,7 +21,7 @@ interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
 // @mst replace-next-line export const WelcomeScreen: FC<WelcomeScreenProps> = (
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
-  function WelcomeScreen(
+  function WelcomeScreen( // @mst remove-current-line
     _props, // @demo remove-current-line
     // @mst replace-next-line ) => {
   ) {
@@ -48,7 +48,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
     const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
     return (
-      <Screen preset="fixed">
+      <Screen preset="fixed" contentContainerStyle={$styles.flex1}>
         <View style={themed($topContainer)}>
           <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
           <Text
@@ -81,7 +81,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
     )
     // @mst replace-next-line }
   },
-)
+) // @mst remove-current-line
 
 const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,

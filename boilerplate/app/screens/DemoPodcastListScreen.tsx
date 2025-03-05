@@ -31,7 +31,7 @@ import {
   Switch,
   Text,
 } from "@/components"
-import { isRTL, translate } from "../i18n"
+import { isRTL, translate } from "@/i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"

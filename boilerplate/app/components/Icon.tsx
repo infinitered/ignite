@@ -48,7 +48,7 @@ interface IconProps extends TouchableOpacityProps {
 /**
  * A component to render a registered icon.
  * It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Icon/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Icon/}
  * @param {IconProps} props - The props for the `Icon` component.
  * @returns {JSX.Element} The rendered `Icon` component.
  */

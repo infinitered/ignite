@@ -334,7 +334,7 @@ import {
   Button, // @demo remove-current-line
   Text,
 } from "app/components"
-import { isRTL } from "../i18n"
+import { isRTL } from "@/i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators"
 import type { ThemedStyle } from "app/theme"

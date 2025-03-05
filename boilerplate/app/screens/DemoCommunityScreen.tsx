@@ -4,7 +4,7 @@ import { ListItem, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { $styles } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
-import { isRTL } from "../i18n"
+import { isRTL } from "@/i18n"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 

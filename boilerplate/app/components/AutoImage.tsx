@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react"
-import { Image, ImageProps, ImageURISource, Platform } from "react-native"
+import { Image, ImageProps, ImageURISource, Platform, PixelRatio } from "react-native"
 
 export interface AutoImageProps extends ImageProps {
   /**
@@ -10,6 +10,9 @@ export interface AutoImageProps extends ImageProps {
    * How tall should the image be?
    */
   maxHeight?: number
+  headers?: {
+    [key: string]: string
+  }
 }
 
 /**
@@ -26,6 +29,9 @@ export interface AutoImageProps extends ImageProps {
  */
 export function useAutoImage(
   remoteUri: string,
+  headers?: {
+    [key: string]: string
+  },
   dimensions?: [maxWidth?: number, maxHeight?: number],
 ): [width: number, height: number] {
   const [[remoteWidth, remoteHeight], setRemoteImageDimensions] = useState([0, 0])
@@ -35,18 +41,25 @@ export function useAutoImage(
   useLayoutEffect(() => {
     if (!remoteUri) return
 
-    Image.getSize(remoteUri, (w, h) => setRemoteImageDimensions([w, h]))
-  }, [remoteUri])
+    if (!headers) {
+      Image.getSize(remoteUri, (w, h) => setRemoteImageDimensions([w, h]))
+    } else {
+      Image.getSizeWithHeaders(remoteUri, headers, (w, h) => setRemoteImageDimensions([w, h]))
+    }
+  }, [remoteUri, headers])
 
   if (Number.isNaN(remoteAspectRatio)) return [0, 0]
 
   if (maxWidth && maxHeight) {
     const aspectRatio = Math.min(maxWidth / remoteWidth, maxHeight / remoteHeight)
-    return [remoteWidth * aspectRatio, remoteHeight * aspectRatio]
+    return [
+      PixelRatio.roundToNearestPixel(remoteWidth * aspectRatio),
+      PixelRatio.roundToNearestPixel(remoteHeight * aspectRatio),
+    ]
   } else if (maxWidth) {
-    return [maxWidth, maxWidth / remoteAspectRatio]
+    return [maxWidth, PixelRatio.roundToNearestPixel(maxWidth / remoteAspectRatio)]
   } else if (maxHeight) {
-    return [maxHeight * remoteAspectRatio, maxHeight]
+    return [PixelRatio.roundToNearestPixel(maxHeight * remoteAspectRatio), maxHeight]
   } else {
     return [remoteWidth, remoteHeight]
   }
@@ -54,19 +67,21 @@ export function useAutoImage(
 
 /**
  * An Image component that automatically sizes a remote or data-uri image.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/AutoImage/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/AutoImage/}
  * @param {AutoImageProps} props - The props for the `AutoImage` component.
  * @returns {JSX.Element} The rendered `AutoImage` component.
  */
 export function AutoImage(props: AutoImageProps) {
   const { maxWidth, maxHeight, ...ImageProps } = props
   const source = props.source as ImageURISource
+  const headers = source?.headers
 
   const [width, height] = useAutoImage(
     Platform.select({
       web: (source?.uri as string) ?? (source as string),
       default: source?.uri as string,
     }),
+    headers,
     [maxWidth, maxHeight],
   )
 

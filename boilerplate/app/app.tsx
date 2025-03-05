@@ -23,6 +23,7 @@ import { useFonts } from "expo-font"
 import { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
+import * as SplashScreen from "expo-splash-screen"
 import { useInitialRootStore } from "./models" // @mst remove-current-line
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
@@ -55,17 +56,12 @@ const config = {
   },
 }
 
-interface AppProps {
-  hideSplashScreen: () => Promise<boolean>
-}
-
 /**
  * This is the root component of our app.
  * @param {AppProps} props - The props for the `App` component.
  * @returns {JSX.Element} The rendered `App` component.
  */
-function App(props: AppProps) {
-  const { hideSplashScreen } = props
+export function App() {
   const {
     initialNavigationState,
     onNavigationStateChange,
@@ -81,16 +77,14 @@ function App(props: AppProps) {
       .then(() => loadDateFnsLocale())
   }, [])
 
-  // @mst replace-next-line React.useEffect(() => {
+  // @mst replace-next-line useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
     // @mst replace-next-line
     // This runs after the root store has been initialized and rehydrated.
 
     // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
     // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
-    // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
-    // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
-    setTimeout(hideSplashScreen, 500)
+    setTimeout(SplashScreen.hideAsync, 500)
 
     // @mst replace-next-line }, [])
   })
@@ -101,9 +95,8 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  // @mst replace-next-line if (!isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
   if (
-    !rehydrated ||
+    !rehydrated || // @mst remove-current-line
     !isNavigationStateRestored ||
     !isI18nInitialized ||
     (!areFontsLoaded && !fontLoadError)
@@ -131,5 +124,3 @@ function App(props: AppProps) {
     </SafeAreaProvider>
   )
 }
-
-export default App

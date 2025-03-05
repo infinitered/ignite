@@ -1,6 +1,6 @@
 import { TOptions } from "i18next"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { isRTL, translate, TxKeyPath } from "../i18n"
+import { isRTL, translate, TxKeyPath } from "@/i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { typography } from "@/theme/typography"
@@ -49,7 +49,7 @@ export interface TextProps extends RNTextProps {
 /**
  * For your text displaying needs.
  * This component is a HOC over the built-in React Native one.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Text/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Text/}
  * @param {TextProps} props - The props for the `Text` component.
  * @returns {JSX.Element} The rendered `Text` component.
  */

@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { isRTL, translate } from "../i18n"
+import { isRTL, translate } from "@/i18n"
 import { $styles } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
@@ -141,7 +141,7 @@ interface HeaderActionProps {
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
  * The Header is meant to be used with the `screenOptions.header` option on navigators, routes, or screen components via `navigation.setOptions({ header })`.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/Header/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Header/}
  * @param {HeaderProps} props - The props for the `Header` component.
  * @returns {JSX.Element} The rendered `Header` component.
  */
