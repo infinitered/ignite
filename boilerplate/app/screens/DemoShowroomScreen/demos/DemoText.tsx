@@ -14,37 +14,37 @@ const TextRefDemo = () => {
   const textRef = useRef<TextInput>(null)
   const [highlighted, setHighlighted] = useState(false)
   const { theme } = useAppTheme()
-  
+
   const handleFocusPress = () => {
     if (textRef.current) {
       // Simulate highlighting by changing state
       setHighlighted(true)
-      
+
       // Reset highlight after a delay
       setTimeout(() => {
         setHighlighted(false)
       }, 1500)
     }
   }
-  
+
   return (
     <View>
       <Text
         ref={textRef}
         style={[
-          highlighted && { 
+          highlighted && {
             backgroundColor: theme.colors.palette.accent300,
             color: theme.colors.palette.neutral100,
-          }
+          },
         ]}
       >
         {translate("demoText:useCase.refs.text")}
         {highlighted && ` (${translate("demoText:useCase.refs.highlightedText")})`}
       </Text>
-      
+
       <DemoDivider />
-      
-      <Button 
+
+      <Button
         text={translate("demoText:useCase.refs.buttonText")}
         onPress={handleFocusPress}
         preset="default"
@@ -186,10 +186,7 @@ export const DemoText: Demo = {
       </Text>
     </DemoUseCase>,
 
-    <DemoUseCase
-      name="demoText:useCase.refs.name"
-      description="demoText:useCase.refs.description"
-    >
+    <DemoUseCase name="demoText:useCase.refs.name" description="demoText:useCase.refs.description">
       <TextRefDemo />
     </DemoUseCase>,
   ],
