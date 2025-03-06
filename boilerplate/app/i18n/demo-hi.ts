@@ -396,6 +396,13 @@ export const demoHi: DemoTranslations = {
         text3:
           "Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco adipisicing tempor adipisicing.",
       },
+      refs: {
+        name: "रेफरेंस का उपयोग",
+        description: "टेक्स्ट कंपोनेंट अब फॉरवर्डेड रेफरेंस का समर्थन करता है।",
+        text: "इस टेक्स्ट में एक रेफरेंस जुड़ा हुआ है। इसे फोकस करने के लिए नीचे दिए गए बटन पर दबाएं!",
+        buttonText: "रेफ के माध्यम से टेक्स्ट फोकस करें",
+        highlightedText: "टेक्स्ट अब प्रकाशित किया गया है!",
+      },
     },
   },
   demoHeader: {

@@ -1,9 +1,57 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
+import { useRef, useState } from "react"
 import { Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 import { translate } from "@/i18n"
+import { Button } from "../../../components"
+import { TextInput, View } from "react-native"
+import { useAppTheme } from "@/utils/useAppTheme"
+
+// Define the TextRefDemo component outside of other function components
+const TextRefDemo = () => {
+  const textRef = useRef<TextInput>(null)
+  const [highlighted, setHighlighted] = useState(false)
+  const { theme } = useAppTheme()
+  
+  const handleFocusPress = () => {
+    if (textRef.current) {
+      // Simulate highlighting by changing state
+      setHighlighted(true)
+      
+      // Reset highlight after a delay
+      setTimeout(() => {
+        setHighlighted(false)
+      }, 1500)
+    }
+  }
+  
+  return (
+    <View>
+      <Text
+        ref={textRef}
+        style={[
+          highlighted && { 
+            backgroundColor: theme.colors.palette.accent300,
+            color: theme.colors.palette.neutral100,
+          }
+        ]}
+      >
+        {translate("demoText:useCase.refs.text")}
+        {highlighted && ` (${translate("demoText:useCase.refs.highlightedText")})`}
+      </Text>
+      
+      <DemoDivider />
+      
+      <Button 
+        text={translate("demoText:useCase.refs.buttonText")}
+        onPress={handleFocusPress}
+        preset="default"
+      />
+    </View>
+  )
+}
 
 export const DemoText: Demo = {
   name: "Text",
@@ -136,6 +184,13 @@ export const DemoText: Demo = {
           {translate("demoText:useCase.styling.text3")}
         </Text>
       </Text>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="demoText:useCase.refs.name"
+      description="demoText:useCase.refs.description"
+    >
+      <TextRefDemo />
     </DemoUseCase>,
   ],
 }

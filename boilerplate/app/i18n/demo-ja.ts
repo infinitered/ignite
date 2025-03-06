@@ -392,6 +392,13 @@ export const demoJa: DemoTranslations = {
         text3:
           "Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco adipisicing tempor adipisicing.",
       },
+      refs: {
+        name: "参照の使用",
+        description: "Textコンポーネントは転送された参照をサポートするようになりました。",
+        text: "このテキストには参照が付いています。下のボタンをクリックして、フォーカスを当ててみてください！",
+        buttonText: "参照でテキストにフォーカス",
+        highlightedText: "テキストがハイライトされました！",
+      },
     },
   },
   demoHeader: {

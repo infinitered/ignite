@@ -3,7 +3,7 @@ import { DemoTranslations } from "./demo-en"
 export const demoFr: DemoTranslations = {
   demoIcon: {
     description:
-      "Un composant pour faire le rendu d’une icône enregistrée. Il est enveloppé dans un <TouchableOpacity /> si `onPress` est fourni, sinon dans une <View />.",
+      "Un composant pour faire le rendu d'une icône enregistrée. Il est enveloppé dans un <TouchableOpacity /> si `onPress` est fourni, sinon dans une <View />.",
     useCase: {
       icons: {
         name: "Icônes",
@@ -37,12 +37,12 @@ export const demoFr: DemoTranslations = {
         },
         error: {
           label: "Statut d'erreur",
-          helper: "Statut à utiliser en cas d’erreur",
+          helper: "Statut à utiliser en cas d'erreur",
           placeholder: "Le texte passe par ici",
         },
         disabled: {
           label: "Statut désactivé",
-          helper: "Désactive l’édition et atténue le texte",
+          helper: "Désactive l'édition et atténue le texte",
           placeholder: "Le texte repasse par là",
         },
       },
@@ -83,7 +83,7 @@ export const demoFr: DemoTranslations = {
           helper: "Via la prop `containerStyle`",
         },
         styleLabel: {
-          label: "Style du label et de l’aide",
+          label: "Style du label et de l'aide",
           helper: "Via les props de style `LabelTextProps` et `HelperTextProps`",
         },
         styleAccessories: {
@@ -95,7 +95,7 @@ export const demoFr: DemoTranslations = {
   },
   demoToggle: {
     description:
-      "Fait le rendu d’un booléen. Ce composant contrôlé nécessite un callback `onValueChange` qui met à jour la prop `value` pour que le composant reflète les actions de l'utilisateur. Si la prop `value` n'est pas mise à jour, le composant continuera à rendre la prop `value` fournie au lieu du résultat attendu des actions de l'utilisateur.",
+      "Fait le rendu d'un booléen. Ce composant contrôlé nécessite un callback `onValueChange` qui met à jour la prop `value` pour que le composant reflète les actions de l'utilisateur. Si la prop `value` n'est pas mise à jour, le composant continuera à rendre la prop `value` fournie au lieu du résultat attendu des actions de l'utilisateur.",
     useCase: {
       variants: {
         name: "Variantes",
@@ -112,7 +112,7 @@ export const demoFr: DemoTranslations = {
         switch: {
           label: "Variante `switch`",
           helper:
-            "Une entrée on/off plus proéminente. Possède un meilleur support d’accessibilité.",
+            "Une entrée on/off plus proéminente. Possède un meilleur support d'accessibilité.",
         },
       },
       statuses: {
@@ -120,8 +120,8 @@ export const demoFr: DemoTranslations = {
         description:
           "Il y a une prop de statut - similaire à `preset` dans d'autres composants, mais affecte également la fonctionnalité du composant.",
         noStatus: "Pas de statut - c'est le défaut",
-        errorStatus: "Statut d’erreur - à utiliser quand il y a une erreur",
-        disabledStatus: "Statut désactivé - désactive l’édition et atténue le style",
+        errorStatus: "Statut d'erreur - à utiliser quand il y a une erreur",
+        disabledStatus: "Statut désactivé - désactive l'édition et atténue le style",
       },
       passingContent: {
         name: "Transfert de contenu",
@@ -144,19 +144,19 @@ export const demoFr: DemoTranslations = {
           switch: {
             label: "Les interrupteurs peuvent être lus comme du texte",
             helper:
-              "Par défaut, cette option n’utilise pas `Text` car selon la police, les caractères on/off pourraient paraître étranges. Personnalisez selon vos besoins.",
+              "Par défaut, cette option n'utilise pas `Text` car selon la police, les caractères on/off pourraient paraître étranges. Personnalisez selon vos besoins.",
           },
           switchAid: {
-            label: "Ou aidé d’une icône",
+            label: "Ou aidé d'une icône",
           },
         },
       },
       styling: {
         name: "Style",
         description: "Le composant peut être facilement stylisé.",
-        outerWrapper: "1 - styliser le wrapper extérieur de l’entrée",
-        innerWrapper: "2 - styliser le wrapper intérieur de l’entrée",
-        inputDetail: "3 - styliser le détail de l’entrée",
+        outerWrapper: "1 - styliser le wrapper extérieur de l'entrée",
+        innerWrapper: "2 - styliser le wrapper intérieur de l'entrée",
+        inputDetail: "3 - styliser le détail de l'entrée",
         labelTx: "Vous pouvez aussi styliser le labelTx",
         styleContainer: "Ou, styliser le conteneur entier",
       },
@@ -164,7 +164,7 @@ export const demoFr: DemoTranslations = {
   },
   demoButton: {
     description:
-      "Un composant qui permet aux utilisateurs d’effectuer des actions et de faire des choix. Enveloppe le composant Text avec un composant Pressable.",
+      "Un composant qui permet aux utilisateurs d'effectuer des actions et de faire des choix. Enveloppe le composant Text avec un composant Pressable.",
     useCase: {
       presets: {
         name: "Préréglages",
@@ -189,7 +189,7 @@ export const demoFr: DemoTranslations = {
         styleContainer: "Style du conteneur - Exercitation",
         styleText: "Style du texte - Ea Anim",
         styleAccessories: "Style des accessoires - enim ea id fugiat anim ad.",
-        pressedState: "Style de l’état pressé - fugiat anim",
+        pressedState: "Style de l'état pressé - fugiat anim",
       },
       disabling: {
         name: "Désactivation",
@@ -198,7 +198,7 @@ export const demoFr: DemoTranslations = {
         standard: "Désactivé - standard",
         filled: "Désactivé - rempli",
         reversed: "Désactivé - inversé",
-        accessory: "Style d’accessoire désactivé",
+        accessory: "Style d'accessoire désactivé",
         textStyle: "Style de texte désactivé",
       },
     },
@@ -234,7 +234,7 @@ export const demoFr: DemoTranslations = {
       customLeftRight: {
         name: "Composants personnalisés gauche/droite",
         description:
-          "Si vous avez besoin d’un composant personnalisé à gauche/droite, vous pouvez le passer.",
+          "Si vous avez besoin d'un composant personnalisé à gauche/droite, vous pouvez le passer.",
         customLeft: "Composant personnalisé à gauche",
         customRight: "Composant personnalisé à droite",
       },
@@ -281,7 +281,7 @@ export const demoFr: DemoTranslations = {
       verticalAlignment: {
         name: "Alignement vertical",
         description:
-          "Selon les besoins, la carte est préconfigurée avec différentes stratégies d’alignement.",
+          "Selon les besoins, la carte est préconfigurée avec différentes stratégies d'alignement.",
         top: {
           heading: "Haut (par défaut)",
           content: "Tout le contenu est automatiquement aligné en haut.",
@@ -313,14 +313,14 @@ export const demoFr: DemoTranslations = {
       customComponent: {
         name: "Composants personnalisés",
         description:
-          "N’importe quels composants préconfigurés peuvent être remplacé par le vôtre. Vous pouvez également en ajouter d’autres.",
+          "N'importe quels composants préconfigurés peuvent être remplacé par le vôtre. Vous pouvez également en ajouter d'autres.",
         rightComponent: "Composant droit",
         leftComponent: "Composant gauche",
       },
       style: {
         name: "Style",
         description: "Le composant peut être facilement stylisé.",
-        heading: "Styliser l’en-tête",
+        heading: "Styliser l'en-tête",
         content: "Styliser le contenu",
         footer: "Styliser le pied de page",
       },
@@ -333,9 +333,9 @@ export const demoFr: DemoTranslations = {
       remoteUri: { name: "URI distante" },
       base64Uri: { name: "URI Base64" },
       scaledToFitDimensions: {
-        name: "Mis à l’échelle pour s’adapter aux dimensions",
+        name: "Mis à l'échelle pour s'adapter aux dimensions",
         description:
-          "En fournissant les props `maxWidth` et/ou `maxHeight`, l’image se redimensionnera automatiquement à l’échelle tout en conservant son rapport d’aspect. En quoi est-ce différent de `resizeMode: 'contain'` ? Premièrement, vous pouvez spécifier la taille d'un seul côté (pas les deux). Deuxièmement, l'image s'adaptera aux dimensions souhaitées au lieu d'être simplement contenue dans son conteneur d'image.",
+          "En fournissant les props `maxWidth` et/ou `maxHeight`, l'image se redimensionnera automatiquement à l'échelle tout en conservant son rapport d'aspect. En quoi est-ce différent de `resizeMode: 'contain'` ? Premièrement, vous pouvez spécifier la taille d'un seul côté (pas les deux). Deuxièmement, l'image s'adaptera aux dimensions souhaitées au lieu d'être simplement contenue dans son conteneur d'image.",
         heightAuto: "largeur: 60 / hauteur: auto",
         widthAuto: "largeur: auto / hauteur: 32",
         bothManual: "largeur: 60 / hauteur: 60",
@@ -397,37 +397,44 @@ export const demoFr: DemoTranslations = {
         text3:
           "Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco adipisicing tempor adipisicing.",
       },
+      refs: {
+        name: "Utilisation des Références",
+        description: "Le composant Text prend désormais en charge les références transmises.",
+        text: "Ce texte a une référence attachée. Essayez de cliquer sur le bouton ci-dessous pour le mettre en évidence !",
+        buttonText: "Mettre en évidence le Texte via Ref",
+        highlightedText: "Le texte est maintenant en surbrillance !",
+      },
     },
   },
   demoHeader: {
     description:
-      "Composant qui apparaît sur de nombreux écrans. Contiendra les boutons de navigation et le titre de l’écran.",
+      "Composant qui apparaît sur de nombreux écrans. Contiendra les boutons de navigation et le titre de l'écran.",
     useCase: {
       actionIcons: {
-        name: "Icônes d’action",
+        name: "Icônes d'action",
         description:
-          "Vous pouvez facilement passer des icônes aux composants d’action gauche ou droit.",
+          "Vous pouvez facilement passer des icônes aux composants d'action gauche ou droit.",
         leftIconTitle: "Icône gauche",
         rightIconTitle: "Icône droite",
         bothIconsTitle: "Les deux icônes",
       },
       actionText: {
-        name: "Texte d’action",
+        name: "Texte d'action",
         description:
-          "Vous pouvez facilement passer du texte aux composants d’action gauche ou droit.",
+          "Vous pouvez facilement passer du texte aux composants d'action gauche ou droit.",
         leftTxTitle: "Via `leftTx`",
         rightTextTitle: "Via `rightText`",
       },
       customActionComponents: {
-        name: "Composants d’action personnalisés",
+        name: "Composants d'action personnalisés",
         description:
-          "Si les options d’icône ou de texte ne suffisent pas, vous pouvez passer votre propre composant d’action personnalisé.",
+          "Si les options d'icône ou de texte ne suffisent pas, vous pouvez passer votre propre composant d'action personnalisé.",
         customLeftActionTitle: "Action gauche personnalisée",
       },
       titleModes: {
         name: "Modes de titre",
         description:
-          "Le titre peut être forcé à rester au centre (par défaut) mais peut être coupé s’il est trop long. Vous pouvez éventuellement le faire s’ajuster aux boutons d’action.",
+          "Le titre peut être forcé à rester au centre (par défaut) mais peut être coupé s'il est trop long. Vous pouvez éventuellement le faire s'ajuster aux boutons d'action.",
         centeredTitle: "Titre centré",
         flexTitle: "Titre flexible",
       },
@@ -442,18 +449,18 @@ export const demoFr: DemoTranslations = {
   },
   demoEmptyState: {
     description:
-      "Un composant à utiliser lorsqu’il n’y a pas de données à afficher. Il peut être utilisé pour diriger l’utilisateur sur ce qu’il faut faire ensuite.",
+      "Un composant à utiliser lorsqu'il n'y a pas de données à afficher. Il peut être utilisé pour diriger l'utilisateur sur ce qu'il faut faire ensuite.",
     useCase: {
       presets: {
         name: "Préréglages",
         description:
-          "Vous pouvez créer différents ensembles de texte/image. Un est prédéfini appelé `generic`. Notez qu’il n’y a pas de valeur par défaut au cas où vous voudriez avoir un EmptyState complètement personnalisé.",
+          "Vous pouvez créer différents ensembles de texte/image. Un est prédéfini appelé `generic`. Notez qu'il n'y a pas de valeur par défaut au cas où vous voudriez avoir un EmptyState complètement personnalisé.",
       },
       passingContent: {
         name: "Transfert de contenu",
         description: "Il y a plusieurs façons de transférer du contenu.",
-        customizeImageHeading: "Personnaliser l’image",
-        customizeImageContent: "Vous pouvez passer n’importe quelle source d'image.",
+        customizeImageHeading: "Personnaliser l'image",
+        customizeImageContent: "Vous pouvez passer n'importe quelle source d'image.",
         viaHeadingProp: "Via la prop `heading`",
         viaContentProp: "Via la prop `content`.",
         viaButtonProp: "Via la prop `button`",

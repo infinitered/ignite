@@ -4,7 +4,7 @@ import { isRTL, translate, TxKeyPath } from "@/i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { typography } from "@/theme/typography"
-import { ReactNode } from "react"
+import { ReactNode, forwardRef, PropsWithChildren, ForwardedRef } from "react"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
@@ -53,7 +53,10 @@ export interface TextProps extends RNTextProps {
  * @param {TextProps} props - The props for the `Text` component.
  * @returns {JSX.Element} The rendered `Text` component.
  */
-export function Text(props: TextProps) {
+export const Text = forwardRef(function Text(
+  props: PropsWithChildren<TextProps>,
+  ref: ForwardedRef<RNText | null>,
+) {
   const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
   const { themed } = useAppTheme()
 
@@ -70,11 +73,11 @@ export function Text(props: TextProps) {
   ]
 
   return (
-    <RNText {...rest} style={$styles}>
+    <RNText {...rest} style={$styles} ref={ref}>
       {content}
     </RNText>
   )
-}
+})
 
 const $sizeStyles = {
   xxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,

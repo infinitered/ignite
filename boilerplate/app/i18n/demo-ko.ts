@@ -385,6 +385,13 @@ export const demoKo: DemoTranslations = {
         text2: "오늘 밤에도 별이 바람에 스치운다.",
         text3: "계속 이어지는 예제 문장입니다. 하나 둘 셋.",
       },
+      refs: {
+        name: "참조 사용하기",
+        description: "Text 컴포넌트는 이제 전달된 참조를 지원합니다.",
+        text: "이 텍스트에는 참조가 첨부되어 있습니다. 아래 버튼을 클릭하여 포커스를 해보세요!",
+        buttonText: "참조를 통해 텍스트 포커스",
+        highlightedText: "텍스트가 강조되었습니다!",
+      },
     },
   },
   demoHeader: {

@@ -389,6 +389,13 @@ export const demoEn = {
         text3:
           "Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco adipisicing tempor adipisicing.",
       },
+      refs: {
+        name: "Using Refs",
+        description: "The Text component now supports forwarded refs.",
+        text: "This text has a ref attached to it. Try clicking the button below to focus it!",
+        buttonText: "Focus Text via Ref",
+        highlightedText: "Text is now highlighted!",
+      },
     },
   },
   demoHeader: {
