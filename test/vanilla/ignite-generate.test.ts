@@ -57,37 +57,39 @@ describe("ignite-cli generate", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/models/Pizza.ts`)).toMatchInlineSnapshot(`
-        "import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
-        import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
+"import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
+import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
 
-        /**
-         * Model description here for TypeScript hints.
-         */
-        export const PizzaModel = types
-          .model(\\"Pizza\\")
-          .props({})
-          .actions(withSetPropAction)
-          .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-          .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+/**
+ * Model description here for TypeScript hints.
+ */
+export const PizzaModel = types
+  .model(\\"Pizza\\")
+  .props({})
+  .actions(withSetPropAction)
+  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
 
-        export interface Pizza extends Instance<typeof PizzaModel> {}
-        export interface PizzaSnapshotOut extends SnapshotOut<typeof PizzaModel> {}
-        export interface PizzaSnapshotIn extends SnapshotIn<typeof PizzaModel> {}
-        export const createPizzaDefaultModel = () => types.optional(PizzaModel, {})
+export interface Pizza extends Instance<typeof PizzaModel> {}
+export interface PizzaSnapshotOut extends SnapshotOut<typeof PizzaModel> {}
+export interface PizzaSnapshotIn extends SnapshotIn<typeof PizzaModel> {}
+export const createPizzaDefaultModel = () => types.optional(PizzaModel, {})
 
-        // @mst remove-file"
-      `)
+// @mst remove-file
+"
+`)
       expect(read(`${TEMP_DIR}/app/models/Pizza.test.ts`)).toMatchInlineSnapshot(`
-        "import { PizzaModel } from \\"./Pizza\\"
+"import { PizzaModel } from \\"./Pizza\\"
 
-        test(\\"can be created\\", () => {
-          const instance = PizzaModel.create({})
+test(\\"can be created\\", () => {
+  const instance = PizzaModel.create({})
 
-          expect(instance).toBeTruthy()
-        })
+  expect(instance).toBeTruthy()
+})
 
-        // @mst remove-file"
-      `)
+// @mst remove-file
+"
+`)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
         "export * from \\"./RootStore\\"
         export * from \\"./helpers/getRootStore\\"
@@ -138,37 +140,39 @@ describe("ignite-cli generate", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.ts`)).toMatchInlineSnapshot(`
-        "import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
-        import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
+"import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
+import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
 
-        /**
-         * Model description here for TypeScript hints.
-         */
-        export const PizzaStoreModel = types
-          .model(\\"PizzaStore\\")
-          .props({})
-          .actions(withSetPropAction)
-          .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-          .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+/**
+ * Model description here for TypeScript hints.
+ */
+export const PizzaStoreModel = types
+  .model(\\"PizzaStore\\")
+  .props({})
+  .actions(withSetPropAction)
+  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
 
-        export interface PizzaStore extends Instance<typeof PizzaStoreModel> {}
-        export interface PizzaStoreSnapshotOut extends SnapshotOut<typeof PizzaStoreModel> {}
-        export interface PizzaStoreSnapshotIn extends SnapshotIn<typeof PizzaStoreModel> {}
-        export const createPizzaStoreDefaultModel = () => types.optional(PizzaStoreModel, {})
+export interface PizzaStore extends Instance<typeof PizzaStoreModel> {}
+export interface PizzaStoreSnapshotOut extends SnapshotOut<typeof PizzaStoreModel> {}
+export interface PizzaStoreSnapshotIn extends SnapshotIn<typeof PizzaStoreModel> {}
+export const createPizzaStoreDefaultModel = () => types.optional(PizzaStoreModel, {})
 
-        // @mst remove-file"
-      `)
+// @mst remove-file
+"
+`)
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.test.ts`)).toMatchInlineSnapshot(`
-        "import { PizzaStoreModel } from \\"./PizzaStore\\"
+"import { PizzaStoreModel } from \\"./PizzaStore\\"
 
-        test(\\"can be created\\", () => {
-          const instance = PizzaStoreModel.create({})
+test(\\"can be created\\", () => {
+  const instance = PizzaStoreModel.create({})
 
-          expect(instance).toBeTruthy()
-        })
+  expect(instance).toBeTruthy()
+})
 
-        // @mst remove-file"
-      `)
+// @mst remove-file
+"
+`)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
         "export * from \\"./RootStore\\"
         export * from \\"./helpers/getRootStore\\"
