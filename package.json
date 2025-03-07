@@ -159,6 +159,7 @@
       "tsx",
       "js",
       "jsx"
-    ]
+    ],
+    "prettierPath": null
   }
 }
