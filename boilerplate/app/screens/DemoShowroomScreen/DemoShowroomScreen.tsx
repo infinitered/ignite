@@ -41,14 +41,22 @@ const WebListItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
   const { themed } = useAppTheme()
   return (
     <View>
-      <Link to={`/showroom/${sectionSlug}`} style={themed($menuContainer)}>
+      <Link
+        screen="DemoShowroom"
+        params={{ queryIndex: sectionSlug }}
+        style={themed($menuContainer)}
+      >
         <Text preset="bold">{item.name}</Text>
       </Link>
       {item.useCases.map((u) => {
         const itemSlug = slugify(u)
 
         return (
-          <Link key={`section${sectionIndex}-${u}`} to={`/showroom/${sectionSlug}/${itemSlug}`}>
+          <Link
+            key={`section${sectionIndex}-${u}`}
+            screen="DemoShowroom"
+            params={{ queryIndex: sectionSlug, itemIndex: itemSlug }}
+          >
             <Text>{u}</Text>
           </Link>
         )
@@ -71,7 +79,7 @@ const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) 
       {item.useCases.map((u, index) => (
         <ListItem
           key={`section${sectionIndex}-${u}`}
-          onPress={() => handleScroll?.(sectionIndex, index + 1)}
+          onPress={() => handleScroll?.(sectionIndex, index)}
           text={u}
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
         />
@@ -103,11 +111,16 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     }, [open])
 
     const handleScroll = useCallback((sectionIndex: number, itemIndex = 0) => {
-      listRef.current?.scrollToLocation({
-        animated: true,
-        itemIndex,
-        sectionIndex,
-      })
+      try {
+        listRef.current?.scrollToLocation({
+          animated: true,
+          itemIndex,
+          sectionIndex,
+          viewPosition: 0.25,
+        })
+      } catch (e) {
+        console.error(e)
+      }
     }, [])
 
     // handle Web links
@@ -122,7 +135,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           try {
             findItemIndex = demoValues[findSectionIndex]
               .data({ themed, theme })
-              .findIndex((u) => slugify(u.props.name) === params.itemIndex)
+              .findIndex((u) => slugify(translate(u.props.name)) === params.itemIndex)
           } catch (err) {
             console.error(err)
           }

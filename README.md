@@ -69,7 +69,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | React Native                     | Mobile Framework     | v0.76   | The best cross-platform mobile framework       |
 | React                            | UI Framework         | v18     | The most popular UI framework in the world     |
 | TypeScript                       | Language             | v5      | Static typechecking                            |
-| React Navigation                 | Navigation           | v6      | Performant and consistent navigation framework |
+| React Navigation                 | Navigation           | v7      | Performant and consistent navigation framework |
 | MobX-State-Tree                  | State Management     | v5      | Observable state tree                          |
 | MobX-React-Lite                  | React Integration    | v3      | Re-render React performantly                   |
 | Expo                             | SDK                  | v52     | Allows (optional) Expo modules                 |
