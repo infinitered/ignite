@@ -93,31 +93,6 @@ The `heading` prop is used to set the heading text of the EmptyState.
 <EmptyState heading="EmptyState Heading" content="EmptyState Content" button="EmptyState Button" />
 ```
 
-### `headingTx`
-
-The `headingTx` prop is used to set the heading text of the EmptyState using a translation key.
-
-```tsx
-<EmptyState
-  headingTx="EmptyState:heading"
-  content="EmptyState Content"
-  button="EmptyState Button"
-/>
-```
-
-### `headingTxOptions`
-
-The `headingTxOptions` prop is used to set the options for the translation key used by the `headingTx` prop.
-
-```tsx
-<EmptyState
-  headingTx="EmptyState:heading"
-  headingTxOptions={{ count: 2 }}
-  content="EmptyState Content"
-  button="EmptyState Button"
-/>
-```
-
 ### `headingStyle`
 
 The `headingStyle` prop is used to set the style of the heading text.
@@ -152,31 +127,6 @@ The `content` prop is used to set the content text of the EmptyState.
 <EmptyState heading="EmptyState Heading" content="EmptyState Content" button="EmptyState Button" />
 ```
 
-### `contentTx`
-
-The `contentTx` prop is used to set the content text of the EmptyState using a translation key.
-
-```tsx
-<EmptyState
-  heading="EmptyState Heading"
-  contentTx="EmptyState:content"
-  button="EmptyState Button"
-/>
-```
-
-### `contentTxOptions`
-
-The `contentTxOptions` prop is used to set the options for the translation key used by the `contentTx` prop.
-
-```tsx
-<EmptyState
-  heading="EmptyState Heading"
-  contentTx="EmptyState:content"
-  contentTxOptions={{ count: 2 }}
-  button="EmptyState Button"
-/>
-```
-
 ### `contentStyle`
 
 The `contentStyle` prop is used to set the style of the content text.
@@ -209,31 +159,6 @@ The `button` prop is used to set the button text of the EmptyState.
 
 ```tsx
 <EmptyState heading="EmptyState Heading" content="EmptyState Content" button="EmptyState Button" />
-```
-
-### `buttonTx`
-
-The `buttonTx` prop is used to set the button text of the EmptyState using a translation key.
-
-```tsx
-<EmptyState
-  heading="EmptyState Heading"
-  content="EmptyState Content"
-  buttonTx="EmptyState:button"
-/>
-```
-
-### `buttonTxOptions`
-
-The `buttonTxOptions` prop is used to set the options for the translation key used by the `buttonTx` prop.
-
-```tsx
-<EmptyState
-  heading="EmptyState Heading"
-  content="EmptyState Content"
-  buttonTx="EmptyState:button"
-  buttonTxOptions={{ count: 2 }}
-/>
 ```
 
 ### `buttonStyle`

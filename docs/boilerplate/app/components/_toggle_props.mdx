@@ -68,24 +68,6 @@ The `label` prop is a string that is used as the label for the toggle.
 
 <CodeBlock language="tsx">{`\<${props.componentName} value={value} onValueChange={setValue} label="Remember Me" />`}</CodeBlock>
 
-### `labelTx`
-
-The `labelTx` prop is a key to a string in the `i18n` translation file. It is used as the label for the toggle.
-
-<CodeBlock language="tsx">{`\<${props.componentName} value={value} onValueChange={setValue} labelTx="login:rememberUsername" />`}</CodeBlock>
-
-### `labelTxOptions`
-
-The `labelTxOptions` prop is an object that is passed to the `i18n` translation function. It is used to pass in values to the translation string.
-
-<CodeBlock language="tsx">
-  {`\<${props.componentName}
-  value={value}
-  onValueChange={setValue}
-  labelTx="login:rememberUsername"
-  labelTxOptions={{ username: "john" }}
-/>`}
-</CodeBlock>
 
 ### `labelStyle`
 
@@ -104,25 +86,6 @@ The `LabelTextProps` prop is a `TextProps` object (from the [`Text`](./Text.md))
 The `helper` prop is a string that is used as the helper for the toggle.
 
 <CodeBlock language="tsx">{`\<${props.componentName} value={value} onValueChange={setValue} helper="Remember Me" />`}</CodeBlock>
-
-### `helperTx`
-
-The `helperTx` prop is a key to a string in the `i18n` translation file. It is used as the helper for the toggle.
-
-<CodeBlock language="tsx">{`\<${props.componentName} value={value} onValueChange={setValue} helperTx="login:rememberUsername" />`}</CodeBlock>
-
-### `helperTxOptions`
-
-The `helperTxOptions` prop is an object that is passed to the `i18n` translation function. It is used to pass in values to the translation string.
-
-<CodeBlock language="tsx">
-  {`\<${props.componentName}
-  value={value}
-  onValueChange={setValue}
-  helperTx="login:rememberUsername"
-  helperTxOptions={{ username: "john" }}
-/>`}
-</CodeBlock>
 
 ### `HelperTextProps`
 

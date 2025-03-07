@@ -6,6 +6,7 @@ import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -78,10 +79,16 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={themed($screenContentContainer)}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="loginScreen:logIn" preset="heading" style={themed($logIn)} />
-      <Text tx="loginScreen:enterDetails" preset="subheading" style={themed($enterDetails)} />
+      <Text testID="login-heading" preset="heading" style={themed($logIn)}>
+        {translations.logIn}
+      </Text>
+      <Text preset="subheading" style={themed($enterDetails)}>
+        {translations.enterDetails}
+      </Text>
       {attemptsCount > 2 && (
-        <Text tx="loginScreen:hint" size="sm" weight="light" style={themed($hint)} />
+        <Text size="sm" weight="light" style={themed($hint)}>
+          {translations.hint}
+        </Text>
       )}
 
       <TextField
@@ -92,8 +99,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoComplete="email"
         autoCorrect={false}
         keyboardType="email-address"
-        labelTx="loginScreen:emailFieldLabel"
-        placeholderTx="loginScreen:emailFieldPlaceholder"
+        label={translations.emailFieldLabel}
+        placeholder={translations.emailFieldPlaceholder}
         helper={error}
         status={error ? "error" : undefined}
         onSubmitEditing={() => authPasswordInput.current?.focus()}
@@ -108,21 +115,29 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoComplete="password"
         autoCorrect={false}
         secureTextEntry={isAuthPasswordHidden}
-        labelTx="loginScreen:passwordFieldLabel"
-        placeholderTx="loginScreen:passwordFieldPlaceholder"
+        label={translations.passwordFieldLabel}
+        placeholder={translations.passwordFieldPlaceholder}
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
       />
 
-      <Button
-        testID="login-button"
-        tx="loginScreen:tapToLogIn"
-        style={themed($tapButton)}
-        preset="reversed"
-        onPress={login}
-      />
+      <Button testID="login-button" style={themed($tapButton)} preset="reversed" onPress={login}>
+        {translations.tapToLogIn}
+      </Button>
     </Screen>
   )
+})
+
+const translations = TranslateSheet.create("loginScreen", {
+  logIn: "Log In",
+  enterDetails:
+    "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
+  emailFieldLabel: "Email",
+  passwordFieldLabel: "Password",
+  emailFieldPlaceholder: "Enter your email address",
+  passwordFieldPlaceholder: "Super secret password here",
+  tapToLogIn: "Tap to log in!",
+  hint: "Hint: you can use any email address and your favorite password :)",
 })
 
 const $screenContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({

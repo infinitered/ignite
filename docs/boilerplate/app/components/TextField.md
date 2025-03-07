@@ -19,15 +19,10 @@ const [input, setInput] = useState("")
   onChangeText={(value) => setInput(value)}
   status="error"
   label="Name"
-  labelTx="login.nameLabel"
-  labelTxOptions={{ name: "John" }}
   LabelTextProps={{ style: { color: "#FFFFFF" } }}
   placeholder="John Doe"
-  placeholderTx="login.namePlaceholder"
   placeholderTxOptions={{ name: "John" }}
   helper="Enter your name"
-  helperTx="login.nameHelper"
-  helperTxOptions={{ name: "John" }}
   HelperTextProps={{ style: { color: "#FFFFFF" } }}
   style={{ backgroundColor: "#BFBFBF" }}
   containerStyle={{ backgroundColor: "#BFBFBF" }}
@@ -58,27 +53,6 @@ The `label` optional prop is a string that is used to set the label. If this is 
 <TextField value={input} onChangeText={(value) => setInput(value)} label="Name" />
 ```
 
-### `labelTx`
-
-The `labelTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization. If this is not set, the `label` prop must be present to set the label. If both are set, the `label` value will be used.
-
-```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} labelTx="signup.name" />
-```
-
-### `labelTxOptions`
-
-The `labelTxOptions` is an optional prop that is used to pass props to the translation lookup for the header title. This is useful if you need to pass in dynamic values to the translation.
-
-```tsx
-<TextField
-  value={input}
-  labelTx="signup.name"
-  labelTxOptions={{ name: "John" }}
-  onChangeText={(value) => setInput(value)}
-/>
-```
-
 ### `LabelTextProps`
 
 The `LabelTextProps` is an optional prop that is used to pass props to the [`Text`](./Text.md) component that renders the label.
@@ -86,7 +60,7 @@ The `LabelTextProps` is an optional prop that is used to pass props to the [`Tex
 ```tsx
 <TextField
   value={input}
-  labelTx="signup.name"
+  labelText="Sign up"
   onChangeText={(value) => setInput(value)}
   LabelTextProps={{ style: { color: "red" } }}
 />
@@ -98,27 +72,6 @@ The `helper` optional prop is a string that is used to set the helper text. If t
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} helper="This is a helper text" />
-```
-
-### `helperTx`
-
-The `helperTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization. If this is not set, the `helper` prop must be present to set the helper text. If both are set, the `helper` value will be used.
-
-```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} helperTx="signup.name" />
-```
-
-### `helperTxOptions`
-
-The `helperTxOptions` is an optional prop that is used to pass props to the translation lookup for the helper text. This is useful if you need to pass in dynamic values to the translation.
-
-```tsx
-<TextField
-  value={input}
-  helperTx="login.name"
-  helperTxOptions={{ name: "John" }}
-  onChangeText={(value) => setInput(value)}
-/>
 ```
 
 ### `HelperTextProps`
@@ -136,26 +89,10 @@ The `HelperTextProps` is an optional prop that is used to pass props to the [`Te
 
 ### `placeholder`
 
-The `placeholder` optional prop is a string that is used to set the placeholder. If this is not set, the `placeholderTx` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
+The `placeholder` optional prop is a string that is used to set the placeholder.
 
 ```tsx
 <TextField value={input} onChangeText={(value) => setInput(value)} placeholder="Name" />
-```
-
-### `placeholderTx`
-
-The `placeholderTx` optional prop is the string key used to look up the translated text for the user's locale. Ignite uses [`i18next`](https://www.i18next.com/) for internationalization. If this is not set, the `placeholder` prop must be present to set the placeholder. If both are set, the `placeholder` value will be used.
-
-```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} placeholderTx="signup.name" />
-```
-
-### `placeholderTxOptions`
-
-The `placeholderTxOptions` is an optional prop that is used to pass props to the translation lookup for the placeholder text. This is useful if you need to pass in dynamic values to the translation.
-
-```tsx
-<TextField value={input} onChangeText={(value) => setInput(value)} />
 ```
 
 ### `style`

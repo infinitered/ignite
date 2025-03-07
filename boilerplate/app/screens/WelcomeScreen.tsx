@@ -13,6 +13,8 @@ import { $styles, type ThemedStyle } from "@/theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
+import TranslateSheet from "translate-sheet"
+import { commonNamespace } from "@/i18n/commonNamespace"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -38,7 +40,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
 
     useHeader(
       {
-        rightTx: "common:logOut",
+        rightText: commonNamespace.logOut,
         onRightPress: logout,
       },
       [logout],
@@ -51,13 +53,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
       <Screen preset="fixed" contentContainerStyle={$styles.flex1}>
         <View style={themed($topContainer)}>
           <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
-          <Text
-            testID="welcome-heading"
-            style={themed($welcomeHeading)}
-            tx="welcomeScreen:readyForLaunch"
-            preset="heading"
-          />
-          <Text tx="welcomeScreen:exciting" preset="subheading" />
+          <Text testID="welcome-heading" style={themed($welcomeHeading)} preset="heading">
+            {translations.readyForLaunch}
+          </Text>
+          <Text preset="subheading">{translations.exciting}</Text>
           <Image
             style={$welcomeFace}
             source={welcomeFace}
@@ -67,14 +66,11 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
         </View>
 
         <View style={themed([$bottomContainer, $bottomContainerInsets])}>
-          <Text tx="welcomeScreen:postscript" size="md" />
+          <Text size="md">{translations.postscript}</Text>
           {/* @demo remove-block-start */}
-          <Button
-            testID="next-screen-button"
-            preset="reversed"
-            tx="welcomeScreen:letsGo"
-            onPress={goNext}
-          />
+          <Button testID="next-screen-button" preset="reversed" onPress={goNext}>
+            {translations.letsGo}
+          </Button>
           {/* @demo remove-block-end */}
         </View>
       </Screen>
@@ -82,6 +78,14 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
     // @mst replace-next-line }
   },
 ) // @mst remove-current-line
+
+export const translations = TranslateSheet.create("welcomeScreen", {
+  postscript:
+    "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
+  readyForLaunch:  "Your app, almost ready for launch!",
+  exciting: "(ohh, this is exciting!)",
+  letsGo: "Let's go!",
+})
 
 const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,

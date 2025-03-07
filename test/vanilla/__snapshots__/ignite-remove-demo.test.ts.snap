@@ -41,6 +41,7 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/.maestro/Login.yaml
    Found '@demo remove-current-line' in /user/home/ignite/app/components/Icon.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/i18n/ar.ts
+   Found '@demo remove-current-line' in /user/home/ignite/app/i18n/commonNamespace.ts
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-ar.ts
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-en.ts
    Found 'remove-file' in /user/home/ignite/app/i18n/demo-es.ts

@@ -4,20 +4,12 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import "intl-pluralrules"
 
-// if English isn't your default language, move Translations to the appropriate language file.
-import en, { Translations } from "./en"
-import ar from "./ar"
-import ko from "./ko"
-import es from "./es"
-import fr from "./fr"
-import ja from "./ja"
-import hi from "./hi"
+import resources from "./resources"
 
 const fallbackLocale = "en-US"
 
 const systemLocales = Localization.getLocales()
 
-const resources = { ar, en, ko, es, fr, ja, hi }
 const supportedTags = Object.keys(resources)
 
 // Checks to see if the device locale matches any of the supported locales
@@ -58,29 +50,3 @@ export const initI18n = async () => {
   return i18n
 }
 
-/**
- * Builds up valid keypaths for translations.
- */
-
-export type TxKeyPath = RecursiveKeyOf<Translations>
-
-// via: https://stackoverflow.com/a/65333050
-type RecursiveKeyOf<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, true>
-}[keyof TObj & (string | number)]
-
-type RecursiveKeyOfInner<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, false>
-}[keyof TObj & (string | number)]
-
-type RecursiveKeyOfHandleValue<
-  TValue,
-  Text extends string,
-  IsFirstLevel extends boolean,
-> = TValue extends any[]
-  ? Text
-  : TValue extends object
-    ? IsFirstLevel extends true
-      ? Text | `${Text}:${RecursiveKeyOfInner<TValue>}`
-      : Text | `${Text}.${RecursiveKeyOfInner<TValue>}`
-    : Text

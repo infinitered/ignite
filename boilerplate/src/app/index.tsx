@@ -6,6 +6,7 @@ import { isRTL } from "@/i18n"
 import { ThemedStyle } from "@/theme"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { translations } from "./../../app/screens/WelcomeScreen"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
@@ -22,10 +23,11 @@ export default observer(function WelcomeScreen() {
         <Text
           testID="welcome-heading"
           style={themed($welcomeHeading)}
-          tx="welcomeScreen:readyForLaunch"
           preset="heading"
-        />
-        <Text tx="welcomeScreen:exciting" preset="subheading" />
+        >{translations.readyForLaunch}</Text>
+        <Text  preset="subheading" >
+          {translations.exciting}
+        </Text>
         <Image
           style={$welcomeFace}
           source={welcomeFace}
@@ -35,7 +37,9 @@ export default observer(function WelcomeScreen() {
       </View>
 
       <View style={[themed($bottomContainer), $bottomContainerInsets]}>
-        <Text tx="welcomeScreen:postscript" size="md" />
+        <Text  size="md" >
+          {translations.postscript}
+        </Text>
       </View>
     </Screen>
   )
