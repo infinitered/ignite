@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import { useRef, useState } from "react"
 import { Text } from "../../../components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
