@@ -6,9 +6,8 @@ import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
 import { translate } from "@/i18n"
 import { Button } from "../../../components"
-import { View} from "react-native"
+import { View } from "react-native"
 import { useAppTheme } from "@/utils/useAppTheme"
-
 
 export const DemoText: Demo = {
   name: "Text",
