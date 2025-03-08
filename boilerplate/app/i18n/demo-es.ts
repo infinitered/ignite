@@ -397,13 +397,6 @@ export const demoEs: DemoTranslations = {
         text3:
           "Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco adipisicing tempor adipisicing.",
       },
-      refs: {
-        name: "Usando Referencias",
-        description: "El componente Text ahora soporta referencias reenviadas.",
-        text: "Este texto tiene una referencia adjunta. ¡Intenta hacer clic en el botón de abajo para enfocarlo!",
-        buttonText: "Enfocar Texto vía Ref",
-        highlightedText: "¡El texto ahora está resaltado!",
-      },
     },
   },
   demoHeader: {

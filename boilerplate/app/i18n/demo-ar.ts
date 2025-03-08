@@ -393,13 +393,6 @@ export const demoAr: DemoTranslations = {
         text3:
           "Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco adipisicing tempor adipisicing.",
       },
-      refs: {
-        name: "استخدام المراجع",
-        description: "يدعم مكون النص الآن المراجع المحولة.",
-        text: "يحتوي هذا النص على مرجع مرفق. حاول النقر على الزر أدناه للتركيز عليه!",
-        buttonText: "تركيز النص عبر المرجع",
-        highlightedText: "النص الآن مضاء!",
-      },
     },
   },
   demoHeader: {
