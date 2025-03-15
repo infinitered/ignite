@@ -33,9 +33,9 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/metro-runtime": "~4.0.0",
-    "@react-navigation/bottom-tabs": "^6.3.2",
-    "@react-navigation/native": "^6.0.2",
-    "@react-navigation/native-stack": "^6.0.2",
+    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/native-stack": "^7.2.0",
     "@shopify/flash-list": "1.7.1",
     "apisauce": "3.0.1",
     "date-fns": "^4.1.0",

@@ -3,7 +3,7 @@ import { isRTL } from "@/i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { typography } from "@/theme/typography"
-import { ReactNode } from "react"
+import { ReactNode, forwardRef, ForwardedRef } from "react"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
@@ -43,8 +43,10 @@ export interface TextProps extends RNTextProps {
  * @param {TextProps} props - The props for the `Text` component.
  * @returns {JSX.Element} The rendered `Text` component.
  */
+
 export function Text(props: TextProps) {
   const { weight, size, text, children, style: $styleOverride, ...rest } = props
+
   const { themed } = useAppTheme()
 
   const content = text || children
@@ -59,11 +61,11 @@ export function Text(props: TextProps) {
   ]
 
   return (
-    <RNText {...rest} style={$styles}>
+    <RNText {...rest} style={$styles} ref={ref}>
       {content}
     </RNText>
   )
-}
+})
 
 const $sizeStyles = {
   xxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,
