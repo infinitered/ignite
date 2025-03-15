@@ -1,7 +1,7 @@
 import { GluegunToolbox } from "gluegun"
 import { boolFlag } from "../tools/flag"
-import { generateFromTemplate, runGenerator } from "../tools/generators"
-import { command, heading, p, warning } from "../tools/pretty"
+import { frontMatterDirectoryDir, generateFromTemplate, runGenerator } from "../tools/generators"
+import { command, heading, p, prettyPrompt, warning } from "../tools/pretty"
 import { Options } from "./new"
 
 const SUB_DIR_DELIMITER = "/"
@@ -16,13 +16,13 @@ module.exports = {
 }
 
 async function generate(toolbox: GluegunToolbox) {
-  const { parameters, strings } = toolbox
+  const { parameters, strings, filesystem, prompt } = toolbox
 
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
 
   // check if we should override front matter dir or default dir
-  const dir = parameters.options.dir ?? parameters.third
+  let dir = parameters.options.dir ?? parameters.third
 
   // we need a name for this component
   let name = parameters.second
@@ -51,6 +51,54 @@ async function generate(toolbox: GluegunToolbox) {
     )
     pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
     command(`npx ignite-cli generate ${generator} ${pascalName}`)
+  }
+  // Check if src/app exists, denoting an Expo Router app
+  if (generator === "screen") {
+    const packageJson = filesystem.read("package.json", "json")
+    const isExpoRouterApp = !!packageJson?.dependencies?.["expo-router"]
+
+    if (isExpoRouterApp) {
+      const directoryDirSetInFrontMatter = frontMatterDirectoryDir("screen")
+
+      if (directoryDirSetInFrontMatter || dir) {
+        heading(
+          `It looks like you're working in a project using Expo Router, determined directory for screen from ${dir ? "override" : "template front matter"}`,
+        )
+        dir = dir || directoryDirSetInFrontMatter
+      } else {
+        const result = await prompt.ask({
+          type: "input",
+          name: "dir",
+          message:
+            "It looks like you're working in a project using Expo Router, please enter the desired directory (e.g., src/app):",
+        })
+
+        if (result.dir) {
+          // Validate the directory
+          const isValidDir = filesystem.exists(result.dir) === "dir"
+          if (isValidDir) {
+            dir = result.dir
+          } else {
+            const createDirResult = await prompt.ask({
+              type: "confirm",
+              name: "createDir",
+              message: `⚠️  Directory ${result.dir} does not exist. Would you like to create it?`,
+              initial: true,
+              format: prettyPrompt.format.boolean,
+            })
+
+            if (createDirResult.createDir) {
+              filesystem.dir(result.dir)
+              dir = result.dir
+            } else {
+              warning(`⚠️ Placing screen in src/app root.`)
+              p()
+              dir = "src/app"
+            }
+          }
+        }
+      }
+    }
   }
 
   // okay, let's do it!
