@@ -161,5 +161,6 @@
       "jsx"
     ],
     "prettierPath": null
-  }
+  },
+  "packageManager": "yarn@4.7.0"
 }
