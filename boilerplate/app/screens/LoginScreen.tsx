@@ -1,8 +1,6 @@
-import { observer } from "mobx-react-lite"
 import { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 import { TextInput, TextStyle, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
-import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
@@ -130,25 +128,17 @@ const $screenContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
 })
 
-const $logIn: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.sm,
-})
+const $logIn: ThemedStyle<TextStyle> = ({ spacing }) => ({ marginBottom: spacing.sm })
 
-const $enterDetails: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.lg,
-})
+const $enterDetails: ThemedStyle<TextStyle> = ({ spacing }) => ({ marginBottom: spacing.lg })
 
 const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.tint,
   marginBottom: spacing.md,
 })
 
-const $textField: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginBottom: spacing.lg,
-})
+const $textField: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginBottom: spacing.lg })
 
-const $tapButton: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginTop: spacing.xs,
-})
+const $tapButton: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginTop: spacing.xs })
 
 // @demo remove-file

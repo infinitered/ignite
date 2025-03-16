@@ -57,14 +57,6 @@ Here are a few videos / talks that introduce Ignite and show off some of its fea
         </a>
       </figure>
     </td>
-    <td>
-      <figure>
-        <a href="https://www.youtube.com/watch?v=n_VjjJxyd8Q">
-          <img src="https://img.youtube.com/vi/n_VjjJxyd8Q/sddefault.jpg" alt="Jamon's Code Quest on MobX-State-Tree" width="100%" /><br />
-        <figcaption><strong>Intro to MobX-State-Tree</strong></figcaption>
-        </a>
-      </figure>
-    </td>
   </tr>
 </table>
 
@@ -118,7 +110,6 @@ With Ignite, you get proven patterns, best practices, and a robust, seasoned com
   - [Generators](./concept/Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./concept/Generator-Templates.md) - Writing your own generator templates
   - [Internationalization](./boilerplate/app/i18n/Internationalization.md) — How to Internationalize your app
-  - [Why MobX-State-Tree?](./concept/MobX-State-Tree.md) - All about MobX-State-Tree, and why we use it instead of Redux
   - [Navigation](./boilerplate/app/navigators/Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
   - [Styling](./concept/Styling.md) - How we approach styling components in Ignite
   - [Testing](./concept/Testing.md) - How to test your Ignite app

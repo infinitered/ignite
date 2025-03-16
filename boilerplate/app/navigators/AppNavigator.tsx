@@ -9,10 +9,8 @@ import {
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite" // @mst remove-current-line
 import * as Screens from "@/screens"
 import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
@@ -53,8 +51,7 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-// @mst replace-next-line const AppStack = () => {
-const AppStack = observer(function AppStack() {
+const AppStack = function AppStack() {
   // @demo remove-block-start
   const {
     authenticationStore: { isAuthenticated },
@@ -69,9 +66,7 @@ const AppStack = observer(function AppStack() {
       screenOptions={{
         headerShown: false,
         navigationBarColor: colors.background,
-        contentStyle: {
-          backgroundColor: colors.background,
-        },
+        contentStyle: { backgroundColor: colors.background },
       }}
       initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
     >
@@ -93,14 +88,12 @@ const AppStack = observer(function AppStack() {
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
-  // @mst replace-next-line }
-})
+}
 
 export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
-// @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
+export const AppNavigator = function AppNavigator(props: NavigationProps) {
   const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
     useThemeProvider()
 
@@ -113,5 +106,4 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       </NavigationContainer>
     </ThemeProvider>
   )
-  // @mst replace-next-line }
-})
+}

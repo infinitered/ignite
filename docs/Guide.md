@@ -30,8 +30,6 @@ Your new Ignite project comes with a full stack of useful libraries, pre-set up 
 
 - React Native
 - React Navigation
-- MobX-State-Tree [(Why not Redux?)](./concept/MobX-State-Tree.md)
-- MobX-React-Lite
 - TypeScript
 - React Native MMKV (integrated with MST for restoring state)
 - apisauce (to talk to REST servers)

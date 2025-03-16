@@ -14,7 +14,6 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "../theme"
 import { isRTL } from "@/i18n"
-import { useStores } from "../models"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 /**
@@ -150,13 +149,9 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   )
 }
 
-const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  paddingBottom: spacing.xxl,
-})
+const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({ paddingBottom: spacing.xxl })
 
-const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.xxl,
-})
+const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({ marginBottom: spacing.xxl })
 
 const $reportBugsLink: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.tint,
@@ -164,21 +159,13 @@ const $reportBugsLink: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   alignSelf: isRTL ? "flex-start" : "flex-end",
 })
 
-const $item: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginBottom: spacing.md,
-})
+const $item: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginBottom: spacing.md })
 
-const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginVertical: spacing.xl,
-})
+const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginVertical: spacing.xl })
 
-const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginBottom: spacing.xs,
-})
+const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginBottom: spacing.xs })
 
-const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginBottom: spacing.md,
-})
+const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginBottom: spacing.md })
 
 const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.palette.neutral600,

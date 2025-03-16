@@ -13,7 +13,6 @@ In this folder, there's only one file ([app.tsx](./app.tsx.md)). The rest are fo
 - [config](./config/Config.md) - Configuration files
 - [devtools](./devtools/Devtools.md) - Configuration/setup for Reactotron and other dev tools
 - [i18n](./i18n/Internationalization.md) - Internationalization setup
-- [models](./models/Models.md) - MobX-State-Tree models
 - [navigators](./navigators/Navigation.md) - React Navigation navigators
 - [screens](./screens/Screens.md) - The main screens of your app
 - [services](./services/Services.md) - Services, such as API clients

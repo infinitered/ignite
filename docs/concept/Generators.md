@@ -16,7 +16,7 @@ npx ignite-cli generate --list
 
 ### Component generator
 
-This is the generator you will be using most often. They come pre-wrapped with mobx-react-lite's `observer` function, which you'll need to trigger re-renders if any MobX-State-Tree properties that are being used in this component change.
+This is the generator you will be using most often. Set up any typical state management or wrappers you want available to a new component you want to generate. For example, if your state management library of choice is MobX-State-Tree, you'll want to wrap the component with mobx-react-lite's `observer` function. This will then trigger re-renders if any MobX-State-Tree properties that are being used in this component change.
 
 ```
 npx ignite-cli generate component MyAwesomeButton
@@ -26,23 +26,11 @@ npx ignite-cli generate component MyAwesomeButton
 
 ### Screen generator
 
-Generates a "hooks enabled" screen that is also pre-wrapped with mobx-react-lite's `observer` function, making it automatically re-render anytime a relevant MST property changes.
+Generates a "hooks enabled" screen.
 
 ```
 npx ignite-cli generate screen Settings
 ```
-
-### Model generator
-
-Creates a Mobx-State-Tree model.
-
-```
-npx ignite-cli generate model Pizza
-```
-
-- Creates the model
-- Creates a unit test file
-- Appends export to `models/index.ts` unless you pass `--skip-index-file`
 
 ### Navigator generator
 

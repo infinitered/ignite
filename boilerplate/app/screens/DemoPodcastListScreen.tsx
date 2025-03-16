@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite"
 import { ComponentType, FC, useCallback, useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
@@ -32,7 +31,6 @@ import {
   Text,
 } from "@/components"
 import { isRTL, translate } from "@/i18n"
-import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
@@ -50,7 +48,6 @@ const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
-    const { episodeStore } = useStores()
     const { themed } = useAppTheme()
 
     const [refreshing, setRefreshing] = useState(false)
@@ -137,7 +134,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
   },
 )
 
-const EpisodeCard = observer(function EpisodeCard({
+const EpisodeCard = function EpisodeCard({
   episode,
   isFavorite,
   onPressFavorite,
@@ -159,25 +156,14 @@ const EpisodeCard = observer(function EpisodeCard({
   // Grey heart
   const animatedLikeButtonStyles = useAnimatedStyle(() => {
     return {
-      transform: [
-        {
-          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.EXTEND),
-        },
-      ],
+      transform: [{ scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.EXTEND) }],
       opacity: interpolate(liked.value, [0, 1], [1, 0], Extrapolation.CLAMP),
     }
   })
 
   // Pink heart
   const animatedUnlikeButtonStyles = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: liked.value,
-        },
-      ],
-      opacity: liked.value,
-    }
+    return { transform: [{ scale: liked.value }], opacity: liked.value }
   })
 
   const handlePressFavorite = useCallback(() => {
@@ -307,7 +293,7 @@ const EpisodeCard = observer(function EpisodeCard({
       }
     />
   )
-})
+}
 
 // #region Styles
 const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
@@ -316,9 +302,7 @@ const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
   paddingBottom: spacing.lg,
 })
 
-const $heading: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginBottom: spacing.md,
-})
+const $heading: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginBottom: spacing.md })
 
 const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   padding: spacing.md,
@@ -333,13 +317,9 @@ const $itemThumbnail: ThemedStyle<ImageStyle> = ({ spacing }) => ({
   alignSelf: "flex-start",
 })
 
-const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginTop: spacing.md,
-})
+const $toggle: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginTop: spacing.md })
 
-const $labelStyle: TextStyle = {
-  textAlign: "left",
-}
+const $labelStyle: TextStyle = { textAlign: "left" }
 
 const $iconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   height: ICON_SIZE,
@@ -376,13 +356,9 @@ const $unFavoriteButton: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.palette.primary100,
 })
 
-const $emptyState: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginTop: spacing.xxl,
-})
+const $emptyState: ThemedStyle<ViewStyle> = ({ spacing }) => ({ marginTop: spacing.xxl })
 
-const $emptyStateImage: ImageStyle = {
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
+const $emptyStateImage: ImageStyle = { transform: [{ scaleX: isRTL ? -1 : 1 }] }
 // #endregion
 
 // @demo remove-file
