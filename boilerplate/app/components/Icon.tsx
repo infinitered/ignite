@@ -1,4 +1,3 @@
-import { ComponentType } from "react"
 import {
   Image,
   ImageStyle,
