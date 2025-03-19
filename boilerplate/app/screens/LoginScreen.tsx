@@ -1,7 +1,14 @@
 import { observer } from "mobx-react-lite"
 import { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 import { TextInput, TextStyle, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
+import {
+  Button,
+  PressableIcon,
+  Screen,
+  Text,
+  TextField,
+  TextFieldAccessoryProps,
+} from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import type { ThemedStyle } from "@/theme"
@@ -60,7 +67,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     () =>
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
         return (
-          <Icon
+          <PressableIcon
             icon={isAuthPasswordHidden ? "view" : "hidden"}
             color={colors.palette.neutral800}
             containerStyle={props.style}
