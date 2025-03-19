@@ -4,7 +4,7 @@ sidebar_position: 35
 
 # Icon
 
-Ignite's `Icon` and `PressableIcon` Components renders an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. `PressableIcon` will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, `Icon` will use a [`View`](https://reactnative.dev/docs/view) component.
+Ignite's `Icon` and `PressableIcon` Components render an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. `PressableIcon` will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, `Icon` will use a [`View`](https://reactnative.dev/docs/view) component.
 
 ![icon-component](https://github.com/user-attachments/assets/25888c72-8bd9-4cbd-b55f-909b0f6b0bca)
 
