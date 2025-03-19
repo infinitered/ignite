@@ -4,12 +4,16 @@ sidebar_position: 35
 
 # Icon
 
-Ignite's `Icon` Component renders an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. If `onPress` is passed, it will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, otherwise it will use a [`View`](https://reactnative.dev/docs/view) component.
+Ignite's `Icon` and `PressableIcon` Components renders an icon using predefined icon images. You can use those, override them, or customize this component to create any number of image based icons. `PressableIcon` will wrap the icon in a [`TouchableOpacity`](https://reactnative.dev/docs/touchableopacity) component, `Icon` will use a [`View`](https://reactnative.dev/docs/view) component.
 
 ![icon-component](https://github.com/user-attachments/assets/25888c72-8bd9-4cbd-b55f-909b0f6b0bca)
 
 ```tsx
-<Icon icon="ladybug" onPress={() => Alert.alert("Hello")} />
+<PressableIcon icon="ladybug" onPress={() => Alert.alert("Hello")} />
+```
+
+```tsx
+<Icon icon="debug" />
 ```
 
 ## Props
@@ -71,7 +75,7 @@ The `style` prop is optional. This is an object that overrides the default style
 
 ### `containerStyle`
 
-The `containerStyle` is an optional prop that sets the style of the icon container, and is of the type `StyleProp<ViewStyle>`. See React Native docs on [ViewStyle](https://reactnative.dev/docs/view-style-props) for more information.
+The `containerStyle` is an optional prop that sets the style of the icon container (either a `TouchableOpacity` or `View`), and is of the type `StyleProp<ViewStyle>`. See React Native docs on [ViewStyle](https://reactnative.dev/docs/view-style-props) for more information.
 
 ```tsx
 <Icon icon="bug" containerStyle={{ backgroundColor: "red" }} />
@@ -79,10 +83,10 @@ The `containerStyle` is an optional prop that sets the style of the icon contain
 
 ### `onPress`
 
-The `onPress` optional prop is a function that will be called when the icon is pressed. Note that when this prop is passed, the icon will be wrapped in a `TouchableOpacity` component rather than a `View` component.
+The `onPress` prop can be passed to a `PressableIcon` Component, which will forward it to the wrapped `TouchableOpacity`s `onPress` prop.
 
 ```tsx
-<Icon icon="ladybug" onPress={() => Alert.alert("Hello")} />
+<PressableIconIcon icon="ladybug" onPress={() => Alert.alert("Hello")} />
 ```
 
 ## Custom Icons
@@ -107,4 +111,8 @@ You can then use your custom icon by passing its name through the `icon` prop.
 
 ```tsx
 <Icon icon="custom" />
+```
+
+```tsx
+<PressableIcon icon="custom" onPress={() => Alert.alert("I'm a custom PressableIcon!")} />
 ```
