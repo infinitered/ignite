@@ -56,7 +56,7 @@ export function PressableIcon(props: PressableIconProps) {
     size,
     style: $imageStyleOverride,
     containerStyle: $containerStyleOverride,
-    ...WrapperProps
+    ...pressableProps
   } = props
 
   const { theme } = useAppTheme()
@@ -69,7 +69,7 @@ export function PressableIcon(props: PressableIconProps) {
   ]
 
   return (
-    <TouchableOpacity {...WrapperProps} style={$containerStyleOverride}>
+    <TouchableOpacity {...pressableProps} style={$containerStyleOverride}>
       <Image style={$imageStyle} source={iconRegistry[icon]} />
     </TouchableOpacity>
   )
@@ -89,7 +89,7 @@ export function Icon(props: IconProps) {
     size,
     style: $imageStyleOverride,
     containerStyle: $containerStyleOverride,
-    ...WrapperProps
+    ...viewProps
   } = props
 
   const { theme } = useAppTheme()
@@ -102,7 +102,7 @@ export function Icon(props: IconProps) {
   ]
 
   return (
-    <View {...WrapperProps} style={$containerStyleOverride}>
+    <View {...viewProps} style={$containerStyleOverride}>
       <Image style={$imageStyle} source={iconRegistry[icon]} />
     </View>
   )
