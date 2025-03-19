@@ -703,6 +703,8 @@ module.exports = {
           const yarnrcPath = path(targetPath, ".yarnrc.yml")
           const yarnrcContents = read(yarnrcPath)
           write(yarnrcPath, `${yarnrcContents ?? ""}${EOL}nodeLinker: node-modules${EOL}`)
+          // also create a blank yarn.lock file to avoid workspaces issue
+          write(path(targetPath, "yarn.lock"), "")
         }
       }
 
