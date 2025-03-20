@@ -10,7 +10,7 @@ import {
 import { isRTL, translate } from "@/i18n"
 import { $styles } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { Icon, IconTypes } from "./Icon"
+import { IconTypes, PressableIcon } from "./Icon"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "@/utils/useAppTheme"
 import type { ThemedStyle } from "@/theme"
@@ -255,7 +255,7 @@ function HeaderAction(props: HeaderActionProps) {
 
   if (icon) {
     return (
-      <Icon
+      <PressableIcon
         size={24}
         icon={icon}
         color={iconColor}
