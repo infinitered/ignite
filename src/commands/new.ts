@@ -705,6 +705,8 @@ module.exports = {
           write(yarnrcPath, `${yarnrcContents ?? ""}${EOL}nodeLinker: node-modules${EOL}`)
           // also create a blank yarn.lock file to avoid workspaces issue
           write(path(targetPath, "yarn.lock"), "")
+          // update the `packagerManager` field in `package.json
+          await system.run(`yarn set version ${yarnVersion}`, { onProgress: log })
         }
       }
 
