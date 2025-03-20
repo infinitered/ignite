@@ -86,7 +86,7 @@ The `containerStyle` is an optional prop that sets the style of the icon contain
 The `onPress` prop can be passed to a `PressableIcon` Component, which will forward it to the wrapped `TouchableOpacity`s `onPress` prop.
 
 ```tsx
-<PressableIconIcon icon="ladybug" onPress={() => Alert.alert("Hello")} />
+<PressableIcon icon="ladybug" onPress={() => Alert.alert("Hello")} />
 ```
 
 ## Custom Icons
