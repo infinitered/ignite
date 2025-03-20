@@ -338,6 +338,7 @@ async function checkForLeftoverHelloWorld(filePath: string) {
     "Pods",
     "/build",
     ".expo",
+    ".yarn",
   ]
   // ignore some folders
   if (!ignoreFolders.every((f) => !filePath.includes(f))) return
