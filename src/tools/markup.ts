@@ -125,6 +125,7 @@ export function updateFile(contents: string, markupPrefix: string): string {
 }
 
 const DEFAULT_MATCHING_GLOBS = [
+  "!**/.yarn{,/**}",
   "!**/.DS_Store",
   "!**/.expo{,/**}",
   "!**/.git{,/**}",

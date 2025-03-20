@@ -28,5 +28,17 @@ test/artifacts/*
 # flame CLI
 .config
 
-# Yarn
+# Ignore everything inside .yarn except the necessary subdirectories
 .yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Ignore Yarn's global cache (not needed for Zero-Installs)
+.yarn/cache
+
+# Ignore build artifacts
+.yarn/build-state.yml
+.yarn/install-state.gz
