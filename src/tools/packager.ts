@@ -11,7 +11,6 @@ type PackageOptions = {
   dev?: boolean
   global?: boolean
   silent?: boolean
-  immutable?: boolean
 }
 
 type PackageRunOptions = PackageOptions & {
@@ -20,7 +19,6 @@ type PackageRunOptions = PackageOptions & {
 const packageInstallOptions: PackageRunOptions = {
   dev: false,
   onProgress: (out: string) => console.log(out),
-  immutable: false,
 }
 
 const packageListOptions: PackageOptions = {
@@ -142,19 +140,16 @@ function removeCmd(pkg: string, options: PackageOptions = packageInstallOptions)
  */
 function installCmd(options: PackageRunOptions) {
   const silent = options.silent ? " --silent" : ""
-  let immutable: string
 
   if (options.packagerName === "pnpm") {
-    immutable = options.immutable ? " --frozen-lockfile" : ""
-    return `pnpm install${silent}${immutable}`
+    return `pnpm install${silent}`
   } else if (options.packagerName === "yarn") {
-    immutable = options.immutable ? "" : " --no-immutable"
+    const immutable = process.env.CI ? " --no-immutable" : ""
     return `yarn install${silent}${immutable}`
   } else if (options.packagerName === "npm") {
     return `npm install${silent}`
   } else if (options.packagerName === "bun") {
-    immutable = options.immutable ? " --frozen-lockfile" : ""
-    return `bun install${silent}${immutable}`
+    return `bun install${silent}`
   } else {
     return installCmd({ ...options, packagerName: detectPackager() })
   }
