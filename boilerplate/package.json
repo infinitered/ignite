@@ -71,6 +71,7 @@
     "@babel/runtime": "^7.20.0",
     "@testing-library/react-native": "^12.5.2",
     "@types/jest": "^29.2.1",
+    "@types/node": "^22.13.11",
     "@types/react": "~18.3.12",
     "babel-jest": "^29.2.1",
     "eslint": "^8.57.0",
