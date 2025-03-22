@@ -144,8 +144,7 @@ function installCmd(options: PackageRunOptions) {
   if (options.packagerName === "pnpm") {
     return `pnpm install${silent}`
   } else if (options.packagerName === "yarn") {
-    const immutable = process.env.CI ? " --no-immutable" : ""
-    return `yarn install${silent}${immutable}`
+    return `yarn install${silent}`
   } else if (options.packagerName === "npm") {
     return `npm install${silent}`
   } else if (options.packagerName === "bun") {

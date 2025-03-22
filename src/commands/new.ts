@@ -687,6 +687,7 @@ module.exports = {
       // pnpm/yarn/npm/bun install it
 
       // fix .npmrc if using pnpm
+      let installFlags = ""
       if (packagerName === "pnpm") {
         // append `node-linker=hoisted` to .npmrc
         const npmrcPath = path(targetPath, ".npmrc")
@@ -698,6 +699,9 @@ module.exports = {
 
         // if yarn version > 1 fix .yarnrc.yml
         if (yarnMajorVersion > 1) {
+          if (process.env.CI === "true") {
+            installFlags = " --no-immutable"
+          }
           log(`yarn v${yarnMajorVersion} found... fixing .yarnrc.yml...`)
           // append `nodeLinker: node-modules` to .yarnrc.yml
           const yarnrcPath = path(targetPath, ".yarnrc.yml")
@@ -761,7 +765,7 @@ module.exports = {
 
         // do base install
         const installCmd = packager.installCmd({ packagerName })
-        await system.run(installCmd, { onProgress: log })
+        await system.run(`${installCmd}${installFlags}`, { onProgress: log })
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
         // for right now, we don't do this in CI because it returns a non-zero exit code
         // see https://docs.expo.dev/more/expo-cli/#version-validation
