@@ -300,8 +300,8 @@ describe("ignite new", () => {
     })
 
     afterAll(() => {
-      // console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
-      filesystem.remove(tempDir) // clean up our mess
+      console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
+      // filesystem.remove(tempDir) // clean up our mess
     })
 
     it("should print success message", () => {
