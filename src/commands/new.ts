@@ -1079,6 +1079,7 @@ module.exports = {
       p2(red(`\nThe following error occurred:`))
       p2()
       p2(red(e.toString()))
+      p2(red(e.stderr))
 
       p2()
       p2("Consider opening an issue with the following information at:")
