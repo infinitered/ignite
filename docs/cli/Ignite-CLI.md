@@ -98,7 +98,7 @@ Starts the interactive prompt for generating a new Ignite project. Any options n
 - `--overwrite` overwrite the target directory if it exists
 - `--targetPath` string, specify a target directory where the project should be created
 - `--removeDemo` will remove the boilerplate demo code after project creation
-- `--state` string, one of `mst` or `none` to include MobX-State-Tree in project (can only be set to `none` if `--removeDemo=true`)
+- `--state` string, one of `mst` or `none` to include MobX-State-Tree in project (**note:** if opting out of MobX-State-Tree the demo application will be removed)
 - `--useCache` flag specifying to use dependency cache for quicker installs
 - `--no-timeout` flag to disable the timeout protection (useful for slow internet connections)
 - `--yes` accept all prompt defaults
