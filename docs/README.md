@@ -12,9 +12,9 @@ sidebar_position: 1
 
 ## Proven React Native boilerplate
 
-The culmination of over seven years of constant React Native development, Ignite is the most popular React Native app boilerplate for both Expo and bare React Native.
+Having been consistently developed and maintained since 2016, Ignite is the oldest active and most popular third-party React Native / Expo app boilerplate.
 
-This is the React Native boilerplate that the [Infinite Red](https://infinite.red/react-native-app-development-company) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
+This is the React Native starting point that the [Infinite Red](https://infinite.red/react-native-app-development-company) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
 
 ## Intro Videos
 
