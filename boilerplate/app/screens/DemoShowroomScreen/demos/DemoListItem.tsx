@@ -1,152 +1,160 @@
-/* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
+/* eslint-disable react/jsx-key */
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Icon, ListItem, ListView, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
+import { $styles } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import { translate } from "@/i18n"
 
 const listData =
   `Tempor Id Ea Aliqua Pariatur Aliquip. Irure Minim Voluptate Consectetur Consequat Sint Esse Proident Irure. Nostrud Elit Veniam Nostrud Excepteur Minim Deserunt Quis Dolore Velit Nulla Irure Voluptate Tempor. Occaecat Amet Laboris Nostrud Qui Do Quis Lorem Ex Elit Fugiat Deserunt. In Pariatur Excepteur Exercitation Ex Incididunt Qui Mollit Dolor Sit Non. Culpa Officia Minim Cillum Exercitation Voluptate Proident Laboris Et Est Reprehenderit Quis Pariatur Nisi`
     .split(".")
     .map((item) => item.trim())
 
-const $customLeft: ViewStyle = {
+const $customLeft: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
   flexGrow: 0,
   flexBasis: 60,
   height: "100%",
-  flexDirection: "row",
   flexWrap: "wrap",
   overflow: "hidden",
-}
+})
 
-const $customTextStyle: TextStyle = {
+const $customTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.error,
-}
+})
 
-const $customTouchableStyle: ViewStyle = {
+const $customTouchableStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   backgroundColor: colors.error,
-}
+})
 
-const $customContainerStyle: ViewStyle = {
+const $customContainerStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderTopWidth: 5,
   borderTopColor: colors.palette.neutral100,
-}
+})
 
-const $listStyle: ViewStyle = {
+const $listStyle: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   height: 148,
   paddingHorizontal: spacing.xs,
   backgroundColor: colors.palette.neutral200,
-}
+})
 
 export const DemoListItem: Demo = {
   name: "ListItem",
-  description: "A styled row component that can be used in FlatList, SectionList, or by itself.",
-  data: [
-    <DemoUseCase name="Height" description="The row can be different heights.">
-      <ListItem topSeparator>Default height (56px)</ListItem>
+  description: "demoListItem:description",
+  data: ({ theme, themed }) => [
+    <DemoUseCase
+      name="demoListItem:useCase.height.name"
+      description="demoListItem:useCase.height.description"
+    >
+      <ListItem topSeparator>{translate("demoListItem:useCase.height.defaultHeight")}</ListItem>
 
       <ListItem topSeparator height={100}>
-        Custom height via `height` prop
+        {translate("demoListItem:useCase.height.customHeight")}
       </ListItem>
 
-      <ListItem topSeparator>
-        Height determined by text content - Reprehenderit incididunt deserunt do do ea labore.
-      </ListItem>
+      <ListItem topSeparator>{translate("demoListItem:useCase.height.textHeight")}</ListItem>
 
       <ListItem topSeparator bottomSeparator TextProps={{ numberOfLines: 1 }}>
-        Limit long text to one line - Reprehenderit incididunt deserunt do do ea labore.
+        {translate("demoListItem:useCase.height.longText")}
       </ListItem>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Separators"
-      description="The separator / divider is preconfigured and optional."
+      name="demoListItem:useCase.separators.name"
+      description="demoListItem:useCase.separators.description"
     >
-      <ListItem topSeparator>Only top separator</ListItem>
+      <ListItem topSeparator>{translate("demoListItem:useCase.separators.topSeparator")}</ListItem>
 
       <DemoDivider size={40} />
 
       <ListItem topSeparator bottomSeparator>
-        Top and bottom separators
+        {translate("demoListItem:useCase.separators.topAndBottomSeparator")}
       </ListItem>
 
       <DemoDivider size={40} />
 
-      <ListItem bottomSeparator>Only bottom separator</ListItem>
-    </DemoUseCase>,
-
-    <DemoUseCase name="Icons" description="You can customize the icons on the left or right.">
-      <ListItem topSeparator leftIcon="ladybug">
-        Left icon
-      </ListItem>
-
-      <ListItem topSeparator rightIcon="ladybug">
-        Right Icon
-      </ListItem>
-
-      <ListItem topSeparator bottomSeparator rightIcon="ladybug" leftIcon="ladybug">
-        Left & Right Icons
+      <ListItem bottomSeparator>
+        {translate("demoListItem:useCase.separators.bottomSeparator")}
       </ListItem>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Custom Left/Right Components"
-      description="If you need a custom left/right component, you can pass it in."
+      name="demoListItem:useCase.icons.name"
+      description="demoListItem:useCase.icons.description"
+    >
+      <ListItem topSeparator leftIcon="ladybug">
+        {translate("demoListItem:useCase.icons.leftIcon")}
+      </ListItem>
+
+      <ListItem topSeparator rightIcon="ladybug">
+        {translate("demoListItem:useCase.icons.rightIcon")}
+      </ListItem>
+
+      <ListItem topSeparator bottomSeparator rightIcon="ladybug" leftIcon="ladybug">
+        {translate("demoListItem:useCase.icons.leftRightIcons")}
+      </ListItem>
+    </DemoUseCase>,
+
+    <DemoUseCase
+      name="demoListItem:useCase.customLeftRight.name"
+      description="demoListItem:useCase.customLeftRight.description"
     >
       <ListItem
         topSeparator
         LeftComponent={
-          <View style={[$customLeft, { marginEnd: spacing.md }]}>
+          <View style={themed([$styles.row, $customLeft, { marginEnd: theme.spacing.md }])}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}
           </View>
         }
       >
-        Custom left component
+        {translate("demoListItem:useCase.customLeftRight.customLeft")}
       </ListItem>
 
       <ListItem
         topSeparator
         bottomSeparator
         RightComponent={
-          <View style={[$customLeft, { marginStart: spacing.md }]}>
+          <View style={themed([$styles.row, $customLeft, { marginStart: theme.spacing.md }])}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
             ))}
           </View>
         }
       >
-        Custom right component
+        {translate("demoListItem:useCase.customLeftRight.customRight")}
       </ListItem>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
+      name="demoListItem:useCase.passingContent.name"
+      description="demoListItem:useCase.passingContent.description"
     >
-      <ListItem topSeparator text="Via `text` prop - reprehenderit sint" />
-      <ListItem topSeparator tx="demoShowroomScreen.demoViaTxProp" />
-      <ListItem topSeparator>Children - mostrud mollit</ListItem>
+      <ListItem topSeparator text={translate("demoListItem:useCase.passingContent.children")} />
+      <ListItem topSeparator tx="demoShowroomScreen:demoViaTxProp" />
+      <ListItem topSeparator>{translate("demoListItem:useCase.passingContent.children")}</ListItem>
       <ListItem topSeparator bottomSeparator>
         <Text>
-          <Text preset="bold">Nested children - proident veniam.</Text>
+          <Text preset="bold">
+            {translate("demoListItem:useCase.passingContent.nestedChildren1")}
+          </Text>
           {` `}
           <Text preset="default">
-            Ullamco cupidatat officia exercitation velit non ullamco nisi..
+            {translate("demoListItem:useCase.passingContent.nestedChildren2")}
           </Text>
         </Text>
       </ListItem>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Integrating w/ FlatList & FlashList"
-      description="The component can be easily integrated with your favorite list interface."
+      name="demoListItem:useCase.listIntegration.name"
+      description="demoListItem:useCase.listIntegration.description"
     >
-      <View style={$listStyle}>
+      <View style={themed($listStyle)}>
         <ListView<string>
           data={listData}
           estimatedItemSize={59}
@@ -162,38 +170,41 @@ export const DemoListItem: Demo = {
       </View>
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
-      <ListItem topSeparator textStyle={$customTextStyle}>
-        Styled Text
+    <DemoUseCase
+      name="demoListItem:useCase.styling.name"
+      description="demoListItem:useCase.styling.description"
+    >
+      <ListItem topSeparator textStyle={themed($customTextStyle)}>
+        {translate("demoListItem:useCase.styling.styledText")}
       </ListItem>
 
       <ListItem
         topSeparator
-        textStyle={{ color: colors.palette.neutral100 }}
-        style={$customTouchableStyle}
+        textStyle={{ color: theme.colors.palette.neutral100 }}
+        style={themed($customTouchableStyle)}
       >
-        Styled Text
+        {translate("demoListItem:useCase.styling.styledText")}
       </ListItem>
 
       <ListItem
         topSeparator
-        textStyle={{ color: colors.palette.neutral100 }}
-        style={$customTouchableStyle}
-        containerStyle={$customContainerStyle}
+        textStyle={{ color: theme.colors.palette.neutral100 }}
+        style={themed($customTouchableStyle)}
+        containerStyle={themed($customContainerStyle)}
       >
-        Styled Container (separators)
+        {translate("demoListItem:useCase.styling.styledContainer")}
       </ListItem>
       <ListItem
         topSeparator
-        textStyle={{ color: colors.palette.neutral100 }}
-        style={$customTouchableStyle}
-        containerStyle={$customContainerStyle}
+        textStyle={{ color: theme.colors.palette.neutral100 }}
+        style={themed($customTouchableStyle)}
+        containerStyle={themed($customContainerStyle)}
         rightIcon="ladybug"
         leftIcon="ladybug"
-        rightIconColor={colors.palette.neutral100}
-        leftIconColor={colors.palette.neutral100}
+        rightIconColor={theme.colors.palette.neutral100}
+        leftIconColor={theme.colors.palette.neutral100}
       >
-        Tinted Icons
+        {translate("demoListItem:useCase.styling.tintedIcons")}
       </ListItem>
     </DemoUseCase>,
   ],

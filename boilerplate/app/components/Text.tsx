@@ -1,12 +1,14 @@
-import i18n from "i18n-js"
-import React from "react"
+import { TOptions } from "i18next"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { isRTL, translate, TxKeyPath } from "../i18n"
-import { colors, typography } from "../theme"
+import { isRTL, translate, TxKeyPath } from "@/i18n"
+import type { ThemedStyle, ThemedStyleArray } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import { typography } from "@/theme/typography"
+import { ReactNode, forwardRef, ForwardedRef } from "react"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
-type Presets = keyof typeof $presets
+type Presets = "default" | "bold" | "heading" | "subheading" | "formLabel" | "formHelper"
 
 export interface TextProps extends RNTextProps {
   /**
@@ -21,7 +23,7 @@ export interface TextProps extends RNTextProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: i18n.TranslateOptions
+  txOptions?: TOptions
   /**
    * An optional style override useful for padding & margin.
    */
@@ -41,17 +43,19 @@ export interface TextProps extends RNTextProps {
   /**
    * Children components.
    */
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 /**
  * For your text displaying needs.
  * This component is a HOC over the built-in React Native one.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Text.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Text/}
+ * @param {TextProps} props - The props for the `Text` component.
+ * @returns {JSX.Element} The rendered `Text` component.
  */
-export function Text(props: TextProps) {
+export const Text = forwardRef(function Text(props: TextProps, ref: ForwardedRef<RNText>) {
   const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
+  const { themed } = useAppTheme()
 
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
@@ -59,18 +63,18 @@ export function Text(props: TextProps) {
   const preset: Presets = props.preset ?? "default"
   const $styles: StyleProp<TextStyle> = [
     $rtlStyle,
-    $presets[preset],
+    themed($presets[preset]),
     weight && $fontWeightStyles[weight],
     size && $sizeStyles[size],
     $styleOverride,
   ]
 
   return (
-    <RNText {...rest} style={$styles}>
+    <RNText {...rest} style={$styles} ref={ref}>
       {content}
     </RNText>
   )
-}
+})
 
 const $sizeStyles = {
   xxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,
@@ -86,24 +90,24 @@ const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weigh
   return { ...acc, [weight]: { fontFamily } }
 }, {}) as Record<Weights, TextStyle>
 
-const $baseStyle: StyleProp<TextStyle> = [
-  $sizeStyles.sm,
-  $fontWeightStyles.normal,
-  { color: colors.text },
-]
+const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
+  ...$sizeStyles.sm,
+  ...$fontWeightStyles.normal,
+  color: theme.colors.text,
+})
 
-const $presets = {
-  default: $baseStyle,
-
-  bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
-
-  heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
-
-  subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
-
-  formLabel: [$baseStyle, $fontWeightStyles.medium] as StyleProp<TextStyle>,
-
-  formHelper: [$baseStyle, $sizeStyles.sm, $fontWeightStyles.normal] as StyleProp<TextStyle>,
+const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
+  default: [$baseStyle],
+  bold: [$baseStyle, { ...$fontWeightStyles.bold }],
+  heading: [
+    $baseStyle,
+    {
+      ...$sizeStyles.xxl,
+      ...$fontWeightStyles.bold,
+    },
+  ],
+  subheading: [$baseStyle, { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
+  formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
+  formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
 }
-
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

@@ -18,3 +18,5 @@ export interface RootStore extends Instance<typeof RootStoreModel> {}
  * The data of a RootStore.
  */
 export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+
+// @mst remove-file

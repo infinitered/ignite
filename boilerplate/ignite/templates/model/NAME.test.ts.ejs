@@ -1,3 +1,6 @@
+---
+destinationDir: app/models
+---
 import { <%= props.pascalCaseName %>Model } from "./<%= props.pascalCaseName %>"
 
 test("can be created", () => {
@@ -5,3 +8,5 @@ test("can be created", () => {
 
   expect(instance).toBeTruthy()
 })
+
+// @mst remove-file

@@ -49,3 +49,5 @@ export async function setupRootStore(rootStore: RootStore) {
 
   return { rootStore, restoredState, unsubscribe }
 }
+
+// @mst remove-file

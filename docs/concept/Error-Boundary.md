@@ -37,7 +37,7 @@ This allows us to show alternative UI components when an error is thrown on chil
 
 Inside `componentDidCatch` of an `ErrorBoundary` component is also a great place to report to monitoring services like BugSnag, Sentry, or Honeybadger, so you can be alerted when errors are happening for users.
 
-Ignite provides utilities in [`/app/utils/crash-reporting.ts`](https://github.com/infinitered/ignite/blob/master/boilerplate/app/utils/crash-reporting.ts) to integrate these services into your app.
+Ignite provides utilities in [`/app/utils/crashReporting.ts`](https://github.com/infinitered/ignite/blob/master/boilerplate/app/utils/crashReporting.ts) to integrate these services into your app.
 
 ## Examples
 

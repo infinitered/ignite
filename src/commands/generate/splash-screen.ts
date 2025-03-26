@@ -33,7 +33,7 @@ async function generate(toolbox: GluegunToolbox) {
     )
 
     p()
-    command(`ignite g ${generator} "#191015" [--android-size=180 --ios-size=212]`)
+    command(`npx ignite-cli g ${generator} "#191015" [--android-size=180 --ios-size=212]`)
     return
   }
 
@@ -60,7 +60,7 @@ async function generate(toolbox: GluegunToolbox) {
   if (isSuccessful) {
     heading(`Splash screen generated!`)
     p(
-      "Uninstall the application from your simulator/emulator and re-build your app to see the changes!",
+      "Uninstall the application from your simulator/emulator, run `prebuild:clean` and re-build your app to see the changes!",
     )
     p(
       "Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106",

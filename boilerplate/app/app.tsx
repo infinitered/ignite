@@ -11,25 +11,27 @@
  * if you're interested in adding screens and navigators.
  */
 if (__DEV__) {
-  // Load Reactotron configuration in development. We don't want to
-  // include this in our production bundle, so we are using `if (__DEV__)`
-  // to only execute this in development.
+  // Load Reactotron in development only.
+  // Note that you must be using metro's `inlineRequires` for this to work.
+  // If you turn it off in metro.config.js, you'll have to manually import it.
   require("./devtools/ReactotronConfig.ts")
 }
-import "./i18n"
+import "./utils/gestureHandler"
+import { initI18n } from "./i18n"
 import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
-import React from "react"
+import { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
-import { useInitialRootStore } from "./models"
+import * as SplashScreen from "expo-splash-screen"
+import { useInitialRootStore } from "./models" // @mst remove-current-line
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { ViewStyle } from "react-native"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+import { loadDateFnsLocale } from "./utils/formatDate"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -54,31 +56,37 @@ const config = {
   },
 }
 
-interface AppProps {
-  hideSplashScreen: () => Promise<boolean>
-}
-
 /**
  * This is the root component of our app.
+ * @param {AppProps} props - The props for the `App` component.
+ * @returns {JSX.Element} The rendered `App` component.
  */
-function App(props: AppProps) {
-  const { hideSplashScreen } = props
+export function App() {
   const {
     initialNavigationState,
     onNavigationStateChange,
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
-  const [areFontsLoaded] = useFonts(customFontsToLoad)
+  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
+  useEffect(() => {
+    initI18n()
+      .then(() => setIsI18nInitialized(true))
+      .then(() => loadDateFnsLocale())
+  }, [])
+
+  // @mst replace-next-line useEffect(() => {
   const { rehydrated } = useInitialRootStore(() => {
+    // @mst replace-next-line
     // This runs after the root store has been initialized and rehydrated.
 
     // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
     // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
-    // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
-    // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
-    setTimeout(hideSplashScreen, 500)
+    setTimeout(SplashScreen.hideAsync, 500)
+
+    // @mst replace-next-line }, [])
   })
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -87,7 +95,14 @@ function App(props: AppProps) {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null
+  if (
+    !rehydrated || // @mst remove-current-line
+    !isNavigationStateRestored ||
+    !isI18nInitialized ||
+    (!areFontsLoaded && !fontLoadError)
+  ) {
+    return null
+  }
 
   const linking = {
     prefixes: [prefix],
@@ -98,20 +113,14 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <GestureHandlerRootView style={$container}>
+        <KeyboardProvider>
           <AppNavigator
             linking={linking}
             initialState={initialNavigationState}
             onStateChange={onNavigationStateChange}
           />
-        </GestureHandlerRootView>
+        </KeyboardProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   )
-}
-
-export default App
-
-const $container: ViewStyle = {
-  flex: 1,
 }

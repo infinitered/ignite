@@ -71,6 +71,7 @@ buck-out/
 bin/Exponent.app
 /android
 /ios
+expo-env.d.ts
 
 ## Secrets
 npm-debug.*
@@ -86,3 +87,6 @@ web-build/
 !env.js
 
 /coverage
+
+# Yarn
+.yarn/*

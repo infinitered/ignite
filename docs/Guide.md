@@ -18,26 +18,26 @@ In order to start a new Ignite project, you can use the CLI. No need to install 
 npx ignite-cli@latest new PizzaApp
 ```
 
-It'll walk you through several questions.
+It'll walk you through several prompts to configure your package manager, navigation library and state management. Or you can simply take all the defaults via `--yes` and jump right into the demo application.
 
 Once it's up and running, you can use the Ignite CLI to [generate](./concept/Generators.md) components, screens, MST models, and more.
 
-Running into errors? have a look at [upgrading Ignite CLI](./cli/Upgrading-Ignite.md)
+Running into errors? have a look at [Troubleshooting](./cli/Troubleshooting.md)
 
 ### Ignite Boilerplate
 
-Your new Ignite project (whether you start with Expo or not) comes with a full stack of useful libraries, pre-set up for you so you can start coding.
+Your new Ignite project comes with a full stack of useful libraries, pre-set up for you so you can start coding. Some of the following are optional, but this list details the default options:
 
 - React Native
 - React Navigation
 - MobX-State-Tree [(Why not Redux?)](./concept/MobX-State-Tree.md)
 - MobX-React-Lite
 - TypeScript
-- AsyncStorage (integrated with MST for restoring state)
+- React Native MMKV (integrated with MST for restoring state)
 - apisauce (to talk to REST servers)
 - Reactotron-ready (and pre-integrated with MST)
 - Supports Expo (and Expo web) out of the box
-- About a dozen prebuilt [components](./boilerplate/components/Components.md) to build out your UI with
+- About a dozen prebuilt [components](./boilerplate/app/components/Components.md) to build out your UI with
 - And more!
 
 ## Where do I start?
@@ -48,11 +48,11 @@ Once it's running, you'll want to get familiarized with the following concepts:
 
 ### Navigation
 
-We use React Navigation v6 in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `AppNavigator.tsx` being the primary one.
+We use React Navigation v7 in the current version of Ignite. You'll find any navigators in `./app/navigators`, with the `AppNavigator.tsx` being the primary one.
 
 There's also a `navigationUtilities.ts` file which provides some utility functions we find useful in building apps, such as `getActiveRouteName`, `useBackButtonHandler` and `useNavigationPersistence`.
 
-Learn more in our [Navigation](./concept/Navigation.md) documentation.
+Learn more in our [Navigation](./boilerplate/app/navigators/Navigation.md) documentation.
 
 ### Components
 
@@ -60,11 +60,11 @@ Ignite comes with some prebuilt, flexible, and customizable components. Unlike m
 
 Ignite works fine with other component libraries, but the built-in component system works the best for custom-designed apps.
 
-Check out the [Components](./boilerplate/components/Components.md) documentation.
+Check out the [Components](./boilerplate/app/components/Components.md) documentation.
 
 ### Testing
 
-Ignite is pre-configured to use Jest for unit tests.
+Ignite is pre-configured to use Jest for unit tests and [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) for component tests.
 
 Ignite includes samples of UI end-to-end tests using [Maestro](https://maestro.mobile.dev/). See our [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/MaestroSetup) for setup and walkthrough of the test samples or check out Maestro's docs on [Installing Maestro](https://maestro.mobile.dev/getting-started/installing-maestro) to run the flows.
 
@@ -76,22 +76,35 @@ Ignite's approach to styling is, like many other things in Ignite, straightforwa
 
 We don't use `StyleSheet.create()` as a general rule, as it doesn't provide any real benefits over bare objects.
 
-We instead use a strategy of constants, colocated with our components, camelCase and prefixed with `$`, and typed with TypeScript:
+We instead use a strategy of constants, co-located with our components, camelCase and prefixed with `$`, and typed with TypeScript:
 
 ```tsx
 import { View, ViewStyle } from "react-native"
-import { palette } from "../theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
 
-const $container: ViewStyle = {
+// This is a themed style that you must wrap with `themed()` to pass the style object.
+const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
-  backgroundColor: palette.bgColor,
+  backgroundColor: colors.palette.bgColor,
+})
+
+// This is a non-themed style
+const $innerView: ViewStyle{
+  backgroundColor: '#fff',
+  alignItems: "center",
 }
 
 const MyComponent = () => {
-  return <View style={$container}>...</View>
+  const { themed } = useAppTheme()
+  return (
+    <View style={themed($container)}>
+    <View style={$innerView}>...</View>
+    </View>
+  )
 }
 ```
 
-Very often, we use [components with presets](./boilerplate/components/Components.md) to share styles across our whole app.
+Very often, we use [components with presets](./boilerplate/app/components/Components.md) to share styles across our whole app.
 
 Read more about styling in the [Styling](./concept/Styling.md) docs.

@@ -5,6 +5,11 @@ import {
   copyBoilerplate,
   renameReactNativeApp,
   replaceMaestroBundleIds,
+  createExpoRouterScreenTemplate,
+  refactorExpoRouterReactotronCmds,
+  updateExpoRouterSrcDir,
+  cleanupExpoRouterConversion,
+  updatePackagerCommandsInReadme,
 } from "../tools/react-native"
 import { packager, PackagerName } from "../tools/packager"
 import {
@@ -26,14 +31,16 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
+import { mstDependenciesToRemove } from "../tools/mst"
 import {
-  expoGoCompatExpectedVersions,
+  findAndRemoveDependencies,
   findAndUpdateDependencyVersions,
-} from "../tools/expoGoCompatibility"
-import { demoDependenciesToRemove, findAndRemoveDemoDependencies } from "../tools/demo"
+  newArchCompatExpectedVersions,
+} from "../tools/dependencies"
+import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
-// deprecated: 'prebuild'. in favor of 'cng' instead.
-type Workflow = "expo" | "cng" | "prebuild" | "manual"
+type Workflow = "cng" | "manual"
+type StateMgmt = "mst" | "none"
 
 export interface Options {
   /**
@@ -136,6 +143,7 @@ export interface Options {
    * and include them in .gitignore or not
    *
    * Input Source: `prompt.ask`| `parameter.option`
+   * @default cng
    */
   workflow?: Workflow
   /**
@@ -144,6 +152,20 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
+  /**
+   * Whether or not to include MobX-State-Tree boilerplate code
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default mst
+   */
+  state?: StateMgmt
+  /**
+   * Whether or not to enable the New Architecture
+   *
+   * Input Source: `prompt.ask` | `parameter.option`
+   * @default false
+   */
+  newArch?: boolean
 }
 
 module.exports = {
@@ -161,7 +183,7 @@ module.exports = {
     const useDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
-    /** Add just a _little_ more spacing to match with spinners and heading */
+    // Add just a _little_ more spacing to match with spinners and heading
     const p2 = (m = "") => p(` ${m}`)
     const command = (cmd: string) => p2(white(CMD_INDENT + cmd))
 
@@ -275,65 +297,32 @@ module.exports = {
     }
     // #endregion
 
-    // #region Prompt for Workflow type
-    const defaultWorkflow = "expo"
+    // #region Prompt for Workflow type - CNG or manual
+    const defaultWorkflow = "cng"
     let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
-      // Ask for Expo vs Bare first, to make the choice tree easier for users
-      const useExpoResponse = await prompt.ask<{ useExpo: "Expo" | "Bare" }>(() => ({
+      const useExpoResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
         type: "select",
-        name: "useExpo",
-        message: "Do you want to use Expo?",
+        name: "workflow",
+        message: "How do you want to manage Native code?",
         choices: [
           {
-            name: "Expo",
-            message: "Expo - Recommended for almost all apps [Default]",
+            name: "cng",
+            message: "Via Expo's Continuous Native Generation - Recommended [Default]",
+            value: "cng",
           },
           {
-            name: "Bare",
-            message: "Bare - For advanced usage (still contains some Expo libraries)",
+            name: "manual",
+            message: "Manual - commits android/ios directories",
+            value: "manual",
           },
         ],
-        initial: "Expo",
+        initial: "cng",
         prefix,
       }))
-      const useExpo = useExpoResponse.useExpo === "Expo"
-      if (useExpo) {
-        const expoWorkflowTypeResponse = await prompt.ask<{ workflow: "expo" | "cng" }>(() => ({
-          type: "select",
-          name: "workflow",
-          message:
-            "Which Expo workflow? (You can switch between them later with a little work -- here's how: https://ignitecookbook.com/docs/recipes/SwitchBetweenExpoGoCNG)",
-          choices: [
-            {
-              name: "Expo Go",
-              message: "Expo Go - For simple apps that don't need custom native code [Default]",
-              value: "expo",
-            },
-            {
-              name: "Expo CNG",
-              message:
-                "Expo CNG - For more involved apps -- allows you to integrate custom native code via config plugins",
-              value: "cng",
-            },
-          ],
-          result(name) {
-            // Some magical enquirer map function here that returns an object of { [name]: value]}
-            // and we only need the value underneath (using name for the cli display to the user)
-            // @ts-expect-error
-            return this.map(name)[name]
-          },
-          initial: "expo",
-          prefix,
-        }))
-        workflow = expoWorkflowTypeResponse.workflow
-      } else {
-        workflow = "manual"
-      }
+      workflow = useExpoResponse.workflow
     }
-    const needsPrebuild = workflow === "prebuild" || workflow === "cng" || workflow === "manual"
     log(`workflow: ${workflow}`)
-    log(`needs prebuild: ${needsPrebuild}`)
     // #endregion
 
     // #region Prompt Git Option
@@ -350,25 +339,6 @@ module.exports = {
         prefix,
       }))
       git = gitResponse.git
-    }
-    // #endregion
-
-    // #region Prompt to Remove Demo code
-    const defaultRemoveDemo = false
-    let removeDemo = useDefault(options.removeDemo)
-      ? defaultRemoveDemo
-      : boolFlag(options.removeDemo)
-    if (removeDemo === undefined) {
-      const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
-        type: "confirm",
-        name: "removeDemo",
-        message:
-          "Remove demo code? We recommend leaving it in if it's your first time using Ignite",
-        initial: defaultRemoveDemo,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      removeDemo = removeDemoResponse.removeDemo
     }
     // #endregion
 
@@ -448,40 +418,114 @@ module.exports = {
     // #endregion
 
     // #region Experimental Features parsing
-    let newArch
     let expoVersion
+    let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
 
     experimentalFlags.forEach((flag) => {
-      if (flag === "new-arch") {
-        newArch = true
-      } else if (flag.indexOf("expo-") > -1) {
-        expoVersion = flag.substring(5)
+      if (flag.indexOf("expo-") > -1) {
+        if (flag !== "expo-router") {
+          expoVersion = flag.substring(5)
+        } else {
+          // user wants to convert to expo-router
+          // force demo code removal for easier conversion
+          // maybe one day convert the demo app
+          expoRouter = true
+
+          if (!removeDemo) {
+            p()
+            p(
+              yellow(
+                `Enabling Expo Router will currently remove the demo application. To continue with the demo app, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/ExpoRouter`,
+              ),
+            )
+            p(yellow(`Setting --remove-demo=true`))
+            removeDemo = true
+          }
+        }
       }
     })
     // #endregion
 
     // #region Prompt to enable experimental features
 
+    // Expo Router
+    const defaultExpoRouter = false
+    let experimentalExpoRouter = useDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
+    if (experimentalExpoRouter === undefined) {
+      const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
+        type: "confirm",
+        name: "experimentalExpoRouter",
+        message:
+          "[Experimental] Expo Router for navigation? (This will remove the demo application)",
+        initial: defaultExpoRouter,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      experimentalExpoRouter = expoRouterResponse.experimentalExpoRouter
+
+      // update experimental flags if needed for buildCliCommand output
+      if (experimentalExpoRouter && !experimentalFlags.includes("expo-router")) {
+        experimentalFlags.push("expo-router")
+      }
+    }
+
     // New Architecture
     const defaultNewArch = false
-    let experimentalNewArch = useDefault(newArch) ? defaultNewArch : boolFlag(newArch)
-    if (experimentalNewArch === undefined && workflow !== "expo") {
+    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
+    if (newArchEnabled === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
         name: "experimentalNewArch",
-        message: "❗EXPERIMENTAL❗Would you like to enable the New Architecture?",
+        message: "Enable the New Architecture?",
         initial: defaultNewArch,
         format: prettyPrompt.format.boolean,
         prefix,
       }))
-      experimentalNewArch = newArchResponse.experimentalNewArch
-    } else if (workflow === "expo") {
-      // Don't ask this for Expo Go flow since it isn't supported atm due to expo-updates
-      experimentalNewArch = false
+      newArchEnabled = newArchResponse.experimentalNewArch
     }
 
+    // #endregion
+
+    // #region Prompt to Remove MobX-State-Tree code
+    const defaultMST = "mst"
+    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
+
+    if (stateMgmt === undefined) {
+      const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
+        type: "confirm",
+        name: "includeMST",
+        message:
+          "Include MobX-State-Tree for state management? (Recommended - opting out will remove the demo application)",
+        initial: true,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
+    }
+    // #endregion
+
+    // #region Prompt to Remove Demo code
+    const defaultRemoveDemo = stateMgmt !== "mst" || experimentalExpoRouter
+    if (defaultRemoveDemo) {
+      p(yellow(`Warning: the demo application will be removed.`))
+    }
+    let removeDemo = useDefault(options.removeDemo)
+      ? defaultRemoveDemo
+      : boolFlag(options.removeDemo)
+    if (!defaultRemoveDemo && removeDemo === undefined) {
+      const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
+        type: "confirm",
+        name: "removeDemo",
+        message:
+          "Remove demo code? We recommend leaving it in if it's your first time using Ignite",
+        initial: defaultRemoveDemo,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      removeDemo = removeDemoResponse.removeDemo
+    }
     // #endregion
 
     // #region Debug
@@ -530,7 +574,14 @@ module.exports = {
       await copyBoilerplate(toolbox, {
         boilerplatePath,
         targetPath,
-        excluded: [".vscode", "node_modules", "yarn.lock", "bun.lockb", "package-lock.json"],
+        excluded: [
+          ".vscode",
+          "node_modules",
+          "yarn.lock",
+          "bun.lockb",
+          "bun.lock",
+          "package-lock.json",
+        ],
         overwrite,
       })
       stopSpinner(" 3D-printing a new React Native app", "🖨")
@@ -543,6 +594,10 @@ module.exports = {
         : boilerplate(".gitignore")
       const targetIgnorePath = log(path(targetPath, ".gitignore"))
       copy(log(boilerplateIgnorePath), targetIgnorePath, { overwrite: true })
+
+      // adjust the README.md with proper packager run commands
+      const readmePath = path(targetPath, "README.md")
+      updatePackagerCommandsInReadme(readmePath, packagerName)
 
       if (exists(targetIgnorePath) === false) {
         warning(`  Unable to copy ${boilerplateIgnorePath} to ${targetIgnorePath}`)
@@ -571,41 +626,57 @@ module.exports = {
         .replace(/HelloWorld/g, projectName)
         .replace(/hello-world/g, projectNameKebab)
 
-      // - If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
-      if (needsPrebuild) {
-        packageJsonRaw = packageJsonRaw
-          .replace(/start --android/g, "run:android")
-          .replace(/start --ios/g, "run:ios")
+      // add in expo-router package
+      if (experimentalExpoRouter) {
+        // find "expo-localization" line and append "expo-router" line after it
+        packageJsonRaw = packageJsonRaw.replace(
+          /"expo-localization": ".*",/g,
+          `"expo-localization": "~15.0.3",${EOL}    "expo-router":  "~3.5.17",`,
+        )
 
-        // If using canary build, update the expo dependency to the canary version
-        if (expoVersion) {
-          const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
-          // filter for canary/beta and get last item in array
-          const tagVersion = JSON.parse(expoDistTagOutput)[expoVersion]
-          log(`overriding expo version to: ${tagVersion}`)
-          // find line with "expo": and replace entire line with tagVersion
-          packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
-        }
-      } else {
-        // Expo Go workflow, swap back to compatible Expo Go versions of modules
-        log("Changing some dependencies for Expo Go compatibility...")
-        log(JSON.stringify(expoGoCompatExpectedVersions))
+        // replace "main" entry point from App.js to "expo-router/entry"
+        packageJsonRaw = packageJsonRaw.replace(/"main": ".*",/g, `"main": "expo-router/entry",`)
+      }
 
+      // If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
+      packageJsonRaw = packageJsonRaw
+        .replace(/start --android/g, "run:android")
+        .replace(/start --ios/g, "run:ios")
+
+      // If using canary build, update the expo dependency to the canary version
+      if (expoVersion) {
+        const expoDistTagOutput = await system.run("npm view expo dist-tags --json")
+        // filter for canary/beta and get last item in array
+        const tagVersion = JSON.parse(expoDistTagOutput)[expoVersion]
+        log(`overriding expo version to: ${tagVersion}`)
+        // find line with "expo": and replace entire line with tagVersion
+        packageJsonRaw = packageJsonRaw.replace(/"expo": ".*"/g, `"expo": "${tagVersion}"`)
+      }
+
+      // If we're removing the demo code, clean up some dependencies that are no longer needed
+      if (removeDemo) {
+        log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
+        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, demoDependenciesToRemove)
+        const patchesToRemove = findDemoPatches()
+        log(`Removing demo patches... ${patchesToRemove}`)
+        patchesToRemove.forEach((patch) => filesystem.cwd("./patches").remove(patch))
+      }
+
+      if (stateMgmt === "none") {
+        log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
+        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
+      }
+
+      if (newArchEnabled) {
+        log(`Swapping new architecture compatible dependencies...`)
         packageJsonRaw = findAndUpdateDependencyVersions(
           packageJsonRaw,
-          expoGoCompatExpectedVersions,
+          newArchCompatExpectedVersions,
         )
       }
 
-      // - If we're removing the demo code, clean up some dependencies that are no longer needed
-      if (removeDemo) {
-        log(`Removing demo dependencies... ${demoDependenciesToRemove.join(", ")}`)
-        packageJsonRaw = findAndRemoveDemoDependencies(packageJsonRaw)
-      }
-
-      // - Then write it back out.
+      // Then write it back out.
       const packageJson = JSON.parse(packageJsonRaw)
-
       write("./package.json", packageJson)
       // #endregion
 
@@ -618,6 +689,18 @@ module.exports = {
         const npmrcPath = path(targetPath, ".npmrc")
         const npmrcContents = read(npmrcPath)
         write(npmrcPath, `${npmrcContents}${EOL}node-linker=hoisted${EOL}`)
+      } else if (packagerName === "yarn") {
+        const yarnVersion = await packager.run("-v", { packagerName })
+        const yarnMajorVersion = parseInt(yarnVersion.split(".")[0], 10)
+
+        // if yarn version > 1 fix .yarnrc.yml
+        if (yarnMajorVersion > 1) {
+          log(`yarn v${yarnMajorVersion} found... fixing .yarnrc.yml...`)
+          // append `nodeLinker: node-modules` to .yarnrc.yml
+          const yarnrcPath = path(targetPath, ".yarnrc.yml")
+          const yarnrcContents = read(yarnrcPath)
+          write(yarnrcPath, `${yarnrcContents ?? ""}${EOL}nodeLinker: node-modules${EOL}`)
+        }
       }
 
       // check if there is a dependency cache using a hash of the package.json
@@ -668,12 +751,18 @@ module.exports = {
       if (shouldFreshInstallDeps) {
         const unboxingMessage = `Installing ${packagerName} dependencies (wow these are heavy)`
         startSpinner(unboxingMessage)
-        await packager.install({ ...packagerOptions, onProgress: log })
 
-        // if we're using the canary build, we need to install the canary versions of supporting Expo packages
-        if (expoVersion) {
-          await system.run("npx expo install --fix", { onProgress: log })
+        // do base install
+        const installCmd = packager.installCmd({ packagerName })
+        await system.run(installCmd, { onProgress: log })
+        // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
+        // for right now, we don't do this in CI because it returns a non-zero exit code
+        // see https://docs.expo.dev/more/expo-cli/#version-validation
+        if (process.env.CI !== "true") {
+          log("Running `npx expo install --fix...`")
+          await system.run(`npx expo install --fix`, { onProgress: log })
         }
+
         stopSpinner(unboxingMessage, "🧶")
       }
 
@@ -697,7 +786,7 @@ module.exports = {
 
       // #region Configure app.json
       // Enable New Architecture if requested (must happen before prebuild)
-      startSpinner(" Configuring app.json")
+      startSpinner("Configuring app.json")
       try {
         const appJsonRaw = read("app.json")
         const appJson = JSON.parse(appJsonRaw)
@@ -705,18 +794,13 @@ module.exports = {
         // Inject ignite version to app.json
         appJson.ignite.version = igniteVersion
 
-        if (experimentalNewArch === true) {
-          appJson.expo.plugins[1][1].ios.newArchEnabled = true
-          appJson.expo.plugins[1][1].android.newArchEnabled = true
-
-          // Adding the "deploymentTarget" key is required for
-          // @react-native-async-storage/async-storage to work in the new architecture
-          appJson.expo.plugins[1][1].ios.deploymentTarget = "13.4"
+        if (newArchEnabled === true) {
+          appJson.expo.newArchEnabled = true
         }
 
-        // this can go away once we're at SDK 50 since expo-font needs to be added here
-        if (expoVersion) {
-          appJson.expo.plugins.push("expo-font")
+        if (experimentalExpoRouter) {
+          appJson.expo.experiments.typedRoutes = true
+          appJson.expo.plugins.push("expo-router")
         }
 
         write("./app.json", appJson)
@@ -724,41 +808,105 @@ module.exports = {
         log(e)
         p(yellow("Unable to configure app.json."))
       }
-      stopSpinner(" Configuring app.json", "")
+      stopSpinner("Configuring app.json", "⚙️")
       // #endregion
 
-      // #region Run Format
+      // #region Run Prebuild
       // we can't run this option if we didn't install deps
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
         // Prebuild also handles the packager install
-        if (needsPrebuild) {
-          const prebuildMessage = ` Generating native template via Expo Prebuild`
-          startSpinner(prebuildMessage)
-          await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
-          stopSpinner(prebuildMessage, "🛠️")
-        }
-        // Make sure all our modifications are formatted nicely
-        await packager.run("format", { ...packagerOptions, silent: !debug })
+        const prebuildMessage = `Generating native template via Expo Prebuild`
+        startSpinner(prebuildMessage)
+        await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
+        stopSpinner(prebuildMessage, "🛠️")
       }
       // #endregion
 
       // #region Remove Demo code
       const removeDemoPart = removeDemo === true ? "code" : "markup"
-      startSpinner(` Removing fancy demo ${removeDemoPart}`)
+      startSpinner(`Removing fancy demo ${removeDemoPart}`)
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
 
         log(`Ignite bin path: ${IGNITE}`)
-        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, {
-          onProgress: log,
-        })
+        await system.run(`${IGNITE} ${CMD} "${targetPath}"`, { onProgress: log })
       } catch (e) {
         log(e)
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
-      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
+      stopSpinner(`Removing fancy demo ${removeDemoPart}`, "🛠️")
+      // #endregion
+
+      // #region Expo Router edits
+      if (experimentalExpoRouter) {
+        const expoRouterMsg = " Recalibrating compass with Expo Router"
+        startSpinner(expoRouterMsg)
+
+        /**
+         * Instructions mostly adapted from https://ignitecookbook.com/docs/recipes/ExpoRouter
+         * 1. Move all files from app/ to src/
+         * 2. Update code refs to app/ with src/
+         * 3. Refactor Reactotron commands to use `router` instead of refs to react navigation
+         * 4. Create a screen template that makes sense for Expo Router
+         * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
+         */
+        filesystem
+          .cwd(targetPath)
+          .find("app")
+          .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
+        updateExpoRouterSrcDir(toolbox)
+        refactorExpoRouterReactotronCmds(toolbox)
+        createExpoRouterScreenTemplate(toolbox)
+        cleanupExpoRouterConversion(toolbox, targetPath)
+
+        stopSpinner(expoRouterMsg, "🧭")
+      } else {
+        // remove src/ dir since not using expo-router
+        filesystem.cwd(targetPath).remove("src")
+      }
+      // #endregion
+
+      // #region Remove MST code
+      const removeMstPart = stateMgmt === "none" ? "code" : "markup"
+      startSpinner(`Removing MobX-State-Tree ${removeMstPart}`)
+      try {
+        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
+        const CMD = stateMgmt === "none" ? "remove-mst" : "remove-mst-markup"
+
+        log(`Ignite bin path: ${IGNITE}`)
+        await system.run(
+          `${IGNITE} ${CMD} "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
+          { onProgress: log },
+        )
+      } catch (e) {
+        log(e)
+        const additionalInfo =
+          stateMgmt === "none"
+            ? ` To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`
+            : ""
+        p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
+      }
+      stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
+      // #endregion
+
+      // #region Run Format
+      const formattingMessage = `Cleaning up`
+      startSpinner(formattingMessage)
+      if (installDeps === true) {
+        // Make sure all our modifications are formatted nicely
+        await packager.run("lint", { ...packagerOptions })
+      } else {
+        // if our linting configuration is not installed, try format
+        // using prettier to make sure it's reasonably close, but this will skip
+        // eslint issues
+        await system.run(`npx prettier@3.3.3 --write .`, {
+          trim: true,
+          cwd: targetPath,
+        })
+      }
+      stopSpinner(formattingMessage, "🧽")
       // #endregion
 
       // #region Format generator templates EOL for Windows
@@ -845,18 +993,20 @@ module.exports = {
           packager: packagerName,
           targetPath,
           removeDemo,
+          newArch: newArchEnabled,
           experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
           workflow,
           useCache,
           y: yname,
           yes: yname,
           noTimeout,
+          state: stateMgmt,
         },
         projectName,
         toolbox,
       })
 
-      p2(`For next time: here are the Ignite options you picked!`)
+      p2(`For next time, here are the Ignite options you picked:`)
 
       // create a multi-line string of the command, where each --flag is on it's own line
       const prettyCliCommand = cliCommand
@@ -883,7 +1033,7 @@ module.exports = {
         p2()
         p2(yellow(`Generator templates could not be converted to Windows EOL.`))
         p2(yellow(`You may want to update these manually with your code editor, more info at:`))
-        p2(`${link("https://github.com/infinitered/ignite/blob/master/docs/Generators.md")}`)
+        p2(`${link("https://docs.infinite.red/ignite-cli/concept/Generators/")}`)
         p2()
       }
 

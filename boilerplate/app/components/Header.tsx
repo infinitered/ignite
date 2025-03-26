@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import { ReactElement } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -7,11 +7,13 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { isRTL, translate } from "../i18n"
-import { colors, spacing } from "../theme"
+import { isRTL, translate } from "@/i18n"
+import { $styles } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
 
 export interface HeaderProps {
   /**
@@ -139,10 +141,15 @@ interface HeaderActionProps {
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
  * The Header is meant to be used with the `screenOptions.header` option on navigators, routes, or screen components via `navigation.setOptions({ header })`.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Header.md)
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/components/Header/}
+ * @param {HeaderProps} props - The props for the `Header` component.
+ * @returns {JSX.Element} The rendered `Header` component.
  */
 export function Header(props: HeaderProps) {
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
   const {
     backgroundColor = colors.background,
     LeftActionComponent,
@@ -176,7 +183,7 @@ export function Header(props: HeaderProps) {
 
   return (
     <View style={[$container, $containerInsets, { backgroundColor }, $containerStyleOverride]}>
-      <View style={[$wrapper, $styleOverride]}>
+      <View style={[$styles.row, $wrapper, $styleOverride]}>
         <HeaderAction
           tx={leftTx}
           text={leftText}
@@ -191,7 +198,7 @@ export function Header(props: HeaderProps) {
         {!!titleContent && (
           <View
             style={[
-              titleMode === "center" && $titleWrapperCenter,
+              titleMode === "center" && themed($titleWrapperCenter),
               titleMode === "flex" && $titleWrapperFlex,
               $titleContainerStyleOverride,
             ]}
@@ -221,8 +228,13 @@ export function Header(props: HeaderProps) {
   )
 }
 
+/**
+ * @param {HeaderActionProps} props - The props for the `HeaderAction` component.
+ * @returns {JSX.Element} The rendered `HeaderAction` component.
+ */
 function HeaderAction(props: HeaderActionProps) {
   const { backgroundColor, icon, text, tx, txOptions, onPress, ActionComponent, iconColor } = props
+  const { themed } = useAppTheme()
 
   const content = tx ? translate(tx, txOptions) : text
 
@@ -231,12 +243,12 @@ function HeaderAction(props: HeaderActionProps) {
   if (content) {
     return (
       <TouchableOpacity
-        style={[$actionTextContainer, { backgroundColor }]}
+        style={themed([$actionTextContainer, { backgroundColor }])}
         onPress={onPress}
         disabled={!onPress}
         activeOpacity={0.8}
       >
-        <Text weight="medium" size="md" text={content} style={$actionText} />
+        <Text weight="medium" size="md" text={content} style={themed($actionText)} />
       </TouchableOpacity>
     )
   }
@@ -248,7 +260,7 @@ function HeaderAction(props: HeaderActionProps) {
         icon={icon}
         color={iconColor}
         onPress={onPress}
-        containerStyle={[$actionIconContainer, { backgroundColor }]}
+        containerStyle={themed([$actionIconContainer, { backgroundColor }])}
         style={isRTL ? { transform: [{ rotate: "180deg" }] } : {}}
       />
     )
@@ -259,7 +271,6 @@ function HeaderAction(props: HeaderActionProps) {
 
 const $wrapper: ViewStyle = {
   height: 56,
-  flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
 }
@@ -272,33 +283,33 @@ const $title: TextStyle = {
   textAlign: "center",
 }
 
-const $actionTextContainer: ViewStyle = {
+const $actionTextContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexGrow: 0,
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
   paddingHorizontal: spacing.md,
   zIndex: 2,
-}
+})
 
-const $actionText: TextStyle = {
+const $actionText: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.tint,
-}
+})
 
-const $actionIconContainer: ViewStyle = {
+const $actionIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexGrow: 0,
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
   paddingHorizontal: spacing.md,
   zIndex: 2,
-}
+})
 
 const $actionFillerContainer: ViewStyle = {
   width: 16,
 }
 
-const $titleWrapperCenter: ViewStyle = {
+const $titleWrapperCenter: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
@@ -306,7 +317,7 @@ const $titleWrapperCenter: ViewStyle = {
   position: "absolute",
   paddingHorizontal: spacing.xxl,
   zIndex: 1,
-}
+})
 
 const $titleWrapperFlex: ViewStyle = {
   justifyContent: "center",

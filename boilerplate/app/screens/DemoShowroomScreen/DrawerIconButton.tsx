@@ -1,17 +1,25 @@
-import React from "react"
-import { Pressable, PressableProps, ViewStyle } from "react-native"
+import { Pressable, PressableProps, ViewStyle, Platform } from "react-native"
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 import { useDrawerProgress } from "react-native-drawer-layout"
-import { isRTL } from "../../i18n"
-import { colors, spacing } from "../../theme"
+import { isRTL } from "@/i18n"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 interface DrawerIconButtonProps extends PressableProps {}
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
+/**
+ * @param {DrawerIconButtonProps} props - The props for the `DrawerIconButton` component.
+ * @returns {JSX.Element} The rendered `DrawerIconButton` component.
+ */
 export function DrawerIconButton(props: DrawerIconButtonProps) {
   const { ...PressableProps } = props
   const progress = useDrawerProgress()
+  const isWeb = Platform.OS === "web"
+  const {
+    theme: { colors },
+    themed,
+  } = useAppTheme()
 
   const animatedContainerStyles = useAnimatedStyle(() => {
     const translateX = interpolate(progress.value, [0, 1], [0, isRTL ? 60 : -60])
@@ -27,10 +35,16 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     const rotate = interpolate(progress.value, [0, 1], [0, isRTL ? 45 : -45])
     const marginBottom = interpolate(progress.value, [0, 1], [0, -2])
     const width = interpolate(progress.value, [0, 1], [18, 12])
+    const marginHorizontal =
+      isWeb && isRTL
+        ? { marginRight: marginStart }
+        : {
+            marginLeft: marginStart,
+          }
 
     return {
+      ...marginHorizontal,
       backgroundColor,
-      marginStart,
       marginBottom,
       width,
       transform: [{ rotate: `${rotate}deg` }],
@@ -53,10 +67,16 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     const marginStart = interpolate(progress.value, [0, 1], [0, -11.5])
     const rotate = interpolate(progress.value, [0, 1], [0, isRTL ? -45 : 45])
     const width = interpolate(progress.value, [0, 1], [18, 12])
+    const marginHorizontal =
+      isWeb && isRTL
+        ? { marginRight: marginStart }
+        : {
+            marginLeft: marginStart,
+          }
 
     return {
+      ...marginHorizontal,
       backgroundColor,
-      marginStart,
       width,
       marginTop,
       transform: [{ rotate: `${rotate}deg` }],
@@ -67,7 +87,7 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
       <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
-      <Animated.View style={[$middleBar, animatedMiddleBarStyles]} />
+      <Animated.View style={[themed($middleBar), animatedMiddleBarStyles]} />
 
       <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
     </AnimatedPressable>
@@ -89,7 +109,7 @@ const $topBar: ViewStyle = {
 
 const $middleBar: ViewStyle = {
   height: barHeight,
-  marginTop: spacing.xxs,
+  marginTop: 4,
 }
 
 const $bottomBar: ViewStyle = {

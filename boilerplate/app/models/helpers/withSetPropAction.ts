@@ -28,3 +28,5 @@ export const withSetPropAction = <T extends IStateTreeNode>(mstInstance: T) => (
     mstInstance[field] = newValue
   },
 })
+
+// @mst remove-file

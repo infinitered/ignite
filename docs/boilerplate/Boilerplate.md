@@ -1,14 +1,29 @@
-# Explanation of the Ignite folder structure
+---
+sidebar_position: 1
+---
+
+# Ignite's Boilerplate
+
+:::tip
+A "boilerplate" project is one that you can use as a starting point for your own project.
+:::
+
+At its heart, Ignite is a boilerplate. Rather than using a basic template from something like react-native-cli or Expo, Ignite is more full-featured and opinionated. However, it still really customizable -- after all, we have many different types of projects we work on and don't want to be painted into a corner either.
+
+When you [spin up a new Ignite project](../Guide.md), you'll get a project with several folders. Feel free to explore each one and see what's inside.
+
+## Explanation of the Ignite folder structure
 
 A new Ignite boilerplate project's structure looks similar to this:
 
 ```
-ignite-project
+your-project
 ├── .maestro
 ├── android
-├── ios
 ├── app
 │   ├── components
+│   ├── config
+│   ├── devtools
 │   ├── i18n
 │   ├── models
 │   ├── navigators
@@ -17,106 +32,97 @@ ignite-project
 │   ├── theme
 │   ├── utils
 │   ├── app.tsx
-|   ├── assets/fonts/
-├── test
-│   ├── __snapshots__
-│   ├── mock-i18n.ts
-│   ├── mock-reactotron.ts
-│   ├── setup.ts
+├── assets
 ├── ignite
 │   └── templates
+├── ios
 ├── plugins
 │   └── withSplashScreen.ts
+├── test
+│   ├── i18n.test.ts
+│   ├── mockFile.ts
+│   ├── setup.ts
+│   ├── test-tsconfig.json
 ├── app.config.ts
 ├── app.json
-├── App.tsx
+├── index.tsx
+├── eas.json
 ├── package.json
 └── README.md
 ```
 
 ### ./app directory
 
-Included in an Ignite boilerplate project is the `app` directory. This is a directory you would normally have to create when using vanilla React Native.
+The vast majority of your code will live in the [/app folder](./app/app.md). This is where you'll spend most of your time.
 
-The inside of the `app` directory looks similar to the following:
+**[components](./app/components/Components.md)**
 
-```
-app
-│── components
-│── i18n
-├── models
-├── navigators
-├── screens
-├── services
-├── theme
-├── utils
-├── app.tsx
-```
+This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement.
 
-**components**
+**[config](./app/config/Config.md)**
 
-This is where your components will live, the reusable building blocks to create your screens. A handful of built-in components come with Ignite that are adaptable to any custom design system you wish to implement. Below are links to further documentation about each component:
+This contains configuration for your app that might vary depending if you're running in development or production.
 
-- [Component Overview](../)
-- [AutoImage](../boilerplate/components/AutoImage.md)
-- [Button](../boilerplate/components/Button.md)
-- [Card](../boilerplate/components/Card.md)
-- [EmptyState](../boilerplate/components/EmptyState.md)
-- [Header](../boilerplate/components/Header.md)
-- [Icon](../boilerplate/components/Icon.md)
-- [ListItem](../boilerplate/components/ListItem.md)
-- [ListView](../boilerplate/components/ListView.md)
-- [Screen](../boilerplate/components/Screen.md)
-- [Text](../boilerplate/components/Text.md)
-- [TextField](../boilerplate/components/TextField.md)
-- [Toggle](../boilerplate/components/Toggle.md)
+**[devtools](./app/devtools/Devtools.md)**
 
-**i18n**
+This is where setup and configuration of devtools like Reactotron occurs.
+
+**[i18n (Internationalization)](./app/i18n/Internationalization.md)**
 
 This is where your translations will live if you are using the included `react-native-i18n`.
 
-**models**
+**[models](./app/models/Models.md)**
 
 This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc. In addition, a helpers directory contains utility functions such as `getRootStore` to access the root store.
 
-**navigators**
+**[navigators](./app/navigators/Navigation.md)**
 
 This is where your `react-navigation` navigators will live.
 
-For a walkthrough about how React Navigation v5 works, check out Harris Robin's post: [Getting Started with the New React Navigation v5 and Ignite Bowser v5](https://shift.infinite.red/getting-started-with-the-new-react-navigation-v5-and-ignite-bowser-v5-31fb4a57f2b9).
-
-**screens**
+**[screens](./app/screens/Screens.md)**
 
 This is where your screen components will live. A screen is a React component which will take up the entire screen and be part of the navigation hierarchy. Each screen will have a directory containing the `.tsx` file, along with any assets or other helper files.
 
-**services**
+**[services](./app/services/Services.md)**
 
 Any services that interface with the outside world will live here (think REST APIs, Push Notifications, etc.).
 
-**theme**
+**[theme](./app/theme/Theming.md)**
 
-Here lives the theme for your application, including spacing, colors, and typography. For help with adding custom fonts to your application, [check out the readme in Fonts & Typography/](../boilerplate/theming/Fonts-And-Typography.md).
+Here lives the theme for your application, including spacing, colors, and typography.
 
-**utils**
+- For help with adding custom fonts to your application, check out [Fonts & Typography](../boilerplate/app/theme/typography.ts.md).
 
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
+**[utils](./app/utils/Utils.md)**
 
-**app.json/app.config.ts**
+This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truly shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
 
-These are the configuration files for your application. `app.json` contains the static configuration which will be fed into the dynamic configuration in `app.config.ts`, where Expo builds it's final configuration for the app.
+**[app.tsx](./app/app.tsx.md)**
 
-**App.tsx**
+The main entry point for your app!
 
-This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
+### Root Directory
 
-### ./ignite directory
+#### Directories
 
-The `ignite` directory stores all things Ignite, including generator templates.
+**[.maestro](./maestro.md)** - Maestro e2e tests
 
-### ./plugins directory
+**[android](./android.md)** - Native Android / Android Studio project files for manual workflows
 
-The `plugins` directory stores any custom Expo Config Plugins you want to be applied during the prebuild process when generating the native code for the project.
+**[assets](./assets.md)** - icons and images
 
-### ./test directory
+**[ignite](./ignite.md)** - all things Ignite, including generator templates.
 
-This directory will hold your Jest configs and mocks.
+**[ios](./ios.md)** - Native iOS / Xcode project files for manual workflows
+
+**[plugins](./plugins/Plugins.md)** - any custom Expo Config Plugins to be applied during the prebuild process when generating the native code for the project.
+
+**[test](./test/Test.md)** - Jest configs and mocks
+
+#### Files
+
+**[app.json/app.config.ts](./app.json.md)** - configuration files for your app. `app.json` contains the static configuration which will be fed into the dynamic configuration in `app.config.ts`, where Expo builds it's final configuration for the app.
+
+**[index.tsx](./index.tsx.md)** - entry point to your app. This is where you will find the main App component which renders the rest of the application.
+
+**[eas.json](./eas.json.md)** - build configurations for Expo EAS builds

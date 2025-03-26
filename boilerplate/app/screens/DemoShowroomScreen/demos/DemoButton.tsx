@@ -1,44 +1,55 @@
 /* eslint-disable react/jsx-key */
-import React from "react"
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Text } from "../../../components"
-import { colors, typography } from "../../../theme"
+import type { ThemedStyle } from "../../../theme"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import { translate } from "@/i18n"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
-const $customButtonStyle: ViewStyle = { backgroundColor: colors.error, height: 100 }
-const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error }
-const $customButtonTextStyle: TextStyle = {
+const $customButtonStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
+  backgroundColor: colors.error,
+  height: 100,
+})
+const $customButtonPressedStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
+  backgroundColor: colors.error,
+})
+const $customButtonTextStyle: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
   color: colors.error,
   fontFamily: typography.primary.bold,
   textDecorationLine: "underline",
   textDecorationColor: colors.error,
-}
-const $customButtonPressedTextStyle: TextStyle = { color: colors.palette.neutral100 }
-const $customButtonRightAccessoryStyle: ViewStyle = {
+})
+const $customButtonPressedTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
+  color: colors.palette.neutral100,
+})
+const $customButtonRightAccessoryStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   width: "53%",
   height: "200%",
   backgroundColor: colors.error,
   position: "absolute",
   top: 0,
   right: 0,
-}
-const $customButtonPressedRightAccessoryStyle: ImageStyle = { tintColor: colors.palette.neutral100 }
+})
+const $customButtonPressedRightAccessoryStyle: ThemedStyle<ImageStyle> = ({ colors }) => ({
+  tintColor: colors.palette.neutral100,
+})
 
 const $disabledOpacity: ViewStyle = { opacity: 0.5 }
-const $disabledButtonTextStyle: TextStyle = {
+const $disabledButtonTextStyle: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.palette.neutral100,
   textDecorationColor: colors.palette.neutral100,
-}
+})
 
 export const DemoButton: Demo = {
   name: "Button",
-  description:
-    "A component that allows users to take actions and make choices. Wraps the Text component with a Pressable component.",
-  data: [
-    <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
+  description: "demoButton:description",
+  data: ({ themed }) => [
+    <DemoUseCase
+      name="demoButton:useCase.presets.name"
+      description="demoButton:useCase.presets.description"
+    >
       <Button>Default - Laboris In Labore</Button>
       <DemoDivider />
 
@@ -49,16 +60,16 @@ export const DemoButton: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
+      name="demoButton:useCase.passingContent.name"
+      description="demoButton:useCase.passingContent.description"
     >
-      <Button text="Via `text` Prop - Billum In" />
+      <Button text={translate("demoButton:useCase.passingContent.viaTextProps")} />
       <DemoDivider />
 
-      <Button tx="demoShowroomScreen.demoViaTxProp" />
+      <Button tx="demoShowroomScreen:demoViaTxProp" />
       <DemoDivider />
 
-      <Button>Children - Irure Reprehenderit</Button>
+      <Button>{translate("demoButton:useCase.passingContent.children")}</Button>
       <DemoDivider />
 
       <Button
@@ -67,7 +78,7 @@ export const DemoButton: Demo = {
           <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
         )}
       >
-        RightAccessory - Duis Quis
+        {translate("demoButton:useCase.passingContent.rightAccessory")}
       </Button>
       <DemoDivider />
 
@@ -77,19 +88,21 @@ export const DemoButton: Demo = {
           <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
         )}
       >
-        LeftAccessory - Duis Proident
+        {translate("demoButton:useCase.passingContent.leftAccessory")}
       </Button>
       <DemoDivider />
 
       <Button>
         <Text>
-          <Text preset="bold">Nested children - proident veniam.</Text>
+          <Text preset="bold">{translate("demoButton:useCase.passingContent.nestedChildren")}</Text>
           {` `}
           <Text preset="default">
-            Ullamco cupidatat officia exercitation velit non ullamco nisi..
+            {translate("demoButton:useCase.passingContent.nestedChildren2")}
           </Text>
           {` `}
-          <Text preset="bold">Occaecat aliqua irure proident veniam.</Text>
+          <Text preset="bold">
+            {translate("demoButton:useCase.passingContent.nestedChildren3")}
+          </Text>
         </Text>
       </Button>
       <DemoDivider />
@@ -103,57 +116,61 @@ export const DemoButton: Demo = {
           <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
         )}
       >
-        Multiline - consequat veniam veniam reprehenderit. Fugiat id nisi quis duis sunt proident
-        mollit dolor mollit adipisicing proident deserunt.
+        {translate("demoButton:useCase.passingContent.multiLine")}
       </Button>
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
-      <Button style={$customButtonStyle}>Style Container - Exercitation</Button>
+    <DemoUseCase
+      name="demoButton:useCase.styling.name"
+      description="demoButton:useCase.styling.description"
+    >
+      <Button style={themed($customButtonStyle)}>
+        {translate("demoButton:useCase.styling.styleContainer")}
+      </Button>
       <DemoDivider />
 
-      <Button preset="filled" textStyle={$customButtonTextStyle}>
-        Style Text - Ea Anim
+      <Button preset="filled" textStyle={themed($customButtonTextStyle)}>
+        {translate("demoButton:useCase.styling.styleText")}
       </Button>
       <DemoDivider />
 
       <Button
         preset="reversed"
-        RightAccessory={() => <View style={$customButtonRightAccessoryStyle} />}
+        RightAccessory={() => <View style={themed($customButtonRightAccessoryStyle)} />}
       >
-        Style Accessories - enim ea id fugiat anim ad.
+        {translate("demoButton:useCase.styling.styleAccessories")}
       </Button>
       <DemoDivider />
 
       <Button
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
         RightAccessory={(props) => (
           <Icon
             containerStyle={props.style}
             style={[
               $iconStyle,
-              props.pressableState.pressed && $customButtonPressedRightAccessoryStyle,
+              props.pressableState.pressed && themed($customButtonPressedRightAccessoryStyle),
             ]}
             icon="ladybug"
           />
         )}
       >
-        Style Pressed State - fugiat anim
+        {translate("demoButton:useCase.styling.pressedState")}
       </Button>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Disabling"
-      description="The component can be disabled, and styled based on that. Press behavior will be disabled."
+      name="demoButton:useCase.disabling.name"
+      description="demoButton:useCase.disabling.description"
     >
       <Button
         disabled
         disabledStyle={$disabledOpacity}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
-        Disabled - standard
+        {translate("demoButton:useCase.disabling.standard")}
       </Button>
       <DemoDivider />
 
@@ -161,10 +178,10 @@ export const DemoButton: Demo = {
         disabled
         preset="filled"
         disabledStyle={$disabledOpacity}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
-        Disabled - filled
+        {translate("demoButton:useCase.disabling.filled")}
       </Button>
       <DemoDivider />
 
@@ -172,39 +189,39 @@ export const DemoButton: Demo = {
         disabled
         preset="reversed"
         disabledStyle={$disabledOpacity}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
-        Disabled - reversed
+        {translate("demoButton:useCase.disabling.reversed")}
       </Button>
       <DemoDivider />
 
       <Button
         disabled
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
         RightAccessory={(props) => (
           <View
             style={
               props.disabled
                 ? [$customButtonRightAccessoryStyle, $disabledOpacity]
-                : $customButtonPressedRightAccessoryStyle
+                : themed($customButtonPressedRightAccessoryStyle)
             }
           />
         )}
       >
-        Disabled accessory style
+        {translate("demoButton:useCase.disabling.accessory")}
       </Button>
       <DemoDivider />
 
       <Button
         disabled
         preset="filled"
-        disabledTextStyle={[$customButtonTextStyle, $disabledButtonTextStyle]}
-        pressedStyle={$customButtonPressedStyle}
-        pressedTextStyle={$customButtonPressedTextStyle}
+        disabledTextStyle={themed([$customButtonTextStyle, $disabledButtonTextStyle])}
+        pressedStyle={themed($customButtonPressedStyle)}
+        pressedTextStyle={themed($customButtonPressedTextStyle)}
       >
-        Disabled text style
+        {translate("demoButton:useCase.disabling.textStyle")}
       </Button>
     </DemoUseCase>,
   ],

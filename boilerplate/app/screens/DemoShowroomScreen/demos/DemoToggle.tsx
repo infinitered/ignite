@@ -1,15 +1,34 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
+import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
-import { Text, Toggle, ToggleProps } from "../../../components"
-import { colors, spacing } from "../../../theme"
+import {
+  Checkbox,
+  CheckboxToggleProps,
+  Radio,
+  RadioToggleProps,
+  Switch,
+  SwitchToggleProps,
+  Text,
+} from "@/components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
+import { $styles, type ThemedStyle } from "@/theme"
+import { translate } from "@/i18n"
 
-function ControlledToggle(props: ToggleProps) {
-  const [value, setValue] = React.useState(props.value || false)
-  return <Toggle {...props} value={value} onPress={() => setValue(!value)} />
+function ControlledCheckbox(props: CheckboxToggleProps) {
+  const [value, setValue] = useState(props.value || false)
+  return <Checkbox {...props} value={value} onPress={() => setValue(!value)} />
+}
+
+function ControlledRadio(props: RadioToggleProps) {
+  const [value, setValue] = useState(props.value || false)
+  return <Radio {...props} value={value} onPress={() => setValue(!value)} />
+}
+
+function ControlledSwitch(props: SwitchToggleProps) {
+  const [value, setValue] = useState(props.value || false)
+  return <Switch {...props} value={value} onPress={() => setValue(!value)} />
 }
 
 const $centeredOneThirdCol: ViewStyle = {
@@ -17,351 +36,302 @@ const $centeredOneThirdCol: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
 }
-const $centeredText: TextStyle = {
+const $centeredText: ThemedStyle<TextStyle> = ({ spacing }) => ({
   textAlign: "center",
   width: "100%",
   marginTop: spacing.xs,
-}
+})
 
 export const DemoToggle: Demo = {
   name: "Toggle",
-  description:
-    "Renders a boolean input. This is a controlled component that requires an onValueChange callback that updates the value prop in order for the component to reflect user actions. If the value prop is not updated, the component will continue to render the supplied value prop instead of the expected result of any user actions.",
-  data: [
+  description: "demoToggle:description",
+  data: ({ theme, themed }) => [
     <DemoUseCase
-      name="Variants"
-      description="The component supports a few different variants. If heavy customization of a specific variant is needed, it can be easily refactored. The default is `checkbox`."
+      name="demoToggle:useCase.variants.name"
+      description="demoToggle:useCase.variants.description"
     >
-      <ControlledToggle
-        variant="checkbox"
-        label="`checkbox` variant"
-        helper="This can be used for a single on/off input."
+      <ControlledCheckbox
+        labelTx="demoToggle:useCase.variants.checkbox.label"
+        helperTx="demoToggle:useCase.variants.checkbox.helper"
       />
       <DemoDivider size={24} />
-      <ControlledToggle
-        variant="radio"
-        label="`radio` variant"
-        helper="Use this when you have multiple options."
+      <ControlledRadio
+        labelTx="demoToggle:useCase.variants.radio.label"
+        helperTx="demoToggle:useCase.variants.radio.helper"
       />
       <DemoDivider size={24} />
-      <ControlledToggle
-        variant="switch"
-        label="`switch` variant"
-        helper="A more prominent on/off input. Has better accessibility support."
+      <ControlledSwitch
+        labelTx="demoToggle:useCase.variants.switch.label"
+        helperTx="demoToggle:useCase.variants.switch.helper"
       />
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Statuses"
-      description="There is a status prop - similar to `preset` in other components, but affects component functionality as well."
+      name="demoToggle:useCase.statuses.name"
+      description="demoToggle:useCase.statuses.description"
       layout="row"
+      itemStyle={$styles.flexWrap}
     >
-      <ControlledToggle variant="checkbox" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="radio" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch containerStyle={$centeredOneThirdCol} />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledToggle variant="checkbox" value containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="radio" value containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" value containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={$centeredText}>
-        No status - this is the default
+      <ControlledCheckbox value containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio value containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch value containerStyle={$centeredOneThirdCol} />
+      <Text preset="formHelper" style={themed($centeredText)}>
+        {translate("demoToggle:useCase.statuses.noStatus")}
       </Text>
 
       <DemoDivider size={24} style={{ width: "100%" }} />
 
-      <ControlledToggle variant="checkbox" status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="radio" status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch status="error" containerStyle={$centeredOneThirdCol} />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledToggle
-        variant="checkbox"
-        value
-        status="error"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <ControlledToggle
-        variant="radio"
-        value
-        status="error"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <ControlledToggle
-        variant="switch"
-        value
-        status="error"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <Text preset="formHelper" style={$centeredText}>
-        Error status - use when there is an error
+      <ControlledCheckbox value status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio value status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch value status="error" containerStyle={$centeredOneThirdCol} />
+      <Text preset="formHelper" style={themed($centeredText)}>
+        {translate("demoToggle:useCase.statuses.errorStatus")}
       </Text>
 
       <DemoDivider size={24} style={{ width: "100%" }} />
 
-      <ControlledToggle
-        variant="checkbox"
-        status="disabled"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <ControlledToggle variant="radio" status="disabled" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch status="disabled" containerStyle={$centeredOneThirdCol} />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledToggle
-        variant="checkbox"
-        value
-        status="disabled"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <ControlledToggle
-        variant="radio"
-        value
-        status="disabled"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <ControlledToggle
-        variant="switch"
-        value
-        status="disabled"
-        containerStyle={$centeredOneThirdCol}
-      />
-      <Text preset="formHelper" style={$centeredText}>
-        Disabled status - disables the editability and mutes input
+      <ControlledCheckbox value status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledRadio value status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledSwitch value status="disabled" containerStyle={$centeredOneThirdCol} />
+      <Text preset="formHelper" style={themed($centeredText)}>
+        {translate("demoToggle:useCase.statuses.disabledStatus")}
       </Text>
     </DemoUseCase>,
 
     <DemoUseCase
-      name="Passing Content"
-      description="There are a few different ways to pass content."
+      name="demoToggle:useCase.passingContent.name"
+      description="demoToggle:useCase.passingContent.description"
     >
-      <ControlledToggle
-        variant="checkbox"
+      <ControlledCheckbox
         value
-        label="Via `label` prop"
-        helper="Via `helper` prop."
+        labelTx="demoToggle:useCase.passingContent.useCase.checkBox.label"
+        helperTx="demoToggle:useCase.passingContent.useCase.checkBox.helper"
       />
       <DemoDivider size={24} />
-      <ControlledToggle
-        variant="radio"
+      <ControlledRadio
         value
-        labelTx="demoShowroomScreen.demoViaSpecifiedTxProp"
+        labelTx="demoShowroomScreen:demoViaSpecifiedTxProp"
         labelTxOptions={{ prop: "label" }}
-        helperTx="demoShowroomScreen.demoViaSpecifiedTxProp"
+        helperTx="demoShowroomScreen:demoViaSpecifiedTxProp"
         helperTxOptions={{ prop: "helper" }}
       />
       <DemoDivider size={24} />
-      <ControlledToggle
-        variant="checkbox"
+      <ControlledCheckbox
         value
-        label="Supports multiline - Nulla proident consectetur labore sunt ea labore. "
+        labelTx="demoToggle:useCase.passingContent.useCase.checkBoxMultiLine.helper"
         editable={false}
       />
       <DemoDivider size={24} />
-      <ControlledToggle
-        variant="radio"
+      <ControlledRadio
         value
-        label="You can change sides - Laborum labore adipisicing in eu ipsum deserunt."
+        labelTx="demoToggle:useCase.passingContent.useCase.radioChangeSides.helper"
         labelPosition="left"
       />
       <DemoDivider size={24} />
-      <ControlledToggle
-        variant="checkbox"
+      <ControlledCheckbox
         value
         status="error"
-        checkboxIcon="ladybug"
-        label="Pass in a custom checkbox icon."
+        icon="ladybug"
+        labelTx="demoToggle:useCase.passingContent.useCase.customCheckBox.label"
       />
       <DemoDivider size={24} />
-      <ControlledToggle
+      <ControlledSwitch
         value
-        variant="switch"
-        switchAccessibilityMode="text"
-        label="Switches can be read as text"
+        accessibilityMode="text"
+        labelTx="demoToggle:useCase.passingContent.useCase.switch.label"
         status="error"
-        helper="By default, this option doesn't use `Text` since depending on the font, the on/off characters might look weird. Customize as needed."
+        helperTx="demoToggle:useCase.passingContent.useCase.switch.helper"
       />
       <DemoDivider size={24} />
-      <ControlledToggle
+      <ControlledSwitch
         value
-        variant="switch"
         labelPosition="left"
-        switchAccessibilityMode="icon"
-        label="Or aided with an icon"
+        accessibilityMode="icon"
+        labelTx="demoToggle:useCase.passingContent.useCase.switchAid.label"
       />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily." layout="row">
-      <ControlledToggle
-        variant="checkbox"
+    <DemoUseCase
+      name="demoToggle:useCase.styling.name"
+      description="demoToggle:useCase.styling.description"
+      layout="row"
+      itemStyle={$styles.flexWrap}
+    >
+      <ControlledCheckbox
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
           height: 50,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
       />
-      <ControlledToggle
-        variant="radio"
+      <ControlledRadio
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
       />
-      <ControlledToggle
-        variant="switch"
+      <ControlledSwitch
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 70,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
       />
-      <Text preset="formHelper" style={$centeredText}>
-        1 - style the input outer wrapper
+      <Text preset="formHelper" style={themed($centeredText)}>
+        {translate("demoToggle:useCase.styling.outerWrapper")}
       </Text>
 
       <DemoDivider style={{ width: "100%" }} />
 
-      <ControlledToggle
+      <ControlledCheckbox
         value
-        variant="checkbox"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
           height: 50,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
       />
-      <ControlledToggle
+      <ControlledRadio
         value
-        variant="radio"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
       />
-      <ControlledToggle
+      <ControlledSwitch
         value
-        variant="switch"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 70,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
           paddingLeft: 10,
           paddingRight: 10,
         }}
       />
-      <Text preset="formHelper" style={$centeredText}>
-        2 - style the input inner wrapper
+      <Text preset="formHelper" style={themed($centeredText)}>
+        {translate("demoToggle:useCase.styling.innerWrapper")}
       </Text>
 
       <DemoDivider style={{ width: "100%" }} />
 
-      <ControlledToggle
+      <ControlledCheckbox
         value
-        variant="checkbox"
-        checkboxIcon="ladybug"
+        icon="ladybug"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
           height: 50,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
         inputDetailStyle={{
-          tintColor: colors.tint,
+          tintColor: theme.colors.tint,
           height: 35,
           width: 35,
         }}
       />
-      <ControlledToggle
+      <ControlledRadio
         value
-        variant="radio"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent500,
         }}
         inputDetailStyle={{
-          backgroundColor: colors.tint,
+          backgroundColor: theme.colors.tint,
           height: 36,
           width: 36,
           borderRadius: 18,
         }}
       />
 
-      <ControlledToggle
+      <ControlledSwitch
         value
-        variant="switch"
         containerStyle={$centeredOneThirdCol}
         inputOuterStyle={{
           width: 70,
           height: 50,
           borderRadius: 25,
-          backgroundColor: colors.palette.accent300,
-          borderColor: colors.palette.accent500,
+          backgroundColor: theme.colors.palette.accent300,
+          borderColor: theme.colors.palette.accent500,
         }}
         inputInnerStyle={{
-          backgroundColor: colors.tint,
+          backgroundColor: theme.colors.tint,
           paddingLeft: 10,
           paddingRight: 10,
         }}
         inputDetailStyle={{
-          backgroundColor: colors.palette.accent300,
+          backgroundColor: theme.colors.palette.accent300,
           height: 36,
           width: 18,
           borderRadius: 36,
         }}
-        switchAccessibilityMode="icon"
+        accessibilityMode="icon"
       />
 
-      <Text preset="formHelper" style={$centeredText}>
-        3 - style the input detail
+      <Text preset="formHelper" style={themed($centeredText)}>
+        {translate("demoToggle:useCase.styling.inputDetail")}
       </Text>
 
       <DemoDivider size={32} style={{ width: "100%" }} />
 
       <View style={{ width: "100%" }}>
-        <ControlledToggle
+        <ControlledRadio
           value
-          variant="radio"
-          label="You can also style the label"
+          labelTx="demoToggle:useCase.styling.labelTx"
           LabelTextProps={{ size: "xs", weight: "bold" }}
           status="error"
           labelStyle={{
-            backgroundColor: colors.error,
-            color: colors.palette.neutral100,
+            backgroundColor: theme.colors.error,
+            color: theme.colors.palette.neutral100,
             paddingHorizontal: 5,
           }}
         />
@@ -370,14 +340,13 @@ export const DemoToggle: Demo = {
       <DemoDivider size={24} style={{ width: "100%" }} />
 
       <View style={{ width: "100%" }}>
-        <ControlledToggle
+        <ControlledRadio
           value
-          variant="radio"
           labelPosition="left"
-          containerStyle={{ padding: 10, backgroundColor: colors.error }}
-          label="Or, style the entire container"
+          containerStyle={{ padding: 10, backgroundColor: theme.colors.error }}
+          labelTx="demoToggle:useCase.styling.styleContainer"
           status="error"
-          labelStyle={{ color: colors.palette.neutral100 }}
+          labelStyle={{ color: theme.colors.palette.neutral100 }}
         />
       </View>
     </DemoUseCase>,

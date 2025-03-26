@@ -4,7 +4,7 @@ sidebar_position: 140
 
 # TypeScript
 
-In addition to `redux` --> `mobx-state-tree`, we've also transitioned to using `TypeScript` vs plain `JavaScript`. We find that TypeScript streamlines the developer experience by catching errors _before_ you hit refresh on that simulator, and prevents costly bugs by enforcing type safety.
+We find that TypeScript streamlines the developer experience by catching errors _before_ you hit refresh on that simulator, and prevents costly bugs by enforcing type safety.
 
 In Ignite, TypeScript is fully set up, so if you know TS, all you need to do is start coding!
 

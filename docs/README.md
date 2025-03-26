@@ -2,70 +2,136 @@
 sidebar_position: 1
 ---
 
-# Welcome to Ignite documentation!
+# Ignite - the battle-tested React Native boilerplate
+
+With over seven years of active development, Ignite is the most popular React Native app starter boilerplate for both Expo and bare React Native.
+
+This is the React Native stack that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning and improves their confidence over the lifetime of the entire project.
 
 ## Getting Started
 
-### Quick Start
+If you just want to kick off a new project, you can do that with the Ignite CLI:
 
 ```terminal
-npx ignite-cli@latest new pizza-app --yes
+npx ignite-cli@latest new pizza-app
 ```
 
-### Full Guide
+Prerequisites:
 
-If you're new to Ignite, start by reading our [Getting Started Guide](./Guide.md)!
+- Node.js LTS release or greater
+- Recommended: recent versions of Xcode and Android Studio
+- Recommended: Yarn or Bun package manager
+- Recommended: macOS (for iOS development)
 
-### Intro Video
+### Intro to Ignite
 
-- Check out the [Getting Started with Ignite](https://www.youtube.com/watch?v=KOSvDlFyg20) video for a 13 minute overview!
-- Jamon's Code Quest on [Ignite 9](https://www.youtube.com/watch?v=QmkMsUYrTlk)
+#### Resources
 
-## Proven React Native boilerplate
+Here are a few videos / talks that introduce Ignite and show off some of its features. Check them out!
 
-The culmination of over seven years of constant React Native development, Ignite is the most popular React Native app boilerplate for both Expo and bare React Native.
+<table>
+  <tr>
+    <td width="50%">
+      <figure>
+        <a href="https://www.youtube.com/watch?v=KOSvDlFyg20">
+          <img src="https://img.youtube.com/vi/KOSvDlFyg20/sddefault.jpg" alt="Getting Started with Ignite"  width="100%" /><br />
+        <figcaption><strong>Getting Started with Ignite</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <a href="https://www.youtube.com/watch?v=dNWkJOpD6YE&list=PLFHvL21g9bk0XOO9XK6d6S9w1jBU6Dz_U&index=16">
+          <img src="https://img.youtube.com/vi/dNWkJOpD6YE/sddefault.jpg" alt="Sweetening React Native Development With Ignite" width="100%" /><br />
+        <figcaption><strong>Ignite talk at Chain React 2024 - Robin Heinze</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <figure>
+        <a href="https://www.youtube.com/watch?v=QmkMsUYrTlk">
+          <img src="https://img.youtube.com/vi/QmkMsUYrTlk/sddefault.jpg" alt="Jamon's Code Quest on Ignite 9" width="100%" /><br />
+        <figcaption><strong>What's new in Ignite 9</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <a href="https://www.youtube.com/watch?v=n_VjjJxyd8Q">
+          <img src="https://img.youtube.com/vi/n_VjjJxyd8Q/sddefault.jpg" alt="Jamon's Code Quest on MobX-State-Tree" width="100%" /><br />
+        <figcaption><strong>Intro to MobX-State-Tree</strong></figcaption>
+        </a>
+      </figure>
+    </td>
+  </tr>
+</table>
 
-This is the React Native boilerplate that the [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Developers who use Ignite report that it saves them two to four weeks of time on average off the beginning of their React Native project!
+#### Boilerplate Guide
 
-## Usage
+Check out our [Guide](./Guide.md) for a walkthrough of the boilerplate project and how to use it
 
-- [Command-line Interface (CLI)](./cli/Ignite-CLI.md)
-  - [Remove Demo Code](./cli/Remove-Demo-Code.md) - A quick guide on how to remove Ignite's demo code via command line
+<table>
+<tr>
+<td><img alt="ignite-01-sign-in" src="https://github.com/infinitered/ir-docs/assets/1479215/d84d5efa-363d-44bc-a7b3-6ec70d878ae3" /></td>
+<td><img alt="ignite-02-welcome" src="https://github.com/infinitered/ir-docs/assets/1479215/8cc22d39-f55c-4c0d-a847-463159f01c86" /></td>
+<td><img alt="ignite-03-component" src="https://github.com/infinitered/ir-docs/assets/1479215/e86e3536-1896-411f-8c96-b5d014fa94e6" /></td>
+</tr><tr>
+<td><img alt="ignite-04-drawer" src="https://github.com/infinitered/ir-docs/assets/1479215/5bfbffd3-e10e-4b3e-ba1f-8c7ab8ae5cfa" /></td>
+<td><img alt="ignite-06-radio" src="https://github.com/infinitered/ir-docs/assets/1479215/332a18b2-0b55-440a-9776-8440c9ecdf16" /></td>
+<td><img alt="ignite-07-debug" src="https://github.com/infinitered/ir-docs/assets/1479215/248097a0-7fb9-46cc-9e64-c675c3b8b7cc" /></td>
+</tr>
+</table>
+
+## Background
+
+Ignite was born in early 2016 when two teams at [Infinite Red](https://infinite.red) were building new React Native apps for clients. As we built the projects, we noticed we were running into similar problems on each app -- what navigation library should we use? What about folder structure? How could we make sure our stack aligns across many future projects?
+
+We built Ignite as a CLI and boilerplate project based on our learnings, and have continuously improved it over the past seven years. Along the way, we've built up an amazing [community of developers](https://community.infinite.red) who use Ignite to build their apps, share techniques, and contribute back to the project.
+
+The guiding philosophy behind Ignite is that nothing makes it into the stack unless it's been proven on projects that Infinite Red has built. This means it evolves a bit slower than other boilerplates, but unlike others, it's based on real-world experience and not the latest new thing. But we also are continuously developing and pushing the stack forward, so it never stagnates.
+
+With Ignite, you get proven patterns, best practices, and a robust, seasoned community. **Don't go alone!**
+
+## Documentation
+
+- [Command-line Interface (CLI)](./cli/Ignite-CLI.md) - How to spin up a new Ignite app
+  - [CLI Generators](./concept/Generators.md) - Generate components, screens, and more
   - [Troubleshooting](./cli/Troubleshooting.md)
-- [Components](./boilerplate/components/Components.md) - Ignite's built-in UI components
-  - [AutoImage](./boilerplate/components/AutoImage.md)
-  - [Button](./boilerplate/components/Button.md)
-  - [Card](./boilerplate/components/Card.md)
-  - [EmptyState](./boilerplate/components/EmptyState.md)
-  - [Header](./boilerplate/components/Header.md)
-  - [Icon](./boilerplate/components/Icon.md)
-  - [ListItem](./boilerplate/components/ListItem.md)
-  - [ListView](./boilerplate/components/ListView.md)
-  - [Screen](./boilerplate/components/Screen.md)
-  - [Text](./boilerplate/components/Text.md)
-  - [TextField](./boilerplate/components/TextField.md)
+- [Components](./boilerplate/app/components/Components.md) - Ignite's built-in UI components
+  - [AutoImage](./boilerplate/app/components/AutoImage.md)
+  - [Button](./boilerplate/app/components/Button.md)
+  - [Card](./boilerplate/app/components/Card.md)
+  - [EmptyState](./boilerplate/app/components/EmptyState.md)
+  - [Header](./boilerplate/app/components/Header.md)
+  - [Icon](./boilerplate/app/components/Icon.md)
+  - [ListItem](./boilerplate/app/components/ListItem.md)
+  - [ListView](./boilerplate/app/components/ListView.md)
+  - [Screen](./boilerplate/app/components/Screen.md)
+  - [Text](./boilerplate/app/components/Text.md)
+  - [TextField](./boilerplate/app/components/TextField.md)
 - [Concepts](./concept/Concepts.md) - An overview of the concepts behind developing with Ignite
 
-  - [Backend API Integration](./concept/Backend-API-Integration.md) - An explanation of Ignite's basic API setup
-  - [Expo and Ignite](./concept/Expo-and-Ignite.md) - How Expo fits in with Ignite, and whether you should use it
-  - [Folder-Structure](./concept/Folder-Structure.md) - An explanation of the Ignite folder structure
+  - [Expo and Ignite](./expo/Expo-and-Ignite.md) - How Expo fits in with Ignite, and whether you should use it
+  - [Folder Structure](./boilerplate/Boilerplate.md) - An overview of the Ignite folder structure
   - [Generators](./concept/Generators.md) - Everything you need to know about Ignite generators
   - [Generator Templates](./concept/Generator-Templates.md) - Writing your own generator templates
-  - [Internationalization](./concept/Internationalization.md) — How to Internationalize your app
+  - [Internationalization](./boilerplate/app/i18n/Internationalization.md) — How to Internationalize your app
   - [Why MobX-State-Tree?](./concept/MobX-State-Tree.md) - All about MobX-State-Tree, and why we use it instead of Redux
-  - [Navigation](./concept/Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
+  - [Navigation](./boilerplate/app/navigators/Navigation.md) - How [React Navigation](https://reactnavigation.org/docs/getting-started/) is used to navigate through your screens
   - [Styling](./concept/Styling.md) - How we approach styling components in Ignite
   - [Testing](./concept/Testing.md) - How to test your Ignite app
   - [TypeScript](./concept/TypeScript.md) - An explanation of TypeScript in Ignite and lots of resources
   - [Upgrades](./concept/Upgrades.md) - How to upgrade your app to the latest and greatest Ignite patterns
 
-- [Theming](./boilerplate/theming/Theming.md) - How to customize the look and feel of your app
-  - [Colors & Palettes](./boilerplate/theming/Colors-And-Palettes.md) - Explanation of our palette-based approach to colors
-  - [Fonts & Typography](./boilerplate/theming/Fonts-And-Typography.md) - How we define fonts in a semantic way
-  - [Spacing](./boilerplate/theming/Spacing.md) - How to approach consistent spacing throughout your Ignite app
-- [Utils](./boilerplate/utility/Utils.md) - Collection of helpful utilities
-  - [useSafeAreaInsetsStyle](./boilerplate/utility/useSafeAreaInsetsStyle.md)
-  - [useHeader](./boilerplate/utility/useHeader.md)
+- [Theming](./boilerplate/app/theme/Theming.md) - How to customize the look and feel of your app
+  - [Colors & Palettes](./boilerplate/app/theme/colors.ts.md) - Explanation of our palette-based approach to colors
+  - [Fonts & Typography](./boilerplate/app/theme/typography.ts.md) - How we define fonts in a semantic way
+  - [Spacing](./boilerplate/app/theme/spacing.ts.md) - How to approach consistent spacing throughout your Ignite app
+- [Utils](./boilerplate/app/utils/Utils.md) - Collection of helpful utilities
+  - [useSafeAreaInsetsStyle](./boilerplate/app/utils/useSafeAreaInsetsStyle.ts.md)
+  - [useHeader](./boilerplate/app/utils/useHeader.tsx.md)
 
 ## Contributing
 

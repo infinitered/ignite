@@ -21,12 +21,15 @@ async function generate(toolbox: GluegunToolbox) {
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
 
+  // check if we should override front matter dir or default dir
+  const dir = parameters.options.dir ?? parameters.third
+
   // we need a name for this component
   let name = parameters.second
   if (!name) {
     warning(`⚠️  Please specify a name for your ${generator}:`)
     p()
-    command(`ignite g ${generator} MyName`)
+    command(`npx ignite-cli g ${generator} MyName`)
     return
   }
 
@@ -47,7 +50,7 @@ async function generate(toolbox: GluegunToolbox) {
       `Note that you don't need to add ${pascalGenerator} to the end of the name -- we'll do it for you!`,
     )
     pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
-    command(`ignite generate ${generator} ${pascalName}`)
+    command(`npx ignite-cli generate ${generator} ${pascalName}`)
   }
 
   // okay, let's do it!
@@ -57,9 +60,12 @@ async function generate(toolbox: GluegunToolbox) {
   const overwrite = !options.overwrite ? defaultOverwrite : boolFlag(options.overwrite)
   const { written, overwritten, exists } = await generateFromTemplate(generator, {
     name: pascalName,
+    originalName: name,
     skipIndexFile: parameters.options.skipIndexFile,
     overwrite,
     subdirectory,
+    dir,
+    case: parameters.options.case,
   })
 
   heading(`Generated new files:`)
