@@ -17,7 +17,7 @@ parameters:
     default: false
 
 orbs:
-  publish-docs: infinitered/publish-docs@0.4.9
+  publish-docs: infinitered/publish-docs@0.5.0
 jobs:
   tests:
     <<: *defaults
@@ -101,7 +101,7 @@ publish-details: &publish-details
   target_docs_dir: "docs"
   target_repo: "git@github.com:infinitered/ir-docs.git"
   target_repo_directory: "target"
-
+  ssh_key_fingerprint: "SHA256:aovjemSAAaR4+VcbAyUjlRrHpVoKistvCQcc0adPkHU"
 workflows:
   version: 2
   test_and_release:
