@@ -17,6 +17,7 @@ import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remov
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 import { ComponentProps } from "react"
+import { ErrorBoundary } from "@/screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -108,9 +109,11 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
 
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-      <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <AppStack />
-      </NavigationContainer>
+      <ErrorBoundary catchErrors={Config.catchErrors}>
+        <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
+          <AppStack />
+        </NavigationContainer>
+      </ErrorBoundary>
     </ThemeProvider>
   )
   // @mst replace-next-line }
