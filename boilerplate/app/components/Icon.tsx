@@ -62,8 +62,10 @@ export function Icon(props: IconProps) {
     ...WrapperProps
   } = props
 
-  const isPressable = !!WrapperProps.onPress
-  const Wrapper = (WrapperProps?.onPress ? TouchableOpacity : View) as ComponentType<
+    const isPressable =
+    !!WrapperProps.onPress || !!WrapperProps.onPressIn || !!WrapperProps.onPressOut || !!WrapperProps.onLongPress
+    
+  const Wrapper = (isPressable ? TouchableOpacity : View) as ComponentType<
     TouchableOpacityProps | ViewProps
   >
 
