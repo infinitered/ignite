@@ -1,0 +1,13 @@
+# flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
+
+appId: ${MAESTRO_APP_ID}
+---
+- runFlow:
+    when:
+      true: ${IS_DEV == "true"}
+    file: './_OpenWithDevClient.yaml'
+
+- runFlow:
+    when:
+      true: ${IS_DEV == "false"}
+    file: './_OpenAppClearStateAndKeychain.yaml'

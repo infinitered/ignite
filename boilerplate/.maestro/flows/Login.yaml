@@ -6,13 +6,7 @@
 appId: ${MAESTRO_APP_ID} # the app id of the app we want to test
 # You can find the appId of an Ignite app in the `app.json` file
 # as the "package" under the "android" section and "bundleIdentifier" under the "ios" section
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
 ---
-- assertVisible: "Log In"
-- tapOn:
-    text: "Tap to Log in!"
-- assertVisible: "Your app, almost ready for launch!"
-- tapOn:
-    text: "Let's go!"
-- assertVisible: "Components to jump start your project!"
-
-# @demo remove-file
+- runFlow: ../shared/_Login.yaml
