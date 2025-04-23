@@ -9,4 +9,4 @@ appId: ${MAESTRO_APP_ID}
 - tapOn:
     text: "Let's go!"
 - assertVisible: "Components to jump start your project!"
-
+# @demo remove-file
