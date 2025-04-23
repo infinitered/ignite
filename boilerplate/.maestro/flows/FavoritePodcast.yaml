@@ -4,9 +4,9 @@ appId: ${MAESTRO_APP_ID}
 env:
   FAVORITES_TEXT: "Switch on to only show favorites"
 onFlowStart:
-  - runFlow: _OnFlowStart.yaml
+  - runFlow: ../shared/_OnFlowStart.yaml
 ---
-- runFlow: Login.yaml
+- runFlow: ../shared/_Login.yaml
 - tapOn: "Podcast"
 - assertVisible: "React Native Radio episodes"
 - tapOn:
@@ -34,4 +34,3 @@ onFlowStart:
 - tapOn:
     text: ${FAVORITES_TEXT}
 - assertVisible: ${maestro.copiedText}
-# @demo remove-file
