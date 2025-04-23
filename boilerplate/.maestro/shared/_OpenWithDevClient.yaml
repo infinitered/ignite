@@ -26,4 +26,3 @@ appId: ${MAESTRO_APP_ID}
     visible: "Continue"
 - swipe:
     direction: DOWN
-# @demo remove-file

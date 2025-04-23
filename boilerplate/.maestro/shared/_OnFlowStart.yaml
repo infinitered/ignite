@@ -11,4 +11,3 @@ appId: ${MAESTRO_APP_ID}
     when:
       true: ${IS_DEV == "false"}
     file: './_OpenAppClearStateAndKeychain.yaml'
-# @demo remove-file
