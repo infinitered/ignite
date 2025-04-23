@@ -34,4 +34,3 @@ onFlowStart:
 - tapOn:
     text: ${FAVORITES_TEXT}
 - assertVisible: ${maestro.copiedText}
-# @demo remove-file
