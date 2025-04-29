@@ -357,7 +357,7 @@ export async function generateFromTemplate(
 /**
  * Checks a file for a directoryDir in template front matter.
  */
-export function frontMatterDirectoryDir(generator: string): "string" | undefined {
+export function frontMatterDirectoryDir(generator: string): string | undefined {
   if (!validateGenerator(generator)) {
     return undefined
   }
@@ -370,11 +370,7 @@ export function frontMatterDirectoryDir(generator: string): "string" | undefined
   const fileContents = filesystem.read(`${templateDir}/NAME.tsx.ejs`)
   const { data: frontMatterData } = frontMatter(fileContents)
 
-  if (frontMatterData?.destinationDir === undefined) {
-    return undefined
-  }
-
-  return frontMatterData.destinationDir
+  return frontMatterData?.destinationDir
 }
 
 /**
