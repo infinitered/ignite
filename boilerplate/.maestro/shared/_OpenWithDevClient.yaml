@@ -1,0 +1,28 @@
+# Common subflow for opening the app with a clear state, clear keychain, and getting past the Expo Dev Client prompts.
+# Use this for local development flows.
+---
+appId: ${MAESTRO_APP_ID}
+---
+- runFlow:
+    file: "./_OpenAppClearStateAndKeychain.yaml"
+
+# Wait for animation subflow
+- waitForAnimationToEnd
+
+# Connect to development server subflow
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - tapOn: ".*8081.*"
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn: "http://localhost:8081"
+
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Continue"
+- swipe:
+    direction: DOWN
