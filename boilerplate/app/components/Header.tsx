@@ -310,7 +310,7 @@ const $actionFillerContainer: ViewStyle = {
 }
 
 const $titleWrapperPointerEvents: ViewStyle = {
-  pointerEvents: "none"
+  pointerEvents: "none",
 }
 
 const $titleWrapperCenter: ThemedStyle<ViewStyle> = ({ spacing }) => ({
