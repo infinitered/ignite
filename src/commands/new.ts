@@ -684,6 +684,7 @@ module.exports = {
       // pnpm/yarn/npm/bun install it
 
       // fix .npmrc if using pnpm
+      let installFlags = ""
       if (packagerName === "pnpm") {
         // append `node-linker=hoisted` to .npmrc
         const npmrcPath = path(targetPath, ".npmrc")
@@ -695,11 +696,18 @@ module.exports = {
 
         // if yarn version > 1 fix .yarnrc.yml
         if (yarnMajorVersion > 1) {
+          if (process.env.CI === "true") {
+            installFlags = " --no-immutable"
+          }
           log(`yarn v${yarnMajorVersion} found... fixing .yarnrc.yml...`)
           // append `nodeLinker: node-modules` to .yarnrc.yml
           const yarnrcPath = path(targetPath, ".yarnrc.yml")
           const yarnrcContents = read(yarnrcPath)
           write(yarnrcPath, `${yarnrcContents ?? ""}${EOL}nodeLinker: node-modules${EOL}`)
+          // also create a blank yarn.lock file to avoid workspaces issue
+          write(path(targetPath, "yarn.lock"), "")
+          // update the `packagerManager` field in `package.json
+          await system.run(`yarn set version ${yarnVersion}`, { onProgress: log })
         }
       }
 
@@ -754,7 +762,7 @@ module.exports = {
 
         // do base install
         const installCmd = packager.installCmd({ packagerName })
-        await system.run(installCmd, { onProgress: log })
+        await system.run(`${installCmd}${installFlags}`, { onProgress: log })
         // now that expo is installed, we can run their install --fix for best Expo SDK compatibility
         // for right now, we don't do this in CI because it returns a non-zero exit code
         // see https://docs.expo.dev/more/expo-cli/#version-validation
@@ -786,7 +794,7 @@ module.exports = {
 
       // #region Configure app.json
       // Enable New Architecture if requested (must happen before prebuild)
-      startSpinner("Configuring app.json")
+      startSpinner(" Configuring app.json")
       try {
         const appJsonRaw = read("app.json")
         const appJson = JSON.parse(appJsonRaw)
@@ -808,7 +816,7 @@ module.exports = {
         log(e)
         p(yellow("Unable to configure app.json."))
       }
-      stopSpinner("Configuring app.json", "⚙️")
+      stopSpinner(" Configuring app.json", "⚙️")
       // #endregion
 
       // #region Run Prebuild
@@ -816,7 +824,7 @@ module.exports = {
       if (installDeps === true) {
         // Check if we need to run prebuild to generate native dirs based on workflow
         // Prebuild also handles the packager install
-        const prebuildMessage = `Generating native template via Expo Prebuild`
+        const prebuildMessage = ` Generating native template via Expo Prebuild`
         startSpinner(prebuildMessage)
         await packager.run("prebuild:clean", { ...packagerOptions, onProgress: log })
         stopSpinner(prebuildMessage, "🛠️")
@@ -825,7 +833,7 @@ module.exports = {
 
       // #region Remove Demo code
       const removeDemoPart = removeDemo === true ? "code" : "markup"
-      startSpinner(`Removing fancy demo ${removeDemoPart}`)
+      startSpinner(` Removing fancy demo ${removeDemoPart}`)
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
@@ -836,7 +844,7 @@ module.exports = {
         log(e)
         p(yellow(`Unable to remove demo ${removeDemoPart}.`))
       }
-      stopSpinner(`Removing fancy demo ${removeDemoPart}`, "🛠️")
+      stopSpinner(` Removing fancy demo ${removeDemoPart}`, "🛠️")
       // #endregion
 
       // #region Expo Router edits

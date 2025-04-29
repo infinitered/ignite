@@ -15,7 +15,7 @@ module.exports = {
   run: async function (toolbox: GluegunToolbox) {
     // fistful of features
     const {
-      filesystem: { separator, isFile },
+      filesystem: { separator },
       system: { run, which },
       print: { colors, info, table },
       strings: { padEnd },
@@ -51,8 +51,13 @@ module.exports = {
     const npmVersion = npmPath && (await run("npm --version", { trim: true }))
     const yarnPath = which("yarn")
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
-    const pnpmPath = which("pnpm")
-    const pnpmVersion = pnpmPath && (await run("pnpm --version", { trim: true }))
+    const yarnMajorVersion = parseInt(yarnVersion.split(".")[0], 10)
+    let pnpmPath
+    let pnpmVersion
+    if (yarnMajorVersion === 1) {
+      pnpmPath = which("pnpm")
+      pnpmVersion = pnpmPath && (await run("pnpm --version", { trim: true }))
+    }
     const bunPath = which("bun")
     const bunVersion = bunPath && (await run("bun --version", { trim: true }))
 
@@ -70,48 +75,12 @@ module.exports = {
       ])
     }
     const npmPackages = npmPath ? await packageInfo("npm") : []
-    const yarnPackages = yarnPath ? await packageInfo("yarn") : []
+    const yarnPackages = yarnPath && yarnMajorVersion === 1 ? await packageInfo("yarn") : []
     // TODO: list pnpm global packages in doctor output
     const pnpmPackages = pnpmPath
       ? [[column1("  "), column2("<no pnpm global package info available>"), column3("")]]
       : []
     const haveGlobalPackages = npmPackages.length > 0 || yarnPackages.length > 0
-
-    const expoVersionCmd = "npm list --depth 0 expo 2>&1"
-    let expoVersion
-    let expoWorkflow
-
-    function expoWorkflowInfo() {
-      const iosFound = isFile(`${directory}\\ios\\.xcodeproj`)
-      const androidFound = isFile(`${directory}\\android\\.gradle`)
-
-      return iosFound || androidFound
-    }
-
-    try {
-      expoVersion = (await run(expoVersionCmd))?.match(/expo@(.*)/)?.slice(-1)[0]
-      expoWorkflow = expoWorkflowInfo() ? "bare" : "managed"
-    } catch (_) {
-      expoVersion = "-"
-      expoWorkflow = "not installed"
-    }
-    const expoInfo = [column1("expo"), column2(expoVersion), column3(expoWorkflow)]
-
-    let depExpoCliInfo = null
-
-    try {
-      const expoCliVersionOutput = await run("expo-cli --version", { trim: true })
-      if (expoCliVersionOutput) {
-        const expoCliVersion = expoCliVersionOutput.replace("v", "")
-        depExpoCliInfo = [
-          column1("expo global cli"),
-          column2(expoCliVersion),
-          column3(colors.yellow("Deprecated: Found 'expo-cli' installed. Please remove it.")),
-        ]
-      }
-    } catch (_) {
-      // No action needed if 'expo-cli' is not installed or there's an error checking its version.
-    }
 
     info("")
     info(colors.cyan(`JavaScript${haveGlobalPackages ? " (and globally-installed packages)" : ""}`))
@@ -124,8 +93,6 @@ module.exports = {
       pnpmInfo,
       ...pnpmPackages,
       bunInfo,
-      expoInfo,
-      ...(depExpoCliInfo ? [depExpoCliInfo] : []),
     ])
 
     // -=-=-=- ignite -=-=-=-
