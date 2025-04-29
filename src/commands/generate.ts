@@ -52,7 +52,10 @@ async function generate(toolbox: GluegunToolbox) {
     pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
     command(`npx ignite-cli generate ${generator} ${pascalName}`)
   }
-  // Check if src/app exists, denoting an Expo Router app
+  /**
+   * Check if the project uses Expo Router as a dependency in package.json,
+   * denoting an Expo Router app.
+   */
   if (generator === "screen") {
     const packageJson = filesystem.read("package.json", "json")
     const isExpoRouterApp = !!packageJson?.dependencies?.["expo-router"]
