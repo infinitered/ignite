@@ -60,9 +60,9 @@ async function generate(toolbox: GluegunToolbox) {
     const packageJson = filesystem.read("package.json", "json")
     const isExpoRouterApp = !!packageJson?.dependencies?.["expo-router"]
 
-    const isSrcAppStructure = filesystem.exists("src/app") === "dir";
-    const isAppStructure = filesystem.exists("app") === "dir";
-    const defaultRouterDir = isSrcAppStructure ? "src/app" : isAppStructure ? "app" : null;
+    const isSrcAppStructure = filesystem.exists("src/app") === "dir"
+    const isAppStructure = filesystem.exists("app") === "dir"
+    const defaultRouterDir = isSrcAppStructure ? "src/app" : isAppStructure ? "app" : null
 
     if (isExpoRouterApp) {
       const directoryDirSetInFrontMatter = frontMatterDirectoryDir("screen")
@@ -76,8 +76,7 @@ async function generate(toolbox: GluegunToolbox) {
         const result = await prompt.ask({
           type: "input",
           name: "dir",
-          message:
-            `It looks like you're working in a project using Expo Router, please enter the desired directory${defaultRouterDir ? ` (e.g., ${defaultRouterDir})` : ''}:`,
+          message: `It looks like you're working in a project using Expo Router, please enter the desired directory${defaultRouterDir ? ` (e.g., ${defaultRouterDir})` : ""}:`,
         })
 
         if (result.dir) {
