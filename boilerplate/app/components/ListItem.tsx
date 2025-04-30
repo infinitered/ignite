@@ -131,7 +131,11 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   } = props
   const { themed } = useAppTheme()
 
-  const isTouchable = TouchableOpacityProps.onPress !== undefined || TouchableOpacityProps.onPressIn !== undefined || TouchableOpacityProps.onPressOut !== undefined || TouchableOpacityProps.onLongPress !== undefined
+  const isTouchable =
+    TouchableOpacityProps.onPress !== undefined ||
+    TouchableOpacityProps.onPressIn !== undefined ||
+    TouchableOpacityProps.onPressOut !== undefined ||
+    TouchableOpacityProps.onLongPress !== undefined
 
   const $textStyles = [$textStyle, $textStyleOverride, TextProps?.style]
 
