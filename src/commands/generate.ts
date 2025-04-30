@@ -98,9 +98,9 @@ async function generate(toolbox: GluegunToolbox) {
               filesystem.dir(result.dir)
               dir = result.dir
             } else {
-              warning(`⚠️ Placing screen in ${defaultRouterDir} root.`)
+              warning(`⚠️ Placing screen in ${result.dir} root.`)
               p()
-              dir = defaultRouterDir
+              dir = result.dir
             }
           }
         }
