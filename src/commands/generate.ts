@@ -77,6 +77,7 @@ async function generate(toolbox: GluegunToolbox) {
           type: "input",
           name: "dir",
           message: `It looks like you're working in a project using Expo Router, please enter the desired directory${defaultRouterDir ? ` (e.g., ${defaultRouterDir})` : ""}:`,
+          initial: defaultRouterDir,
         })
 
         if (result.dir) {
