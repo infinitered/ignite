@@ -342,54 +342,6 @@ module.exports = {
     }
     // #endregion
 
-    // #region Prompt to Remove Demo code
-    const defaultRemoveDemo = false
-    let removeDemo = useDefault(options.removeDemo)
-      ? defaultRemoveDemo
-      : boolFlag(options.removeDemo)
-    if (removeDemo === undefined) {
-      const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
-        type: "confirm",
-        name: "removeDemo",
-        message:
-          "Remove demo code? We recommend leaving it in if it's your first time using Ignite",
-        initial: defaultRemoveDemo,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      removeDemo = removeDemoResponse.removeDemo
-    }
-    // #endregion
-
-    // #region Prompt to Remove MobX-State-Tree code
-    const defaultMST = "mst"
-    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
-
-    if (stateMgmt === undefined) {
-      if (!removeDemo) {
-        stateMgmt = "mst"
-      } else {
-        // only ask if we're removing the demo code
-        const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
-          type: "confirm",
-          name: "includeMST",
-          message: "Include MobX-State-Tree code? (recommended)",
-          initial: defaultMST,
-          format: prettyPrompt.format.boolean,
-          prefix,
-        }))
-        stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
-      }
-    }
-
-    if (!removeDemo && stateMgmt === "none") {
-      p()
-      p(yellow(`Warning: You can't remove MobX-State-Tree code without removing demo code.`))
-      p(yellow(`Setting --state=mst`))
-      stateMgmt = "mst"
-    }
-    // #endregion
-
     // #region Packager
     // check if a packager is provided, or detect one
     // we pass in expo because we can't use pnpm if we're using expo
@@ -505,7 +457,8 @@ module.exports = {
       const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
         type: "confirm",
         name: "experimentalExpoRouter",
-        message: "[Experimental] Expo Router for navigation?",
+        message:
+          "[Experimental] Expo Router for navigation? (This will remove the demo application)",
         initial: defaultExpoRouter,
         format: prettyPrompt.format.boolean,
         prefix,
@@ -520,7 +473,7 @@ module.exports = {
 
     // New Architecture
     const defaultNewArch = false
-    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : options.newArch
+    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
     if (newArchEnabled === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
@@ -533,6 +486,46 @@ module.exports = {
       newArchEnabled = newArchResponse.experimentalNewArch
     }
 
+    // #endregion
+
+    // #region Prompt to Remove MobX-State-Tree code
+    const defaultMST = "mst"
+    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
+
+    if (stateMgmt === undefined) {
+      const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
+        type: "confirm",
+        name: "includeMST",
+        message:
+          "Include MobX-State-Tree for state management? (Recommended - opting out will remove the demo application)",
+        initial: true,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
+    }
+    // #endregion
+
+    // #region Prompt to Remove Demo code
+    const defaultRemoveDemo = stateMgmt !== "mst" || experimentalExpoRouter
+    if (defaultRemoveDemo) {
+      p(yellow(`Warning: the demo application will be removed.`))
+    }
+    let removeDemo = useDefault(options.removeDemo)
+      ? defaultRemoveDemo
+      : boolFlag(options.removeDemo)
+    if (!defaultRemoveDemo && removeDemo === undefined) {
+      const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
+        type: "confirm",
+        name: "removeDemo",
+        message:
+          "Remove demo code? We recommend leaving it in if it's your first time using Ignite",
+        initial: defaultRemoveDemo,
+        format: prettyPrompt.format.boolean,
+        prefix,
+      }))
+      removeDemo = removeDemoResponse.removeDemo
+    }
     // #endregion
 
     // #region Debug

@@ -1,11 +1,12 @@
 # flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
 
-appId: com.helloworld
+appId: ${MAESTRO_APP_ID}
 env:
   FAVORITES_TEXT: "Switch on to only show favorites"
-
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
 ---
-- runFlow: Login.yaml
+- runFlow: ../shared/_Login.yaml
 - tapOn: "Podcast"
 - assertVisible: "React Native Radio episodes"
 - tapOn:

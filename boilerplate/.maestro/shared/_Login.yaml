@@ -1,0 +1,12 @@
+#flow: Shared _Login
+#intent: shared login flow for any flow that needs to start with a log in.
+appId: ${MAESTRO_APP_ID} 
+---
+- assertVisible: "Log In"
+- tapOn:
+    text: "Tap to Log in!"
+- assertVisible: "Your app, almost ready for launch!"
+- tapOn:
+    text: "Let's go!"
+- assertVisible: "Components to jump start your project!"
+# @demo remove-file
