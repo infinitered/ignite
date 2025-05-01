@@ -1,5 +1,4 @@
-import { forwardRef, ReactElement } from "react"
-import React from "react"
+import { forwardRef, ReactElement, ComponentType } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -147,39 +146,31 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
 
   const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
 
-  const content = (
-    <>
-      <ListItemAction
-        side="left"
-        size={height}
-        icon={leftIcon}
-        iconColor={leftIconColor}
-        Component={LeftComponent}
-      />
-
-      <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={themed($textStyles)}>
-        {children}
-      </Text>
-
-      <ListItemAction
-        side="right"
-        size={height}
-        icon={rightIcon}
-        iconColor={rightIconColor}
-        Component={RightComponent}
-      />
-    </>
-  )
+  const Wrapper: ComponentType<TouchableOpacityProps> = isTouchable ? TouchableOpacity : View
 
   return (
     <View ref={ref} style={themed($containerStyles)}>
-      {isTouchable ? (
-        <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
-          {content}
-        </TouchableOpacity>
-      ) : (
-        <View style={$touchableStyles}>{content}</View>
-      )}
+      <Wrapper {...TouchableOpacityProps} style={$touchableStyles}>
+        <ListItemAction
+          side="left"
+          size={height}
+          icon={leftIcon}
+          iconColor={leftIconColor}
+          Component={LeftComponent}
+        />
+
+        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={themed($textStyles)}>
+          {children}
+        </Text>
+
+        <ListItemAction
+          side="right"
+          size={height}
+          icon={rightIcon}
+          iconColor={rightIconColor}
+          Component={RightComponent}
+        />
+      </Wrapper>
     </View>
   )
 })
