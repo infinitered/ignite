@@ -163,7 +163,7 @@ export interface Options {
    * Whether or not to enable the New Architecture
    *
    * Input Source: `prompt.ask` | `parameter.option`
-   * @default false
+   * @default true
    */
   newArch?: boolean
 }
@@ -472,7 +472,7 @@ module.exports = {
     }
 
     // New Architecture
-    const defaultNewArch = false
+    const defaultNewArch = true
     let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
     if (newArchEnabled === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
