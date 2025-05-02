@@ -52,12 +52,12 @@ The `backgroundColor` prop is an optional `string` that determines the backgroun
 <Screen backgroundColor="red">{/* ... content here ... */}</Screen>
 ```
 
-### `statusBarStyle`
+### `systemBarStyle`
 
-The `statusBarStyle` prop is a prop that determines the style of the status bar. It can be either `"light"` or `"dark"`. The default value is `"dark"`.
+The `systemBarStyle` prop is a prop that determines the style of the system bar. It can be either `"light"` or `"dark"`. The default value is `"dark"`.
 
 ```tsx
-<Screen statusBarStyle="light">{/* ... content here ... */}</Screen>
+<Screen systemBarStyle="light">{/* ... content here ... */}</Screen>
 ```
 
 ### `keyboardOffset`
@@ -68,12 +68,12 @@ The `keyboardOffset` prop is an optional `number` that determines the offset of 
 <Screen keyboardOffset={10}>{/* ... content here ... */}</Screen>
 ```
 
-### `StatusBarProps`
+### `SystemBarProps`
 
-The `StatusBarProps` prop is an object that is passed as props to the `expo-status-bar` [`StatusBar`](https://docs.expo.io/versions/latest/sdk/status-bar/) component.
+The `SystemBarProps` prop is an object that is passed as props to the `react-native-edge-to-edge` [`SystemBar`](https://github.com/zoontek/react-native-edge-to-edge/) component.
 
 ```tsx
-<Screen StatusBarProps={{ animated: false }}>{/* ... content here ... */}</Screen>
+<Screen SystemBarProps={{ animated: false }}>{/* ... content here ... */}</Screen>
 ```
 
 ### `KeyboardAvoidingViewProps`

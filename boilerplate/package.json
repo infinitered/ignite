@@ -45,7 +45,6 @@
     "expo-linking": "~7.1.4",
     "expo-localization": "~16.1.5",
     "expo-splash-screen": "~0.30.7",
-    "expo-status-bar": "~2.2.3",
     "expo-system-ui": "~5.0.6",
     "i18next": "^23.14.0",
     "intl-pluralrules": "^2.0.1",
