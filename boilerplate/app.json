@@ -43,6 +43,15 @@
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
+    ],
+    [
+      "react-native-edge-to-edge",
+      {
+        "android": {
+          "parentTheme": "Light",
+          "enforceNavigationBarContrast": false
+        }
+      }
     ]
   ],
   "experiments": {
