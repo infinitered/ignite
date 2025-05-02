@@ -59,6 +59,7 @@
     "react-i18next": "^15.0.1",
     "react-native": "0.76.9",
     "react-native-drawer-layout": "^4.0.1",
+    "react-native-edge-to-edge": "^1.6.0",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-keyboard-controller": "^1.12.7",
     "react-native-mmkv": "^2.12.2",
