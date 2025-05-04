@@ -115,3 +115,10 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   )
   // @mst replace-next-line }
 })
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace ReactNavigation {
+    interface RootParamList extends AppStackParamList {}
+  }
+}
