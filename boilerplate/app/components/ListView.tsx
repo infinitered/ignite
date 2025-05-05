@@ -36,6 +36,6 @@ ListViewComponent.displayName = "ListView"
 
 export const ListView = ListViewComponent as <T>(
   props: ListViewProps<T> & {
-    ref?: RefObject<ListViewRef<T> | undefined>
+    ref?: RefObject<ListViewRef<T> | null>
   },
 ) => ReactElement
