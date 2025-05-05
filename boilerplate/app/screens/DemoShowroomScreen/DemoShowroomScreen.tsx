@@ -13,6 +13,7 @@ import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { hasValidStringProp } from "@/utils/hasValidStringProp"
 
 const logo = require("../../../assets/images/logo.png")
 
@@ -133,9 +134,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         let findItemIndex = 0
         if (params.itemIndex) {
           try {
-            findItemIndex = demoValues[findSectionIndex]
-              .data({ themed, theme })
-              .findIndex((u) => slugify(translate(u.props.name)) === params.itemIndex)
+            findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
+              if (hasValidStringProp(u.props, "name")) {
+                return slugify(translate(u.props.name)) === params.itemIndex
+              }
+              return false
+            })
           } catch (err) {
             console.error(err)
           }
@@ -185,7 +189,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data({ theme, themed }).map((u) => translate(u.props.name)),
+                useCases: d.data({ theme, themed }).map((u) => {
+                  if (hasValidStringProp(u.props, "name")) {
+                    return translate(u.props.name)
+                  }
+                  return ""
+                }),
               }))}
               keyExtractor={(item) => item.name}
               renderItem={({ item, index: sectionIndex }) => (
