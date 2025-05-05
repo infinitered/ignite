@@ -13,6 +13,7 @@ import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { hasValidStringProp } from "@/utils/hasValidStringProp"
 
 const logo = require("../../../assets/images/logo.png")
 
@@ -134,12 +135,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         if (params.itemIndex) {
           try {
             findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
-              if (
-                u.props &&
-                typeof u.props === "object" &&
-                "name" in u.props &&
-                typeof u.props.name === "string"
-              ) {
+              if (hasValidStringProp(u.props, "name")) {
                 return slugify(translate(u.props.name)) === params.itemIndex
               }
               return false
@@ -194,12 +190,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
                 useCases: d.data({ theme, themed }).map((u) => {
-                  if (
-                    u.props &&
-                    typeof u.props === "object" &&
-                    "name" in u.props &&
-                    typeof u.props.name === "string"
-                  ) {
+                  if (hasValidStringProp(u.props, "name")) {
                     return translate(u.props.name)
                   }
                   return ""
