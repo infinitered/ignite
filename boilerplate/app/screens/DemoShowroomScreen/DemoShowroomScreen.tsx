@@ -97,7 +97,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const [open, setOpen] = useState(false)
     const timeout = useRef<ReturnType<typeof setTimeout>>()
     const listRef = useRef<SectionList>(null)
-    const menuRef = useRef<ListViewRef<DemoListItem["item"]> | undefined>(undefined)
+    const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
 
