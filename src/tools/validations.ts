@@ -100,9 +100,3 @@ export type ValidationsExports = {
   validateProjectName: typeof validateProjectName
   validateBundleIdentifier: typeof validateBundleIdentifier
 }
-
-export function hasValidStringProp(props: unknown, propName: string): boolean {
-  return (
-    props && typeof props === "object" && propName in props && typeof props[propName] === "string"
-  )
-}
