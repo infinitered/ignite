@@ -137,7 +137,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           try {
             findItemIndex = demoValues[findSectionIndex]
               .data({ themed, theme })
-              .findIndex((u) => slugify(translate(u.props.name)) === params.itemIndex)
+              .findIndex((u) => {
+                if (u.props && typeof u.props === 'object' && 'name' in u.props && typeof u.props.name === 'string') {
+                  return slugify(translate(u.props.name)) === params.itemIndex
+                }
+                return false
+              })
           } catch (err) {
             console.error(err)
           }
@@ -187,7 +192,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data({ theme, themed }).map((u) => translate(u.props.name)),
+                useCases: d.data({ theme, themed }).map((u) => {
+                  if (u.props && typeof u.props === 'object' && 'name' in u.props && typeof u.props.name === 'string') {
+                    return translate(u.props.name)
+                  }
+                  return ''
+                }),
               }))}
               keyExtractor={(item) => item.name}
               renderItem={({ item, index: sectionIndex }) => (
