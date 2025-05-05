@@ -135,14 +135,17 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         let findItemIndex = 0
         if (params.itemIndex) {
           try {
-            findItemIndex = demoValues[findSectionIndex]
-              .data({ themed, theme })
-              .findIndex((u) => {
-                if (u.props && typeof u.props === 'object' && 'name' in u.props && typeof u.props.name === 'string') {
-                  return slugify(translate(u.props.name)) === params.itemIndex
-                }
-                return false
-              })
+            findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
+              if (
+                u.props &&
+                typeof u.props === "object" &&
+                "name" in u.props &&
+                typeof u.props.name === "string"
+              ) {
+                return slugify(translate(u.props.name)) === params.itemIndex
+              }
+              return false
+            })
           } catch (err) {
             console.error(err)
           }
@@ -193,10 +196,15 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
                 useCases: d.data({ theme, themed }).map((u) => {
-                  if (u.props && typeof u.props === 'object' && 'name' in u.props && typeof u.props.name === 'string') {
+                  if (
+                    u.props &&
+                    typeof u.props === "object" &&
+                    "name" in u.props &&
+                    typeof u.props.name === "string"
+                  ) {
                     return translate(u.props.name)
                   }
-                  return ''
+                  return ""
                 }),
               }))}
               keyExtractor={(item) => item.name}
