@@ -86,10 +86,10 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
     }
 
     // Subscribe when we come to life
-    BackHandler.addEventListener("hardwareBackPress", onBackPress)
+    const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress)
 
     // Unsubscribe when we're done
-    return () => BackHandler.removeEventListener("hardwareBackPress", onBackPress)
+    return () => subscription.remove()
   }, [])
 }
 
