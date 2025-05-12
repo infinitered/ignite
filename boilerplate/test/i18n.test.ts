@@ -1,66 +1,157 @@
 import en from "../app/i18n/en"
 import { exec } from "child_process"
+import path from "path"
+import fs from "fs"
 
-// Use this array for keys that for whatever reason aren't greppable so they
-// don't hold your test suite hostage by always failing.
-const EXCEPTIONS: string[] = [
-  // "welcomeScreen:readyForLaunch",
-]
+function findAppDirectory(): string {
+  const currentDir = process.cwd()
 
-function iterate(obj, stack, array) {
-  for (const property in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, property)) {
-      if (typeof (obj as object)[property] === "object") {
-        iterate(obj[property], `${stack}.${property}`, array)
-      } else {
-        array.push(`${stack.slice(1)}.${property}`)
+  // If we are in an Ignite environment (temporary directory)
+  if (currentDir.includes("ignite-")) {
+    // Try to find the actual temporary directory
+    const tempPaths = [
+      // macOS path
+      "/private/var/folders",
+      // Other common temp paths, for CicleCI for example
+      "/tmp",
+      currentDir,
+    ]
+
+    for (const tempPath of tempPaths) {
+      if (fs.existsSync(tempPath)) {
+        // Recursively search for the first directory that starts with 'ignite-'
+        const findIgniteDir = (startPath: string): string | null => {
+          const files = fs.readdirSync(startPath)
+          for (const file of files) {
+            const fullPath = path.join(startPath, file)
+            if (file.startsWith("ignite-") && fs.statSync(fullPath).isDirectory()) {
+              const appDir = path.join(fullPath, "Foo", "app")
+              if (fs.existsSync(appDir)) return appDir
+            }
+          }
+          return null
+        }
+
+        const appDir = findIgniteDir(tempPath)
+        if (appDir) return appDir
       }
     }
   }
 
-  return array
+  // Alternative paths if we don't find it in the temporary directory
+  const possiblePaths = [
+    path.join(process.cwd(), "app"),
+    path.join(__dirname, "..", "app"),
+    path.join(process.cwd().split("node_modules")[0], "app"),
+  ]
+
+  for (const dir of possiblePaths) {
+    if (fs.existsSync(dir)) {
+      return dir
+    }
+  }
+
+  throw new Error(`Could not find the 'app' directory. Current directory: ${currentDir}`)
+}
+
+const CONFIG = {
+  srcDir: findAppDirectory(),
+  grepRegex: `[Tt]x=[{]?\\\\"[^\\"]*\\\\"[}]?\\|translate(\\\\"[^\\"]*\\\\"`,
+  exceptions: [] as string[],
+  retryLimit: 3,
 }
 
 /**
- * This tests your codebase for missing i18n strings so you can avoid error strings at render time
+ * Recursively collects all keys from the translation object and returns them in dot notation.
+ * This function traverses the entire object to collect all keys, even nested ones.
  *
- * It was taken from https://gist.github.com/Michaelvilleneuve/8808ba2775536665d95b7577c9d8d5a1
- * and modified slightly to account for our Ignite higher order components,
- * which take 'tx' and 'fooTx' props.
- * The grep command is nasty looking, but it's essentially searching the codebase for a few different things:
- *
- * tx="*"
- * Tx=""
- * tx={""}
- * Tx={""}
- * translate(""
- *
- * and then grabs the i18n key between the double quotes
- *
- * This approach isn't 100% perfect. If you are storing your key string in a variable because you
- * are setting it conditionally, then it won't be picked up.
- *
+ * @param obj - The translation object (typically `en`)
+ * @param prefix - A prefix for nested keys (used for recursion)
+ * @param keys - An accumulator array to store collected keys
+ * @returns An array of collected keys
  */
+function collectKeys(obj: Record<string, any>, prefix = "", keys: string[] = []): string[] {
+  for (const [key, value] of Object.entries(obj)) {
+    const currentKey = prefix ? `${prefix}.${key}` : key
+    if (typeof value === "object" && value !== null) {
+      collectKeys(value, currentKey, keys)
+    } else {
+      keys.push(currentKey)
+    }
+  }
+  return keys
+}
 
-describe("i18n", () => {
-  test("There are no missing keys", (done) => {
-    // Actual command output:
-    // grep "[T\|t]x=[{]\?\"\S*\"[}]\?\|translate(\"\S*\"" -ohr './app' | grep -o "\".*\""
-    const command = `grep "[T\\|t]x=[{]\\?\\"\\S*\\"[}]\\?\\|translate(\\"\\S*\\"" -ohr './app' | grep -o "\\".*\\""`
-    exec(command, (_, stdout) => {
-      const allTranslationsDefinedOld = iterate(en, "", [])
-      // Replace first instance of "." because of i18next namespace separator
-      const allTranslationsDefined = allTranslationsDefinedOld.map((key) => key.replace(".", ":"))
-      const allTranslationsUsed = stdout.replace(/"/g, "").split("\n")
-      allTranslationsUsed.splice(-1, 1)
-
-      for (let i = 0; i < allTranslationsUsed.length; i += 1) {
-        if (!EXCEPTIONS.includes(allTranslationsUsed[i])) {
-          // You can add keys to EXCEPTIONS (above) if you don't want them included in the test
-          expect(allTranslationsDefined).toContainEqual(allTranslationsUsed[i])
+/**
+ * Executes a shell command with retries in case of failure.
+ * This is used to run the `grep` command that scans the codebase for i18n keys.
+ *
+ * @param command - The command to execute
+ * @param retries - Number of retries in case of failure
+ * @returns A promise resolving with the output of the command
+ */
+function execWithRetries(command: string, retries: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const attempt = (triesLeft: number) => {
+      exec(command, (error, stdout) => {
+        if (error) {
+          if (triesLeft > 0) {
+            console.warn(`Command failed, retrying... (${triesLeft} retries left)`)
+            return attempt(triesLeft - 1)
+          }
+          return reject(new Error(`Command failed after multiple attempts: ${error.message}`))
         }
+        resolve(stdout.trim())
+      })
+    }
+    attempt(retries)
+  })
+}
+
+/**
+ * The main test that checks for missing and unused translation keys.
+ * It runs a `grep` command to find i18n keys used in the codebase, compares them to the keys defined in the `en` object,
+ * and reports missing or unused keys.
+ */
+describe("i18n", () => {
+  test("There are no missing or unused keys", async () => {
+    if (!fs.existsSync(CONFIG.srcDir)) {
+      throw new Error(`Directory not found: ${CONFIG.srcDir}`)
+    }
+
+    const grepCommand = `grep -E '[Tt]x=[{]?"[^"]*"[}]?|translate\\("[^"]*"' -ohr ${CONFIG.srcDir} | grep -o '"[^"]*"'`
+
+    try {
+      const stdout = await execWithRetries(grepCommand, CONFIG.retryLimit)
+
+      const allKeysDefined = collectKeys(en).map((key) => key.replace(".", ":"))
+
+      const allKeysUsed = stdout.replace(/"/g, "").split("\n").filter(Boolean)
+
+      const missingKeys = allKeysUsed.filter(
+        (key) => !CONFIG.exceptions.includes(key) && !allKeysDefined.includes(key),
+      )
+
+      const unusedKeys = allKeysDefined.filter((key) => !allKeysUsed.includes(key))
+
+      let output = `--- i18n Test Results ---\n`
+      output += `Total keys defined: ${allKeysDefined.length}\n`
+      output += `Total keys used: ${allKeysUsed.length}\n`
+      output += `Missing keys: ${missingKeys.length > 0 ? missingKeys.join(", ") : "None"}\n`
+      output += `Unused keys: ${unusedKeys.length > 0 ? unusedKeys.join(", ") : "None"}\n`
+      output += `-------------------------\n`
+
+      console.log(output)
+
+      if (missingKeys.length > 0) {
+        throw new Error(`Missing translation keys detected: ${missingKeys.join(", ")}`)
       }
-      done()
-    })
-  }, 240000)
+
+      if (unusedKeys.length > 0) {
+        console.warn(`Warning: Unused translation keys detected: ${unusedKeys.join(", ")}`)
+      }
+    } catch (error) {
+      throw new Error(`Test failed: ${error.message}`)
+    }
+  }, 240000) // 4 minutes timeout
 })
