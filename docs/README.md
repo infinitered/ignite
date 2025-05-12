@@ -91,7 +91,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | react-native-keyboard-controller | Keyboard library     | v1      | Great keyboard manager library                 |
 | FlashList                        | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
 
-Ignite also comes with a [component library](./docs/boilerplate/app/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
+Ignite also comes with a [component library](./boilerplate/app/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
 
 ## Quick Start
 
