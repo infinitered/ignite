@@ -155,7 +155,7 @@ Ready to see how we can work together? [Send us a message](https://infinite.red/
 
 ## License and Trademark Notice
 
-This project's source code is licensed under the [MIT License](LICENSE). The Ignite name, its logo, and any other brand assets associated with Ignite and Infinite Red are the exclusive property of Infinite Red, Inc. These marks are not covered by the MIT License provided herein and may not be used without explicit written permission from Infinite Red, Inc.
+This project's source code is licensed under the [MIT License](https://github.com/infinitered/ignite/blob/master/LICENSE). The Ignite name, its logo, and any other brand assets associated with Ignite and Infinite Red are the exclusive property of Infinite Red, Inc. These marks are not covered by the MIT License provided herein and may not be used without explicit written permission from Infinite Red, Inc.
 
 ### Note on Generated Code
 
