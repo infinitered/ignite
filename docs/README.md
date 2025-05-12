@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Ignite - the battle-tested React Native boilerplate
 
-<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20" /></a>
 ![GitHub Repo stars](https://img.shields.io/github/stars/infinitered/ignite)
 ![Twitter Follow](https://img.shields.io/twitter/follow/ir_ignite)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/infinitered/ignite/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/infinitered/ignite/tree/master)
@@ -133,7 +133,7 @@ If you still need help after reaching out to the proper channels, feel free to o
 
 ## Contributing to Ignite
 
-Want to contribute to Ignite? Check out [the contributing guide](./docs/contributing/Contributing-To-Ignite.md) for more info on how to work with the codebase.
+Want to contribute to Ignite? Check out [the contributing guide](./contributing/Contributing-To-Ignite.md) for more info on how to work with the codebase.
 
 ## Need Inspiration?
 
