@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement } from "react"
+import { forwardRef, ReactElement, ComponentType } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -130,6 +130,12 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   } = props
   const { themed } = useAppTheme()
 
+  const isTouchable =
+    TouchableOpacityProps.onPress !== undefined ||
+    TouchableOpacityProps.onPressIn !== undefined ||
+    TouchableOpacityProps.onPressOut !== undefined ||
+    TouchableOpacityProps.onLongPress !== undefined
+
   const $textStyles = [$textStyle, $textStyleOverride, TextProps?.style]
 
   const $containerStyles = [
@@ -140,9 +146,11 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
 
   const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
 
+  const Wrapper: ComponentType<TouchableOpacityProps> = isTouchable ? TouchableOpacity : View
+
   return (
     <View ref={ref} style={themed($containerStyles)}>
-      <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
+      <Wrapper {...TouchableOpacityProps} style={$touchableStyles}>
         <ListItemAction
           side="left"
           size={height}
@@ -162,7 +170,7 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
           iconColor={rightIconColor}
           Component={RightComponent}
         />
-      </TouchableOpacity>
+      </Wrapper>
     </View>
   )
 })
