@@ -134,14 +134,14 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         let findItemIndex = 0
         if (params.itemIndex) {
           try {
-            findItemIndex = demoValues[findSectionIndex]
-              .data({ themed, theme })
-              .findIndex((u: { props: { name: TxKeyPath } }) => {
-                if (hasValidStringProp(u.props, "name")) {
-                  return slugify(translate(u.props.name)) === params.itemIndex
-                }
-                return false
-              })
+            findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
+              if (hasValidStringProp(u.props, "name")) {
+                return (
+                  slugify(translate((u.props as { name: TxKeyPath }).name)) === params.itemIndex
+                )
+              }
+              return false
+            })
           } catch (err) {
             console.error(err)
           }
@@ -195,9 +195,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data({ theme, themed }).map((u: { props: { name: TxKeyPath } }) => {
+                useCases: d.data({ theme, themed }).map((u) => {
                   if (hasValidStringProp(u.props, "name")) {
-                    return translate(u.props.name)
+                    return translate((u.props as { name: TxKeyPath }).name)
                   }
                   return ""
                 }),

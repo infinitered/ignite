@@ -57,14 +57,14 @@ describe("ignite-cli generate", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/models/Pizza.ts`)).toMatchInlineSnapshot(`
-"import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
-import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
+"import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { withSetPropAction } from "./helpers/withSetPropAction"
 
 /**
  * Model description here for TypeScript hints.
  */
 export const PizzaModel = types
-  .model(\\"Pizza\\")
+  .model("Pizza")
   .props({})
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -79,9 +79,9 @@ export const createPizzaDefaultModel = () => types.optional(PizzaModel, {})
 "
 `)
       expect(read(`${TEMP_DIR}/app/models/Pizza.test.ts`)).toMatchInlineSnapshot(`
-"import { PizzaModel } from \\"./Pizza\\"
+"import { PizzaModel } from "./Pizza"
 
-test(\\"can be created\\", () => {
+test("can be created", () => {
   const instance = PizzaModel.create({})
 
   expect(instance).toBeTruthy()
@@ -91,15 +91,15 @@ test(\\"can be created\\", () => {
 "
 `)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./RootStore\\"
-        export * from \\"./helpers/getRootStore\\"
-        export * from \\"./helpers/useStores\\"
-        export * from \\"./helpers/setupRootStore\\"
+"export * from "./RootStore"
+export * from "./helpers/getRootStore"
+export * from "./helpers/useStores"
+export * from "./helpers/setupRootStore"
 
-        // @mst remove-file
-        export * from \\"./Pizza\\"
-        "
-      `)
+// @mst remove-file
+export * from "./Pizza"
+"
+`)
       expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toEqual(
         read(`${BOILERPLATE_PATH}/app/models/RootStore.ts`),
       )
@@ -140,14 +140,14 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.ts`)).toMatchInlineSnapshot(`
-"import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
-import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
+"import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { withSetPropAction } from "./helpers/withSetPropAction"
 
 /**
  * Model description here for TypeScript hints.
  */
 export const PizzaStoreModel = types
-  .model(\\"PizzaStore\\")
+  .model("PizzaStore")
   .props({})
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -162,9 +162,9 @@ export const createPizzaStoreDefaultModel = () => types.optional(PizzaStoreModel
 "
 `)
       expect(read(`${TEMP_DIR}/app/models/PizzaStore.test.ts`)).toMatchInlineSnapshot(`
-"import { PizzaStoreModel } from \\"./PizzaStore\\"
+"import { PizzaStoreModel } from "./PizzaStore"
 
-test(\\"can be created\\", () => {
+test("can be created", () => {
   const instance = PizzaStoreModel.create({})
 
   expect(instance).toBeTruthy()
@@ -174,42 +174,42 @@ test(\\"can be created\\", () => {
 "
 `)
       expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./RootStore\\"
-        export * from \\"./helpers/getRootStore\\"
-        export * from \\"./helpers/useStores\\"
-        export * from \\"./helpers/setupRootStore\\"
+"export * from "./RootStore"
+export * from "./helpers/getRootStore"
+export * from "./helpers/useStores"
+export * from "./helpers/setupRootStore"
 
-        // @mst remove-file
-        export * from \\"./PizzaStore\\"
-        "
-      `)
+// @mst remove-file
+export * from "./PizzaStore"
+"
+`)
       expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toMatchInlineSnapshot(`
-        "import { Instance, SnapshotOut, types } from \\"mobx-state-tree\\"
-        import { PizzaStoreModel } from \\"./PizzaStore\\"
-        import { AuthenticationStoreModel } from \\"./AuthenticationStore\\" // @demo remove-current-line
-        import { EpisodeStoreModel } from \\"./EpisodeStore\\" // @demo remove-current-line
+"import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { PizzaStoreModel } from "./PizzaStore"
+import { AuthenticationStoreModel } from "./AuthenticationStore" // @demo remove-current-line
+import { EpisodeStoreModel } from "./EpisodeStore" // @demo remove-current-line
 
-        /**
-         * A RootStore model.
-         */
-        export const RootStoreModel = types.model(\\"RootStore\\").props({
-          pizzaStore: types.optional(PizzaStoreModel, {} as any),
-          authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
-          episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
-        })
+/**
+ * A RootStore model.
+ */
+export const RootStoreModel = types.model("RootStore").props({
+  pizzaStore: types.optional(PizzaStoreModel, {} as any),
+  authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
+  episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
+})
 
-        /**
-         * The RootStore instance.
-         */
-        export interface RootStore extends Instance<typeof RootStoreModel> {}
-        /**
-         * The data of a RootStore.
-         */
-        export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+/**
+ * The RootStore instance.
+ */
+export interface RootStore extends Instance<typeof RootStoreModel> {}
+/**
+ * The data of a RootStore.
+ */
+export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
 
-        // @mst remove-file
-        "
-      `)
+// @mst remove-file
+"
+`)
       const resultWithoutOverwriteOption = await runIgnite(`generate model PizzaStore`, options)
       expect(replaceHomeDir(resultWithoutOverwriteOption)).toMatchInlineSnapshot(`
         "   
@@ -251,63 +251,63 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
-        "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
-        import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { useAppTheme } from \\"@/utils/useAppTheme\\"
-        import type { ThemedStyle } from \\"@/theme\\"
-        import { Text } from \\"@/components/Text\\"
+"import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { observer } from "mobx-react-lite" // @mst remove-current-line
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { Text } from "@/components/Text"
 
-        export interface ToppingProps {
-          /**
-           * An optional style override useful for padding & margin.
-           */
-          style?: StyleProp<ViewStyle>
-        }
+export interface ToppingProps {
+  /**
+   * An optional style override useful for padding & margin.
+   */
+  style?: StyleProp<ViewStyle>
+}
 
-        /**
-         * Describe your component here
-         */
-        // @mst replace-next-line export const Topping = (props: ToppingProps) => {
-        export const Topping = observer(function Topping(props: ToppingProps) {
-          const { style } = props
-          const $styles = [$container, style]
-          const { themed } = useAppTheme();
+/**
+ * Describe your component here
+ */
+// @mst replace-next-line export const Topping = (props: ToppingProps) => {
+export const Topping = observer(function Topping(props: ToppingProps) {
+  const { style } = props
+  const $styles = [$container, style]
+  const { themed } = useAppTheme();
 
-          return (
-            <View style={$styles}>
-              <Text style={themed($text)}>Hello</Text>
-            </View>
-          )
-        // @mst replace-next-line }
-        })
+  return (
+    <View style={$styles}>
+      <Text style={themed($text)}>Hello</Text>
+    </View>
+  )
+// @mst replace-next-line }
+})
 
-        const $container: ViewStyle = {
-          justifyContent: \\"center\\",
-        }
+const $container: ViewStyle = {
+  justifyContent: "center",
+}
 
-        const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
-          fontFamily: typography.primary.normal,
-          fontSize: 14,
-          color: colors.palette.primary500,
-        })
-        "
-      `)
+const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
+  fontFamily: typography.primary.normal,
+  fontSize: 14,
+  color: colors.palette.primary500,
+})
+"
+`)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./AutoImage\\"
-        export * from \\"./Button\\"
-        export * from \\"./Card\\"
-        export * from \\"./Header\\"
-        export * from \\"./Icon\\"
-        export * from \\"./ListItem\\"
-        export * from \\"./ListView\\"
-        export * from \\"./Screen\\"
-        export * from \\"./Text\\"
-        export * from \\"./TextField\\"
-        export * from \\"./Toggle\\"
-        export * from \\"./EmptyState\\"
-        export * from \\"./Topping\\"
-        "
-      `)
+"export * from "./AutoImage"
+export * from "./Button"
+export * from "./Card"
+export * from "./Header"
+export * from "./Icon"
+export * from "./ListItem"
+export * from "./ListView"
+export * from "./Screen"
+export * from "./Text"
+export * from "./TextField"
+export * from "./Toggle"
+export * from "./EmptyState"
+export * from "./Topping"
+"
+`)
     })
 
     it("should generate Topping component in subdirectory and patch index components export", async () => {
@@ -321,63 +321,63 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
-        "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
-        import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { useAppTheme } from \\"@/utils/useAppTheme\\"
-        import type { ThemedStyle } from \\"@/theme\\"
-        import { Text } from \\"@/components/Text\\"
+"import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { observer } from "mobx-react-lite" // @mst remove-current-line
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { Text } from "@/components/Text"
 
-        export interface ToppingProps {
-          /**
-           * An optional style override useful for padding & margin.
-           */
-          style?: StyleProp<ViewStyle>
-        }
+export interface ToppingProps {
+  /**
+   * An optional style override useful for padding & margin.
+   */
+  style?: StyleProp<ViewStyle>
+}
 
-        /**
-         * Describe your component here
-         */
-        // @mst replace-next-line export const Topping = (props: ToppingProps) => {
-        export const Topping = observer(function Topping(props: ToppingProps) {
-          const { style } = props
-          const $styles = [$container, style]
-          const { themed } = useAppTheme();
+/**
+ * Describe your component here
+ */
+// @mst replace-next-line export const Topping = (props: ToppingProps) => {
+export const Topping = observer(function Topping(props: ToppingProps) {
+  const { style } = props
+  const $styles = [$container, style]
+  const { themed } = useAppTheme();
 
-          return (
-            <View style={$styles}>
-              <Text style={themed($text)}>Hello</Text>
-            </View>
-          )
-        // @mst replace-next-line }
-        })
+  return (
+    <View style={$styles}>
+      <Text style={themed($text)}>Hello</Text>
+    </View>
+  )
+// @mst replace-next-line }
+})
 
-        const $container: ViewStyle = {
-          justifyContent: \\"center\\",
-        }
+const $container: ViewStyle = {
+  justifyContent: "center",
+}
 
-        const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
-          fontFamily: typography.primary.normal,
-          fontSize: 14,
-          color: colors.palette.primary500,
-        })
-        "
-      `)
+const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
+  fontFamily: typography.primary.normal,
+  fontSize: 14,
+  color: colors.palette.primary500,
+})
+"
+`)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./AutoImage\\"
-        export * from \\"./Button\\"
-        export * from \\"./Card\\"
-        export * from \\"./Header\\"
-        export * from \\"./Icon\\"
-        export * from \\"./ListItem\\"
-        export * from \\"./ListView\\"
-        export * from \\"./Screen\\"
-        export * from \\"./Text\\"
-        export * from \\"./TextField\\"
-        export * from \\"./Toggle\\"
-        export * from \\"./EmptyState\\"
-        export * from \\"./sub/to/my/Topping\\"
-        "
-      `)
+"export * from "./AutoImage"
+export * from "./Button"
+export * from "./Card"
+export * from "./Header"
+export * from "./Icon"
+export * from "./ListItem"
+export * from "./ListView"
+export * from "./Screen"
+export * from "./Text"
+export * from "./TextField"
+export * from "./Toggle"
+export * from "./EmptyState"
+export * from "./sub/to/my/Topping"
+"
+`)
     })
   })
 })
@@ -448,24 +448,24 @@ describe("ignite-cli generate screens expo-router style", () => {
       "
     `)
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/log-in.tsx`)).toMatchInlineSnapshot(`
-      "import React, { FC } from \\"react\\"
-      import { observer } from \\"mobx-react-lite\\"
-      import { ViewStyle } from \\"react-native\\"
-      import { Screen, Text } from \\"@/components\\"
+"import React, { FC } from "react"
+import { observer } from "mobx-react-lite"
+import { ViewStyle } from "react-native"
+import { Screen, Text } from "@/components"
 
-      export default observer(function LogInScreen() {
-        return (
-          <Screen style={$root} preset=\\"scroll\\">
-            <Text text=\\"logIn\\" />
-          </Screen>
-        )
-      })
+export default observer(function LogInScreen() {
+  return (
+    <Screen style={$root} preset="scroll">
+      <Text text="logIn" />
+    </Screen>
+  )
+})
 
-      const $root: ViewStyle = {
-        flex: 1,
-      }
-      "
-    `)
+const $root: ViewStyle = {
+  flex: 1,
+}
+"
+`)
   })
 
   it("should generate dynamic id files at requested path", async () => {
@@ -482,23 +482,23 @@ describe("ignite-cli generate screens expo-router style", () => {
         "
       `)
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/podcasts/[id].tsx`)).toMatchInlineSnapshot(`
-      "import React, { FC } from \\"react\\"
-      import { observer } from \\"mobx-react-lite\\"
-      import { ViewStyle } from \\"react-native\\"
-      import { Screen, Text } from \\"@/components\\"
+"import React, { FC } from "react"
+import { observer } from "mobx-react-lite"
+import { ViewStyle } from "react-native"
+import { Screen, Text } from "@/components"
 
-      export default observer(function IdScreen() {
-        return (
-          <Screen style={$root} preset=\\"scroll\\">
-            <Text text=\\"id\\" />
-          </Screen>
-        )
-      })
+export default observer(function IdScreen() {
+  return (
+    <Screen style={$root} preset="scroll">
+      <Text text="id" />
+    </Screen>
+  )
+})
 
-      const $root: ViewStyle = {
-        flex: 1,
-      }
-      "
-      `)
+const $root: ViewStyle = {
+  flex: 1,
+}
+"
+`)
   })
 })

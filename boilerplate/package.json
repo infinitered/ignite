@@ -72,10 +72,10 @@
     "@babel/runtime": "^7.20.0",
     "@testing-library/react-native": "^12.5.2",
     "@types/jest": "^29.2.1",
-    "@types/react": "~18.3.12",
+    "@types/react": "~19.0.10",
     "babel-jest": "^29.2.1",
     "eslint": "^8.57.0",
-    "eslint-config-expo": "~8.0.1",
+    "eslint-config-expo": "~9.2.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-native": "^4.1.0",
@@ -93,7 +93,7 @@
     "reactotron-react-native-mmkv": "^0.2.6",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "~5.4.2"
+    "typescript": "~5.8.3"
   },
   "engines": {
     "node": "^18.18.0 || >=20.0.0"
