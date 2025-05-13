@@ -104,7 +104,7 @@ function CheckboxInput(props: CheckboxInputProps) {
           style={[
             $checkboxDetail,
             !!iconTintColor && { tintColor: iconTintColor },
-            $detailStyleOverride,
+            $detailStyleOverride as ImageStyle,
           ]}
         />
       </Animated.View>

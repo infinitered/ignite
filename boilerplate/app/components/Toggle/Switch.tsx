@@ -1,14 +1,5 @@
 import { useEffect, useMemo, useRef, useCallback } from "react"
-import {
-  Animated,
-  Image,
-  ImageStyle,
-  Platform,
-  StyleProp,
-  TextStyle,
-  View,
-  ViewStyle,
-} from "react-native"
+import { Animated, Image, ImageStyle, Platform, StyleProp, View, ViewStyle } from "react-native"
 
 import { $styles } from "@/theme"
 import { iconRegistry } from "@/components/Icon"
@@ -247,7 +238,7 @@ const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
   height: 24,
 }
 
-const $switchAccessibility: TextStyle = {
+const $switchAccessibility: ViewStyle = {
   width: "40%",
   justifyContent: "center",
   alignItems: "center",
