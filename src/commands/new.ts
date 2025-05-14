@@ -180,7 +180,7 @@ module.exports = {
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
     const noTimeout = options.noTimeout ?? false
-    const useDefault = (option: unknown) => yname && option === undefined
+    const getDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
     // Add just a _little_ more spacing to match with spinners and heading
@@ -232,7 +232,7 @@ module.exports = {
 
     // #region Bundle Identifier
     const defaultBundleIdentifier = `com.${strings.pascalCase(projectName).toLowerCase()}`
-    let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
+    let bundleIdentifier = getDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
       const bundleIdentifierResponse = await prompt.ask(() => ({
@@ -253,7 +253,7 @@ module.exports = {
 
     // #region Project Path
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
+    let targetPath = getDefault(options.targetPath) ? defaultTargetPath : options.targetPath
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
@@ -275,7 +275,7 @@ module.exports = {
     // #region Prompt Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     const defaultOverwrite = false
-    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
+    let overwrite = getDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
 
     if (exists(targetPath) && overwrite === undefined) {
       const overwriteResponse = await prompt.ask<{ overwrite: boolean }>(() => ({
@@ -299,7 +299,7 @@ module.exports = {
 
     // #region Prompt for Workflow type - CNG or manual
     const defaultWorkflow = "cng"
-    let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
+    let workflow = getDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
       const useExpoResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
         type: "select",
@@ -327,7 +327,7 @@ module.exports = {
 
     // #region Prompt Git Option
     const defaultGit = true
-    let git = useDefault(options.git) ? defaultGit : boolFlag(options.git)
+    let git = getDefault(options.git) ? defaultGit : boolFlag(options.git)
 
     if (git === undefined) {
       const gitResponse = await prompt.ask<{ git: boolean }>(() => ({
@@ -349,7 +349,7 @@ module.exports = {
     const availablePackagers = packager.availablePackagers()
     log(`availablePackagers: ${availablePackagers}`)
     const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
-    let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
+    let packagerName = getDefault(options.packager) ? defaultPackagerName : options.packager
 
     const validatePackagerName = (input: unknown): input is PackagerName =>
       typeof input === "string" && ["npm", "yarn", "pnpm", "bun"].includes(input)
@@ -401,7 +401,7 @@ module.exports = {
     log(`boilerplatePath: ${boilerplatePath}`)
 
     const defaultInstallDeps = true
-    let installDeps = useDefault(options.installDeps)
+    let installDeps = getDefault(options.installDeps)
       ? defaultInstallDeps
       : boolFlag(options.installDeps)
     if (installDeps === undefined) {
@@ -422,6 +422,7 @@ module.exports = {
     let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
+    let removeDemo = boolFlag(options.removeDemo)
 
     experimentalFlags.forEach((flag) => {
       if (flag.indexOf("expo-") > -1) {
@@ -452,7 +453,7 @@ module.exports = {
 
     // Expo Router
     const defaultExpoRouter = false
-    let experimentalExpoRouter = useDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
+    let experimentalExpoRouter = getDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
     if (experimentalExpoRouter === undefined) {
       const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
         type: "confirm",
@@ -473,7 +474,7 @@ module.exports = {
 
     // New Architecture
     const defaultNewArch = true
-    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
+    let newArchEnabled = getDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
     if (newArchEnabled === undefined) {
       const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
         type: "confirm",
@@ -490,7 +491,7 @@ module.exports = {
 
     // #region Prompt to Remove MobX-State-Tree code
     const defaultMST = "mst"
-    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
+    let stateMgmt = getDefault(options.state) ? defaultMST : options.state
 
     if (stateMgmt === undefined) {
       const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
@@ -511,9 +512,7 @@ module.exports = {
     if (defaultRemoveDemo) {
       p(yellow(`Warning: the demo application will be removed.`))
     }
-    let removeDemo = useDefault(options.removeDemo)
-      ? defaultRemoveDemo
-      : boolFlag(options.removeDemo)
+    removeDemo = getDefault(options.removeDemo) ? defaultRemoveDemo : boolFlag(options.removeDemo)
 
     if (!defaultRemoveDemo && removeDemo === undefined) {
       const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
@@ -634,7 +633,7 @@ module.exports = {
         // find "expo-localization" line and append "expo-router" line after it
         packageJsonRaw = packageJsonRaw.replace(
           /"expo-localization": ".*",/g,
-          `"expo-localization": "~15.0.3",${EOL}    "expo-router":  "~3.5.17",`,
+          `"expo-localization": "~15.0.3",${EOL}    "expo-router":  "~5.0.7",`,
         )
 
         // replace "main" entry point from App.js to "expo-router/entry"
