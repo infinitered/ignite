@@ -95,7 +95,7 @@ const isAndroid = Platform.OS === "android"
 export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
     const [open, setOpen] = useState(false)
-    const timeout = useRef<ReturnType<typeof setTimeout>>()
+    const timeout = useRef<ReturnType<typeof setTimeout>>(null)
     const listRef = useRef<SectionList>(null)
     const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
@@ -136,7 +136,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
           try {
             findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
               if (hasValidStringProp(u.props, "name")) {
-                return slugify(translate(u.props.name)) === params.itemIndex
+                return (
+                  slugify(translate((u.props as { name: TxKeyPath }).name)) === params.itemIndex
+                )
               }
               return false
             })
@@ -166,7 +168,11 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     }
 
     useEffect(() => {
-      return () => timeout.current && clearTimeout(timeout.current)
+      return () => {
+        if (timeout.current) {
+          clearTimeout(timeout.current)
+        }
+      }
     }, [])
 
     const $drawerInsets = useSafeAreaInsetsStyle(["top"])
@@ -191,7 +197,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
                 name: d.name,
                 useCases: d.data({ theme, themed }).map((u) => {
                   if (hasValidStringProp(u.props, "name")) {
-                    return translate(u.props.name)
+                    return translate((u.props as { name: TxKeyPath }).name)
                   }
                   return ""
                 }),

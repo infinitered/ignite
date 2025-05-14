@@ -112,7 +112,7 @@ export interface BaseToggleInputProps<T> {
   disabled: boolean
   outerStyle: ViewStyle
   innerStyle: ViewStyle
-  detailStyle: Omit<ViewStyle & ImageStyle, "overflow">
+  detailStyle: ViewStyle | ImageStyle
 }
 
 /**
