@@ -1,77 +1,91 @@
-# Welcome to your new ignited app!
+# Welcome to the Spacebox Application!
 
-> The latest and greatest boilerplate for Infinite Red opinions
+## Overview
 
-This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
+The Spacebox application is a mobile application that allows users to manage their items. It involves two screens:
 
-- [Quick start documentation](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/Boilerplate.md)
-- [Full documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
+- The Login screen, where users can log in to their account.
+- The Home screen, where users can view their items, add new items, and remove items.
 
-## Getting Started
+Optionally, it involves a backend application that allows users to manage their items using a REST API. The backend application is built using Node.js and Express, and it uses PostgreSQL as the database. The backend application is exposed to the internet using ngrok, which allows users to access it from anywhere. The backend application can be disabled through the configuration file in app/config.
+
+For ease of use, the user id is hardcoded in the application and the application doesn't implement any authentication mechanism (e.g JWT, OAuth, etc.).
+
+The mobile application is built using React Native and Expo and has been tested **on iOS only.**
+
+The application is translated into English and Traditional Chinese. The language is set based on the device's language settings. If the device's language is not supported, the application will default to English.
+
+## Setup the application
+
+Make sure you run the Node.js version 22.0 or higher.
+You can check your Node.js version by running the following command:
 
 ```bash
-yarn
-yarn start
+node -v
 ```
 
-To make things work on your local simulator, or on your phone, you need first to [run `eas build`](https://github.com/infinitered/ignite/blob/master/docs/expo/EAS.md). We have many shortcuts on `package.json` to make it easier:
+If you don't have Node.js installed, you can download it from the official website: [Node.js](https://nodejs.org/)
+If you have Node.js installed, you can run the following command to install the dependencies:
 
 ```bash
-yarn build:ios:sim # build for ios simulator
-yarn build:ios:dev # build for ios device
-yarn build:ios:prod # build for ios device
+npm install
 ```
 
-### `./assets` directory
+### Setup the backend application
 
-This directory is designed to organize and store various assets, making it easy for you to manage and use them in your application. The assets are further categorized into subdirectories, including `icons` and `images`:
+In order to run the backend application in the folder `backend-app-spacebox`, you need to have the following dependencies installed:
 
-```tree
-assets
-├── icons
-└── images
+- Docker compose
+- Node.js
+
+Once you have the dependencies installed, you can run the following command to start the backend application:
+
+```bash
+docker-compose up -d
 ```
 
-**icons**
-This is where your icon assets will live. These icons can be used for buttons, navigation elements, or any other UI components. The recommended format for icons is PNG, but other formats can be used as well.
+The backend application will be running on port 3002 locally and the database will be running on port 5432 locally.
+An ngrok server is configured to expose the backend application to the internet. To grab the ngrok URL, you can open your browser and go to the following URL: http://localhost:4040/inspect/http
 
-Ignite comes with a built-in `Icon` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/app/components/Icon.md).
+### Setup the react-native expo application
 
-**images**
-This is where your images will live, such as background images, logos, or any other graphics. You can use various formats such as PNG, JPEG, or GIF for your images.
+Once the backend application is running, you can run the following command to start the react-native expo application in the root folder of the project:
 
-Another valuable built-in component within Ignite is the `AutoImage` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/Components-AutoImage.md).
-
-How to use your `icon` or `image` assets:
-
-```typescript
-import { Image } from 'react-native';
-
-const MyComponent = () => {
-  return (
-    <Image source={require('../assets/images/my_image.png')} />
-  );
-};
+```bash
+npm install
 ```
 
-## Running Maestro end-to-end tests
+Set the backend configuration url in app/config if you wanna use the backend API previously started.
 
-Follow our [Maestro Setup](https://ignitecookbook.com/docs/recipes/MaestroSetup) recipe.
+```bash
+`API_URL` should be set to the ngrok URL you got from the previous step.
+`USE_API_ITEMS` should be set to `true` to use the backend API.
+```
 
-## Next Steps
+To run the application on the IOS simulator, you can run the following command:
 
-### Ignite Cookbook
+```bash
+npm run ios
+```
 
-[Ignite Cookbook](https://ignitecookbook.com/) is an easy way for developers to browse and share code snippets (or “recipes”) that actually work.
+If you just want to run the current development build without changing the native code, you can run the following command:
 
-### Upgrade Ignite boilerplate
+```bash
+npm run start:ios
+```
 
-Read our [Upgrade Guide](https://ignitecookbook.com/docs/recipes/UpdatingIgnite) to learn how to upgrade your Ignite project.
+## Run Tests
 
-## Community
+To run the tests, you can run the following command:
 
-⭐️ Help us out by [starring on GitHub](https://github.com/infinitered/ignite), filing bug reports in [issues](https://github.com/infinitered/ignite/issues) or [ask questions](https://github.com/infinitered/ignite/discussions).
+```bash
+npm test
+```
 
-💬 Join us on [Slack](https://join.slack.com/t/infiniteredcommunity/shared_invite/zt-1f137np4h-zPTq_CbaRFUOR_glUFs2UA) to discuss.
+To run the tests in watch mode, you can run the following command:
 
-📰 Make our Editor-in-chief happy by [reading the React Native Newsletter](https://reactnativenewsletter.com/).
+```bash
+npm test:watch
+```
+
+Note: The tests should be run with the config `USE_API_ITEMS` set to `false` in order to run the tests without the backend API.

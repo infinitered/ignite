@@ -1,5 +1,5 @@
 {
-  "name": "hello-world",
+  "name": "spacebox",
   "version": "0.0.1",
   "private": true,
   "main": "index.tsx",
@@ -10,43 +10,46 @@
     "patch": "patch-package",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:maestro": "maestro test -e MAESTRO_APP_ID=com.helloworld -e IS_DEV=true .maestro/flows",
-    "test:maestro:ci": "maestro test -e MAESTRO_APP_ID=com.helloworld -e IS_DEV=false .maestro/flows",
-    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "postinstall": "patch-package",
-    "build:ios:sim": "eas build --profile development --platform ios --local",
-    "build:ios:dev": "eas build --profile development:device --platform ios --local",
-    "build:ios:preview": "eas build --profile preview --platform ios --local",
-    "build:ios:prod": "eas build --profile production --platform ios --local",
-    "build:android:sim": "eas build --profile development --platform android --local",
-    "build:android:dev": "eas build --profile development:device --platform android --local",
-    "build:android:preview": "eas build --profile preview --platform android --local",
-    "build:android:prod": "eas build --profile production --platform android --local",
     "start": "expo start --dev-client",
+    "start:ios": "expo start --dev-client --ios",
+    "install:ios": "eas build --platform ios --profile preview",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "bundle:web": "npx expo export --platform web",
-    "serve:web": "npx serve dist",
-    "prebuild:clean": "npx expo prebuild --clean"
+    "prebuild:clean": "npx expo prebuild --clean",
+    "prettier:write": "prettier --write ."
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "i18next",
+          "@hey-api/client-fetch",
+          "intl-pluralrules",
+          "mobx",
+          "mobx-react-lite",
+          "mobx-state-tree"
+        ]
+      }
+    }
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/metro-runtime": "~4.0.0",
-    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@hey-api/client-fetch": "^0.10.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
-    "@shopify/flash-list": "1.7.3",
     "apisauce": "3.0.1",
     "date-fns": "^4.1.0",
-    "expo": "^52.0.44",
+    "expo": "~52.0.7",
     "expo-application": "~6.0.1",
     "expo-build-properties": "~0.13.1",
-    "expo-dev-client": "~5.0.1",
+    "expo-dev-client": "~5.0.20",
     "expo-font": "~13.0.1",
     "expo-linking": "~7.0.2",
     "expo-localization": "~16.0.0",
-    "expo-splash-screen": "~0.29.10",
+    "expo-splash-screen": "~0.29.24",
     "expo-status-bar": "~2.0.0",
     "expo-system-ui": "~4.0.3",
     "i18next": "^23.14.0",
@@ -59,12 +62,13 @@
     "react-i18next": "^15.0.1",
     "react-native": "0.76.9",
     "react-native-drawer-layout": "^4.0.1",
-    "react-native-gesture-handler": "~2.20.2",
     "react-native-keyboard-controller": "^1.12.7",
-    "react-native-mmkv": "^2.12.2",
+    "react-native-mmkv": "3.1.0",
+    "react-native-modal": "^14.0.0-rc.1",
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
+    "react-native-uuid": "^2.0.3",
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
@@ -82,11 +86,10 @@
     "eslint-plugin-react-native": "^4.1.0",
     "eslint-plugin-reactotron": "^0.1.2",
     "jest": "^29.2.1",
-    "jest-expo": "~52.0.1",
+    "jest-expo": "52.0.6",
     "patch-package": "^8.0.0",
     "postinstall-prepare": "1.0.1",
     "prettier": "^3.3.3",
-    "react-test-renderer": "18.2.0",
     "reactotron-core-client": "^2.9.4",
     "reactotron-mst": "^3.1.7",
     "reactotron-react-js": "^3.3.11",
@@ -94,7 +97,7 @@
     "reactotron-react-native-mmkv": "^0.2.6",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "~5.3.3"
+    "typescript": "5.8.3"
   },
   "engines": {
     "node": "^18.18.0 || >=20.0.0"

@@ -1,39 +1,28 @@
 {
-  "name": "HelloWorld",
-  "displayName": "HelloWorld",
+  "name": "Spacebox",
+  "displayName": "Spacebox",
   "expo": {
-    "name": "HelloWorld",
-    "slug": "HelloWorld",
-    "scheme": "helloworld",
+    "name": "Spacebox",
+    "slug": "Spacebox",
+    "scheme": "spacebox",
     "version": "1.0.0",
     "orientation": "portrait",
+    "backgroundColor": "#000000",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/images/app-icon-all.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "android": {
-      "icon": "./assets/images/app-icon-android-legacy.png",
-      "package": "com.helloworld",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
-        "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
-      },
-      "allowBackup": false
-    },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "icon": "./assets/images/app-icon-ios.png",
+      "icon": "./assets/images/app-icon-all.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.helloworld"
-    },
-    "web": {
-      "favicon": "./assets/images/app-icon-web-favicon.png",
-      "bundler": "metro"
+      "bundleIdentifier": "com.spacebox",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "plugins": [
       "expo-localization",
@@ -41,18 +30,23 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/app-icon-android-adaptive-foreground.png",
+          "image": "./assets/images/spacebox.png",
           "imageWidth": 300,
           "resizeMode": "contain",
-          "backgroundColor": "#191015"
+          "backgroundColor": "#FFFFFF"
         }
       ]
     ],
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b98c7724-a87f-4475-a75d-d70bc3755e47"
+      }
+    },
+    "android": {
+      "package": "com.spacebox"
     }
-  },
-  "ignite": {
-    "version": "UNKNOWN"
   }
 }

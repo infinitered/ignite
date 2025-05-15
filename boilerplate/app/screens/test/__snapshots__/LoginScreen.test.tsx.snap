@@ -1,0 +1,529 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginScreen renders the LoginScreen - Snapshot 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+        "height": "100%",
+        "width": "100%",
+      },
+      {
+        "backgroundColor": undefined,
+      },
+      {
+        "paddingBottom": 0,
+        "paddingTop": 0,
+      },
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ],
+        {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      bottomOffset={50}
+      contentContainerStyle={
+        [
+          {
+            "alignItems": "stretch",
+            "justifyContent": "flex-start",
+          },
+          undefined,
+          [Function],
+        ]
+      }
+      keyboardShouldPersistTaps="handled"
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      scrollEnabled={true}
+      style={
+        [
+          {
+            "flex": 1,
+            "height": "100%",
+            "width": "100%",
+          },
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      <View>
+        <Text
+          data-testid="login-heading"
+          preset="heading"
+          style={
+            [
+              {},
+              [Function],
+              undefined,
+              undefined,
+              [Function],
+            ]
+          }
+        >
+          loginScreen:logIn
+        </Text>
+        <Text
+          data-testid="login-enter-details"
+          preset="subheading"
+          style={
+            [
+              {},
+              [Function],
+              undefined,
+              undefined,
+              [Function],
+            ]
+          }
+        >
+          loginScreen:enterDetails
+        </Text>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            preset="formLabel"
+            style={
+              [
+                {},
+                [Function],
+                undefined,
+                undefined,
+                [Function],
+              ]
+            }
+          >
+            loginScreen:emailFieldLabel
+          </Text>
+          <View
+            style={[Function]}
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect={false}
+              editable={true}
+              keyboardType="email-address"
+              onChangeText={
+                [MockFunction] {
+                  "calls": [
+                    [
+                      "",
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                }
+              }
+              onSubmitEditing={[Function]}
+              placeholder="loginScreen:emailFieldPlaceholder"
+              style={[Function]}
+              testID="login-email"
+              textAlignVertical="top"
+            />
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            preset="formLabel"
+            style={
+              [
+                {},
+                [Function],
+                undefined,
+                undefined,
+                [Function],
+              ]
+            }
+          >
+            loginScreen:firstNameFieldLabel
+          </Text>
+          <View
+            style={[Function]}
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoComplete="name-given"
+              autoCorrect={false}
+              editable={true}
+              placeholder="loginScreen:firstNameFieldPlaceholder"
+              style={[Function]}
+              testID="login-first-name"
+              textAlignVertical="top"
+            />
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            preset="formLabel"
+            style={
+              [
+                {},
+                [Function],
+                undefined,
+                undefined,
+                [Function],
+              ]
+            }
+          >
+            loginScreen:lastNameFieldLabel
+          </Text>
+          <View
+            style={[Function]}
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoComplete="name-family"
+              autoCorrect={false}
+              editable={true}
+              placeholder="loginScreen:lastNameFieldPlaceholder"
+              style={[Function]}
+              testID="login-last-name"
+              textAlignVertical="top"
+            />
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            preset="formLabel"
+            style={
+              [
+                {},
+                [Function],
+                undefined,
+                undefined,
+                [Function],
+              ]
+            }
+          >
+            loginScreen:passwordFieldLabel
+          </Text>
+          <View
+            style={[Function]}
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoComplete="password"
+              autoCorrect={false}
+              editable={true}
+              onChangeText={
+                [MockFunction] {
+                  "calls": [
+                    [
+                      "",
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                }
+              }
+              onSubmitEditing={[Function]}
+              placeholder="loginScreen:passwordFieldPlaceholder"
+              secureTextEntry={true}
+              style={[Function]}
+              testID="login-password"
+              textAlignVertical="top"
+            />
+            <View
+              accessibilityRole="imagebutton"
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <RCTImageView
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                internal_analyticTag={null}
+                resizeMode="contain"
+                source={
+                  [
+                    {
+                      "testUri": "../../../assets/icons/view.png",
+                    },
+                  ]
+                }
+                style={
+                  [
+                    {
+                      "height": undefined,
+                      "width": undefined,
+                    },
+                    {
+                      "overflow": "hidden",
+                    },
+                    [
+                      {
+                        "resizeMode": "contain",
+                      },
+                      {
+                        "tintColor": "#000",
+                      },
+                      {
+                        "height": 20,
+                        "width": 20,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                tintColor="#000"
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          preset="reversed"
+          style={
+            [
+              [Function],
+              [Function],
+              false,
+              false,
+            ]
+          }
+          testID="login-button"
+        >
+          <Text
+            style={
+              [
+                {},
+                [Function],
+                undefined,
+                undefined,
+                [
+                  [Function],
+                  undefined,
+                  false,
+                  false,
+                ],
+              ]
+            }
+          >
+            loginScreen:tapToLogIn
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;

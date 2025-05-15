@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeScreen renders the Home screen - Snapshot 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+        "height": "100%",
+        "width": "100%",
+      },
+      {
+        "backgroundColor": undefined,
+      },
+      {},
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ],
+        {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "flex": 1,
+            "height": "100%",
+            "width": "100%",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "stretch",
+              "justifyContent": "flex-start",
+            },
+            {
+              "justifyContent": "flex-end",
+            },
+            {
+              "flex": 1,
+            },
+          ]
+        }
+      >
+        <View
+          style={[Function]}
+        >
+          <RCTImageView
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            internal_analyticTag={null}
+            resizeMode="contain"
+            source={
+              [
+                {
+                  "testUri": "../../../assets/images/spacebox.png",
+                },
+              ]
+            }
+            style={
+              [
+                {
+                  "height": undefined,
+                  "width": undefined,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                [Function],
+              ]
+            }
+          />
+          <Text
+            preset="heading"
+            style={
+              [
+                {},
+                [Function],
+                undefined,
+                undefined,
+                [Function],
+              ]
+            }
+            testID="welcome-name"
+          >
+            common:hello undefined undefined
+          </Text>
+          <RCTScrollView
+            contentContainerStyle={[Function]}
+            getItem={[Function]}
+            getItemCount={[Function]}
+            keyExtractor={[Function]}
+            onContentSizeChange={[Function]}
+            onLayout={[Function]}
+            onMomentumScrollBegin={[Function]}
+            onMomentumScrollEnd={[Function]}
+            onScroll={[Function]}
+            onScrollBeginDrag={[Function]}
+            onScrollEndDrag={[Function]}
+            removeClippedSubviews={false}
+            renderItem={[Function]}
+            scrollEventThrottle={0.0001}
+            stickyHeaderIndices={[]}
+            viewabilityConfigCallbackPairs={[]}
+          >
+            <View />
+          </RCTScrollView>
+          <View
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              [
+                [Function],
+                [Function],
+                false,
+                false,
+              ]
+            }
+            testID="add-item-button"
+          >
+            <Text
+              style={
+                [
+                  {},
+                  [Function],
+                  undefined,
+                  undefined,
+                  [
+                    [Function],
+                    undefined,
+                    false,
+                    false,
+                  ],
+                ]
+              }
+            >
+              homeScreen:addItem
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
