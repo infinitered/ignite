@@ -66,6 +66,12 @@ describe("ignite new", () => {
       expect(templates).toContain("app-icon")
     })
 
+    it("should have created an apple privacy manifest file", () => {
+      // now let's examine the spun-up app
+      const dirs = filesystem.list(appPath + `/ios/${APP_NAME}/`)
+      expect(dirs).toContain("PrivacyInfo.xcprivacy")
+    })
+
     it(`should have renamed all permutations of hello-world to ${APP_NAME}`, async () => {
       // react-native-rename doesn't always catch everything, so we need to check for
       // any instances and fail if it doesn't work
