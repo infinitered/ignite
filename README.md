@@ -2,7 +2,7 @@
 
 # Ignite - the battle-tested React Native boilerplate
 
-<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20" /></a>
 ![GitHub Repo stars](https://img.shields.io/github/stars/infinitered/ignite)
 ![Twitter Follow](https://img.shields.io/twitter/follow/ir_ignite)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/infinitered/ignite/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/infinitered/ignite/tree/master)

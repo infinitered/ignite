@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Ignite - the battle-tested React Native boilerplate
 
-<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20"></a>
+<a href="https://badge.fury.io/js/ignite-cli" target="_blank"><img src="https://badge.fury.io/js/ignite-cli.svg" alt="npm version" height="20" /></a>
 ![GitHub Repo stars](https://img.shields.io/github/stars/infinitered/ignite)
 ![Twitter Follow](https://img.shields.io/twitter/follow/ir_ignite)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/infinitered/ignite/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/infinitered/ignite/tree/master)
@@ -91,7 +91,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | react-native-keyboard-controller | Keyboard library     | v1      | Great keyboard manager library                 |
 | FlashList                        | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
 
-Ignite also comes with a [component library](./docs/boilerplate/app/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
+Ignite also comes with a [component library](./boilerplate/app/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
 
 ## Quick Start
 
@@ -133,7 +133,7 @@ If you still need help after reaching out to the proper channels, feel free to o
 
 ## Contributing to Ignite
 
-Want to contribute to Ignite? Check out [the contributing guide](./docs/contributing/Contributing-To-Ignite.md) for more info on how to work with the codebase.
+Want to contribute to Ignite? Check out [the contributing guide](./contributing/Contributing-To-Ignite.md) for more info on how to work with the codebase.
 
 ## Need Inspiration?
 
@@ -155,7 +155,7 @@ Ready to see how we can work together? [Send us a message](https://infinite.red/
 
 ## License and Trademark Notice
 
-This project's source code is licensed under the [MIT License](LICENSE). The Ignite name, its logo, and any other brand assets associated with Ignite and Infinite Red are the exclusive property of Infinite Red, Inc. These marks are not covered by the MIT License provided herein and may not be used without explicit written permission from Infinite Red, Inc.
+This project's source code is licensed under the [MIT License](https://github.com/infinitered/ignite/blob/master/LICENSE). The Ignite name, its logo, and any other brand assets associated with Ignite and Infinite Red are the exclusive property of Infinite Red, Inc. These marks are not covered by the MIT License provided herein and may not be used without explicit written permission from Infinite Red, Inc.
 
 ### Note on Generated Code
 
