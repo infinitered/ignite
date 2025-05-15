@@ -355,6 +355,25 @@ export async function generateFromTemplate(
 }
 
 /**
+ * Checks a file for a directoryDir in template front matter.
+ */
+export function frontMatterDirectoryDir(generator: string): string | undefined {
+  if (!validateGenerator(generator)) {
+    return undefined
+  }
+
+  const { path } = filesystem
+
+  // where are we copying from?
+  const templateDir = path(templatesDir(), generator)
+
+  const fileContents = filesystem.read(`${templateDir}/NAME.tsx.ejs`)
+  const { data: frontMatterData } = frontMatter(fileContents)
+
+  return frontMatterData?.destinationDir
+}
+
+/**
  * Ignite cli root directory
  */
 function igniteCliRootDir(): string {
