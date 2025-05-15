@@ -55,5 +55,3 @@ appId: ${MAESTRO_APP_ID}
       - swipe:
           direction: DOWN
       - waitForAnimationToEnd
-
-# @demo remove-file
