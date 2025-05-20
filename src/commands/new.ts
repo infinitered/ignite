@@ -514,6 +514,7 @@ module.exports = {
     let removeDemo = useDefault(options.removeDemo)
       ? defaultRemoveDemo
       : boolFlag(options.removeDemo)
+
     if (!defaultRemoveDemo && removeDemo === undefined) {
       const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
         type: "confirm",
@@ -525,6 +526,8 @@ module.exports = {
         prefix,
       }))
       removeDemo = removeDemoResponse.removeDemo
+    } else {
+      removeDemo = defaultRemoveDemo
     }
     // #endregion
 
@@ -826,6 +829,10 @@ module.exports = {
       // #region Remove Demo code
       const removeDemoPart = removeDemo === true ? "code" : "markup"
       startSpinner(`Removing fancy demo ${removeDemoPart}`)
+
+      p(yellow(`removeDemo: ${removeDemo}`))
+      p(yellow(`removeDemoPart: ${removeDemoPart}`))
+      // process.exit(1)
       try {
         const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
         const CMD = removeDemo === true ? "remove-demo" : "remove-demo-markup"
