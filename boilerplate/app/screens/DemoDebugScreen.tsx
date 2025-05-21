@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react"
+import { FC, useCallback, useMemo, useEffect, useState } from "react"
 import * as Application from "expo-application"
 import {
   LayoutAnimation,
@@ -68,6 +68,15 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setThemeContextOverride(undefined)
   }, [setThemeContextOverride])
+
+  // Crashes the app
+  const [shouldCrash, setShouldCrash] = useState(false)
+  useEffect(() => {
+    if (shouldCrash) {
+      setShouldCrash(false)
+      throw new Error("Test error")
+    }
+  }, [shouldCrash])
 
   return (
     <Screen
@@ -145,6 +154,9 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
       </View>
       <View style={themed($buttonContainer)}>
         <Button style={themed($button)} tx="common:logOut" onPress={logout} />
+      </View>
+      <View style={themed($buttonContainer)}>
+        <Button style={themed($button)} text="Crash App" onPress={() => setShouldCrash(true)} />
       </View>
     </Screen>
   )
