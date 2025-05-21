@@ -18,7 +18,6 @@ if (__DEV__) {
 }
 import "./utils/gestureHandler"
 import { initI18n } from "./i18n"
-import "./utils/ignoreWarnings"
 import { useFonts } from "expo-font"
 import { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
