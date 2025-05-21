@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite"
 import { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
+// eslint-disable-next-line no-restricted-imports
 import { TextInput, TextStyle, ViewStyle } from "react-native"
 import {
   Button,

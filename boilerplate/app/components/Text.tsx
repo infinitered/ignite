@@ -1,4 +1,5 @@
 import { TOptions } from "i18next"
+// eslint-disable-next-line no-restricted-imports
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "@/i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
