@@ -1,4 +1,5 @@
 // we always make sure 'react-native' gets included first
+// eslint-disable-next-line no-restricted-imports
 import * as ReactNative from "react-native"
 import mockFile from "./mockFile"
 

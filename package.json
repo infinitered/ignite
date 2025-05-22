@@ -1,6 +1,6 @@
 {
   "name": "ignite-cli",
-  "version": "10.3.0",
+  "version": "10.5.3",
   "description": "Infinite Red's hottest boilerplate for React Native.",
   "bin": {
     "ignite": "bin/ignite",
@@ -161,5 +161,6 @@
       "jsx"
     ],
     "prettierPath": null
-  }
+  },
+  "packageManager": "yarn@4.9.1"
 }

@@ -109,7 +109,9 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <AppStack />
+        <Screens.ErrorBoundary catchErrors={Config.catchErrors}>
+          <AppStack />
+        </Screens.ErrorBoundary>
       </NavigationContainer>
     </ThemeProvider>
   )

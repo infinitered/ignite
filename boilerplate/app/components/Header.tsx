@@ -198,11 +198,11 @@ export function Header(props: HeaderProps) {
         {!!titleContent && (
           <View
             style={[
+              $titleWrapperPointerEvents,
               titleMode === "center" && themed($titleWrapperCenter),
               titleMode === "flex" && $titleWrapperFlex,
               $titleContainerStyleOverride,
             ]}
-            pointerEvents="none"
           >
             <Text
               weight="medium"
@@ -307,6 +307,10 @@ const $actionIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 
 const $actionFillerContainer: ViewStyle = {
   width: 16,
+}
+
+const $titleWrapperPointerEvents: ViewStyle = {
+  pointerEvents: "none",
 }
 
 const $titleWrapperCenter: ThemedStyle<ViewStyle> = ({ spacing }) => ({

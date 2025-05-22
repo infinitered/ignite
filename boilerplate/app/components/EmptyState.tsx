@@ -196,7 +196,7 @@ export function EmptyState(props: EmptyStateProps) {
           source={imageSource}
           {...ImageProps}
           style={$imageStyles}
-          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+          tintColor={theme.colors.palette.neutral900}
         />
       )}
 
