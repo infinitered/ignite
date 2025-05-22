@@ -25,6 +25,7 @@ async function generate(toolbox: GluegunToolbox) {
   let backgroundColor = parameters.first
 
   // get optional android/ios logo sizes
+  // eslint-disable-next-line prefer-const
   let { androidSize = 180, iosSize = 212, ...options } = parameters.options || {}
 
   if (!backgroundColor) {
