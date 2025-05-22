@@ -4325,7 +4325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.30.0":
+"eslint-plugin-import@npm:^2.30.0, eslint-plugin-import@npm:^2.31.0":
   version: 2.31.0
   resolution: "eslint-plugin-import@npm:2.31.0"
   dependencies:
@@ -5574,6 +5574,7 @@ __metadata:
     eslint: "npm:^8.57.0"
     eslint-config-expo: "npm:~9.2.0"
     eslint-config-prettier: "npm:^9.1.0"
+    eslint-plugin-import: "npm:^2.31.0"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react-native: "npm:^4.1.0"
     eslint-plugin-reactotron: "npm:^0.1.7"
