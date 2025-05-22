@@ -30,7 +30,7 @@ export default observer(function WelcomeScreen() {
           style={$welcomeFace}
           source={welcomeFace}
           resizeMode="contain"
-          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+          tintColor={theme.colors.palette.neutral900}
         />
       </View>
 
