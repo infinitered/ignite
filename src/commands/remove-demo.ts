@@ -6,6 +6,7 @@ import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
 import { DEMO_MARKUP_PREFIX } from "../tools/demo"
 
 const MATCHING_GLOBS = [
+  "!**/.yarn{,/**}",
   "!**/.DS_Store",
   "!**/.expo{,/**}",
   "!**/.git{,/**}",
