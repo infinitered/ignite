@@ -1,5 +1,4 @@
 import { useScrollToTop } from "@react-navigation/native"
-import { StatusBar, StatusBarProps, StatusBarStyle } from "expo-status-bar"
 import { ReactNode, useRef, useState } from "react"
 import {
   KeyboardAvoidingView,
@@ -16,6 +15,7 @@ import { $styles } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { SystemBars, SystemBarsProps, SystemBarStyle } from "react-native-edge-to-edge";
 
 export const DEFAULT_BOTTOM_OFFSET = 50
 
@@ -41,9 +41,9 @@ interface BaseScreenProps {
    */
   backgroundColor?: string
   /**
-   * Status bar setting. Defaults to dark.
+   * System bar setting. Defaults to dark.
    */
-  statusBarStyle?: StatusBarStyle
+  systemBarStyle?: SystemBarStyle
   /**
    * By how much should we offset the keyboard? Defaults to 0.
    */
@@ -53,9 +53,9 @@ interface BaseScreenProps {
    */
   keyboardBottomOffset?: number
   /**
-   * Pass any additional props directly to the StatusBar component.
+   * Pass any additional props directly to the SystemBars component.
    */
-  StatusBarProps?: StatusBarProps
+  SystemBarsProps?: SystemBarsProps
   /**
    * Pass any additional props directly to the KeyboardAvoidingView component.
    */
@@ -247,8 +247,8 @@ export function Screen(props: ScreenProps) {
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
     safeAreaEdges,
-    StatusBarProps,
-    statusBarStyle,
+    SystemBarsProps,
+    systemBarStyle,
   } = props
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
@@ -261,9 +261,9 @@ export function Screen(props: ScreenProps) {
         $containerInsets,
       ]}
     >
-      <StatusBar
-        style={statusBarStyle || (themeContext === "dark" ? "light" : "dark")}
-        {...StatusBarProps}
+      <SystemBars
+        style={systemBarStyle || (themeContext === "dark" ? "light" : "dark")}
+        {...SystemBarsProps}
       />
 
       <KeyboardAvoidingView
