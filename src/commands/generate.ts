@@ -56,7 +56,7 @@ async function generate(toolbox: GluegunToolbox) {
    * Check if the project uses Expo Router as a dependency in package.json,
    * denoting an Expo Router app.
    */
-  if (generator === "screen") {
+  if (generator === "route") {
     const packageJson = filesystem.read("package.json", "json")
     const isExpoRouterApp = !!packageJson?.dependencies?.["expo-router"]
 
@@ -65,11 +65,12 @@ async function generate(toolbox: GluegunToolbox) {
     const defaultRouterDir = isSrcAppStructure ? "src/app" : isAppStructure ? "app" : null
 
     if (isExpoRouterApp) {
-      const directoryDirSetInFrontMatter = frontMatterDirectoryDir("screen")
+      const directoryDirSetInFrontMatter = frontMatterDirectoryDir("route")
+      p(directoryDirSetInFrontMatter)
 
       if (directoryDirSetInFrontMatter || dir) {
         heading(
-          `It looks like you're working in a project using Expo Router, determined directory for screen from ${dir ? "override" : "template front matter"}`,
+          `It looks like you're working in a project using Expo Router, determined directory for route from ${dir ? "override" : "template front matter"}`,
         )
         dir = dir || directoryDirSetInFrontMatter
       } else {

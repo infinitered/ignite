@@ -32,12 +32,11 @@ describe(`ignite new with expo-router`, () => {
     it("should convert to Expo Router with MST", async () => {
       expect(result).toContain("--state=mst")
 
-      // make sure src/navigators, src/screens, app/, app.tsx is gone
+      // make sure src/navigators, app/, app.tsx is gone
       const dirs = filesystem.list(appPath)
       expect(dirs).toContain("src")
       expect(dirs).not.toContain("app")
       expect(dirs).not.toContain("app.tsx")
-      expect(dirs).not.toContain("src/screens")
       expect(dirs).not.toContain("src/navigators")
 
       // check the contents of ignite/templates
@@ -45,6 +44,7 @@ describe(`ignite new with expo-router`, () => {
       expect(templates).toContain("component")
       expect(templates).toContain("model")
       expect(templates).toContain("screen")
+      expect(templates).toContain("route")
       expect(templates).not.toContain("navigator")
 
       // inspect that destinationDir has been adjusted
@@ -82,9 +82,9 @@ describe(`ignite new with expo-router`, () => {
       const rootLayout = filesystem.read(`${appPath}/src/app/_layout.tsx`)
       expect(rootLayout).toContain("useInitialRootStore")
 
-      // make sure index has observer
-      const rootIndex = filesystem.read(`${appPath}/src/app/index.tsx`)
-      expect(rootIndex).toContain("observer")
+      // make sure <WelcomeScreen /> has observer
+      const welcomeScreen = filesystem.read(`${appPath}/src/screens/WelcomeScreen.tsx`)
+      expect(welcomeScreen).toContain("observer")
     })
 
     it("should pass test, lint, and compile checks", async () => {
@@ -131,6 +131,7 @@ describe(`ignite new with expo-router`, () => {
       const templates = filesystem.list(`${appPath}/ignite/templates`)
       expect(templates).toContain("component")
       expect(templates).toContain("screen")
+      expect(templates).toContain("route")
       expect(templates).not.toContain("model")
       expect(templates).not.toContain("navigator")
 
@@ -139,9 +140,9 @@ describe(`ignite new with expo-router`, () => {
       const rootLayout = filesystem.read(`${appPath}/src/app/_layout.tsx`)
       expect(rootLayout).not.toContain("useInitialRootStore")
 
-      // make sure index does not have observer
-      const rootIndex = filesystem.read(`${appPath}/src/app/index.tsx`)
-      expect(rootIndex).not.toContain("observer")
+      // make sure <WelcomeScreen /> does not have observer
+      const welcomeScreen = filesystem.read(`${appPath}/src/screens/WelcomeScreen.tsx`)
+      expect(welcomeScreen).not.toContain("observer")
     })
   })
 })

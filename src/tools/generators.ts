@@ -169,6 +169,11 @@ function igniteDir() {
 }
 
 function appDir() {
+  const routerPath = filesystem.path(cwd(), "src/app")
+  if (filesystem.exists(routerPath) === "dir") {
+    return filesystem.path(cwd(), "src")
+  }
+
   return filesystem.path(cwd(), "app")
 }
 

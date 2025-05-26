@@ -2,9 +2,9 @@ import { filesystem } from "gluegun"
 import * as tempy from "tempy"
 import {
   copyDefaultScreenGenerator,
-  copyExpoRouterScreenGenerator,
-  removeDefaultScreenGenerator,
-  removeExpoRouterScreenGenerator,
+  copyExpoRouterGeneratorTemplates,
+  removeExpoRouterGeneratorTemplates,
+  removeScreenGenerator,
   runIgnite,
 } from "../_test-helpers"
 
@@ -424,21 +424,20 @@ describe("ignite-cli generate with path params", () => {
 describe("ignite-cli generate screens expo-router style", () => {
   beforeEach(() => {
     // modify the generator template for screens to be a standard pattern for expo-router
-    removeDefaultScreenGenerator(TEMP_DIR)
-    copyExpoRouterScreenGenerator(TEMP_DIR)
+    removeScreenGenerator(TEMP_DIR)
+
+    // copy expo router specific screen and route generator templates
+    copyExpoRouterGeneratorTemplates(TEMP_DIR)
   })
 
   afterEach(() => {
     // restore the generator template for screens to be a standard pattern for react-navigation
-    removeExpoRouterScreenGenerator(TEMP_DIR)
+    removeExpoRouterGeneratorTemplates(TEMP_DIR)
     copyDefaultScreenGenerator(TEMP_DIR)
   })
 
   it("should generate `log-in` screen exactly in the requested path", async () => {
-    const result = await runIgnite(
-      `generate screen log-in --case=none --dir="src/app/(app)/(tabs)"`,
-      options,
-    )
+    const result = await runIgnite(`generate route log-in --dir="src/app/(app)/(tabs)"`, options)
 
     expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
       "   
@@ -447,30 +446,21 @@ describe("ignite-cli generate screens expo-router style", () => {
          /user/home/ignite/src/app/(app)/(tabs)/log-in.tsx
       "
     `)
+
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/log-in.tsx`)).toMatchInlineSnapshot(`
-      "import React, { FC } from \\"react\\"
-      import { observer } from \\"mobx-react-lite\\"
-      import { ViewStyle } from \\"react-native\\"
-      import { Screen, Text } from \\"@/components\\"
-
-      export default observer(function LogInScreen() {
-        return (
-          <Screen style={$root} preset=\\"scroll\\">
-            <Text text=\\"logIn\\" />
-          </Screen>
-        )
-      })
-
-      const $root: ViewStyle = {
-        flex: 1,
+      "import { LogInScreen } from \\"@/screens\\"
+      
+      export default function LogIn() {
+        return <LogInScreen />
       }
+
       "
-    `)
+      `)
   })
 
   it("should generate dynamic id files at requested path", async () => {
     const result = await runIgnite(
-      `generate screen [id] --case=none --dir="src/app/(app)/(tabs)/podcasts"`,
+      `generate dynamic-route [id] --case=none --dir="src/app/(app)/(tabs)/podcasts"`,
       options,
     )
 
@@ -482,22 +472,12 @@ describe("ignite-cli generate screens expo-router style", () => {
         "
       `)
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/podcasts/[id].tsx`)).toMatchInlineSnapshot(`
-      "import React, { FC } from \\"react\\"
-      import { observer } from \\"mobx-react-lite\\"
-      import { ViewStyle } from \\"react-native\\"
-      import { Screen, Text } from \\"@/components\\"
+      "import { IdScreen } from \\"@/screens\\"
 
-      export default observer(function IdScreen() {
-        return (
-          <Screen style={$root} preset=\\"scroll\\">
-            <Text text=\\"id\\" />
-          </Screen>
-        )
-      })
-
-      const $root: ViewStyle = {
-        flex: 1,
+      export default function Id() {
+        return <IdScreen />
       }
+
       "
       `)
   })
