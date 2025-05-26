@@ -2,7 +2,11 @@ import { system, filesystem } from "gluegun"
 import { stripANSI } from "../src/tools/strip-ansi"
 import { spawn } from "child_process"
 import { WriteStream } from "fs"
-import { EXPO_ROUTER_SCREEN_TEMPLATE, EXPO_ROUTER_ROUTE_TEMPLATE, EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE } from "../src/tools/react-native"
+import {
+  EXPO_ROUTER_SCREEN_TEMPLATE,
+  EXPO_ROUTER_ROUTE_TEMPLATE,
+  EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE,
+} from "../src/tools/react-native"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }
@@ -160,7 +164,6 @@ function generateRouteTemplatePath(pathname: string): string {
 function generateDynamicRouteTemplatePath(pathname: string): string {
   return filesystem.path(pathname, "ignite", "templates", "dynamic-route", "NAME.tsx.ejs")
 }
-
 
 export function copyDefaultScreenGenerator(tempBoilerplatePath: string): void {
   const REACT_NAVIGATION_SCREEN_TEMPLATE = filesystem.read(

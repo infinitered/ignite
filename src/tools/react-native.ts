@@ -260,7 +260,7 @@ const $root: ViewStyle = {
 export const EXPO_ROUTER_ROUTE_TEMPLATE = `---
 filename: <%= props.kebabCaseName %>.tsx
 ---
-import { <%= props.pascalCaseName %>Screen } from "@/screens"
+import { <%= props.pascalCaseName %>Screen } from "@/screens/<%= props.pascalCaseName %>Screen"
 
 export default function <%= props.pascalCaseName %>() {
   return <<%= props.pascalCaseName %>Screen />
@@ -268,7 +268,7 @@ export default function <%= props.pascalCaseName %>() {
 
 `
 
-export const EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE = `import { <%= props.pascalCaseName %>Screen } from "@/screens"
+export const EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE = `import { <%= props.pascalCaseName %>Screen } from "@/screens/<%= props.pascalCaseName %>Screen"
 
 export default function <%= props.pascalCaseName %>() {
   return <<%= props.pascalCaseName %>Screen />
