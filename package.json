@@ -73,63 +73,6 @@
     "ts-node": "^10.2.0",
     "typescript": "~5.3.3"
   },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "prettier",
-      "plugin:@typescript-eslint/recommended",
-      "standard"
-    ],
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "globals": {
-      "__DEV__": false,
-      "jasmine": false,
-      "beforeAll": false,
-      "afterAll": false,
-      "beforeEach": false,
-      "afterEach": false,
-      "test": false,
-      "expect": false,
-      "describe": false,
-      "jest": false,
-      "it": false
-    },
-    "rules": {
-      "@typescript-eslint/ban-ts-ignore": 0,
-      "@typescript-eslint/ban-ts-comment": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/member-delimiter-style": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-object-literal-type-assertion": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/no-use-before-define": 0,
-      "comma-dangle": 0,
-      "multiline-ternary": 0,
-      "no-undef": 0,
-      "no-unused-vars": 0,
-      "no-use-before-define": "off",
-      "quotes": 0,
-      "space-before-function-paren": 0
-    },
-    "ignorePatterns": [
-      "**/*.snap",
-      "**/*.txt",
-      "bin/ignite"
-    ]
-  },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "all",
-    "quoteProps": "consistent"
-  },
   "release": {
     "plugins": [
       "@semantic-release/commit-analyzer",
@@ -144,23 +87,6 @@
         }
       ]
     ]
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/boilerplate/"
-    ],
-    "testEnvironment": "node",
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx"
-    ],
-    "prettierPath": null
   },
   "packageManager": "yarn@4.9.1"
 }
