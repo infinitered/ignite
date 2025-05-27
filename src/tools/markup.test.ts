@@ -317,7 +317,7 @@ describe("markup", () => {
       expect(result).not.toContain(blockEndComment)
       expect(result).not.toContain(currentLineComment)
       expect(result).not.toContain(`NavigatorScreenParams`)
-      expect(result).not.toContain(`import { useStores } from "../models"`)
+      expect(result).not.toContain(`import { useStores } from "@/models"`)
       expect(result).not.toContain(
         `import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" "`,
       )
@@ -333,17 +333,17 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line
   Text,
-} from "app/components"
+} from "@/components"
 import { isRTL } from "@/i18n"
-import { useStores } from "../models" // @demo remove-current-line
-import { AppStackScreenProps } from "../navigators"
-import type { ThemedStyle } from "app/theme"
-import { useHeader } from "../utils/useHeader" // @demo remove-current-line
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
+import { useStores } from "@/models" // @demo remove-current-line
+import { AppStackScreenProps } from "@/navigators"
+import type { ThemedStyle } from "@/theme"
+import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
+import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
+import { useAppTheme } from "@/utils/useAppTheme" // @demo remove-current-line
 
-const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
+const welcomeLogo = require("assets/images/logo.png")
+const welcomeFace = require("assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
@@ -457,12 +457,12 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
-import * as Screens from "app/screens"
-import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
+import * as Screens from "@/screens"
+import Config from "@/config"
+import { useStores } from "@/models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useAppTheme, useThemeProvider } from "app/utils/useAppTheme"
+import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

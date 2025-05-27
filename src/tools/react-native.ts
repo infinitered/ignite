@@ -244,7 +244,7 @@ export function createExpoRouterScreenTemplate(toolbox: GluegunToolbox) {
     const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { Screen, Text } from "src/components"
+import { Screen, Text } from "@/components"
 
 // @mst replace-next-line export default function <%= props.pascalCaseName %>Screen() {
 export default observer(function <%= props.pascalCaseName %>Screen() {

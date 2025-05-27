@@ -12,7 +12,7 @@ The `EmptyState` component is to be used when there is no data to display, usual
 <EmptyState
   preset="generic"
   style={{ padding: 10 }}
-  imageSource={require("../../assets/images/sad-face.png")}
+  imageSource={require("assets/images/sad-face.png")}
   imageStyle={{ height: 400, width: 400 }}
   ImageProps={{ resizeMode: "contain" }}
   heading="EmptyState Heading"
@@ -53,7 +53,7 @@ The `imageSource` prop is used to set the Image source to be displayed above the
 
 ```tsx
 <EmptyState
-  imageSource={require("../../assets/images/empty-state.png")}
+  imageSource={require("assets/images/empty-state.png")}
   heading="EmptyState Heading"
   content="EmptyState Content"
 />
@@ -65,7 +65,7 @@ The `imageStyle` prop is used to set any style overrides to be applied to the im
 
 ```tsx
 <EmptyState
-  imageSource={require("../../assets/images/empty-state.png")}
+  imageSource={require("assets/images/empty-state.png")}
   imageStyle={{ borderRadius: 5 }}
   heading="EmptyState Heading"
   content="EmptyState Content"
@@ -78,7 +78,7 @@ The `ImageProps` prop is used to pass any additional props directly to the `Imag
 
 ```tsx
 <EmptyState
-  imageSource={require("../../assets/images/empty-state.png")}
+  imageSource={require("assets/images/empty-state.png")}
   ImageProps={{ onLoad: handleImageLoaded }}
   heading="EmptyState Heading"
   content="EmptyState Content"

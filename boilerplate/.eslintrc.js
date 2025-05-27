@@ -47,7 +47,7 @@ module.exports = {
           {
             name: "react-native",
             importNames: ["Text", "Button", "TextInput"],
-            message: "Use the custom wrapper component from 'app/src/components'.",
+            message: "Use the custom wrapper component from '@/components'.",
           },
         ],
       },
