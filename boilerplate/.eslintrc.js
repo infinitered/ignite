@@ -48,7 +48,7 @@ module.exports = {
             name: "react-native",
             importNames: ["Text", "Button", "TextInput"],
             message: "Use the custom wrapper component from 'app/src/components'.",
-          }
+          },
         ],
       },
     ],
@@ -63,5 +63,21 @@ module.exports = {
     "no-global-assign": 0,
     "quotes": 0,
     "space-before-function-paren": 0,
+    // eslint-import
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            pattern: "@/**",
+            group: "external",
+            position: "after",
+          },
+        ],
+      },
+    ],
+    "import/newline-after-import": 1,
   },
 }

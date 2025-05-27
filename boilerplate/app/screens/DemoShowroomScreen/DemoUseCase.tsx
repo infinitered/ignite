@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+
 import { TxKeyPath, translate } from "@/i18n"
 import { Text } from "@/components"
 import type { ThemedStyle } from "@/theme"

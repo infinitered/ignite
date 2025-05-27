@@ -1,4 +1,5 @@
 import type { StyleProp } from "react-native"
+
 import { colors as colorsLight } from "./colors"
 import { colors as colorsDark } from "./colorsDark"
 import { spacing as spacingLight } from "./spacing"

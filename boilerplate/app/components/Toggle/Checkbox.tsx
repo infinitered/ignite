@@ -1,9 +1,12 @@
 import { useEffect, useRef, useCallback } from "react"
 import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
-import { $styles } from "../../theme"
-import { iconRegistry, IconTypes } from "../Icon"
-import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
+
+import { $styles } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+
+import { iconRegistry, IconTypes } from "../Icon"
+
+import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
 export interface CheckboxToggleProps extends Omit<ToggleProps<CheckboxInputProps>, "ToggleInput"> {
   /**

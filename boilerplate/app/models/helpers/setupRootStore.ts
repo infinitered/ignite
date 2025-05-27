@@ -10,8 +10,10 @@
  * @refresh reset
  */
 import { applySnapshot, IDisposer, onSnapshot } from "mobx-state-tree"
-import { RootStore, RootStoreSnapshot } from "../RootStore"
+
 import * as storage from "@/utils/storage"
+
+import { RootStore, RootStoreSnapshot } from "../RootStore"
 
 /**
  * The key we'll be saving our state as within async storage.

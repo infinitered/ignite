@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+
 import {
   Checkbox,
   CheckboxToggleProps,
@@ -10,11 +11,12 @@ import {
   SwitchToggleProps,
   Text,
 } from "@/components"
+import { $styles, type ThemedStyle } from "@/theme"
+import { translate } from "@/i18n"
+
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"
-import { $styles, type ThemedStyle } from "@/theme"
-import { translate } from "@/i18n"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
   const [value, setValue] = useState(props.value || false)

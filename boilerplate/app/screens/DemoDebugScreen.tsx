@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+
 import { Button, ListItem, Screen, Text } from "@/components"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"

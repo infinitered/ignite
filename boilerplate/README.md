@@ -49,7 +49,7 @@ import { Image } from 'react-native';
 
 const MyComponent = () => {
   return (
-    <Image source={require('../assets/images/my_image.png')} />
+    <Image source={require('assets/images/my_image.png')} />
   );
 };
 ```

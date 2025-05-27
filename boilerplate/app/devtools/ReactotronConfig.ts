@@ -4,10 +4,10 @@
  * @see https://github.com/infinitered/reactotron
  */
 import { Platform, NativeModules } from "react-native"
-
 import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst" // @mst remove-current-line
 import mmkvPlugin from "reactotron-react-native-mmkv"
+import { ReactotronReactNative } from "reactotron-react-native"
 
 import {
   storage,
@@ -16,7 +16,6 @@ import {
 import { goBack, resetRoot, navigate } from "@/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
-import { ReactotronReactNative } from "reactotron-react-native"
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,

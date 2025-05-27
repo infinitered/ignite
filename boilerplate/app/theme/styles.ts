@@ -1,4 +1,5 @@
 import { ViewStyle } from "react-native"
+
 import { spacing } from "./spacing" // @demo remove-current-line
 
 /* Use this file to define styles that are used in multiple places in your app. */
