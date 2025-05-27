@@ -11,8 +11,8 @@ import {
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite" // @mst remove-current-line
 import * as Screens from "@/screens"
-import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
+import Config from "@/config"
+import { useStores } from "@/models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"

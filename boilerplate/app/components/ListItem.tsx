@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { $styles } from "../theme"
+import { $styles } from "@/theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 import type { ThemedStyle } from "@/theme"

@@ -8,8 +8,8 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "@/i18n"
-import { $styles } from "../theme"
-import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { $styles } from "@/theme"
+import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { IconTypes, PressableIcon } from "./Icon"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "@/utils/useAppTheme"

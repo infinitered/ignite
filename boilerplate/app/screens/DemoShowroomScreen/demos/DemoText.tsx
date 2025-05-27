@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import { Text } from "../../../components"
+import { Text } from "@/components"
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
 import { DemoUseCase } from "../DemoUseCase"

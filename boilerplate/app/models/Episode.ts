@@ -1,6 +1,6 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
-import { formatDate } from "../utils/formatDate"
+import { formatDate } from "@/utils/formatDate"
 import { translate } from "@/i18n"
 
 interface Enclosure {

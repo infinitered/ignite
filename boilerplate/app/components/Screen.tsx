@@ -12,8 +12,8 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { $styles } from "../theme"
-import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { $styles } from "@/theme"
+import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 import { useAppTheme } from "@/utils/useAppTheme"
 

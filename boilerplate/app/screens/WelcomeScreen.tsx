@@ -7,11 +7,11 @@ import {
   Screen,
 } from "@/components"
 import { isRTL } from "@/i18n"
-import { useStores } from "../models" // @demo remove-current-line
-import { AppStackScreenProps } from "../navigators"
+import { useStores } from "@/models" // @demo remove-current-line
+import { AppStackScreenProps } from "@/navigators"
 import { $styles, type ThemedStyle } from "@/theme"
-import { useHeader } from "../utils/useHeader" // @demo remove-current-line
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
+import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
