@@ -20,6 +20,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+
 import {
   Button,
   ButtonAccessoryProps,
@@ -32,20 +33,21 @@ import {
   Text,
 } from "@/components"
 import { isRTL, translate } from "@/i18n"
-import { useStores } from "../models"
-import { Episode } from "../models/Episode"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { useStores } from "@/models"
+import { Episode } from "@/models/Episode"
+import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
-import { $styles } from "../theme"
-import { delay } from "../utils/delay"
-import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import { $styles } from "@/theme"
+import { delay } from "@/utils/delay"
+import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 const ICON_SIZE = 14
 
-const rnrImage1 = require("../../assets/images/demo/rnr-image-1.png")
-const rnrImage2 = require("../../assets/images/demo/rnr-image-2.png")
-const rnrImage3 = require("../../assets/images/demo/rnr-image-3.png")
+const rnrImage1 = require("@assets/images/demo/rnr-image-1.png")
+const rnrImage2 = require("@assets/images/demo/rnr-image-2.png")
+const rnrImage3 = require("@assets/images/demo/rnr-image-3.png")
+
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(

@@ -45,7 +45,7 @@ export const EpisodeModel = types.model("Episode", {
 You will be able to create instances and use them in observed components like this:
 
 ```typescript
-import { useStores } from "../models/root-store"
+import { useStores } from "@/models/root-store"
 import { observer } from "mobx-react-lite"
 
 export const EpisodeScreen = observer(() => {

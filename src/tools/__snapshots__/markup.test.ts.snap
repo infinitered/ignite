@@ -13,10 +13,10 @@ import {
 } from \\"@react-navigation/native\\"
 import { createNativeStackNavigator, NativeStackScreenProps } from \\"@react-navigation/native-stack\\"
 import { observer } from \\"mobx-react-lite\\"
-import * as Screens from \\"app/screens\\"
-import Config from \\"../config\\"
+import * as Screens from \\"@/screens\\"
+import Config from \\"@/config\\"
 import { navigationRef, useBackButtonHandler } from \\"./navigationUtilities\\"
-import { useAppTheme, useThemeProvider } from \\"app/utils/useAppTheme\\"
+import { useAppTheme, useThemeProvider } from \\"@/utils/useAppTheme\\"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -95,14 +95,14 @@ import { FC } from \\"react\\"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from \\"react-native\\"
 import {
   Text,
-} from \\"app/components\\"
+} from \\"@/components\\"
 import { isRTL } from \\"@/i18n\\"
-import { AppStackScreenProps } from \\"../navigators\\"
-import type { ThemedStyle } from \\"app/theme\\"
-import { useSafeAreaInsetsStyle } from \\"../utils/useSafeAreaInsetsStyle\\"
+import { AppStackScreenProps } from \\"@/navigators\\"
+import type { ThemedStyle } from \\"@/theme\\"
+import { useSafeAreaInsetsStyle } from \\"@/utils/useSafeAreaInsetsStyle\\"
 
-const welcomeLogo = require(\\"../../assets/images/logo.png\\")
-const welcomeFace = require(\\"../../assets/images/welcome-face.png\\")
+const welcomeLogo = require(\\"@assets/images/logo.png\\")
+const welcomeFace = require(\\"@assets/images/welcome-face.png\\")
 
 interface WelcomeScreenProps extends AppStackScreenProps<\\"Welcome\\"> {}
 

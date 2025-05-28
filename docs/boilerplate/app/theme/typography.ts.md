@@ -19,7 +19,7 @@ export const customFontsToLoad = {
   spaceGroteskMedium,
   spaceGroteskSemiBold,
   spaceGroteskBold,
-  myCustomFont: require("./assets/fonts/custom-font.otf"),
+  myCustomFont: require("@assets/fonts/custom-font.otf"),
 }
 
 const fonts = {

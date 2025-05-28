@@ -184,32 +184,33 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toMatchInlineSnapshot(`
-        "import { Instance, SnapshotOut, types } from \\"mobx-state-tree\\"
-        import { PizzaStoreModel } from \\"./PizzaStore\\"
-        import { AuthenticationStoreModel } from \\"./AuthenticationStore\\" // @demo remove-current-line
-        import { EpisodeStoreModel } from \\"./EpisodeStore\\" // @demo remove-current-line
+"import { Instance, SnapshotOut, types } from \\"mobx-state-tree\\"
+import { PizzaStoreModel } from \\"./PizzaStore\\"
 
-        /**
-         * A RootStore model.
-         */
-        export const RootStoreModel = types.model(\\"RootStore\\").props({
-          pizzaStore: types.optional(PizzaStoreModel, {} as any),
-          authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
-          episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
-        })
+import { AuthenticationStoreModel } from \\"./AuthenticationStore\\" // @demo remove-current-line
+import { EpisodeStoreModel } from \\"./EpisodeStore\\" // @demo remove-current-line
 
-        /**
-         * The RootStore instance.
-         */
-        export interface RootStore extends Instance<typeof RootStoreModel> {}
-        /**
-         * The data of a RootStore.
-         */
-        export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+/**
+ * A RootStore model.
+ */
+export const RootStoreModel = types.model(\\"RootStore\\").props({
+  pizzaStore: types.optional(PizzaStoreModel, {} as any),
+  authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
+  episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
+})
 
-        // @mst remove-file
-        "
-      `)
+/**
+ * The RootStore instance.
+ */
+export interface RootStore extends Instance<typeof RootStoreModel> {}
+/**
+ * The data of a RootStore.
+ */
+export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+
+// @mst remove-file
+"
+`)
       const resultWithoutOverwriteOption = await runIgnite(`generate model PizzaStore`, options)
       expect(replaceHomeDir(resultWithoutOverwriteOption)).toMatchInlineSnapshot(`
         "   
@@ -293,21 +294,21 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./AutoImage\\"
-        export * from \\"./Button\\"
-        export * from \\"./Card\\"
-        export * from \\"./Header\\"
-        export * from \\"./Icon\\"
-        export * from \\"./ListItem\\"
-        export * from \\"./ListView\\"
-        export * from \\"./Screen\\"
-        export * from \\"./Text\\"
-        export * from \\"./TextField\\"
-        export * from \\"./Toggle\\"
-        export * from \\"./EmptyState\\"
-        export * from \\"./Topping\\"
-        "
-      `)
+"export * from \\"./AutoImage\\"
+export * from \\"./Button\\"
+export * from \\"./Card\\"
+export * from \\"./EmptyState\\"
+export * from \\"./Header\\"
+export * from \\"./Icon\\"
+export * from \\"./ListItem\\"
+export * from \\"./ListView\\"
+export * from \\"./Screen\\"
+export * from \\"./Text\\"
+export * from \\"./TextField\\"
+export * from \\"./Toggle\\"
+export * from \\"./Topping\\"
+"
+`)
     })
 
     it("should generate Topping component in subdirectory and patch index components export", async () => {
@@ -363,21 +364,21 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./AutoImage\\"
-        export * from \\"./Button\\"
-        export * from \\"./Card\\"
-        export * from \\"./Header\\"
-        export * from \\"./Icon\\"
-        export * from \\"./ListItem\\"
-        export * from \\"./ListView\\"
-        export * from \\"./Screen\\"
-        export * from \\"./Text\\"
-        export * from \\"./TextField\\"
-        export * from \\"./Toggle\\"
-        export * from \\"./EmptyState\\"
-        export * from \\"./sub/to/my/Topping\\"
-        "
-      `)
+"export * from \\"./AutoImage\\"
+export * from \\"./Button\\"
+export * from \\"./Card\\"
+export * from \\"./EmptyState\\"
+export * from \\"./Header\\"
+export * from \\"./Icon\\"
+export * from \\"./ListItem\\"
+export * from \\"./ListView\\"
+export * from \\"./Screen\\"
+export * from \\"./Text\\"
+export * from \\"./TextField\\"
+export * from \\"./Toggle\\"
+export * from \\"./sub/to/my/Topping\\"
+"
+`)
     })
   })
 })
