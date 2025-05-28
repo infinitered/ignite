@@ -1,7 +1,9 @@
 import { GluegunToolbox } from "gluegun"
+
 import { boolFlag } from "../tools/flag"
 import { generateFromTemplate, runGenerator } from "../tools/generators"
 import { command, heading, p, warning } from "../tools/pretty"
+
 import { Options } from "./new"
 
 const SUB_DIR_DELIMITER = "/"

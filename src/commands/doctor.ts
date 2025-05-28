@@ -3,8 +3,10 @@
  * to run Ignite properly. This needs some TLC, as it is mostly designed
  * for the old Ignite CLI and Bowser. Ignite v4 ("flame") is a combination of the two.
  */
-import { GluegunToolbox } from "gluegun"
 import * as os from "os"
+
+import { GluegunToolbox } from "gluegun"
+
 import { packager } from "../tools/packager"
 
 const isWindows = process.platform === "win32"

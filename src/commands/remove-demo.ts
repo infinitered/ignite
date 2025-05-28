@@ -1,5 +1,7 @@
-import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
+
+import { GluegunToolbox } from "gluegun"
+
 import { boolFlag } from "../tools/flag"
 import { p, warning } from "../tools/pretty"
 import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"

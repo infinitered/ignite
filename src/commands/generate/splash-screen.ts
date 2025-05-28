@@ -1,4 +1,5 @@
 import { GluegunToolbox } from "gluegun"
+
 import {
   generateSplashScreen,
   runGenerator,

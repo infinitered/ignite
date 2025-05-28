@@ -1,5 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
+
 import {
   copyDefaultScreenGenerator,
   copyExpoRouterScreenGenerator,
@@ -186,6 +187,7 @@ export * from "./PizzaStore"
       expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toMatchInlineSnapshot(`
 "import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { PizzaStoreModel } from "./PizzaStore"
+
 import { AuthenticationStoreModel } from "./AuthenticationStore" // @demo remove-current-line
 import { EpisodeStoreModel } from "./EpisodeStore" // @demo remove-current-line
 
@@ -296,6 +298,7 @@ const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
 "export * from "./AutoImage"
 export * from "./Button"
 export * from "./Card"
+export * from "./EmptyState"
 export * from "./Header"
 export * from "./Icon"
 export * from "./ListItem"
@@ -304,7 +307,6 @@ export * from "./Screen"
 export * from "./Text"
 export * from "./TextField"
 export * from "./Toggle"
-export * from "./EmptyState"
 export * from "./Topping"
 "
 `)
@@ -366,6 +368,7 @@ const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
 "export * from "./AutoImage"
 export * from "./Button"
 export * from "./Card"
+export * from "./EmptyState"
 export * from "./Header"
 export * from "./Icon"
 export * from "./ListItem"
@@ -374,7 +377,6 @@ export * from "./Screen"
 export * from "./Text"
 export * from "./TextField"
 export * from "./Toggle"
-export * from "./EmptyState"
 export * from "./sub/to/my/Topping"
 "
 `)

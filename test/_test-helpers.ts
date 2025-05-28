@@ -1,7 +1,9 @@
-import { system, filesystem } from "gluegun"
-import { stripANSI } from "../src/tools/strip-ansi"
 import { spawn } from "child_process"
 import { WriteStream } from "fs"
+
+import { system, filesystem } from "gluegun"
+
+import { stripANSI } from "../src/tools/strip-ansi"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }

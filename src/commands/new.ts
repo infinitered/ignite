@@ -1,4 +1,5 @@
 import { EOL } from "os"
+
 import { GluegunToolbox } from "../types"
 import {
   isAndroidInstalled,

@@ -1,5 +1,6 @@
-import { filesystem, patching } from "gluegun"
 import * as pathlib from "path"
+
+import { filesystem, patching } from "gluegun"
 
 // all possible comment types
 export enum MarkupComments {
