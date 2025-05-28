@@ -342,8 +342,8 @@ import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme" // @demo remove-current-line
 
-const welcomeLogo = require("assets/images/logo.png")
-const welcomeFace = require("assets/images/welcome-face.png")
+const welcomeLogo = require("@assets/images/logo.png")
+const welcomeFace = require("@assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 

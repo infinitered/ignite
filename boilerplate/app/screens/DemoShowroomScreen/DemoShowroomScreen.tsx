@@ -16,7 +16,7 @@ import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 
-const logo = require("assets/images/logo.png")
+const logo = require("@assets/images/logo.png")
 
 export interface Demo {
   name: string

@@ -21,7 +21,7 @@ export const DemoEmptyState: Demo = {
       description="demoEmptyState:useCase.passingContent.description"
     >
       <EmptyState
-        imageSource={require("assets/images/logo.png")}
+        imageSource={require("@assets/images/logo.png")}
         headingTx="demoEmptyState:useCase.passingContent.customizeImageHeading"
         contentTx="demoEmptyState:useCase.passingContent.customizeImageContent"
       />

@@ -8,8 +8,8 @@ import { ThemedStyle } from "@/theme"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
 
-const welcomeLogo = require("assets/images/logo.png")
-const welcomeFace = require("assets/images/welcome-face.png")
+const welcomeLogo = require("@assets/images/logo.png")
+const welcomeFace = require("@assets/images/welcome-face.png")
 
 // @mst replace-next-line export default function WelcomeScreen() {
 export default observer(function WelcomeScreen() {

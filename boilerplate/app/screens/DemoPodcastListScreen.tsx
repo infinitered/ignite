@@ -44,9 +44,9 @@ import { useAppTheme } from "@/utils/useAppTheme"
 
 const ICON_SIZE = 14
 
-const rnrImage1 = require("assets/images/demo/rnr-image-1.png")
-const rnrImage2 = require("assets/images/demo/rnr-image-2.png")
-const rnrImage3 = require("assets/images/demo/rnr-image-3.png")
+const rnrImage1 = require("@assets/images/demo/rnr-image-1.png")
+const rnrImage2 = require("@assets/images/demo/rnr-image-2.png")
+const rnrImage3 = require("@assets/images/demo/rnr-image-3.png")
 
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 

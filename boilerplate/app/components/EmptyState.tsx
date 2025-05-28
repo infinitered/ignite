@@ -7,7 +7,7 @@ import { translate } from "@/i18n/translate"
 import { Text, TextProps } from "./Text"
 import { Button, ButtonProps } from "./Button"
 
-const sadFace = require("assets/images/sad-face.png")
+const sadFace = require("@assets/images/sad-face.png")
 
 interface EmptyStateProps {
   /**

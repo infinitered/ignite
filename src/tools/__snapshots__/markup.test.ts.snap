@@ -101,8 +101,8 @@ import { AppStackScreenProps } from \\"@/navigators\\"
 import type { ThemedStyle } from \\"@/theme\\"
 import { useSafeAreaInsetsStyle } from \\"@/utils/useSafeAreaInsetsStyle\\"
 
-const welcomeLogo = require(\\"assets/images/logo.png\\")
-const welcomeFace = require(\\"assets/images/welcome-face.png\\")
+const welcomeLogo = require(\\"@assets/images/logo.png\\")
+const welcomeFace = require(\\"@assets/images/welcome-face.png\\")
 
 interface WelcomeScreenProps extends AppStackScreenProps<\\"Welcome\\"> {}
 
