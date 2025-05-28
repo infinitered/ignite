@@ -29,7 +29,7 @@ onFlowStart:
       text: ${FAVORITES_TEXT}
     direction: UP
     timeout: 50000
-    speed: 40
+    speed: 90
     visibilityPercentage: 100
 - tapOn:
     text: ${FAVORITES_TEXT}
