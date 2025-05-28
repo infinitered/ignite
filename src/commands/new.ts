@@ -36,7 +36,7 @@ import { mstDependenciesToRemove } from "../tools/mst"
 import {
   findAndRemoveDependencies,
   findAndUpdateDependencyVersions,
-  newArchCompatExpectedVersions,
+  oldArchCompatExpectedVersions,
 } from "../tools/dependencies"
 import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
@@ -671,11 +671,11 @@ module.exports = {
         packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
-      if (newArchEnabled) {
-        log(`Swapping new architecture compatible dependencies...`)
+      if (!newArchEnabled) {
+        log(`Swapping old architecture compatible dependencies...`)
         packageJsonRaw = findAndUpdateDependencyVersions(
           packageJsonRaw,
-          newArchCompatExpectedVersions,
+          oldArchCompatExpectedVersions,
         )
       }
 

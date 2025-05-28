@@ -43,6 +43,6 @@ export function findAndUpdateDependencyVersions(
   return updatedPackageJson
 }
 
-export const newArchCompatExpectedVersions = {
-  "react-native-mmkv": "3.2.0",
+export const oldArchCompatExpectedVersions = {
+  "react-native-mmkv": "^2.12.2",
 }
