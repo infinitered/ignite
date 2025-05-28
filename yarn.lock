@@ -5580,7 +5580,7 @@ __metadata:
     eslint-plugin-reactotron: "npm:^0.1.7"
     gluegun: "npm:5.1.6"
     husky: "npm:^7.0.1"
-    jest: "npm:^29.2.1"
+    jest: "npm:~29.7.0"
     prettier: "npm:^3.3.3"
     react: "npm:19.0.0"
     semantic-release: "npm:^17.4.2"
@@ -6697,7 +6697,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.2.1":
+"jest@npm:~29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
