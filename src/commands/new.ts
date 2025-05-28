@@ -803,15 +803,15 @@ module.exports = {
         const appJson = JSON.parse(appJsonRaw)
 
         // Inject ignite version to app.json
-        appJson.ignite.version = igniteVersion
+        appJson.extra.ignite.version = igniteVersion
 
         if (newArchEnabled === true) {
-          appJson.expo.newArchEnabled = true
+          appJson.newArchEnabled = true
         }
 
         if (experimentalExpoRouter) {
-          appJson.expo.experiments.typedRoutes = true
-          appJson.expo.plugins.push("expo-router")
+          appJson.experiments.typedRoutes = true
+          appJson.plugins.push("expo-router")
         }
 
         write("./app.json", appJson)
