@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement, ComponentType } from "react"
+import { RefObject, ReactElement, ComponentType } from "react"
 import {
   StyleProp,
   TextStyle,
@@ -90,6 +90,10 @@ export interface ListItemProps extends TouchableOpacityProps {
    * Overrides `leftIcon`.
    */
   LeftComponent?: ReactElement
+  /**
+   * Optional ref
+   */
+  ref?: RefObject<View>
 }
 
 interface ListItemActionProps {
@@ -106,11 +110,9 @@ interface ListItemActionProps {
  * @param {ListItemProps} props - The props for the `ListItem` component.
  * @returns {JSX.Element} The rendered `ListItem` component.
  */
-export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
-  props: ListItemProps,
-  ref,
-) {
+export const ListItem = (props: ListItemProps) => {
   const {
+    ref,
     bottomSeparator,
     children,
     height = 56,
@@ -175,7 +177,7 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
       </Wrapper>
     </View>
   )
-})
+}
 
 /**
  * @param {ListItemActionProps} props - The props for the `ListItemAction` component.

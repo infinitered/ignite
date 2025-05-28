@@ -1,9 +1,9 @@
-import { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
+import { ComponentType, RefObject, useImperativeHandle, useRef } from "react"
 import {
   ImageStyle,
   StyleProp,
   // eslint-disable-next-line no-restricted-imports
-  TextInput,
+  TextInput as RNTextInput,
   TextInputProps,
   TextStyle,
   TouchableOpacity,
@@ -101,6 +101,10 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    * Note: It is a good idea to memoize this.
    */
   LeftAccessory?: ComponentType<TextFieldAccessoryProps>
+  /**
+   * An optional ref
+   */
+  ref?: RefObject<RNTextInput>
 }
 
 /**
@@ -109,8 +113,9 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
  * @param {TextFieldProps} props - The props for the `TextField` component.
  * @returns {JSX.Element} The rendered `TextField` component.
  */
-export const TextField = forwardRef(function TextField(props: TextFieldProps, ref: Ref<TextInput>) {
+export const TextField = (props: TextFieldProps) => {
   const {
+    ref,
     labelTx,
     label,
     labelTxOptions,
@@ -130,7 +135,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     inputWrapperStyle: $inputWrapperStyleOverride,
     ...TextInputProps
   } = props
-  const input = useRef<TextInput>(null)
+  const input = useRef<RNTextInput>(null)
 
   const {
     themed,
@@ -180,7 +185,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     input.current?.focus()
   }
 
-  useImperativeHandle(ref, () => input.current as TextInput)
+  useImperativeHandle(ref, () => input.current as RNTextInput)
 
   return (
     <TouchableOpacity
@@ -210,7 +215,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           />
         )}
 
-        <TextInput
+        <RNTextInput
           ref={input}
           underlineColorAndroid={colors.transparent}
           textAlignVertical="top"
@@ -243,7 +248,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       )}
     </TouchableOpacity>
   )
-})
+}
 
 const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,

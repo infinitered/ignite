@@ -1,7 +1,7 @@
-import { TOptions } from "i18next"
+import { ReactNode, RefObject } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { ReactNode, forwardRef, ForwardedRef } from "react"
+import { TOptions } from "i18next"
 
 import { isRTL, translate, TxKeyPath } from "@/i18n"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
@@ -46,6 +46,10 @@ export interface TextProps extends RNTextProps {
    * Children components.
    */
   children?: ReactNode
+  /**
+   * Optional ref
+   */
+  ref?: RefObject<RNText | null>
 }
 
 /**
@@ -55,8 +59,8 @@ export interface TextProps extends RNTextProps {
  * @param {TextProps} props - The props for the `Text` component.
  * @returns {JSX.Element} The rendered `Text` component.
  */
-export const Text = forwardRef(function Text(props: TextProps, ref: ForwardedRef<RNText>) {
-  const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
+export const Text = (props: TextProps) => {
+  const { ref, weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
   const { themed } = useAppTheme()
 
   const i18nText = tx && translate(tx, txOptions)
@@ -76,7 +80,7 @@ export const Text = forwardRef(function Text(props: TextProps, ref: ForwardedRef
       {content}
     </RNText>
   )
-})
+}
 
 const $sizeStyles = {
   xxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,

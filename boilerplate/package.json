@@ -95,7 +95,9 @@
   },
   "expo": {
     "install": {
-      "exclude": ["@shopify/flash-list"]
+      "exclude": [
+        "@shopify/flash-list"
+      ]
     }
   }
 }
