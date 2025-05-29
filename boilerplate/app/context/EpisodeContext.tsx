@@ -9,6 +9,8 @@ import {
 } from "react"
 
 import { api } from "@/services/api"
+import { translate } from "@/i18n/translate"
+import { formatDate } from "@/utils/formatDate"
 
 export interface Episode {
   guid: string
@@ -100,6 +102,53 @@ export const useEpisodes = () => {
   const context = useContext(EpisodeContext)
   if (!context) throw new Error("useEpisodes must be used within an EpisodeProvider")
   return context
+}
+
+// A helper hook to extract and format episode details
+export const useEpisode = (episode: Episode) => {
+  const { hasFavorite } = useEpisodes()
+
+  const isFavorite = hasFavorite(episode)
+
+  let datePublished
+  try {
+    const formatted = formatDate(episode.pubDate)
+    datePublished = {
+      textLabel: formatted,
+      accessibilityLabel: translate("demoPodcastListScreen:accessibility.publishLabel", {
+        date: formatted,
+      }),
+    }
+  } catch {
+    datePublished = { textLabel: "", accessibilityLabel: "" }
+  }
+
+  const seconds = Number(episode.enclosure?.duration ?? 0)
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = Math.floor((seconds % 3600) % 60)
+  const duration = {
+    textLabel: `${h > 0 ? `${h}:` : ""}${m > 0 ? `${m}:` : ""}${s}`,
+    accessibilityLabel: translate("demoPodcastListScreen:accessibility.durationLabel", {
+      hours: h,
+      minutes: m,
+      seconds: s,
+    }),
+  }
+
+  const trimmedTitle = episode.title?.trim()
+  const titleMatches = trimmedTitle?.match(/^(RNR.*\d)(?: - )(.*$)/)
+  const parsedTitleAndSubtitle =
+    titleMatches && titleMatches.length === 3
+      ? { title: titleMatches[1], subtitle: titleMatches[2] }
+      : { title: trimmedTitle, subtitle: "" }
+
+  return {
+    isFavorite,
+    datePublished,
+    duration,
+    parsedTitleAndSubtitle,
+  }
 }
 
 // @demo remove-file

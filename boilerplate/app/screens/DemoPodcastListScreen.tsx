@@ -20,7 +20,6 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 
-import { formatDate } from "@/utils/formatDate"
 import {
   Button,
   ButtonAccessoryProps,
@@ -33,7 +32,7 @@ import {
   Text,
 } from "@/components"
 import { isRTL, translate } from "@/i18n"
-import { useEpisodes, Episode } from "@/context/EpisodeContext"
+import { useEpisodes, Episode, useEpisode } from "@/context/EpisodeContext"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme"
@@ -146,8 +145,7 @@ const EpisodeCard = ({
     theme: { colors },
     themed,
   } = useAppTheme()
-  const { hasFavorite } = useEpisodes()
-  const isFavorite = useMemo(() => hasFavorite(episode), [episode, hasFavorite])
+  const { isFavorite, datePublished, duration, parsedTitleAndSubtitle } = useEpisode(episode)
 
   const liked = useSharedValue(isFavorite ? 1 : 0)
   const imageUri = useMemo<ImageSourcePropType>(() => {
@@ -251,55 +249,6 @@ const EpisodeCard = ({
       },
     [animatedLikeButtonStyles, animatedUnlikeButtonStyles, colors, themed],
   )
-
-  const datePublished = useMemo(() => {
-    try {
-      const formatted = formatDate(episode.pubDate)
-      return {
-        textLabel: formatted,
-        accessibilityLabel: translate("demoPodcastListScreen:accessibility.publishLabel", {
-          date: formatted,
-        }),
-      }
-    } catch {
-      return { textLabel: "", accessibilityLabel: "" }
-    }
-  }, [episode.pubDate])
-
-  const duration = useMemo(() => {
-    try {
-      const seconds = Number(episode.enclosure?.duration ?? 0)
-      const h = Math.floor(seconds / 3600)
-      const m = Math.floor((seconds % 3600) / 60)
-      const s = Math.floor((seconds % 3600) % 60)
-
-      const hDisplay = h > 0 ? `${h}:` : ""
-      const mDisplay = m > 0 ? `${m}:` : ""
-      const sDisplay = s > 0 ? s : ""
-      return {
-        textLabel: hDisplay + mDisplay + sDisplay,
-        accessibilityLabel: translate("demoPodcastListScreen:accessibility.durationLabel", {
-          hours: h,
-          minutes: m,
-          seconds: s,
-        }),
-      }
-    } catch {
-      return { textLabel: "", accessibilityLabel: "" }
-    }
-  }, [episode.enclosure?.duration])
-
-  const parsedTitleAndSubtitle = useMemo(() => {
-    const defaultValue = { title: episode.title?.trim(), subtitle: "" }
-
-    if (!defaultValue.title) return defaultValue
-
-    const titleMatches = defaultValue.title.match(/^(RNR.*\d)(?: - )(.*$)/)
-
-    if (!titleMatches || titleMatches.length !== 3) return defaultValue
-
-    return { title: titleMatches[1], subtitle: titleMatches[2] }
-  }, [episode.title])
 
   return (
     <Card
