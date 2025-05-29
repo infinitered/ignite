@@ -1,18 +1,11 @@
-import {
-  createContext,
-  FC,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react"
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo } from "react"
+import { useMMKVString } from "react-native-mmkv"
 
 export type AuthContextType = {
   isAuthenticated: boolean
-  authToken: string | undefined
-  authEmail: string
-  setAuthToken: (token: string | undefined) => void
+  authToken?: string
+  authEmail?: string
+  setAuthToken: (token?: string) => void
   setAuthEmail: (email: string) => void
   logout: () => void
   validationError: string
@@ -23,16 +16,16 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 export interface AuthProviderProps {}
 
 export const AuthProvider: FC<PropsWithChildren<AuthProviderProps>> = ({ children }) => {
-  const [authToken, setAuthToken] = useState<string | undefined>(undefined)
-  const [authEmail, setAuthEmail] = useState("")
+  const [authToken, setAuthToken] = useMMKVString("AuthProvider.authToken")
+  const [authEmail, setAuthEmail] = useMMKVString("AuthProvider.authEmail")
 
   const logout = useCallback(() => {
     setAuthToken(undefined)
     setAuthEmail("")
-  }, [])
+  }, [setAuthEmail, setAuthToken])
 
   const validationError = useMemo(() => {
-    if (authEmail.length === 0) return "can't be blank"
+    if (!authEmail || authEmail.length === 0) return "can't be blank"
     if (authEmail.length < 6) return "must be at least 6 characters"
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(authEmail)) return "must be a valid email address"
     return ""

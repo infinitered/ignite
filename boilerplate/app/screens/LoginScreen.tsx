@@ -36,12 +36,6 @@ export const LoginScreen: FC<LoginScreenProps> = (_props) => {
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
     setAuthPassword("ign1teIsAwes0m3")
-
-    // Return a "cleanup" function that React will run when the component unmounts
-    return () => {
-      setAuthPassword("")
-      setAuthEmail("")
-    }
   }, [setAuthEmail])
 
   const error = isSubmitted ? validationError : ""

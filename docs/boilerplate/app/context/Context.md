@@ -17,7 +17,7 @@ Here are some popular state management solutions you might consider:
 
 - Redux using [Redux Toolkit](https://github.com/reduxjs/redux-toolkit): A predictable state container for JavaScript apps. It is widely used and has a large ecosystem of libraries and tools.
 - [MobX](https://mobx.js.org/README.html): A simple, scalable state management solution that uses observable data structures.
-- [Mobx State Tree (MST)](https://mobx-state-tree.js.org/): MobX is a state management "engine", and MobX-State-Tree is a luxury car. MST gives you the structure, tools, and other features to get you where you're going.
+- [Mobx State Tree (MST)](https://mobx-state-tree.js.org/): If MobX is a state management "engine", then MobX-State-Tree is a luxury car. MST gives you the structure, tools, and other features to get you where you're going.
 - [Zustand](https://github.com/pmndrs/zustand): A small, fast and scalable bearbones state-management solution using simplified flux principles.
 - [Legend State](https://github.com/LegendApp/legend-state): A super fast all-in-one state and sync library.
 - [React Query](https://react-query.tanstack.com/): A powerful data-fetching library that can also manage local state.
