@@ -64,28 +64,28 @@ We've put great effort into the documentation as a team, please [read through it
 
 Nothing makes it into Ignite unless it's been proven on projects that Infinite Red works on. Ignite apps include the following rock-solid technical decisions out of the box:
 
-| Library                          | Category             | Version | Description                                    |
-| -------------------------------- | -------------------- | ------- | ---------------------------------------------- |
-| React Native                     | Mobile Framework     | v0.79   | The best cross-platform mobile framework       |
-| React                            | UI Framework         | v19     | The most popular UI framework in the world     |
-| TypeScript                       | Language             | v5      | Static typechecking                            |
-| React Navigation                 | Navigation           | v7      | Performant and consistent navigation framework |
-| MobX-State-Tree                  | State Management     | v5      | Observable state tree                          |
-| MobX-React-Lite                  | React Integration    | v3      | Re-render React performantly                   |
-| Expo                             | SDK                  | v53     | Allows (optional) Expo modules                 |
-| Expo Font                        | Custom Fonts         | v13     | Import custom fonts                            |
-| Expo Localization                | Internationalization | v16     | i18n support (including RTL!)                  |
-| Expo Status Bar                  | Status Bar Library   | v2      | Status bar support                             |
-| RN Reanimated                    | Animations           | v3      | Beautiful and performant animations            |
-| MMKV                             | Persistence          | v2      | State persistence                              |
-| apisauce                         | REST client          | v2      | Communicate with back-end                      |
-| Reactotron RN                    | Inspector/Debugger   | v3      | JS debugging                                   |
-| Hermes                           | JS engine            |         | Fine-tuned JS engine for RN                    |
-| Jest                             | Test Runner          | v29     | Standard test runner for JS apps               |
-| Maestro                          | Testing Framework    |         | Automate end-to-end UI testing                 |
-| date-fns                         | Date library         | v4      | Excellent date library                         |
-| react-native-keyboard-controller | Keyboard library     | v1      | Great keyboard manager library                 |
-| FlashList                        | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
+| Library                          | Category             | Version | Description                                             |
+| -------------------------------- | -------------------- | ------- | ------------------------------------------------------- |
+| React Native                     | Mobile Framework     | v0.79   | The best cross-platform mobile framework                |
+| React                            | UI Framework         | v19     | The most popular UI framework in the world              |
+| TypeScript                       | Language             | v5      | Static typechecking                                     |
+| React Navigation                 | Navigation           | v7      | Performant and consistent navigation framework          |
+| MobX-State-Tree                  | State Management     | v7      | Observable state tree                                   |
+| MobX-React-Lite                  | React Integration    | v4      | Re-render React performantly                            |
+| Expo                             | SDK                  | v53     | Allows (optional) Expo modules                          |
+| Expo Font                        | Custom Fonts         | v13     | Import custom fonts                                     |
+| Expo Localization                | Internationalization | v16     | i18n support (including RTL!)                           |
+| Expo Status Bar                  | Status Bar Library   | v2      | Status bar support                                      |
+| RN Reanimated                    | Animations           | v3      | Beautiful and performant animations                     |
+| MMKV                             | Persistence          | v2/3    | State persistence (version depends on new architecture) |
+| apisauce                         | REST client          | v3      | Communicate with back-end                               |
+| Jest                             | Test Runner          | v29     | Standard test runner for JS apps                        |
+| date-fns                         | Date library         | v4      | Excellent date library                                  |
+| react-native-keyboard-controller | Keyboard library     | v1      | Great keyboard manager library                          |
+| FlashList                        | FlatList replacement | v1      | A performant drop-in replacement for FlatList           |
+| Reactotron RN                    | Inspector/Debugger   | v5      | JS debugging                                            |
+| Maestro                          | Testing Framework    |         | Automate end-to-end UI testing                          |
+| Hermes                           | JS engine            |         | Fine-tuned JS engine for RN                             |
 
 Ignite also comes with a [component library](./docs/boilerplate/app/components/Components.md) that is tuned for custom designs, theming support, testing, custom fonts, generators, and much, much more.
 
