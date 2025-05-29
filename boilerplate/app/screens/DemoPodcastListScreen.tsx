@@ -325,7 +325,11 @@ const EpisodeCard = ({
           </Text>
         </View>
       }
-      content={`${parsedTitleAndSubtitle.title} - ${parsedTitleAndSubtitle.subtitle}`}
+      content={
+        parsedTitleAndSubtitle.subtitle
+          ? `${parsedTitleAndSubtitle.title} - ${parsedTitleAndSubtitle.subtitle}`
+          : parsedTitleAndSubtitle.title
+      }
       {...accessibilityHintProps}
       RightComponent={<Image source={imageUri} style={themed($itemThumbnail)} />}
       FooterComponent={
