@@ -24,7 +24,7 @@ We provide an [Ignite Cookbook recipe](https://ignitecookbook.com/docs/recipes/M
 
 ### Test Structure
 
-In Ignite, we include unit tests for pure functions, such as models or utility functions.
+In Ignite, we include unit tests for pure utility functions.
 
 Ignite uses Jest as our test runner. Jest tests are written using `it` or `test` statements, which take a describe of the test, and a function to execute the test code.
 

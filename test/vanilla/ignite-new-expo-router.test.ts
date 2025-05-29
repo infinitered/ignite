@@ -1,13 +1,13 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
 
-import { run, runIgnite, spawnIgniteAndPrintIfFail } from "../_test-helpers"
+import { run, spawnIgniteAndPrintIfFail } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
 
 describe(`ignite new with expo-router`, () => {
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
@@ -15,7 +15,7 @@ describe(`ignite new with expo-router`, () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await spawnIgniteAndPrintIfFail(
-        `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`,
+        `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --yes`,
         {
           pre: `cd ${tempDir}`,
           post: `cd ${originalDir}`,
@@ -30,8 +30,8 @@ describe(`ignite new with expo-router`, () => {
       filesystem.remove(tempDir) // clean up our mess
     })
 
-    it("should convert to Expo Router with MST", async () => {
-      expect(result).toContain("--state=mst")
+    it("should convert to Expo Router", async () => {
+      expect(result).toContain("--experimental=expo-router")
 
       // make sure src/navigators, src/screens, app/, app.tsx is gone
       const dirs = filesystem.list(appPath)
@@ -44,19 +44,10 @@ describe(`ignite new with expo-router`, () => {
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
       expect(templates).toContain("component")
-      expect(templates).toContain("model")
       expect(templates).toContain("screen")
       expect(templates).not.toContain("navigator")
 
       // inspect that destinationDir has been adjusted
-      const modelTpl = filesystem.read(`${appPath}/ignite/templates/model/NAME.ts.ejs`)
-      expect(modelTpl).not.toContain("destinationDir: app/models")
-      expect(modelTpl).toContain("destinationDir: src/models")
-
-      const modelTestTpl = filesystem.read(`${appPath}/ignite/templates/model/NAME.test.ts.ejs`)
-      expect(modelTestTpl).not.toContain("destinationDir: app/models")
-      expect(modelTestTpl).toContain("destinationDir: src/models")
-
       const componentTpl = filesystem.read(`${appPath}/ignite/templates/component/NAME.tsx.ejs`)
       expect(componentTpl).not.toContain("app/components")
       expect(componentTpl).toContain("src/components")
@@ -78,14 +69,6 @@ describe(`ignite new with expo-router`, () => {
       expect(reactotronConfig).not.toContain("navigate(")
       expect(reactotronConfig).not.toContain("react-navigation")
       expect(reactotronConfig).not.toContain("reset navigation state")
-
-      // make sure _layout sets up initial root store
-      const rootLayout = filesystem.read(`${appPath}/src/app/_layout.tsx`)
-      expect(rootLayout).toContain("useInitialRootStore")
-
-      // make sure index has observer
-      const rootIndex = filesystem.read(`${appPath}/src/app/index.tsx`)
-      expect(rootIndex).toContain("observer")
     })
 
     it("should pass test, lint, and compile checks", async () => {
@@ -99,50 +82,6 @@ describe(`ignite new with expo-router`, () => {
       await run(`bun run lint`, runOpts)
       await run(`bun run compile`, runOpts)
       expect(await run("git diff HEAD --no-ext-diff", runOpts)).toBe("")
-    })
-  })
-
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state-none --yes`, () => {
-    let tempDir: string
-    let result: string
-    let appPath: string
-
-    beforeAll(async () => {
-      tempDir = tempy.directory({ prefix: "ignite-" })
-      result = await runIgnite(
-        `new ${APP_NAME} --debug --packager=bun --install-deps=false --experimental=expo-router --state=none --remove-demo --yes`,
-        {
-          pre: `cd ${tempDir}`,
-          post: `cd ${originalDir}`,
-        },
-      )
-      appPath = filesystem.path(tempDir, APP_NAME)
-    })
-
-    afterAll(() => {
-      // console.log(tempDir) // uncomment for debugging, then run `code <tempDir>` to see the generated app
-      filesystem.remove(tempDir) // clean up our mess
-    })
-
-    it("should convert to Expo Router without MST", async () => {
-      expect(result).toContain("--state=none")
-      expect(result).not.toContain("Setting --state=mst")
-
-      // check the contents of ignite/templates
-      const templates = filesystem.list(`${appPath}/ignite/templates`)
-      expect(templates).toContain("component")
-      expect(templates).toContain("screen")
-      expect(templates).not.toContain("model")
-      expect(templates).not.toContain("navigator")
-
-      // same as with MST but..
-      // make sure _layout doesn't have mention of rehydrating root store
-      const rootLayout = filesystem.read(`${appPath}/src/app/_layout.tsx`)
-      expect(rootLayout).not.toContain("useInitialRootStore")
-
-      // make sure index does not have observer
-      const rootIndex = filesystem.read(`${appPath}/src/app/index.tsx`)
-      expect(rootIndex).not.toContain("observer")
     })
   })
 })

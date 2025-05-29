@@ -7,21 +7,7 @@ By default, Reactotron is configured to work with web and mobile apps and is con
 
 ### ReactotronConfig.ts
 
-The `reactotron-mst` plugin is included for MobX-State-Tree support.
-
-```typescript
-import { mst } from "reactotron-mst"
-const reactotron = Reactotron.configure({
-    ...
-}).use(
-  mst({
-    /** ignore some chatty `mobx-state-tree` actions  */
-    filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
-  }),
-)
-```
-
-There are also a few custom commands included. You can use `reactotron.onCustomCommand` to add your own own custom debugging tools to Reactotron. Here is an example:
+There are a few custom commands included with this configuration. You can use `reactotron.onCustomCommand` to add your own own custom debugging tools to Reactotron. Here is an example:
 
 ```typescript
 reactotron.onCustomCommand({

@@ -48,9 +48,6 @@
     "expo-system-ui": "~5.0.6",
     "i18next": "^23.14.0",
     "intl-pluralrules": "^2.0.1",
-    "mobx": "6.13.7",
-    "mobx-react-lite": "4.1.0",
-    "mobx-state-tree": "7.0.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-i18next": "^15.0.1",
@@ -82,7 +79,6 @@
     "jest-expo": "~53.0.5",
     "prettier": "^3.3.3",
     "reactotron-core-client": "^2.9.4",
-    "reactotron-mst": "^3.1.7",
     "reactotron-react-js": "^3.3.11",
     "reactotron-react-native": "^5.0.5",
     "reactotron-react-native-mmkv": "^0.2.6",
@@ -95,7 +91,9 @@
   },
   "expo": {
     "install": {
-      "exclude": ["@shopify/flash-list"]
+      "exclude": [
+        "@shopify/flash-list"
+      ]
     }
   }
 }

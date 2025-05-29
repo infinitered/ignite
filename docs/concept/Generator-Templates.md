@@ -90,27 +90,6 @@ patch:
 ---
 ```
 
-### patches
-
-You can patch multiple files with `patches`. It works just the same as `patch`, but allows for multiple.
-
-```tsx
----
-patches:
-  - path: "app/models/RootStore.ts"
-    after: "from \"mobx-state-tree\"\n"
-    insert: "import { <%= props.pascalCaseName %>Model } from \"../<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n"
-    skip: <%= !props.kebabCaseName.endsWith('store') %>
-  - path: "app/models/RootStore.ts"
-    after: "types.model(\"RootStore\").props({\n"
-    insert: "  <%= props.camelCaseName %>: types.optional(<%= props.pascalCaseName %>Model, {} as any),\n"
-    skip: <%= !props.kebabCaseName.endsWith('store') %>
-  - path: "app/models/index.ts"
-    append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>\"\n"
-    skip: <%= props.skipIndexFile %>
----
-```
-
 ## Notes
 
 Front matter is very powerful, but not necessarily super intuitive. If you have questions about it, ask in the [Ignite Slack community](https://community.infinite.red) or post a [Discussion](https://github.com/infinitered/ignite/discussions).

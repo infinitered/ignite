@@ -15,8 +15,8 @@ import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme"
 import { isRTL } from "@/i18n"
-import { useStores } from "@/models"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { useAuth } from "@/context/AuthContext"
 
 /**
  * @param {string} url - The URL to open in the browser.
@@ -32,9 +32,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   _props,
 ) {
   const { setThemeContextOverride, themeContext, themed } = useAppTheme()
-  const {
-    authenticationStore: { logout },
-  } = useStores()
+  const { logout } = useAuth()
 
   // @ts-expect-error
   const usingFabric = global.nativeFabricUIManager != null

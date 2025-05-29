@@ -1,7 +1,6 @@
 import { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { TextInput, TextStyle, ViewStyle } from "react-native"
-import { observer } from "mobx-react-lite"
 
 import {
   Button,
@@ -11,23 +10,21 @@ import {
   TextField,
   TextFieldAccessoryProps,
 } from "@/components"
-import { useStores } from "@/models"
 import { AppStackScreenProps } from "@/navigators"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { useAuth } from "@/context/AuthContext"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
-export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
+export const LoginScreen: FC<LoginScreenProps> = (_props) => {
   const authPasswordInput = useRef<TextInput>(null)
 
   const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
-  const {
-    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
-  } = useStores()
+  const { authEmail, setAuthEmail, setAuthToken, validationError } = useAuth()
 
   const {
     themed,
@@ -39,12 +36,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
     setAuthPassword("ign1teIsAwes0m3")
-
-    // Return a "cleanup" function that React will run when the component unmounts
-    return () => {
-      setAuthPassword("")
-      setAuthEmail("")
-    }
   }, [setAuthEmail])
 
   const error = isSubmitted ? validationError : ""
@@ -132,7 +123,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       />
     </Screen>
   )
-})
+}
 
 const $screenContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingVertical: spacing.xxl,
