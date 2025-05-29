@@ -1,5 +1,3 @@
-// @mst replace-next-line
-import { observer } from "mobx-react-lite"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
 import { Screen, Text } from "@/components"
@@ -11,8 +9,7 @@ import { useAppTheme } from "@/utils/useAppTheme"
 const welcomeLogo = require("@assets/images/logo.png")
 const welcomeFace = require("@assets/images/welcome-face.png")
 
-// @mst replace-next-line export default function WelcomeScreen() {
-export default observer(function WelcomeScreen() {
+export default function WelcomeScreen() {
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
   const { theme, themed } = useAppTheme()
 
@@ -40,8 +37,7 @@ export default observer(function WelcomeScreen() {
       </View>
     </Screen>
   )
-// @mst replace-next-line }
-})
+}
 
 const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,

@@ -5,14 +5,10 @@
  */
 import { Platform, NativeModules } from "react-native"
 import { ArgType } from "reactotron-core-client"
-import { mst } from "reactotron-mst" // @mst remove-current-line
 import mmkvPlugin from "reactotron-react-native-mmkv"
 import { ReactotronReactNative } from "reactotron-react-native"
 
-import {
-  storage,
-  clear, // @mst remove-current-line
-} from "@/utils/storage"
+import { storage } from "@/utils/storage"
 import { goBack, resetRoot, navigate } from "@/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
@@ -24,15 +20,6 @@ const reactotron = Reactotron.configure({
     Reactotron.clear()
   },
 })
-
-// @mst remove-block-start
-reactotron.use(
-  mst({
-    /* ignore some chatty `mobx-state-tree` actions */
-    filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
-  }),
-)
-// @mst remove-block-end
 
 reactotron.use(mmkvPlugin<ReactotronReactNative>({ storage }))
 
@@ -64,18 +51,6 @@ reactotron.onCustomCommand({
     NativeModules.DevMenu.show()
   },
 })
-
-// @mst remove-block-start
-reactotron.onCustomCommand({
-  title: "Reset Root Store",
-  description: "Resets the MST store",
-  command: "resetStore",
-  handler: () => {
-    Reactotron.log("resetting store")
-    clear()
-  },
-})
-// @mst remove-block-end
 
 reactotron.onCustomCommand({
   title: "Reset Navigation State",

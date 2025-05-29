@@ -62,7 +62,6 @@ describe("ignite new", () => {
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
       expect(templates).toContain("component")
-      expect(templates).toContain("model")
       expect(templates).toContain("screen")
       expect(templates).toContain("app-icon")
     })
@@ -99,10 +98,9 @@ describe("ignite new", () => {
       expect(igniteJSON.scripts.ios).toBe("expo run:ios")
     })
 
-    it("should have created app.tsx with export and RootStore", () => {
+    it("should have created app.tsx with export", () => {
       const appJS = filesystem.read(`${appPath}/app/app.tsx`)
       expect(appJS).toContain("export function App")
-      expect(appJS).toContain("RootStore")
     })
 
     it("should be able to use `generate` command and have pass output pass bun run test, bun run lint, and bun run compile scripts", async () => {
@@ -131,18 +129,6 @@ describe("ignite new", () => {
       expect(filesystem.list(`${appPath}/app/components`)).toContain("WompBomp.tsx")
       expect(filesystem.read(`${appPath}/app/components/WompBomp.tsx`)).toContain(
         "export const WompBomp",
-      )
-
-      // models
-      const modelGen = await runIgnite(`generate model mod-test`, runOpts)
-      expect(modelGen).toContain(`app/models/ModTest.ts`)
-      expect(modelGen).toContain(`app/models/ModTest.test.ts`)
-      expect(filesystem.list(`${appPath}/app/models`)).toContain("ModTest.ts")
-      expect(filesystem.read(`${appPath}/app/models/ModTest.ts`)).toContain(
-        "export const ModTestModel",
-      )
-      expect(filesystem.read(`${appPath}/app/models/index.ts`)).toContain(
-        `export * from "./ModTest"`,
       )
 
       // screens
@@ -264,7 +250,7 @@ describe("ignite new", () => {
 
       // #region Assert Changes Can Be Commit To Git
       // commit the change
-      await run(`git add ./app/models ./app/components ./app.json ./assets/images`, runOpts)
+      await run(`git add ./app/context ./app/components ./app.json ./assets/images`, runOpts)
       await run(`git commit -m "generated test components & assets"`, runOpts)
       // #endregion
 

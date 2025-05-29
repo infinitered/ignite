@@ -9,12 +9,11 @@ import {
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite" // @mst remove-current-line
 import { ComponentProps } from "react"
 
-import * as Screens from "@/screens"
+import { useAuth } from "@/context/AuthContext"
 import Config from "@/config"
-import { useStores } from "@/models" // @demo remove-current-line
+import * as Screens from "@/screens"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
@@ -23,10 +22,6 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
  *
  * For more information, see this documentation:
  *   https://reactnavigation.org/docs/params/
@@ -55,12 +50,9 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-// @mst replace-next-line const AppStack = () => {
-const AppStack = observer(function AppStack() {
+const AppStack = () => {
   // @demo remove-block-start
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
+  const { isAuthenticated } = useAuth()
   // @demo remove-block-end
   const {
     theme: { colors },
@@ -95,14 +87,12 @@ const AppStack = observer(function AppStack() {
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
-  // @mst replace-next-line }
-})
+}
 
 export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
-// @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
+export const AppNavigator = (props: NavigationProps) => {
   const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
     useThemeProvider()
 
@@ -117,5 +107,4 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       </NavigationContainer>
     </ThemeProvider>
   )
-  // @mst replace-next-line }
-})
+}

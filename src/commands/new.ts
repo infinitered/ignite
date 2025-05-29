@@ -32,7 +32,6 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import { mstDependenciesToRemove } from "../tools/mst"
 import {
   findAndRemoveDependencies,
   findAndUpdateDependencyVersions,
@@ -41,7 +40,6 @@ import {
 import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
-type StateMgmt = "mst" | "none"
 
 export interface Options {
   /**
@@ -153,13 +151,6 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
-  /**
-   * Whether or not to include MobX-State-Tree boilerplate code
-   *
-   * Input Source: `prompt.ask` | `parameter.option`
-   * @default mst
-   */
-  state?: StateMgmt
   /**
    * Whether or not to enable the New Architecture
    *
@@ -490,26 +481,8 @@ module.exports = {
 
     // #endregion
 
-    // #region Prompt to Remove MobX-State-Tree code
-    const defaultMST = "mst"
-    let stateMgmt = getDefault(options.state) ? defaultMST : options.state
-
-    if (stateMgmt === undefined) {
-      const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
-        type: "confirm",
-        name: "includeMST",
-        message:
-          "Include MobX-State-Tree for state management? (Recommended - opting out will remove the demo application)",
-        initial: true,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
-    }
-    // #endregion
-
     // #region Prompt to Remove Demo code
-    const defaultRemoveDemo = stateMgmt !== "mst" || experimentalExpoRouter
+    const defaultRemoveDemo = experimentalExpoRouter
     if (defaultRemoveDemo) {
       p(yellow(`Warning: the demo application will be removed.`))
     }
@@ -664,11 +637,6 @@ module.exports = {
         const patchesToRemove = findDemoPatches()
         log(`Removing demo patches... ${patchesToRemove}`)
         patchesToRemove.forEach((patch) => filesystem.cwd("./patches").remove(patch))
-      }
-
-      if (stateMgmt === "none") {
-        log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
-        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
       }
 
       if (!newArchEnabled) {
@@ -880,29 +848,6 @@ module.exports = {
       }
       // #endregion
 
-      // #region Remove MST code
-      const removeMstPart = stateMgmt === "none" ? "code" : "markup"
-      startSpinner(`Removing MobX-State-Tree ${removeMstPart}`)
-      try {
-        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-        const CMD = stateMgmt === "none" ? "remove-mst" : "remove-mst-markup"
-
-        log(`Ignite bin path: ${IGNITE}`)
-        await system.run(
-          `${IGNITE} ${CMD} "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
-          { onProgress: log },
-        )
-      } catch (e) {
-        log(e)
-        const additionalInfo =
-          stateMgmt === "none"
-            ? ` To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`
-            : ""
-        p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
-      }
-      stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
-      // #endregion
-
       // #region Run Format
       const formattingMessage = `Cleaning up`
       startSpinner(formattingMessage)
@@ -1012,7 +957,6 @@ module.exports = {
           y: yname,
           yes: yname,
           noTimeout,
-          state: stateMgmt,
         },
         projectName,
         toolbox,

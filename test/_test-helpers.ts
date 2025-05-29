@@ -174,19 +174,14 @@ patches:
   skip: <%= props.skipIndexFile %>
 ---
 import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { AppStackScreenProps } from "@/navigators"
 import { Screen, Text } from "@/components"
 // import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "@/models"
 
 interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
 
-export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>ScreenProps> = observer(function <%= props.pascalCaseName %>Screen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
-
+export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>ScreenProps> = () => {
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
@@ -194,7 +189,7 @@ export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>Sc
       <Text text="<%= props.camelCaseName %>" />
     </Screen>
   )
-})
+}
 
 const $root: ViewStyle = {
   flex: 1,
@@ -207,17 +202,16 @@ const $root: ViewStyle = {
 
 export function copyExpoRouterScreenGenerator(tempBoilerplatePath: string): void {
   const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { Screen, Text } from "@/components"
 
-export default observer(function <%= props.pascalCaseName %>Screen() {
+export default function <%= props.pascalCaseName %>Screen() {
   return (
     <Screen style={$root} preset="scroll">
       <Text text="<%= props.camelCaseName %>" />
     </Screen>
   )
-})
+}
 
 const $root: ViewStyle = {
   flex: 1,

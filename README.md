@@ -45,14 +45,6 @@ Here are a few videos / talks that introduce Ignite and show off some of its fea
         </a>
       </figure>
     </td>
-    <td>
-      <figure>
-        <a href="https://www.youtube.com/watch?v=n_VjjJxyd8Q">
-          <img src="https://img.youtube.com/vi/n_VjjJxyd8Q/sddefault.jpg" alt="Jamon's Code Quest on MobX-State-Tree" width="100%" /><br />
-        <figcaption><strong>Intro to MobX-State-Tree</strong></figcaption>
-        </a>
-      </figure>
-    </td>
   </tr>
 </table>
 
@@ -70,8 +62,6 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | React                            | UI Framework         | v19     | The most popular UI framework in the world              |
 | TypeScript                       | Language             | v5      | Static typechecking                                     |
 | React Navigation                 | Navigation           | v7      | Performant and consistent navigation framework          |
-| MobX-State-Tree                  | State Management     | v7      | Observable state tree                                   |
-| MobX-React-Lite                  | React Integration    | v4      | Re-render React performantly                            |
 | Expo                             | SDK                  | v53     | Allows (optional) Expo modules                          |
 | Expo Font                        | Custom Fonts         | v13     | Import custom fonts                                     |
 | Expo Localization                | Internationalization | v16     | i18n support (including RTL!)                           |
