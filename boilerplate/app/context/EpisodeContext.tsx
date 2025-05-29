@@ -100,9 +100,7 @@ export const EpisodeProvider: FC<PropsWithChildren<EpisodeProviderProps>> = ({ c
 
 export const useEpisodes = () => {
   const context = useContext(EpisodeContext)
-  if (!context) {
-    throw new Error("useEpisodes must be used within an EpisodeProvider")
-  }
+  if (!context) throw new Error("useEpisodes must be used within an EpisodeProvider")
   return context
 }
 
