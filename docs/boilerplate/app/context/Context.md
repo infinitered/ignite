@@ -13,7 +13,7 @@ Currently this folder contains the following React contexts that are meant to be
 
 There are many state management solutions available for React Native apps. React context comes built in and is a is a reasonable solution for many apps. But you may want to consider other solutions depending on your app's complexity and needs.
 
-Here are some popular state management solutions you might consider:
+Here are some popular state management solutions you might consider (not in any particular order):
 
 - Redux using [Redux Toolkit](https://github.com/reduxjs/redux-toolkit): A predictable state container for JavaScript apps. It is widely used and has a large ecosystem of libraries and tools.
 - [MobX](https://mobx.js.org/README.html): A simple, scalable state management solution that uses observable data structures.
