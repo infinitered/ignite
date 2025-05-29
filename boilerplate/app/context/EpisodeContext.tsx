@@ -10,14 +10,6 @@ import {
 
 import { api } from "@/services/api"
 
-interface Enclosure {
-  link: string
-  type: string
-  length: number
-  duration: number
-  rating: { scheme: string; value: string }
-}
-
 export interface Episode {
   guid: string
   title: string
@@ -27,7 +19,13 @@ export interface Episode {
   thumbnail: string
   description: string
   content: string
-  enclosure: Enclosure
+  enclosure: {
+    link: string
+    type: string
+    length: number
+    duration: number
+    rating: { scheme: string; value: string }
+  }
   categories: string[]
 }
 
