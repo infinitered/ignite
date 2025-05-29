@@ -77,7 +77,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
   // simulate a longer refresh, if the refresh is too fast for UX
   async function manualRefresh() {
     setRefreshing(true)
-    await Promise.all([fetchEpisodes(), delay(750)])
+    await Promise.allSettled([fetchEpisodes(), delay(750)])
     setRefreshing(false)
   }
 
