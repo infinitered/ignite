@@ -2,7 +2,7 @@
 
 The `context` folder is where you can put your [React context providers](https://react.dev/learn/passing-data-deeply-with-context) or any other state management solutions you choose to use in your Ignited app.
 
-Ignite used to include [mobx-state-tree](https://mobx-state-tree.js.org/) as the default state management solution, but over time Infinite Red's clients have chosen to use it less and less. We still love MST, and it was our go-to solution for many years, but shipping it by default with Ignite makes less sense now that there are so many other great options out there. We haven't settled on a single state management solution so simple React contexts are the default in this boilerplate.
+Ignite used to include [mobx-state-tree](https://mobx-state-tree.js.org/) as the default state management solution, but over time our projects have had more and more diverse state management solutions. We still love MST, and it was our go-to solution for many years, but shipping it by default with Ignite makes less sense now that there are so many other great options out there. Since we haven't settled on a single state management solution, simple React contexts are the default in this boilerplate.
 
 Currently this folder contains the following React contexts that are meant to be simple examples of how to use React context in your app:
 
