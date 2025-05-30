@@ -1,6 +1,5 @@
 import { spawn } from "child_process"
 import { WriteStream } from "fs"
-
 import { system, filesystem } from "gluegun"
 
 import { stripANSI } from "../src/tools/strip-ansi"

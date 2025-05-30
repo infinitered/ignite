@@ -1,17 +1,8 @@
 import { EOL } from "os"
 
-import { GluegunToolbox } from "../types"
-import {
-  isAndroidInstalled,
-  copyBoilerplate,
-  renameReactNativeApp,
-  replaceMaestroBundleIds,
-  createExpoRouterScreenTemplate,
-  refactorExpoRouterReactotronCmds,
-  updateExpoRouterSrcDir,
-  cleanupExpoRouterConversion,
-  updatePackagerCommandsInReadme,
-} from "../tools/react-native"
+import { cache } from "../tools/cache"
+import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
+import { boolFlag } from "../tools/flag"
 import { packager, PackagerName } from "../tools/packager"
 import {
   p,
@@ -29,10 +20,19 @@ import {
   INDENT,
   stopLastSpinner,
 } from "../tools/pretty"
+import {
+  isAndroidInstalled,
+  copyBoilerplate,
+  renameReactNativeApp,
+  replaceMaestroBundleIds,
+  createExpoRouterScreenTemplate,
+  refactorExpoRouterReactotronCmds,
+  updateExpoRouterSrcDir,
+  cleanupExpoRouterConversion,
+  updatePackagerCommandsInReadme,
+} from "../tools/react-native"
 import type { ValidationsExports } from "../tools/validations"
-import { boolFlag } from "../tools/flag"
-import { cache } from "../tools/cache"
-import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
+import { GluegunToolbox } from "../types"
 
 type Workflow = "cng" | "manual"
 
