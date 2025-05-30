@@ -1,5 +1,6 @@
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
+  root: true,
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
