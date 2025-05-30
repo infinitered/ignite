@@ -1,9 +1,11 @@
 import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
-import { ListItem, Screen, Text } from "@/components"
+import { ListItem } from "@/components/ListItem"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import { $styles } from "@/theme"
+import { $styles } from "@/theme/styles"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
 import { isRTL } from "@/i18n"
 import type { ThemedStyle } from "@/theme"

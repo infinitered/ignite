@@ -237,7 +237,8 @@ describe("ignite-cli generate screens expo-router style", () => {
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/log-in.tsx`)).toMatchInlineSnapshot(`
 "import React, { FC } from "react"
 import { ViewStyle } from "react-native"
-import { Screen, Text } from "@/components"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 
 export default function LogInScreen() {
   return (
@@ -270,7 +271,8 @@ const $root: ViewStyle = {
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/podcasts/[id].tsx`)).toMatchInlineSnapshot(`
 "import React, { FC } from "react"
 import { ViewStyle } from "react-native"
-import { Screen, Text } from "@/components"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 
 export default function IdScreen() {
   return (

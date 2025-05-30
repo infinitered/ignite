@@ -9,7 +9,7 @@ import {
 } from "react-native"
 
 import { isRTL, translate } from "@/i18n"
-import { $styles } from "@/theme"
+import { $styles } from "@/theme/styles"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
 import type { ThemedStyle } from "@/theme"

@@ -14,7 +14,9 @@ import {
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { ComponentProps } from "react"
 
-import * as Screens from "@/screens"
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
+import { LoginScreen } from "@/screens/LoginScreen"
+import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 import Config from "@/config"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 
@@ -66,7 +68,7 @@ const AppStack = () => {
         },
       }}
     >
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
@@ -85,9 +87,9 @@ export const AppNavigator = (props: NavigationProps) => {
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <Screens.ErrorBoundary catchErrors={Config.catchErrors}>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
           <AppStack />
-        </Screens.ErrorBoundary>
+        </ErrorBoundary>
       </NavigationContainer>
     </ThemeProvider>
   )
@@ -100,12 +102,10 @@ exports[`markup remove should remove all comments in WelcomeScreen 1`] = `
 import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
-import {
-  Text,
-  Screen,
-} from "@/components"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 import { isRTL } from "@/i18n"
-import { AppStackScreenProps } from "@/navigators"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
 import { $styles, type ThemedStyle } from "@/theme"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"

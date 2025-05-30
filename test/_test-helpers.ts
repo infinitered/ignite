@@ -168,8 +168,9 @@ patches:
 ---
 import React, { FC } from "react"
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "@/navigators"
-import { Screen, Text } from "@/components"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 // import { useNavigation } from "@react-navigation/native"
 
 interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
@@ -196,7 +197,8 @@ const $root: ViewStyle = {
 export function copyExpoRouterScreenGenerator(tempBoilerplatePath: string): void {
   const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
 import { ViewStyle } from "react-native"
-import { Screen, Text } from "@/components"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 
 export default function <%= props.pascalCaseName %>Screen() {
   return (

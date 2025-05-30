@@ -7,8 +7,9 @@ patches:
 ---
 import { FC } from "react"
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "@/navigators"
-import { Screen, Text } from "@/components"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 // import { useNavigation } from "@react-navigation/native"
 
 interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}

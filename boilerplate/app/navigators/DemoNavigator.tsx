@@ -3,15 +3,17 @@ import { CompositeScreenProps } from "@react-navigation/native"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { Icon } from "@/components"
-import { translate } from "@/i18n"
-import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "@/screens"
-import { DemoPodcastListScreen } from "@/screens/DemoPodcastListScreen"
+import { Icon } from "@/components/Icon"
+import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { EpisodeProvider } from "@/context/EpisodeContext"
+import { DemoShowroomScreen } from "@/screens/DemoShowroomScreen/DemoShowroomScreen"
+import { DemoCommunityScreen } from "@/screens/DemoCommunityScreen"
+import { DemoDebugScreen } from "@/screens/DemoDebugScreen"
+import { DemoPodcastListScreen } from "@/screens/DemoPodcastListScreen"
 
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
-import { EpisodeProvider } from "@/context/EpisodeContext"
 
 export type DemoTabParamList = {
   DemoCommunity: undefined

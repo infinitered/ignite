@@ -10,10 +10,13 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { Button, ListItem, Screen, Text } from "@/components"
+import { Button } from "@/components/Button"
+import { ListItem } from "@/components/ListItem"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme"
+import { $styles } from "@/theme/styles"
 import { isRTL } from "@/i18n"
 import { useAppTheme } from "@/utils/useAppTheme"
 import { useAuth } from "@/context/AuthContext"

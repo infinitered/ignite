@@ -9,37 +9,19 @@ import {
 } from "react"
 
 import { api } from "@/services/api"
+import type { EpisodeItem } from "@/services/api/types"
 import { translate } from "@/i18n/translate"
 import { formatDate } from "@/utils/formatDate"
-
-export interface Episode {
-  guid: string
-  title: string
-  pubDate: string
-  link: string
-  author: string
-  thumbnail: string
-  description: string
-  content: string
-  enclosure: {
-    link: string
-    type: string
-    length: number
-    duration: number
-    rating: { scheme: string; value: string }
-  }
-  categories: string[]
-}
 
 export type EpisodeContextType = {
   totalEpisodes: number
   totalFavorites: number
-  episodesForList: Episode[]
+  episodesForList: EpisodeItem[]
   fetchEpisodes: () => Promise<void>
   favoritesOnly: boolean
   toggleFavoritesOnly: () => void
-  hasFavorite: (episode: Episode) => boolean
-  toggleFavorite: (episode: Episode) => void
+  hasFavorite: (episode: EpisodeItem) => boolean
+  toggleFavorite: (episode: EpisodeItem) => void
 }
 
 export const EpisodeContext = createContext<EpisodeContextType | null>(null)
@@ -47,7 +29,7 @@ export const EpisodeContext = createContext<EpisodeContextType | null>(null)
 export interface EpisodeProviderProps {}
 
 export const EpisodeProvider: FC<PropsWithChildren<EpisodeProviderProps>> = ({ children }) => {
-  const [episodes, setEpisodes] = useState<Episode[]>([])
+  const [episodes, setEpisodes] = useState<EpisodeItem[]>([])
   const [favorites, setFavorites] = useState<string[]>([])
   const [favoritesOnly, setFavoritesOnly] = useState<boolean>(false)
 
@@ -65,7 +47,7 @@ export const EpisodeProvider: FC<PropsWithChildren<EpisodeProviderProps>> = ({ c
   }, [])
 
   const toggleFavorite = useCallback(
-    (episode: Episode) => {
+    (episode: EpisodeItem) => {
       if (favorites.some((fav) => fav === episode.guid)) {
         setFavorites((prev) => prev.filter((fav) => fav !== episode.guid))
       } else {
@@ -76,7 +58,7 @@ export const EpisodeProvider: FC<PropsWithChildren<EpisodeProviderProps>> = ({ c
   )
 
   const hasFavorite = useCallback(
-    (episode: Episode) => favorites.some((fav) => fav === episode.guid),
+    (episode: EpisodeItem) => favorites.some((fav) => fav === episode.guid),
     [favorites],
   )
 
@@ -105,7 +87,7 @@ export const useEpisodes = () => {
 }
 
 // A helper hook to extract and format episode details
-export const useEpisode = (episode: Episode) => {
+export const useEpisode = (episode: EpisodeItem) => {
   const { hasFavorite } = useEpisodes()
 
   const isFavorite = hasFavorite(episode)

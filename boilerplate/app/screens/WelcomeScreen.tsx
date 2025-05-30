@@ -1,14 +1,13 @@
 import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
-import {
-  Button, // @demo remove-current-line
-  Text,
-  Screen,
-} from "@/components"
+import { Button } from "@/components/Button" // @demo remove-current-line
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 import { isRTL } from "@/i18n"
-import { AppStackScreenProps } from "@/navigators"
-import { $styles, type ThemedStyle } from "@/theme"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
+import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
 import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"

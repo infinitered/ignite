@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-key */
 import { TextStyle, ViewStyle } from "react-native"
 
-import { Icon, TextField } from "@/components"
+import { Icon } from "@/components/Icon"
+import { TextField } from "@/components/TextField"
 import type { ThemedStyle } from "@/theme"
 
 import { Demo } from "../DemoShowroomScreen"

@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-key */
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
-import { Button, Icon, Text } from "@/components"
+import { Button } from "@/components/Button"
+import { Icon } from "@/components/Icon"
+import { Text } from "@/components/Text"
 import type { ThemedStyle } from "@/theme"
-import { translate } from "@/i18n"
+import { translate } from "@/i18n/translate"
 
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"

@@ -2,17 +2,13 @@
 import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 
-import {
-  Checkbox,
-  CheckboxToggleProps,
-  Radio,
-  RadioToggleProps,
-  Switch,
-  SwitchToggleProps,
-  Text,
-} from "@/components"
-import { $styles, type ThemedStyle } from "@/theme"
-import { translate } from "@/i18n"
+import { Checkbox, CheckboxToggleProps } from "@/components/Toggle/Checkbox"
+import { Radio, RadioToggleProps } from "@/components/Toggle/Radio"
+import { Switch, SwitchToggleProps } from "@/components/Toggle/Switch"
+import { Text } from "@/components/Text"
+import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
+import { translate } from "@/i18n/translate"
 
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"

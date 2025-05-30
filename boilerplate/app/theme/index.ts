@@ -75,7 +75,3 @@ export type ThemedStyleArray<T> = (
 export { colorsLight as colors }
 export { colorsDark }
 export { spacingLight as spacing }
-
-export * from "./styles"
-export * from "./typography"
-export * from "./timing"

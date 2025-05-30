@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-key */
 import { TextStyle, View, ViewStyle } from "react-native"
 
-import { Icon, ListItem, ListView, Text } from "@/components"
+import { Icon } from "@/components/Icon"
+import { ListItem } from "@/components/ListItem"
+import { ListView } from "@/components/ListView"
+import { Text } from "@/components/Text"
 import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme"
-import { translate } from "@/i18n"
+import { $styles } from "@/theme/styles"
+import { translate } from "@/i18n/translate"
 
 import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
