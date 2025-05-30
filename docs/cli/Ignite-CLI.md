@@ -104,10 +104,9 @@ Starts the interactive prompt for generating a new Ignite project. Any options n
 - `--workflow` string, one of `cng` or `manual` for project initialization
 - `--experimental` comma separated string, indicates experimental features (which may or may not be stable) to turn on during installation. **A CNG workflow is require for these flags** `--workflow=cng`
   - `expo-router` converts the base project to use [Expo Router](https://docs.expo.dev/router/introduction/) from React Navigation (**note:** the demo application will be removed)
-  - `new-arch` enables [The New Architecture](https://reactnative.dev/docs/new-architecture-intro)
   - `expo-canary` uses Expo's highly experimental canary release instead of the la test stable SDK
   - `expo-beta` uses Expo's latest beta SDK available instead of the latest stable SDK
-  - Examples: `--experimental=new-arch` or `--experimental=new-arch,expo-beta`
+  - Examples: `--experimental=expo-router` or `--experimental=expo-router,expo-beta`
 
 ### Issue
 
