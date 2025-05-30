@@ -17,7 +17,7 @@ if (__DEV__) {
   require("src/devtools/ReactotronConfig.ts")
 }
 
-export { ErrorBoundary } from "@/components/ErrorScreen/ErrorBoundary"
+export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
 
 export default function Root() {
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)

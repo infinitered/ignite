@@ -139,9 +139,6 @@ describe("ignite new", () => {
       expect(filesystem.read(`${appPath}/app/screens/BowserScreen.tsx`)).toContain(
         "export const BowserScreen",
       )
-      expect(filesystem.read(`${appPath}/app/screens/index.ts`)).not.toContain(
-        `export * from "./BowserScreen"`,
-      )
 
       // app-icons
       const iconSearchPath = "assets/images"

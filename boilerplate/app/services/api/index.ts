@@ -12,7 +12,7 @@ import {
 } from "apisauce"
 
 import Config from "@/config"
-import type { Episode } from "@/context/EpisodeContext" // @demo remove-current-line
+import type { EpisodeItem } from "@/services/api/types" // @demo remove-current-line
 
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
 import type {
@@ -54,7 +54,7 @@ export class Api {
   /**
    * Gets a list of recent React Native Radio episodes.
    */
-  async getEpisodes(): Promise<{ kind: "ok"; episodes: Episode[] } | GeneralApiProblem> {
+  async getEpisodes(): Promise<{ kind: "ok"; episodes: EpisodeItem[] } | GeneralApiProblem> {
     // make the api call
     const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(
       `api.json?rss_url=https%3A%2F%2Ffeeds.simplecast.com%2FhEI_f9Dx`,
@@ -71,7 +71,7 @@ export class Api {
       const rawData = response.data
 
       // This is where we transform the data into the shape we expect for our model.
-      const episodes: Episode[] =
+      const episodes: EpisodeItem[] =
         rawData?.items.map((raw) => ({
           ...raw,
         })) ?? []

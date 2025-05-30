@@ -28,10 +28,11 @@ import { ListView } from "@/components/ListView"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { Switch } from "@/components/Toggle/Switch"
-import { useEpisodes, Episode, useEpisode } from "@/context/EpisodeContext"
+import { useEpisodes, useEpisode } from "@/context/EpisodeContext"
 import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
+import type { EpisodeItem } from "@/services/api/types"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
 import { delay } from "@/utils/delay"
@@ -80,7 +81,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
-      <ListView<Episode>
+      <ListView<EpisodeItem>
         contentContainerStyle={themed([$styles.container, $listContentContainer])}
         data={episodesForList}
         extraData={totalEpisodes + totalFavorites}
@@ -136,7 +137,7 @@ const EpisodeCard = ({
   episode,
   onPressFavorite,
 }: {
-  episode: Episode
+  episode: EpisodeItem
   onPressFavorite: () => void
 }) => {
   const {
