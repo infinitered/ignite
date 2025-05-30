@@ -4,7 +4,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "@/components/Button" // @demo remove-current-line
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
-import { useAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
 import { isRTL } from "@/i18n"
 import type { AppStackScreenProps } from "@/navigators/AppNavigator"
 import type { ThemedStyle } from "@/theme"
