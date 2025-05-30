@@ -32,30 +32,11 @@ import {
 import type { ValidationsExports } from "../tools/validations"
 import { boolFlag } from "../tools/flag"
 import { cache } from "../tools/cache"
-import {
-  findAndRemoveDependencies,
-  findAndUpdateDependencyVersions,
-  oldArchCompatExpectedVersions,
-} from "../tools/dependencies"
 import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
 
 type Workflow = "cng" | "manual"
 
 export interface Options {
-  /**
-   * alias for `boilerplate`
-   *
-   * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
-   * @default undefined
-   */
-  b?: string
-  /**
-   * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
-   * @default undefined
-   */
-  boilerplate?: string
   /**
    * custom bundle identifier for iOS and Android
    *
@@ -151,10 +132,16 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
+
+  /**
+   * Deprecated Props:
+   */
+
   /**
    * Whether or not to enable the New Architecture
    *
    * Input Source: `prompt.ask` | `parameter.option`
+   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
    * @default true
    */
   newArch?: boolean
@@ -210,14 +197,13 @@ module.exports = {
     const projectNameKebab = kebabCase(projectName)
     // #endregion
 
-    // #region Boilerplate
-    // if they pass in --boilerplate, warn them to use old Ignite
-    const bname = options.b || options.boilerplate
-    if (bname) {
+    // New Architecture
+    if (options.newArch !== undefined && boolFlag(options.newArch) === false) {
       p()
-      p(yellow(`Different boilerplates are no longer supported in Ignite v4+.`))
-      p(gray(`To use the old CLI to support different boilerplates, try:`))
-      p(cyan(`npx ignite-cli@3 new ${projectName} --boilerplate ${bname}`))
+      p(yellow(`Ignited apps have the new architecture turned on by default.`))
+      p(gray(`If you need to ignite an app with the legacy architecture please use Ignite v10:`))
+      p()
+      p(cyan(`npx ignite-cli@10 new ${projectName} --new-arch=false`))
       process.exit(1)
     }
     // #endregion
@@ -464,23 +450,6 @@ module.exports = {
       }
     }
 
-    // New Architecture
-    const defaultNewArch = true
-    let newArchEnabled = getDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
-    if (newArchEnabled === undefined) {
-      const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
-        type: "confirm",
-        name: "experimentalNewArch",
-        message: "Enable the New Architecture?",
-        initial: defaultNewArch,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      newArchEnabled = newArchResponse.experimentalNewArch
-    }
-
-    // #endregion
-
     // #region Prompt to Remove Demo code
     const defaultRemoveDemo = experimentalExpoRouter
     if (defaultRemoveDemo) {
@@ -639,14 +608,6 @@ module.exports = {
         patchesToRemove.forEach((patch) => filesystem.cwd("./patches").remove(patch))
       }
 
-      if (!newArchEnabled) {
-        log(`Swapping old architecture compatible dependencies...`)
-        packageJsonRaw = findAndUpdateDependencyVersions(
-          packageJsonRaw,
-          oldArchCompatExpectedVersions,
-        )
-      }
-
       // Then write it back out.
       const packageJson = JSON.parse(packageJsonRaw)
       write("./package.json", packageJson)
@@ -773,10 +734,6 @@ module.exports = {
 
         // Inject ignite version to app.json
         appJson.extra.ignite.version = igniteVersion
-
-        if (newArchEnabled === true) {
-          appJson.newArchEnabled = true
-        }
 
         if (experimentalExpoRouter) {
           appJson.experiments.typedRoutes = true
@@ -940,8 +897,6 @@ module.exports = {
       p2()
       const cliCommand = buildCliCommand({
         flags: {
-          b: bname,
-          boilerplate: bname,
           bundle: bundleIdentifier,
           debug,
           git,
@@ -950,7 +905,6 @@ module.exports = {
           packager: packagerName,
           targetPath,
           removeDemo,
-          newArch: newArchEnabled,
           experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
           workflow,
           useCache,
@@ -1053,7 +1007,7 @@ module.exports = {
 }
 
 function buildCliCommand(args: {
-  flags: Required<Options>
+  flags: Required<Omit<Options, "newArch">>
   toolbox: GluegunToolbox
   projectName: string
 }): string {
@@ -1064,7 +1018,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "useCache", "y", "yes"]
+  const privateFlags: Flag[] = ["debug", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>
@@ -1079,4 +1033,20 @@ function buildCliCommand(args: {
     .join(" ")}`
 
   return cliCommand
+}
+
+// This function takes a package.json file as a string and removes the dependencies
+// supplied in dependenciesToRemove and returns the updated package.json as a string.
+export function findAndRemoveDependencies(
+  packageJsonRaw: string,
+  dependenciesToRemove: string[],
+): string {
+  let updatedPackageJson = packageJsonRaw
+
+  dependenciesToRemove.forEach((depName) => {
+    const regex = new RegExp(`"${depName}"\\s*:\\s*"[^"]+",?`, "g")
+    updatedPackageJson = updatedPackageJson.replace(regex, "")
+  })
+
+  return updatedPackageJson
 }
