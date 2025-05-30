@@ -4,11 +4,11 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Text } from "@/components/Text"
-import type { ThemedStyle } from "@/theme"
 import { translate } from "@/i18n/translate"
+import type { ThemedStyle } from "@/theme"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }

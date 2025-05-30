@@ -5,12 +5,12 @@ import { Icon } from "@/components/Icon"
 import { ListItem } from "@/components/ListItem"
 import { ListView } from "@/components/ListView"
 import { Text } from "@/components/Text"
+import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
-import { translate } from "@/i18n/translate"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const listData =

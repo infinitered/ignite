@@ -5,7 +5,6 @@ import { $styles } from "@/theme/styles"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 import { iconRegistry, IconTypes } from "../Icon"
-
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
 export interface CheckboxToggleProps extends Omit<ToggleProps<CheckboxInputProps>, "ToggleInput"> {

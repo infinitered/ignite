@@ -11,7 +11,8 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { isRTL, translate } from "@/i18n"
+import { isRTL } from "@/i18n"
+import { translate } from "@/i18n/translate"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
 import { $styles } from "@/theme/styles"
 import { useAppTheme } from "@/utils/useAppTheme"

@@ -2,16 +2,16 @@
 import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 
+import { Text } from "@/components/Text"
 import { Checkbox, CheckboxToggleProps } from "@/components/Toggle/Checkbox"
 import { Radio, RadioToggleProps } from "@/components/Toggle/Radio"
 import { Switch, SwitchToggleProps } from "@/components/Toggle/Switch"
-import { Text } from "@/components/Text"
+import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
-import { translate } from "@/i18n/translate"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {

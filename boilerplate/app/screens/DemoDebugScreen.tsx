@@ -1,5 +1,4 @@
 import { FC, useCallback, useMemo } from "react"
-import * as Application from "expo-application"
 import {
   LayoutAnimation,
   Linking,
@@ -9,17 +8,18 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import * as Application from "expo-application"
 
 import { Button } from "@/components/Button"
 import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
+import { useAuth } from "@/context/AuthContext"
+import { isRTL } from "@/i18n"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
-import { isRTL } from "@/i18n"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { useAuth } from "@/context/AuthContext"
 
 /**
  * @param {string} url - The URL to open in the browser.

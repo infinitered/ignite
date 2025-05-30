@@ -5,8 +5,8 @@ import { Icon } from "@/components/Icon"
 import { TextField } from "@/components/TextField"
 import type { ThemedStyle } from "@/theme"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $customInputStyle: ThemedStyle<TextStyle> = ({ colors }) => ({

@@ -453,7 +453,6 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { ComponentProps } from "react"
-
 import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { LoginScreen } from "@/screens/LoginScreen"
 import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"

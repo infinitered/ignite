@@ -4,18 +4,18 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { ComponentProps } from "react"
 import {
   NavigationContainer,
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { ComponentProps } from "react"
 
-import { useAuth } from "@/context/AuthContext"
 import Config from "@/config"
-import { WelcomeScreen } from "@/screens/WelcomeScreen"
-import { LoginScreen } from "@/screens/LoginScreen"
+import { useAuth } from "@/context/AuthContext"
 import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
+import { LoginScreen } from "@/screens/LoginScreen"
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line

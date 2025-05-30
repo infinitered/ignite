@@ -4,14 +4,14 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "@/components/Button" // @demo remove-current-line
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
+import { useAuth } from "@/context/AuthContext"
 import { isRTL } from "@/i18n"
 import type { AppStackScreenProps } from "@/navigators/AppNavigator"
 import type { ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
+import { useAppTheme } from "@/utils/useAppTheme"
 import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "@/utils/useAppTheme"
-import { useAuth } from "@/context/AuthContext"
 
 const welcomeLogo = require("@assets/images/logo.png")
 const welcomeFace = require("@assets/images/welcome-face.png")

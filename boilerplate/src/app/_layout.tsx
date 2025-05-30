@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { Slot, SplashScreen } from "expo-router"
-import { KeyboardProvider } from "react-native-keyboard-controller"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
+import { KeyboardProvider } from "react-native-keyboard-controller"
 
-import { customFontsToLoad } from "@/theme"
 import { initI18n } from "@/i18n"
+import { customFontsToLoad } from "@/theme/typography"
 import { loadDateFnsLocale } from "@/utils/formatDate"
 import { useThemeProvider } from "@/utils/useAppTheme"
 
@@ -17,7 +17,7 @@ if (__DEV__) {
   require("src/devtools/ReactotronConfig.ts")
 }
 
-export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
+export { ErrorBoundary } from "@/components/ErrorScreen/ErrorBoundary"
 
 export default function Root() {
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)

@@ -3,11 +3,11 @@ import { TextStyle, View, ViewStyle } from "react-native"
 
 import { Header } from "@/components/Header"
 import { Icon } from "@/components/Icon"
-import { $styles } from "@/theme/styles"
 import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $rightAlignTitle: TextStyle = {

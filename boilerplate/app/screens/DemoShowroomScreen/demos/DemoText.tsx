@@ -2,8 +2,8 @@
 import { Text } from "@/components/Text"
 import { translate } from "@/i18n/translate"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 export const DemoText: Demo = {

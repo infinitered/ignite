@@ -8,9 +8,9 @@ import {
   useState,
 } from "react"
 
+import { translate } from "@/i18n/translate"
 import { api } from "@/services/api"
 import type { EpisodeItem } from "@/services/api/types"
-import { translate } from "@/i18n/translate"
 import { formatDate } from "@/utils/formatDate"
 
 export type EpisodeContextType = {
