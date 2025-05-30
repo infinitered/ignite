@@ -39,6 +39,7 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/.maestro/flows/FavoritePodcast.yaml
    Found 'remove-file' in /user/home/ignite/.maestro/flows/Login.yaml
    Found 'remove-file' in /user/home/ignite/.maestro/shared/_Login.yaml
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/app.tsx
    Found '@demo remove-current-line' in /user/home/ignite/app/components/Icon.tsx
    Found 'remove-file' in /user/home/ignite/app/context/AuthContext.tsx
    Found 'remove-file' in /user/home/ignite/app/context/EpisodeContext.tsx
