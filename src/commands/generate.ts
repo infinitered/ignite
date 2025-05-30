@@ -63,7 +63,6 @@ async function generate(toolbox: GluegunToolbox) {
   const { written, overwritten, exists } = await generateFromTemplate(generator, {
     name: pascalName,
     originalName: name,
-    skipIndexFile: parameters.options.skipIndexFile,
     overwrite,
     subdirectory,
     dir,

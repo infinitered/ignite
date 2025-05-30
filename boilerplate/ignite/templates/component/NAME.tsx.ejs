@@ -1,9 +1,5 @@
 ---
 destinationDir: app/components/<%= props.subdirectory %>
-patch:
-  path: "app/components/index.ts"
-  append: "export * from \"./<%= props.subdirectory %><%= props.pascalCaseName %>\"\n"
-  skip: <%= props.skipIndexFile %>
 ---
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { useAppTheme } from "@/utils/useAppTheme"

@@ -239,7 +239,6 @@ type GeneratorCaseOptions = "auto" | "pascal" | "camel" | "kebab" | "snake" | "n
 type GeneratorOptions = {
   name: string
   originalName: string
-  skipIndexFile?: boolean
   subdirectory: string
   overwrite: boolean
   dir?: string

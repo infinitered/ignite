@@ -1,16 +1,9 @@
 ---
 destinationDir: app/screens
 patches:
-- path: "app/screens/index.ts"
-  append: "export * from \"./<%= props.pascalCaseName %>Screen\"\n"
-  skip: <%= props.skipIndexFile %>
 - path: "app/navigators/AppNavigator.tsx"
   replace: "// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST"
   insert: "<%= props.pascalCaseName %>: undefined\n\t// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST"
-- path: "app/navigators/AppNavigator.tsx"
-  replace: "{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}"
-  insert: "<Stack.Screen name=\"<%= props.pascalCaseName %>\" component={Screens.<%= props.pascalCaseName %>Screen} />\n\t\t\t{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}"
-  skip: <%= props.skipIndexFile %>
 ---
 import { FC } from "react"
 import { ViewStyle } from "react-native"

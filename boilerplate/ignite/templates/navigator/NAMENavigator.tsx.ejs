@@ -1,9 +1,5 @@
 ---
 destinationDir: app/navigators
-patch:
-  path: "app/navigators/index.ts"
-  append: "export * from \"./<%= props.pascalCaseName %>Navigator\"\n"
-  skip: <%= props.skipIndexFile %>
 ---
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import {
