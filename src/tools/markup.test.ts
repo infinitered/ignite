@@ -329,13 +329,11 @@ const WelcomeScreen = /* jsx */ `
 import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
-import {
-  Button, // @demo remove-current-line
-  Text,
-  Screen,
-} from "@/components"
+import { Button } from "@/components/Button" // @demo remove-current-line
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 import { isRTL } from "@/i18n"
-import { AppStackScreenProps } from "@/navigators"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
 import { $styles, type ThemedStyle } from "@/theme"
 import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
@@ -455,8 +453,9 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { ComponentProps } from "react"
-
-import * as Screens from "@/screens"
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
+import { LoginScreen } from "@/screens/LoginScreen"
+import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 import Config from "@/config"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 
@@ -519,13 +518,13 @@ const AppStack = () => {
       {isAuthenticated ? (
         <>
           {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
           {/* @demo remove-block-start */}
           <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
         </>
       )}
       {/* @demo remove-block-end */}
@@ -547,9 +546,9 @@ export const AppNavigator = (props: NavigationProps) => {
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <Screens.ErrorBoundary catchErrors={Config.catchErrors}>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
           <AppStack />
-        </Screens.ErrorBoundary>
+        </ErrorBoundary>
       </NavigationContainer>
     </ThemeProvider>
   )

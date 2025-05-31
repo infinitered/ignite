@@ -2,18 +2,15 @@ import { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { TextInput, TextStyle, ViewStyle } from "react-native"
 
-import {
-  Button,
-  PressableIcon,
-  Screen,
-  Text,
-  TextField,
-  TextFieldAccessoryProps,
-} from "@/components"
-import { AppStackScreenProps } from "@/navigators"
+import { Button } from "@/components/Button"
+import { PressableIcon } from "@/components/Icon"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+import { TextField, type TextFieldAccessoryProps } from "@/components/TextField"
+import { useAuth } from "@/context/AuthContext"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
 import type { ThemedStyle } from "@/theme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { useAuth } from "@/context/AuthContext"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 

@@ -8,8 +8,8 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { $styles } from "@/theme"
 import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 import { Icon, IconTypes } from "./Icon"

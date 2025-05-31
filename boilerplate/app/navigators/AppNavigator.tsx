@@ -4,16 +4,18 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { ComponentProps } from "react"
 import {
   NavigationContainer,
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { ComponentProps } from "react"
 
-import { useAuth } from "@/context/AuthContext"
 import Config from "@/config"
-import * as Screens from "@/screens"
+import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
+import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
+import { LoginScreen } from "@/screens/LoginScreen" // @demo remove-current-line
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
@@ -73,13 +75,13 @@ const AppStack = () => {
       {isAuthenticated ? (
         <>
           {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
           {/* @demo remove-block-start */}
           <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
         </>
       )}
       {/* @demo remove-block-end */}
@@ -101,9 +103,9 @@ export const AppNavigator = (props: NavigationProps) => {
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <Screens.ErrorBoundary catchErrors={Config.catchErrors}>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
           <AppStack />
-        </Screens.ErrorBoundary>
+        </ErrorBoundary>
       </NavigationContainer>
     </ThemeProvider>
   )

@@ -5,11 +5,11 @@
  */
 import { Platform, NativeModules } from "react-native"
 import { ArgType } from "reactotron-core-client"
-import mmkvPlugin from "reactotron-react-native-mmkv"
 import { ReactotronReactNative } from "reactotron-react-native"
+import mmkvPlugin from "reactotron-react-native-mmkv"
 
-import { storage } from "@/utils/storage"
 import { goBack, resetRoot, navigate } from "@/navigators/navigationUtilities"
+import { storage } from "@/utils/storage"
 
 import { Reactotron } from "./ReactotronClient"
 

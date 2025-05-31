@@ -39,6 +39,7 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/.maestro/flows/FavoritePodcast.yaml
    Found 'remove-file' in /user/home/ignite/.maestro/flows/Login.yaml
    Found 'remove-file' in /user/home/ignite/.maestro/shared/_Login.yaml
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/app.tsx
    Found '@demo remove-current-line' in /user/home/ignite/app/components/Icon.tsx
    Found 'remove-file' in /user/home/ignite/app/context/AuthContext.tsx
    Found 'remove-file' in /user/home/ignite/app/context/EpisodeContext.tsx
@@ -77,10 +78,9 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DemoUseCase.tsx
    Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/DrawerIconButton.tsx
    Found 'remove-file' in /user/home/ignite/app/screens/DemoShowroomScreen/SectionListWithKeyboardAwareScrollView.tsx
-   Found '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/index.ts
    Found 'remove-file' in /user/home/ignite/app/screens/LoginScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/screens/WelcomeScreen.tsx
-   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/api.ts
+   Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/index.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/theme/styles.ts
    Removed empty directory '/user/home/ignite/.maestro/flows'
    Removed empty directory '/user/home/ignite/app/context'

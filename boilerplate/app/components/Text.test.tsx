@@ -1,5 +1,5 @@
-import { render } from "@testing-library/react-native"
 import { NavigationContainer } from "@react-navigation/native"
+import { render } from "@testing-library/react-native"
 
 import { Text } from "./Text"
 

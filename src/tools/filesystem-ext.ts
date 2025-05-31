@@ -1,6 +1,5 @@
-import * as pathlib from "path"
-
 import { filesystem } from "gluegun"
+import * as pathlib from "path"
 
 /**
  * A lot like gluegun's filesystem.subdirectories(), but gets files too.

@@ -1,6 +1,5 @@
 import { spawn } from "child_process"
 import { WriteStream } from "fs"
-
 import { system, filesystem } from "gluegun"
 
 import { stripANSI } from "../src/tools/strip-ansi"
@@ -162,21 +161,15 @@ export function copyDefaultScreenGenerator(tempBoilerplatePath: string): void {
   const REACT_NAVIGATION_SCREEN_TPL = `---
 destinationDir: app/screens
 patches:
-- path: "app/screens/index.ts"
-  append: "export * from "./<%= props.pascalCaseName %>Screen"\n"
-  skip: <%= props.skipIndexFile %>
 - path: "app/navigators/AppNavigator.tsx"
   replace: "// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST"
   insert: "<%= props.pascalCaseName %>: undefined\n\t// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST"
-- path: "app/navigators/AppNavigator.tsx"
-  replace: "{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}"
-  insert: "<Stack.Screen name="<%= props.pascalCaseName %>" component={Screens.<%= props.pascalCaseName %>Screen} />\n\t\t\t{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}"
-  skip: <%= props.skipIndexFile %>
 ---
 import React, { FC } from "react"
 import { ViewStyle } from "react-native"
-import { AppStackScreenProps } from "@/navigators"
-import { Screen, Text } from "@/components"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 // import { useNavigation } from "@react-navigation/native"
 
 interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
@@ -203,7 +196,8 @@ const $root: ViewStyle = {
 export function copyExpoRouterScreenGenerator(tempBoilerplatePath: string): void {
   const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
 import { ViewStyle } from "react-native"
-import { Screen, Text } from "@/components"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 
 export default function <%= props.pascalCaseName %>Screen() {
   return (

@@ -2,7 +2,7 @@ import { forwardRef, ReactElement, ReactNode, useCallback } from "react"
 import { ScrollViewProps, SectionList, SectionListProps } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 
-import { DEFAULT_BOTTOM_OFFSET } from "@/components"
+import { DEFAULT_BOTTOM_OFFSET } from "@/components/Screen"
 
 type SectionType<ItemType> = {
   name: string

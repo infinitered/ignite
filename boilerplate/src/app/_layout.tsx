@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { Slot, SplashScreen } from "expo-router"
-import { KeyboardProvider } from "react-native-keyboard-controller"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
-import { customFontsToLoad } from "@/theme"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+
 import { initI18n } from "@/i18n"
+import { customFontsToLoad } from "@/theme/typography"
 import { loadDateFnsLocale } from "@/utils/formatDate"
 import { useThemeProvider } from "@/utils/useAppTheme"
-
 
 SplashScreen.preventAutoHideAsync()
 
@@ -30,7 +30,7 @@ export default function Root() {
       .then(() => loadDateFnsLocale())
   }, [])
 
-  const loaded = fontsLoaded && isI18nInitialized 
+  const loaded = fontsLoaded && isI18nInitialized
 
   useEffect(() => {
     if (fontError) throw fontError

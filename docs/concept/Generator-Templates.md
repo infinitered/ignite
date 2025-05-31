@@ -41,7 +41,6 @@ filename: <%= props.camelCaseName %>.tsx
 There's a provided `props` object that contains the following properties:
 
 ```
-props.skipIndexFile  // boolean, if --skip-index-file is passed it's `true`
 props.filename       // string, the name of the file being generated (e.g. "UserModel.tsx")
 props.pascalCaseName // string, PascalCase version of the name that is passed in (e.g. "UserModel")
 props.camelCaseName  // string, camelCase version of the name (e.g. "userModel")
@@ -86,7 +85,6 @@ This lets you patch another file, such as an index file. Example:
 patch:
   path: "app/screens/index.ts"
   append: "export * from \"./<%= props.kebabCaseName %>/<%= props.kebabCaseName %>-screen\"\n"
-  skip: <%= props.skipIndexFile %>
 ---
 ```
 

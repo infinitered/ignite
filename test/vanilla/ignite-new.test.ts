@@ -132,15 +132,12 @@ describe("ignite new", () => {
       )
 
       // screens
-      const screenGen = await runIgnite(`generate screen bowser-screen --skip-index-file`, runOpts)
+      const screenGen = await runIgnite(`generate screen bowser-screen`, runOpts)
       expect(screenGen).toContain(`Stripping Screen from end of name`)
       expect(screenGen).toContain(`app/screens/BowserScreen.tsx`)
       expect(filesystem.list(`${appPath}/app/screens`)).toContain("BowserScreen.tsx")
       expect(filesystem.read(`${appPath}/app/screens/BowserScreen.tsx`)).toContain(
         "export const BowserScreen",
-      )
-      expect(filesystem.read(`${appPath}/app/screens/index.ts`)).not.toContain(
-        `export * from "./BowserScreen"`,
       )
 
       // app-icons
