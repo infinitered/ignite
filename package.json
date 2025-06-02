@@ -43,7 +43,7 @@
     "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
   "engines": {
-    "node": "^18.18.0 || >=20.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
