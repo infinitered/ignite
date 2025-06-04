@@ -17,7 +17,7 @@ import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { LoginScreen } from "@/screens/LoginScreen"
 import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 import Config from "@/config"
-import { useAppTheme, ThemeProvider } from "@/utils/useAppTheme"
+import { useAppTheme, type ThemeProvider } from "@/theme"
 
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useAuth } from "@/context/AuthContext"
