@@ -236,7 +236,8 @@ destinationDir: src/screens
 ---
 import { ViewStyle } from "react-native"
 
-import { Screen, Text } from "@/components"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
 
 export default function <%= props.pascalCaseName %>Screen() {
   return (
