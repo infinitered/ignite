@@ -234,8 +234,8 @@ export async function replaceMaestroBundleIds(
 export const EXPO_ROUTER_SCREEN_TEMPLATE = `---
 destinationDir: src/screens
 ---
-import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
+
 import { Screen, Text } from "@/components"
 
 export default function <%= props.pascalCaseName %>Screen() {

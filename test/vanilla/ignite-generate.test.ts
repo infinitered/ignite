@@ -205,7 +205,7 @@ describe("ignite-cli generate screens expo-router style", () => {
     `)
 
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/log-in.tsx`)).toMatchInlineSnapshot(`
-      "import { LogInScreen } from \\"@/screens/LogInScreen\\"
+      "import { LogInScreen } from "@/screens/LogInScreen"
       
       export default function LogIn() {
         return <LogInScreen />
@@ -229,7 +229,7 @@ describe("ignite-cli generate screens expo-router style", () => {
         "
       `)
     expect(read(`${TEMP_DIR}/src/app/(app)/(tabs)/podcasts/[id].tsx`)).toMatchInlineSnapshot(`
-      "import { IdScreen } from \\"@/screens/IdScreen\\"
+      "import { IdScreen } from "@/screens/IdScreen"
 
       export default function Id() {
         return <IdScreen />
