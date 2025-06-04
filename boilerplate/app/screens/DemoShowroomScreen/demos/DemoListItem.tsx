@@ -1,12 +1,17 @@
 /* eslint-disable react/jsx-key */
 import { TextStyle, View, ViewStyle } from "react-native"
-import { Icon, ListItem, ListView, Text } from "../../../components"
-import type { ThemedStyle } from "../../../theme"
-import { $styles } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
+
+import { Icon } from "@/components/Icon"
+import { ListItem } from "@/components/ListItem"
+import { ListView } from "@/components/ListView"
+import { Text } from "@/components/Text"
+import { translate } from "@/i18n/translate"
+import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
+
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
 
 const listData =
   `Tempor Id Ea Aliqua Pariatur Aliquip. Irure Minim Voluptate Consectetur Consequat Sint Esse Proident Irure. Nostrud Elit Veniam Nostrud Excepteur Minim Deserunt Quis Dolore Velit Nulla Irure Voluptate Tempor. Occaecat Amet Laboris Nostrud Qui Do Quis Lorem Ex Elit Fugiat Deserunt. In Pariatur Excepteur Exercitation Ex Incididunt Qui Mollit Dolor Sit Non. Culpa Officia Minim Cillum Exercitation Voluptate Proident Laboris Et Est Reprehenderit Quis Pariatur Nisi`

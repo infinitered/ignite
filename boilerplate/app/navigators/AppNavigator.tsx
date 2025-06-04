@@ -4,27 +4,26 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { ComponentProps } from "react"
 import {
   NavigationContainer,
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite" // @mst remove-current-line
-import * as Screens from "@/screens"
-import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
+
+import Config from "@/config"
+import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
+import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
+import { LoginScreen } from "@/screens/LoginScreen" // @demo remove-current-line
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
+import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
+
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
-import { ComponentProps } from "react"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
  *
  * For more information, see this documentation:
  *   https://reactnavigation.org/docs/params/
@@ -53,12 +52,9 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-// @mst replace-next-line const AppStack = () => {
-const AppStack = observer(function AppStack() {
+const AppStack = () => {
   // @demo remove-block-start
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
+  const { isAuthenticated } = useAuth()
   // @demo remove-block-end
   const {
     theme: { colors },
@@ -79,13 +75,13 @@ const AppStack = observer(function AppStack() {
       {isAuthenticated ? (
         <>
           {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
           {/* @demo remove-block-start */}
           <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
         </>
       )}
       {/* @demo remove-block-end */}
@@ -93,14 +89,12 @@ const AppStack = observer(function AppStack() {
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
-  // @mst replace-next-line }
-})
+}
 
 export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
-// @mst replace-next-line export const AppNavigator = (props: NavigationProps) => {
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
+export const AppNavigator = (props: NavigationProps) => {
   const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
     useThemeProvider()
 
@@ -109,11 +103,10 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <Screens.ErrorBoundary catchErrors={Config.catchErrors}>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
           <AppStack />
-        </Screens.ErrorBoundary>
+        </ErrorBoundary>
       </NavigationContainer>
     </ThemeProvider>
   )
-  // @mst replace-next-line }
-})
+}

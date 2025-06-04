@@ -43,7 +43,7 @@
     "ignite-cli:prod": "wrap () { node bin/ignite \"$@\" --compiled-build | cat; }; wrap"
   },
   "engines": {
-    "node": "^18.18.0 || >=20.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "deepmerge-json": "^1.1.0",
@@ -55,80 +55,25 @@
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "16.6.1",
+    "@types/react": "~19.0.10",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.57.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-n": "^17.10.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.1.0",
+    "eslint-config-expo": "~9.2.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-reactotron": "^0.1.7",
     "husky": "^7.0.1",
-    "jest": "^27.0.6",
+    "jest": "~29.7.0",
     "prettier": "^3.3.3",
+    "react": "19.0.0",
     "semantic-release": "^17.4.2",
-    "ts-jest": "^27.0.4",
-    "ts-node": "^10.2.0",
-    "typescript": "~5.3.3"
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "prettier",
-      "plugin:@typescript-eslint/recommended",
-      "standard"
-    ],
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "globals": {
-      "__DEV__": false,
-      "jasmine": false,
-      "beforeAll": false,
-      "afterAll": false,
-      "beforeEach": false,
-      "afterEach": false,
-      "test": false,
-      "expect": false,
-      "describe": false,
-      "jest": false,
-      "it": false
-    },
-    "rules": {
-      "@typescript-eslint/ban-ts-ignore": 0,
-      "@typescript-eslint/ban-ts-comment": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/member-delimiter-style": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-object-literal-type-assertion": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/no-use-before-define": 0,
-      "comma-dangle": 0,
-      "multiline-ternary": 0,
-      "no-undef": 0,
-      "no-unused-vars": 0,
-      "no-use-before-define": "off",
-      "quotes": 0,
-      "space-before-function-paren": 0
-    },
-    "ignorePatterns": [
-      "**/*.snap",
-      "**/*.txt",
-      "bin/ignite"
-    ]
-  },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "all",
-    "quoteProps": "consistent"
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.8.3"
   },
   "release": {
     "plugins": [
@@ -144,23 +89,6 @@
         }
       ]
     ]
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/boilerplate/"
-    ],
-    "testEnvironment": "node",
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx"
-    ],
-    "prettierPath": null
   },
   "packageManager": "yarn@4.9.1"
 }

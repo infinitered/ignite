@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import { Text } from "../../../components"
-import { Demo } from "../DemoShowroomScreen"
+import { Text } from "@/components/Text"
+import { translate } from "@/i18n/translate"
+
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
 
 export const DemoText: Demo = {
   name: "Text",

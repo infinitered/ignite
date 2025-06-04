@@ -1,12 +1,13 @@
-import { system, filesystem } from "gluegun"
-import { stripANSI } from "../src/tools/strip-ansi"
 import { spawn } from "child_process"
 import { WriteStream } from "fs"
+import { system, filesystem } from "gluegun"
+
 import {
   EXPO_ROUTER_SCREEN_TEMPLATE,
   EXPO_ROUTER_ROUTE_TEMPLATE,
   EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE,
 } from "../src/tools/react-native"
+import { stripANSI } from "../src/tools/strip-ansi"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
 const shellOpts = { stdio: "inherit" }

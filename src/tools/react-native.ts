@@ -1,4 +1,5 @@
 import { filesystem, GluegunToolbox } from "gluegun"
+
 import { children } from "./filesystem-ext"
 import { boolFlag } from "./flag"
 import { packager, PackagerName } from "./packager"
@@ -237,15 +238,13 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { Screen, Text } from "@/components"
 
-// @mst replace-next-line export default function <%= props.pascalCaseName %>Screen() {
-export default observer(function <%= props.pascalCaseName %>Screen() {
+export default function <%= props.pascalCaseName %>Screen() {
   return (
     <Screen style={$root} preset="scroll">
       <Text text="<%= props.camelCaseName %>" />
     </Screen>
   )
-// @mst replace-next-line }
-})
+}
 
 const $root: ViewStyle = {
   flex: 1,
@@ -344,8 +343,6 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
     // has its own tsconfig, needs updating separately
     "test/i18n.test.ts",
     "test/setup.ts",
-    "ignite/templates/model/NAME.ts.ejs",
-    "ignite/templates/model/NAME.test.ts.ejs",
     "ignite/templates/component/NAME.tsx.ejs",
   ]
   expoRouterFilesToFix.forEach((file) => {

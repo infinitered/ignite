@@ -1,11 +1,15 @@
 /* eslint-disable react/jsx-key */
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Button, Icon, Text } from "../../../components"
-import type { ThemedStyle } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
+
+import { Button } from "@/components/Button"
+import { Icon } from "@/components/Icon"
+import { Text } from "@/components/Text"
+import { translate } from "@/i18n/translate"
+import type { ThemedStyle } from "@/theme"
+
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
-import { translate } from "@/i18n"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }
 const $customButtonStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({

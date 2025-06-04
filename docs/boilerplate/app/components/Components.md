@@ -96,7 +96,7 @@ The `EmptyState` component can be used when there is no data to display and dire
 <EmptyState
   preset="default"
   style={{ padding: 10 }}
-  imageSource={require("../../assets/images/sad-face.png")}
+  imageSource={require("@assets/images/sad-face.png")}
   imageStyle={{ height: 400, width: 400 }}
   ImageProps={{ resizeMode: "contain" }}
   heading="EmptyState Heading"
@@ -203,7 +203,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
   preset="header"
   tx="welcome:header"
   txOptions={{
-    name: rootStore.currentUser.name,
+    name: currentUser.name,
   }}
   style={$header}
 />

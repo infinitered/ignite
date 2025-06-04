@@ -14,7 +14,7 @@ Since Ignite already comes with an RTL language, Arabic, adding any new ones wou
 
 To remove RTL support, follow the following steps:
 
-1. In `/app/i18n/i18n.ts`
+1. In `/app/i18n/index.ts`
 
 - Remove your RTL language imports
 - Remove references to those language objects
@@ -31,4 +31,4 @@ I18nManager.forceRTL(isRTL)
 
 ## Adding more languages
 
-See the [i18next Documentation](https://www.i18next.com/how-to/add-or-load-translations) to add languages to `app/i18n/i18n.ts`.
+See the [i18next Documentation](https://www.i18next.com/how-to/add-or-load-translations) to add languages to `app/i18n/index.ts`.

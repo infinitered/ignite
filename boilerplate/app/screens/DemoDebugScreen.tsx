@@ -1,5 +1,4 @@
 import { FC, useCallback, useMemo } from "react"
-import * as Application from "expo-application"
 import {
   LayoutAnimation,
   Linking,
@@ -9,12 +8,17 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { Button, ListItem, Screen, Text } from "../components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import type { ThemedStyle } from "@/theme"
-import { $styles } from "../theme"
+import * as Application from "expo-application"
+
+import { Button } from "@/components/Button"
+import { ListItem } from "@/components/ListItem"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+import { useAuth } from "@/context/AuthContext"
 import { isRTL } from "@/i18n"
-import { useStores } from "../models"
+import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
+import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 /**
@@ -31,9 +35,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
   _props,
 ) {
   const { setThemeContextOverride, themeContext, themed } = useAppTheme()
-  const {
-    authenticationStore: { logout },
-  } = useStores()
+  const { logout } = useAuth()
 
   // @ts-expect-error
   const usingFabric = global.nativeFabricUIManager != null

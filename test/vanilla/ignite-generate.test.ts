@@ -1,5 +1,6 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
+
 import {
   copyDefaultScreenGenerator,
   copyExpoRouterGeneratorTemplates,
@@ -44,201 +45,6 @@ const replaceHomeDir = (result: string, { mock = "/user/home/ignite", temp = TEM
   result.replace(new RegExp(temp, "g"), mock)
 
 describe("ignite-cli generate", () => {
-  describe("model", () => {
-    it("should generate Pizza model and test, patch index model export, not patch RootStore and testing --overwrite option", async () => {
-      const result = await runIgnite(`generate model Pizza`, options)
-
-      expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
-        "   
-           
-           Generated new files:
-           /user/home/ignite/app/models/Pizza.test.ts
-           /user/home/ignite/app/models/Pizza.ts
-        "
-      `)
-      expect(read(`${TEMP_DIR}/app/models/Pizza.ts`)).toMatchInlineSnapshot(`
-"import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
-import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
-
-/**
- * Model description here for TypeScript hints.
- */
-export const PizzaModel = types
-  .model(\\"Pizza\\")
-  .props({})
-  .actions(withSetPropAction)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-
-export interface Pizza extends Instance<typeof PizzaModel> {}
-export interface PizzaSnapshotOut extends SnapshotOut<typeof PizzaModel> {}
-export interface PizzaSnapshotIn extends SnapshotIn<typeof PizzaModel> {}
-export const createPizzaDefaultModel = () => types.optional(PizzaModel, {})
-
-// @mst remove-file
-"
-`)
-      expect(read(`${TEMP_DIR}/app/models/Pizza.test.ts`)).toMatchInlineSnapshot(`
-"import { PizzaModel } from \\"./Pizza\\"
-
-test(\\"can be created\\", () => {
-  const instance = PizzaModel.create({})
-
-  expect(instance).toBeTruthy()
-})
-
-// @mst remove-file
-"
-`)
-      expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./RootStore\\"
-        export * from \\"./helpers/getRootStore\\"
-        export * from \\"./helpers/useStores\\"
-        export * from \\"./helpers/setupRootStore\\"
-
-        // @mst remove-file
-        export * from \\"./Pizza\\"
-        "
-      `)
-      expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toEqual(
-        read(`${BOILERPLATE_PATH}/app/models/RootStore.ts`),
-      )
-      const resultWithoutOverwriteOption = await runIgnite(`generate model Pizza`, options)
-      expect(replaceHomeDir(resultWithoutOverwriteOption)).toMatchInlineSnapshot(`
-        "   
-           
-           Generated new files:
-           <none>
-           
-           Skipped these files because they already exist:
-           /user/home/ignite/app/models/Pizza.test.ts
-           /user/home/ignite/app/models/Pizza.ts
-           
-           To overwrite these files, run the command again with the \`--overwrite\` flag
-        "
-      `)
-      const resultWithOverwriteOption = await runIgnite(`generate model Pizza --overwrite`, options)
-      expect(replaceHomeDir(resultWithOverwriteOption)).toMatchInlineSnapshot(`
-        "   
-           
-           Generated new files:
-           /user/home/ignite/app/models/Pizza.test.ts
-           /user/home/ignite/app/models/Pizza.ts
-        "
-      `)
-    })
-
-    it("should generate PizzaStore model and test, patch index model export, patch RootStore and testing --overwrite option", async () => {
-      const result = await runIgnite(`generate model PizzaStore`, options)
-
-      expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
-        "   
-           
-           Generated new files:
-           /user/home/ignite/app/models/PizzaStore.test.ts
-           /user/home/ignite/app/models/PizzaStore.ts
-        "
-      `)
-      expect(read(`${TEMP_DIR}/app/models/PizzaStore.ts`)).toMatchInlineSnapshot(`
-"import { Instance, SnapshotIn, SnapshotOut, types } from \\"mobx-state-tree\\"
-import { withSetPropAction } from \\"./helpers/withSetPropAction\\"
-
-/**
- * Model description here for TypeScript hints.
- */
-export const PizzaStoreModel = types
-  .model(\\"PizzaStore\\")
-  .props({})
-  .actions(withSetPropAction)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-
-export interface PizzaStore extends Instance<typeof PizzaStoreModel> {}
-export interface PizzaStoreSnapshotOut extends SnapshotOut<typeof PizzaStoreModel> {}
-export interface PizzaStoreSnapshotIn extends SnapshotIn<typeof PizzaStoreModel> {}
-export const createPizzaStoreDefaultModel = () => types.optional(PizzaStoreModel, {})
-
-// @mst remove-file
-"
-`)
-      expect(read(`${TEMP_DIR}/app/models/PizzaStore.test.ts`)).toMatchInlineSnapshot(`
-"import { PizzaStoreModel } from \\"./PizzaStore\\"
-
-test(\\"can be created\\", () => {
-  const instance = PizzaStoreModel.create({})
-
-  expect(instance).toBeTruthy()
-})
-
-// @mst remove-file
-"
-`)
-      expect(read(`${TEMP_DIR}/app/models/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./RootStore\\"
-        export * from \\"./helpers/getRootStore\\"
-        export * from \\"./helpers/useStores\\"
-        export * from \\"./helpers/setupRootStore\\"
-
-        // @mst remove-file
-        export * from \\"./PizzaStore\\"
-        "
-      `)
-      expect(read(`${TEMP_DIR}/app/models/RootStore.ts`)).toMatchInlineSnapshot(`
-        "import { Instance, SnapshotOut, types } from \\"mobx-state-tree\\"
-        import { PizzaStoreModel } from \\"./PizzaStore\\"
-        import { AuthenticationStoreModel } from \\"./AuthenticationStore\\" // @demo remove-current-line
-        import { EpisodeStoreModel } from \\"./EpisodeStore\\" // @demo remove-current-line
-
-        /**
-         * A RootStore model.
-         */
-        export const RootStoreModel = types.model(\\"RootStore\\").props({
-          pizzaStore: types.optional(PizzaStoreModel, {} as any),
-          authenticationStore: types.optional(AuthenticationStoreModel, {}), // @demo remove-current-line
-          episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
-        })
-
-        /**
-         * The RootStore instance.
-         */
-        export interface RootStore extends Instance<typeof RootStoreModel> {}
-        /**
-         * The data of a RootStore.
-         */
-        export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
-
-        // @mst remove-file
-        "
-      `)
-      const resultWithoutOverwriteOption = await runIgnite(`generate model PizzaStore`, options)
-      expect(replaceHomeDir(resultWithoutOverwriteOption)).toMatchInlineSnapshot(`
-        "   
-           
-           Generated new files:
-           <none>
-           
-           Skipped these files because they already exist:
-           /user/home/ignite/app/models/PizzaStore.test.ts
-           /user/home/ignite/app/models/PizzaStore.ts
-           
-           To overwrite these files, run the command again with the \`--overwrite\` flag
-        "
-      `)
-      const resultWithOverwriteOption = await runIgnite(
-        `generate model PizzaStore --overwrite`,
-        options,
-      )
-      expect(replaceHomeDir(resultWithOverwriteOption)).toMatchInlineSnapshot(`
-        "   
-           
-           Generated new files:
-           /user/home/ignite/app/models/PizzaStore.test.ts
-           /user/home/ignite/app/models/PizzaStore.ts
-        "
-      `)
-    })
-  })
-
   describe("components", () => {
     it("should generate Topping component and patch index components export", async () => {
       const result = await runIgnite(`generate component Topping`, options)
@@ -251,63 +57,45 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
-        "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
-        import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { useAppTheme } from \\"@/utils/useAppTheme\\"
-        import type { ThemedStyle } from \\"@/theme\\"
-        import { Text } from \\"@/components/Text\\"
+"import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { Text } from "@/components/Text"
 
-        export interface ToppingProps {
-          /**
-           * An optional style override useful for padding & margin.
-           */
-          style?: StyleProp<ViewStyle>
-        }
+export interface ToppingProps {
+  /**
+   * An optional style override useful for padding & margin.
+   */
+  style?: StyleProp<ViewStyle>
+}
 
-        /**
-         * Describe your component here
-         */
-        // @mst replace-next-line export const Topping = (props: ToppingProps) => {
-        export const Topping = observer(function Topping(props: ToppingProps) {
-          const { style } = props
-          const $styles = [$container, style]
-          const { themed } = useAppTheme();
+/**
+ * Describe your component here
+ */
+export const Topping = (props: ToppingProps) => {
+  const { style } = props
+  const $styles = [$container, style]
+  const { themed } = useAppTheme();
 
-          return (
-            <View style={$styles}>
-              <Text style={themed($text)}>Hello</Text>
-            </View>
-          )
-        // @mst replace-next-line }
-        })
+  return (
+    <View style={$styles}>
+      <Text style={themed($text)}>Hello</Text>
+    </View>
+  )
+}
 
-        const $container: ViewStyle = {
-          justifyContent: \\"center\\",
-        }
+const $container: ViewStyle = {
+  justifyContent: "center",
+}
 
-        const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
-          fontFamily: typography.primary.normal,
-          fontSize: 14,
-          color: colors.palette.primary500,
-        })
-        "
-      `)
-      expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./AutoImage\\"
-        export * from \\"./Button\\"
-        export * from \\"./Card\\"
-        export * from \\"./Header\\"
-        export * from \\"./Icon\\"
-        export * from \\"./ListItem\\"
-        export * from \\"./ListView\\"
-        export * from \\"./Screen\\"
-        export * from \\"./Text\\"
-        export * from \\"./TextField\\"
-        export * from \\"./Toggle\\"
-        export * from \\"./EmptyState\\"
-        export * from \\"./Topping\\"
-        "
-      `)
+const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
+  fontFamily: typography.primary.normal,
+  fontSize: 14,
+  color: colors.palette.primary500,
+})
+"
+`)
+      expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`undefined`)
     })
 
     it("should generate Topping component in subdirectory and patch index components export", async () => {
@@ -321,63 +109,45 @@ test(\\"can be created\\", () => {
         "
       `)
       expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
-        "import { StyleProp, TextStyle, View, ViewStyle } from \\"react-native\\"
-        import { observer } from \\"mobx-react-lite\\" // @mst remove-current-line
-        import { useAppTheme } from \\"@/utils/useAppTheme\\"
-        import type { ThemedStyle } from \\"@/theme\\"
-        import { Text } from \\"@/components/Text\\"
+"import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme"
+import { Text } from "@/components/Text"
 
-        export interface ToppingProps {
-          /**
-           * An optional style override useful for padding & margin.
-           */
-          style?: StyleProp<ViewStyle>
-        }
+export interface ToppingProps {
+  /**
+   * An optional style override useful for padding & margin.
+   */
+  style?: StyleProp<ViewStyle>
+}
 
-        /**
-         * Describe your component here
-         */
-        // @mst replace-next-line export const Topping = (props: ToppingProps) => {
-        export const Topping = observer(function Topping(props: ToppingProps) {
-          const { style } = props
-          const $styles = [$container, style]
-          const { themed } = useAppTheme();
+/**
+ * Describe your component here
+ */
+export const Topping = (props: ToppingProps) => {
+  const { style } = props
+  const $styles = [$container, style]
+  const { themed } = useAppTheme();
 
-          return (
-            <View style={$styles}>
-              <Text style={themed($text)}>Hello</Text>
-            </View>
-          )
-        // @mst replace-next-line }
-        })
+  return (
+    <View style={$styles}>
+      <Text style={themed($text)}>Hello</Text>
+    </View>
+  )
+}
 
-        const $container: ViewStyle = {
-          justifyContent: \\"center\\",
-        }
+const $container: ViewStyle = {
+  justifyContent: "center",
+}
 
-        const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
-          fontFamily: typography.primary.normal,
-          fontSize: 14,
-          color: colors.palette.primary500,
-        })
-        "
-      `)
-      expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`
-        "export * from \\"./AutoImage\\"
-        export * from \\"./Button\\"
-        export * from \\"./Card\\"
-        export * from \\"./Header\\"
-        export * from \\"./Icon\\"
-        export * from \\"./ListItem\\"
-        export * from \\"./ListView\\"
-        export * from \\"./Screen\\"
-        export * from \\"./Text\\"
-        export * from \\"./TextField\\"
-        export * from \\"./Toggle\\"
-        export * from \\"./EmptyState\\"
-        export * from \\"./sub/to/my/Topping\\"
-        "
-      `)
+const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
+  fontFamily: typography.primary.normal,
+  fontSize: 14,
+  color: colors.palette.primary500,
+})
+"
+`)
+      expect(read(`${TEMP_DIR}/app/components/index.ts`)).toMatchInlineSnapshot(`undefined`)
     })
   })
 })
@@ -403,19 +173,6 @@ describe("ignite-cli generate with path params", () => {
          
          Generated new files:
          /user/home/ignite/src/screens/SicilianScreen.tsx
-      "
-    `)
-  })
-
-  it("should generate `pizza` model in the src/models directory with exact casing", async () => {
-    const result = await runIgnite(`generate model pizza --case=none --dir=src/models`, options)
-
-    expect(replaceHomeDir(result)).toMatchInlineSnapshot(`
-      "   
-         
-         Generated new files:
-         /user/home/ignite/src/models/pizza.test.ts
-         /user/home/ignite/src/models/pizza.ts
       "
     `)
   })

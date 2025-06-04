@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-key */
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
+
+import { Icon, iconRegistry, type IconTypes } from "@/components/Icon"
+import { Text } from "@/components/Text"
+import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
+
 import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
-import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme"
 
 const $demoIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   padding: spacing.xs,

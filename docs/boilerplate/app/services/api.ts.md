@@ -3,7 +3,7 @@
 This is the API service. It is a singleton class and contains the code for making API calls to your backend. You can use it like this:
 
 ```typescript
-import { api } from "../services/api"
+import { api } from "@/services/api"
 
 // ...
 const response = await api.getEpisodes()

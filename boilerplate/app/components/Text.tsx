@@ -1,11 +1,13 @@
-import { TOptions } from "i18next"
+import { ReactNode, forwardRef, ForwardedRef } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { isRTL, translate, TxKeyPath } from "@/i18n"
+import { TOptions } from "i18next"
+
+import { isRTL, TxKeyPath } from "@/i18n"
+import { translate } from "@/i18n/translate"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { useAppTheme } from "@/utils/useAppTheme"
 import { typography } from "@/theme/typography"
-import { ReactNode, forwardRef, ForwardedRef } from "react"
+import { useAppTheme } from "@/utils/useAppTheme"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary

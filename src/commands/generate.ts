@@ -1,8 +1,9 @@
 import { GluegunToolbox } from "gluegun"
+
+import { Options } from "./new"
 import { boolFlag } from "../tools/flag"
 import { frontMatterDirectoryDir, generateFromTemplate, runGenerator } from "../tools/generators"
 import { command, heading, p, prettyPrompt, warning } from "../tools/pretty"
-import { Options } from "./new"
 
 const SUB_DIR_DELIMITER = "/"
 
@@ -117,7 +118,6 @@ async function generate(toolbox: GluegunToolbox) {
   const { written, overwritten, exists } = await generateFromTemplate(generator, {
     name: pascalName,
     originalName: name,
-    skipIndexFile: parameters.options.skipIndexFile,
     overwrite,
     subdirectory,
     dir,

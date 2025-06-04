@@ -1,12 +1,13 @@
 import { filesystem } from "gluegun"
 import * as tempy from "tempy"
+
 import { run, runIgnite, spawnIgniteAndPrintIfFail } from "../_test-helpers"
 
 const APP_NAME = "Foo"
 const originalDir = process.cwd()
 
 describe(`ignite new with expo-router`, () => {
-  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`, () => {
+  describe(`ignite new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --yes`, () => {
     let tempDir: string
     let result: string
     let appPath: string
@@ -14,7 +15,7 @@ describe(`ignite new with expo-router`, () => {
     beforeAll(async () => {
       tempDir = tempy.directory({ prefix: "ignite-" })
       result = await spawnIgniteAndPrintIfFail(
-        `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --state=mst --yes`,
+        `new ${APP_NAME} --debug --packager=bun --install-deps=true --experimental=expo-router --yes`,
         {
           pre: `cd ${tempDir}`,
           post: `cd ${originalDir}`,
@@ -29,8 +30,8 @@ describe(`ignite new with expo-router`, () => {
       filesystem.remove(tempDir) // clean up our mess
     })
 
-    it("should convert to Expo Router with MST", async () => {
-      expect(result).toContain("--state=mst")
+    it("should convert to Expo Router", async () => {
+      expect(result).toContain("--experimental=expo-router")
 
       // make sure src/navigators, app/, app.tsx is gone
       const dirs = filesystem.list(appPath)
@@ -42,20 +43,11 @@ describe(`ignite new with expo-router`, () => {
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
       expect(templates).toContain("component")
-      expect(templates).toContain("model")
       expect(templates).toContain("screen")
       expect(templates).toContain("route")
       expect(templates).not.toContain("navigator")
 
       // inspect that destinationDir has been adjusted
-      const modelTpl = filesystem.read(`${appPath}/ignite/templates/model/NAME.ts.ejs`)
-      expect(modelTpl).not.toContain("destinationDir: app/models")
-      expect(modelTpl).toContain("destinationDir: src/models")
-
-      const modelTestTpl = filesystem.read(`${appPath}/ignite/templates/model/NAME.test.ts.ejs`)
-      expect(modelTestTpl).not.toContain("destinationDir: app/models")
-      expect(modelTestTpl).toContain("destinationDir: src/models")
-
       const componentTpl = filesystem.read(`${appPath}/ignite/templates/component/NAME.tsx.ejs`)
       expect(componentTpl).not.toContain("app/components")
       expect(componentTpl).toContain("src/components")

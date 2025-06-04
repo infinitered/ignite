@@ -10,11 +10,14 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { isRTL, translate } from "@/i18n"
+
+import { isRTL } from "@/i18n"
+import { translate } from "@/i18n/translate"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { $styles } from "../theme"
-import { Text, TextProps } from "./Text"
+import { $styles } from "@/theme/styles"
 import { useAppTheme } from "@/utils/useAppTheme"
+
+import { Text, TextProps } from "./Text"
 
 export interface TextFieldAccessoryProps {
   style: StyleProp<ViewStyle | TextStyle | ImageStyle>
@@ -256,7 +259,7 @@ const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   overflow: "hidden",
 })
 
-const $inputStyle: ThemedStyle<ViewStyle> = ({ colors, typography, spacing }) => ({
+const $inputStyle: ThemedStyle<TextStyle> = ({ colors, typography, spacing }) => ({
   flex: 1,
   alignSelf: "stretch",
   fontFamily: typography.primary.normal,

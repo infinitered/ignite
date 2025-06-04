@@ -8,10 +8,12 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
+
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { $styles } from "../theme"
-import { Text, TextProps } from "./Text"
+import { $styles } from "@/theme/styles"
 import { useAppTheme } from "@/utils/useAppTheme"
+
+import { Text, TextProps } from "./Text"
 
 type Presets = "default" | "reversed"
 

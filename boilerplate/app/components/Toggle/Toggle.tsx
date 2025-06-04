@@ -12,10 +12,12 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import { $styles } from "../../theme"
-import { Text, TextProps } from "../Text"
-import { useAppTheme } from "@/utils/useAppTheme"
+
 import type { ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
+import { useAppTheme } from "@/utils/useAppTheme"
+
+import { Text, TextProps } from "../Text"
 
 export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**
@@ -112,7 +114,7 @@ export interface BaseToggleInputProps<T> {
   disabled: boolean
   outerStyle: ViewStyle
   innerStyle: ViewStyle
-  detailStyle: Omit<ViewStyle & ImageStyle, "overflow">
+  detailStyle: ViewStyle | ImageStyle
 }
 
 /**

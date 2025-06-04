@@ -1,4 +1,5 @@
 import type { StyleProp } from "react-native"
+
 import { colors as colorsLight } from "./colors"
 import { colors as colorsDark } from "./colorsDark"
 import { spacing as spacingLight } from "./spacing"
@@ -74,7 +75,3 @@ export type ThemedStyleArray<T> = (
 export { colorsLight as colors }
 export { colorsDark }
 export { spacingLight as spacing }
-
-export * from "./styles"
-export * from "./typography"
-export * from "./timing"

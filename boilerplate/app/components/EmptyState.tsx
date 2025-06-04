@@ -1,12 +1,13 @@
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 
+import { translate } from "@/i18n/translate"
+import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/utils/useAppTheme"
+
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
-import { useAppTheme } from "@/utils/useAppTheme"
-import type { ThemedStyle } from "@/theme"
-import { translate } from "@/i18n/translate"
 
-const sadFace = require("../../assets/images/sad-face.png")
+const sadFace = require("@assets/images/sad-face.png")
 
 interface EmptyStateProps {
   /**

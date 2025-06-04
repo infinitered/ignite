@@ -317,7 +317,6 @@ describe("markup", () => {
       expect(result).not.toContain(blockEndComment)
       expect(result).not.toContain(currentLineComment)
       expect(result).not.toContain(`NavigatorScreenParams`)
-      expect(result).not.toContain(`import { useStores } from "../models"`)
       expect(result).not.toContain(
         `import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" "`,
       )
@@ -327,35 +326,32 @@ describe("markup", () => {
 })
 
 const WelcomeScreen = /* jsx */ `
-import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import {
-  Button, // @demo remove-current-line
-  Text,
-} from "app/components"
-import { isRTL } from "@/i18n"
-import { useStores } from "../models" // @demo remove-current-line
-import { AppStackScreenProps } from "../navigators"
-import type { ThemedStyle } from "app/theme"
-import { useHeader } from "../utils/useHeader" // @demo remove-current-line
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "app/utils/useAppTheme" // @demo remove-current-line
 
-const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
+import { Button } from "@/components/Button" // @demo remove-current-line
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+import { isRTL } from "@/i18n"
+import type { AppStackScreenProps } from "@/navigators/AppNavigator"
+import { $styles, type ThemedStyle } from "@/theme"
+import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
+import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
+import { useAppTheme } from "@/utils/useAppTheme"
+import { useAuth } from "@/context/AuthContext"
+
+const welcomeLogo = require("@assets/images/logo.png")
+const welcomeFace = require("@assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
+export const WelcomeScreen: FC<WelcomeScreenProps> = (
   _props, // @demo remove-current-line
-) {
+) => {
+  const { themed, theme } = useAppTheme()
   // @demo remove-block-start
-  const { themed } = useAppTheme()
   const { navigation } = _props
-  const {
-    authenticationStore: { logout },
-  } = useStores()
+  const { logout } = useAuth()
 
   function goNext() {
     navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
@@ -363,7 +359,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
   useHeader(
     {
-      rightTx: "common.logOut",
+      rightTx: "common:logOut",
       onRightPress: logout,
     },
     [logout],
@@ -373,7 +369,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
   return (
-    <View style={themed($container)}>
+    <Screen preset="fixed" contentContainerStyle={$styles.flex1}>
       <View style={themed($topContainer)}>
         <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
         <Text
@@ -383,10 +379,15 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
           preset="heading"
         />
         <Text tx="welcomeScreen:exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
+        <Image
+          style={$welcomeFace}
+          source={welcomeFace}
+          resizeMode="contain"
+          tintColor={theme.colors.palette.neutral900}
+        />
       </View>
 
-      <View style={[themed($bottomContainer), $bottomContainerInsets]}>
+      <View style={themed([$bottomContainer, $bottomContainerInsets])}>
         <Text tx="welcomeScreen:postscript" size="md" />
         {/* @demo remove-block-start */}
         <Button
@@ -397,14 +398,9 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         />
         {/* @demo remove-block-end */}
       </View>
-    </View>
+    </Screen>
   )
-})
-
-const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  flex: 1,
-  backgroundColor: colors.background,
-})
+}
 
 const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   flexShrink: 1,
@@ -456,21 +452,20 @@ import {
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
-import * as Screens from "app/screens"
-import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
+import { ComponentProps } from "react"
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
+import { LoginScreen } from "@/screens/LoginScreen"
+import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
+import Config from "@/config"
+import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
+
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useAppTheme, useThemeProvider } from "app/utils/useAppTheme"
+import { useAuth } from "@/context/AuthContext"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through undefined. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
  *
  * For more information, see this documentation:
  *   https://reactnavigation.org/docs/params/
@@ -499,15 +494,16 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-const AppStack = observer(function AppStack() {
+const AppStack = () => {
   // @demo remove-block-start
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
-  const { theme: { colors } } = useAppTheme()
-
+  const { isAuthenticated } = useAuth()
   // @demo remove-block-end
+  const {
+    theme: { colors },
+  } = useAppTheme()
+
   return (
+    
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -522,13 +518,13 @@ const AppStack = observer(function AppStack() {
       {isAuthenticated ? (
         <>
           {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
           {/* @demo remove-block-start */}
           <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
         </>
       )}
       {/* @demo remove-block-end */}
@@ -536,22 +532,25 @@ const AppStack = observer(function AppStack() {
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
-})
+}
 
 export interface NavigationProps
-  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+  extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const { theme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
+export const AppNavigator = (props: NavigationProps) => {
+  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
+    useThemeProvider()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <ThemeProvider value={{ theme, setThemeContextOverride }}>
+    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <AppStack />
+        <ErrorBoundary catchErrors={Config.catchErrors}>
+          <AppStack />
+        </ErrorBoundary>
       </NavigationContainer>
     </ThemeProvider>
   )
-})
+}
 `

@@ -51,7 +51,7 @@ import {
   useAppTheme,
   ThemeProvider,
   useThemeProvider
-} from 'app/theme'
+} from '@/theme'
 
 const $container: ThemedStyle<ViewStyle> = (theme) => ({
   flex: 1,
@@ -75,8 +75,7 @@ const Component = () => {
 }
 
 const App = () => {
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
-    useThemeProvider()
+  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <Component />
@@ -148,7 +147,8 @@ return <NavigationContainer theme={navigationTheme} {...props} />
 There are many component libraries that offer light/dark modes to their components. Here's an example of how to use `react-native-elements` with Ignite's theming system by extending their own `ThemeProvider`:
 
 ```tsx
-import { colorsDark, colorsLight, customFontsToLoad } from "src/theme"
+import { colorsDark, colorsLight } from "@/theme/colors"
+import { customFontsToLoad } from "@/theme/typography"
 import { createTheme as createRNEUITheme, ThemeProvider as RNEUIThemeProvider } from "@rneui/themed"
 
 export const ThemedRNEUIProvider = ({ children }) => {

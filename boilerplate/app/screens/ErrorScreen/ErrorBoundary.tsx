@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react"
+
 import { ErrorDetails } from "./ErrorDetails"
 
 interface Props {
