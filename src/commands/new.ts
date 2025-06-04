@@ -794,13 +794,8 @@ module.exports = {
         filesystem
           .cwd(targetPath)
           .find("app")
-          .forEach((file) => {
-            // skip copying anything in app/screens but the error screen
-            if (file.includes("screens") && !file.includes("Error")) {
-              return
-            }
-            filesystem.cwd(targetPath).move(file, file.replace("app", "src"))
-          })
+          .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
+
         updateExpoRouterSrcDir(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
         const screenTplPath = filesystem.path(
