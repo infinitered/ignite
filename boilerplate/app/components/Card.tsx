@@ -10,8 +10,7 @@ import {
 } from "react-native"
 
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { $styles } from "@/theme/styles"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { useAppTheme, $styles } from "@/theme"
 
 import { Text, TextProps } from "./Text"
 

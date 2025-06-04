@@ -9,8 +9,7 @@ import { Text } from "@/components/Text"
 import { TextField, type TextFieldAccessoryProps } from "@/components/TextField"
 import { useAuth } from "@/context/AuthContext"
 import type { AppStackScreenProps } from "@/navigators/AppNavigator"
-import type { ThemedStyle } from "@/theme"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { useAppTheme, type ThemedStyle } from "@/theme"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 

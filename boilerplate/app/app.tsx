@@ -28,6 +28,7 @@ import { AuthProvider } from "./context/AuthContext" // @demo remove-current-lin
 import { initI18n } from "./i18n"
 import { AppNavigator } from "./navigators/AppNavigator"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
+import { ThemeProvider } from "./theme/context"
 import { customFontsToLoad } from "./theme/typography"
 import { loadDateFnsLocale } from "./utils/formatDate"
 import * as storage from "./utils/storage"
@@ -94,19 +95,21 @@ export function App() {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardProvider>
-        {/* @demo remove-block-start */}
-        <AuthProvider>
-          {/* @demo remove-block-end */}
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
+      <ThemeProvider>
+        <KeyboardProvider>
           {/* @demo remove-block-start */}
-        </AuthProvider>
-        {/* @demo remove-block-end */}
-      </KeyboardProvider>
+          <AuthProvider>
+            {/* @demo remove-block-end */}
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+            {/* @demo remove-block-start */}
+          </AuthProvider>
+          {/* @demo remove-block-end */}
+        </KeyboardProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   )
 }

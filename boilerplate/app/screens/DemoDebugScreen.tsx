@@ -17,9 +17,8 @@ import { Text } from "@/components/Text"
 import { useAuth } from "@/context/AuthContext"
 import { isRTL } from "@/i18n"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import type { ThemedStyle } from "@/theme"
+import { useAppTheme, type ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
-import { useAppTheme } from "@/utils/useAppTheme"
 
 /**
  * @param {string} url - The URL to open in the browser.

@@ -14,8 +14,7 @@ import {
 import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
 import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { $styles } from "@/theme/styles"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { useAppTheme, $styles } from "@/theme"
 
 import { Text, TextProps } from "./Text"
 

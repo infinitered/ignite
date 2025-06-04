@@ -8,7 +8,7 @@ import { Radio, RadioToggleProps } from "@/components/Toggle/Radio"
 import { Switch, SwitchToggleProps } from "@/components/Toggle/Switch"
 import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme/styles"
+import { $styles } from "@/theme"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"

@@ -5,7 +5,7 @@ import { AutoImage } from "@/components/AutoImage"
 import { Text } from "@/components/Text"
 import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme/styles"
+import { $styles } from "@/theme"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"

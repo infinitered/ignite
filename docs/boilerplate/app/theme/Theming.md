@@ -50,7 +50,6 @@ import {
   type ThemedStyle,
   useAppTheme,
   ThemeProvider,
-  useThemeProvider
 } from '@/theme'
 
 const $container: ThemedStyle<ViewStyle> = (theme) => ({
@@ -75,9 +74,8 @@ const Component = () => {
 }
 
 const App = () => {
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
   return (
-    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+    <ThemeProvider>
       <Component />
     </ThemeProvider>
   )

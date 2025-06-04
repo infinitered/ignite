@@ -16,7 +16,7 @@ import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
 import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 import { LoginScreen } from "@/screens/LoginScreen" // @demo remove-current-line
 import { WelcomeScreen } from "@/screens/WelcomeScreen"
-import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
+import { useAppTheme } from "@/theme"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -95,18 +95,15 @@ export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
 export const AppNavigator = (props: NavigationProps) => {
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
-    useThemeProvider()
+  const { navigationTheme } = useAppTheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-      <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <AppStack />
-        </ErrorBoundary>
-      </NavigationContainer>
-    </ThemeProvider>
+    <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
+      <ErrorBoundary catchErrors={Config.catchErrors}>
+        <AppStack />
+      </ErrorBoundary>
+    </NavigationContainer>
   )
 }

@@ -4,7 +4,7 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Icon, iconRegistry, type IconTypes } from "@/components/Icon"
 import { Text } from "@/components/Text"
 import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme/styles"
+import { $styles } from "@/theme"
 
 import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"

@@ -3,7 +3,7 @@ import { useDrawerProgress } from "react-native-drawer-layout"
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 
 import { isRTL } from "@/i18n"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { useAppTheme } from "@/theme"
 
 interface DrawerIconButtonProps extends PressableProps {}
 

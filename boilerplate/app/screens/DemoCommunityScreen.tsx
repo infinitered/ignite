@@ -6,10 +6,9 @@ import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { isRTL } from "@/i18n"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import type { ThemedStyle } from "@/theme"
+import { useAppTheme, type ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
-import { useAppTheme } from "@/utils/useAppTheme"
 
 const chainReactLogo = require("@assets/images/demo/cr-logo.png")
 const reactNativeLiveLogo = require("@assets/images/demo/rnl-logo.png")

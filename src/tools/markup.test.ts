@@ -337,7 +337,7 @@ import type { AppStackScreenProps } from "@/navigators/AppNavigator"
 import { $styles, type ThemedStyle } from "@/theme"
 import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { useAppTheme } from "@/theme"
 import { useAuth } from "@/context/AuthContext"
 
 const welcomeLogo = require("@assets/images/logo.png")
@@ -457,7 +457,7 @@ import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { LoginScreen } from "@/screens/LoginScreen"
 import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 import Config from "@/config"
-import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
+import { useAppTheme, ThemeProvider } from "@/utils/useAppTheme"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
