@@ -2,8 +2,10 @@ import { useEffect, useMemo, useRef, useCallback } from "react"
 import { Animated, Image, ImageStyle, Platform, StyleProp, View, ViewStyle } from "react-native"
 
 import { iconRegistry } from "@/components/Icon"
+import { useAppTheme } from "@/context/ThemeContext"
 import { isRTL } from "@/i18n"
-import { useAppTheme, $styles, type ThemedStyle } from "@/theme"
+import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/theme/types"
 
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 

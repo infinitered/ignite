@@ -15,10 +15,11 @@ import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { useAuth } from "@/context/AuthContext"
+import { useAppTheme } from "@/context/ThemeContext"
 import { isRTL } from "@/i18n"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import { useAppTheme, type ThemedStyle } from "@/theme"
 import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/theme/types"
 
 /**
  * @param {string} url - The URL to open in the browser.

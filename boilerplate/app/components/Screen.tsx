@@ -14,7 +14,8 @@ import { StatusBar, StatusBarProps, StatusBarStyle } from "expo-status-bar"
 import { useScrollToTop } from "@react-navigation/native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 
-import { useAppTheme, $styles } from "@/theme"
+import { useAppTheme } from "@/context/ThemeContext"
+import { $styles } from "@/theme/styles"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 export const DEFAULT_BOTTOM_OFFSET = 50

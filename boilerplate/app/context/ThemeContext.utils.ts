@@ -1,4 +1,4 @@
-import type { Theme } from "./types"
+import type { Theme } from "../theme/types"
 
 const systemui = require("expo-system-ui")
 

@@ -2,7 +2,7 @@ import { ReactElement } from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { render, RenderOptions } from "@testing-library/react-native"
 
-import { ThemeProvider } from "@/theme"
+import { ThemeProvider } from "../app/context/ThemeContext"
 
 // This provides a custom renderer function for @testing-library/react-native.
 // Use this instead of the default `render` function to ensure that

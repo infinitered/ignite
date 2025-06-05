@@ -1,7 +1,8 @@
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 
+import { useAppTheme } from "@/context/ThemeContext"
 import { translate } from "@/i18n/translate"
-import { useAppTheme, type ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
 
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"

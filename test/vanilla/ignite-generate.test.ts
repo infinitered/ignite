@@ -58,7 +58,8 @@ describe("ignite-cli generate", () => {
       `)
       expect(read(`${TEMP_DIR}/app/components/Topping.tsx`)).toMatchInlineSnapshot(`
 "import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { useAppTheme, type ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/context/ThemeContext"
+import type { ThemedStyle } from "@/theme/types"
 import { Text } from "@/components/Text"
 
 export interface ToppingProps {
@@ -109,7 +110,8 @@ const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
       `)
       expect(read(`${TEMP_DIR}/app/components/sub/to/my/Topping.tsx`)).toMatchInlineSnapshot(`
 "import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { useAppTheme, type ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/context/ThemeContext"
+import type { ThemedStyle } from "@/theme/types"
 import { Text } from "@/components/Text"
 
 export interface ToppingProps {

@@ -15,10 +15,6 @@ import {
 } from "@react-navigation/native"
 import { useMMKVString } from "react-native-mmkv"
 
-import { storage } from "@/utils/storage"
-
-import { setImperativeTheming } from "./context.utils"
-import { darkTheme, lightTheme } from "./theme"
 import type {
   AllowedStylesT,
   ImmutableThemeContextModeT,
@@ -26,7 +22,11 @@ import type {
   ThemeContextModeT,
   ThemedFnT,
   ThemedStyle,
-} from "./types"
+} from "@/theme/types"
+import { storage } from "@/utils/storage"
+
+import { setImperativeTheming } from "./ThemeContext.utils"
+import { darkTheme, lightTheme } from "../theme/theme"
 
 export type ThemeContextType = {
   navigationTheme: NavTheme

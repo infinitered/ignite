@@ -1,7 +1,8 @@
 /* eslint-disable  react-native/no-inline-styles */
 import { StyleProp, View, ViewStyle } from "react-native"
 
-import { useAppTheme, type ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/context/ThemeContext"
+import type { ThemedStyle } from "@/theme/types"
 
 interface DemoDividerProps {
   type?: "vertical" | "horizontal"

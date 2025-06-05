@@ -11,10 +11,11 @@ import {
   ViewStyle,
 } from "react-native"
 
+import { useAppTheme } from "@/context/ThemeContext"
 import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { useAppTheme, $styles } from "@/theme"
+import { $styles } from "@/theme/styles"
+import type { ThemedStyle, ThemedStyleArray } from "@/theme/types"
 
 import { Text, TextProps } from "./Text"
 

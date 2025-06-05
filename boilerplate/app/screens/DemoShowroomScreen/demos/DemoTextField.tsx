@@ -3,7 +3,7 @@ import { TextStyle, ViewStyle } from "react-native"
 
 import { Icon } from "@/components/Icon"
 import { TextField } from "@/components/TextField"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"

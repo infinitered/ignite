@@ -3,8 +3,8 @@ import { TextStyle, View, ViewStyle } from "react-native"
 
 import { Header } from "@/components/Header"
 import { Icon } from "@/components/Icon"
-import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
+import { $styles } from "@/theme/styles"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"

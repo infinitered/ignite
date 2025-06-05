@@ -2,8 +2,9 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
+import { useAppTheme } from "@/context/ThemeContext"
 import { isRTL } from "@/i18n"
-import { useAppTheme, type ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 const welcomeLogo = require("@assets/images/logo.png")
