@@ -37,9 +37,12 @@ npx ignite-cli new MyFirstApp --yes
 
 ## 2. Building the app
 
-Once the app has been created, fire it up via one of the following:
+Once the app has been created, change to the project directory and fire it up via one of the following:
 
 ```bash
+# first
+cd MyFirstApp
+# then one of the following
 yarn run android
 yarn run ios
 yarn run web
