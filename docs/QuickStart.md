@@ -25,7 +25,7 @@ You'll need:
 npm install -g eas-cli
 ```
 
-- An Expo account, which you can [sign up for here](https://expo.dev/signup)
+- An Expo account. [Create one for free here](https://expo.dev/signup).
 
 ## 1. Create your first app
 
