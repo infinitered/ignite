@@ -77,4 +77,4 @@ In the end, though, Ignite is just a boilerplate. Feel free to adopt application
 
 #### Why is Package A included, but not Package B?
 
-The Ignite Boilerplate represents the current stack that [Infinite Red](https://infinite.red) generally uses to start a new project. Of course, each case is different, but that is the reason for the decision making behind which packages make it into the boilerplate.
+The Ignite Boilerplate represents the current stack that [Infinite Red](https://infinite.red) generally uses to start a new project. Of course, each case is different, but this is generally the stack that works well for us.
