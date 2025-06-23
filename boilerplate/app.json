@@ -21,7 +21,8 @@
       "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
       "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
     },
-    "allowBackup": false
+    "allowBackup": false,
+    "edgeToEdgeEnabled": true
   },
   "ios": {
     "icon": "./assets/images/app-icon-ios.png",
@@ -42,6 +43,15 @@
         "imageWidth": 300,
         "resizeMode": "contain",
         "backgroundColor": "#191015"
+      }
+    ],
+    [
+      "react-native-edge-to-edge",
+      {
+        "android": {
+          "parentTheme": "Light",
+          "enforceNavigationBarContrast": false
+        }
       }
     ]
   ],

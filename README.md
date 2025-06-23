@@ -73,6 +73,7 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 | date-fns                         | Date library         | v4      | Excellent date library                         |
 | react-native-keyboard-controller | Keyboard library     | v1      | Great keyboard manager library                 |
 | FlashList                        | FlatList replacement | v1      | A performant drop-in replacement for FlatList  |
+| react-native-edge-to-edge        | UI library           | v1      | Enables edge-to-edge in Android                |
 | Reactotron RN                    | Inspector/Debugger   | v5      | JS debugging                                   |
 | Maestro                          | Testing Framework    |         | Automate end-to-end UI testing                 |
 | Hermes                           | JS engine            |         | Fine-tuned JS engine for RN                    |
