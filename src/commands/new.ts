@@ -25,11 +25,13 @@ import {
   copyBoilerplate,
   renameReactNativeApp,
   replaceMaestroBundleIds,
-  createExpoRouterScreenTemplate,
   refactorExpoRouterReactotronCmds,
   updateExpoRouterSrcDir,
   cleanupExpoRouterConversion,
   updatePackagerCommandsInReadme,
+  createGeneratorTemplate,
+  EXPO_ROUTER_SCREEN_TEMPLATE,
+  EXPO_ROUTER_ROUTE_TEMPLATE,
 } from "../tools/react-native"
 import type { ValidationsExports } from "../tools/validations"
 import { GluegunToolbox } from "../types"
@@ -786,16 +788,23 @@ module.exports = {
          * 1. Move all files from app/ to src/
          * 2. Update code refs to app/ with src/
          * 3. Refactor Reactotron commands to use `router` instead of refs to react navigation
-         * 4. Create a screen template that makes sense for Expo Router
+         * 4. Create screen and route generator templates that makes sense for Expo Router
          * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
          */
         filesystem
           .cwd(targetPath)
           .find("app")
           .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
+
         updateExpoRouterSrcDir(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
-        createExpoRouterScreenTemplate(toolbox)
+        const screenTplPath = filesystem.path(
+          targetPath,
+          "ignite/templates/screen/NAMEScreen.tsx.ejs",
+        )
+        const routerTplPath = filesystem.path(targetPath, "ignite/templates/route/NAME.tsx.ejs")
+        createGeneratorTemplate(toolbox, screenTplPath, EXPO_ROUTER_SCREEN_TEMPLATE)
+        createGeneratorTemplate(toolbox, routerTplPath, EXPO_ROUTER_ROUTE_TEMPLATE)
         cleanupExpoRouterConversion(toolbox, targetPath)
 
         stopSpinner(expoRouterMsg, "🧭")

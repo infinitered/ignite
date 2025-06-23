@@ -228,22 +228,14 @@ export async function replaceMaestroBundleIds(
   )
 }
 
-export function createExpoRouterScreenTemplate(toolbox: GluegunToolbox) {
-  const { filesystem, parameters, print } = toolbox
-
-  // debug?
-  const debug = boolFlag(parameters.options.debug)
-  const log = <T = unknown>(m: T): T => {
-    debug && print.info(` ${m}`)
-    return m
-  }
-
-  try {
-    const TARGET_DIR = filesystem.path(process.cwd())
-    const filePath = filesystem.path(TARGET_DIR, "ignite/templates/screen/NAME.tsx.ejs")
-
-    const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
+/**
+ * Defines an ejs template for a screen when using Expo Router.
+ */
+export const EXPO_ROUTER_SCREEN_TEMPLATE = `---
+destinationDir: src/screens
+---
 import { ViewStyle } from "react-native"
+
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 
@@ -259,9 +251,49 @@ const $root: ViewStyle = {
   flex: 1,
 }
 `
-    filesystem.write(filePath, EXPO_ROUTER_SCREEN_TPL)
+
+/**
+ * Defines an ejs template for a route when using Expo Router. The route
+ * will be inside the proper `app` directory which will just render the
+ * appropriate screen from src/screens.
+ */
+export const EXPO_ROUTER_ROUTE_TEMPLATE = `---
+filename: <%= props.kebabCaseName %>.tsx
+---
+import { <%= props.pascalCaseName %>Screen } from "@/screens/<%= props.pascalCaseName %>Screen"
+
+export default function <%= props.pascalCaseName %>() {
+  return <<%= props.pascalCaseName %>Screen />
+}
+
+`
+
+export const EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE = `import { <%= props.pascalCaseName %>Screen } from "@/screens/<%= props.pascalCaseName %>Screen"
+
+export default function <%= props.pascalCaseName %>() {
+  return <<%= props.pascalCaseName %>Screen />
+}
+
+`
+
+export function createGeneratorTemplate(
+  toolbox: GluegunToolbox,
+  path: string,
+  templateEjs: string,
+) {
+  const { filesystem, parameters, print } = toolbox
+
+  // debug?
+  const debug = boolFlag(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  try {
+    filesystem.write(path, templateEjs)
   } catch (e) {
-    log(`Unable to write screen generator template.`)
+    log(`Unable to write generator template at ${path}.`)
   }
 }
 
@@ -336,9 +368,7 @@ export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath:
     workingDir.path("src", "components", "ErrorBoundary"),
   )
   workingDir.remove("index.tsx")
-  workingDir.remove(workingDir.path("ignite", "templates", "screen", "NAMEScreen.tsx.ejs"))
   workingDir.remove(workingDir.path("ignite", "templates", "navigator"))
-  workingDir.remove(workingDir.path("src", "screens"))
   workingDir.remove(workingDir.path("src", "navigators"))
   workingDir.remove("app")
 }

@@ -170,6 +170,11 @@ function igniteDir() {
 }
 
 function appDir() {
+  const routerPath = filesystem.path(cwd(), "src/app")
+  if (filesystem.exists(routerPath) === "dir") {
+    return filesystem.path(cwd(), "src")
+  }
+
   return filesystem.path(cwd(), "app")
 }
 
@@ -352,6 +357,25 @@ export async function generateFromTemplate(
     }
   }
   return { written, exists, overwritten }
+}
+
+/**
+ * Checks a file for a directoryDir in template front matter.
+ */
+export function frontMatterDirectoryDir(generator: string): string | undefined {
+  if (!validateGenerator(generator)) {
+    return undefined
+  }
+
+  const { path } = filesystem
+
+  // where are we copying from?
+  const templateDir = path(templatesDir(), generator)
+
+  const fileContents = filesystem.read(`${templateDir}/NAME.tsx.ejs`)
+  const { data: frontMatterData } = frontMatter(fileContents)
+
+  return frontMatterData?.destinationDir
 }
 
 /**

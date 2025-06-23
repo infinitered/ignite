@@ -33,18 +33,18 @@ describe(`ignite new with expo-router`, () => {
     it("should convert to Expo Router", async () => {
       expect(result).toContain("--experimental=expo-router")
 
-      // make sure src/navigators, src/screens, app/, app.tsx is gone
+      // make sure src/navigators, app/, app.tsx is gone
       const dirs = filesystem.list(appPath)
       expect(dirs).toContain("src")
       expect(dirs).not.toContain("app")
       expect(dirs).not.toContain("app.tsx")
-      expect(dirs).not.toContain("src/screens")
       expect(dirs).not.toContain("src/navigators")
 
       // check the contents of ignite/templates
       const templates = filesystem.list(`${appPath}/ignite/templates`)
       expect(templates).toContain("component")
       expect(templates).toContain("screen")
+      expect(templates).toContain("route")
       expect(templates).not.toContain("navigator")
 
       // inspect that destinationDir has been adjusted

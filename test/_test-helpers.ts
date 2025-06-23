@@ -2,6 +2,11 @@ import { spawn } from "child_process"
 import { WriteStream } from "fs"
 import { system, filesystem } from "gluegun"
 
+import {
+  EXPO_ROUTER_SCREEN_TEMPLATE,
+  EXPO_ROUTER_ROUTE_TEMPLATE,
+  EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE,
+} from "../src/tools/react-native"
 import { stripANSI } from "../src/tools/strip-ansi"
 
 const IGNITE = "node " + filesystem.path(__dirname, "..", "bin", "ignite")
@@ -149,79 +154,49 @@ export async function spawnIgniteAndPrintIfFail(
   }
 }
 
-function generateDefaultTemplatePath(pathname: string): string {
+function generateScreenTemplatePath(pathname: string): string {
   return filesystem.path(pathname, "ignite", "templates", "screen", "NAMEScreen.tsx.ejs")
 }
 
-function generateExpoRouterTemplatePath(pathname: string): string {
-  return filesystem.path(pathname, "ignite", "templates", "screen", "NAME.tsx.ejs")
+function generateRouteTemplatePath(pathname: string): string {
+  return filesystem.path(pathname, "ignite", "templates", "route", "NAME.tsx.ejs")
+}
+
+function generateDynamicRouteTemplatePath(pathname: string): string {
+  return filesystem.path(pathname, "ignite", "templates", "dynamic-route", "NAME.tsx.ejs")
 }
 
 export function copyDefaultScreenGenerator(tempBoilerplatePath: string): void {
-  const REACT_NAVIGATION_SCREEN_TPL = `---
-destinationDir: app/screens
-patches:
-- path: "app/navigators/AppNavigator.tsx"
-  replace: "// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST"
-  insert: "<%= props.pascalCaseName %>: undefined\n\t// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST"
----
-import React, { FC } from "react"
-import { ViewStyle } from "react-native"
-import type { AppStackScreenProps } from "@/navigators/AppNavigator"
-import { Screen } from "@/components/Screen"
-import { Text } from "@/components/Text"
-// import { useNavigation } from "@react-navigation/native"
-
-interface <%= props.pascalCaseName %>ScreenProps extends AppStackScreenProps<"<%= props.pascalCaseName %>"> {}
-
-export const <%= props.pascalCaseName %>Screen: FC<<%= props.pascalCaseName %>ScreenProps> = () => {
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
-  return (
-    <Screen style={$root} preset="scroll">
-      <Text text="<%= props.camelCaseName %>" />
-    </Screen>
+  const REACT_NAVIGATION_SCREEN_TEMPLATE = filesystem.read(
+    filesystem.path(tempBoilerplatePath, "ignite", "templates", "screen", "NAMEScreen.tsx.ejs"),
   )
+
+  const destination = generateScreenTemplatePath(tempBoilerplatePath)
+  if (REACT_NAVIGATION_SCREEN_TEMPLATE) {
+    filesystem.write(destination, REACT_NAVIGATION_SCREEN_TEMPLATE)
+  }
 }
 
-const $root: ViewStyle = {
-  flex: 1,
-}
-`
+export function copyExpoRouterGeneratorTemplates(tempBoilerplatePath: string): void {
+  const screenDestination = generateScreenTemplatePath(tempBoilerplatePath)
+  filesystem.write(screenDestination, EXPO_ROUTER_SCREEN_TEMPLATE)
 
-  const destination = generateDefaultTemplatePath(tempBoilerplatePath)
-  filesystem.write(destination, REACT_NAVIGATION_SCREEN_TPL)
-}
+  const routeDestination = generateRouteTemplatePath(tempBoilerplatePath)
+  filesystem.write(routeDestination, EXPO_ROUTER_ROUTE_TEMPLATE)
 
-export function copyExpoRouterScreenGenerator(tempBoilerplatePath: string): void {
-  const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
-import { ViewStyle } from "react-native"
-import { Screen } from "@/components/Screen"
-import { Text } from "@/components/Text"
-
-export default function <%= props.pascalCaseName %>Screen() {
-  return (
-    <Screen style={$root} preset="scroll">
-      <Text text="<%= props.camelCaseName %>" />
-    </Screen>
-  )
+  const dynamicRouteDestination = generateDynamicRouteTemplatePath(tempBoilerplatePath)
+  filesystem.write(dynamicRouteDestination, EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE)
 }
 
-const $root: ViewStyle = {
-  flex: 1,
-}
-`
-
-  const destination = generateExpoRouterTemplatePath(tempBoilerplatePath)
-  filesystem.write(destination, EXPO_ROUTER_SCREEN_TPL)
-}
-
-export function removeDefaultScreenGenerator(tempBoilerplatePath: string): void {
-  const destination = generateDefaultTemplatePath(tempBoilerplatePath)
+export function removeScreenGenerator(tempBoilerplatePath: string): void {
+  const destination = generateScreenTemplatePath(tempBoilerplatePath)
   filesystem.remove(destination)
 }
 
-export function removeExpoRouterScreenGenerator(tempBoilerplatePath: string): void {
-  const destination = generateExpoRouterTemplatePath(tempBoilerplatePath)
-  filesystem.remove(destination)
+export function removeExpoRouterGeneratorTemplates(tempBoilerplatePath: string): void {
+  const screenDestination = generateScreenTemplatePath(tempBoilerplatePath)
+  filesystem.remove(screenDestination)
+
+  const routeDestination = generateRouteTemplatePath(tempBoilerplatePath)
+  filesystem.remove(routeDestination)
 }
