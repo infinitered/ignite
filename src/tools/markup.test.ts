@@ -332,13 +332,14 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "@/components/Button" // @demo remove-current-line
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
+import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
 import { isRTL } from "@/i18n"
 import type { AppStackScreenProps } from "@/navigators/AppNavigator"
-import { $styles, type ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
+import { $styles } from "@/theme/styles"
 import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "@/utils/useAppTheme"
-import { useAuth } from "@/context/AuthContext"
 
 const welcomeLogo = require("@assets/images/logo.png")
 const welcomeFace = require("@assets/images/welcome-face.png")
@@ -447,21 +448,22 @@ const AppNavigator = /* jsx */ `
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { ComponentProps } from "react"
 import {
   NavigationContainer,
   NavigatorScreenParams, // @demo remove-current-line
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { ComponentProps } from "react"
-import { WelcomeScreen } from "@/screens/WelcomeScreen"
-import { LoginScreen } from "@/screens/LoginScreen"
-import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
+
 import Config from "@/config"
-import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
+import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
+import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
+import { LoginScreen } from "@/screens/LoginScreen" // @demo remove-current-line
+import { WelcomeScreen } from "@/screens/WelcomeScreen"
+import { useAppTheme } from "@/theme/context"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useAuth } from "@/context/AuthContext"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -503,7 +505,6 @@ const AppStack = () => {
   } = useAppTheme()
 
   return (
-    
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -538,19 +539,16 @@ export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
 export const AppNavigator = (props: NavigationProps) => {
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
-    useThemeProvider()
+  const { navigationTheme } = useAppTheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-      <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <AppStack />
-        </ErrorBoundary>
-      </NavigationContainer>
-    </ThemeProvider>
+    <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
+      <ErrorBoundary catchErrors={Config.catchErrors}>
+        <AppStack />
+      </ErrorBoundary>
+    </NavigationContainer>
   )
 }
 `

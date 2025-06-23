@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import { Slot, SplashScreen } from "expo-router"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
 import { KeyboardProvider } from "react-native-keyboard-controller"
+import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
 import { initI18n } from "@/i18n"
+import { ThemeProvider } from "@/theme/context"
 import { customFontsToLoad } from "@/theme/typography"
 import { loadDateFnsLocale } from "@/utils/formatDate"
-import { useThemeProvider } from "@/utils/useAppTheme"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -22,7 +23,6 @@ export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
 export default function Root() {
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
-  const { themeScheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
 
   useEffect(() => {
     initI18n()
@@ -47,10 +47,12 @@ export default function Root() {
   }
 
   return (
-    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-      <KeyboardProvider>
-        <Slot />
-      </KeyboardProvider>
-    </ThemeProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <ThemeProvider>
+        <KeyboardProvider>
+          <Slot />
+        </KeyboardProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   )
 }

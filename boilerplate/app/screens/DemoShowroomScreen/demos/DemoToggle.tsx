@@ -7,7 +7,7 @@ import { Checkbox, CheckboxToggleProps } from "@/components/Toggle/Checkbox"
 import { Radio, RadioToggleProps } from "@/components/Toggle/Radio"
 import { Switch, SwitchToggleProps } from "@/components/Toggle/Switch"
 import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
 import { $styles } from "@/theme/styles"
 
 import { DemoDivider } from "../DemoDivider"

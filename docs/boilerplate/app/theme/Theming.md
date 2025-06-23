@@ -32,7 +32,7 @@ Spacing is a first class citizen in Ignite. We use a spacing scale to define the
 
 [Spacing](./spacing.ts.md)
 
-# Multiple Themes (a.k.a "Dark Mode")
+## Multiple Themes (a.k.a "Dark Mode")
 
 The Ignite boilerplate ships with color palette definitions and support for multiple themes! By default we define two themes, but you can easily add more using our generic theming system.
 
@@ -42,16 +42,12 @@ Head on over to the [Ignite Cookbook](https://ignitecookbook.com/) to find recip
 
 :::
 
-**New in Ignite 10**: the `useAppTheme` hook allows you to create dynamically-themed styles, right out of the box. Here's an example:
+The `useAppTheme` hook allows you to create dynamically-themed styles, right out of the box. Here's an example:
 
 ```tsx
 import { type ViewStyle, View } from 'react-native'
-import {
-  type ThemedStyle,
-  useAppTheme,
-  ThemeProvider,
-  useThemeProvider
-} from '@/theme'
+import { type ThemedStyle } from '@/theme/types'
+import { ThemeProvider, useAppTheme } from '@/theme/context'
 
 const $container: ThemedStyle<ViewStyle> = (theme) => ({
   flex: 1,
@@ -75,16 +71,15 @@ const Component = () => {
 }
 
 const App = () => {
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
   return (
-    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+    <ThemeProvider>
       <Component />
     </ThemeProvider>
   )
 }
 ```
 
-For more information on the `useAppTheme()` hook, [check out its documentation](../utils/useAppTheme.tsx.md).
+For more information on the `useAppTheme()` hook, [check out the theme context documentation](./context.ts.md).
 
 ## Switching Between Themes
 
@@ -123,9 +118,8 @@ const {
   label="Dark Mode"
   variant="switch"
   value={themeContext === "dark"}
-  onValueChange={(value: boolean) => {
-    setThemeContextOverride(value ? "dark" : "light")
-  }}
+  onValueChange={(value: boolean) =>
+    setThemeContextOverride(value ? "dark" : "light")}
 />
 ```
 
@@ -135,10 +129,10 @@ To have your app go back to respecting the user's device system setting, you can
 
 ## Hooking up the navigation theme
 
-Ignite uses `react-navigation` so it's already hooked up for use with your `NavigationController`! The `navigationTheme` variable returned from `useThemeProvider()` is a `react-navigation` theme object you can pass to the root `NavigationController`.
+Ignite uses `react-navigation` so it's already hooked up for use with your `NavigationController`! The `navigationTheme` variable returned from `useAppTheme()` is a `react-navigation` theme object you can pass to the root `NavigationController`.
 
 ```tsx
-const { navigationTheme } = useThemeProvider()
+const { navigationTheme } = useAppTheme()
 return <NavigationContainer theme={navigationTheme} {...props} />
 ```
 
@@ -152,10 +146,10 @@ import { customFontsToLoad } from "@/theme/typography"
 import { createTheme as createRNEUITheme, ThemeProvider as RNEUIThemeProvider } from "@rneui/themed"
 
 export const ThemedRNEUIProvider = ({ children }) => {
-  const { themeScheme } = useThemeProvider()
+  const { themeContext } = useAppTheme()
   const themeColors = themeScheme === "light" ? colorsLight : colorsDark
   const RNEUITheme = createRNEUITheme({
-    mode: themeScheme,
+    mode: themeContext,
     lightColors: {
       primary: colorsLight.palette.secondary500,
     },

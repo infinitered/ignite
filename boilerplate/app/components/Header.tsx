@@ -10,9 +10,9 @@ import {
 
 import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
-import { useAppTheme } from "@/utils/useAppTheme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 import { IconTypes, PressableIcon } from "./Icon"

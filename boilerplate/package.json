@@ -36,7 +36,7 @@
     "@shopify/flash-list": "1.8.1",
     "apisauce": "3.1.1",
     "date-fns": "^4.1.0",
-    "expo": "^53.0.9",
+    "expo": "^53.0.12",
     "expo-application": "~6.1.4",
     "expo-build-properties": "~0.14.6",
     "expo-dev-client": "~5.1.7",
