@@ -1,4 +1,5 @@
 import { GluegunToolbox } from "gluegun"
+
 import { generateAppIcons, runGenerator, validateAppIconGenerator } from "../../tools/generators"
 import { heading, p, warning } from "../../tools/pretty"
 

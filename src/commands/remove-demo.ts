@@ -1,9 +1,10 @@
 import { GluegunToolbox } from "gluegun"
 import * as pathlib from "path"
-import { boolFlag } from "../tools/flag"
-import { p, warning } from "../tools/pretty"
-import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
+
 import { DEMO_MARKUP_PREFIX } from "../tools/demo"
+import { boolFlag } from "../tools/flag"
+import { findFiles, removeEmptyDirs, updateFiles } from "../tools/markup"
+import { p, warning } from "../tools/pretty"
 
 const MATCHING_GLOBS = [
   "!**/.yarn{,/**}",

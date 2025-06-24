@@ -8,9 +8,9 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { $styles } from "@/theme"
-import type { ThemedStyle } from "@/theme"
-import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
+import { $styles } from "@/theme/styles"
 
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"

@@ -1,11 +1,13 @@
 {
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "jsx": "react-native",
-    "module": "es2015",
-    "moduleResolution": "node",
+    "customConditions": ["react-native"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -28,7 +30,6 @@
       "./types"
     ]
   },
-  "extends": "expo/tsconfig.base",
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
@@ -36,7 +37,9 @@
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ],
   "exclude": [
     "node_modules",

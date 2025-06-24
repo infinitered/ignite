@@ -2,7 +2,7 @@
 
 appId: ${MAESTRO_APP_ID}
 env:
-  FAVORITES_TEXT: "Switch on to only show favorites"
+  FAVORITES_TEXT: "Switch on to only show favorites" # en.demoPodcastListScreen.accessibility.switch
 onFlowStart:
   - runFlow: ../shared/_OnFlowStart.yaml
 ---
@@ -21,15 +21,15 @@ onFlowStart:
     commands:
       - scroll
 - copyTextFrom:
-    text: "^RNR.*" # assumes all podcast titles start with RNR
-    index: 1 # grab the second one, the first one might not be fully visible
+    text: "RNR .*" # assumes all podcast titles start with RNR
+    index: 2 # grab the third one, others might not be fully visible
 - longPressOn: ${maestro.copiedText}
 - scrollUntilVisible:
     element:
       text: ${FAVORITES_TEXT}
     direction: UP
     timeout: 50000
-    speed: 40
+    speed: 90
     visibilityPercentage: 100
 - tapOn:
     text: ${FAVORITES_TEXT}

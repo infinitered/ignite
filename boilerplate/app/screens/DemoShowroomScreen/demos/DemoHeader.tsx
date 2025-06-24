@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import { TextStyle, View, ViewStyle } from "react-native"
 
-import { Header, Icon } from "@/components"
-import { $styles } from "@/theme"
-import type { ThemedStyle } from "@/theme"
+import { Header } from "@/components/Header"
+import { Icon } from "@/components/Icon"
+import type { ThemedStyle } from "@/theme/types"
+import { $styles } from "@/theme/styles"
 
-import { Demo } from "../DemoShowroomScreen"
 import { DemoDivider } from "../DemoDivider"
+import { Demo } from "../DemoShowroomScreen"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $rightAlignTitle: TextStyle = {

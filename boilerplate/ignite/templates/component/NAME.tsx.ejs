@@ -1,14 +1,9 @@
 ---
 destinationDir: app/components/<%= props.subdirectory %>
-patch:
-  path: "app/components/index.ts"
-  append: "export * from \"./<%= props.subdirectory %><%= props.pascalCaseName %>\"\n"
-  skip: <%= props.skipIndexFile %>
 ---
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { observer } from "mobx-react-lite" // @mst remove-current-line
-import { useAppTheme } from "@/utils/useAppTheme"
-import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/theme/types"
 import { Text } from "@/components/Text"
 
 export interface <%= props.pascalCaseName %>Props {
@@ -21,8 +16,7 @@ export interface <%= props.pascalCaseName %>Props {
 /**
  * Describe your component here
  */
-// @mst replace-next-line export const <%= props.pascalCaseName %> = (props: <%= props.pascalCaseName %>Props) => {
-export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
+export const <%= props.pascalCaseName %> = (props: <%= props.pascalCaseName %>Props) => {
   const { style } = props
   const $styles = [$container, style]
   const { themed } = useAppTheme();
@@ -32,8 +26,7 @@ export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCas
       <Text style={themed($text)}>Hello</Text>
     </View>
   )
-// @mst replace-next-line }
-})
+}
 
 const $container: ViewStyle = {
   justifyContent: "center",

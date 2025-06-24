@@ -1,8 +1,9 @@
 import { GluegunToolbox } from "gluegun"
-import { boolFlag } from "../tools/flag"
-import { generateFromTemplate, runGenerator } from "../tools/generators"
-import { command, heading, p, warning } from "../tools/pretty"
+
 import { Options } from "./new"
+import { boolFlag } from "../tools/flag"
+import { frontMatterDirectoryDir, generateFromTemplate, runGenerator } from "../tools/generators"
+import { command, heading, p, prettyPrompt, warning } from "../tools/pretty"
 
 const SUB_DIR_DELIMITER = "/"
 
@@ -16,13 +17,13 @@ module.exports = {
 }
 
 async function generate(toolbox: GluegunToolbox) {
-  const { parameters, strings } = toolbox
+  const { parameters, strings, filesystem, prompt } = toolbox
 
   // what generator are we running?
   const generator = parameters.first.toLowerCase()
 
   // check if we should override front matter dir or default dir
-  const dir = parameters.options.dir ?? parameters.third
+  let dir = parameters.options.dir ?? parameters.third
 
   // we need a name for this component
   let name = parameters.second
@@ -52,6 +53,62 @@ async function generate(toolbox: GluegunToolbox) {
     pascalName = pascalName.slice(0, -1 * pascalGenerator.length)
     command(`npx ignite-cli generate ${generator} ${pascalName}`)
   }
+  /**
+   * Check if the project uses Expo Router as a dependency in package.json,
+   * denoting an Expo Router app.
+   */
+  if (generator === "route") {
+    const packageJson = filesystem.read("package.json", "json")
+    const isExpoRouterApp = !!packageJson?.dependencies?.["expo-router"]
+
+    const isSrcAppStructure = filesystem.exists("src/app") === "dir"
+    const isAppStructure = filesystem.exists("app") === "dir"
+    const defaultRouterDir = isSrcAppStructure ? "src/app" : isAppStructure ? "app" : null
+
+    if (isExpoRouterApp) {
+      const directoryDirSetInFrontMatter = frontMatterDirectoryDir("route")
+      p(directoryDirSetInFrontMatter)
+
+      if (directoryDirSetInFrontMatter || dir) {
+        heading(
+          `It looks like you're working in a project using Expo Router, determined directory for route from ${dir ? "override" : "template front matter"}`,
+        )
+        dir = dir || directoryDirSetInFrontMatter
+      } else {
+        const result = await prompt.ask({
+          type: "input",
+          name: "dir",
+          message: `It looks like you're working in a project using Expo Router, please enter the desired directory${defaultRouterDir ? ` (e.g., ${defaultRouterDir})` : ""}:`,
+          initial: defaultRouterDir,
+        })
+
+        if (result.dir) {
+          // Validate the directory
+          const isValidDir = filesystem.exists(result.dir) === "dir"
+          if (isValidDir) {
+            dir = result.dir
+          } else {
+            const createDirResult = await prompt.ask({
+              type: "confirm",
+              name: "createDir",
+              message: `⚠️  Directory ${result.dir} does not exist. Would you like to create it?`,
+              initial: true,
+              format: prettyPrompt.format.boolean,
+            })
+
+            if (createDirResult.createDir) {
+              filesystem.dir(result.dir)
+              dir = result.dir
+            } else {
+              warning(`⚠️ Placing screen in ${result.dir} root.`)
+              p()
+              dir = result.dir
+            }
+          }
+        }
+      }
+    }
+  }
 
   // okay, let's do it!
   p()
@@ -61,7 +118,6 @@ async function generate(toolbox: GluegunToolbox) {
   const { written, overwritten, exists } = await generateFromTemplate(generator, {
     name: pascalName,
     originalName: name,
-    skipIndexFile: parameters.options.skipIndexFile,
     overwrite,
     subdirectory,
     dir,

@@ -1,6 +1,7 @@
 import { filesystem } from "gluegun"
-import { updatePackagerCommandsInReadme } from "./react-native"
 import * as tempy from "tempy"
+
+import { updatePackagerCommandsInReadme } from "./react-native"
 
 const EXAMPLE_README = `
 yarn

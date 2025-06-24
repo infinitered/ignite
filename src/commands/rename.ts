@@ -1,4 +1,5 @@
 import { GluegunToolbox } from "gluegun"
+
 import { direction, heading, p, warning } from "../tools/pretty"
 import { renameReactNativeApp } from "../tools/react-native"
 
@@ -32,7 +33,7 @@ module.exports = {
     // then, get the package name from Android or ios if it DNE
     // we do this via app.json now as android/ios dirs may not exist to find AndroidManifest/gradle files
     // in the case of a managed or custom workflow setup, so ignite v9+ compatible
-    const oldBundleIdentifier = appJson.expo.android.package ?? appJson.expo.ios.bundleIdentifier
+    const oldBundleIdentifier = appJson.android.package ?? appJson.ios.bundleIdentifier
     if (!oldBundleIdentifier) {
       warning("Couldn't find the current name in app.json.")
       return

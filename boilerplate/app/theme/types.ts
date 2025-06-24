@@ -8,7 +8,8 @@ import { timing } from "./timing"
 import { typography } from "./typography"
 
 // This supports "light" and "dark" themes by default. If undefined, it'll use the system theme
-export type ThemeContexts = "light" | "dark" | undefined
+export type ImmutableThemeContextModeT = "light" | "dark"
+export type ThemeContextModeT = ImmutableThemeContextModeT | undefined
 
 // Because we have two themes, we need to define the types for each of them.
 // colorsLight and colorsDark should have the same keys, but different values.
@@ -27,22 +28,6 @@ export interface Theme {
   typography: Typography
   timing: Timing
   isDark: boolean
-}
-
-// Here we define our themes.
-export const lightTheme: Theme = {
-  colors: colorsLight,
-  spacing: spacingLight,
-  typography,
-  timing,
-  isDark: false,
-}
-export const darkTheme: Theme = {
-  colors: colorsDark,
-  spacing: spacingDark,
-  typography,
-  timing,
-  isDark: true,
 }
 
 /**
@@ -71,11 +56,9 @@ export type ThemedStyleArray<T> = (
   | (StyleProp<T> | ThemedStyle<T>)[]
 )[]
 
-// Export the theme objects with backwards compatibility for the old theme structure.
-export { colorsLight as colors }
-export { colorsDark }
-export { spacingLight as spacing }
-
-export * from "./styles"
-export * from "./typography"
-export * from "./timing"
+/**
+ */
+export type AllowedStylesT<T> = ThemedStyle<T> | StyleProp<T> | ThemedStyleArray<T>
+/**
+ */
+export type ThemedFnT = <T>(styleOrStyleFn: AllowedStylesT<T>) => T

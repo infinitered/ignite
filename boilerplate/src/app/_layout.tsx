@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import { Slot, SplashScreen } from "expo-router"
-import { KeyboardProvider } from "react-native-keyboard-controller"
-// @mst replace-next-line
-import { useInitialRootStore } from "@/models"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
-import { customFontsToLoad } from "@/theme"
-import { initI18n } from "@/i18n"
-import { loadDateFnsLocale } from "@/utils/formatDate"
-import { useThemeProvider } from "@/utils/useAppTheme"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
+import { initI18n } from "@/i18n"
+import { ThemeProvider } from "@/theme/context"
+import { customFontsToLoad } from "@/theme/typography"
+import { loadDateFnsLocale } from "@/utils/formatDate"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -22,15 +21,8 @@ if (__DEV__) {
 export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
 
 export default function Root() {
-  // @mst remove-block-start
-  // Wait for stores to load and render our layout inside of it so we have access
-  // to auth info etc
-  const { rehydrated } = useInitialRootStore()
-  // @mst remove-block-end
-
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
-  const { themeScheme, setThemeContextOverride, ThemeProvider } = useThemeProvider()
 
   useEffect(() => {
     initI18n()
@@ -38,8 +30,7 @@ export default function Root() {
       .then(() => loadDateFnsLocale())
   }, [])
 
-  const loaded = fontsLoaded && isI18nInitialized 
-                         && rehydrated // @mst remove-current-line
+  const loaded = fontsLoaded && isI18nInitialized
 
   useEffect(() => {
     if (fontError) throw fontError
@@ -56,10 +47,12 @@ export default function Root() {
   }
 
   return (
-    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-      <KeyboardProvider>
-        <Slot />
-      </KeyboardProvider>
-    </ThemeProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <ThemeProvider>
+        <KeyboardProvider>
+          <Slot />
+        </KeyboardProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   )
 }

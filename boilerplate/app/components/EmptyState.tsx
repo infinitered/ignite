@@ -1,11 +1,11 @@
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 
-import { useAppTheme } from "@/utils/useAppTheme"
-import type { ThemedStyle } from "@/theme"
 import { translate } from "@/i18n/translate"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
 
-import { Text, TextProps } from "./Text"
 import { Button, ButtonProps } from "./Button"
+import { Text, TextProps } from "./Text"
 
 const sadFace = require("@assets/images/sad-face.png")
 

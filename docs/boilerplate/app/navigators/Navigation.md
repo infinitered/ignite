@@ -27,10 +27,8 @@ We've found that there are some useful patterns for building navigators in React
 We recommend following the guidance of [React Navigation's Authentication Flows](https://reactnavigation.org/docs/auth-flow/) and Ignite comes bootstrapped with this pattern in its demo code.
 
 ```tsx
-const AppStack = observer(function AppStack() {
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
+const AppStack = () => {
+  const { isAuthenticated } = useAuth()
 
   return (
     <Stack.Navigator
@@ -49,7 +47,7 @@ const AppStack = observer(function AppStack() {
       )}
     </Stack.Navigator>
   )
-})
+}
 ```
 
 The screens included within the AppStack are dependent on value of `isAuthenticated` from `authenticationStore`. If the user hasn't been authenticated yet, the only screen to be shown will be the `LoginScreen`.

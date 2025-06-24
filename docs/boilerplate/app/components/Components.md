@@ -203,7 +203,7 @@ This is an enhanced version of the built-in React Native Text component. It adds
   preset="header"
   tx="welcome:header"
   txOptions={{
-    name: rootStore.currentUser.name,
+    name: currentUser.name,
   }}
   style={$header}
 />

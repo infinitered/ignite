@@ -2,26 +2,42 @@
 sidebar_position: 10
 ---
 
-# useAppTheme
+# theme/context.ts
 
-The `useAppTheme()` hook returns various properties and tools relating to theming your app.
+## `<ThemeProvider>`
 
-Generally, you'll only need a few properties from this hook, with the most important being `theme` and `themed`.
+The `<ThemeProvider>` component is a context provider that wraps your app and provides access to the theme and theming tools. It should be used at the root of your application, typically in `App.tsx`.
+
+```tsx
+import { ThemeProvider } from "@/theme/context"
+
+const App = () => {
+  return <ThemeProvider>{/* Your app components go here */}</ThemeProvider>
+}
+```
+
+Anything that needs access to the `useAppTheme()` hook should be a child of this provider.
+
+## useAppTheme
+
+The `useAppTheme()` hook returns various properties and tools relating to theming your app. Generally, you'll only need a few properties from this hook, with the most important being `theme` and `themed`.
 
 Example usage:
 
 ```tsx
 import { View, type ViewStyle } from "react-native"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { useAppTheme } from "@/theme/context"
 
 const MyComponent = () => {
   const {
-    // Any styles you create with the type ThemedStyle<T> must be wrapped with
-    // themed($styleName) before passing it along to the component's style property.
+    // Any styles you create with the type ThemedStyle<T>
+    // must be wrapped with themed($styleName) before passing
+    // it along to the component's style property.
     themed,
     // This is the current theme object.
     theme,
-    // themeContext is what theme you are actually using: "light" | "dark"
+    // themeContext is what theme you are actually using:
+    // "light" | "dark"
     themeContext,
   } = useAppTheme()
 
@@ -60,9 +76,9 @@ const $plainObjectStyle: ViewStyle = {
 }
 ```
 
-## Properties:
+## Properties
 
-### `navTheme`
+### `navigationTheme`
 
 A `react-navigation` [theme object](https://reactnavigation.org/docs/themes#built-in-themes). This is the same object you would pass to a `NavigationContainer` component.
 
@@ -127,4 +143,8 @@ const $themedStyle: ThemedStyle<ViewStyle> = (theme) => ({
 ])} />
 ```
 
+:::warn
+
 Make sure you don't pass any `Animated` styles to `themed()`. It will not work as expected! Keep them in separate style array objects: `<Animated.View style={[$animatedStyle, themed($myThemedStyle)]}>`.
+
+:::

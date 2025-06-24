@@ -1,8 +1,9 @@
 import { GluegunToolbox } from "gluegun"
-import { boolFlag } from "../tools/flag"
-import { p, warning } from "../tools/pretty"
-import { findFiles, updateFiles } from "../tools/markup"
+
 import { DEMO_MARKUP_PREFIX } from "../tools/demo"
+import { boolFlag } from "../tools/flag"
+import { findFiles, updateFiles } from "../tools/markup"
+import { p, warning } from "../tools/pretty"
 
 module.exports = {
   alias: ["rdm"],

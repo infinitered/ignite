@@ -2,8 +2,8 @@
 // If you import with the syntax: import { format } from "date-fns" the ENTIRE library
 // will be included in your production bundle (even if you only use one function).
 // This is because react-native does not support tree-shaking.
-import { type Locale } from "date-fns/locale"
 import { format } from "date-fns/format"
+import type { Locale } from "date-fns/locale"
 import { parseISO } from "date-fns/parseISO"
 import i18n from "i18next"
 

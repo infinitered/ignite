@@ -12,7 +12,6 @@ Things that this file is responsible for:
 
 - Loading fonts
 - Setting up internationalization
-- Initializing the root MST store
 - Initializing the root navigator
 - Ensuring everything is loaded and then hiding the splash screen
 - Setting up the safe area provider
