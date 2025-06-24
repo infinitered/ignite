@@ -147,7 +147,7 @@ import { createTheme as createRNEUITheme, ThemeProvider as RNEUIThemeProvider } 
 
 export const ThemedRNEUIProvider = ({ children }) => {
   const { themeContext } = useAppTheme()
-  const themeColors = themeScheme === "light" ? colorsLight : colorsDark
+  const themeColors = themeContext === "light" ? colorsLight : colorsDark
   const RNEUITheme = createRNEUITheme({
     mode: themeContext,
     lightColors: {
