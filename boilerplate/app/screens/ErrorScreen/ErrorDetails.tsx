@@ -5,8 +5,8 @@ import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
-import type { ThemedStyle } from "@/theme"
-import { useAppTheme } from "@/utils/useAppTheme"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
 
 export interface ErrorDetailsProps {
   error: Error

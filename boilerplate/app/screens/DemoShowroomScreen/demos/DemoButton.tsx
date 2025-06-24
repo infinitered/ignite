@@ -5,7 +5,7 @@ import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Text } from "@/components/Text"
 import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "../DemoShowroomScreen"

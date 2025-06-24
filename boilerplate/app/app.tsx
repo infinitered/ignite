@@ -28,6 +28,7 @@ import { AuthProvider } from "./context/AuthContext" // @demo remove-current-lin
 import { initI18n } from "./i18n"
 import { AppNavigator } from "./navigators/AppNavigator"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
+import { ThemeProvider } from "./theme/context"
 import { customFontsToLoad } from "./theme/typography"
 import { loadDateFnsLocale } from "./utils/formatDate"
 import * as storage from "./utils/storage"
@@ -98,11 +99,13 @@ export function App() {
         {/* @demo remove-block-start */}
         <AuthProvider>
           {/* @demo remove-block-end */}
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
+          <ThemeProvider>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </ThemeProvider>
           {/* @demo remove-block-start */}
         </AuthProvider>
         {/* @demo remove-block-end */}

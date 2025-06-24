@@ -78,8 +78,8 @@ We instead use a strategy of constants, co-located with our components, camelCas
 
 ```tsx
 import { View, ViewStyle } from "react-native"
-import { useAppTheme } from "@/utils/useAppTheme"
-import type { ThemedStyle } from "@/theme"
+import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/theme/types"
 
 // This is a themed style that you must wrap with `themed()` to pass the style object.
 const $container: ThemedStyle<ViewStyle> = ({ colors }) => ({

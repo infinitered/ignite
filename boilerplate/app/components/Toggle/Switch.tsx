@@ -3,9 +3,9 @@ import { Animated, Image, ImageStyle, Platform, StyleProp, View, ViewStyle } fro
 
 import { iconRegistry } from "@/components/Icon"
 import { isRTL } from "@/i18n"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
-import { useAppTheme } from "@/utils/useAppTheme"
 
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 

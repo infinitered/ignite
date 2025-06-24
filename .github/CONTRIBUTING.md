@@ -9,7 +9,7 @@ _Working on Ignite CLI requires Yarn v1._
 - Everything works on iOS/Android
 - Jest tests pass in the root folder (`yarn test`)
 - New tests are included for any new functionality
-- Code is compliant with our linter and prettier (`yarn format && yarn lint`)
+- Code is compliant with our linter and prettier (`yarn format:write && yarn lint`)
 - Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
 ## Requirements

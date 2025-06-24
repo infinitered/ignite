@@ -4,7 +4,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { AutoImage } from "@/components/AutoImage"
 import { Text } from "@/components/Text"
 import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
 import { $styles } from "@/theme/styles"
 
 import { DemoDivider } from "../DemoDivider"
