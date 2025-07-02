@@ -11,10 +11,11 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { isRTL, translate } from "@/i18n"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { $styles } from "@/theme"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { isRTL } from "@/i18n"
+import { translate } from "@/i18n/translate"
+import type { ThemedStyle, ThemedStyleArray } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
+import { $styles } from "@/theme/styles"
 
 import { Text, TextProps } from "./Text"
 
@@ -258,7 +259,7 @@ const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   overflow: "hidden",
 })
 
-const $inputStyle: ThemedStyle<ViewStyle> = ({ colors, typography, spacing }) => ({
+const $inputStyle: ThemedStyle<TextStyle> = ({ colors, typography, spacing }) => ({
   flex: 1,
   alignSelf: "stretch",
   fontFamily: typography.primary.normal,

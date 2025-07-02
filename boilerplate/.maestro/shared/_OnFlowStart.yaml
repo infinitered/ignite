@@ -1,13 +1,57 @@
-# flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
-
+# flow: Shared _OnFlowStart
+#intent:
+# launch the app with a completely clear state, wait for animations to settle,
+# and click through the expo dev screens if needed.
+# These conditionals slow the app launch down a little but are necessary because the expo
+# dev server and launch screen are only shown when the new architecture is turned off in expo 53.
+# So we check to see if we need to connect to the metro server... that loads the app and then we
+# check if the dev menu is showing and dismiss it if necessary.
+# Then the app is then launched and ready for the maestro tests to run.
+#
+# This flow should be included in every maestro test header as `onFlowStart` to ensure expo screens
+# are bypassed if necessary. Example:
+#
+# appId: ${MAESTRO_APP_ID}
+# onFlowStart:
+#   - runFlow: ../shared/_OnFlowStart.yaml
+# ---
+# [your maestro flow]
+#
 appId: ${MAESTRO_APP_ID}
 ---
+# launch the app with a clean slate
+- launchApp:
+    clearState: true
+    clearKeychain: true
+    stopApp: true
+
+- waitForAnimationToEnd
+
+# conditionally run the dev client flow if the words "Development servers" is present.
+# this uses the default maestro timeout and moves on if it doesn't see the text.
 - runFlow:
     when:
-      true: ${IS_DEV == "true"}
-    file: './_OpenWithDevClient.yaml'
+      visible: 'Development servers'
+    commands:
+      # this regex allows for different hosts and ports
+      - tapOn: "http://.*:.*" 
+      - waitForAnimationToEnd
 
 - runFlow:
     when:
-      true: ${IS_DEV == "false"}
-    file: './_OpenAppClearStateAndKeychain.yaml'
+      platform: Android
+      visible:
+        id: "${MAESTRO_APP_ID}:id/bottom_sheet" # id of the android bottom sheet we want to dismiss
+    commands:
+      - swipe:
+          direction: DOWN
+      - waitForAnimationToEnd
+- runFlow:
+    when:
+      platform: iOS
+      visible: 
+        id: "SBSwitcherWindow:Main" # id of the iOS bottom sheet we want to dismiss
+    commands:
+      - swipe:
+          direction: DOWN
+      - waitForAnimationToEnd

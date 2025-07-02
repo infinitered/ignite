@@ -1,5 +1,5 @@
-import { GluegunToolbox } from "../types"
 import { p, heading, command, direction } from "../tools/pretty"
+import { GluegunToolbox } from "../types"
 
 export default {
   alias: ["add", "remove", "spork"],

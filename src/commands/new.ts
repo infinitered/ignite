@@ -1,16 +1,8 @@
 import { EOL } from "os"
-import { GluegunToolbox } from "../types"
-import {
-  isAndroidInstalled,
-  copyBoilerplate,
-  renameReactNativeApp,
-  replaceMaestroBundleIds,
-  createExpoRouterScreenTemplate,
-  refactorExpoRouterReactotronCmds,
-  updateExpoRouterSrcDir,
-  cleanupExpoRouterConversion,
-  updatePackagerCommandsInReadme,
-} from "../tools/react-native"
+
+import { cache } from "../tools/cache"
+import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
+import { boolFlag } from "../tools/flag"
 import { packager, PackagerName } from "../tools/packager"
 import {
   p,
@@ -28,35 +20,25 @@ import {
   INDENT,
   stopLastSpinner,
 } from "../tools/pretty"
-import type { ValidationsExports } from "../tools/validations"
-import { boolFlag } from "../tools/flag"
-import { cache } from "../tools/cache"
-import { mstDependenciesToRemove } from "../tools/mst"
 import {
-  findAndRemoveDependencies,
-  findAndUpdateDependencyVersions,
-  newArchCompatExpectedVersions,
-} from "../tools/dependencies"
-import { demoDependenciesToRemove, findDemoPatches } from "../tools/demo"
+  isAndroidInstalled,
+  copyBoilerplate,
+  renameReactNativeApp,
+  replaceMaestroBundleIds,
+  refactorExpoRouterReactotronCmds,
+  updateExpoRouterSrcDir,
+  cleanupExpoRouterConversion,
+  updatePackagerCommandsInReadme,
+  createGeneratorTemplate,
+  EXPO_ROUTER_SCREEN_TEMPLATE,
+  EXPO_ROUTER_ROUTE_TEMPLATE,
+} from "../tools/react-native"
+import type { ValidationsExports } from "../tools/validations"
+import { GluegunToolbox } from "../types"
 
 type Workflow = "cng" | "manual"
-type StateMgmt = "mst" | "none"
 
 export interface Options {
-  /**
-   * alias for `boilerplate`
-   *
-   * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
-   * @default undefined
-   */
-  b?: string
-  /**
-   * Input Source: `parameter.option`
-   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
-   * @default undefined
-   */
-  boilerplate?: string
   /**
    * custom bundle identifier for iOS and Android
    *
@@ -152,18 +134,17 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
+
   /**
-   * Whether or not to include MobX-State-Tree boilerplate code
-   *
-   * Input Source: `prompt.ask` | `parameter.option`
-   * @default mst
+   * Deprecated Props:
    */
-  state?: StateMgmt
+
   /**
    * Whether or not to enable the New Architecture
    *
    * Input Source: `prompt.ask` | `parameter.option`
-   * @default false
+   * @deprecated flag left in for backwards compatibility, warn them to use old Ignite
+   * @default true
    */
   newArch?: boolean
 }
@@ -180,7 +161,7 @@ module.exports = {
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
     const noTimeout = options.noTimeout ?? false
-    const useDefault = (option: unknown) => yname && option === undefined
+    const getDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
     // Add just a _little_ more spacing to match with spinners and heading
@@ -218,21 +199,20 @@ module.exports = {
     const projectNameKebab = kebabCase(projectName)
     // #endregion
 
-    // #region Boilerplate
-    // if they pass in --boilerplate, warn them to use old Ignite
-    const bname = options.b || options.boilerplate
-    if (bname) {
+    // New Architecture
+    if (options.newArch !== undefined && boolFlag(options.newArch) === false) {
       p()
-      p(yellow(`Different boilerplates are no longer supported in Ignite v4+.`))
-      p(gray(`To use the old CLI to support different boilerplates, try:`))
-      p(cyan(`npx ignite-cli@3 new ${projectName} --boilerplate ${bname}`))
+      p(yellow(`Ignited apps have the new architecture turned on by default.`))
+      p(gray(`If you need to ignite an app with the legacy architecture please use Ignite v10:`))
+      p()
+      p(cyan(`npx ignite-cli@10 new ${projectName} --new-arch=false`))
       process.exit(1)
     }
     // #endregion
 
     // #region Bundle Identifier
     const defaultBundleIdentifier = `com.${strings.pascalCase(projectName).toLowerCase()}`
-    let bundleIdentifier = useDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
+    let bundleIdentifier = getDefault(options.bundle) ? defaultBundleIdentifier : options.bundle
 
     if (bundleIdentifier === undefined) {
       const bundleIdentifierResponse = await prompt.ask(() => ({
@@ -253,7 +233,7 @@ module.exports = {
 
     // #region Project Path
     const defaultTargetPath = path(projectName)
-    let targetPath = useDefault(options.targetPath) ? defaultTargetPath : options.targetPath
+    let targetPath = getDefault(options.targetPath) ? defaultTargetPath : options.targetPath
     if (targetPath === undefined) {
       const targetPathResponse = await prompt.ask(() => ({
         type: "input",
@@ -275,7 +255,7 @@ module.exports = {
     // #region Prompt Overwrite
     // if they pass in --overwrite, remove existing directory otherwise throw if exists
     const defaultOverwrite = false
-    let overwrite = useDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
+    let overwrite = getDefault(options.overwrite) ? defaultOverwrite : boolFlag(options.overwrite)
 
     if (exists(targetPath) && overwrite === undefined) {
       const overwriteResponse = await prompt.ask<{ overwrite: boolean }>(() => ({
@@ -299,7 +279,7 @@ module.exports = {
 
     // #region Prompt for Workflow type - CNG or manual
     const defaultWorkflow = "cng"
-    let workflow = useDefault(options.workflow) ? defaultWorkflow : options.workflow
+    let workflow = getDefault(options.workflow) ? defaultWorkflow : options.workflow
     if (workflow === undefined) {
       const useExpoResponse = await prompt.ask<{ workflow: Workflow }>(() => ({
         type: "select",
@@ -327,7 +307,7 @@ module.exports = {
 
     // #region Prompt Git Option
     const defaultGit = true
-    let git = useDefault(options.git) ? defaultGit : boolFlag(options.git)
+    let git = getDefault(options.git) ? defaultGit : boolFlag(options.git)
 
     if (git === undefined) {
       const gitResponse = await prompt.ask<{ git: boolean }>(() => ({
@@ -349,7 +329,7 @@ module.exports = {
     const availablePackagers = packager.availablePackagers()
     log(`availablePackagers: ${availablePackagers}`)
     const defaultPackagerName = availablePackagers.includes("yarn") ? "yarn" : "npm"
-    let packagerName = useDefault(options.packager) ? defaultPackagerName : options.packager
+    let packagerName = getDefault(options.packager) ? defaultPackagerName : options.packager
 
     const validatePackagerName = (input: unknown): input is PackagerName =>
       typeof input === "string" && ["npm", "yarn", "pnpm", "bun"].includes(input)
@@ -401,7 +381,7 @@ module.exports = {
     log(`boilerplatePath: ${boilerplatePath}`)
 
     const defaultInstallDeps = true
-    let installDeps = useDefault(options.installDeps)
+    let installDeps = getDefault(options.installDeps)
       ? defaultInstallDeps
       : boolFlag(options.installDeps)
     if (installDeps === undefined) {
@@ -422,6 +402,7 @@ module.exports = {
     let expoRouter
     const experimentalFlags = options.experimental?.split(",") ?? []
     log(`experimentalFlags: ${experimentalFlags}`)
+    let removeDemo = boolFlag(options.removeDemo)
 
     experimentalFlags.forEach((flag) => {
       if (flag.indexOf("expo-") > -1) {
@@ -452,7 +433,7 @@ module.exports = {
 
     // Expo Router
     const defaultExpoRouter = false
-    let experimentalExpoRouter = useDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
+    let experimentalExpoRouter = getDefault(expoRouter) ? defaultExpoRouter : boolFlag(expoRouter)
     if (experimentalExpoRouter === undefined) {
       const expoRouterResponse = await prompt.ask<{ experimentalExpoRouter: boolean }>(() => ({
         type: "confirm",
@@ -471,49 +452,12 @@ module.exports = {
       }
     }
 
-    // New Architecture
-    const defaultNewArch = false
-    let newArchEnabled = useDefault(options.newArch) ? defaultNewArch : boolFlag(options.newArch)
-    if (newArchEnabled === undefined) {
-      const newArchResponse = await prompt.ask<{ experimentalNewArch: boolean }>(() => ({
-        type: "confirm",
-        name: "experimentalNewArch",
-        message: "Enable the New Architecture?",
-        initial: defaultNewArch,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      newArchEnabled = newArchResponse.experimentalNewArch
-    }
-
-    // #endregion
-
-    // #region Prompt to Remove MobX-State-Tree code
-    const defaultMST = "mst"
-    let stateMgmt = useDefault(options.state) ? defaultMST : options.state
-
-    if (stateMgmt === undefined) {
-      const includeMSTResponse = await prompt.ask<{ includeMST: StateMgmt }>(() => ({
-        type: "confirm",
-        name: "includeMST",
-        message:
-          "Include MobX-State-Tree for state management? (Recommended - opting out will remove the demo application)",
-        initial: true,
-        format: prettyPrompt.format.boolean,
-        prefix,
-      }))
-      stateMgmt = includeMSTResponse.includeMST ? "mst" : "none"
-    }
-    // #endregion
-
     // #region Prompt to Remove Demo code
-    const defaultRemoveDemo = stateMgmt !== "mst" || experimentalExpoRouter
+    const defaultRemoveDemo = experimentalExpoRouter
     if (defaultRemoveDemo) {
       p(yellow(`Warning: the demo application will be removed.`))
     }
-    let removeDemo = useDefault(options.removeDemo)
-      ? defaultRemoveDemo
-      : boolFlag(options.removeDemo)
+    removeDemo = getDefault(options.removeDemo) ? defaultRemoveDemo : boolFlag(options.removeDemo)
 
     if (!defaultRemoveDemo && removeDemo === undefined) {
       const removeDemoResponse = await prompt.ask<{ removeDemo: boolean }>(() => ({
@@ -628,13 +572,14 @@ module.exports = {
       packageJsonRaw = packageJsonRaw
         .replace(/HelloWorld/g, projectName)
         .replace(/hello-world/g, projectNameKebab)
+      const packageJsonParsed = JSON.parse(packageJsonRaw)
 
       // add in expo-router package
       if (experimentalExpoRouter) {
         // find "expo-localization" line and append "expo-router" line after it
         packageJsonRaw = packageJsonRaw.replace(
           /"expo-localization": ".*",/g,
-          `"expo-localization": "~15.0.3",${EOL}    "expo-router":  "~3.5.17",`,
+          `"expo-localization": "${packageJsonParsed.dependencies["expo-localization"]}",${EOL}    "expo-router":  "~5.0.7",`,
         )
 
         // replace "main" entry point from App.js to "expo-router/entry"
@@ -663,19 +608,6 @@ module.exports = {
         const patchesToRemove = findDemoPatches()
         log(`Removing demo patches... ${patchesToRemove}`)
         patchesToRemove.forEach((patch) => filesystem.cwd("./patches").remove(patch))
-      }
-
-      if (stateMgmt === "none") {
-        log(`Removing MST dependencies... ${mstDependenciesToRemove.join(", ")}`)
-        packageJsonRaw = findAndRemoveDependencies(packageJsonRaw, mstDependenciesToRemove)
-      }
-
-      if (newArchEnabled) {
-        log(`Swapping new architecture compatible dependencies...`)
-        packageJsonRaw = findAndUpdateDependencyVersions(
-          packageJsonRaw,
-          newArchCompatExpectedVersions,
-        )
       }
 
       // Then write it back out.
@@ -803,15 +735,11 @@ module.exports = {
         const appJson = JSON.parse(appJsonRaw)
 
         // Inject ignite version to app.json
-        appJson.ignite.version = igniteVersion
-
-        if (newArchEnabled === true) {
-          appJson.expo.newArchEnabled = true
-        }
+        appJson.extra.ignite.version = igniteVersion
 
         if (experimentalExpoRouter) {
-          appJson.expo.experiments.typedRoutes = true
-          appJson.expo.plugins.push("expo-router")
+          appJson.experiments.typedRoutes = true
+          appJson.plugins.push("expo-router")
         }
 
         write("./app.json", appJson)
@@ -860,16 +788,23 @@ module.exports = {
          * 1. Move all files from app/ to src/
          * 2. Update code refs to app/ with src/
          * 3. Refactor Reactotron commands to use `router` instead of refs to react navigation
-         * 4. Create a screen template that makes sense for Expo Router
+         * 4. Create screen and route generator templates that makes sense for Expo Router
          * 5. Clean up - move ErrorBoundary to proper spot and remove unused files
          */
         filesystem
           .cwd(targetPath)
           .find("app")
           .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
+
         updateExpoRouterSrcDir(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
-        createExpoRouterScreenTemplate(toolbox)
+        const screenTplPath = filesystem.path(
+          targetPath,
+          "ignite/templates/screen/NAMEScreen.tsx.ejs",
+        )
+        const routerTplPath = filesystem.path(targetPath, "ignite/templates/route/NAME.tsx.ejs")
+        createGeneratorTemplate(toolbox, screenTplPath, EXPO_ROUTER_SCREEN_TEMPLATE)
+        createGeneratorTemplate(toolbox, routerTplPath, EXPO_ROUTER_ROUTE_TEMPLATE)
         cleanupExpoRouterConversion(toolbox, targetPath)
 
         stopSpinner(expoRouterMsg, "🧭")
@@ -877,29 +812,6 @@ module.exports = {
         // remove src/ dir since not using expo-router
         filesystem.cwd(targetPath).remove("src")
       }
-      // #endregion
-
-      // #region Remove MST code
-      const removeMstPart = stateMgmt === "none" ? "code" : "markup"
-      startSpinner(`Removing MobX-State-Tree ${removeMstPart}`)
-      try {
-        const IGNITE = "node " + filesystem.path(__dirname, "..", "..", "bin", "ignite")
-        const CMD = stateMgmt === "none" ? "remove-mst" : "remove-mst-markup"
-
-        log(`Ignite bin path: ${IGNITE}`)
-        await system.run(
-          `${IGNITE} ${CMD} "${targetPath}" "${experimentalExpoRouter ? "src" : "app"}"`,
-          { onProgress: log },
-        )
-      } catch (e) {
-        log(e)
-        const additionalInfo =
-          stateMgmt === "none"
-            ? ` To perform updates manually, check out the recipe with full instructions: https://ignitecookbook.com/docs/recipes/RemoveMobxStateTree`
-            : ""
-        p(yellow(`Unable to remove MobX-State-Tree ${removeMstPart}.${additionalInfo}`))
-      }
-      stopSpinner(`Removing MobX-State-Tree ${removeMstPart}`, "🌳")
       // #endregion
 
       // #region Run Format
@@ -994,8 +906,6 @@ module.exports = {
       p2()
       const cliCommand = buildCliCommand({
         flags: {
-          b: bname,
-          boilerplate: bname,
           bundle: bundleIdentifier,
           debug,
           git,
@@ -1004,14 +914,12 @@ module.exports = {
           packager: packagerName,
           targetPath,
           removeDemo,
-          newArch: newArchEnabled,
           experimental: experimentalFlags.length > 0 ? experimentalFlags.join(",") : undefined,
           workflow,
           useCache,
           y: yname,
           yes: yname,
           noTimeout,
-          state: stateMgmt,
         },
         projectName,
         toolbox,
@@ -1108,7 +1016,7 @@ module.exports = {
 }
 
 function buildCliCommand(args: {
-  flags: Required<Options>
+  flags: Required<Omit<Options, "newArch">>
   toolbox: GluegunToolbox
   projectName: string
 }): string {
@@ -1119,7 +1027,7 @@ function buildCliCommand(args: {
   type Flag = keyof typeof flags
   type FlagEntry = [key: Flag, value: Options[Flag]]
 
-  const privateFlags: Flag[] = ["b", "boilerplate", "debug", "useCache", "y", "yes"]
+  const privateFlags: Flag[] = ["debug", "useCache", "y", "yes"]
 
   const stringFlag = ([key, value]: FlagEntry) => `--${kebabCase(key)}=${value}`
   const booleanFlag = ([key, value]: FlagEntry) =>
@@ -1134,4 +1042,20 @@ function buildCliCommand(args: {
     .join(" ")}`
 
   return cliCommand
+}
+
+// This function takes a package.json file as a string and removes the dependencies
+// supplied in dependenciesToRemove and returns the updated package.json as a string.
+export function findAndRemoveDependencies(
+  packageJsonRaw: string,
+  dependenciesToRemove: string[],
+): string {
+  let updatedPackageJson = packageJsonRaw
+
+  dependenciesToRemove.forEach((depName) => {
+    const regex = new RegExp(`"${depName}"\\s*:\\s*"[^"]+",?`, "g")
+    updatedPackageJson = updatedPackageJson.replace(regex, "")
+  })
+
+  return updatedPackageJson
 }

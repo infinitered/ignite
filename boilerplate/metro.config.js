@@ -1,6 +1,6 @@
 /* eslint-env node */
 // Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig } = require("expo/metro-config")
 
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname)
@@ -15,6 +15,14 @@ config.transformer.getTransformOptions = async () => ({
     inlineRequires: true,
   },
 })
+
+// This is a temporary fix that helps fixing an issue with axios/apisauce.
+// See the following issues in Github for more details:
+// https://github.com/infinitered/apisauce/issues/331
+// https://github.com/axios/axios/issues/6899
+// The solution was taken from the following issue:
+// https://github.com/facebook/metro/issues/1272
+config.resolver.unstable_conditionNames = ["require", "default", "browser"]
 
 // This helps support certain popular third-party libraries
 // such as Firebase that use the extension cjs.

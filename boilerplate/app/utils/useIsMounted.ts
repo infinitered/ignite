@@ -1,5 +1,4 @@
 import { useEffect, useCallback, useRef } from "react"
-
 /**
  * A common react custom hook to check if the component is mounted.
  * @returns {() => boolean} - A function that returns true if the component is mounted.

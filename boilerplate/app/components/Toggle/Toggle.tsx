@@ -13,9 +13,9 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { $styles } from "@/theme"
-import { useAppTheme } from "@/utils/useAppTheme"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
+import { $styles } from "@/theme/styles"
 
 import { Text, TextProps } from "../Text"
 
@@ -114,7 +114,7 @@ export interface BaseToggleInputProps<T> {
   disabled: boolean
   outerStyle: ViewStyle
   innerStyle: ViewStyle
-  detailStyle: Omit<ViewStyle & ImageStyle, "overflow">
+  detailStyle: ViewStyle | ImageStyle
 }
 
 /**

@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite"
 import { ComponentType, FC, useCallback, useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
@@ -21,26 +20,24 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 
-import {
-  Button,
-  ButtonAccessoryProps,
-  Card,
-  EmptyState,
-  Icon,
-  ListView,
-  Screen,
-  Switch,
-  Text,
-} from "@/components"
-import { isRTL, translate } from "@/i18n"
-import { useStores } from "@/models"
-import { Episode } from "@/models/Episode"
+import { Button, type ButtonAccessoryProps } from "@/components/Button"
+import { Card } from "@/components/Card"
+import { EmptyState } from "@/components/EmptyState"
+import { Icon } from "@/components/Icon"
+import { ListView } from "@/components/ListView"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+import { Switch } from "@/components/Toggle/Switch"
+import { useEpisodes, useEpisode } from "@/context/EpisodeContext"
+import { isRTL } from "@/i18n"
+import { translate } from "@/i18n/translate"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import type { ThemedStyle } from "@/theme"
-import { $styles } from "@/theme"
+import type { EpisodeItem } from "@/services/api/types"
+import type { ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
+import { $styles } from "@/theme/styles"
 import { delay } from "@/utils/delay"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
-import { useAppTheme } from "@/utils/useAppTheme"
 
 const ICON_SIZE = 14
 
@@ -50,108 +47,104 @@ const rnrImage3 = require("@assets/images/demo/rnr-image-3.png")
 
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
-export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
-  function DemoPodcastListScreen(_props) {
-    const { episodeStore } = useStores()
-    const { themed } = useAppTheme()
+export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = (_props) => {
+  const { themed } = useAppTheme()
+  const {
+    totalEpisodes,
+    totalFavorites,
 
-    const [refreshing, setRefreshing] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    episodesForList,
+    fetchEpisodes,
+    favoritesOnly,
+    toggleFavoritesOnly,
+    toggleFavorite,
+  } = useEpisodes()
 
-    // initially, kick off a background refresh without the refreshing UI
-    useEffect(() => {
-      ;(async function load() {
-        setIsLoading(true)
-        await episodeStore.fetchEpisodes()
-        setIsLoading(false)
-      })()
-    }, [episodeStore])
+  const [refreshing, setRefreshing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-    // simulate a longer refresh, if the refresh is too fast for UX
-    async function manualRefresh() {
-      setRefreshing(true)
-      await Promise.all([episodeStore.fetchEpisodes(), delay(750)])
-      setRefreshing(false)
-    }
+  // initially, kick off a background refresh without the refreshing UI
+  useEffect(() => {
+    ;(async function load() {
+      setIsLoading(true)
+      await fetchEpisodes()
+      setIsLoading(false)
+    })()
+  }, [fetchEpisodes])
 
-    return (
-      <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
-        <ListView<Episode>
-          contentContainerStyle={themed([$styles.container, $listContentContainer])}
-          data={episodeStore.episodesForList.slice()}
-          extraData={episodeStore.favorites.length + episodeStore.episodes.length}
-          refreshing={refreshing}
-          estimatedItemSize={177}
-          onRefresh={manualRefresh}
-          ListEmptyComponent={
-            isLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <EmptyState
-                preset="generic"
-                style={themed($emptyState)}
-                headingTx={
-                  episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen:noFavoritesEmptyState.heading"
-                    : undefined
-                }
-                contentTx={
-                  episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen:noFavoritesEmptyState.content"
-                    : undefined
-                }
-                button={episodeStore.favoritesOnly ? "" : undefined}
-                buttonOnPress={manualRefresh}
-                imageStyle={$emptyStateImage}
-                ImageProps={{ resizeMode: "contain" }}
-              />
-            )
-          }
-          ListHeaderComponent={
-            <View style={themed($heading)}>
-              <Text preset="heading" tx="demoPodcastListScreen:title" />
-              {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
-                <View style={themed($toggle)}>
-                  <Switch
-                    value={episodeStore.favoritesOnly}
-                    onValueChange={() =>
-                      episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
-                    }
-                    labelTx="demoPodcastListScreen:onlyFavorites"
-                    labelPosition="left"
-                    labelStyle={$labelStyle}
-                    accessibilityLabel={translate("demoPodcastListScreen:accessibility.switch")}
-                  />
-                </View>
-              )}
-            </View>
-          }
-          renderItem={({ item }) => (
-            <EpisodeCard
-              episode={item}
-              isFavorite={episodeStore.hasFavorite(item)}
-              onPressFavorite={() => episodeStore.toggleFavorite(item)}
+  // simulate a longer refresh, if the refresh is too fast for UX
+  async function manualRefresh() {
+    setRefreshing(true)
+    await Promise.allSettled([fetchEpisodes(), delay(750)])
+    setRefreshing(false)
+  }
+
+  return (
+    <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
+      <ListView<EpisodeItem>
+        contentContainerStyle={themed([$styles.container, $listContentContainer])}
+        data={episodesForList}
+        extraData={totalEpisodes + totalFavorites}
+        refreshing={refreshing}
+        estimatedItemSize={177}
+        onRefresh={manualRefresh}
+        ListEmptyComponent={
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <EmptyState
+              preset="generic"
+              style={themed($emptyState)}
+              headingTx={
+                favoritesOnly ? "demoPodcastListScreen:noFavoritesEmptyState.heading" : undefined
+              }
+              contentTx={
+                favoritesOnly ? "demoPodcastListScreen:noFavoritesEmptyState.content" : undefined
+              }
+              button={favoritesOnly ? "" : undefined}
+              buttonOnPress={manualRefresh}
+              imageStyle={$emptyStateImage}
+              ImageProps={{ resizeMode: "contain" }}
             />
-          )}
-        />
-      </Screen>
-    )
-  },
-)
+          )
+        }
+        ListHeaderComponent={
+          <View style={themed($heading)}>
+            <Text preset="heading" tx="demoPodcastListScreen:title" />
+            {(favoritesOnly || episodesForList.length > 0) && (
+              <View style={themed($toggle)}>
+                <Switch
+                  value={favoritesOnly}
+                  onValueChange={() => toggleFavoritesOnly()}
+                  labelTx="demoPodcastListScreen:onlyFavorites"
+                  labelPosition="left"
+                  labelStyle={$labelStyle}
+                  accessibilityLabel={translate("demoPodcastListScreen:accessibility.switch")}
+                />
+              </View>
+            )}
+          </View>
+        }
+        renderItem={({ item }) => (
+          <EpisodeCard episode={item} onPressFavorite={() => toggleFavorite(item)} />
+        )}
+      />
+    </Screen>
+  )
+}
 
-const EpisodeCard = observer(function EpisodeCard({
+const EpisodeCard = ({
   episode,
-  isFavorite,
   onPressFavorite,
 }: {
-  episode: Episode
+  episode: EpisodeItem
   onPressFavorite: () => void
-  isFavorite: boolean
-}) {
+}) => {
   const {
     theme: { colors },
     themed,
   } = useAppTheme()
+  const { isFavorite, datePublished, duration, parsedTitleAndSubtitle } = useEpisode(episode)
 
   const liked = useSharedValue(isFavorite ? 1 : 0)
   const imageUri = useMemo<ImageSourcePropType>(() => {
@@ -267,20 +260,24 @@ const EpisodeCard = observer(function EpisodeCard({
           <Text
             style={themed($metadataText)}
             size="xxs"
-            accessibilityLabel={episode.datePublished.accessibilityLabel}
+            accessibilityLabel={datePublished.accessibilityLabel}
           >
-            {episode.datePublished.textLabel}
+            {datePublished.textLabel}
           </Text>
           <Text
             style={themed($metadataText)}
             size="xxs"
-            accessibilityLabel={episode.duration.accessibilityLabel}
+            accessibilityLabel={duration.accessibilityLabel}
           >
-            {episode.duration.textLabel}
+            {duration.textLabel}
           </Text>
         </View>
       }
-      content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
+      content={
+        parsedTitleAndSubtitle.subtitle
+          ? `${parsedTitleAndSubtitle.title} - ${parsedTitleAndSubtitle.subtitle}`
+          : parsedTitleAndSubtitle.title
+      }
       {...accessibilityHintProps}
       RightComponent={<Image source={imageUri} style={themed($itemThumbnail)} />}
       FooterComponent={
@@ -297,7 +294,7 @@ const EpisodeCard = observer(function EpisodeCard({
         >
           <Text
             size="xxs"
-            accessibilityLabel={episode.duration.accessibilityLabel}
+            accessibilityLabel={duration.accessibilityLabel}
             weight="medium"
             text={
               isFavorite
@@ -309,7 +306,7 @@ const EpisodeCard = observer(function EpisodeCard({
       }
     />
   )
-})
+}
 
 // #region Styles
 const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({

@@ -3,6 +3,7 @@ import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, stri
 import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
 import * as YAML from "yaml"
+
 import { command, direction, heading, igniteHeading, link, p, warning } from "./pretty"
 
 const NEW_LINE = filesystem.eol
@@ -84,7 +85,7 @@ export function showGeneratorHelp(toolbox: GluegunToolbox) {
   heading("Options")
   p()
   command("--dir", "Override front matter or default path for generated files", [
-    "npx ignite-cli g model Episodes --dir src/models",
+    "npx ignite-cli g model Episodes --dir src/context",
   ])
   command("--case", "Formats the generated filename", [
     "npx ignite-cli g model episode --case=auto",
@@ -169,6 +170,11 @@ function igniteDir() {
 }
 
 function appDir() {
+  const routerPath = filesystem.path(cwd(), "src/app")
+  if (filesystem.exists(routerPath) === "dir") {
+    return filesystem.path(cwd(), "src")
+  }
+
   return filesystem.path(cwd(), "app")
 }
 
@@ -238,7 +244,6 @@ type GeneratorCaseOptions = "auto" | "pascal" | "camel" | "kebab" | "snake" | "n
 type GeneratorOptions = {
   name: string
   originalName: string
-  skipIndexFile?: boolean
   subdirectory: string
   overwrite: boolean
   dir?: string
@@ -322,7 +327,7 @@ export async function generateFromTemplate(
     }
 
     // where are we copying to?
-    const defaultDestinationDir = path(appDir(), pluralize(generator), options.subdirectory) // e.g. app/components, app/screens, app/models
+    const defaultDestinationDir = path(appDir(), pluralize(generator), options.subdirectory) // e.g. app/components, app/screens
     const overrideDestinationDir = options.dir ?? frontMatterData.destinationDir // cli dir takes priority over front matter dir
     const destinationDir = overrideDestinationDir
       ? path(cwd(), overrideDestinationDir)
@@ -352,6 +357,25 @@ export async function generateFromTemplate(
     }
   }
   return { written, exists, overwritten }
+}
+
+/**
+ * Checks a file for a directoryDir in template front matter.
+ */
+export function frontMatterDirectoryDir(generator: string): string | undefined {
+  if (!validateGenerator(generator)) {
+    return undefined
+  }
+
+  const { path } = filesystem
+
+  // where are we copying from?
+  const templateDir = path(templatesDir(), generator)
+
+  const fileContents = filesystem.read(`${templateDir}/NAME.tsx.ejs`)
+  const { data: frontMatterData } = frontMatter(fileContents)
+
+  return frontMatterData?.destinationDir
 }
 
 /**

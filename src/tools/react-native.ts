@@ -1,4 +1,5 @@
 import { filesystem, GluegunToolbox } from "gluegun"
+
 import { children } from "./filesystem-ext"
 import { boolFlag } from "./flag"
 import { packager, PackagerName } from "./packager"
@@ -227,7 +228,59 @@ export async function replaceMaestroBundleIds(
   )
 }
 
-export function createExpoRouterScreenTemplate(toolbox: GluegunToolbox) {
+/**
+ * Defines an ejs template for a screen when using Expo Router.
+ */
+export const EXPO_ROUTER_SCREEN_TEMPLATE = `---
+destinationDir: src/screens
+---
+import { ViewStyle } from "react-native"
+
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+
+export default function <%= props.pascalCaseName %>Screen() {
+  return (
+    <Screen style={$root} preset="scroll">
+      <Text text="<%= props.camelCaseName %>" />
+    </Screen>
+  )
+}
+
+const $root: ViewStyle = {
+  flex: 1,
+}
+`
+
+/**
+ * Defines an ejs template for a route when using Expo Router. The route
+ * will be inside the proper `app` directory which will just render the
+ * appropriate screen from src/screens.
+ */
+export const EXPO_ROUTER_ROUTE_TEMPLATE = `---
+filename: <%= props.kebabCaseName %>.tsx
+---
+import { <%= props.pascalCaseName %>Screen } from "@/screens/<%= props.pascalCaseName %>Screen"
+
+export default function <%= props.pascalCaseName %>() {
+  return <<%= props.pascalCaseName %>Screen />
+}
+
+`
+
+export const EXPO_ROUTER_DYNAMIC_ROUTE_TEMPLATE = `import { <%= props.pascalCaseName %>Screen } from "@/screens/<%= props.pascalCaseName %>Screen"
+
+export default function <%= props.pascalCaseName %>() {
+  return <<%= props.pascalCaseName %>Screen />
+}
+
+`
+
+export function createGeneratorTemplate(
+  toolbox: GluegunToolbox,
+  path: string,
+  templateEjs: string,
+) {
   const { filesystem, parameters, print } = toolbox
 
   // debug?
@@ -238,31 +291,9 @@ export function createExpoRouterScreenTemplate(toolbox: GluegunToolbox) {
   }
 
   try {
-    const TARGET_DIR = filesystem.path(process.cwd())
-    const filePath = filesystem.path(TARGET_DIR, "ignite/templates/screen/NAME.tsx.ejs")
-
-    const EXPO_ROUTER_SCREEN_TPL = `import React, { FC } from "react"
-import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
-import { Screen, Text } from "@/components"
-
-// @mst replace-next-line export default function <%= props.pascalCaseName %>Screen() {
-export default observer(function <%= props.pascalCaseName %>Screen() {
-  return (
-    <Screen style={$root} preset="scroll">
-      <Text text="<%= props.camelCaseName %>" />
-    </Screen>
-  )
-// @mst replace-next-line }
-})
-
-const $root: ViewStyle = {
-  flex: 1,
-}
-`
-    filesystem.write(filePath, EXPO_ROUTER_SCREEN_TPL)
+    filesystem.write(path, templateEjs)
   } catch (e) {
-    log(`Unable to write screen generator template.`)
+    log(`Unable to write generator template at ${path}.`)
   }
 }
 
@@ -313,8 +344,6 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
     // has its own tsconfig, needs updating separately
     "test/i18n.test.ts",
     "test/setup.ts",
-    "ignite/templates/model/NAME.ts.ejs",
-    "ignite/templates/model/NAME.test.ts.ejs",
     "ignite/templates/component/NAME.tsx.ejs",
   ]
   expoRouterFilesToFix.forEach((file) => {
@@ -339,9 +368,7 @@ export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath:
     workingDir.path("src", "components", "ErrorBoundary"),
   )
   workingDir.remove("index.tsx")
-  workingDir.remove(workingDir.path("ignite", "templates", "screen", "NAMEScreen.tsx.ejs"))
   workingDir.remove(workingDir.path("ignite", "templates", "navigator"))
-  workingDir.remove(workingDir.path("src", "screens"))
   workingDir.remove(workingDir.path("src", "navigators"))
   workingDir.remove("app")
 }

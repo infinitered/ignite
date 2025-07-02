@@ -1,16 +1,21 @@
-import { Link, RouteProp, useRoute } from "@react-navigation/native"
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
 import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
-import { Drawer } from "react-native-drawer-layout"
+import { Link, RouteProp, useRoute } from "@react-navigation/native"
 import { type ContentStyle } from "@shopify/flash-list"
+import { Drawer } from "react-native-drawer-layout"
 
-import { ListItem, ListView, ListViewRef, Screen, Text } from "@/components"
-import { TxKeyPath, isRTL, translate } from "@/i18n"
+import { ListItem } from "@/components/ListItem"
+import { ListView, type ListViewRef } from "@/components/ListView"
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+import { TxKeyPath, isRTL } from "@/i18n"
+import { translate } from "@/i18n/translate"
 import { DemoTabParamList, DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import type { Theme, ThemedStyle } from "@/theme"
-import { $styles } from "@/theme"
+import type { Theme, ThemedStyle } from "@/theme/types"
+import { useAppTheme } from "@/theme/context"
+import { $styles } from "@/theme/styles"
+import { hasValidStringProp } from "@/utils/hasValidStringProp"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
-import { useAppTheme } from "@/utils/useAppTheme"
 
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
@@ -96,7 +101,7 @@ const isAndroid = Platform.OS === "android"
 export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
   function DemoShowroomScreen(_props) {
     const [open, setOpen] = useState(false)
-    const timeout = useRef<ReturnType<typeof setTimeout>>()
+    const timeout = useRef<ReturnType<typeof setTimeout>>(null)
     const listRef = useRef<SectionList>(null)
     const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
@@ -135,9 +140,14 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         let findItemIndex = 0
         if (params.itemIndex) {
           try {
-            findItemIndex = demoValues[findSectionIndex]
-              .data({ themed, theme })
-              .findIndex((u) => slugify(translate(u.props.name)) === params.itemIndex)
+            findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
+              if (hasValidStringProp(u.props, "name")) {
+                return (
+                  slugify(translate((u.props as { name: TxKeyPath }).name)) === params.itemIndex
+                )
+              }
+              return false
+            })
           } catch (err) {
             console.error(err)
           }
@@ -164,7 +174,11 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     }
 
     useEffect(() => {
-      return () => timeout.current && clearTimeout(timeout.current)
+      return () => {
+        if (timeout.current) {
+          clearTimeout(timeout.current)
+        }
+      }
     }, [])
 
     const $drawerInsets = useSafeAreaInsetsStyle(["top"])
@@ -187,7 +201,12 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
               estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
-                useCases: d.data({ theme, themed }).map((u) => translate(u.props.name)),
+                useCases: d.data({ theme, themed }).map((u) => {
+                  if (hasValidStringProp(u.props, "name")) {
+                    return translate((u.props as { name: TxKeyPath }).name)
+                  }
+                  return ""
+                }),
               }))}
               keyExtractor={(item) => item.name}
               renderItem={({ item, index: sectionIndex }) => (
