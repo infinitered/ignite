@@ -40,16 +40,6 @@ Here are a few videos / talks that introduce Ignite and show off some of its fea
       </figure>
     </td>
   </tr>
-  <tr>
-    <td>
-      <figure>
-        <a href="https://www.youtube.com/watch?v=QmkMsUYrTlk">
-          <img src="https://img.youtube.com/vi/QmkMsUYrTlk/sddefault.jpg" alt="Jamon's Code Quest on Ignite 9" width="100%" /><br />
-        <figcaption><strong>What's new in Ignite 9</strong></figcaption>
-        </a>
-      </figure>
-    </td>
-  </tr>
 </table>
 
 ## [Full Documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
