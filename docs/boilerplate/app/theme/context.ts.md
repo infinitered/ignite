@@ -1,5 +1,6 @@
 ---
 sidebar_position: 10
+title: context.ts
 ---
 
 # theme/context.ts
