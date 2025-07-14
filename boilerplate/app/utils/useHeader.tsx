@@ -6,7 +6,7 @@ import { Header, HeaderProps } from "@/components/Header"
 
 /**
  * A hook that can be used to easily set the Header of a react-navigation screen from within the screen's component.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/utility/useHeader/}
+ * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/app/utils/useHeader.tsx/}
  * @param {HeaderProps} headerProps - The props for the `Header` component.
  * @param {any[]} deps - The dependencies to watch for changes to update the header.
  */
