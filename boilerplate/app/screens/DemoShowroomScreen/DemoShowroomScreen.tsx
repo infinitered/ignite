@@ -1,11 +1,9 @@
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
-import { Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
+import { FlatList, Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
 import { Link, RouteProp, useRoute } from "@react-navigation/native"
-import { type ContentStyle } from "@shopify/flash-list"
 import { Drawer } from "react-native-drawer-layout"
 
 import { ListItem } from "@/components/ListItem"
-import { ListView, type ListViewRef } from "@/components/ListView"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { TxKeyPath, isRTL } from "@/i18n"
@@ -103,7 +101,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const [open, setOpen] = useState(false)
     const timeout = useRef<ReturnType<typeof setTimeout>>(null)
     const listRef = useRef<SectionList>(null)
-    const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
+    const menuRef = useRef<FlatList<DemoListItem["item"]>>(null)
     const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
     const params = route.params
 
@@ -195,10 +193,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             <View style={themed($logoContainer)}>
               <Image source={logo} style={$logoImage} />
             </View>
-            <ListView<DemoListItem["item"]>
+            <FlatList<DemoListItem["item"]>
               ref={menuRef}
               contentContainerStyle={themed($listContentContainer)}
-              estimatedItemSize={250}
               data={Object.values(Demos).map((d) => ({
                 name: d.name,
                 useCases: d.data({ theme, themed }).map((u) => {
@@ -268,7 +265,7 @@ const $drawer: ThemedStyle<ViewStyle> = ({ colors }) => ({
   flex: 1,
 })
 
-const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
+const $listContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
 })
 
