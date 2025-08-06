@@ -1,5 +1,14 @@
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
-import { FlatList, Image, ImageStyle, Platform, SectionList, TextStyle, View, ViewStyle } from "react-native"
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  Platform,
+  SectionList,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 import { Link, RouteProp, useRoute } from "@react-navigation/native"
 import { Drawer } from "react-native-drawer-layout"
 
