@@ -34,7 +34,6 @@
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
-    "@shopify/flash-list": "1.8.1",
     "apisauce": "3.1.1",
     "date-fns": "^4.1.0",
     "expo": "^53.0.15",
@@ -90,12 +89,5 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  },
-  "expo": {
-    "install": {
-      "exclude": [
-        "@shopify/flash-list"
-      ]
-    }
   }
 }
