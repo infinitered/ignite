@@ -246,7 +246,7 @@ export const demoEs: DemoTranslations = {
         nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
       },
       listIntegration: {
-        name: "Integración con FlatList y FlashList",
+        name: "Integración con FlatList",
         description:
           "El componente puede ser fácilmente integrado con tu interfaz de lista preferida.",
       },

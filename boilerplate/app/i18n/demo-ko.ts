@@ -243,7 +243,7 @@ export const demoKo: DemoTranslations = {
         nestedChildren2: "또 다른 예제 문장, 중첩이 된 형태입니다.",
       },
       listIntegration: {
-        name: "FlatList 및 FlashList 통합",
+        name: "FlatList 통합",
         description: "이 컴포넌트는 선호하는 리스트 인터페이스와 쉽게 통합할 수 있습니다.",
       },
       styling: {

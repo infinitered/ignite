@@ -91,7 +91,7 @@ The `preset` prop is an optional enum that applies to the outer `KeyboardAvoidin
 The predefined presets are:
 
 - `scroll` - A preset that applies a scroll behavior to the screen. This is useful for forms or other screens which require a keyboard.
-- `fixed` - A preset that applies a fixed behavior to the screen. i.e. The screen will not scroll. This is useful if you have a component such as a `FlashList` that has its own scrolling behavior.
+- `fixed` - A preset that applies a fixed behavior to the screen. i.e. The screen will not scroll. This is useful if you have a component such as a `FlatList` that has its own scrolling behavior.
 - `auto` - A preset that applies an automatic behavior to the screen. i.e. The screen will scroll if the content is larger than the screen, but not otherwise.
 
 ```tsx
