@@ -241,7 +241,7 @@ export const demoAr: DemoTranslations = {
         nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
       },
       listIntegration: {
-        name: "دمج مع/ FlatList & FlashList",
+        name: "دمج مع/ FlatList",
         description: "يمكن دمج المكون بسهولة مع واجهة القائمة المفضلة لديك",
       },
       styling: {

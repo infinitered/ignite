@@ -244,7 +244,7 @@ export const demoJa: DemoTranslations = {
         nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
       },
       listIntegration: {
-        name: "FlatList & FlashListに組みこむ場合",
+        name: "FlatList に組みこむ場合",
         description:
           "このコンポーネントはお好みのリスト系のコンポーネントへ容易に組み込むことができます。",
       },

@@ -246,7 +246,7 @@ export const demoHi: DemoTranslations = {
         nestedChildren2: "Ullamco cupidatat officia exercitation velit non ullamco nisi..",
       },
       listIntegration: {
-        name: "FlatList और FlashList के साथ एकीकरण",
+        name: "FlatList के साथ एकीकरण",
         description:
           "कंपोनेंट को आसानी से आपके पसंदीदा सूची इंटरफेस के साथ एकीकृत किया जा सकता है।",
       },

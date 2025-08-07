@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-key */
 import { TextStyle, View, ViewStyle } from "react-native"
+import { FlatList } from "react-native-gesture-handler"
 
 import { Icon } from "@/components/Icon"
 import { ListItem } from "@/components/ListItem"
-import { ListView } from "@/components/ListView"
 import { Text } from "@/components/Text"
 import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme/types"
@@ -160,9 +160,9 @@ export const DemoListItem: Demo = {
       description="demoListItem:useCase.listIntegration.description"
     >
       <View style={themed($listStyle)}>
-        <ListView<string>
+        <FlatList<string>
           data={listData}
-          estimatedItemSize={59}
+          keyExtractor={(item, index) => `${item}-${index}`}
           renderItem={({ item, index }) => (
             <ListItem
               text={item}

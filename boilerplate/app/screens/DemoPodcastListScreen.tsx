@@ -2,6 +2,7 @@ import { ComponentType, FC, useCallback, useEffect, useMemo, useState } from "re
 import {
   AccessibilityProps,
   ActivityIndicator,
+  FlatList,
   Image,
   ImageSourcePropType,
   ImageStyle,
@@ -11,7 +12,6 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { type ContentStyle } from "@shopify/flash-list"
 import Animated, {
   Extrapolation,
   interpolate,
@@ -24,7 +24,6 @@ import { Button, type ButtonAccessoryProps } from "@/components/Button"
 import { Card } from "@/components/Card"
 import { EmptyState } from "@/components/EmptyState"
 import { Icon } from "@/components/Icon"
-import { ListView } from "@/components/ListView"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { Switch } from "@/components/Toggle/Switch"
@@ -81,13 +80,13 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
-      <ListView<EpisodeItem>
+      <FlatList<EpisodeItem>
         contentContainerStyle={themed([$styles.container, $listContentContainer])}
         data={episodesForList}
         extraData={totalEpisodes + totalFavorites}
         refreshing={refreshing}
-        estimatedItemSize={177}
         onRefresh={manualRefresh}
+        keyExtractor={(item) => item.guid}
         ListEmptyComponent={
           isLoading ? (
             <ActivityIndicator />
@@ -309,7 +308,7 @@ const EpisodeCard = ({
 }
 
 // #region Styles
-const $listContentContainer: ThemedStyle<ContentStyle> = ({ spacing }) => ({
+const $listContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.lg,
