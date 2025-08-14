@@ -380,6 +380,11 @@ module.exports = {
     log(`ignitePath: ${ignitePath}`)
     log(`boilerplatePath: ${boilerplatePath}`)
 
+    // Check for Windows path length issues
+    if (isWindows) {
+      checkWindowsPathLength(targetPath, toolbox)
+    }
+
     const defaultInstallDeps = true
     let installDeps = getDefault(options.installDeps)
       ? defaultInstallDeps
@@ -1058,4 +1063,30 @@ export function findAndRemoveDependencies(
   })
 
   return updatedPackageJson
+}
+
+
+// Threshold for warning about long paths on Windows
+const PATH_WARN_THRESHOLD = 120
+
+/**
+ * Warn if absolute project path is "deep" on Windows.
+ * Deep paths can cause Android CMake/Ninja builds to fail due to MAX_PATH issues.
+ */
+function checkWindowsPathLength(absPath: string, toolbox: GluegunToolbox): void {
+  if (process.platform !== "win32") return
+
+  const { print } = toolbox
+  const { warning } = print
+
+  const normalized = absPath.replace(/[\\/]+$/, "")
+  const len = normalized.length
+  if (len > PATH_WARN_THRESHOLD) {
+    p()
+    warning(`Windows project path is quite long (${len} chars). Android native builds can fail on very long paths.`)
+    p(`Path: ${em(normalized)}`)
+    p(`Tip: move your project closer to the drive root, e.g. ${em("C:\\\\src\\\\MyApp")}`)
+    p(`Why: CMake/Ninja can generate very long object file paths that hit Windows limits.`)
+    p()
+  }
 }
