@@ -1065,7 +1065,6 @@ export function findAndRemoveDependencies(
   return updatedPackageJson
 }
 
-
 // Threshold for warning about long paths on Windows
 const PATH_WARN_THRESHOLD = 120
 
@@ -1083,7 +1082,9 @@ function checkWindowsPathLength(absPath: string, toolbox: GluegunToolbox): void 
   const len = normalized.length
   if (len > PATH_WARN_THRESHOLD) {
     p()
-    warning(`Windows project path is quite long (${len} chars). Android native builds can fail on very long paths.`)
+    warning(
+      `Windows project path is quite long (${len} chars). Android native builds can fail on very long paths.`,
+    )
     p(`Path: ${em(normalized)}`)
     p(`Tip: move your project closer to the drive root, e.g. ${em("C:\\\\src\\\\MyApp")}`)
     p(`Why: CMake/Ninja can generate very long object file paths that hit Windows limits.`)
