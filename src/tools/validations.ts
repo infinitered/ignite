@@ -125,7 +125,7 @@ export function validateProjectPath(absPath: string, toolbox: GluegunToolbox) {
         `Windows project path is quite long (${len} chars). Android native builds can fail on very long paths.`,
       )
       print.warning(`Path: ${normalized}`)
-      print.warning(`Tip: move your project closer to the drive root, e.g. ${"C:\\\\src\\\\MyApp"}`)
+      print.warning(`Tip: move your project closer to the drive root, e.g. ${"C:\\src\\MyApp"}`)
       print.warning(
         `Why: CMake/Ninja can generate very long object file paths that hit Windows limits.`,
       )
