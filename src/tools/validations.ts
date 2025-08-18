@@ -97,7 +97,45 @@ export function validateBundleIdentifier(
   return bundleID
 }
 
+/**
+ * Check for project path issues (Windows length, macOS spaces)
+ *
+ */
+
+export function validateProjectPath(absPath: string, toolbox: GluegunToolbox) {
+  const { print } = toolbox
+  const normalized = absPath.replace(/[\\/]+$/, "")
+  const len = normalized.length
+
+  // Check for spaces in path on macOS (Xcode build issues)
+  if (process.platform === "darwin" && normalized.includes(" ")) {
+    print.warning(`Project path contains spaces, which can cause Xcode build failures.`)
+    print.warning(`Tip: use a path without spaces, e.g. "/Users/username/MyApp"`)
+    print.warning(`Why: Xcode build scripts and CI systems can fail when paths contain spaces.`)
+    print.warning(" ")
+  }
+
+  if (process.platform === "win32") {
+    // Threshold for warning about long paths on Windows
+    const PATH_WARN_THRESHOLD = 120
+
+    // Warn if the path is too long: https://github.com/expo/expo/issues/36274
+    if (len > PATH_WARN_THRESHOLD) {
+      print.warning(
+        `Windows project path is quite long (${len} chars). Android native builds can fail on very long paths.`,
+      )
+      print.warning(`Path: ${normalized}`)
+      print.warning(`Tip: move your project closer to the drive root, e.g. ${"C:\\src\\MyApp"}`)
+      print.warning(
+        `Why: CMake/Ninja can generate very long object file paths that hit Windows limits.`,
+      )
+      print.warning(" ")
+    }
+  }
+}
+
 export type ValidationsExports = {
   validateProjectName: typeof validateProjectName
   validateBundleIdentifier: typeof validateBundleIdentifier
+  validateProjectPath: typeof validateProjectPath
 }

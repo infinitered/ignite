@@ -507,6 +507,11 @@ module.exports = {
       p()
       // #endregion
 
+      // #region Validate Project Path
+      const { validateProjectPath } = require("../tools/validations") as ValidationsExports
+      validateProjectPath(targetPath, toolbox)
+      // #endregion
+
       // #region Overwrite
       if (exists(targetPath) === "dir" && overwrite === true) {
         const msg = ` Tossing that old app like it's hot`
