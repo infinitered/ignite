@@ -40,7 +40,7 @@ Now you're ready to check out a new branch and get hacking on Ignite CLI!
 
 ## Source Code
 
-To get familiarized with Ignite CLI's source code, read the [Tour of Ignite CLI's source code](../docs/Tour-of-Ignite.md) (TODO! currently out of date).
+To get familiarized with Ignite CLI's source code, read the [Tour of Ignite CLI's source code](../docs/contributing/Tour-of-Ignite.md) (TODO! currently out of date).
 
 ## How to Build and Run App
 
