@@ -16,6 +16,7 @@ _Working on Ignite CLI requires Yarn v1._
 
 - Node (reasonably recent version)
 - Yarn (while you can use Ignite CLI without Yarn, we require it for contributors)
+- Install [Git LFS](https://git-lfs.com/) to work with the development build artifacts we track in this repository.
 
 ## Getting Started
 
