@@ -7,7 +7,7 @@ const EXAMPLE_README = `
 yarn
 yarn start
 yarn build:ios:sim
-yarn build:ios:dev
+yarn build:ios:device
 yarn build:ios:prod
 `
 
@@ -34,7 +34,7 @@ describe("react native", () => {
 npm install
 npm run start
 npm run build:ios:sim
-npm run build:ios:dev
+npm run build:ios:device
 npm run build:ios:prod
 `
 
@@ -51,7 +51,7 @@ npm run build:ios:prod
 yarn install
 yarn start
 yarn build:ios:sim
-yarn build:ios:dev
+yarn build:ios:device
 yarn build:ios:prod
 `
 
@@ -67,7 +67,7 @@ yarn build:ios:prod
 pnpm install
 pnpm run start
 pnpm run build:ios:sim
-pnpm run build:ios:dev
+pnpm run build:ios:device
 pnpm run build:ios:prod
 `
 
@@ -83,7 +83,7 @@ pnpm run build:ios:prod
 bun install
 bun run start
 bun run build:ios:sim
-bun run build:ios:dev
+bun run build:ios:device
 bun run build:ios:prod
 `
 
