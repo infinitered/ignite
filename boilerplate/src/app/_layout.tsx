@@ -8,6 +8,7 @@ import { initI18n } from "@/i18n"
 import { ThemeProvider } from "@/theme/context"
 import { customFontsToLoad } from "@/theme/typography"
 import { loadDateFnsLocale } from "@/utils/formatDate"
+import { AuthContext } from "@/context/AuthContext"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -18,7 +19,7 @@ if (__DEV__) {
   require("src/devtools/ReactotronConfig.ts")
 }
 
-export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
+export { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 
 export default function Root() {
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
@@ -49,9 +50,11 @@ export default function Root() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ThemeProvider>
-        <KeyboardProvider>
-          <Slot />
-        </KeyboardProvider>
+        <AuthContext>
+          <KeyboardProvider>
+            <Slot />
+          </KeyboardProvider>
+        </AuthContext>
       </ThemeProvider>
     </SafeAreaProvider>
   )
