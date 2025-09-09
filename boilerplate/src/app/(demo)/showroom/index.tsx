@@ -1,58 +1,282 @@
-import { FC } from "react"
-import { Image, ImageStyle, TextStyle, ViewStyle } from "react-native"
+import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react"
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  Platform,
+  SectionList,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
+import { useLocalSearchParams } from "expo-router"
+import { Drawer } from "react-native-drawer-layout"
 
+import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
-import type { ThemedStyle } from "@/theme/types"
+import { TxKeyPath, isRTL } from "@/i18n"
+import { translate } from "@/i18n/translate"
+import type { Theme, ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
+import { hasValidStringProp } from "@/utils/hasValidStringProp"
+import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
+
+import * as Demos from "./demos"
+import { DrawerIconButton } from "./DrawerIconButton"
 
 const logo = require("@assets/images/logo.png")
 
-export default function Showroom() {
-  const { themed } = useAppTheme()
+export interface Demo {
+  name: string
+  description: TxKeyPath
+  data: ({ themed, theme }: { themed: any; theme: Theme }) => ReactElement[]
+}
 
+interface DemoListItem {
+  item: { name: string; useCases: string[] }
+  sectionIndex: number
+  handleScroll?: (sectionIndex: number, itemIndex?: number) => void
+}
+
+const slugify = (str: string) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+
+const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) => {
+  const { themed } = useAppTheme()
   return (
-    <Screen preset="scroll" contentContainerStyle={$styles.container} safeAreaEdges={["top"]}>
-      <Image style={themed($logo)} source={logo} resizeMode="contain" />
-      <Text preset="heading" tx="demoShowroomScreen:jumpStart" style={themed($title)} />
-      <Text tx="demoShowroomScreen:description" style={themed($description)} />
-      <Text preset="subheading" tx="demoShowroomScreen:reactotron" style={themed($sectionTitle)} />
-      <Text tx="demoShowroomScreen:reactotronDescription" style={themed($description)} />
-      
-      {/* TODO: Add drawer navigation and component demos in Step 4 */}
-      <Text style={themed($comingSoon)}>
-        Component showcase with drawer navigation coming soon...
+    <View>
+      <Text
+        onPress={() => handleScroll?.(sectionIndex)}
+        preset="bold"
+        style={themed($menuContainer)}
+      >
+        {item.name}
       </Text>
-    </Screen>
+      {item.useCases.map((u, index) => (
+        <ListItem
+          key={`section${sectionIndex}-${u}`}
+          onPress={() => handleScroll?.(sectionIndex, index)}
+          text={u}
+          rightIcon={isRTL ? "caretLeft" : "caretRight"}
+        />
+      ))}
+    </View>
   )
 }
 
-const $logo: ThemedStyle<ImageStyle> = ({ spacing }) => ({
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.lg,
-  alignSelf: "center",
+const isAndroid = Platform.OS === "android"
+
+export default function Showroom() {
+  const [open, setOpen] = useState(false)
+  const timeout = useRef<ReturnType<typeof setTimeout>>(null)
+  const listRef = useRef<SectionList>(null)
+  const menuRef = useRef<FlatList<DemoListItem["item"]>>(null)
+  const params = useLocalSearchParams()
+
+  const { themed, theme } = useAppTheme()
+
+  const toggleDrawer = useCallback(() => {
+    setOpen(!open)
+  }, [open])
+
+  const handleScroll = useCallback((sectionIndex: number, itemIndex = 0) => {
+    try {
+      listRef.current?.scrollToLocation({
+        animated: true,
+        itemIndex,
+        sectionIndex,
+        viewPosition: 0.25,
+      })
+      setOpen(false) // Close drawer after navigation
+    } catch (e) {
+      console.error(e)
+    }
+  }, [])
+
+  // handle search params for deep linking
+  useEffect(() => {
+    if (params && Object.keys(params).length > 0) {
+      const demoValues = Object.values(Demos)
+      const findSectionIndex = demoValues.findIndex(
+        (x) => x.name.toLowerCase() === params.queryIndex,
+      )
+      let findItemIndex = 0
+      if (params.itemIndex && findSectionIndex >= 0) {
+        try {
+          findItemIndex = demoValues[findSectionIndex].data({ themed, theme }).findIndex((u) => {
+            if (hasValidStringProp(u.props, "name")) {
+              return (
+                slugify(translate((u.props as { name: TxKeyPath }).name)) === params.itemIndex
+              )
+            }
+            return false
+          })
+        } catch (err) {
+          console.error(err)
+        }
+      }
+      if (findSectionIndex >= 0) {
+        handleScroll(findSectionIndex, findItemIndex)
+      }
+    }
+  }, [handleScroll, params, theme, themed])
+
+  const scrollToIndexFailed = (info: {
+    index: number
+    highestMeasuredFrameIndex: number
+    averageItemLength: number
+  }) => {
+    listRef.current?.getScrollResponder()?.scrollToEnd()
+    timeout.current = setTimeout(
+      () =>
+        listRef.current?.scrollToLocation({
+          animated: true,
+          itemIndex: info.index,
+          sectionIndex: 0,
+        }),
+      50,
+    )
+  }
+
+  useEffect(() => {
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current)
+      }
+    }
+  }, [])
+
+  const $drawerInsets = useSafeAreaInsetsStyle(["top"])
+
+  return (
+    <Drawer
+      open={open}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      drawerType="back"
+      drawerPosition={isRTL ? "right" : "left"}
+      renderDrawerContent={() => (
+        <View style={themed([$drawer, $drawerInsets])}>
+          <View style={themed($logoContainer)}>
+            <Image source={logo} style={$logoImage} />
+          </View>
+          <FlatList<DemoListItem["item"]>
+            ref={menuRef}
+            contentContainerStyle={themed($listContentContainer)}
+            data={Object.values(Demos).map((d) => ({
+              name: d.name,
+              useCases: d.data({ theme, themed }).map((u) => {
+                if (hasValidStringProp(u.props, "name")) {
+                  return translate((u.props as { name: TxKeyPath }).name)
+                }
+                return ""
+              }),
+            }))}
+            keyExtractor={(item) => item.name}
+            renderItem={({ item, index: sectionIndex }) => (
+              <NativeListItem {...{ item, sectionIndex, handleScroll }} />
+            )}
+          />
+        </View>
+      )}
+    >
+      <Screen
+        preset="fixed"
+        safeAreaEdges={["top"]}
+        contentContainerStyle={$styles.flex1}
+        {...(isAndroid ? { KeyboardAvoidingViewProps: { behavior: undefined } } : {})}
+      >
+        <DrawerIconButton onPress={toggleDrawer} />
+
+        <SectionList
+          ref={listRef}
+          contentContainerStyle={themed($sectionListContentContainer)}
+          stickySectionHeadersEnabled={false}
+          sections={Object.values(Demos).map((d) => ({
+            name: d.name,
+            description: d.description,
+            data: [d.data({ theme, themed })],
+          }))}
+          renderItem={({ item, index: sectionIndex }) => (
+            <View>
+              {item.map((demo: ReactElement, demoIndex: number) => (
+                <View key={`${sectionIndex}-${demoIndex}`}>{demo}</View>
+              ))}
+            </View>
+          )}
+          renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
+          ListHeaderComponent={
+            <View style={themed($heading)}>
+              <Text preset="heading" tx="demoShowroomScreen:jumpStart" />
+            </View>
+          }
+          onScrollToIndexFailed={scrollToIndexFailed}
+          renderSectionHeader={({ section }) => {
+            return (
+              <View>
+                <Text preset="heading" style={themed($demoItemName)}>
+                  {section.name}
+                </Text>
+                <Text style={themed($demoItemDescription)}>{translate(section.description)}</Text>
+              </View>
+            )
+          }}
+        />
+      </Screen>
+    </Drawer>
+  )
+}
+
+const $drawer: ThemedStyle<ViewStyle> = ({ colors }) => ({
+  backgroundColor: colors.background,
+  flex: 1,
 })
 
-const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.sm,
+const $listContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  paddingHorizontal: spacing.lg,
 })
 
-const $description: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.lg,
+const $sectionListContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  paddingHorizontal: spacing.lg,
 })
 
-const $sectionTitle: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginTop: spacing.xl,
-  marginBottom: spacing.sm,
+const $heading: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  marginBottom: spacing.xxxl,
 })
 
-const $comingSoon: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
-  marginTop: spacing.xl,
-  padding: spacing.md,
-  backgroundColor: colors.palette.neutral200,
-  borderRadius: 8,
-  textAlign: "center",
-  fontStyle: "italic",
+const $logoImage: ImageStyle = {
+  height: 42,
+  width: 77,
+}
+
+const $logoContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  alignSelf: "flex-start",
+  justifyContent: "center",
+  height: 56,
+  paddingHorizontal: spacing.lg,
+})
+
+const $menuContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  paddingBottom: spacing.xs,
+  paddingTop: spacing.lg,
+})
+
+const $demoItemName: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  fontSize: 24,
+  marginBottom: spacing.md,
+})
+
+const $demoItemDescription: ThemedStyle<TextStyle> = ({ spacing }) => ({
+  marginBottom: spacing.xxl,
+})
+
+const $demoUseCasesSpacer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  paddingBottom: spacing.xxl,
 })
