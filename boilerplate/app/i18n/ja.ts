@@ -6,7 +6,7 @@ const ja: Translations = {
     ok: "OK",
     cancel: "キャンセル",
     back: "戻る",
-    logOut: "ログアウト", // @demo remove-current-line
+    logOut: "ログアウト",
   },
   welcomeScreen: {
     postscript:
@@ -30,7 +30,6 @@ const ja: Translations = {
       button: "もう一度やってみよう",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "有効なメールアドレスを入力してください.",
   },
@@ -45,6 +44,7 @@ const ja: Translations = {
     tapToLogIn: "タップしてログインしよう！",
     hint: "ヒント: お好みのメールアドレスとパスワードを使ってください :)",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "コンポーネント",
     debugTab: "デバッグ",

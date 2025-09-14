@@ -5,7 +5,7 @@ const en = {
     ok: "OK!",
     cancel: "Cancel",
     back: "Back",
-    logOut: "Log Out", // @demo remove-current-line
+    logOut: "Log Out",
   },
   welcomeScreen: {
     postscript:
@@ -28,7 +28,6 @@ const en = {
       button: "Let's try this again",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "Invalid email address.",
   },
@@ -43,6 +42,7 @@ const en = {
     tapToLogIn: "Tap to log in!",
     hint: "Hint: you can use any email address and your favorite password :)",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "Components",
     debugTab: "Debug",

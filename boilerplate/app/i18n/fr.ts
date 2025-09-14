@@ -6,7 +6,7 @@ const fr: Translations = {
     ok: "OK !",
     cancel: "Annuler",
     back: "Retour",
-    logOut: "Déconnexion", // @demo remove-current-line
+    logOut: "Déconnexion",
   },
   welcomeScreen: {
     postscript:
@@ -30,7 +30,6 @@ const fr: Translations = {
       button: "Essayons à nouveau",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "Adresse e-mail invalide.",
   },
@@ -45,6 +44,7 @@ const fr: Translations = {
     tapToLogIn: "Appuyez pour vous connecter!",
     hint: "Astuce : vous pouvez utiliser n'importe quelle adresse e-mail et votre mot de passe préféré :)",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "Composants",
     debugTab: "Débogage",
