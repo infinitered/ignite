@@ -82,11 +82,8 @@ removing file /user/home/ignite/app/screens/WelcomeScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/services/api/index.ts
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/theme/styles.ts
    Removed empty directory '/user/home/ignite/.maestro/flows'
-   Removed empty directory '/user/home/ignite/app/components/pages/showRoom/demos'
    Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen/demos'
-   Removed empty directory '/user/home/ignite/app/components/pages/showRoom'
    Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen'
-   Removed empty directory '/user/home/ignite/app/components/pages'
    Removed demo directory '/user/home/ignite/assets/icons/demo'
    Removed demo directory '/user/home/ignite/assets/images/demo'
    Done removing demo code from '/user/home/ignite'
