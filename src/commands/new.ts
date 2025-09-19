@@ -486,7 +486,7 @@ module.exports = {
     const perfStart = new Date().getTime()
 
     // add a timeout to make sure we don't hang on any errors
-    const timeoutHandle = noTimeout ? undefined : setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
+    const timeoutHandle = !noTimeout && setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
 
     // #region Print Welcome
     // welcome everybody!
