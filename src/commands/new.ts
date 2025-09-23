@@ -134,6 +134,11 @@ export interface Options {
    * @default false
    */
   noTimeout?: boolean
+  /**
+   * Set by CLI parser when --no-timeout is passed (negation of timeout)
+   * Input Source: `parameter.option`
+   */
+  timeout?: boolean
 
   /**
    * Deprecated Props:
@@ -160,7 +165,8 @@ module.exports = {
     const options: Options = parameters.options
 
     const yname = boolFlag(options.y) || boolFlag(options.yes)
-    const noTimeout = options.noTimeout ?? false
+    const timeoutFlag = boolFlag(options.timeout) ?? true
+    const noTimeout = boolFlag(options.noTimeout) ?? !timeoutFlag
     const getDefault = (option: unknown) => yname && option === undefined
 
     const CMD_INDENT = "  "
@@ -480,7 +486,7 @@ module.exports = {
     const perfStart = new Date().getTime()
 
     // add a timeout to make sure we don't hang on any errors
-    const timeout = noTimeout ? undefined : setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
+    const timeoutHandle = !noTimeout && setTimeout(timeoutExit, MAX_APP_CREATION_TIME)
 
     // #region Print Welcome
     // welcome everybody!
@@ -905,7 +911,7 @@ module.exports = {
       const perfDuration = Math.round((new Date().getTime() - perfStart) / 10) / 100
 
       // no need to timeout, we're done!
-      clearTimeout(timeout)
+      if (timeoutHandle) clearTimeout(timeoutHandle)
 
       p2(`Ignited ${em(`${projectName}`)} in ${gray(`${perfDuration}s`)}  🚀 `)
       p2()
@@ -1021,7 +1027,7 @@ module.exports = {
 }
 
 function buildCliCommand(args: {
-  flags: Required<Omit<Options, "newArch">>
+  flags: Required<Omit<Options, "newArch" | "timeout">>
   toolbox: GluegunToolbox
   projectName: string
 }): string {
