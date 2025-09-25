@@ -1,0 +1,4 @@
+build
+ignite_bin
+libignite_native.dylib
+test.txt
