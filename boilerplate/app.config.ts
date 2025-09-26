@@ -37,7 +37,6 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
     plugins: [
       ...existingPlugins,
       require("./plugins/withSplashScreen").withSplashScreen,
-      require("./plugins/withModularHeaders").withModularHeaders,
       "expo-build-properties",
     ],
   }
