@@ -1,58 +1,82 @@
-// we always make sure 'react-native' gets included first
-// eslint-disable-next-line no-restricted-imports
-import * as ReactNative from "react-native"
+import { MMKV } from "react-native-mmkv"
 
-import mockFile from "./mockFile"
+export const storage = new MMKV()
 
-// libraries to mock
-jest.doMock("react-native", () => {
-  // Extend ReactNative
-  return Object.setPrototypeOf(
-    {
-      Image: {
-        ...ReactNative.Image,
-        resolveAssetSource: jest.fn((_source) => mockFile), // eslint-disable-line @typescript-eslint/no-unused-vars
-        getSize: jest.fn(
-          (
-            uri: string, // eslint-disable-line @typescript-eslint/no-unused-vars
-            success: (width: number, height: number) => void,
-            failure?: (_error: any) => void, // eslint-disable-line @typescript-eslint/no-unused-vars
-          ) => success(100, 100),
-        ),
-      },
-    },
-    ReactNative,
-  )
-})
+/**
+ * Loads a string from storage.
+ *
+ * @param key The key to fetch.
+ */
+export function loadString(key: string): string | null {
+  try {
+    return storage.getString(key) ?? null
+  } catch {
+    // not sure why this would fail... even reading the RN docs I'm unclear
+    return null
+  }
+}
 
-jest.mock("i18next", () => ({
-  currentLocale: "en",
-  t: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-  translate: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-}))
+/**
+ * Saves a string to storage.
+ *
+ * @param key The key to fetch.
+ * @param value The value to store.
+ */
+export function saveString(key: string, value: string): boolean {
+  try {
+    storage.set(key, value)
+    return true
+  } catch {
+    return false
+  }
+}
 
-jest.mock("expo-localization", () => ({
-  ...jest.requireActual("expo-localization"),
-  getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
-}))
+/**
+ * Loads something from storage and runs it thru JSON.parse.
+ *
+ * @param key The key to fetch.
+ */
+export function load<T>(key: string): T | null {
+  let almostThere: string | null = null
+  try {
+    almostThere = loadString(key)
+    return JSON.parse(almostThere ?? "") as T
+  } catch {
+    return (almostThere as T) ?? null
+  }
+}
 
-jest.mock("../app/i18n/index.ts", () => ({
-  i18n: {
-    isInitialized: true,
-    language: "en",
-    t: (key: string, params: Record<string, string>) => {
-      return `${key} ${JSON.stringify(params)}`
-    },
-    numberToCurrency: jest.fn(),
-  },
-}))
+/**
+ * Saves an object to storage.
+ *
+ * @param key The key to fetch.
+ * @param value The value to store.
+ */
+export function save(key: string, value: unknown): boolean {
+  try {
+    saveString(key, JSON.stringify(value))
+    return true
+  } catch {
+    return false
+  }
+}
 
-declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
+/**
+ * Removes something from storage.
+ *
+ * @param key The key to kill.
+ */
+export function remove(key: string): void {
+  try {
+    storage.delete(key)
+  } catch {}
+}
 
-declare global {
-  let __TEST__: boolean
+/**
+ * Burn it all to the ground.
+ */
+export function clear(): void {
+  try {
+    storage.clearAll()
+  } catch {}
 }
