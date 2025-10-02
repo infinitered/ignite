@@ -51,15 +51,6 @@ jest.mock("../app/i18n/index.ts", () => ({
   },
 }))
 
-jest.mock("react-native-nitro-modules", () => ({
-  createHybridObject: () => ({
-    init: () => {},
-    add: () => {},
-    createHybridNavigationBar: () => {},
-    createHybridStatusBar: () => ({}),
-  }),
-}))
-
 declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
 
 declare global {
