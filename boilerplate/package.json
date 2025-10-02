@@ -36,7 +36,7 @@
     "@react-navigation/native-stack": "^7.2.0",
     "apisauce": "3.1.1",
     "date-fns": "^4.1.0",
-    "expo": "54.0.10",
+    "expo": "54.0.12",
     "expo-application": "~7.0.7",
     "expo-build-properties": "~1.0.9",
     "expo-dev-client": "~6.0.12",
@@ -61,7 +61,7 @@
     "react-native-safe-area-context": "5.6.0",
     "react-native-screens": "~4.16.0",
     "react-native-web": "~0.21.0",
-    "react-native-worklets": "0.5.1"
+    "react-native-worklets": "0.7.0-nightly-20251001-14eca5b4c"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -91,5 +91,12 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "react-native-worklets@~0.7.0-nightly-20251001-14eca5b4c"
+      ]
+    }
   }
 }
