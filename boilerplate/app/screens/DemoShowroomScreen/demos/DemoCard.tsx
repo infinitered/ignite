@@ -5,7 +5,7 @@ import { Card } from "@/components/Card"
 import { Icon } from "@/components/Icon"
 
 import { DemoDivider } from "../DemoDivider"
-import { Demo } from "../DemoShowroomScreen"
+import { Demo } from "./types"
 import { DemoUseCase } from "../DemoUseCase"
 
 export const DemoCard: Demo = {

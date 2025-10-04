@@ -4,12 +4,8 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import { ComponentProps } from "react"
-import {
-  NavigationContainer,
-  NavigatorScreenParams, // @demo remove-current-line
-} from "@react-navigation/native"
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import Config from "@/config"
 import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
@@ -18,36 +14,15 @@ import { LoginScreen } from "@/screens/LoginScreen" // @demo remove-current-line
 import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { useAppTheme } from "@/theme/context"
 
-import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
+import { DemoNavigator } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-
-/**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * For more information, see this documentation:
- *   https://reactnavigation.org/docs/params/
- *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
- *   https://reactnavigation.org/docs/typescript/#organizing-types
- */
-export type AppStackParamList = {
-  Welcome: undefined
-  Login: undefined // @demo remove-current-line
-  Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
-  // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
-}
+import type { AppStackParamList, NavigationProps } from "./navigationTypes"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
  */
 const exitRoutes = Config.exitRoutes
-
-export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
-  AppStackParamList,
-  T
->
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
@@ -90,9 +65,6 @@ const AppStack = () => {
     </Stack.Navigator>
   )
 }
-
-export interface NavigationProps
-  extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
 export const AppNavigator = (props: NavigationProps) => {
   const { navigationTheme } = useAppTheme()

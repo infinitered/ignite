@@ -11,7 +11,7 @@ import type { PersistNavigationConfig } from "@/config/config.base"
 import * as storage from "@/utils/storage"
 import { useIsMounted } from "@/utils/useIsMounted"
 
-import type { AppStackParamList, NavigationProps } from "./AppNavigator"
+import type { AppStackParamList, NavigationProps } from "./navigationTypes"
 
 type Storage = typeof storage
 

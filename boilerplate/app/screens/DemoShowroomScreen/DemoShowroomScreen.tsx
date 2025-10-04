@@ -17,8 +17,8 @@ import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { TxKeyPath, isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
-import { DemoTabParamList, DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import type { Theme, ThemedStyle } from "@/theme/types"
+import { DemoTabParamList, DemoTabScreenProps } from "@/navigators/navigationTypes"
+import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
 import { hasValidStringProp } from "@/utils/hasValidStringProp"
@@ -29,12 +29,6 @@ import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 
 const logo = require("@assets/images/logo.png")
-
-export interface Demo {
-  name: string
-  description: TxKeyPath
-  data: ({ themed, theme }: { themed: any; theme: Theme }) => ReactElement[]
-}
 
 interface DemoListItem {
   item: { name: string; useCases: string[] }

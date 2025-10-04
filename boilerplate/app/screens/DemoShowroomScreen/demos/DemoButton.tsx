@@ -8,7 +8,7 @@ import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme/types"
 
 import { DemoDivider } from "../DemoDivider"
-import { Demo } from "../DemoShowroomScreen"
+import { Demo } from "./types"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $iconStyle: ImageStyle = { width: 30, height: 30 }

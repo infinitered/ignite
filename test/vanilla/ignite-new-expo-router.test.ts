@@ -81,6 +81,7 @@ describe(`ignite new with expo-router`, () => {
       await run(`bun run test`, runOpts)
       await run(`bun run lint`, runOpts)
       await run(`bun run compile`, runOpts)
+      await run(`bun run depcruise`, runOpts)
       expect(await run("git diff HEAD --no-ext-diff", runOpts)).toBe("")
     })
   })

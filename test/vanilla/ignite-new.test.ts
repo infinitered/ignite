@@ -256,6 +256,7 @@ describe("ignite new", () => {
       await run(`bun run test`, runOpts)
       await run(`bun run lint`, runOpts)
       await run(`bun run compile`, runOpts)
+      await run(`bun run depcruise`, runOpts)
       expect(await run("git diff HEAD --no-ext-diff", runOpts)).toContain("+  Bowser: undefined")
       // #endregion
 
@@ -305,6 +306,7 @@ describe("ignite new", () => {
       await run(`yarn test`, runOpts)
       await run(`yarn lint`, runOpts)
       await run(`yarn compile`, runOpts)
+      await run(`yarn depcruise`, runOpts)
       expect(await run("git diff HEAD --no-ext-diff", runOpts)).toBe("")
     })
     // #endregion

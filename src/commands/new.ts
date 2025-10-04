@@ -595,6 +595,12 @@ module.exports = {
 
         // replace "main" entry point from App.js to "expo-router/entry"
         packageJsonRaw = packageJsonRaw.replace(/"main": ".*",/g, `"main": "expo-router/entry",`)
+
+        // update depcruise script to use src instead of app
+        packageJsonRaw = packageJsonRaw.replace(
+          /"depcruise": "depcruise app --config .dependency-cruiser.js"/g,
+          `"depcruise": "depcruise src --config .dependency-cruiser.js"`,
+        )
       }
 
       // If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
