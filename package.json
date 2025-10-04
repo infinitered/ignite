@@ -33,6 +33,7 @@
     "format:check": "yarn format --check",
     "lint": "eslint 'src/**' 'test/**'",
     "depcruise": "depcruise src --config .dependency-cruiser.js",
+    "depcruise:graph": "depcruise src --include-only \"^src\" --config .dependency-cruiser.js --output-type dot | dot -T svg > ignite-cli-dependency-graph.svg && dot -T png ignite-cli-dependency-graph.svg -o ignite-cli-dependency-graph.png",
     "test": "TS_JEST_DISABLE_VER_CHECKER=true jest",
     "watch": "jest --watch",
     "watch:debug": "yarn watch --runInBand --verbose",

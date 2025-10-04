@@ -42,3 +42,7 @@ test/artifacts/*
 # Ignore build artifacts
 .yarn/build-state.yml
 .yarn/install-state.gz
+
+# Dependency graph visualizations
+ignite-cli-dependency-graph.svg
+ignite-cli-dependency-graph.png
