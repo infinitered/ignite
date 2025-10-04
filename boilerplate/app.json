@@ -53,7 +53,8 @@
           "enforceNavigationBarContrast": false
         }
       }
-    ]
+    ],
+    "expo-build-properties"
   ],
   "experiments": {
     "tsconfigPaths": true
