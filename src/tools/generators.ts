@@ -1,12 +1,16 @@
 import * as ejs from "ejs"
 import { filesystem, GluegunToolbox, GluegunPatchingPatchOptions, patching, strings } from "gluegun"
-import { Options } from "gluegun/build/types/domain/options"
 import * as sharp from "sharp"
 import * as YAML from "yaml"
 
 import { command, direction, heading, igniteHeading, link, p, warning } from "./pretty"
 
 const NEW_LINE = filesystem.eol
+
+type Options = {
+  skipSourceEqualityValidation?: boolean
+  [key: string]: any
+}
 
 export function runGenerator(
   toolbox: GluegunToolbox,
