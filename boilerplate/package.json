@@ -94,7 +94,7 @@
   "expo": {
     "install": {
       "exclude": [
-        "react-native-worklets@~0.7.0-nightly-20251001-14eca5b4c"
+        "react-native-worklets"
       ]
     }
   }
