@@ -15,6 +15,7 @@
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "depcruise": "depcruise app --config .dependency-cruiser.js",
+    "depcruise:graph": "depcruise app --include-only \"^app\" --config .dependency-cruiser.js --output-type dot > app-dependency-graph.dot && dot -T svg app-dependency-graph.dot -o app-dependency-graph.svg && dot -T png app-dependency-graph.dot -o app-dependency-graph.png && rm app-dependency-graph.dot",
     "align-deps": "npx expo install --fix",
     "test": "jest",
     "test:watch": "jest --watch",

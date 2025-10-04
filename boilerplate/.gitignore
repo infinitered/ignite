@@ -95,3 +95,8 @@ web-build/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Dependency Graph Visualizations
+app-dependency-graph.dot
+app-dependency-graph.svg
+app-dependency-graph.png
