@@ -31,7 +31,7 @@ describe("react native", () => {
 
       const results = filesystem.read(readmePath)
       const expectedResults = `
-npm install
+npm install --legacy-peer-deps
 npm run start
 npm run build:ios:sim
 npm run build:ios:device
