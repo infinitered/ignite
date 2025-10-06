@@ -1,3 +1,5 @@
+const metroConfig = require('./metro.config.js');
+
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
   forbidden: [
@@ -171,25 +173,7 @@ module.exports = {
       // React Native / Metro bundler support for platform-specific extensions
       // See: https://reactnative.dev/docs/platform-specific-code
       // See: https://github.com/sverweij/dependency-cruiser/issues/511
-      extensions: [
-        ".ios.tsx",
-        ".android.tsx",
-        ".native.tsx",
-        ".tsx",
-        ".ios.ts",
-        ".android.ts",
-        ".native.ts",
-        ".ts",
-        ".ios.jsx",
-        ".android.jsx",
-        ".native.jsx",
-        ".jsx",
-        ".ios.js",
-        ".android.js",
-        ".native.js",
-        ".js",
-        ".json",
-      ],
+      extensions: metroConfig?.resolver?.sourceExts.map(pExt => `.${pExt}`),
     },
     reporterOptions: {
       dot: {
