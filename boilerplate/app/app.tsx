@@ -70,7 +70,7 @@ export function App() {
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
   // We load fonts dynamically for web only, the rest are handled by
-  // the expo-font config plugin in `app.json`. If not using web, 
+  // the expo-font config plugin in `app.json`. If not using web,
   // you can delete this permissive check along with associated
   // code in `typography'.
   const [areFontsLoadedWebOnly, fontLoadErrorWebOnly] = useFonts(customFontsToLoadWebOnly)
