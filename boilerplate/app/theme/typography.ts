@@ -2,6 +2,7 @@
 // markdown file and add links from here
 
 import { Platform } from "react-native"
+import type { FontSource } from "expo-font"
 import {
   SpaceGrotesk_300Light as spaceGroteskLight,
   SpaceGrotesk_400Regular as spaceGroteskRegular,
@@ -19,7 +20,7 @@ export const customFontsToLoadWebOnly =
         spaceGroteskSemiBold,
         spaceGroteskBold,
       }
-    : {}
+    : ({} as Record<string, FontSource>)
 
 const fonts = {
   spaceGrotesk: {
