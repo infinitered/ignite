@@ -29,6 +29,7 @@ module.exports = {
           "(^|/)tsconfig\\.json$",
           "(^|/)(babel|webpack)\\.config\\.(js|cjs|mjs|ts|json)$",
           "crashReporting\\.ts$", // Boilerplate file for future crash reporting setup
+          "utils/delay\\.ts$" // Utility function for delaying execution
         ],
       },
       to: {},
