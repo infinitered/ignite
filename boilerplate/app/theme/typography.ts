@@ -2,6 +2,7 @@
 // markdown file and add links from here
 
 import { Platform } from "react-native"
+import type { FontSource } from "expo-font"
 import {
   SpaceGrotesk_300Light as spaceGroteskLight,
   SpaceGrotesk_400Regular as spaceGroteskRegular,
@@ -10,22 +11,48 @@ import {
   SpaceGrotesk_700Bold as spaceGroteskBold,
 } from "@expo-google-fonts/space-grotesk"
 
-export const customFontsToLoad = {
-  spaceGroteskLight,
-  spaceGroteskRegular,
-  spaceGroteskMedium,
-  spaceGroteskSemiBold,
-  spaceGroteskBold,
-}
+export const customFontsToLoadWebOnly =
+  Platform.OS === "web"
+    ? {
+        spaceGroteskLight,
+        spaceGroteskRegular,
+        spaceGroteskMedium,
+        spaceGroteskSemiBold,
+        spaceGroteskBold,
+      }
+    : ({} as Record<string, FontSource>)
 
 const fonts = {
   spaceGrotesk: {
-    // Cross-platform Google font.
-    light: "spaceGroteskLight",
-    normal: "spaceGroteskRegular",
-    medium: "spaceGroteskMedium",
-    semiBold: "spaceGroteskSemiBold",
-    bold: "spaceGroteskBold",
+    // The way expo-fonts config plugin applies
+    // fonts to the individual platforms, the names come out different
+    // on ios and android. For web, we have to load fonts asynchronously
+    // using useFonts.
+    light: Platform.select({
+      ios: "SpaceGrotesk-Light",
+      android: "SpaceGrotesk-300Light",
+      web: "spaceGroteskLight",
+    }),
+    normal: Platform.select({
+      ios: "SpaceGrotesk-Regular",
+      android: "SpaceGrotesk-400Regular",
+      web: "spaceGroteskRegular",
+    }),
+    medium: Platform.select({
+      ios: "SpaceGrotesk-Medium",
+      android: "SpaceGrotesk-500Medium",
+      web: "spaceGroteskMedium",
+    }),
+    semiBold: Platform.select({
+      ios: "SpaceGrotesk-SemiBold",
+      android: "SpaceGrotesk-600SemiBold",
+      web: "spaceGroteskSemiBold",
+    }),
+    bold: Platform.select({
+      ios: "SpaceGrotesk-Bold",
+      android: "SpaceGrotesk-700Bold",
+      web: "spaceGroteskBold",
+    }),
   },
   helveticaNeue: {
     // iOS only font.
