@@ -2,7 +2,7 @@ import { filesystem } from "gluegun"
 
 export const DEMO_MARKUP_PREFIX = "@demo"
 
-export const demoDependenciesToRemove = ["@react-navigation/bottom-tabs", "expo-application"]
+export const demoDependenciesToRemove = ["expo-application"]
 
 export function findDemoPatches(): string[] {
   const patchesPath = filesystem.path("./patches")

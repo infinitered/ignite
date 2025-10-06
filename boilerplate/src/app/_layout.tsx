@@ -15,10 +15,8 @@ if (__DEV__) {
   // Load Reactotron configuration in development. We don't want to
   // include this in our production bundle, so we are using `if (__DEV__)`
   // to only execute this in development.
-  require("src/devtools/ReactotronConfig.ts")
+  require("../../app/devtools/ReactotronConfig")
 }
-
-export { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary"
 
 export default function Root() {
   const [fontsLoaded, fontError] = useFonts(customFontsToLoad)
