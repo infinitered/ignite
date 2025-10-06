@@ -62,6 +62,12 @@ module.exports = {
       ["npx ignite-cli remove-demo-markup", "npx ignite-cli remove-demo-markup --dry-run"],
     )
     p()
+    command(
+      "devclient        ",
+      "Download pre-built Expo development clients from GitHub releases",
+      ["npx ignite-cli devclient"],
+    )
+    p()
     direction(
       `See the documentation: ${link("https://github.com/infinitered/ignite/tree/master/docs")}`,
     )
