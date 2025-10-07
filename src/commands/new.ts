@@ -27,6 +27,7 @@ import {
   replaceMaestroBundleIds,
   refactorExpoRouterReactotronCmds,
   updateExpoRouterSrcDir,
+  updateExpoRouterPackageJson,
   cleanupExpoRouterConversion,
   updatePackagerCommandsInReadme,
   createGeneratorTemplate,
@@ -808,6 +809,7 @@ module.exports = {
           .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
 
         updateExpoRouterSrcDir(toolbox)
+        updateExpoRouterPackageJson(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
         const screenTplPath = filesystem.path(
           targetPath,

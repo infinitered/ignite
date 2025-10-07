@@ -1,3 +1,5 @@
+import * as crossSpawn from "cross-spawn"
+
 export type SpawnOptions = {
   onProgress?: (data: string) => void
   env?: Record<string, unknown>
@@ -5,7 +7,7 @@ export type SpawnOptions = {
 export function spawnProgress(commandLine: string, options: SpawnOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     const args = commandLine.split(" ")
-    const spawned = require("cross-spawn")(args.shift(), args, options)
+    const spawned = crossSpawn(args.shift(), args, options)
     const output = []
 
     spawned.stdout.on("data", (data) => {

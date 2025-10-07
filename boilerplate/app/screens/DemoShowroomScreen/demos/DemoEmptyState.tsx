@@ -2,7 +2,7 @@
 import { EmptyState } from "@/components/EmptyState"
 
 import { DemoDivider } from "../DemoDivider"
-import { Demo } from "../DemoShowroomScreen"
+import { Demo } from "./types"
 import { DemoUseCase } from "../DemoUseCase"
 
 export const DemoEmptyState: Demo = {

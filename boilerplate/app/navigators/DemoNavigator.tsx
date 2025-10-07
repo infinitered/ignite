@@ -1,6 +1,5 @@
 import { TextStyle, ViewStyle } from "react-native"
-import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { CompositeScreenProps } from "@react-navigation/native"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { Icon } from "@/components/Icon"
@@ -13,24 +12,7 @@ import { DemoShowroomScreen } from "@/screens/DemoShowroomScreen/DemoShowroomScr
 import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 
-import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
-
-export type DemoTabParamList = {
-  DemoCommunity: undefined
-  DemoShowroom: { queryIndex?: string; itemIndex?: string }
-  DemoDebug: undefined
-  DemoPodcastList: undefined
-}
-
-/**
- * Helper for automatically generating navigation prop types for each route.
- *
- * More info: https://reactnavigation.org/docs/typescript/#organizing-types
- */
-export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<DemoTabParamList, T>,
-  AppStackScreenProps<keyof AppStackParamList>
->
+import type { DemoTabParamList } from "./navigationTypes"
 
 const Tab = createBottomTabNavigator<DemoTabParamList>()
 

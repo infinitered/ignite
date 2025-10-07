@@ -6,7 +6,7 @@ import { Text } from "@/components/Text"
 import type { ThemedStyle } from "@/theme/types"
 import { $styles } from "@/theme/styles"
 
-import { Demo } from "../DemoShowroomScreen"
+import { Demo } from "./types"
 import { DemoUseCase } from "../DemoUseCase"
 
 const $demoIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({

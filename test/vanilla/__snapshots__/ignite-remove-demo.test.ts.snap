@@ -84,8 +84,6 @@ removing file /user/home/ignite/app/screens/LoginScreen.tsx
    Found '@demo remove-current-line', '@demo remove-block-start', '@demo remove-block-end' in /user/home/ignite/app/theme/styles.ts
    Removed empty directory '/user/home/ignite/.maestro/flows'
    Removed empty directory '/user/home/ignite/app/context'
-   Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen/demos'
-   Removed empty directory '/user/home/ignite/app/screens/DemoShowroomScreen'
    Removed demo directory '/user/home/ignite/assets/icons/demo'
    Removed demo directory '/user/home/ignite/assets/images/demo'
    Done removing demo code from '/user/home/ignite'

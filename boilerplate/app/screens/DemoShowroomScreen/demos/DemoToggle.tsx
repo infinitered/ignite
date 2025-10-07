@@ -11,7 +11,7 @@ import type { ThemedStyle } from "@/theme/types"
 import { $styles } from "@/theme/styles"
 
 import { DemoDivider } from "../DemoDivider"
-import { Demo } from "../DemoShowroomScreen"
+import { Demo } from "./types"
 import { DemoUseCase } from "../DemoUseCase"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {

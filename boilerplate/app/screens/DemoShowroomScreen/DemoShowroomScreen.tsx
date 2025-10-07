@@ -17,11 +17,10 @@ import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { TxKeyPath, isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
-import { DemoTabParamList, DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import type { Theme, ThemedStyle } from "@/theme/types"
+import { DemoTabParamList, DemoTabScreenProps } from "@/navigators/navigationTypes"
+import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
-import { hasValidStringProp } from "@/utils/hasValidStringProp"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 import * as Demos from "./demos"
@@ -29,12 +28,6 @@ import { DrawerIconButton } from "./DrawerIconButton"
 import SectionListWithKeyboardAwareScrollView from "./SectionListWithKeyboardAwareScrollView"
 
 const logo = require("@assets/images/logo.png")
-
-export interface Demo {
-  name: string
-  description: TxKeyPath
-  data: ({ themed, theme }: { themed: any; theme: Theme }) => ReactElement[]
-}
 
 interface DemoListItem {
   item: { name: string; useCases: string[] }
@@ -49,6 +42,23 @@ const slugify = (str: string) =>
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
+
+/**
+ * Type-safe utility to check if an unknown object has a valid string property.
+ * This is particularly useful in React 19 where props are typed as unknown by default.
+ * The function safely narrows down the type by checking both property existence and type.
+ * @param props - The unknown props to check.
+ * @param propName - The name of the property to check.
+ * @returns Whether the property is a valid string.
+ */
+function hasValidStringProp(props: unknown, propName: string): boolean {
+  return (
+    props !== null &&
+    typeof props === "object" &&
+    propName in props &&
+    typeof (props as Record<string, unknown>)[propName] === "string"
+  )
+}
 
 const WebListItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
   const sectionSlug = item.name.toLowerCase()

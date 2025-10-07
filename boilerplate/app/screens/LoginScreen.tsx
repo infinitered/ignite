@@ -8,7 +8,7 @@ import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
 import { TextField, type TextFieldAccessoryProps } from "@/components/TextField"
 import { useAuth } from "@/context/AuthContext"
-import type { AppStackScreenProps } from "@/navigators/AppNavigator"
+import type { AppStackScreenProps } from "@/navigators/navigationTypes"
 import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 
