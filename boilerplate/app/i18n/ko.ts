@@ -6,7 +6,7 @@ const ko: Translations = {
     ok: "확인!",
     cancel: "취소",
     back: "뒤로",
-    logOut: "로그아웃", // @demo remove-current-line
+    logOut: "로그아웃",
   },
   welcomeScreen: {
     postscript:
@@ -29,7 +29,6 @@ const ko: Translations = {
       button: "다시 시도해봅시다",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "잘못된 이메일 주소 입니다.",
   },
@@ -44,6 +43,7 @@ const ko: Translations = {
     tapToLogIn: "눌러서 로그인 하기!",
     hint: "힌트: 가장 좋아하는 암호와 아무런 아무 이메일 주소나 사용할 수 있어요 :)",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "컴포넌트",
     debugTab: "디버그",

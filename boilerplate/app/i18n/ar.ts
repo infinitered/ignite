@@ -6,7 +6,7 @@ const ar: Translations = {
     ok: "نعم",
     cancel: "حذف",
     back: "خلف",
-    logOut: "تسجيل خروج", // @demo remove-current-line
+    logOut: "تسجيل خروج",
   },
   welcomeScreen: {
     postscript:
@@ -29,7 +29,6 @@ const ar: Translations = {
       button: "لنحاول هذا مرّة أخرى",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "عنوان البريد الالكتروني غير صالح",
   },
@@ -44,6 +43,7 @@ const ar: Translations = {
     tapToLogIn: "انقر لتسجيل الدخول!",
     hint: "(: تلميح: يمكنك استخدام اي عنوان بريد الكتروني وكلمة السر المفضلة لديك",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "عناصر",
     debugTab: "تصحيح",

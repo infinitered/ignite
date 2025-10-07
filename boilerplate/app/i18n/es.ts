@@ -6,7 +6,7 @@ const es: Translations = {
     ok: "OK",
     cancel: "Cancelar",
     back: "Volver",
-    logOut: "Cerrar sesión", // @demo remove-current-line
+    logOut: "Cerrar sesión",
   },
   welcomeScreen: {
     postscript:
@@ -30,7 +30,6 @@ const es: Translations = {
       button: "Intentemos de nuevo",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "Email inválido.",
   },
@@ -45,6 +44,7 @@ const es: Translations = {
     tapToLogIn: "¡Presiona acá para iniciar sesión!",
     hint: "Consejo: puedes usar cualquier email y tu contraseña preferida :)",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "Componentes",
     debugTab: "Debug",

@@ -6,7 +6,7 @@ const hi: Translations = {
     ok: "ठीक है!",
     cancel: "रद्द करें",
     back: "वापस",
-    logOut: "लॉग आउट", // @demo remove-current-line
+    logOut: "लॉग आउट",
   },
   welcomeScreen: {
     postscript:
@@ -29,7 +29,6 @@ const hi: Translations = {
       button: "चलो फिर से कोशिश करते हैं",
     },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "अमान्य ईमेल पता।",
   },
@@ -44,6 +43,7 @@ const hi: Translations = {
     tapToLogIn: "लॉग इन करने के लिए टैप करें!",
     hint: "संकेत: आप किसी भी ईमेल पते और अपने पसंदीदा पासवर्ड का उपयोग कर सकते हैं :)",
   },
+  // @demo remove-block-start
   demoNavigator: {
     componentsTab: "कंपोनेंट्स",
     debugTab: "डीबग",
