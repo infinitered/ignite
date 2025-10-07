@@ -27,6 +27,7 @@ import {
   replaceMaestroBundleIds,
   refactorExpoRouterReactotronCmds,
   updateExpoRouterSrcDir,
+  updateExpoRouterPackageJson,
   cleanupExpoRouterConversion,
   updatePackagerCommandsInReadme,
   createGeneratorTemplate,
@@ -595,18 +596,6 @@ module.exports = {
 
         // replace "main" entry point from App.js to "expo-router/entry"
         packageJsonRaw = packageJsonRaw.replace(/"main": ".*",/g, `"main": "expo-router/entry",`)
-
-        // update depcruise script to use src instead of app
-        packageJsonRaw = packageJsonRaw.replace(
-          /"depcruise": "depcruise app --config .dependency-cruiser.js"/g,
-          `"depcruise": "depcruise src --config .dependency-cruiser.js"`,
-        )
-
-        // update dependency graph script to use src instead of app
-        packageJsonRaw = packageJsonRaw.replace(
-          /"depcruise:graph": "depcruise app --include-only \"^app\" --config .dependency-cruiser.js --output-type dot > app-dependency-graph.dot && dot -T svg app-dependency-graph.dot -o app-dependency-graph.svg && dot -T png app-dependency-graph.dot -o app-dependency-graph.png && rm app-dependency-graph.dot"/g,
-          `"depcruise:graph": "depcruise src --include-only \"^src\" --config .dependency-cruiser.js --output-type dot > app-dependency-graph.dot && dot -T svg app-dependency-graph.dot -o app-dependency-graph.svg && dot -T png src-dependency-graph.dot -o app-dependency-graph.png && rm app-dependency-graph.dot"`,
-        )
       }
 
       // If we need native dirs, change up start scripts from Expo Go variation to expo run:platform.
@@ -820,6 +809,7 @@ module.exports = {
           .forEach((file) => filesystem.cwd(targetPath).move(file, file.replace("app", "src")))
 
         updateExpoRouterSrcDir(toolbox)
+        updateExpoRouterPackageJson(toolbox)
         refactorExpoRouterReactotronCmds(toolbox)
         const screenTplPath = filesystem.path(
           targetPath,

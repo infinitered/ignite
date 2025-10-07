@@ -358,6 +358,40 @@ export function updateExpoRouterSrcDir(toolbox: GluegunToolbox) {
   })
 }
 
+export function updateExpoRouterPackageJson(toolbox: GluegunToolbox) {
+  const { filesystem, parameters, print } = toolbox
+
+  // debug?
+  const debug = boolFlag(parameters.options.debug)
+  const log = <T = unknown>(m: T): T => {
+    debug && print.info(` ${m}`)
+    return m
+  }
+
+  const TARGET_DIR = filesystem.path(process.cwd())
+  const packageJsonPath = filesystem.path(TARGET_DIR, "package.json")
+
+  try {
+    let packageJsonRaw = filesystem.read(packageJsonPath)
+
+    // update depcruise script to use src instead of app
+    packageJsonRaw = packageJsonRaw.replace(
+      /"depcruise": "depcruise app --config .dependency-cruiser.js"/g,
+      `"depcruise": "depcruise src --config .dependency-cruiser.js"`,
+    )
+
+    // update dependency graph script to use src instead of app
+    packageJsonRaw = packageJsonRaw.replace(
+      /"depcruise:graph": "depcruise app --include-only \"^app\" --config .dependency-cruiser.js --output-type dot > app-dependency-graph.dot && dot -T svg app-dependency-graph.dot -o app-dependency-graph.svg && dot -T png app-dependency-graph.dot -o app-dependency-graph.png && rm app-dependency-graph.dot"/g,
+      `"depcruise:graph": "depcruise src --include-only \"^src\" --config .dependency-cruiser.js --output-type dot > app-dependency-graph.dot && dot -T svg app-dependency-graph.dot -o app-dependency-graph.svg && dot -T png src-dependency-graph.dot -o app-dependency-graph.png && rm app-dependency-graph.dot"`,
+    )
+
+    filesystem.write(packageJsonPath, packageJsonRaw)
+  } catch (e) {
+    log(`Unable to update package.json for Expo Router.`)
+  }
+}
+
 export function cleanupExpoRouterConversion(toolbox: GluegunToolbox, targetPath: string) {
   const { filesystem } = toolbox
 
