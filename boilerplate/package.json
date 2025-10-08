@@ -89,7 +89,7 @@
     "reactotron-react-native": "^5.0.5",
     "reactotron-react-native-mmkv": "^0.2.6",
     "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
     "typescript": "~5.9.2"
   },
   "engines": {
