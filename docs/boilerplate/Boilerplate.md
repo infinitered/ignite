@@ -36,8 +36,6 @@ your-project
 ├── ignite
 │   └── templates
 ├── ios
-├── plugins
-│   └── withSplashScreen.ts
 ├── test
 │   ├── i18n.test.ts
 │   ├── mockFile.ts
