@@ -44,56 +44,7 @@
           "./assets/fonts/SpaceGrotesk-500Medium.ttf",
           "./assets/fonts/SpaceGrotesk-600SemiBold.ttf",
           "./assets/fonts/SpaceGrotesk-700Bold.ttf"
-        ],
-        "android": {
-          "fonts": [
-            {
-              "fontFamily": "SpaceGrotesk-300Light",
-              "fontDefinitions": [
-                {
-                  "path": "./assets/fonts/SpaceGrotesk-300Light.ttf",
-                  "weight": 300
-                }
-              ]
-            },
-            {
-              "fontFamily": "SpaceGrotesk-400Regular",
-              "fontDefinitions": [
-                {
-                  "path": "./assets/fonts/SpaceGrotesk-400Regular.ttf",
-                  "weight": 400
-                }
-              ]
-            },
-            {
-              "fontFamily": "SpaceGrotesk-500Medium",
-              "fontDefinitions": [
-                {
-                  "path": "./assets/fonts/SpaceGrotesk-500Medium.ttf",
-                  "weight": 500
-                }
-              ]
-            },
-            {
-              "fontFamily": "SpaceGrotesk-600SemiBold",
-              "fontDefinitions": [
-                {
-                  "path": "./assets/fonts/SpaceGrotesk-600SemiBold.ttf",
-                  "weight": 600
-                }
-              ]
-            },
-            {
-              "fontFamily": "SpaceGrotesk-700Bold",
-              "fontDefinitions": [
-                {
-                  "path": "./assets/fonts/SpaceGrotesk-700Bold.ttf",
-                  "weight": 700
-                }
-              ]
-            }
-          ]
-        }
+        ]
       }
     ],
     [
