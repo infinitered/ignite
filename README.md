@@ -48,15 +48,14 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 
 | Library                          | Category             | Version | Description                                    |
 | -------------------------------- | -------------------- | ------- | ---------------------------------------------- |
-| React Native                     | Mobile Framework     | v0.79   | The best cross-platform mobile framework       |
+| React Native                     | Mobile Framework     | v0.81   | The best cross-platform mobile framework       |
 | React                            | UI Framework         | v19     | The most popular UI framework in the world     |
 | TypeScript                       | Language             | v5      | Static typechecking                            |
 | React Navigation                 | Navigation           | v7      | Performant and consistent navigation framework |
-| Expo                             | SDK                  | v53     | Allows (optional) Expo modules                 |
-| Expo Font                        | Custom Fonts         | v13     | Import custom fonts                            |
-| Expo Localization                | Internationalization | v16     | i18n support (including RTL!)                  |
-| Expo Status Bar                  | Status Bar Library   | v2      | Status bar support                             |
-| RN Reanimated                    | Animations           | v3      | Beautiful and performant animations            |
+| Expo                             | SDK                  | v54     | Allows (optional) Expo modules                 |
+| Expo Font                        | Custom Fonts         | v14     | Import custom fonts                            |
+| Expo Localization                | Internationalization | v17     | i18n support (including RTL!)                  |
+| RN Reanimated                    | Animations           | v4      | Beautiful and performant animations            |
 | MMKV                             | Persistence          | v3      | State persistence                              |
 | apisauce                         | REST client          | v3      | Communicate with back-end                      |
 | Jest                             | Test Runner          | v29     | Standard test runner for JS apps               |
