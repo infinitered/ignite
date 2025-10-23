@@ -36,22 +36,4 @@ appId: ${MAESTRO_APP_ID}
       # this regex allows for different hosts and ports
       - tapOn: "http://.*:.*" 
       - waitForAnimationToEnd
-
-- runFlow:
-    when:
-      platform: Android
-      visible:
-        id: "${MAESTRO_APP_ID}:id/bottom_sheet" # id of the android bottom sheet we want to dismiss
-    commands:
-      - swipe:
-          direction: DOWN
-      - waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-      visible: 
-        id: "SBSwitcherWindow:Main" # id of the iOS bottom sheet we want to dismiss
-    commands:
-      - swipe:
-          direction: DOWN
-      - waitForAnimationToEnd
+      - tapOn: "Close" # dismiss the bottom sheet
