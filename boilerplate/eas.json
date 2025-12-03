@@ -14,7 +14,7 @@
         "simulator": true
       }
     },
-    "development:device": {
+    "development-device": {
       "extends": "development",
       "distribution": "internal",
       "ios": {
@@ -28,7 +28,7 @@
       "ios": { "simulator": true },
       "android": { "buildType": "apk" }
     },
-    "preview:device": {
+    "preview-device": {
       "extends": "preview",
       "ios": { "simulator": false }
     },
