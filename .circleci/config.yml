@@ -33,9 +33,9 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}-{{ arch }}
+            - v2-dependencies-{{ checksum "package.json" }}-{{ arch }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
       - run:
           name: Install dependencies
           command: pnpm install
