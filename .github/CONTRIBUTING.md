@@ -4,7 +4,7 @@ We welcome all contributors to Ignite CLI! This contributing guide will help you
 
 Before submitting a pull request, you will want to make sure that your branch meets the following requirements:
 
-_Working on Ignite CLI requires pnpm 10.9.0
+\_Working on Ignite CLI requires pnpm 10.9.0
 
 - Everything works on iOS/Android
 - Jest tests pass in the root folder (`pnpm run test`)

@@ -656,7 +656,9 @@ module.exports = {
           // update the `packagerManager` field in `package.json
           await system.run(`yarn set version ${yarnVersion}`, { onProgress: log })
         } else {
-          warning(`We do not recommend using yarn v1 due to security and performance reasons. We recommend using yarn v4 or pnpm.`)
+          warning(
+            `We do not recommend using yarn v1 due to security and performance reasons. We recommend using yarn v4 or pnpm.`,
+          )
         }
       }
 
