@@ -294,7 +294,7 @@ describe("ignite new", () => {
       expect(result).toContain("Now get cooking! 🍽")
     })
 
-    it("should be able to use `generate` command and have pass output pass yarn test, yarn lint, and yarn compile scripts", async () => {
+    it("should be able to use `generate` command and have pass output pass pnpm run test, pnpm run lint, and pnpm run compile scripts", async () => {
       // other common test operations
       const runOpts = {
         pre: `cd ${appPath}`,
@@ -303,10 +303,10 @@ describe("ignite new", () => {
 
       // #region Assert package.json Scripts Can Be Run
       // run the tests; if they fail, run will raise and this test will fail
-      await run(`yarn test`, runOpts)
-      await run(`yarn lint`, runOpts)
-      await run(`yarn compile`, runOpts)
-      await run(`yarn depcruise`, runOpts)
+      await run(`pnpm run test`, runOpts)
+      await run(`pnpm run lint`, runOpts)
+      await run(`pnpm run compile`, runOpts)
+      await run(`pnpm run depcruise`, runOpts)
       expect(await run("git diff HEAD --no-ext-diff", runOpts)).toBe("")
     })
     // #endregion

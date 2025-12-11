@@ -58,9 +58,9 @@ You can read more about how to best practices for creating tests in the [Structu
 
 To write your own tests, create a `.test.ts` file within the `app` or `test` directory.
 
-Then run `yarn test` to run all unit tests using Jest.
+Then run `pnpm run test` to run all unit tests using Jest.
 
-When writing tests, you can also run Jest in watch mode by running `yarn test:watch`. This will start a long running Jest process, that re-runs your tests on save in your editor. This is useful for iterating on values and getting quick feedback about whether your changes were successful or not.
+When writing tests, you can also run Jest in watch mode by running `pnpm run test:watch`. This will start a long running Jest process, that re-runs your tests on save in your editor. This is useful for iterating on values and getting quick feedback about whether your changes were successful or not.
 
 ### When to write Unit Tests
 

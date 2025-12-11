@@ -22,7 +22,7 @@ node your-ignite-repo-clone/bin/ignite new PizzaApp
 node your-ignite-repo-clone/bin/ignite generate component OrderButton
 ```
 
-In addition, we have automated tests you can run with `yarn test`.
+In addition, we have automated tests you can run with `pnpm run test`.
 
 ### Making PRs
 

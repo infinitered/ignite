@@ -75,8 +75,8 @@ Then run the author list command again to ensure you are listed.
 Run these commands from the Ignite root to clean & build the CLI:
 
 ```bash
-yarn clean
-yarn build
+pnpm run clean
+pnpm run build
 ```
 
 ### 3. Update the version manually
@@ -106,7 +106,7 @@ npm publish --tag=next
 
 This will publish a new version and set the @next tag to it. Note that `--tag=latest` is the same as not providing a tag and will publish as the main package version.
 
-Check that the size of the newly published package is on the order of 3MB or less. If it's much more than that, you forgot to run `yarn clean`.
+Check that the size of the newly published package is on the order of 3MB or less. If it's much more than that, you forgot to run `pnpm run clean`.
 
 ### 5. Test
 

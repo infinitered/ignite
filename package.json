@@ -25,20 +25,20 @@
   "scripts": {
     "compile": "tsc -p .",
     "typecheck": "tsc -p . --noEmit",
-    "build": "yarn clean && yarn compile && yarn build:assets",
+    "build": "pnpm run clean && pnpm run compile && pnpm run build:assets",
     "build:assets": "cp ./boilerplate/.gitignore ./boilerplate/.gitignore.template && cp ./src/assets/*.txt ./build/assets/",
-    "build:watch": "yarn build && yarn compile --watch",
+    "build:watch": "pnpm run build && pnpm run compile --watch",
     "format": "prettier '**/*{.js,.ts,.tsx,.json,.md}'",
-    "format:write": "yarn format --write",
-    "format:check": "yarn format --check",
+    "format:write": "pnpm run format --write",
+    "format:check": "pnpm run format --check",
     "lint": "eslint 'src/**' 'test/**'",
     "depcruise": "depcruise src --config .dependency-cruiser.js",
     "depcruise:graph": "depcruise src --include-only \"^src\" --config .dependency-cruiser.js --output-type dot | dot -T svg > ignite-cli-dependency-graph.svg && dot -T png ignite-cli-dependency-graph.svg -o ignite-cli-dependency-graph.png",
     "test": "TS_JEST_DISABLE_VER_CHECKER=true jest",
     "watch": "jest --watch",
-    "watch:debug": "yarn watch --runInBand --verbose",
+    "watch:debug": "pnpm run watch --runInBand --verbose",
     "coverage": "jest --coverage",
-    "ci:publish": "yarn build && yarn semantic-release && yarn clean",
+    "ci:publish": "pnpm run build && pnpm run semantic-release && pnpm run clean",
     "semantic-release": "semantic-release",
     "clean": "rm -drf ./build ./boilerplate/.gitignore.template ./boilerplate/node_modules ./boilerplate/ios/build/ ./boilerplate/ios/Pods/ ./boilerplate/android/app/build ./boilerplate/ios/.xcode.env.local",
     "ignite-cli:dev": "node bin/ignite",
@@ -96,5 +96,5 @@
       ]
     ]
   },
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "pnpm@10.9.0"
 }

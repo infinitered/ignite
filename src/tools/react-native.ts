@@ -412,11 +412,11 @@ export function updatePackagerCommandsInReadme(readmePath: string, packagerName:
     let readmeContents = filesystem.read(readmePath)
 
     // replace `yarn` exactly with the install command
-    readmeContents = readmeContents.replace("yarn", packager.installCmd({ packagerName }))
+    readmeContents = readmeContents.replace("pnpm run", packager.installCmd({ packagerName }))
 
     // replace `yarn` plus some command after the space with the proper packager run command
     // pass the matched command to runCmd as string excluding the `yarn` part
-    readmeContents = readmeContents.replace(/^yarn\s(.*)$/gm, (_, cmd) =>
+    readmeContents = readmeContents.replace(/^pnpm run\s(.*)$/gm, (_, cmd) =>
       packager.runCmd(cmd, { packagerName }),
     )
 

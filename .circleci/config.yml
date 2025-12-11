@@ -38,7 +38,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: Install dependencies
-          command: yarn install
+          command: pnpm install
       - save_cache:
           name: Save node modules
           paths:
@@ -59,10 +59,10 @@ jobs:
           key: ignite-deps-cache-{{ .Environment.IGNITE_DEPS_PACKAGER }}-{{ checksum "boilerplate/package.json" }}-{{ arch }}-{{ .Environment.IGNITE_DEPS_KEY_SUFFIX }}
       - run:
           name: Run static tests
-          command: yarn format:check && yarn lint && yarn typecheck && yarn depcruise
+          command: pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run depcruise
       - run:
           name: Run jest tests
-          command: yarn test
+          command: pnpm run test
           no_output_timeout: 10m
       - save_cache:
           name: Save ignite dependency cache
@@ -83,11 +83,11 @@ jobs:
             - v1-dependencies-
       - run:
           name: Build package
-          command: yarn build
+          command: pnpm run build
       # Run semantic-release after all the above is set.
       - run:
           name: Publish to npm
-          command: yarn ci:publish # this will be added to your package.json scripts
+          command: pnpm run ci:publish # this will be added to your package.json scripts
 
 # Publishing docs details
 publish-details: &publish-details

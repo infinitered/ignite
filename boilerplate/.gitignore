@@ -36,7 +36,6 @@ local.properties
 #
 node_modules/
 npm-debug.log
-yarn-error.log
 
 # BUCK
 buck-out/
@@ -87,14 +86,6 @@ web-build/
 !env.js
 
 /coverage
-
-# Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
 
 # Dependency Graph Visualizations
 app-dependency-graph.svg

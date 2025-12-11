@@ -4,26 +4,26 @@ We welcome all contributors to Ignite CLI! This contributing guide will help you
 
 Before submitting a pull request, you will want to make sure that your branch meets the following requirements:
 
-_Working on Ignite CLI requires Yarn v1._
+_Working on Ignite CLI requires pnpm 10.9.0
 
 - Everything works on iOS/Android
-- Jest tests pass in the root folder (`yarn test`)
+- Jest tests pass in the root folder (`pnpm run test`)
 - New tests are included for any new functionality
-- Code is compliant with our linter and prettier (`yarn format:write && yarn lint`)
+- Code is compliant with our linter and prettier (`pnpm run format:write && pnpm run lint`)
 - Branch has already been [synced with the upstream repo](https://help.github.com/articles/syncing-a-fork/) and any merge-conflicts have been resolved.
 
 ## Requirements
 
 - Node (reasonably recent version)
-- Yarn (while you can use Ignite CLI without Yarn, we require it for contributors)
+- pnpm (while you can use Ignite CLI without pnpm, we require it for contributors)
 
 ## Getting Started
 
 1. Fork and then clone the repo (`git clone git@github.com:<YOURGITHUBUSER>/ignite.git`)
 2. CD into the directory (`cd ignite`)
-3. Uninstall npm version (`yarn global remove ignite-cli`)
-4. Pull all package dependencies (`yarn`)
-5. Link the local binary (`yarn link`)
+3. Uninstall npm version (`pnpm remove ignite-cli -g`)
+4. Pull all package dependencies (`pnpm install`)
+5. Link the local binary (`pnpm link`)
 
 Test it out:
 
@@ -56,11 +56,11 @@ We use Jest for testing.
 To run tests from the ignite folder:
 
 ```sh
-$ yarn test
+$ pnpm run test
 ```
 
 **To Run Lint** from ignite:
 
 ```sh
-$ yarn lint
+$ pnpm run lint
 ```

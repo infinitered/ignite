@@ -27,8 +27,8 @@ Now in version 10 (or Ignite X), we no longer support the option for the Expo Go
 # Spin up a new app
 npx ignite-cli new PizzaApp
 cd PizzaApp
-yarn ios
-yarn android
+npm run ios
+npm run android
 ```
 
 ### How it works

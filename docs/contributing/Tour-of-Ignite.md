@@ -84,7 +84,7 @@ In the root is another folder called `boilerplate`. This used to be called `Igni
 
 However, we now include the boilerplate in the main CLI for convenience (as of version 6.0). We used to support multiple boilerplates with Ignite CLI, but that was a fairly underutilized feature, so this made sense for maintainability. You can read more here: https://shift.infinite.red/introducing-ignite-4-0-flame-1dfc891f9966.
 
-Inside the boilerplate is a functioning React Native app! That's right, you can actually _run_ the boilerplate app when you clone Ignite down to your machine. Just `cd` into the `boilerplate` folder, run `yarn` and `npx pod-install`, and then `npx react-native run-ios` or `npx react-native run-android`.
+Inside the boilerplate is a functioning React Native app! That's right, you can actually _run_ the boilerplate app when you clone Ignite down to your machine. Just `cd` into the `boilerplate` folder, run `pnpm install` and `npx pod-install`, and then `npx react-native run-ios` or `npx react-native run-android`.
 
 This is one of the best changes from the previous system, as you can now work on the boilerplate in realtime and not have to make changes, spin up a new app, test, repeat, which was such a slowwww process before.
 

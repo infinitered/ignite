@@ -4,11 +4,11 @@ import * as tempy from "tempy"
 import { updatePackagerCommandsInReadme } from "./react-native"
 
 const EXAMPLE_README = `
-yarn
-yarn start
-yarn build:ios:sim
-yarn build:ios:device
-yarn build:ios:prod
+pnpm run
+pnpm run start
+pnpm run build:ios:sim
+pnpm run build:ios:device
+pnpm run build:ios:prod
 `
 
 describe("react native", () => {

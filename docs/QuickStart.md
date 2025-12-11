@@ -22,7 +22,7 @@ You'll need:
 - EAS CLI installed
 
 ```bash
-npm install -g eas-cli
+pnpm add -g eas-cli
 ```
 
 - An Expo account. [Create one for free here](https://expo.dev/signup).
@@ -43,9 +43,9 @@ Once the app has been created, change to the project directory and fire it up vi
 # first
 cd MyFirstApp
 # then one of the following
-yarn run android
-yarn run ios
-yarn run web
+pnpm run android
+pnpm run ios
+pnpm run web
 ```
 
 Android and iOS will take a few moments to build depending on your machine's hardware.
@@ -60,9 +60,9 @@ Ignite uses EAS Build to make the proper binaries for App Store and Google Play 
 
 ```bash
 # Running a local Android build
-yarn run build:android:prod
+pnpm run build:android:prod
 # or a local iOS build
-yarn build:ios:prod
+pnpm build:ios:prod
 ```
 
 Follow the instructions in your terminal upon running these commands. With a successful build you'll end up with binaries in the AAB or IPA format (depending on which platform you're building for). Those can be submitted to the appropriate app stores.
