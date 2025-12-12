@@ -111,8 +111,9 @@ Read more about styling in the [Styling](./concept/Styling.md) docs.
 
 The react-native ecosystem moves quickly and sometimes, you may need to patch a library locally to get it working. This is especially true for libraries that are not well maintained or have not been updated to work with the latest version of React Native. Ignite used to ship with patches (pre-v10) that were applied with `yarn` and `patch-package`, but the boilerplate no longer needs any patches by default.
 
-Igniting an app allows you to choose `yarn`, `pnpm`, or `bun` as a package manager, so we don't have configuration in the boilerplate for patches. If you find that you need to patch a library in your app, we recommend the following:
+Igniting an app allows you to choose `npm`, `yarn`, `pnpm`, or `bun` as a package manager, so we don't have configuration in the boilerplate for patches. If you find that you need to patch a library in your app, we recommend the following:
 
+- `npm` - use [`patch-package`](https://www.npmjs.com/package/patch-package).
 - `yarn@4` - use [`yarn patch` tool](https://yarnpkg.com/features/patching).
 - `pnpm` - use [`pnpm patch <package>`](https://pnpm.io/cli/patch).
 - `bun` - use [`bun patch <package>`](https://bun.sh/docs/install/patch).

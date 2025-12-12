@@ -22,7 +22,7 @@ You'll need:
 - EAS CLI installed
 
 ```bash
-pnpm add -g eas-cli
+npm install -g eas-cli
 ```
 
 - An Expo account. [Create one for free here](https://expo.dev/signup).

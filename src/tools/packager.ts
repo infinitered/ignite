@@ -65,7 +65,7 @@ function availablePackagers(): PackagerName[] {
     packagers.push("yarn")
   }
   if (pnpmAvailable()) {
-    packagers.push("pnpm")
+    packagers.unshift("pnpm") // pnpm should be first in the list if it's available
   }
 
   if (bunAvailable()) {
