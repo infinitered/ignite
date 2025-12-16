@@ -657,7 +657,7 @@ module.exports = {
           await system.run(`yarn set version ${yarnVersion}`, { onProgress: log })
         } else {
           warning(
-            `We do not recommend using yarn v1 due to security and performance reasons. \nIf you do use yarn, we recommend using yarn v4 and making sure enableScripts is set to false in your .yarnrc.yml file.`
+            `We do not recommend using yarn v1 due to security and performance reasons. \nIf you do use yarn, we recommend using yarn v4 and making sure enableScripts is set to false in your .yarnrc.yml file.`,
           )
         }
       }
