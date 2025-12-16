@@ -370,7 +370,7 @@ module.exports = {
       const packagerNameResponse = await prompt.ask<{ packagerName: PackagerName }>(() => ({
         type: "select",
         name: "packagerName",
-        message: "Which package manager do you want to use? (Note: we recommend pnpm or yarn v4)",
+        message: "Which package manager do you want to use? (Note: we recommend pnpm)",
         choices: availablePackagers,
         initial,
         prefix,
@@ -657,7 +657,7 @@ module.exports = {
           await system.run(`yarn set version ${yarnVersion}`, { onProgress: log })
         } else {
           warning(
-            `We do not recommend using yarn v1 due to security and performance reasons. We recommend using yarn v4 or pnpm.`,
+            `We do not recommend using yarn v1 due to security and performance reasons. \nIf you do use yarn, we recommend using yarn v4 and making sure enableScripts is set to false in your .yarnrc.yml file.`
           )
         }
       }
