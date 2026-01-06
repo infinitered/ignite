@@ -2,30 +2,53 @@
 // markdown file and add links from here
 
 import { Platform } from "react-native"
-import {
-  SpaceGrotesk_300Light as spaceGroteskLight,
-  SpaceGrotesk_400Regular as spaceGroteskRegular,
-  SpaceGrotesk_500Medium as spaceGroteskMedium,
-  SpaceGrotesk_600SemiBold as spaceGroteskSemiBold,
-  SpaceGrotesk_700Bold as spaceGroteskBold,
-} from "@expo-google-fonts/space-grotesk"
+import { FontSource, useFonts } from "expo-font"
 
-export const customFontsToLoad = {
-  spaceGroteskLight,
-  spaceGroteskRegular,
-  spaceGroteskMedium,
-  spaceGroteskSemiBold,
-  spaceGroteskBold,
+/**
+ * The naming here is important. Most font files come with
+ * a name like `SpaceGrotesk_300Light`, but iOS uses the font PostScript
+ * name (in this case `SpaceGrotesk-Light`). To keep the imports the
+ * same on both platforms use the PostScript name.
+ *
+ * For more info: https://docs.expo.dev/develop/user-interface/fonts/#how-to-determine-which-font-family-name-to-use
+ */
+export const customFontsToLoad: Record<string, FontSource> =
+  Platform.OS === "web"
+    ? {
+        "SpaceGrotesk-Light": require("../../assets/fonts/SpaceGrotesk-Light.ttf"),
+        "SpaceGrotesk-Regular": require("../../assets/fonts/SpaceGrotesk-Regular.ttf"),
+        "SpaceGrotesk-Medium": require("../../assets/fonts/SpaceGrotesk-Medium.ttf"),
+        "SpaceGrotesk-SemiBold": require("../../assets/fonts/SpaceGrotesk-SemiBold.ttf"),
+        "SpaceGrotesk-Bold": require("../../assets/fonts/SpaceGrotesk-Bold.ttf"),
+      }
+    : {}
+
+/**
+ * On iOS and Android, the fonts are embedded as part of the app binary
+ * using the expo config plugin in `app.config.ts`. See the project
+ * [`app.config.ts`](../../app.config.ts) for the expo-fonts configuration. The assets
+ * are added via the `app/assets/fonts` folder. This config plugin
+ * does NOT work for web, so we have to dynamically load the fonts via this hook.
+ *
+ * For more info: https://docs.expo.dev/versions/latest/sdk/font/
+ */
+export const useCustomFonts = (): [boolean, Error | null] => {
+  const [areFontsLoaded, fontError] = useFonts(customFontsToLoad)
+  if (Platform.OS === "web") {
+    return [areFontsLoaded, fontError]
+  }
+
+  // On native, fonts are precompiled and ready
+  return [true, null]
 }
 
 const fonts = {
   spaceGrotesk: {
-    // Cross-platform Google font.
-    light: "spaceGroteskLight",
-    normal: "spaceGroteskRegular",
-    medium: "spaceGroteskMedium",
-    semiBold: "spaceGroteskSemiBold",
-    bold: "spaceGroteskBold",
+    light: "SpaceGrotesk-Light",
+    normal: "SpaceGrotesk-Regular",
+    medium: "SpaceGrotesk-Medium",
+    semiBold: "SpaceGrotesk-SemiBold",
+    bold: "SpaceGrotesk-Bold",
   },
   helveticaNeue: {
     // iOS only font.

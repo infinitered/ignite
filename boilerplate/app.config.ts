@@ -1,4 +1,22 @@
 import { ExpoConfig, ConfigContext } from "@expo/config"
+import fs from "fs"
+import path from "path"
+
+/**
+ * Automatically discover all fonts under `assets/fonts`
+ * so we never have to hardcode them.
+ */
+function getFontPathsFromAssetsFolder(): string[] {
+  const fontsDir = path.resolve(__dirname, "assets/fonts")
+  if (!fs.existsSync(fontsDir)) {
+    console.warn("FONT_WARNING: No custom fonts detected.")
+    return []
+  }
+
+  return fs
+    .readdirSync(fontsDir)
+    .map((file) => `./assets/fonts/${file}`)
+}
 
 /**
  * Use tsx/cjs here so we can use TypeScript for our Config Plugins
@@ -16,6 +34,7 @@ import "tsx/cjs"
  */
 module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
   const existingPlugins = config.plugins ?? []
+  const fontPaths = getFontPathsFromAssetsFolder()
 
   return {
     ...config,
@@ -36,6 +55,14 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
         ],
       },
     },
-    plugins: [...existingPlugins],
+    plugins: [
+      ...existingPlugins,
+      [
+        "expo-font",
+        {
+          fonts: fontPaths,
+        },
+      ],
+    ],
   }
 }

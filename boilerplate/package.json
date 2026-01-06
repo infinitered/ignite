@@ -31,7 +31,6 @@
     "build:android:prod": "eas build --profile production --platform android --local"
   },
   "dependencies": {
-    "@expo-google-fonts/space-grotesk": "^0.4.0",
     "@expo/metro-runtime": "~6.1.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
