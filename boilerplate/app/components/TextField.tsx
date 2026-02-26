@@ -1,4 +1,4 @@
-import { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
+import { ComponentType, Ref, useImperativeHandle, useRef } from "react"
 import {
   ImageStyle,
   StyleProp,
@@ -110,7 +110,8 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
  * @param {TextFieldProps} props - The props for the `TextField` component.
  * @returns {JSX.Element} The rendered `TextField` component.
  */
-export const TextField = forwardRef(function TextField(props: TextFieldProps, ref: Ref<TextInput>) {
+export function TextField(props: TextFieldProps & { ref?: Ref<TextInput>}) {
+  const { ref, ...rest } = props
   const {
     labelTx,
     label,
@@ -244,7 +245,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       )}
     </TouchableOpacity>
   )
-})
+}
 
 const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
