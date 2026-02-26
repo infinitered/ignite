@@ -245,7 +245,7 @@ export function TextField(props: TextFieldProps & { ref?: Ref<TextInput>}) {
       )}
     </TouchableOpacity>
   )
-})
+}
 
 const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
