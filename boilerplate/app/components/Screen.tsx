@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingViewProps,
   LayoutChangeEvent,
   Platform,
-  ScrollView,
   ScrollViewProps,
   StyleProp,
   View,
