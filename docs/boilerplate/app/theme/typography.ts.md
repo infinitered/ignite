@@ -11,6 +11,7 @@ Fonts are defined in `app/theme/typography.ts`. We use a similar approach to [co
 We define the fonts used in `app/theme/typography.ts`. The custom fonts are loaded using the `useFonts` hook from [`expo-fonts`](https://docs.expo.dev/guides/using-custom-fonts/) to load the fonts.
 
 ### Add Custom fonts
+
 To add additional custom fonts to your project, obtain the proper OTF/TTF file(s). Make the necessary additions to the `customFontsToLoad` object in `app/theme/typography.ts` and `fonts` object to reference the font family in the typography theming object.
 
 ```tsx
@@ -34,6 +35,7 @@ const fonts = {
 ### Adding a Google Font
 
 install the desired Google Font package:
+
 ```bash
 npx expo install @expo-google-fonts/inter
 ```
@@ -70,6 +72,7 @@ Keep in mind that when utilizing custom fonts, it is a better user experience to
 ## Usage
 
 Use the `typography` object in your stylesheets rather than hardcoding font names:
+
 ```ts
 import { typography } from "app/theme/typography"
 
@@ -79,7 +82,6 @@ const styles = StyleSheet.create({
   snippet: { fontFamily: typography.code.normal },
 })
 ```
-
 
 ## Typography
 
