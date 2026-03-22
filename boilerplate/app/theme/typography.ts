@@ -1,5 +1,4 @@
-// TODO: write documentation about fonts and typography along with guides on how to add custom fonts in own
-// markdown file and add links from here
+// For documentation on fonts and typography, see docs/boilerplate/app/theme/typography.ts.md
 
 import { Platform } from "react-native"
 import {
