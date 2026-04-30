@@ -1,0 +1,58 @@
+---
+description: Security and privacy rules — applies to every file
+globs: "**/*"
+---
+
+# Security + privacy rules
+
+## Secrets
+
+- **Auth tokens / refresh tokens**: `@/lib/secureStorage` (expo-secure-store, Keychain/Keystore). NEVER MMKV, NEVER AsyncStorage, NEVER a Zustand-persisted store.
+- **Anything else** considered "secret" (biometric flag, encryption keys): SecureStore.
+- **Non-secret prefs / cache** (theme, last-viewed item, language): MMKV via `@/lib/storage`.
+- `clearAuthTokens()` must be called on sign-out, plus `useSessionStore.getState().signOut()`.
+
+## Env access
+
+- Only via `@/config/env`. Never `process.env.X` outside that file.
+- `EXPO_PUBLIC_*` keys are bundled into the JS — visible to anyone who downloads the app. NEVER put backend secrets in `EXPO_PUBLIC_*`.
+- `SENTRY_AUTH_TOKEN`, `SNYK_TOKEN`, etc., are build-time only — referenced from `eas.json` / GitHub Actions secrets.
+- `.env*` files are gitignored. Pre-commit gitleaks scan blocks accidental commits.
+
+## Logging
+
+- No PII in logs. Redact email/phone/name/userId before logging.
+- `app/lib/logger.ts` is the only file allowed to call `console.*`. Production builds forward to Sentry breadcrumbs, not stdout.
+
+## Network
+
+- HTTPS only. `usesCleartextTraffic: false` is enforced in `app.config.ts` (Android).
+- All HTTP via `@/lib/api`. Auth headers injected once; request bodies/responses validated via Zod.
+- Pin certificates only if you have a strong reason — pinning makes hot-fixes painful.
+
+## Privacy
+
+- Declare data collection in `PrivacyInfo.xcprivacy` (iOS 17+). Required reasons API: see `app.config.ts`.
+- PostHog `identify(userId)` only after the user has consented to analytics.
+- Any third-party SDK that collects data → declare in privacy manifest before submitting to App Store.
+- GDPR / CCPA: provide a "delete my data" path that calls SecureStore.clear, MMKV.clearAll, analytics.reset, and the backend delete endpoint.
+
+## OWASP Mobile Top 10 mapping
+
+- **M1 Improper credential usage** → SecureStore for tokens.
+- **M2 Inadequate supply chain security** → pnpm-lock.yaml + Dependabot + Snyk in CI.
+- **M3 Insecure authentication/authorization** → server-side validation; never trust client claims.
+- **M4 Insufficient input/output validation** → Zod on every external response.
+- **M5 Insecure communication** → HTTPS only, no cleartext.
+- **M6 Inadequate privacy controls** → privacy manifest + consent flows.
+- **M7 Insufficient binary protections** → Hermes bytecode + Proguard (Android).
+- **M8 Security misconfiguration** → strict TS, biome rules, CI gates.
+- **M9 Insecure data storage** → SecureStore for secrets, never MMKV.
+- **M10 Insufficient cryptography** → use platform crypto (`expo-crypto`); never roll your own.
+
+## Repo hygiene
+
+- Pre-commit gitleaks scan + `noRestrictedImports` + lint-staged Biome.
+- Pre-push typecheck + tests.
+- Never bypass hooks (`--no-verify`) without commenting why in the PR.
+- `bypass` of any rule requires an ADR in `docs/decisions/`.

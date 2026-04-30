@@ -1,0 +1,77 @@
+---
+description: Core project rules — apply to every file
+globs: "**/*"
+alwaysApply: true
+---
+
+# Core rules
+
+> Full system prompt: `CLAUDE.md`. This file is the rules section, slimmed for Cursor's context budget. The two are kept in sync.
+
+## Stack
+Expo SDK 55 · RN 0.83 · React 19 · TS 5.9 strict · Zustand · TanStack Query · axios · RHF + Zod · NativeWind v4 · FlashList · expo-image · MMKV + expo-secure-store · Sentry · PostHog · Biome · pnpm.
+
+## Process
+- Run `pnpm before-pr` before considering code complete.
+- Commit format: Conventional Commits — `type(scope): description`.
+- One opinionated way per concern.
+
+## Architecture
+- Server state via TanStack Query; UI state via Zustand. Never duplicate.
+- Auth tokens only via `expo-secure-store` (`@/lib/secureStorage`). Non-secret prefs → MMKV. Never the reverse.
+- All HTTP via `@/lib/api` (centralized axios). Biome blocks direct `axios`/`fetch` imports.
+- Validate every external response with Zod (use `getValidated`).
+- Forms: RHF + Zod resolver. One schema per form. Export schema for tests.
+
+## Naming
+- Screens: `PascalCase` + `Screen` suffix → `app/screens/profile/ProfileScreen.tsx`.
+- Navigators: `PascalCase` + `Navigator` suffix.
+- Hooks: `useCamelCase.ts`.
+- Zustand: `useNameStore.ts`.
+- Query hooks: `useResourceVerb.ts`.
+- Components: `PascalCase.tsx`. Tests co-located.
+- Screens grouped by feature subdirectory, never flat in `screens/`.
+
+## Components
+- Use custom primitives from `@/components` — never raw `react-native` `Text`/`Button`/`TextInput`/`FlatList`/`Image`/`SafeAreaView`. Biome enforces.
+- Lists with >30 items: `ListView` (FlashList) with required `estimatedItemSize`.
+- Images: `@/components/Image` (wraps `expo-image`). Always pass a `placeholder` for network images.
+
+## Styling
+- Tokens live in `tailwind.config.js` only. No hex, no literal spacing/radius/font-size anywhere else.
+- Variants via `tailwind-variants` (`tv()`).
+- Dark mode via `dark:` prefix.
+- RTL via `me-*`/`ms-*` margin utilities.
+- No inline `style={{ … }}` for visual values.
+
+## i18n + a11y
+- Every user-visible string via `translate(key)` or `tx` prop. Hardcoded English → reject.
+- Every Pressable: `accessibilityRole` + `accessibilityLabel`.
+- Respect `useReduceMotion`. Hit-slop ≥ 8 on small targets.
+- Live regions on async status changes.
+
+## Errors + logging
+- `api` returns normalized errors. Surface to UI via banners/`ErrorState`.
+- Sentry capture only at error boundaries / explicit catches.
+- No `console.log` in production paths — use `@/lib/logger`.
+
+## Performance
+- Memoize list renderers (`React.memo` + `useCallback`).
+- `FlashList` `estimatedItemSize` is required.
+- Reanimated worklets only on UI thread.
+
+## Privacy + security
+- Declare data collection in `PrivacyInfo.xcprivacy`.
+- PostHog `identify` only after consent.
+- No PII in logs.
+- Env access only via `@/config/env`.
+- Never commit `.env*` or secrets.
+
+## Tests
+- Mock at the network boundary only (MSW). Never mock our own modules.
+- Render with the same providers the app uses (helper).
+- One user-flow test per screen minimum.
+- Don't snapshot components > 30 lines.
+
+## UI states
+- Every screen handles loading, empty, error, populated. Use `LoadingState`/`EmptyState`/`ErrorState` primitives.

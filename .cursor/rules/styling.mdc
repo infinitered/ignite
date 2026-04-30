@@ -1,0 +1,62 @@
+---
+description: NativeWind + tailwind-variants styling rules
+globs: "app/**/*.{ts,tsx}"
+---
+
+# Styling rules (NativeWind v4)
+
+## Single source of truth
+
+- All design tokens live in `tailwind.config.js`. Edits there propagate everywhere.
+- Semantic tokens (e.g., `bg-background`, `text-foreground`, `border-border`, `text-muted-foreground`) are mapped to CSS variables in `global.css`. Dark mode flips the variables — no per-component `dark:` plumbing needed for color tokens.
+
+## What you may write
+
+- `<View className="flex-1 bg-background p-4 gap-2" />` — layout via classes
+- `<Text className="text-lg font-sans-medium text-primary" />` — typography via classes (or use `<Text variant="…" tone="…">`)
+- `dark:` prefix only for class-level overrides not covered by semantic tokens (e.g., `dark:opacity-90`)
+- `me-4` / `ms-4` (margin-end / margin-start) instead of `mr-4` / `ml-4` for layout-affecting margins → respects RTL.
+
+## What you may NOT write
+
+- ❌ `<View style={{ backgroundColor: '#fff', padding: 16 }} />` — use `className="bg-background p-4"`.
+- ❌ `<Text style={{ color: 'red' }} />` — use `<Text tone="destructive" />`.
+- ❌ Inline `style={{ marginRight: 12 }}` for layout — use `className="me-3"`.
+
+Inline `style` is allowed only for **dynamic numeric values** that can't be classes — e.g., `style={{ transform: [{ translateY: animatedY.value }] }}` from a Reanimated worklet.
+
+## Variants — use `tailwind-variants` (`tv()`)
+
+For any component with > 2 visual states, use `tv()`:
+
+```tsx
+import { tv, type VariantProps } from 'tailwind-variants';
+
+const button = tv({
+  base: 'flex-row items-center justify-center rounded-md',
+  variants: {
+    variant: { primary: 'bg-primary', destructive: 'bg-destructive' },
+    size: { sm: 'h-8 px-3', md: 'h-11 px-4', lg: 'h-13 px-6' },
+  },
+  defaultVariants: { variant: 'primary', size: 'md' },
+});
+type Variants = VariantProps<typeof button>;
+```
+
+For multi-element components, use **slots** (see existing `Button.tsx`).
+
+## Third-party components
+
+Components not built on RN's `View` (e.g., `FlashList`, `expo-image`'s `Image`) need `cssInterop` to accept `className`. See `app/lib/cssInterop.ts` — call it once at app boot.
+
+## Dark mode
+
+- Semantic tokens flip automatically via `:root.dark` in `global.css`.
+- Toggle via `usePrefsStore.colorScheme` and apply `useColorScheme` to update the document class. (System default is supported via `colorScheme === 'system'`.)
+- Test both light + dark for any new screen.
+
+## RTL
+
+- Use `me-*` / `ms-*` (margin-end/start), `pe-*` / `ps-*` (padding-end/start), `start-*` / `end-*` for absolute positioning.
+- Avoid `flex-row` for content that should reverse in RTL — use `flex-row-reverse` conditionally if needed, or rely on RN's automatic flex-direction flipping when `I18nManager.isRTL` is true.
+- Test in an RTL locale before merging RTL-affecting changes.

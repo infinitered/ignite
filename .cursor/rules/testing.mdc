@@ -1,0 +1,52 @@
+---
+description: Testing rules — Jest + RTL + MSW + Maestro
+globs: "**/*.test.{ts,tsx}"
+---
+
+# Testing rules
+
+## Mocking — at the network boundary only
+
+- **MSW** intercepts at the network layer (covers axios via XHR adapter). Define handlers in `test/msw/handlers.ts` and the server in `test/msw/server.ts`.
+- **NEVER** `jest.mock('@/lib/api')` or `jest.mock('@/queries/usePosts')`. Mocking our own modules hides regressions.
+- Native modules (`expo-secure-store`, `react-native-mmkv`, `expo-notifications`) are mocked once in `test/setup.ts` — do NOT add per-test overrides without strong justification.
+
+## Render with providers
+
+Use a `renderWithProviders(ui)` helper that wraps in:
+- `QueryClientProvider` with a fresh QueryClient (`new QueryClient({ defaultOptions: { queries: { retry: false } } })` — disable retries in tests)
+- `SafeAreaProvider`
+- `NavigationContainer` (with a stub stack)
+
+Don't render bare components and pass mocked queries — that diverges from production.
+
+## What to test
+
+- One **user-flow test per screen** at minimum. "User taps submit → sees success message".
+- Form schemas: import the Zod schema and assert `schema.safeParse(input)` for boundary cases.
+- Custom hooks: render with `@testing-library/react-native`'s `renderHook` and assert state transitions.
+- Navigation: assert that pressing a button calls `navigation.navigate(…)` with the right params.
+
+## What NOT to test
+
+- Implementation details (internal state, private methods).
+- Component snapshots > 30 lines — they become noise.
+- Library code (TanStack Query, Zustand) — trust the maintainers.
+
+## Assertions
+
+- Prefer accessible queries: `getByRole('button', { name: /submit/i })`, `getByLabelText('Email')`. They double as a11y audit.
+- Avoid `getByTestId` unless no accessible alternative exists. If you use it, also add an `accessibilityLabel`.
+
+## E2E with Maestro
+
+- Flows live in `.maestro/flows/`.
+- Tag smoke flows with `# tags: smoke` so CI can run a subset on PRs.
+- Use `accessibilityLabel`-based selectors in the YAML — never raw text (breaks with i18n).
+- Test data via env hooks: `MAESTRO_TEST_USER_EMAIL`, `MAESTRO_TEST_USER_PASSWORD`. Never check in real credentials.
+
+## Coverage targets
+
+- **Lines: 60%** floor across the repo.
+- **Changed-lines: 70%** floor on PRs (CI gate).
+- 100% coverage is not the goal — meaningful behavior coverage is.

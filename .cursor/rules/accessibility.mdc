@@ -1,0 +1,63 @@
+---
+description: Accessibility rules for every interactive surface
+globs: "app/**/*.tsx"
+---
+
+# Accessibility rules
+
+A11y is non-negotiable. Treat it like type safety: encode it, run it in CI, fail PRs that regress.
+
+## Every interactive control
+
+- `accessibilityRole` set explicitly: `'button'`, `'link'`, `'image'`, `'header'`, `'switch'`, `'checkbox'`, `'radio'`, `'tab'`, `'menuitem'`.
+- `accessibilityLabel` set — never rely on visible text alone for icon-only controls.
+- `accessibilityState` for stateful controls: `{ disabled, busy, checked, expanded, selected }`.
+- `accessibilityHint` only when the action is non-obvious from the label (rare; lean on better labels first).
+
+## Tap targets
+
+- **Minimum 48×48 dp** for all interactive elements.
+- For visually smaller targets (e.g., a 24-px icon button), set `hitSlop={8}` (or larger) so the tappable area expands.
+
+## Live regions
+
+Use `accessibilityLiveRegion="polite"` for:
+- Form validation errors (so VoiceOver announces them as they appear)
+- Toast/banner status changes
+- Loading-state captions ("Loading posts…", "Submitting…")
+
+`"assertive"` only for genuinely interrupting messages (rare).
+
+## Color and contrast
+
+- Text contrast ratio ≥ **4.5:1** against its background (WCAG AA). Use the semantic tokens — they're tuned for AA.
+- Never communicate state with color alone. Pair with an icon, label, or pattern.
+
+## Reduced motion
+
+Respect `useReduceMotion()` from `react-native-reanimated`. Decorative animations should disable, not just shorten, when reduce-motion is on.
+
+## Screen structure
+
+- One `accessibilityRole="header"` per screen at the top of meaningful content.
+- Lists: ensure each item has a complete accessibility label (e.g., for a post item: `"{{title}}, posted by {{author}} on {{date}}"`).
+- Don't break visual reading order with absolute positioning if it changes accessibility tree order.
+
+## Focus management
+
+- Modals and bottom sheets: focus the title on open, restore focus to the trigger on close.
+- After navigation, the screen header should be the first focusable element.
+- Use `AccessibilityInfo.announceForAccessibility('…')` for transient announcements after async actions.
+
+## Forms
+
+- Each field has a visible label (or `accessibilityLabel` on the input).
+- Errors are announced via `accessibilityLiveRegion` on the error `<Text>`.
+- `aria-invalid={Boolean(error)}` on the input. (Already wired in `<TextField />`.)
+- Group related fields with `accessibilityRole="form"` (rare in RN; native handles this).
+
+## Testing
+
+- `getByRole` / `getByLabelText` queries in RTL doubles as a11y audit.
+- Maestro a11y flows live in `.maestro/flows/a11y/`. CI runs them nightly.
+- Manual QA: enable VoiceOver (iOS) / TalkBack (Android) and walk through every user-facing flow before release.

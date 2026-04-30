@@ -1,0 +1,73 @@
+---
+description: React Native + Expo app structure, data flow, screen patterns
+globs: "app/**/*"
+---
+
+# Native app structure (`app/`)
+
+| Directory | Purpose | Naming |
+|---|---|---|
+| `screens/{feature}/` | Feature-grouped screens; one folder per feature | PascalCase + `Screen` suffix |
+| `components/` | App-wide primitives + cross-cutting components | PascalCase |
+| `navigators/` | React Navigation stacks/tabs/types | `*Navigator.tsx` |
+| `hooks/` | Cross-cutting reusable hooks | `use*.ts` |
+| `services/` | External clients (analytics, sentry, …); NOT API layer | folder per domain |
+| `stores/` | Zustand stores (UI state, persisted prefs, session) | `useNameStore.ts` |
+| `queries/` | TanStack Query hooks per resource | `useResourceVerb.ts` |
+| `lib/` | Pure utilities (api, queryClient, storage, fonts, …) | camelCase |
+| `i18n/` | Translations + i18n init | lowercase |
+| `theme/` | (deleted — tokens live in `tailwind.config.js`) | — |
+| `types/` | Shared TS types | camelCase |
+| `config/` | `env.ts` (Zod-validated), runtime config | — |
+
+## Screen grouping pattern
+
+```
+screens/
+├── example/        # ExampleScreen.tsx, components/, hooks/
+├── auth/           # LoginScreen.tsx, SignUpScreen.tsx, …
+├── onboarding/     # WelcomeScreen.tsx, PermissionScreen.tsx
+├── profile/        # ProfileScreen.tsx, EditProfileScreen.tsx
+└── settings/       # SettingsScreen.tsx, …
+```
+
+NEVER flat in `screens/`. Each feature directory may contain its own `components/`, `hooks/`, `types.ts` — promote to `app/components/` / `app/hooks/` only when truly shared.
+
+## Data flow
+
+```
+Screen → query hook (usePosts) → TanStack Query → service (postsService) → @/lib/api (axios) → backend
+Screen → Zustand store → UI / ephemeral state (form drafts, modals, current step)
+```
+
+- **Screens orchestrate**, **components render**. Screens own hooks + state; components receive data via props.
+- **One hook per domain**: `usePosts`, `useProfile`, `useFavorites`.
+- **One service per domain**: `postsService.ts`, `profileService.ts`. Each function = one endpoint, returning a Zod-validated typed result.
+- **Never duplicate** server state into Zustand. If you need it in two screens, both call the same query hook.
+
+## Patterns
+
+- Custom hook to extract shared state + handlers logic (e.g., `usePostForm`).
+- Shared types in `app/types/{feature}.ts`. Service + screen + tests import from there.
+- TanStack Query `queryKey` factory pattern: export `postKeys = { all, list, detail(id) }` so invalidation is consistent.
+- Mutations always include `onSuccess` invalidation of the relevant queries.
+
+## Code reuse
+
+- **No copy-paste between screens.** If two screens share state-and-handlers, extract a hook.
+- Screen-local components live in `screens/{feature}/components/`. Promote to `app/components/` only when reused across features.
+- Generic, business-logic-free UI lives in `app/components/`.
+
+## Required UI states
+
+Every screen must handle: **loading**, **empty**, **error**, **populated**. Use:
+- `<LoadingState />` for query.isPending
+- `<ErrorState onRetry={…} />` for query.isError
+- `<EmptyState />` for empty data
+- inline render for populated
+
+## Lists
+
+- `>30 items` → `<ListView />` (FlashList) with `estimatedItemSize`. NEVER `FlatList`.
+- Memoize `renderItem` and `keyExtractor` with `useCallback`.
+- Avoid inline objects in `renderItem` — pre-compute item-level data.
