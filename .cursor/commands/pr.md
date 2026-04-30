@@ -26,7 +26,6 @@ Goal: produce a polished pull-request title and body without me writing it. Save
      - [ ] a11y: VoiceOver pass on changed flows
    - **Screenshots** — placeholder section noting iOS + Android screenshots.
    - **Sentry / PostHog impact** — any new tracked events or breaking event-name changes.
-   - **ADR link** (optional) — if the change involves a foundational decision.
 
 ## Output
 

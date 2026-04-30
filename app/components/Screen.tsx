@@ -2,8 +2,8 @@ import { useScrollToTop } from '@react-navigation/native';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { type SystemBarStyle, SystemBars } from 'react-native-edge-to-edge';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { SystemBars, type SystemBarStyle } from 'react-native-edge-to-edge';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type ScreenProps = {

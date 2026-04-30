@@ -29,10 +29,10 @@ function parseArgs(argv: string[]): Args {
   for (let i = 0; i < rest.length; i++) {
     const flag = rest[i];
     const value = rest[i + 1];
-    if (flag === '--bundle-id') {
+    if (flag === '--bundle-id' && value) {
       args.bundleId = value;
       i++;
-    } else if (flag === '--scheme') {
+    } else if (flag === '--scheme' && value) {
       args.scheme = value;
       i++;
     }
@@ -41,13 +41,11 @@ function parseArgs(argv: string[]): Args {
 }
 
 function fail(msg: string): never {
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.error(`✗ ${msg}`);
   process.exit(1);
 }
 
 function ok(msg: string): void {
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.warn(`✓ ${msg}`);
 }
 
@@ -55,7 +53,7 @@ function ensureCleanTree(): void {
   const status = execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim();
   if (status) {
     fail(
-      'Working tree is dirty. Commit or stash first so you can review the rename diff.\n' + status
+      `Working tree is dirty. Commit or stash first so you can review the rename diff.\n${status}`
     );
   }
 }
@@ -104,4 +102,4 @@ ok('Next steps:');
 ok('  1. Review the diff: git diff');
 ok('  2. Update assets/images/ icons + splash to match the new brand');
 ok('  3. If ios/ or android/ folders exist (you ran prebuild), run: npx expo prebuild --clean');
-ok('  4. Commit: git commit -am "chore(infra): rename to ' + Pascal + '"');
+ok(`  4. Commit: git commit -am "chore(infra): rename to ${Pascal}"`);

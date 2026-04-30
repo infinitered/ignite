@@ -22,7 +22,7 @@ export function initSentry(): void {
     debug: __DEV__,
     tracesSampleRate: env.EXPO_PUBLIC_ENV === 'production' ? 0.1 : 1.0,
     release: `${Application.applicationId}@${Application.nativeApplicationVersion}+${Application.nativeBuildVersion}`,
-    dist: Updates.updateId ?? undefined,
+    ...(Updates.updateId ? { dist: Updates.updateId } : {}),
   });
 }
 

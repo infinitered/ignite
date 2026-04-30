@@ -27,14 +27,8 @@
       "@assets/*": ["./assets/*"]
     },
     "typeRoots": ["./node_modules/@types", "./types"],
-    "types": ["nativewind/types", "jest"]
+    "types": ["nativewind/types", "jest", "node"]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "nativewind-env.d.ts",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ],
-  "exclude": ["node_modules", "templates-ignite-original/**/*"]
+  "include": ["**/*.ts", "**/*.tsx", "nativewind-env.d.ts", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "exclude": ["node_modules", "templates/**/*"]
 }

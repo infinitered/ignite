@@ -112,10 +112,10 @@ Screen
 
 ## Performance budgets (CI gate)
 
-- JS bundle: 4 MB iOS / 5 MB Android. Enforced by `scripts/check-bundle-size.ts` (CI gate). Bumping requires an ADR.
+- JS bundle: 4 MB iOS / 5 MB Android. Enforced by `scripts/check-bundle-size.ts` (CI gate). Bumping requires a PR with bundle-size justification in the description.
 - TTI on a mid-tier Android (Pixel 5): ≤ 2 s. Profile with Hermes profiler.
 - Lists: 60 fps scrolling for ≤ 1000 items. FlashList + `estimatedItemSize` is the contract.
 
 ## Decisions
 
-Foundational choices are documented as ADRs in [`./decisions/`](./decisions/). Read them when joining the project — they encode *why*, not just what.
+The *why* behind each foundational choice (Zustand + TanStack Query split, NativeWind v4, MMKV vs SecureStore, Biome over ESLint+Prettier, axios + Zod boundary) lives in [`../CLAUDE.md`](../CLAUDE.md) §Stack and §Rules. Each rule is paired with the constraint it addresses — read those sections before proposing a parallel implementation.

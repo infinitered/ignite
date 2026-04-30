@@ -55,7 +55,7 @@ eas update --branch production --message "Hotfix: corrected price formatter"
 ## Sentry
 
 - Source-map upload: automatic via the `@sentry/react-native/expo` plugin during production / preview builds when `SENTRY_AUTH_TOKEN` is set.
-- Release tagging: `app/lib/sentry.ts` tags every event with `release: <bundleId>@<nativeAppVersion>+<nativeBuildVersion>` and `dist: <Updates.updateId>` (the OTA bundle id).
+- Release tagging: `app/services/sentry.ts` tags every event with `release: <bundleId>@<nativeAppVersion>+<nativeBuildVersion>` and `dist: <Updates.updateId>` (the OTA bundle id).
 - Verify after build: open the Sentry release page → "Source Maps" tab — should show JS + native sourcemaps attached.
 
 For OTA-only releases (no rebuild), create a Sentry release entry post-update:
@@ -122,4 +122,4 @@ Failing to declare = App Review rejection.
 - **JS-only regression**: `eas update --branch production --message "Rollback to v0.x.0"` with the previous bundle.
 - **Native regression on iOS**: pull the binary from review (if not yet released) or expedite a hotfix build.
 - **Already on the store**: ship a fix; you cannot un-ship a binary.
-- **Post-incident**: ADR in `docs/decisions/` documenting the cause and mitigation.
+- **Post-incident**: write a postmortem (cause, mitigation, prevention) in the rollback PR description. Link it from the Sentry release notes.

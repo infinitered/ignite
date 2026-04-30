@@ -26,6 +26,7 @@ const en = {
     offline: 'You are offline. Some features may be unavailable.',
     loadFailed: "Couldn't load. Please try again.",
   },
+  // @demo remove-block
   example: {
     title: 'Example',
     counter: 'Counter: {{count}}',
@@ -37,6 +38,7 @@ const en = {
     submit: 'Submit',
     submitted: 'Form submitted',
   },
+  // @demo remove-block-end
 };
 
 export default en;

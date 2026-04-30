@@ -1,6 +1,6 @@
 # Expo App Starter
 
-> A FAANG-quality, SaaS-ready, context-engineered React Native + Expo starter template. Clone-and-go for new projects.
+> A context-engineered React Native + Expo starter template. Clone-and-go for new projects.
 
 ## What this template gives you
 
@@ -61,17 +61,14 @@ app/
 ├── lib/                pure utilities (api [axios], queryClient, storage, secureStorage, network, logger, fonts, cssInterop)
 ├── i18n/               translations + i18n init
 ├── types/              shared TS types
-├── config/             env.ts (Zod-validated)
-└── utils/              legacy bucket; prefer lib/
+└── config/             env.ts (Zod-validated)
 
 .claude/{skills,commands,agents,settings.local.json}   # Claude Code context
 .cursor/{rules,commands}                                # Cursor IDE rules + commands
-.agents/skills/                                         # Real skill content (symlinked at .claude/skills)
 CLAUDE.md  AGENTS.md  GEMINI.md                         # Top-level system prompts for AI agents
 .github/copilot-instructions.md                         # GitHub Copilot conventions
 
 docs/                                                   # Architecture, standards, deployment, testing, …
-docs/decisions/                                         # ADRs
 ```
 
 Full architecture map: [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
@@ -104,6 +101,38 @@ The full rules — and *why* each exists — live in [`CLAUDE.md`](./CLAUDE.md).
 | `pnpm bundle:check` | bundle-size budget gate |
 | `pnpm doctor` | expo-doctor environment health check |
 
+## First 10 minutes after cloning
+
+A chronological runbook. Do these in order — later steps assume earlier ones are done.
+
+1. **Bootstrap the toolchain.**
+   ```bash
+   corepack enable
+   pnpm setup        # installs deps + husky hooks + copies .env.example → .env.local
+   ```
+2. **Rename the app.**
+   ```bash
+   pnpm rename Acme --bundle-id com.acme.app --scheme acme
+   ```
+3. **Fill `.env.local`.** Required keys (see `.env.example` for the full list):
+   - `EXPO_PUBLIC_API_URL`
+   - `EXPO_PUBLIC_SENTRY_DSN`
+   - `EXPO_PUBLIC_POSTHOG_API_KEY` + `EXPO_PUBLIC_POSTHOG_HOST`
+   - `EXPO_PUBLIC_EAS_PROJECT_ID`
+4. **Edit `CLAUDE.md` § Project context.** Replace the placeholder paragraph with your product summary. Every AI assistant loaded into the repo reads this first — the better it is, the better the suggestions.
+5. **Smoke-test the wiring.**
+   ```bash
+   pnpm before-pr    # lint + typecheck + tests should be green on a fresh clone
+   pnpm ios          # or pnpm android / pnpm web
+   ```
+6. **When you're ready to start your own features:**
+   ```bash
+   pnpm clean-demo   # strips ExampleScreen, sample query, sample i18n keys, demo flows
+   pnpm gen feature MyScreen
+   ```
+
+After that, the [pre-flight checklist](#pre-flight-checklist-before-your-first-commit) below covers the production wiring (icons, EAS secrets, CODEOWNERS, etc.).
+
 ## Pre-flight checklist (before your first commit)
 
 - [ ] `.env.local` filled in (`EXPO_PUBLIC_SENTRY_DSN`, `POSTHOG` keys, `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_EAS_PROJECT_ID`)
@@ -126,7 +155,6 @@ The full rules — and *why* each exists — live in [`CLAUDE.md`](./CLAUDE.md).
 - [`docs/PRODUCTION_CHECKLIST.md`](./docs/PRODUCTION_CHECKLIST.md) — pre-launch checklist
 - [`docs/COMPONENTS.md`](./docs/COMPONENTS.md) — primitive reference
 - [`docs/ONBOARDING.md`](./docs/ONBOARDING.md) — Day 1 for new engineers
-- [`docs/decisions/`](./docs/decisions/) — Architecture Decision Records
 
 ## Context engineering
 
@@ -142,4 +170,4 @@ Edit the rules in one place; they propagate everywhere.
 
 ## License
 
-[MIT](./LICENSE) — built on top of [Ignite](https://github.com/infinitered/ignite) by Infinite Red, then re-shaped for context-engineered, clone-and-go SaaS development.
+[MIT](./LICENSE).

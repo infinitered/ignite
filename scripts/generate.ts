@@ -19,17 +19,33 @@
  * No EJS — placeholder substitution is enough for our shapes and avoids
  * a dependency that drifts.
  */
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
-type Kind = 'component' | 'screen' | 'hook' | 'store' | 'service' | 'query' | 'navigator' | 'feature';
+type Kind =
+  | 'component'
+  | 'screen'
+  | 'hook'
+  | 'store'
+  | 'service'
+  | 'query'
+  | 'navigator'
+  | 'feature';
 
-const KINDS: Kind[] = ['component', 'screen', 'hook', 'store', 'service', 'query', 'navigator', 'feature'];
+const KINDS: Kind[] = [
+  'component',
+  'screen',
+  'hook',
+  'store',
+  'service',
+  'query',
+  'navigator',
+  'feature',
+];
 const REPO_ROOT = process.cwd();
 
 function fail(msg: string): never {
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.error(`✗ ${msg}`);
   process.exit(1);
 }
@@ -52,17 +68,29 @@ function render(template: string, vars: ReturnType<typeof caseTransforms>): stri
     .replaceAll('{{snake_name}}', vars.snake);
 }
 
-function destinationFor(kind: Kind, vars: ReturnType<typeof caseTransforms>, templateFile: string): string {
+function destinationFor(
+  kind: Kind,
+  vars: ReturnType<typeof caseTransforms>,
+  templateFile: string
+): string {
   const fileName = render(templateFile, vars);
   switch (kind) {
-    case 'component': return join('app', 'components', fileName);
-    case 'screen':    return join('app', 'screens', vars.kebab, fileName);
-    case 'hook':      return join('app', 'hooks', fileName);
-    case 'store':     return join('app', 'stores', fileName);
-    case 'service':   return join('app', 'services', vars.camel, fileName);
-    case 'query':     return join('app', 'queries', fileName);
-    case 'navigator': return join('app', 'navigators', fileName);
-    case 'feature':   return ''; // unused — feature dispatches to other kinds
+    case 'component':
+      return join('app', 'components', fileName);
+    case 'screen':
+      return join('app', 'screens', vars.kebab, fileName);
+    case 'hook':
+      return join('app', 'hooks', fileName);
+    case 'store':
+      return join('app', 'stores', fileName);
+    case 'service':
+      return join('app', 'services', vars.camel, fileName);
+    case 'query':
+      return join('app', 'queries', fileName);
+    case 'navigator':
+      return join('app', 'navigators', fileName);
+    case 'feature':
+      return ''; // unused — feature dispatches to other kinds
   }
 }
 
@@ -75,13 +103,9 @@ async function generate(kind: Kind, rawName: string): Promise<void> {
     await generate('service', rawName);
     await generate('query', rawName);
     await generate('screen', rawName);
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.warn('\n→ Feature scaffold complete. Next steps:');
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.warn(`  • Define the Zod schema in app/services/${vars.camel}/${vars.camel}Service.ts`);
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.warn(`  • Wire ${vars.Pascal}Screen into app/navigators/AppNavigator.tsx`);
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.warn(`  • Add i18n keys for "${vars.camel}.*" in app/i18n/en.ts`);
     return;
   }
@@ -89,7 +113,9 @@ async function generate(kind: Kind, rawName: string): Promise<void> {
   const templateDir = join(REPO_ROOT, 'templates', kind);
   if (!existsSync(templateDir)) fail(`No templates/ for kind "${kind}"`);
 
-  const templateFiles = readdirSync(templateDir).filter((f) => statSync(join(templateDir, f)).isFile());
+  const templateFiles = readdirSync(templateDir).filter((f) =>
+    statSync(join(templateDir, f)).isFile()
+  );
   if (templateFiles.length === 0) fail(`No template files in ${templateDir}`);
 
   for (const templateFile of templateFiles) {
@@ -100,16 +126,13 @@ async function generate(kind: Kind, rawName: string): Promise<void> {
     const rendered = render(template, vars);
     await mkdir(dirname(dest), { recursive: true });
     await writeFile(dest, rendered);
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.warn(`✓ ${dest}`);
   }
 }
 
 const [, , kind, name] = process.argv;
 if (!kind || !name) {
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.error('Usage: pnpm gen <kind> <Name>');
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.error(`Kinds: ${KINDS.join(' | ')}`);
   process.exit(1);
 }

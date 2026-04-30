@@ -1,5 +1,5 @@
 import { Pressable, type PressableProps, View, type ViewProps } from 'react-native';
-import { tv, type VariantProps } from 'tailwind-variants';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 const card = tv({
   base: 'rounded-lg border border-border bg-card p-4',

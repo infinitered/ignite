@@ -70,6 +70,6 @@ Auto-loaded by Cursor based on glob:
 
 ## Editing the skills/rules
 
-If a rule changes, update the **enforcement** first (Biome, hooks, generators), then the prose in CLAUDE.md, then the relevant `.cursor/rules/*.mdc`, then the relevant skill file. Document the *why* as an ADR in `docs/decisions/`.
+If a rule changes, update the **enforcement** first (Biome, hooks, generators), then the prose in CLAUDE.md, then the relevant `.cursor/rules/*.mdc`, then the relevant skill file. Capture the *why* in the PR description.
 
 If the prose disagrees with the code, the code wins.

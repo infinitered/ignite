@@ -6,7 +6,7 @@ import { registerRootComponent } from 'expo';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { App } from '@/app';
-import { initSentry, SentryWrap } from '@/lib/sentry';
+import { SentryWrap, initSentry } from '@/services/sentry';
 
 // Keep the native splash visible until App's boot effect finishes.
 // `App` calls `SplashScreen.hideAsync()` once fonts + i18n + session are ready.

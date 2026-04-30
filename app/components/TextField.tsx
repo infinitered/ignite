@@ -28,14 +28,14 @@ const field = tv({
 
 export type TextFieldProps = Omit<TextInputProps, 'children'> & {
   /** Translatable label key. */
-  labelTx?: TxKeyPath;
-  label?: string;
+  labelTx?: TxKeyPath | undefined;
+  label?: string | undefined;
   /** Translatable helper key. */
-  helperTx?: TxKeyPath;
-  helper?: string;
+  helperTx?: TxKeyPath | undefined;
+  helper?: string | undefined;
   /** Validation error message — renders in destructive color. */
-  error?: string;
-  className?: string;
+  error?: string | undefined;
+  className?: string | undefined;
 };
 
 /**

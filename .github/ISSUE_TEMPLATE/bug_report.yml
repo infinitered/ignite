@@ -1,36 +1,53 @@
 name: Bug report
-description: For issues with running ignite on your computer
+description: Report a defect in the app
 labels: ["bug"]
 body:
-
   - type: markdown
     attributes:
       value: >
-        Before creating a **bug report**, please check the following:
-          * Ensure you're running the latest version release.
-          * Ensure there isn't an existing issue for your bug. If there is, leave a comment on the existing issue.
-
-        If you're unsure whether you've hit a bug, check out the #react-native channel in our [Slack Community](https://community.infinite.red).
+        Before filing, please confirm:
+          * You're on the latest commit on the default branch (`git pull` then retry).
+          * There isn't already an open issue for the same bug.
+          * `pnpm before-pr` is green on a clean checkout.
 
   - type: textarea
     attributes:
       label: Describe the bug
-      description: Also include a description of how to reproduce the bug
+      description: What happened, and what did you expect instead? Include reproduction steps.
     validations:
       required: true
 
   - type: input
-    id: version
+    id: app_version
     attributes:
-      label: Ignite version
-      description: If you're not on release, provide the commit hash
-      placeholder: 7.15.0
+      label: App version
+      description: From `package.json` `version` field, or the build number from the app.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - iOS device
+        - iOS simulator
+        - Android device
+        - Android emulator
+        - Web
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: Additional info
-      description: Run `npx ignite-cli doctor` and paste the results
+      label: Environment
+      description: Output of `pnpm doctor` and `node -v && pnpm -v`.
     validations:
       required: true
+
+  - type: textarea
+    attributes:
+      label: Screenshots / video
+      description: Attach if visual.

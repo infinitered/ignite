@@ -8,6 +8,16 @@
  */
 import { useColorScheme } from 'react-native';
 
+export type ThemedColors = {
+  background: string;
+  foreground: string;
+  muted: string;
+  mutedForeground: string;
+  border: string;
+  primary: string;
+  destructive: string;
+};
+
 const tokens = {
   light: {
     background: '#ffffff',
@@ -27,14 +37,12 @@ const tokens = {
     primary: '#5e83ff',
     destructive: '#f87171',
   },
-} as const;
-
-export type ThemedColors = (typeof tokens)['light'];
+} as const satisfies Record<'light' | 'dark', ThemedColors>;
 
 export function useThemedColors(): ThemedColors {
   const scheme = useColorScheme();
   return scheme === 'dark' ? tokens.dark : tokens.light;
 }
 
-export const lightColors = tokens.light;
-export const darkColors = tokens.dark;
+export const lightColors: ThemedColors = tokens.light;
+export const darkColors: ThemedColors = tokens.dark;

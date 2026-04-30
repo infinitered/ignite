@@ -5,11 +5,11 @@ import { Icon } from '@/components/Icon';
 import { Text } from '@/components/Text';
 
 export type ErrorStateProps = {
-  title?: string;
-  message?: string;
-  onRetry?: () => void;
-  retryLabel?: string;
-  className?: string;
+  title?: string | undefined;
+  message?: string | undefined;
+  onRetry?: (() => void) | undefined;
+  retryLabel?: string | undefined;
+  className?: string | undefined;
 };
 
 /**

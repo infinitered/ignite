@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { ActivityIndicator, Pressable, type PressableProps, View } from 'react-native';
-import { tv, type VariantProps } from 'tailwind-variants';
+import { ActivityIndicator, Pressable, type PressableProps, type View } from 'react-native';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 import { Text } from '@/components/Text';
 import type { TxKeyPath } from '@/i18n';
@@ -31,11 +31,11 @@ type Variants = VariantProps<typeof button>;
 
 export type ButtonProps = Omit<PressableProps, 'children'> &
   Variants & {
-    tx?: TxKeyPath;
-    text?: string;
-    children?: React.ReactNode;
-    loading?: boolean;
-    className?: string;
+    tx?: TxKeyPath | undefined;
+    text?: string | undefined;
+    children?: React.ReactNode | undefined;
+    loading?: boolean | undefined;
+    className?: string | undefined;
     accessibilityLabel: string;
   };
 
@@ -47,18 +47,7 @@ export type ButtonProps = Omit<PressableProps, 'children'> &
  * v4 does not support function-form `className`.
  */
 export const Button = forwardRef<View, ButtonProps>(function Button(
-  {
-    variant,
-    size,
-    tx,
-    text,
-    children,
-    loading,
-    disabled,
-    className,
-    accessibilityLabel,
-    ...rest
-  },
+  { variant, size, tx, text, children, loading, disabled, className, accessibilityLabel, ...rest },
   ref
 ) {
   const isDisabled = disabled || loading;
@@ -66,7 +55,6 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   return (
     <Pressable
       ref={ref}
-      role="button"
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       accessibilityState={{ disabled: isDisabled, busy: loading }}

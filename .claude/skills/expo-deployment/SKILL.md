@@ -59,7 +59,7 @@ Verify after a build: open the Sentry release in the dashboard — should show s
 
 ## Sentry release tagging
 
-`app/lib/sentry.ts` tags every event with:
+`app/services/sentry.ts` tags every event with:
 
 ```
 release: <bundleId>@<nativeAppVersion>+<nativeBuildVersion>

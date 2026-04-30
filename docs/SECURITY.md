@@ -94,7 +94,7 @@ grep -rE 'MMKV|AsyncStorage|persist' app/stores/  # cross-check w/ secret-naming
 4. Rotate any exposed secrets:
    - EAS: `eas secret:delete` + `eas secret:create`.
    - SecureStore: bump app version + wipe on launch via a feature flag.
-5. Postmortem within 5 working days; ADR in `docs/decisions/` for any structural change.
+5. Postmortem within 5 working days; if the response involved a structural change, document the rationale in the change's PR description.
 
 ## Reporting vulnerabilities
 

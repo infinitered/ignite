@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, isAxiosError } from 'axios';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 import { env } from '@/config/env';
 import { logger } from '@/lib/logger';

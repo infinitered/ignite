@@ -15,5 +15,3 @@ cssInterop(FlashList, {
 cssInterop(ExpoImage, {
   className: 'style',
 });
-
-export {};

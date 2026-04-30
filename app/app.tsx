@@ -7,14 +7,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 
 import { initI18n } from '@/i18n';
 import { customFontsToLoad } from '@/lib/fonts';
 import { queryClient } from '@/lib/queryClient';
+import { AppNavigator } from '@/navigators/AppNavigator';
 import { initAnalytics } from '@/services/analytics/posthog';
 import { useSessionStore } from '@/stores/useSessionStore';
-import { AppNavigator } from '@/navigators/AppNavigator';
 
 const linking = {
   prefixes: [Linking.createURL('/')],

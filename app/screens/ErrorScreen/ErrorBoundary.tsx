@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
-import { captureException } from '@/lib/sentry';
+import { captureException } from '@/services/sentry';
 
 import { ErrorDetails } from './ErrorDetails';
 

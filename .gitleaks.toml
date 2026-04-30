@@ -12,11 +12,9 @@ paths = [
   '''docs/.*''',
   '''\.env\.example$''',
   '''templates/.*''',
-  '''templates-ignite-original/.*''',
   '''CLAUDE\.md$''',
   '''AGENTS\.md$''',
   '''GEMINI\.md$''',
   '''\.cursor/.*''',
   '''\.claude/.*''',
-  '''\.agents/.*''',
 ]

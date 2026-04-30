@@ -17,14 +17,18 @@ type ColorScheme = 'light' | 'dark' | 'system';
 type PrefsState = {
   colorScheme: ColorScheme;
   hasCompletedOnboarding: boolean;
+  // @demo remove-block
   exampleCounter: number;
+  // @demo remove-block-end
 };
 
 type PrefsActions = {
   setColorScheme: (scheme: ColorScheme) => void;
   completeOnboarding: () => void;
+  // @demo remove-block
   incrementCounter: () => void;
   resetCounter: () => void;
+  // @demo remove-block-end
 };
 
 export const usePrefsStore = create<PrefsState & PrefsActions>()(
@@ -32,11 +36,15 @@ export const usePrefsStore = create<PrefsState & PrefsActions>()(
     (set) => ({
       colorScheme: 'system',
       hasCompletedOnboarding: false,
+      // @demo remove-block
       exampleCounter: 0,
+      // @demo remove-block-end
       setColorScheme: (colorScheme) => set({ colorScheme }),
       completeOnboarding: () => set({ hasCompletedOnboarding: true }),
+      // @demo remove-block
       incrementCounter: () => set((state) => ({ exampleCounter: state.exampleCounter + 1 })),
       resetCounter: () => set({ exampleCounter: 0 }),
+      // @demo remove-block-end
     }),
     {
       name: 'app.prefs',

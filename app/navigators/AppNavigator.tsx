@@ -4,14 +4,20 @@ import { View } from 'react-native';
 
 import { OfflineBanner } from '@/components/OfflineBanner';
 import { ErrorBoundary } from '@/screens/ErrorScreen/ErrorBoundary';
+// @demo remove-block
 import { ExampleScreen } from '@/screens/example/ExampleScreen';
+// @demo remove-block-end
 
-import { type AppStackParamList, type NavigationProps } from './navigationTypes';
+import type { AppStackParamList, NavigationProps } from './navigationTypes';
 import { navigationRef, useBackButtonHandler } from './navigationUtilities';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
-const exitRoutes: ReadonlyArray<keyof AppStackParamList> = ['Example'];
+const exitRoutes: ReadonlyArray<keyof AppStackParamList> = [
+  // @demo remove-block
+  'Example',
+  // @demo remove-block-end
+];
 
 function AppStack() {
   return (
@@ -20,10 +26,13 @@ function AppStack() {
         headerShown: false,
         contentStyle: { backgroundColor: 'transparent' },
       }}
+      // @demo remove-block
       initialRouteName="Example"
+      // @demo remove-block-end
     >
+      {/* @demo remove-block */}
       <Stack.Screen name="Example" component={ExampleScreen} />
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+      {/* @demo remove-block-end */}
     </Stack.Navigator>
   );
 }

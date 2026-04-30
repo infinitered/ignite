@@ -88,7 +88,7 @@ Release automation (`release-please`) is intentionally deferred. For now, manual
 4. Tag the release: `git tag v0.x.y && git push --tags`.
 5. Add a Sentry release entry: `sentry-cli releases new "<bundleId>@<version>+<build>"`.
 
-Add `release-please` (or `changesets`) once the repo is in active multi-project use — see [`./decisions/`](./decisions/) for the deferred rationale.
+Add `release-please` (or `changesets`) once the repo is in active multi-project use. The deferred rationale: until the repo has a release cadence, the tooling churn isn't worth the savings.
 
 ## Updating the rules
 
@@ -96,6 +96,6 @@ Conventions evolve. To change a rule:
 
 1. **Update the enforcement** first (Biome rule, husky hook, CI step, generator template).
 2. **Update the prose** in `CLAUDE.md`, `.cursor/rules/`, `docs/CODE_STANDARDS.md`.
-3. **Document the rationale** as an ADR in `docs/decisions/`.
+3. **Document the rationale** in the PR description (the why, the alternatives considered, the trade-off accepted).
 
 If the prose disagrees with the code, the code wins.

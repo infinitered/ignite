@@ -22,6 +22,8 @@ You are a senior React Native + Expo engineer working in this repo. Read this fi
 
 This repo is currently the **starter template itself** — a clone-and-go baseline for new React Native + Expo projects.
 
+> **If you are an AI assistant invoked in a fresh clone:** the human just ran `git clone`. Direct them to the README's *"First 10 minutes after cloning"* section before doing any code work. The most common slip is editing this file's `Project context` placeholder before the env, rename, and demo cleanup steps are done.
+
 ---
 
 ## Stack (locked-in)
@@ -40,7 +42,7 @@ This repo is currently the **starter template itself** — a clone-and-go baseli
 - **Auth tokens**: `expo-secure-store` only. Non-secret prefs → MMKV. **Never** the reverse.
 - **Error tracking**: `@sentry/react-native` with EAS source-map upload.
 - **Analytics + flags**: `posthog-react-native` via `app/services/analytics/posthog.ts`.
-- **Push**: `expo-notifications` via `app/lib/notifications.ts`.
+- **Push**: `expo-notifications` via `app/services/notifications.ts`.
 - **Network status**: `@react-native-community/netinfo` via `app/lib/network.ts`.
 - **i18n**: `i18next` + `react-i18next`. Every user-visible string goes through `translate(key)` or the `tx` prop.
 - **Testing**: Jest + `@testing-library/react-native`; **MSW** for network mocking; **Maestro** for E2E.
@@ -59,18 +61,19 @@ app/
 ├── services/           external clients (analytics, sentry, notifications, …)
 ├── stores/             Zustand stores (useSessionStore, usePrefsStore, …)
 ├── queries/            TanStack Query hooks per resource (usePosts, useUser, …)
-├── lib/                pure utilities (api [axios], queryClient, storage, secureStorage, network, logger, fonts, cssInterop)
+├── lib/                pure utilities (api [axios], queryClient, storage, secureStorage, network, logger, fonts, cssInterop, colors)
 ├── i18n/               translations + i18n init
 ├── types/              shared TS types
-├── config/             env.ts (Zod-validated), config.ts
-└── utils/              legacy bucket; prefer lib/ for new code
+└── config/             env.ts (Zod-validated)
 ```
+
+> `app/lib/colors.ts` is the documented bridge for native props (`placeholderTextColor`, `tintColor`, Reanimated `interpolateColor`) that don't accept className strings. Keep it in sync with `tailwind.config.js` when the brand changes.
 
 ---
 
 ## Skills you can rely on
 
-The 8 skills in `.claude/skills/` (mirrored at `.agents/skills/`) cover the patterns in depth. Read them when starting unfamiliar work:
+The 8 skills in `.claude/skills/` cover the patterns in depth. Read them when starting unfamiliar work:
 
 - `react-native-best-practices` — FPS, re-renders, bundle size, TTI, profiling, New Architecture
 - `building-native-ui` — NativeWind patterns (`tv()` variants, `dark:`, RTL, `cssInterop`), accessibility, animations
@@ -200,6 +203,5 @@ Templates live in `templates/<kind>/`. **Edit the templates, not the generated c
 - Cursor rules: `.cursor/rules/{core,native-app,testing,security,styling,accessibility}.mdc`.
 - Other agents: `AGENTS.md` (Codex / Aider / Cline / Antigravity), `GEMINI.md` (Gemini CLI), `.github/copilot-instructions.md` (GitHub Copilot).
 - Architecture / code standards / deployment / testing → `docs/`.
-- Architectural Decision Records → `docs/decisions/`.
 
 If anything in this file disagrees with code in this repo, the code wins — open a PR to fix the doc.

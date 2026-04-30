@@ -9,5 +9,6 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/app/$1',
     '^@assets/(.*)$': '<rootDir>/assets/$1',
   },
-  testPathIgnorePatterns: ['/node_modules/', '/templates/', '/templates-ignite-original/'],
+  testPathIgnorePatterns: ['/node_modules/', '/templates/'],
+  passWithNoTests: true,
 };

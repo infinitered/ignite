@@ -63,10 +63,10 @@ module.exports = {
       },
       spacing: {
         // 4-pixel base scale; align with the rest of the design system
-        '4.5': '18px',
-        '5.5': '22px',
-        '13': '52px',
-        '15': '60px',
+        4.5: '18px',
+        5.5: '22px',
+        13: '52px',
+        15: '60px',
       },
       animation: {
         spin: 'spin 1s linear infinite',

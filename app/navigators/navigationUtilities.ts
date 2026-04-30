@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { BackHandler } from 'react-native';
 import {
   type NavigationState,
   type PartialState,
   createNavigationContainerRef,
 } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { BackHandler } from 'react-native';
 
 import type { AppStackParamList } from '@/navigators/navigationTypes';
 

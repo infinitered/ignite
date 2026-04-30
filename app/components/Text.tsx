@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
-import { tv, type VariantProps } from 'tailwind-variants';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 import type { TxKeyPath } from '@/i18n';
 import { translate } from '@/i18n/translate';
@@ -44,11 +44,11 @@ type Variants = VariantProps<typeof text>;
 export type TextProps = RNTextProps &
   Variants & {
     /** i18n key — preferred over `children` for any user-visible string. */
-    tx?: TxKeyPath;
+    tx?: TxKeyPath | undefined;
     /** Fallback raw text (only when truly non-translatable, e.g., counters). */
-    text?: string;
+    text?: string | undefined;
     /** Optional className for one-off layout overrides. */
-    className?: string;
+    className?: string | undefined;
   };
 
 /**

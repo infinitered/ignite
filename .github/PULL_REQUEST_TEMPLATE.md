@@ -37,10 +37,6 @@
 
 <!-- New tracked events? Breaking event-name changes? Sentry release notes? -->
 
-## ADR link
-
-<!-- If this change involves a foundational decision, link the ADR in docs/decisions/. -->
-
 ## Checklist
 
 - [ ] Conventional Commits format on all commits

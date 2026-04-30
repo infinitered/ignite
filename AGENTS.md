@@ -59,5 +59,4 @@ pnpm gen <kind> <Name>   # use generators; don't hand-write boilerplate
 - [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md), [`docs/CODE_STANDARDS.md`](./docs/CODE_STANDARDS.md), [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md)
 - [`docs/SECURITY.md`](./docs/SECURITY.md), [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md), [`docs/TESTING.md`](./docs/TESTING.md)
 - [`docs/PRODUCTION_CHECKLIST.md`](./docs/PRODUCTION_CHECKLIST.md), [`docs/ONBOARDING.md`](./docs/ONBOARDING.md)
-- [`docs/decisions/`](./docs/decisions/) — Architecture Decision Records
 - [`.claude/skills/`](./.claude/skills/) — depth-first technique guides

@@ -1,3 +1,4 @@
+// @demo remove-file
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
@@ -8,7 +9,7 @@ import { getValidated } from '@/lib/api';
  * pattern: queryKey factory → schema-validated fetcher → typed hook.
  *
  * Replace this file with your own resource hooks. Generator template
- * lives at `templates/query/useNAME.ts.ejs` (see `pnpm gen query`).
+ * lives at `templates/query/use{{Name}}.ts` (see `pnpm gen query`).
  */
 
 export const Post = z.object({

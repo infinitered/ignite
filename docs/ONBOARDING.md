@@ -85,7 +85,7 @@ CI will run automatically. Address feedback. Squash-merge.
 
 ## Day 1 mental model
 
-- **One opinionated way per concern.** Don't add a parallel implementation. If you want to change a convention, file an ADR (`docs/decisions/`).
+- **One opinionated way per concern.** Don't add a parallel implementation. If you want to change a convention, open a PR that updates the enforcement (Biome rule, generator template, husky hook) plus the prose in CLAUDE.md, with the rationale in the PR description.
 - **Encode rules in tools.** If a rule isn't enforceable by Biome / Husky / CI / generators, it's just a hope. Make it real.
 - **Server state vs. client state.** TanStack Query owns server state. Zustand owns ephemeral / UI state. Never duplicate.
 - **Primitives only.** `@/components/*`, never raw `react-native` for `Text` / `Button` / `TextInput` / `FlatList` / `Image` / `SafeAreaView`. Biome blocks the violations.
@@ -97,7 +97,6 @@ CI will run automatically. Address feedback. Squash-merge.
 - `CLAUDE.md` first — it's the single source of truth.
 - `.claude/skills/<topic>/SKILL.md` for depth on FPS, lists, queries, forms, deployment, testing.
 - `docs/` for runbooks (Architecture, Standards, Security, Deployment, Testing).
-- `docs/decisions/` for *why* foundational choices were made.
 - Team Slack / Discord (replace this with your team's channel).
 
 ## Cheat sheet

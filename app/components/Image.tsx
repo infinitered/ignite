@@ -10,12 +10,5 @@ export type ImageProps = ExpoImageProps & { className?: string };
  * loading from network — it dramatically improves perceived perf.
  */
 export function Image(props: ImageProps) {
-  return (
-    <ExpoImage
-      transition={150}
-      contentFit="cover"
-      cachePolicy="memory-disk"
-      {...props}
-    />
-  );
+  return <ExpoImage transition={150} contentFit="cover" cachePolicy="memory-disk" {...props} />;
 }

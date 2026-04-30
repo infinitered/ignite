@@ -4,8 +4,8 @@
 # and navigate to the demo screen
 
 appId: ${MAESTRO_APP_ID} # the app id of the app we want to test
-# You can find the appId of an Ignite app in the `app.json` file
-# as the "package" under the "android" section and "bundleIdentifier" under the "ios" section
+# Defined as the "package" under the "android" section and
+# "bundleIdentifier" under the "ios" section in `app.json` / `app.config.ts`.
 onFlowStart:
   - runFlow: ../shared/_OnFlowStart.yaml
 ---

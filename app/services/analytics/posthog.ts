@@ -14,10 +14,16 @@ export function initAnalytics(): void {
   });
 }
 
+// PostHog's event properties are loosely typed; our adapter exposes the
+// stricter `Record<string, unknown>` shape and casts at the boundary.
+type PostHogProps = Parameters<NonNullable<typeof client>['capture']>[1];
+
+const asProps = (props?: Record<string, unknown>): PostHogProps => props as PostHogProps;
+
 export const analytics: AnalyticsAdapter = {
-  identify: (userId, traits) => client?.identify(userId, traits),
-  track: (event, properties) => client?.capture(event, properties),
-  screen: (name, properties) => client?.screen(name, properties),
+  identify: (userId, traits) => client?.identify(userId, asProps(traits)),
+  track: (event, properties) => client?.capture(event, asProps(properties)),
+  screen: (name, properties) => client?.screen(name, asProps(properties)),
   reset: () => client?.reset(),
   flush: async () => {
     await client?.flush();

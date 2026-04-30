@@ -6,20 +6,12 @@
     "useIgnoreFile": true
   },
   "files": {
-    "include": [
-      "app/**/*.{js,jsx,ts,tsx,json}",
-      "scripts/**/*.{js,ts}",
-      "test/**/*.{js,ts,tsx}",
-      "*.{js,jsx,ts,tsx,json}",
-      "**/*.config.{js,ts}"
-    ],
     "ignore": [
       "node_modules/**",
       "dist/**",
       ".expo/**",
-      "ios/Pods/**",
-      "android/build/**",
-      "templates-ignite-original/**",
+      "ios/**",
+      "android/**",
       "templates/**",
       "types/**",
       ".maestro/**",
@@ -64,12 +56,13 @@
         "useTemplate": "warn",
         "useImportType": "error",
         "useExportType": "error",
-        "noParameterAssign": "error",
+        "noParameterAssign": "error"
+      },
+      "nursery": {
         "noRestrictedImports": {
           "level": "error",
           "options": {
             "paths": {
-              "react-native": "Import primitives from '@/components' (or 'react-native-safe-area-context' for SafeAreaView). Raw RN primitives bypass theme + accessibility + perf rules. Restricted: SafeAreaView, Text, Button, TextInput, FlatList, Image.",
               "axios": "Import the configured `api` instance from '@/lib/api' instead of `axios` directly. Direct imports bypass auth-header injection, error normalization, and dev logging."
             }
           }
@@ -86,20 +79,15 @@
       }
     }
   },
-  "assist": {
-    "enabled": true,
-    "actions": {
-      "source": {
-        "organizeImports": "on"
-      }
-    }
+  "organizeImports": {
+    "enabled": true
   },
   "overrides": [
     {
       "include": ["app/lib/api.ts"],
       "linter": {
         "rules": {
-          "style": {
+          "nursery": {
             "noRestrictedImports": "off"
           }
         }
@@ -109,7 +97,7 @@
       "include": ["app/components/**/*.tsx"],
       "linter": {
         "rules": {
-          "style": {
+          "nursery": {
             "noRestrictedImports": "off"
           }
         }

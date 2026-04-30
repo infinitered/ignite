@@ -19,9 +19,7 @@ const ANDROID_BUDGET_BYTES = 5 * 1024 * 1024; // 5 MB
 
 const dist = join(process.cwd(), 'dist');
 if (!existsSync(dist)) {
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.warn('ℹ️  No `dist/` found. Run `npx expo export` first to produce a bundle.');
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.warn('   Skipping bundle-size gate. (Set up the gate per-project.)');
   process.exit(0);
 }
@@ -29,7 +27,6 @@ if (!existsSync(dist)) {
 function reportPlatform(name: 'ios' | 'android', budget: number) {
   const platformDir = join(dist, '_expo', 'static', 'js', name);
   if (!existsSync(platformDir)) {
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.warn(`ℹ️  No bundle found for ${name}, skipping.`);
     return true;
   }
@@ -38,15 +35,16 @@ function reportPlatform(name: 'ios' | 'android', budget: number) {
   const mb = (bytes / 1024 / 1024).toFixed(2);
   const budgetMb = (budget / 1024 / 1024).toFixed(2);
   if (bytes > budget) {
-    // biome-ignore lint/suspicious/noConsole: CLI script.
     console.error(`✗ ${name} bundle (${mb} MB) exceeds budget (${budgetMb} MB).`);
     return false;
   }
-  // biome-ignore lint/suspicious/noConsole: CLI script.
   console.warn(`✓ ${name} bundle: ${mb} MB / ${budgetMb} MB`);
   return true;
 }
 
-const ok = [reportPlatform('ios', IOS_BUDGET_BYTES), reportPlatform('android', ANDROID_BUDGET_BYTES)].every(Boolean);
+const ok = [
+  reportPlatform('ios', IOS_BUDGET_BYTES),
+  reportPlatform('android', ANDROID_BUDGET_BYTES),
+].every(Boolean);
 
 process.exit(ok ? 0 : 1);
