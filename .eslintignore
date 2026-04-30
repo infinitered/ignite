@@ -1,6 +1,0 @@
-node_modules
-.vscode
-
-**/*.snap
-**/*.txt
-bin/ignite
