@@ -1,0 +1,22 @@
+# gitleaks config — extends the default ruleset with project-specific
+# allowlist entries. Run via the pre-commit hook + the security CI workflow.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Project-specific paths that should never trigger secret detection."
+paths = [
+  '''app/i18n/.*\.ts$''',
+  '''assets/.*''',
+  '''docs/.*''',
+  '''\.env\.example$''',
+  '''templates/.*''',
+  '''templates-ignite-original/.*''',
+  '''CLAUDE\.md$''',
+  '''AGENTS\.md$''',
+  '''GEMINI\.md$''',
+  '''\.cursor/.*''',
+  '''\.claude/.*''',
+  '''\.agents/.*''',
+]

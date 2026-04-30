@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Pre-push: typecheck + tests for changed files only (fast path).
+pnpm typecheck && pnpm test --passWithNoTests --bail

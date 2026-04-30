@@ -1,0 +1,34 @@
+version: 2
+updates:
+  # NPM (pnpm) deps — grouped to avoid PR spam
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 10
+    groups:
+      patches:
+        patterns: ['*']
+        update-types: [patch]
+      production-minors:
+        dependency-type: production
+        update-types: [minor]
+      dev-minors:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # Defer to deliberate Expo SDK upgrades — never auto-bump.
+      - dependency-name: expo
+      - dependency-name: react-native
+      - dependency-name: react
+      - dependency-name: 'expo-*'
+      - dependency-name: '@expo/*'
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5

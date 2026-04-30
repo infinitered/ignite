@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# Pre-commit: format/lint staged files (auto-fix), then secret scan.
+pnpm lint-staged
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --no-banner --redact || {
+    echo "✗ gitleaks blocked the commit. If this is a false positive,"
+    echo "  add the path to .gitleaks.toml allowlist."
+    exit 1
+  }
+else
+  echo "ℹ️  gitleaks not installed — install via 'brew install gitleaks' for local secret scanning."
+fi

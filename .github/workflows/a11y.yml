@@ -1,0 +1,40 @@
+name: Accessibility (Maestro)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * *'
+
+jobs:
+  maestro-a11y:
+    name: Run Maestro a11y flows
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: ${{ vars.MAESTRO_ENABLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Maestro a11y flows
+        uses: mobile-dev-inc/action-maestro-cloud@v1
+        env:
+          MAESTRO_TEST_USER_EMAIL: ${{ secrets.MAESTRO_TEST_USER_EMAIL }}
+          MAESTRO_TEST_USER_PASSWORD: ${{ secrets.MAESTRO_TEST_USER_PASSWORD }}
+        with:
+          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+          app-file: app-release.apk
+          workspace: .maestro
+          include-tags: a11y

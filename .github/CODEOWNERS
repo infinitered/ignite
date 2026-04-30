@@ -1,0 +1,12 @@
+# Default owner for everything in the repo. Replace per project.
+*           @your-team
+
+# Critical infra — require an extra reviewer if your team supports it.
+/CLAUDE.md          @your-team
+/AGENTS.md          @your-team
+/.cursor/rules/     @your-team
+/.agents/skills/    @your-team
+/.github/workflows/ @your-team
+/biome.json         @your-team
+/tailwind.config.js @your-team
+/app/lib/api.ts     @your-team

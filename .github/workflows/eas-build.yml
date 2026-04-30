@@ -1,0 +1,66 @@
+name: EAS Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Build profile
+        required: true
+        default: preview
+        type: choice
+        options: [development, preview, production]
+      platform:
+        description: Platform
+        required: true
+        default: all
+        type: choice
+        options: [ios, android, all]
+      submit:
+        description: Submit to stores after build (production only)
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    name: EAS Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      EAS_PROFILE: ${{ inputs.profile }}
+      EAS_PLATFORM: ${{ inputs.platform }}
+      EAS_SUBMIT: ${{ inputs.submit }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Set up EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build with EAS
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        run: eas build --non-interactive --no-wait --platform "$EAS_PLATFORM" --profile "$EAS_PROFILE"
+
+      - name: Submit to stores
+        if: ${{ inputs.submit && inputs.profile == 'production' }}
+        run: eas submit --non-interactive --latest --platform "$EAS_PLATFORM"
