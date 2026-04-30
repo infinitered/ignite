@@ -23,6 +23,8 @@ const en = {
     invalidEmail: 'Please enter a valid email address.',
     required: 'This field is required.',
     network: 'You appear to be offline. Check your connection and try again.',
+    offline: 'You are offline. Some features may be unavailable.',
+    loadFailed: "Couldn't load. Please try again.",
   },
   example: {
     title: 'Example',

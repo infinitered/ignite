@@ -1,11 +1,11 @@
 import { forwardRef, useId } from 'react';
-// biome-ignore lint/nursery/noRestrictedImports: This file is the canonical TextField wrapper.
 import { TextInput as RNTextInput, type TextInputProps, View } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 import { Text } from '@/components/Text';
 import type { TxKeyPath } from '@/i18n';
 import { translate } from '@/i18n/translate';
+import { useThemedColors } from '@/lib/colors';
 
 const field = tv({
   slots: {
@@ -52,6 +52,7 @@ export const TextField = forwardRef<RNTextInput, TextFieldProps>(function TextFi
   ref
 ) {
   const id = useId();
+  const colors = useThemedColors();
   const styles = field({ invalid: Boolean(error), disabled: editable === false });
   const labelText = labelTx ? translate(labelTx) : label;
   const helperText = helperTx ? translate(helperTx) : helper;
@@ -69,7 +70,7 @@ export const TextField = forwardRef<RNTextInput, TextFieldProps>(function TextFi
         aria-invalid={Boolean(error)}
         aria-labelledby={labelText ? `${id}-label` : undefined}
         editable={editable}
-        placeholderTextColor="rgb(var(--color-muted-foreground))"
+        placeholderTextColor={colors.mutedForeground}
         className={styles.input()}
         {...rest}
       />

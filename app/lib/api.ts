@@ -1,4 +1,4 @@
-import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios';
+import axios, { type AxiosInstance, type AxiosRequestConfig, isAxiosError } from 'axios';
 import { z } from 'zod';
 
 import { env } from '@/config/env';
@@ -13,34 +13,50 @@ import { getAuthToken } from '@/lib/secureStorage';
  * uniformly.
  */
 
-export type ApiError = {
-  status: number | null;
-  code: string;
-  message: string;
-  cause?: unknown;
-};
-
 const NETWORK_ERROR_CODE = 'NETWORK_ERROR';
 const TIMEOUT_ERROR_CODE = 'TIMEOUT';
 const UNKNOWN_ERROR_CODE = 'UNKNOWN';
 
-function normalizeError(error: AxiosError): ApiError {
-  if (error.response) {
-    return {
-      status: error.response.status,
-      code: typeof error.code === 'string' ? error.code : `HTTP_${error.response.status}`,
-      message:
-        (error.response.data as { message?: string } | undefined)?.message ?? error.message,
-      cause: error.response.data,
-    };
+/**
+ * Normalized error type. Extends `Error` so consumers can rely on
+ * `error.message` and `instanceof Error` checks.
+ */
+export class ApiError extends Error {
+  status: number | null;
+  code: string;
+  data?: unknown;
+
+  constructor(message: string, opts: { status: number | null; code: string; data?: unknown }) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = opts.status;
+    this.code = opts.code;
+    this.data = opts.data;
   }
-  if (error.code === 'ECONNABORTED') {
-    return { status: null, code: TIMEOUT_ERROR_CODE, message: 'Request timed out', cause: error };
+}
+
+function normalizeError(error: unknown): ApiError {
+  if (isAxiosError(error)) {
+    if (error.response) {
+      const data = error.response.data as { message?: string } | undefined;
+      return new ApiError(data?.message ?? error.message, {
+        status: error.response.status,
+        code: typeof error.code === 'string' ? error.code : `HTTP_${error.response.status}`,
+        data: error.response.data,
+      });
+    }
+    if (error.code === 'ECONNABORTED') {
+      return new ApiError('Request timed out', { status: null, code: TIMEOUT_ERROR_CODE });
+    }
+    if (error.code === 'ERR_NETWORK') {
+      return new ApiError('Network unavailable', { status: null, code: NETWORK_ERROR_CODE });
+    }
+    return new ApiError(error.message, { status: null, code: UNKNOWN_ERROR_CODE });
   }
-  if (error.code === 'ERR_NETWORK') {
-    return { status: null, code: NETWORK_ERROR_CODE, message: 'Network unavailable', cause: error };
+  if (error instanceof Error) {
+    return new ApiError(error.message, { status: null, code: UNKNOWN_ERROR_CODE });
   }
-  return { status: null, code: UNKNOWN_ERROR_CODE, message: error.message, cause: error };
+  return new ApiError('Unknown error', { status: null, code: UNKNOWN_ERROR_CODE, data: error });
 }
 
 function createApi(): AxiosInstance {
@@ -68,7 +84,7 @@ function createApi(): AxiosInstance {
       }
       return response;
     },
-    (error: AxiosError) => {
+    (error: unknown) => {
       const normalized = normalizeError(error);
       if (__DEV__) {
         logger.warn(`✗ ${normalized.code} ${normalized.status ?? ''} ${normalized.message}`);

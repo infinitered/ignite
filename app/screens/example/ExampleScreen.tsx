@@ -34,7 +34,10 @@ type FormValues = z.infer<typeof formSchema>;
  * Replace this with your real first screen — keep the patterns.
  */
 export function ExampleScreen() {
-  const { exampleCounter, incrementCounter, resetCounter } = usePrefsStore();
+  // Selector-based subscriptions — re-render only when each value changes.
+  const exampleCounter = usePrefsStore((s) => s.exampleCounter);
+  const incrementCounter = usePrefsStore((s) => s.incrementCounter);
+  const resetCounter = usePrefsStore((s) => s.resetCounter);
   const posts = usePosts();
   const form = useForm<FormValues>({ resolver: zodResolver(formSchema) });
 
@@ -71,8 +74,8 @@ export function ExampleScreen() {
             <LoadingState />
           ) : posts.isError ? (
             <ErrorState
-              title="Couldn't load posts"
-              message={posts.error.message}
+              title={translate('errors.loadFailed')}
+              message={posts.error instanceof Error ? posts.error.message : undefined}
               onRetry={() => posts.refetch()}
             />
           ) : posts.data.length === 0 ? (

@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { type ComponentProps, forwardRef } from 'react';
+import type { ComponentProps } from 'react';
 
 type IoniconsName = ComponentProps<typeof Ionicons>['name'];
 
@@ -16,12 +16,10 @@ export type IconProps = {
  * Wraps `@expo/vector-icons` Ionicons with NativeWind className support
  * for color (e.g., `text-primary`). For non-decorative icons, pass an
  * `accessibilityLabel` so screen readers announce them.
+ *
+ * Not a forwardRef — Ionicons doesn't expose a useful imperative handle.
  */
-export const Icon = forwardRef<typeof Ionicons, IconProps>(function Icon(
-  { name, size = 24, className, accessibilityLabel },
-  // biome-ignore lint/correctness/noUnusedVariables: forwardRef signature
-  _ref
-) {
+export function Icon({ name, size = 24, className, accessibilityLabel }: IconProps) {
   const isDecorative = !accessibilityLabel;
   return (
     <Ionicons
@@ -34,4 +32,4 @@ export const Icon = forwardRef<typeof Ionicons, IconProps>(function Icon(
       accessibilityRole={isDecorative ? undefined : 'image'}
     />
   );
-});
+}

@@ -10,13 +10,13 @@ import { env } from '@/config/env';
  * pinned to a specific OTA bundle.
  */
 export function initSentry(): void {
-  if (!env.SENTRY_DSN) {
-    if (__DEV__) console.warn('[sentry] SENTRY_DSN not set, Sentry disabled');
+  if (!env.EXPO_PUBLIC_SENTRY_DSN) {
+    if (__DEV__) console.warn('[sentry] EXPO_PUBLIC_SENTRY_DSN not set, Sentry disabled');
     return;
   }
 
   Sentry.init({
-    dsn: env.SENTRY_DSN,
+    dsn: env.EXPO_PUBLIC_SENTRY_DSN,
     environment: env.EXPO_PUBLIC_ENV,
     enabled: !__DEV__,
     debug: __DEV__,

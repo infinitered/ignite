@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-// biome-ignore lint/nursery/noRestrictedImports: This file is the canonical Text wrapper.
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 import { tv, type VariantProps } from 'tailwind-variants';
 

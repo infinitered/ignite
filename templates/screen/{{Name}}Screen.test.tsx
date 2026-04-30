@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react-native';
-
+import { renderWithProviders } from '@/../test/utils/renderWithProviders';
 import { {{Name}}Screen } from '@/screens/{{kebab-name}}/{{Name}}Screen';
 
 describe('{{Name}}Screen', () => {
-  it('renders the screen title', () => {
-    // TODO: wrap in renderWithProviders once the helper exists in test/utils.
-    render(<{{Name}}Screen route={{ params: undefined } as never} navigation={{} as never} />);
-    expect(screen.getByText(/.+/)).toBeTruthy();
+  it('renders without crashing', () => {
+    const { toJSON } = renderWithProviders(
+      <{{Name}}Screen route={{ params: undefined } as never} navigation={{} as never} />
+    );
+    expect(toJSON()).toBeTruthy();
   });
 });

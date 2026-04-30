@@ -18,9 +18,8 @@ export function OfflineBanner() {
         align="center"
         className="text-destructive-foreground font-sans-medium"
         accessibilityLiveRegion="polite"
-      >
-        You are offline. Some features may be unavailable.
-      </Text>
+        tx="errors.offline"
+      />
     </View>
   );
 }

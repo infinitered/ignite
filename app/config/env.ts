@@ -17,7 +17,9 @@ const Env = z.object({
   EXPO_PUBLIC_POSTHOG_KEY: z.string().optional(),
   EXPO_PUBLIC_POSTHOG_HOST: z.string().url().default('https://us.posthog.com'),
   EXPO_PUBLIC_EAS_PROJECT_ID: z.string().optional(),
-  SENTRY_DSN: z.string().url().optional(),
+  // Sentry DSN must be `EXPO_PUBLIC_*` so it's bundled into the app at build
+  // time. DSNs are public by design (the auth lives elsewhere).
+  EXPO_PUBLIC_SENTRY_DSN: z.string().url().optional(),
 });
 
 const parsed = Env.safeParse(process.env);

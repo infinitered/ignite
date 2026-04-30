@@ -3,7 +3,9 @@ import '@/lib/cssInterop';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import * as Linking from 'expo-linking';
-import { useEffect, useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -27,8 +29,9 @@ const linking = {
  * Root component. Mounts providers in this order (outermost first):
  *   SafeAreaProvider → KeyboardProvider → QueryClientProvider → NavigationContainer (inside AppNavigator)
  *
- * Boot sequence: load fonts + i18n + auth session in parallel; render `null`
- * (native splash stays visible) until all three are ready.
+ * Boot sequence: load fonts + i18n + auth session in parallel. The native
+ * splash stays visible (via `SplashScreen.preventAutoHideAsync` in
+ * `index.tsx`) until all three are ready, then `onLayoutRootView` hides it.
  */
 export function App() {
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad);
@@ -42,17 +45,26 @@ export function App() {
     initAnalytics();
   }, [bootstrap]);
 
-  if (!isI18nInitialized || (!areFontsLoaded && !fontLoadError) || !isSessionHydrated) {
-    return null;
-  }
+  const isReady =
+    isI18nInitialized && (areFontsLoaded || Boolean(fontLoadError)) && isSessionHydrated;
+
+  const onLayoutRootView = useCallback(async () => {
+    if (isReady) {
+      await SplashScreen.hideAsync().catch(() => undefined);
+    }
+  }, [isReady]);
+
+  if (!isReady) return null;
 
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardProvider>
-        <QueryClientProvider client={queryClient}>
-          <AppNavigator linking={linking} />
-        </QueryClientProvider>
-      </KeyboardProvider>
-    </SafeAreaProvider>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <KeyboardProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppNavigator linking={linking} />
+          </QueryClientProvider>
+        </KeyboardProvider>
+      </SafeAreaProvider>
+    </View>
   );
 }

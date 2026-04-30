@@ -16,7 +16,7 @@ pnpm setup                              # installs deps, husky, copies .env.exam
 pnpm rename MyApp --bundle-id com.your.app
 
 # 2. Configure env
-# Edit .env.local with SENTRY_DSN, POSTHOG keys, EXPO_PUBLIC_API_URL.
+# Edit .env.local with EXPO_PUBLIC_SENTRY_DSN, POSTHOG keys, EXPO_PUBLIC_API_URL.
 # (See .env.example for the full list.)
 
 # 3. Run
@@ -106,7 +106,7 @@ The full rules — and *why* each exists — live in [`CLAUDE.md`](./CLAUDE.md).
 
 ## Pre-flight checklist (before your first commit)
 
-- [ ] `.env.local` filled in (`SENTRY_DSN`, `POSTHOG` keys, `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_EAS_PROJECT_ID`)
+- [ ] `.env.local` filled in (`EXPO_PUBLIC_SENTRY_DSN`, `POSTHOG` keys, `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_EAS_PROJECT_ID`)
 - [ ] EAS secrets set: `EXPO_TOKEN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` (in CI / `eas secret:create`)
 - [ ] App icon & splash updated in `assets/images/`
 - [ ] `pnpm rename` run with your real app name + bundle id

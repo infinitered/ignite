@@ -24,7 +24,7 @@ echo
 echo "✓ Setup complete."
 echo
 echo "Next steps:"
-echo "  1. Edit .env.local with SENTRY_DSN, POSTHOG keys, EXPO_PUBLIC_API_URL."
+echo "  1. Edit .env.local with EXPO_PUBLIC_SENTRY_DSN, POSTHOG keys, EXPO_PUBLIC_API_URL."
 echo "  2. Rename the app:    pnpm rename MyApp --bundle-id com.your.app"
 echo "  3. Boot the dev sim:  pnpm ios   (or pnpm android)"
 echo "  4. Generate features: pnpm gen feature Profile"

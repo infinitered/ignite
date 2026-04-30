@@ -7,7 +7,7 @@ import type { TxKeyPath } from '@/i18n';
 
 const button = tv({
   slots: {
-    base: 'flex-row items-center justify-center rounded-md',
+    base: 'flex-row items-center justify-center rounded-md active:opacity-80 disabled:opacity-50',
     label: 'font-sans-medium text-base',
   },
   variants: {
@@ -16,20 +16,15 @@ const button = tv({
       secondary: { base: 'bg-muted border border-border', label: 'text-foreground' },
       ghost: { base: 'bg-transparent', label: 'text-foreground' },
       destructive: { base: 'bg-destructive', label: 'text-destructive-foreground' },
-      link: { base: 'bg-transparent px-0 py-0', label: 'text-primary underline' },
+      link: { base: 'bg-transparent px-0', label: 'text-primary underline' },
     },
     size: {
       sm: { base: 'h-8 px-3', label: 'text-sm' },
       md: { base: 'h-11 px-4', label: 'text-base' },
       lg: { base: 'h-13 px-6', label: 'text-lg' },
     },
-    state: {
-      enabled: { base: 'opacity-100' },
-      disabled: { base: 'opacity-50' },
-      pressed: { base: 'opacity-80' },
-    },
   },
-  defaultVariants: { variant: 'primary', size: 'md', state: 'enabled' },
+  defaultVariants: { variant: 'primary', size: 'md' },
 });
 
 type Variants = VariantProps<typeof button>;
@@ -47,7 +42,9 @@ export type ButtonProps = Omit<PressableProps, 'children'> &
 /**
  * App-wide Button primitive. `accessibilityLabel` is required so screen
  * readers always have a label even when there's no visible text (e.g.,
- * icon-only buttons).
+ * icon-only buttons). Pressed-state opacity is handled by the `active:`
+ * Tailwind modifier; `disabled:` handles the disabled state. NativeWind
+ * v4 does not support function-form `className`.
  */
 export const Button = forwardRef<View, ButtonProps>(function Button(
   {
@@ -75,16 +72,11 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
       accessibilityState={{ disabled: isDisabled, busy: loading }}
       disabled={isDisabled}
       hitSlop={8}
+      className={styles.base({ className })}
       {...rest}
-      className={({ pressed }) =>
-        styles.base({
-          state: isDisabled ? 'disabled' : pressed ? 'pressed' : 'enabled',
-          className,
-        })
-      }
     >
       {loading ? (
-        <ActivityIndicator className="text-primary-foreground" />
+        <ActivityIndicator color="white" />
       ) : (
         <Text className={styles.label()} tx={tx} text={text}>
           {children}
