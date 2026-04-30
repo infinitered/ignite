@@ -1,58 +1,20 @@
-// we always make sure 'react-native' gets included first
-// eslint-disable-next-line no-restricted-imports
-import * as ReactNative from "react-native"
+/* Global test setup. Mock at the network/native boundary, never internal modules. */
+import '@testing-library/react-native/extend-expect';
 
-import mockFile from "./mockFile"
+jest.mock('expo-secure-store', () => ({
+  getItemAsync: jest.fn(async () => null),
+  setItemAsync: jest.fn(async () => undefined),
+  deleteItemAsync: jest.fn(async () => undefined),
+  AFTER_FIRST_UNLOCK: 'AFTER_FIRST_UNLOCK',
+}));
 
-// libraries to mock
-jest.doMock("react-native", () => {
-  // Extend ReactNative
-  return Object.setPrototypeOf(
-    {
-      Image: {
-        ...ReactNative.Image,
-        resolveAssetSource: jest.fn((_source) => mockFile), // eslint-disable-line @typescript-eslint/no-unused-vars
-        getSize: jest.fn(
-          (
-            uri: string, // eslint-disable-line @typescript-eslint/no-unused-vars
-            success: (width: number, height: number) => void,
-            failure?: (_error: any) => void, // eslint-disable-line @typescript-eslint/no-unused-vars
-          ) => success(100, 100),
-        ),
-      },
-    },
-    ReactNative,
-  )
-})
-
-jest.mock("i18next", () => ({
-  currentLocale: "en",
-  t: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-  translate: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-}))
-
-jest.mock("expo-localization", () => ({
-  ...jest.requireActual("expo-localization"),
-  getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
-}))
-
-jest.mock("../app/i18n/index.ts", () => ({
-  i18n: {
-    isInitialized: true,
-    language: "en",
-    t: (key: string, params: Record<string, string>) => {
-      return `${key} ${JSON.stringify(params)}`
-    },
-    numberToCurrency: jest.fn(),
-  },
-}))
-
-declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
-
-declare global {
-  let __TEST__: boolean
-}
+jest.mock('react-native-mmkv', () => {
+  class MockMMKV {
+    private map = new Map<string, string>();
+    set(key: string, value: string) { this.map.set(key, value); }
+    getString(key: string) { return this.map.get(key); }
+    delete(key: string) { this.map.delete(key); }
+    clearAll() { this.map.clear(); }
+  }
+  return { MMKV: MockMMKV };
+});

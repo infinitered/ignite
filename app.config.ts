@@ -1,41 +1,65 @@
-import { ExpoConfig, ConfigContext } from "@expo/config"
+import 'tsx/cjs';
+import type { ConfigContext, ExpoConfig } from '@expo/config';
 
 /**
- * Use tsx/cjs here so we can use TypeScript for our Config Plugins
- * and not have to compile them to JavaScript.
- * 
- * See https://docs.expo.dev/config-plugins/plugins/#add-typescript-support-and-convert-to-dynamic-app-config
- */
-import "tsx/cjs"
-
-/**
- * @param config ExpoConfig coming from the static config app.json if it exists
+ * Dynamic Expo config. The static `app.json` carries app-name placeholders
+ * that `pnpm rename` updates; this file layers env-driven settings on top.
  *
- * You can read more about Expo's Configuration Resolution Rules here:
  * https://docs.expo.dev/workflow/configuration/#configuration-resolution-rules
  */
 module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
-  const existingPlugins = config.plugins ?? []
+  const existingPlugins = config.plugins ?? [];
 
   return {
     ...config,
+    runtimeVersion: { policy: 'appVersion' },
+    updates: {
+      ...config.updates,
+      fallbackToCacheTimeout: 0,
+    },
     ios: {
       ...config.ios,
-      // This privacyManifests is to get you started.
-      // See Expo's guide on apple privacy manifests here:
+      supportsTablet: true,
+      // Apple Privacy Manifest. Add categories as you adopt APIs.
       // https://docs.expo.dev/guides/apple-privacy/
-      // You may need to add more privacy manifests depending on your app's usage of APIs.
-      // More details and a list of "required reason" APIs can be found in the Apple Developer Documentation.
-      // https://developer.apple.com/documentation/bundleresources/privacy-manifest-files
       privacyManifests: {
         NSPrivacyAccessedAPITypes: [
           {
-            NSPrivacyAccessedAPIType: "NSPrivacyAccessedAPICategoryUserDefaults",
-            NSPrivacyAccessedAPITypeReasons: ["CA92.1"], // CA92.1 = "Access info from same app, per documentation"
+            NSPrivacyAccessedAPIType: 'NSPrivacyAccessedAPICategoryUserDefaults',
+            NSPrivacyAccessedAPITypeReasons: ['CA92.1'],
           },
         ],
       },
     },
-    plugins: [...existingPlugins],
-  }
-}
+    plugins: [
+      ...existingPlugins,
+      // Sentry source-map upload. Requires SENTRY_AUTH_TOKEN at build time.
+      [
+        '@sentry/react-native/expo',
+        {
+          organization: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          url: 'https://sentry.io/',
+        },
+      ],
+      [
+        'expo-build-properties',
+        {
+          android: {
+            usesCleartextTraffic: false,
+            minSdkVersion: 24,
+          },
+          ios: {
+            useFrameworks: 'static',
+            deploymentTarget: '15.1',
+          },
+        },
+      ],
+      'expo-secure-store',
+      'expo-notifications',
+    ],
+    extra: {
+      eas: { projectId: process.env.EXPO_PUBLIC_EAS_PROJECT_ID },
+    },
+  };
+};

@@ -1,39 +1,19 @@
-import { ComponentProps } from "react"
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
-import {
-  CompositeScreenProps,
-  NavigationContainer,
-  NavigatorScreenParams,
-} from "@react-navigation/native"
-import { NativeStackScreenProps } from "@react-navigation/native-stack"
+import type { ComponentProps } from 'react';
+import type { NavigationContainer } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-// Demo Tab Navigator types
-export type DemoTabParamList = {
-  DemoCommunity: undefined
-  DemoShowroom: { queryIndex?: string; itemIndex?: string }
-  DemoDebug: undefined
-  DemoPodcastList: undefined
-}
-
-// App Stack Navigator types
+/**
+ * Top-level stack route param list. Add screens here as you create them.
+ */
 export type AppStackParamList = {
-  Welcome: undefined
-  Login: undefined
-  Demo: NavigatorScreenParams<DemoTabParamList>
-  // 🔥 Your screens go here
+  Example: undefined;
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
-}
+};
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
   AppStackParamList,
   T
->
+>;
 
-export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<DemoTabParamList, T>,
-  AppStackScreenProps<keyof AppStackParamList>
->
-
-export interface NavigationProps extends Partial<
-  ComponentProps<typeof NavigationContainer<AppStackParamList>>
-> {}
+export interface NavigationProps
+  extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}

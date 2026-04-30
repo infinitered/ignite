@@ -1,0 +1,143 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "include": [
+      "app/**/*.{js,jsx,ts,tsx,json}",
+      "scripts/**/*.{js,ts}",
+      "test/**/*.{js,ts,tsx}",
+      "*.{js,jsx,ts,tsx,json}",
+      "**/*.config.{js,ts}"
+    ],
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      ".expo/**",
+      "ios/Pods/**",
+      "android/build/**",
+      "templates-ignite-original/**",
+      "templates/**",
+      "types/**",
+      ".maestro/**",
+      "coverage/**"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "es5",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noBannedTypes": "error",
+        "noUselessTypeConstraint": "error",
+        "noStaticOnlyClass": "error"
+      },
+      "correctness": {
+        "noUnusedVariables": "error",
+        "noUnusedImports": "error",
+        "useExhaustiveDependencies": "warn"
+      },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useConst": "error",
+        "useTemplate": "warn",
+        "useImportType": "error",
+        "useExportType": "error",
+        "noParameterAssign": "error"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noConsole": {
+          "level": "warn",
+          "options": { "allow": ["warn", "error"] }
+        },
+        "noDoubleEquals": "error",
+        "noArrayIndexKey": "warn"
+      },
+      "nursery": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "react-native": {
+                "importNames": [
+                  "SafeAreaView",
+                  "Text",
+                  "Button",
+                  "TextInput",
+                  "FlatList",
+                  "Image"
+                ],
+                "message": "Import these from '@/components' (or 'react-native-safe-area-context' for SafeAreaView). Raw RN primitives bypass theme + accessibility + perf rules."
+              },
+              "axios": {
+                "message": "Import the configured `api` instance from '@/lib/api' instead of `axios` directly. Direct imports bypass auth-header injection, error normalization, and dev logging."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "include": ["app/lib/api.ts"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noRestrictedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["app/components/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noRestrictedImports": {
+              "level": "off"
+            }
+          }
+        }
+      }
+    },
+    {
+      "include": ["app/lib/logger.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noConsole": "off" }
+        }
+      }
+    }
+  ]
+}

@@ -1,9 +1,14 @@
-import "@expo/metro-runtime" // this is for fast refresh on web w/o expo-router
-import { registerRootComponent } from "expo"
+import '@expo/metro-runtime'; // fast refresh on web (no expo-router)
+import './global.css'; // NativeWind base styles
+import 'react-native-gesture-handler';
 
-import { App } from "@/app"
+import { registerRootComponent } from 'expo';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
-registerRootComponent(App)
+import { App } from '@/app';
+import { initSentry } from '@/lib/sentry';
+import { SentryWrap } from '@/lib/sentry';
+
+initSentry();
+
+// Wrap App with Sentry to capture unhandled errors at the root.
+registerRootComponent(SentryWrap(App));

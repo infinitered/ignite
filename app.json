@@ -1,22 +1,17 @@
 {
-  "name": "HelloWorld",
-  "slug": "HelloWorld",
-  "scheme": "helloworld",
-  "version": "1.0.0",
+  "name": "ExpoAppStarter",
+  "slug": "expo-app-starter",
+  "scheme": "expoappstarter",
+  "version": "0.1.0",
   "orientation": "portrait",
   "userInterfaceStyle": "automatic",
   "icon": "./assets/images/app-icon-all.png",
-  "updates": {
-    "fallbackToCacheTimeout": 0
-  },
   "newArchEnabled": true,
   "jsEngine": "hermes",
-  "assetBundlePatterns": [
-    "**/*"
-  ],
+  "assetBundlePatterns": ["**/*"],
   "android": {
     "icon": "./assets/images/app-icon-android-legacy.png",
-    "package": "com.helloworld",
+    "package": "com.example.expoappstarter",
     "adaptiveIcon": {
       "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
       "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -27,7 +22,7 @@
   "ios": {
     "icon": "./assets/images/app-icon-ios.png",
     "supportsTablet": true,
-    "bundleIdentifier": "com.helloworld"
+    "bundleIdentifier": "com.example.expoappstarter"
   },
   "web": {
     "favicon": "./assets/images/app-icon-web-favicon.png",
@@ -42,7 +37,7 @@
         "image": "./assets/images/app-icon-android-adaptive-foreground.png",
         "imageWidth": 300,
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#0d2280"
       }
     ],
     [
@@ -53,15 +48,9 @@
           "enforceNavigationBarContrast": false
         }
       }
-    ],
-    "expo-build-properties"
+    ]
   ],
   "experiments": {
     "tsconfigPaths": true
-  },
-  "extra": {
-    "ignite": {
-      "version": "UNKNOWN"
-    }
   }
 }

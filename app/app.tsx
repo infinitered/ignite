@@ -1,115 +1,58 @@
-/* eslint-disable import/first */
-/**
- * Welcome to the main entry point of the app. In this file, we'll
- * be kicking off our app.
- *
- * Most of this file is boilerplate and you shouldn't need to modify
- * it very often. But take some time to look through and understand
- * what is going on here.
- *
- * The app navigation resides in ./app/navigators, so head over there
- * if you're interested in adding screens and navigators.
- */
-if (__DEV__) {
-  // Load Reactotron in development only.
-  // Note that you must be using metro's `inlineRequires` for this to work.
-  // If you turn it off in metro.config.js, you'll have to manually import it.
-  require("./devtools/ReactotronConfig.ts")
-}
-import "./utils/gestureHandler"
+import '@/lib/cssInterop';
 
-import { useEffect, useState } from "react"
-import { useFonts } from "expo-font"
-import * as Linking from "expo-linking"
-import { KeyboardProvider } from "react-native-keyboard-controller"
-import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
+import { QueryClientProvider } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
+import * as Linking from 'expo-linking';
+import { useEffect, useState } from 'react';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AuthProvider } from "./context/AuthContext" // @demo remove-current-line
-import { initI18n } from "./i18n"
-import { AppNavigator } from "./navigators/AppNavigator"
-import { useNavigationPersistence } from "./navigators/navigationUtilities"
-import { ThemeProvider } from "./theme/context"
-import { customFontsToLoad } from "./theme/typography"
-import { loadDateFnsLocale } from "./utils/formatDate"
-import * as storage from "./utils/storage"
+import { initI18n } from '@/i18n';
+import { customFontsToLoad } from '@/lib/fonts';
+import { queryClient } from '@/lib/queryClient';
+import { initAnalytics } from '@/services/analytics/posthog';
+import { useSessionStore } from '@/stores/useSessionStore';
+import { AppNavigator } from '@/navigators/AppNavigator';
 
-export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
-
-// Web linking configuration
-const prefix = Linking.createURL("/")
-const config = {
-  screens: {
-    Login: {
-      path: "",
-    },
-    Welcome: "welcome",
-    Demo: {
-      screens: {
-        DemoShowroom: {
-          path: "showroom/:queryIndex?/:itemIndex?",
-        },
-        DemoDebug: "debug",
-        DemoPodcastList: "podcast",
-        DemoCommunity: "community",
-      },
+const linking = {
+  prefixes: [Linking.createURL('/')],
+  config: {
+    screens: {
+      Example: '',
     },
   },
-}
+};
 
 /**
- * This is the root component of our app.
- * @param {AppProps} props - The props for the `App` component.
- * @returns {JSX.Element} The rendered `App` component.
+ * Root component. Mounts providers in this order (outermost first):
+ *   SafeAreaProvider → KeyboardProvider → QueryClientProvider → NavigationContainer (inside AppNavigator)
+ *
+ * Boot sequence: load fonts + i18n + auth session in parallel; render `null`
+ * (native splash stays visible) until all three are ready.
  */
 export function App() {
-  const {
-    initialNavigationState,
-    onNavigationStateChange,
-    isRestored: isNavigationStateRestored,
-  } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
-
-  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
-  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
+  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad);
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false);
+  const isSessionHydrated = useSessionStore((s) => s.isHydrated);
+  const bootstrap = useSessionStore((s) => s.bootstrap);
 
   useEffect(() => {
-    initI18n()
-      .then(() => setIsI18nInitialized(true))
-      .then(() => loadDateFnsLocale())
-  }, [])
+    initI18n().then(() => setIsI18nInitialized(true));
+    bootstrap();
+    initAnalytics();
+  }, [bootstrap]);
 
-  // Before we show the app, we have to wait for our state to be ready.
-  // In the meantime, don't render anything. This will be the background
-  // color set in native by rootView's background color.
-  // In iOS: application:didFinishLaunchingWithOptions:
-  // In Android: https://stackoverflow.com/a/45838109/204044
-  // You can replace with your own loading component if you wish.
-  if (!isNavigationStateRestored || !isI18nInitialized || (!areFontsLoaded && !fontLoadError)) {
-    return null
+  if (!isI18nInitialized || (!areFontsLoaded && !fontLoadError) || !isSessionHydrated) {
+    return null;
   }
 
-  const linking = {
-    prefixes: [prefix],
-    config,
-  }
-
-  // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardProvider>
-        {/* @demo remove-block-start */}
-        <AuthProvider>
-          {/* @demo remove-block-end */}
-          <ThemeProvider>
-            <AppNavigator
-              linking={linking}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </ThemeProvider>
-          {/* @demo remove-block-start */}
-        </AuthProvider>
-        {/* @demo remove-block-end */}
+        <QueryClientProvider client={queryClient}>
+          <AppNavigator linking={linking} />
+        </QueryClientProvider>
       </KeyboardProvider>
     </SafeAreaProvider>
-  )
+  );
 }

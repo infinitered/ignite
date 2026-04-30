@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: 255 255 255;
+    --color-foreground: 17 24 39;
+    --color-muted: 243 244 246;
+    --color-muted-foreground: 107 114 128;
+    --color-border: 229 231 235;
+    --color-card: 255 255 255;
+    --color-card-foreground: 17 24 39;
+    --color-primary: 47 94 255;
+    --color-primary-foreground: 255 255 255;
+    --color-destructive: 220 38 38;
+    --color-destructive-foreground: 255 255 255;
+    --color-success: 22 163 74;
+    --color-warning: 234 179 8;
+  }
+
+  .dark:root,
+  :root.dark {
+    --color-background: 17 24 39;
+    --color-foreground: 243 244 246;
+    --color-muted: 31 41 55;
+    --color-muted-foreground: 156 163 175;
+    --color-border: 55 65 81;
+    --color-card: 31 41 55;
+    --color-card-foreground: 243 244 246;
+    --color-primary: 94 131 255;
+    --color-primary-foreground: 17 24 39;
+    --color-destructive: 248 113 113;
+    --color-destructive-foreground: 17 24 39;
+    --color-success: 74 222 128;
+    --color-warning: 250 204 21;
+  }
+}
