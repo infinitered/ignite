@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
-# Pre-push: typecheck + tests for changed files only (fast path).
-pnpm typecheck && pnpm test --passWithNoTests --bail
+# Pre-push: typecheck + tests (fast path). passWithNoTests is set in
+# jest.config.js so the suite is allowed to be empty in a fresh clone.
+pnpm typecheck && pnpm test -- --bail
