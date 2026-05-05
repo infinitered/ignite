@@ -60,9 +60,16 @@ export const initI18n = async () => {
 
 /**
  * Builds up valid keypaths for translations.
+ * Includes support for i18next pluralization keys by stripping suffixes.
  */
 
 export type TxKeyPath = RecursiveKeyOf<Translations>
+
+// i18next pluralization suffixes
+type PluralSuffixes = "_zero" | "_one" | "_two" | "_few" | "_many" | "_other"
+
+// Helper to strip plural suffixes from keys
+type StripPluralSuffix<T extends string> = T extends `${infer Base}${PluralSuffixes}` ? Base : T
 
 // via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
@@ -81,6 +88,14 @@ type RecursiveKeyOfHandleValue<
   ? Text
   : TValue extends object
     ? IsFirstLevel extends true
-      ? Text | `${Text}:${RecursiveKeyOfInner<TValue>}`
-      : Text | `${Text}.${RecursiveKeyOfInner<TValue>}`
-    : Text
+      ?
+          | Text
+          | `${Text}:${RecursiveKeyOfInner<TValue>}`
+          | StripPluralSuffix<Text>
+          | `${StripPluralSuffix<Text>}:${RecursiveKeyOfInner<TValue>}`
+      :
+          | Text
+          | `${Text}.${RecursiveKeyOfInner<TValue>}`
+          | StripPluralSuffix<Text>
+          | `${StripPluralSuffix<Text>}.${RecursiveKeyOfInner<TValue>}`
+    : Text | StripPluralSuffix<Text>
