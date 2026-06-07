@@ -17,7 +17,7 @@ interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 export const LoginScreen: FC<LoginScreenProps> = () => {
   const authPasswordInput = useRef<TextInput>(null)
 
-  const [authPassword, setAuthPassword] = useState("")
+  const [authPassword, setAuthPassword] = useState("ign1teIsAwes0m3")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
@@ -32,7 +32,6 @@ export const LoginScreen: FC<LoginScreenProps> = () => {
     // Here is where you could fetch credentials from keychain or storage
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
-    setAuthPassword("ign1teIsAwes0m3")
   }, [setAuthEmail])
 
   const error = isSubmitted ? validationError : ""

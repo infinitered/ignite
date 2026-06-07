@@ -32,9 +32,9 @@ import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
 import { DemoTabScreenProps } from "@/navigators/navigationTypes"
 import type { EpisodeItem } from "@/services/api/types"
-import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/theme/types"
 import { delay } from "@/utils/delay"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
 
@@ -146,9 +146,9 @@ const EpisodeCard = ({
   const { isFavorite, datePublished, duration, parsedTitleAndSubtitle } = useEpisode(episode)
 
   const liked = useSharedValue(isFavorite ? 1 : 0)
-  const imageUri = useMemo<ImageSourcePropType>(() => {
-    return rnrImages[Math.floor(Math.random() * rnrImages.length)]
-  }, [])
+  const [imageUri] = useState<ImageSourcePropType>(
+    () => rnrImages[Math.floor(Math.random() * rnrImages.length)],
+  )
 
   // Grey heart
   const animatedLikeButtonStyles = useAnimatedStyle(() => {
@@ -176,8 +176,8 @@ const EpisodeCard = ({
 
   const handlePressFavorite = useCallback(() => {
     onPressFavorite()
-    liked.value = withSpring(liked.value ? 0 : 1)
-  }, [liked, onPressFavorite])
+    liked.set((prev) => withSpring(prev ? 0 : 1))
+  }, [onPressFavorite, liked])
 
   /**
    * Android has a "longpress" accessibility action. iOS does not, so we just have to use a hint.

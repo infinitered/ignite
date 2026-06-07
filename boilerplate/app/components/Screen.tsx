@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from "react"
+import { ReactNode, useMemo, useRef, useState } from "react"
 import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
@@ -117,28 +117,16 @@ function useAutoPreset(props: AutoScreenProps): {
   const { preset, scrollEnabledToggleThreshold } = props
   const { percent = 0.92, point = 0 } = scrollEnabledToggleThreshold || {}
 
-  const scrollViewHeight = useRef<null | number>(null)
-  const scrollViewContentHeight = useRef<null | number>(null)
-  const [scrollEnabled, setScrollEnabled] = useState(true)
+  const [scrollViewHeight, setScrollViewHeight] = useState<number | null>(null)
+  const [scrollViewContentHeight, setScrollViewContentHeight] = useState<number | null>(null)
 
-  function updateScrollState() {
-    if (scrollViewHeight.current === null || scrollViewContentHeight.current === null) return
-
-    // check whether content fits the screen then toggle scroll state according to it
-    const contentFitsScreen = (function () {
-      if (point) {
-        return scrollViewContentHeight.current < scrollViewHeight.current - point
-      } else {
-        return scrollViewContentHeight.current < scrollViewHeight.current * percent
-      }
-    })()
-
-    // content is less than the size of the screen, so we can disable scrolling
-    if (scrollEnabled && contentFitsScreen) setScrollEnabled(false)
-
-    // content is greater than the size of the screen, so let's enable scrolling
-    if (!scrollEnabled && !contentFitsScreen) setScrollEnabled(true)
-  }
+  const scrollEnabled = useMemo(() => {
+    if (scrollViewHeight === null || scrollViewContentHeight === null) return true
+    const contentFitsScreen = point
+      ? scrollViewContentHeight < scrollViewHeight - point
+      : scrollViewContentHeight < scrollViewHeight * percent
+    return !contentFitsScreen
+  }, [scrollViewHeight, scrollViewContentHeight, point, percent])
 
   /**
    * @param {number} w - The width of the content.
@@ -146,8 +134,7 @@ function useAutoPreset(props: AutoScreenProps): {
    */
   function onContentSizeChange(w: number, h: number) {
     // update scroll-view content height
-    scrollViewContentHeight.current = h
-    updateScrollState()
+    setScrollViewContentHeight(h)
   }
 
   /**
@@ -156,12 +143,8 @@ function useAutoPreset(props: AutoScreenProps): {
   function onLayout(e: LayoutChangeEvent) {
     const { height } = e.nativeEvent.layout
     // update scroll-view  height
-    scrollViewHeight.current = height
-    updateScrollState()
+    setScrollViewHeight(height)
   }
-
-  // update scroll state on every render
-  if (preset === "auto") updateScrollState()
 
   return {
     scrollEnabled: preset === "auto" ? scrollEnabled : true,
