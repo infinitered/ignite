@@ -10,7 +10,9 @@ Fonts are defined in `app/theme/typography.ts`. We use a similar approach to [co
 
 We define the fonts used in `app/theme/typography.ts`. The custom fonts are loaded using the `useFonts` hook from [`expo-fonts`](https://docs.expo.dev/guides/using-custom-fonts/) to load the fonts.
 
-To add additional custom fonts to your project, obtain the proper OTF/TTF file(s) or install the desired Google Font package. Make the necessary additions to the `customFontsToLoad` object in `app/theme/typography.ts` and `fonts` object to reference the font family in the typography theming object.
+### Add Custom fonts
+
+To add additional custom fonts to your project, obtain the proper OTF/TTF file(s). Make the necessary additions to the `customFontsToLoad` object in `app/theme/typography.ts` and `fonts` object to reference the font family in the typography theming object.
 
 ```tsx
 export const customFontsToLoad = {
@@ -30,7 +32,56 @@ const fonts = {
 }
 ```
 
-Keep in mind that when utilizing custom fonts, it is a better user experience to wait on rendering anything within the app until the fonts are loaded (this will prevent any text from changing in front of the user's eyes). This functionality is baked into Ignite for you! Check out `app/app.tsx` to see it in action.
+### Adding a Google Font
+
+install the desired Google Font package:
+
+```bash
+npx expo install @expo-google-fonts/inter
+```
+
+Then import and add to `customFontsToLoad` and `fonts`:
+
+```ts
+import {
+  Inter_400Regular as interRegular,
+  Inter_700Bold as interBold,
+} from "@expo-google-fonts/inter"
+
+export const customFontsToLoad = {
+  spaceGroteskLight,
+  spaceGroteskRegular,
+  spaceGroteskMedium,
+  spaceGroteskSemiBold,
+  spaceGroteskBold,
+  interRegular,
+  interBold,
+}
+
+const fonts = {
+  // ...
+  inter: {
+    normal: "interRegular",
+    bold: "interBold",
+  },
+}
+```
+
+Keep in mind that when utilizing custom fonts, it is a better user experience to wait on rendering anything within the app until the fonts are loaded (this will prevent any text from changing in front of the user's eyes). This functionality is baked into Ignite for you! Check out [`app/app.tsx`](../../../../boilerplate/app/app.tsx) to see it in action.
+
+## Usage
+
+Use the `typography` object in your stylesheets rather than hardcoding font names:
+
+```ts
+import { typography } from "app/theme/typography"
+
+const styles = StyleSheet.create({
+  title: { fontFamily: typography.primary.bold },
+  subtitle: { fontFamily: typography.primary.medium },
+  snippet: { fontFamily: typography.code.normal },
+})
+```
 
 ## Typography
 

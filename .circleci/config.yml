@@ -87,7 +87,9 @@ jobs:
       # Run semantic-release after all the above is set.
       - run:
           name: Publish to npm
-          command: pnpm run ci:publish # this will be added to your package.json scripts
+          command: |
+            export NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
+            pnpm run ci:publish
 
 # Publishing docs details
 publish-details: &publish-details
