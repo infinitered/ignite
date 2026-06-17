@@ -77,11 +77,14 @@ Prerequisites:
 
 The Ignite CLI will walk you through the steps to ignite a new React Native app:
 
-```bash
-# Get walked through the prompts for the different options to start your new app
-npx ignite-cli@latest new PizzaApp
 
-# Accept all the recommended defaults and get straight to coding!
+**Get walked through the prompts for the different options to start your new app**
+```bash
+npx ignite-cli@latest new PizzaApp
+```
+
+**or accept all the recommended defaults and get straight to coding!**
+```bash
 npx ignite-cli@latest new PizzaApp --yes
 ```
 
