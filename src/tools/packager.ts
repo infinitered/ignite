@@ -195,7 +195,7 @@ export function list(options: PackageOptions = packageListOptions): PackageListO
       (output: string): [string, string][] => {
         // npm returns a single JSON blob with a "dependencies" key
         // however, sometimes npm can emit warning messages prepended to json output
-        const json = JSON.parse(output.replace(/npm WARN.+/g, ""))
+        const json = JSON.parse(output.replace(/npm warn.+/gi, ""))
         return Object.keys(json.dependencies || []).map((key: string): [string, string] => [
           key,
           json.dependencies[key].version,
