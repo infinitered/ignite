@@ -52,7 +52,7 @@ module.exports = {
     const npmVersion = npmPath && (await run("npm --version", { trim: true }))
     const yarnPath = which("yarn")
     const yarnVersion = yarnPath && (await run("yarn --version", { trim: true }))
-    const yarnMajorVersion = parseInt(yarnVersion.split(".")[0], 10)
+    const yarnMajorVersion = yarnVersion ? parseInt(yarnVersion.split(".")[0], 10) : undefined
     let pnpmPath
     let pnpmVersion
     if (yarnMajorVersion === 1) {

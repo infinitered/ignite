@@ -30,6 +30,25 @@ describe("packager", () => {
         expect(() => parseFn(input)).not.toThrow()
       })
 
+      it("should handle lowercase npm warn output (npm >= 9)", () => {
+        const [cmd, parseFn] = list({ packagerName: "npm" })
+
+        expect(cmd.includes("npm")).toBe(true)
+
+        const input = `
+            npm warn Unknown project config "node-linker". This will stop working in the next major version of npm.
+            {
+                "dependencies": {
+                    "ignite-cli": {
+                        "version": "11.5.0"
+                    }
+                }
+            }
+        `
+
+        expect(parseFn(input)).toStrictEqual([["ignite-cli", "11.5.0"]])
+      })
+
       it("should handle transforming input json string to expected shape", () => {
         const [cmd, parseFn] = list({ packagerName: "npm" })
 
