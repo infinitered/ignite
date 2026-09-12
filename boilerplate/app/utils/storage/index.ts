@@ -54,8 +54,7 @@ export function load<T>(key: string): T | null {
  */
 export function save(key: string, value: unknown): boolean {
   try {
-    saveString(key, JSON.stringify(value))
-    return true
+    return saveString(key, JSON.stringify(value))
   } catch {
     return false
   }
