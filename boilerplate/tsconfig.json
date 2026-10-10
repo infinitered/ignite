@@ -1,6 +1,7 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
@@ -25,6 +26,7 @@
       "@/*": ["./app/*"],
       "@assets/*": ["./assets/*"]
     },
+    "types": ["jest", "node"],
     "typeRoots": [
       "./node_modules/@types",
       "./types"
