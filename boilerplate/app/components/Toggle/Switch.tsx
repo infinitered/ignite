@@ -1,11 +1,20 @@
-import { useEffect, useMemo, useRef, useCallback } from "react"
-import { Animated, Image, ImageStyle, Platform, StyleProp, View, ViewStyle } from "react-native"
+import { useEffect, useMemo, useCallback } from "react"
+import {
+  Animated,
+  Image,
+  ImageStyle,
+  Platform,
+  StyleProp,
+  View,
+  ViewStyle,
+  useAnimatedValue,
+} from "react-native"
 
 import { iconRegistry } from "@/components/Icon"
 import { isRTL } from "@/i18n"
-import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/theme/types"
 
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 
@@ -56,24 +65,24 @@ function SwitchInput(props: SwitchInputProps) {
     themed,
   } = useAppTheme()
 
-  const animate = useRef(new Animated.Value(on ? 1 : 0)) // Initial value is set based on isActive
-  const opacity = useRef(new Animated.Value(0))
+  const animate = useAnimatedValue(on ? 1 : 0) // Initial value is set based on isActive
+  const opacity = useAnimatedValue(0)
 
   useEffect(() => {
-    Animated.timing(animate.current, {
+    Animated.timing(animate, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true, // Enable native driver for smoother animations
     }).start()
-  }, [on])
+  }, [on, animate])
 
   useEffect(() => {
-    Animated.timing(opacity.current, {
+    Animated.timing(opacity, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
     }).start()
-  }, [on])
+  }, [on, opacity])
 
   const knobSizeFallback = 2
 
@@ -137,7 +146,7 @@ function SwitchInput(props: SwitchInputProps) {
         : [offsetLeft, +(knobWidth || 0) + offsetRight]
       : [rtlAdjustment * offsetLeft, rtlAdjustment * (+(knobWidth || 0) + offsetRight)]
 
-  const $animatedSwitchKnob = animate.current.interpolate({
+  const $animatedSwitchKnob = animate.interpolate({
     inputRange: [0, 1],
     outputRange,
   })
@@ -149,7 +158,7 @@ function SwitchInput(props: SwitchInputProps) {
           $themedSwitchInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          { opacity: opacity.current },
+          { opacity: opacity },
         ]}
       />
 
