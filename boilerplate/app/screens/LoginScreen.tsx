@@ -9,8 +9,8 @@ import { Text } from "@/components/Text"
 import { TextField, type TextFieldAccessoryProps } from "@/components/TextField"
 import { useAuth } from "@/context/AuthContext"
 import type { AppStackScreenProps } from "@/navigators/navigationTypes"
-import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/theme/types"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -28,12 +28,14 @@ export const LoginScreen: FC<LoginScreenProps> = () => {
     theme: { colors },
   } = useAppTheme()
 
+  /* eslint-disable react-hooks/set-state-in-effect -- demo prefill on mount; a real keychain read is async */
   useEffect(() => {
     // Here is where you could fetch credentials from keychain or storage
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
     setAuthPassword("ign1teIsAwes0m3")
   }, [setAuthEmail])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const error = isSubmitted ? validationError : ""
 
