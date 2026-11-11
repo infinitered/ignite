@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: "Get started with Ignite, Infinite Red's CLI and battle-tested React Native boilerplate for starting new Expo and React Native apps."
 ---
 
 # Getting Started Guide
