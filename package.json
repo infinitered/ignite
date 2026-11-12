@@ -65,7 +65,7 @@
     "babel-eslint": "^10.1.0",
     "dependency-cruiser": "^17.0.2",
     "eslint": "^8.57.0",
-    "eslint-config-expo": "~9.2.0",
+    "eslint-config-expo": "~56.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",

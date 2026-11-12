@@ -48,13 +48,13 @@ Nothing makes it into Ignite unless it's been proven on projects that Infinite R
 
 | Library                          | Category             | Version | Description                                    |
 | -------------------------------- | -------------------- | ------- | ---------------------------------------------- |
-| React Native                     | Mobile Framework     | v0.81   | The best cross-platform mobile framework       |
+| React Native                     | Mobile Framework     | v0.85   | The best cross-platform mobile framework       |
 | React                            | UI Framework         | v19     | The most popular UI framework in the world     |
-| TypeScript                       | Language             | v5      | Static typechecking                            |
+| TypeScript                       | Language             | v6      | Static typechecking                            |
 | React Navigation                 | Navigation           | v7      | Performant and consistent navigation framework |
-| Expo                             | SDK                  | v55     | Allows (optional) Expo modules                 |
-| Expo Font                        | Custom Fonts         | v14     | Import custom fonts                            |
-| Expo Localization                | Internationalization | v17     | i18n support (including RTL!)                  |
+| Expo                             | SDK                  | v56     | Allows (optional) Expo modules                 |
+| Expo Font                        | Custom Fonts         | v56     | Import custom fonts                            |
+| Expo Localization                | Internationalization | v56     | i18n support (including RTL!)                  |
 | RN Reanimated                    | Animations           | v4      | Beautiful and performant animations            |
 | MMKV                             | Persistence          | v3      | State persistence                              |
 | apisauce                         | REST client          | v3      | Communicate with back-end                      |

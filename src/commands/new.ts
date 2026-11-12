@@ -591,7 +591,7 @@ module.exports = {
         // find "expo-localization" line and append "expo-router" line after it
         packageJsonRaw = packageJsonRaw.replace(
           /"expo-localization": ".*",/g,
-          `"expo-localization": "${packageJsonParsed.dependencies["expo-localization"]}",${EOL}    "expo-router":  "~55.0.4",`,
+          `"expo-localization": "${packageJsonParsed.dependencies["expo-localization"]}",${EOL}    "expo-router":  "~56.2.9",`,
         )
 
         // replace "main" entry point from App.js to "expo-router/entry"
