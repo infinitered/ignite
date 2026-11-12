@@ -189,7 +189,9 @@ const EpisodeCard = ({
         ios: {
           accessibilityLabel: episode.title,
           accessibilityHint: translate("demoPodcastListScreen:accessibility.cardHint", {
-            action: isFavorite ? "unfavorite" : "favorite",
+            action: isFavorite
+              ? translate("demoPodcastListScreen:unfavoriteButton")
+              : translate("demoPodcastListScreen:favoriteButton"),
           }),
         },
         android: {

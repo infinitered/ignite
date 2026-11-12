@@ -3,119 +3,123 @@ import { Translations } from "./en"
 
 const ar: Translations = {
   common: {
-    ok: "نعم",
-    cancel: "حذف",
-    back: "خلف",
-    logOut: "تسجيل خروج", // @demo remove-current-line
+    ok: "حسنًا",
+    cancel: "إلغاء",
+    back: "رجوع",
+    logOut: "تسجيل الخروج", // @demo remove-current-line
   },
   welcomeScreen: {
     postscript:
-      "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
-    readyForLaunch: "تطبيقك تقريبا جاهز للتشغيل",
-    exciting: "اوه هذا مثير",
-    letsGo: "لنذهب", // @demo remove-current-line
+      "بالمناسبة، ربما لن يبدو تطبيقك بهذا الشكل. (إلا إذا سلّمك المصمم هذه الشاشات، ففي هذه الحالة، أطلقه!)",
+    readyForLaunch: "تطبيقك جاهز تقريبًا للإطلاق!",
+    exciting: "(يا له من أمر مثير!)",
+    letsGo: "لنبدأ", // @demo remove-current-line
   },
   errorScreen: {
-    title: "هناك خطأ ما",
+    title: "حدث خطأ ما!",
     friendlySubtitle:
-      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة ( الموجودة في 'ts.en/i18n/app') وربما التخطيط ايضاً ('app/screens/ErrorScreen'). إذا كنت تريد إزالة هذا بالكامل، تحقق من 'app/app.tsp' من اجل عنصر <ErrorBoundary>.",
-    reset: "اعادة تعيين التطبيق",
-    traceTitle: "خطأ من مجموعة %{name}", // @demo remove-current-line
+      "هذه هي الشاشة التي سيراها المستخدمون عند حدوث خطأ في النسخة المنشورة من التطبيق. يمكنك تخصيص هذه الرسالة (في `app/i18n/ar.ts`) وربما تخطيط الشاشة أيضًا (في `app/screens/ErrorScreen`). لإزالة هذه الشاشة بالكامل، راجع المكوّن <ErrorBoundary> في `app/app.tsx`.",
+    reset: "إعادة تعيين التطبيق",
+    traceTitle: "خطأ في مكدس الاستدعاءات %{name}", // @demo remove-current-line
   },
   emptyStateComponent: {
     generic: {
-      heading: "فارغة جداً....حزين",
-      content: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
-      button: "لنحاول هذا مرّة أخرى",
+      heading: "فارغ تمامًا... يا للأسف",
+      content: "لا توجد بيانات بعد. جرّب الضغط على الزر لتحديث التطبيق أو إعادة تحميله.",
+      button: "لنحاول مرة أخرى",
     },
   },
   // @demo remove-block-start
   errors: {
-    invalidEmail: "عنوان البريد الالكتروني غير صالح",
+    invalidEmail: "عنوان البريد الإلكتروني غير صالح.",
   },
   loginScreen: {
     logIn: "تسجيل الدخول",
     enterDetails:
-      ".ادخل التفاصيل الخاصة بك ادناه لفتح معلومات سرية للغاية. لن تخمن ابداً ما الذي ننتظره. او ربما ستفعل انها انها ليست علم الصواريخ",
-    emailFieldLabel: "البريد الالكتروني",
-    passwordFieldLabel: "كلمة السر",
-    emailFieldPlaceholder: "ادخل بريدك الالكتروني",
-    passwordFieldPlaceholder: "كلمة السر هنا فائقة السر",
-    tapToLogIn: "انقر لتسجيل الدخول!",
-    hint: "(: تلميح: يمكنك استخدام اي عنوان بريد الكتروني وكلمة السر المفضلة لديك",
+      "أدخل بياناتك أدناه للاطلاع على معلومات سرية للغاية. لن تتخيل ما ينتظرك. أو ربما تتخيله؛ فالأمر ليس معقدًا إلى هذا الحد.",
+    emailFieldLabel: "البريد الإلكتروني",
+    passwordFieldLabel: "كلمة المرور",
+    emailFieldPlaceholder: "أدخل عنوان بريدك الإلكتروني",
+    passwordFieldPlaceholder: "أدخل كلمة مرور سرية للغاية",
+    tapToLogIn: "اضغط لتسجيل الدخول!",
+    hint: "تلميح: يمكنك استخدام أي عنوان بريد إلكتروني وكلمة المرور المفضلة لديك :)",
   },
   demoNavigator: {
-    componentsTab: "عناصر",
-    debugTab: "تصحيح",
-    communityTab: "واصل اجتماعي",
+    componentsTab: "المكوّنات",
+    debugTab: "تصحيح الأخطاء",
+    communityTab: "المجتمع",
     podcastListTab: "البودكاست",
   },
   demoCommunityScreen: {
     title: "تواصل مع المجتمع",
     tagLine:
-      "قم بالتوصيل لمنتدى Infinite Red الذي يضم تفاعل المهندسين المحلّيين ورفع مستوى تطوير تطبيقك معنا",
-    joinUsOnSlackTitle: "انضم الينا على Slack",
+      "انضم إلى مجتمع مطوّري React Native في Infinite Red، وارتقِ بمهاراتك في تطوير التطبيقات معنا!",
+    joinUsOnSlackTitle: "انضم إلينا على Slack",
     joinUsOnSlack:
-      "هل ترغب في وجود مكان للتواصل مع مهندسي React Native حول العالم؟ الانضمام الى المحادثة في سلاك المجتمع الاحمر اللانهائي! مجتمعناالمتنامي هو مساحةآمنة لطرح الاسئلة والتعلم من الآخرين وتنمية شبكتك.",
-    joinSlackLink: "انضم الي مجتمع Slack",
-    makeIgniteEvenBetterTitle: "اجعل Ignite افضل",
+      "هل تبحث عن مكان للتواصل مع مطوّري React Native حول العالم؟ انضم إلى النقاش في مجتمع Infinite Red على Slack! مجتمعنا المتنامي مساحة آمنة لطرح الأسئلة والتعلّم من الآخرين وتوسيع شبكة علاقاتك.",
+    joinSlackLink: "انضم إلى مجتمع Slack",
+    makeIgniteEvenBetterTitle: "ساهم في تحسين Ignite",
     makeIgniteEvenBetter:
-      "هل لديك فكرة لجعل Ignite افضل؟ نحن سعداء لسماع ذلك! نحن نبحث دائماً عن الآخرين الذين يرغبون في مساعدتنا في بناء افضل الادوات المحلية التفاعلية المتوفرة هناك. انضم الينا عبر GitHub للانضمام الينا في بناء مستقبل Ignite",
+      "هل لديك فكرة لتحسين Ignite؟ يسعدنا سماعها! نبحث دائمًا عمّن يرغب في مساعدتنا على بناء أفضل أدوات React Native. انضم إلينا على GitHub وساهم في بناء مستقبل Ignite.",
     contributeToIgniteLink: "ساهم في Ignite",
-    theLatestInReactNativeTitle: "الاحدث في React Native",
-    theLatestInReactNative: "نخن هنا لنبقيك محدثاً على جميع React Native التي تعرضها",
-    reactNativeRadioLink: "راديو React Native",
-    reactNativeNewsletterLink: "نشرة اخبار React Native",
-    reactNativeLiveLink: "مباشر React Native",
+    theLatestInReactNativeTitle: "آخر مستجدات React Native",
+    theLatestInReactNative: "نحن هنا لنطلعك على آخر ما تقدّمه React Native.",
+    reactNativeRadioLink: "React Native Radio",
+    reactNativeNewsletterLink: "نشرة React Native الإخبارية",
+    reactNativeLiveLink: "React Native Live",
     chainReactConferenceLink: "مؤتمر Chain React",
-    hireUsTitle: "قم بتوظيف Infinite Red لمشروعك القادم",
+    hireUsTitle: "استعن بفريق Infinite Red في مشروعك القادم",
     hireUs:
-      "سواء كان الامر يتعلّق بتشغيل مشروع كامل او اعداد الفرق بسرعة من خلال التدريب العلمي لدينا، يمكن ان يساعد Infinite Red اللامتناهي في اي مشروع محلي يتفاعل معه.",
-    hireUsLink: "ارسل لنا رسالة",
+      "سواء كنت تحتاج إلى تنفيذ مشروع كامل أو تطوير مهارات فريقك من خلال تدريبنا العملي، يمكن لفريق Infinite Red مساعدتك في أي مشروع React Native تقريبًا.",
+    hireUsLink: "أرسل إلينا رسالة",
   },
   demoShowroomScreen: {
-    jumpStart: "مكونات او عناصر لبدء مشروعك",
+    jumpStart: "مكوّنات تمنح مشروعك انطلاقة سريعة!",
     lorem2Sentences:
-      "عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم",
-    demoHeaderTxExample: "ياي",
-    demoViaTxProp: "عبر `tx` Prop",
-    demoViaSpecifiedTxProp: "Prop `{{prop}}Tx` عبر",
+      "هذا نص تجريبي لعرض المكوّنات واختبار تنسيقها. يمكنك استبداله بالمحتوى المناسب لتطبيقك.",
+    demoHeaderTxExample: "رائع!",
+    demoViaTxProp: "عبر الخاصية `tx`",
+    demoViaSpecifiedTxProp: "عبر الخاصية `{{prop}}Tx`",
   },
   demoDebugScreen: {
-    howTo: "كيف",
-    title: "التصحيح",
-    tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
-    reactotron: "Reactotron ارسل إلى",
-    reportBugs: "الابلاغ عن اخطاء",
+    howTo: "طريقة الاستخدام",
+    title: "تصحيح الأخطاء",
+    tagLine: "تهانينا، لديك قالب متقدّم لتطبيق React Native. استفد من هذا القالب!",
+    reactotron: "إرسال إلى Reactotron",
+    reportBugs: "الإبلاغ عن أخطاء",
     demoList: "قائمة تجريبية",
-    demoPodcastList: "قائمة البودكاست التجريبي",
+    demoPodcastList: "قائمة البودكاست التجريبية",
     androidReactotronHint:
-      "اذا لم ينجح ذللك، فتأكد من تشغيل تطبيق الحاسوب الخاص Reactotron، وقم بتشغيل عكس adb tcp:9090 \ntcp:9090 من جهازك الطرفي ، واعد تحميل التطبيق",
+      "إذا لم ينجح ذلك، فتأكد من تشغيل تطبيق Reactotron على الحاسوب، ونفّذ الأمر `adb reverse tcp:9090 tcp:9090` في الطرفية، ثم أعد تحميل التطبيق.",
     iosReactotronHint:
-      "اذا لم ينجح ذلك، فتأكد من تشغيل تطبيق الحاسوب الخاص ب Reactotron وأعد تحميل التطبيق",
-    macosReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
-    webReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+      "إذا لم ينجح ذلك، فتأكد من تشغيل تطبيق Reactotron على الحاسوب، ثم أعد تحميل التطبيق.",
+    macosReactotronHint:
+      "إذا لم ينجح ذلك، فتأكد من تشغيل تطبيق Reactotron على الحاسوب، ثم أعد تحميل التطبيق.",
+    webReactotronHint:
+      "إذا لم ينجح ذلك، فتأكد من تشغيل تطبيق Reactotron على الحاسوب، ثم أعد تحميل التطبيق.",
     windowsReactotronHint:
-      "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+      "إذا لم ينجح ذلك، فتأكد من تشغيل تطبيق Reactotron على الحاسوب، ثم أعد تحميل التطبيق.",
   },
   demoPodcastListScreen: {
-    title: "حلقات إذاعية React Native",
+    title: "حلقات React Native Radio",
     onlyFavorites: "المفضلة فقط",
-    favoriteButton: "المفضل",
-    unfavoriteButton: "غير مفضل",
+    favoriteButton: "إضافة إلى المفضلة",
+    unfavoriteButton: "إزالة من المفضلة",
     accessibility: {
-      cardHint: "انقر مرّتين للاستماع على الحلقة. انقر مرّتين وانتظر لتفعيل {{action}} هذه الحلقة.",
-      switch: "قم بالتبديل لاظهار المفضّلة فقط.",
-      favoriteAction: "تبديل المفضلة",
-      favoriteIcon: "الحلقة الغير مفضّلة",
-      unfavoriteIcon: "الحلقة المفضّلة",
-      publishLabel: "نشرت {{date}}",
-      durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
+      cardHint:
+        "اضغط مرتين للاستماع إلى الحلقة. اضغط مرتين مع الاستمرار لتطبيق الإجراء «{{action}}» على هذه الحلقة.",
+      switch: "فعّل المفتاح لعرض المفضلة فقط.",
+      favoriteAction: "تغيير حالة التفضيل",
+      favoriteIcon: "الحلقة غير مضافة إلى المفضلة",
+      unfavoriteIcon: "الحلقة مضافة إلى المفضلة",
+      publishLabel: "نُشرت في {{date}}",
+      durationLabel:
+        "المدة: عدد الساعات {{hours}}، وعدد الدقائق {{minutes}}، وعدد الثواني {{seconds}}",
     },
     noFavoritesEmptyState: {
-      heading: "هذا يبدو فارغاً بعض الشيء.",
+      heading: "تبدو هذه القائمة فارغة بعض الشيء",
       content:
-        "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
+        "لم تُضف أي حلقات إلى المفضلة بعد. اضغط على القلب بجانب إحدى الحلقات لإضافتها إلى المفضلة!",
     },
   },
   // @demo remove-block-start
