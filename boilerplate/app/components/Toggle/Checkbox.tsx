@@ -1,5 +1,13 @@
-import { useEffect, useRef, useCallback } from "react"
-import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
+import { useEffect, useCallback } from "react"
+import {
+  Image,
+  ImageStyle,
+  Animated,
+  StyleProp,
+  View,
+  ViewStyle,
+  useAnimatedValue,
+} from "react-native"
 
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
@@ -50,15 +58,15 @@ function CheckboxInput(props: CheckboxInputProps) {
     theme: { colors },
   } = useAppTheme()
 
-  const opacity = useRef(new Animated.Value(0))
+  const opacity = useAnimatedValue(0)
 
   useEffect(() => {
-    Animated.timing(opacity.current, {
+    Animated.timing(opacity, {
       toValue: on ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
     }).start()
-  }, [on])
+  }, [on, opacity])
 
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
@@ -98,7 +106,7 @@ function CheckboxInput(props: CheckboxInputProps) {
           $styles.toggleInner,
           { backgroundColor: onBackgroundColor },
           $innerStyleOverride,
-          { opacity: opacity.current },
+          { opacity: opacity },
         ]}
       >
         <Image
